@@ -131,7 +131,7 @@ const page = () => {
 					<div className='rounded-md bg-gray-100 text-center'>
 						Mon 17.03.2024
 					</div>
-					<div className='rounded-md bg-pink-700 text-center text-white'>
+					<div className='bg-primary rounded-md text-center text-white'>
 						Mon 24.03.2024
 					</div>
 					<div className='rounded-md bg-gray-100 text-center'>

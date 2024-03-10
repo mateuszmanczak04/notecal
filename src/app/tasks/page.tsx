@@ -26,7 +26,7 @@ const Task = ({
 					{date}
 				</p>
 			</div>
-			<button className='mt-2 h-8 w-full rounded-md bg-pink-700 text-white'>
+			<button className='bg-primary mt-2 h-8 w-full rounded-md text-white'>
 				Done
 			</button>
 		</div>

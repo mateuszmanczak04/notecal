@@ -11,7 +11,7 @@ export default function Home() {
 				Are you tired of grouping your university notes by a specific course
 				lesson or date? NoteCal has been made to decrease your fatigue.
 			</p>
-			<button className='mt-8 h-10 w-full rounded-md bg-pink-700 px-3 text-white'>
+			<button className='bg-primary mt-8 h-10 w-full rounded-md px-3 text-white'>
 				Click Here to Learn More
 			</button>
 		</div>

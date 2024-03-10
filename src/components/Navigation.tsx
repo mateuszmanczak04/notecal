@@ -14,7 +14,7 @@ const Navigation = () => {
 
 	return (
 		<>
-			<div className='fixed left-0 top-0 z-50 flex h-16 w-screen items-center justify-between bg-pink-700 p-4 text-white sm:hidden'>
+			<div className='bg-primary fixed left-0 top-0 z-50 flex h-16 w-screen items-center justify-between p-4 text-white sm:hidden'>
 				<Link href='/' className='text-2xl font-semibold'>
 					NoteCal
 				</Link>
@@ -44,7 +44,7 @@ const Navigation = () => {
 					</div>
 				)}
 			</div>
-			<div className='fixed left-0 top-0 z-50 hidden h-16 w-screen items-center justify-between bg-pink-700 p-4 text-white sm:flex'>
+			<div className='bg-primary fixed left-0 top-0 z-50 hidden h-16 w-screen items-center justify-between p-4 text-white sm:flex'>
 				<Link href='/' className='text-2xl font-bold'>
 					NoteCal
 				</Link>

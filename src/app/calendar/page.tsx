@@ -40,7 +40,7 @@ const page = () => {
 			<div className='flex w-full flex-col justify-between'>
 				{/* +, <, > */}
 				<div className='flex w-64 justify-between gap-2'>
-					<button className='h-8 flex-1 rounded-md bg-pink-700 text-2xl font-semibold text-white'>
+					<button className='bg-primary h-8 flex-1 rounded-md text-2xl font-semibold text-white'>
 						+
 					</button>
 					<button className='h-8 flex-1 rounded-md bg-gray-200 text-xl font-semibold'>
