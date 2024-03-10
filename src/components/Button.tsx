@@ -2,7 +2,7 @@ import cn from '@/utils/cn';
 import { VariantProps, cva } from 'class-variance-authority';
 import { ButtonHTMLAttributes, FC, forwardRef } from 'react';
 
-const buttonVariants = cva('transition rounded-md font-medium', {
+export const buttonVariants = cva('transition rounded-md font-medium', {
 	variants: {
 		variant: {
 			primary: 'bg-primary hover:bg-primary/90 text-white',

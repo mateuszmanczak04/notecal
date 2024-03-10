@@ -1,15 +1,32 @@
+import Button from '@/components/Button';
+import { Brain, Notebook, Pencil, Trash2 } from 'lucide-react';
+
 const Course = ({ title }: { title: string }) => {
 	return (
-		<div className='flex w-full flex-col rounded-md bg-blue-700 p-4 text-lg font-semibold text-white'>
+		<div className='flex w-full flex-col rounded-md bg-gray-100 p-4 text-lg font-semibold text-black'>
 			<p>{title}</p>
 			<div className='mt-2 flex w-full justify-between gap-2'>
-				<button className='h-8 flex-1 rounded-md bg-white/10 px-3'>
+				<Button
+					size='small'
+					className='flex flex-1 items-center justify-center gap-1'
+					variant='primary'>
+					{/* <Brain className='h-4 w-4' /> */}
 					Notes
-				</button>
-				<button className='h-8 flex-1 rounded-md bg-white/10 px-3'>Edit</button>
-				<button className='h-8 flex-1 rounded-md bg-white/10 px-3'>
+				</Button>
+				<Button
+					size='small'
+					className='flex flex-1 items-center justify-center gap-1 '
+					variant='secondary'>
+					<Pencil className='h-4 w-4' />
+					Edit
+				</Button>
+				<Button
+					size='small'
+					className='flex flex-1 items-center justify-center gap-1'
+					variant='secondary'>
+					<Trash2 className='h-4 w-4' />
 					Delete
-				</button>
+				</Button>
 			</div>
 		</div>
 	);
@@ -35,9 +52,9 @@ const page = () => {
 		<div className='p-4'>
 			<h1 className='text-2xl font-bold'>Your Courses:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
-				<button className='grid h-12 w-full place-content-center rounded-md bg-gray-100 text-lg font-semibold hover:bg-gray-200'>
+				<Button variant='secondary' size='large'>
 					+ Create a New Course
-				</button>
+				</Button>
 				{COURSES.map(course => (
 					<Course key={course.id} {...course} />
 				))}

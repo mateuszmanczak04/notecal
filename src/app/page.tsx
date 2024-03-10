@@ -1,3 +1,4 @@
+import Button from '@/components/Button';
 import Image from 'next/image';
 
 export default function Home() {
@@ -11,9 +12,9 @@ export default function Home() {
 				Are you tired of grouping your university notes by a specific course
 				lesson or date? NoteCal has been made to decrease your fatigue.
 			</p>
-			<button className='bg-primary mt-8 h-10 w-full rounded-md px-6 text-white sm:h-12 sm:w-fit'>
+			<Button size='large' variant='primary' className='mt-8 w-full sm:w-fit'>
 				Click Here to Learn More
-			</button>
+			</Button>
 		</div>
 	);
 }

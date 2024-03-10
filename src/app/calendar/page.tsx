@@ -1,3 +1,6 @@
+import Button from '@/components/Button';
+import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+
 const WeekDayName = ({ day, date }: { day: string; date: string }) => {
 	return (
 		<div className='flex-1'>
@@ -39,16 +42,17 @@ const page = () => {
 			{/* top bar: */}
 			<div className='flex w-full flex-col justify-between'>
 				{/* +, <, > */}
-				<div className='flex w-64 justify-between gap-2'>
-					<button className='bg-primary h-8 flex-1 rounded-md text-2xl font-semibold text-white'>
-						+
-					</button>
-					<button className='h-8 flex-1 rounded-md bg-gray-200 text-xl font-semibold'>
-						L
-					</button>
-					<button className='h-8 flex-1 rounded-md bg-gray-200 text-xl font-semibold'>
-						R
-					</button>
+				<div className='flex gap-2'>
+					{/* <button className='bg-primary hover:bg-primary/90 h-8 w-16 rounded-md font-semibold text-white transition'></button> */}
+					<Button size='small' variant='primary' className='w-16'>
+						<Plus className='h-full w-full' />
+					</Button>
+					<Button size='small' variant='secondary' className='w-16'>
+						<ChevronLeft className='h-full w-full' />
+					</Button>
+					<Button size='small' variant='secondary' className='w-16'>
+						<ChevronRight className='h-full w-full' />
+					</Button>
 				</div>
 				{/* week day names */}
 				<div className='mt-2 flex flex-1 justify-between'>

@@ -1,3 +1,5 @@
+import Button from '@/components/Button';
+
 const Task = ({
 	title,
 	description,
@@ -26,9 +28,9 @@ const Task = ({
 					{date}
 				</p>
 			</div>
-			<button className='bg-primary mt-2 h-8 w-full rounded-md text-white'>
+			<Button variant='primary' size='small' className='mt-2 w-full'>
 				Done
-			</button>
+			</Button>
 		</div>
 	);
 };
@@ -81,9 +83,9 @@ const page = () => {
 		<div className='p-4'>
 			<h1 className='text-2xl font-bold'>Your Tasks To Do:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
-				<button className='grid h-12 w-full place-content-center rounded-md bg-gray-100 text-lg font-semibold hover:bg-gray-200'>
+				<Button variant='secondary' size='large' className='w-full'>
 					+ Add Task
-				</button>
+				</Button>
 				{TASKS.map(task => (
 					<Task key={task.id} {...task} />
 				))}

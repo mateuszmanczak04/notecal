@@ -1,3 +1,5 @@
+import Button from '@/components/Button';
+
 const Task = ({
 	title,
 	description,
@@ -19,9 +21,9 @@ const Task = ({
 					{date}
 				</p>
 			</div>
-			<button className='absolute right-0 top-0 h-8 w-8 rounded-md bg-gray-200'>
-				❌
-			</button>
+			<Button variant='primary' className='mt-2' size='small'>
+				Done
+			</Button>
 		</div>
 	);
 };
@@ -122,21 +124,21 @@ const page = () => {
 				{/* lessons: */}
 				<div className='flex flex-col gap-2'>
 					<p className='text-xl font-semibold'>Lessons:</p>
-					<div className='rounded-md bg-gray-100 text-center'>
+					<Button variant='secondary' size='small'>
 						Mon 03.03.2024
-					</div>
-					<div className='rounded-md bg-gray-100 text-center'>
+					</Button>
+					<Button variant='secondary' size='small'>
 						Mon 10.03.2024
-					</div>
-					<div className='rounded-md bg-gray-100 text-center'>
+					</Button>
+					<Button variant='secondary' size='small'>
 						Mon 17.03.2024
-					</div>
-					<div className='bg-primary rounded-md text-center text-white'>
+					</Button>
+					<Button variant='primary' size='small'>
 						Mon 24.03.2024
-					</div>
-					<div className='rounded-md bg-gray-100 text-center'>
+					</Button>
+					<Button variant='secondary' size='small'>
 						Tue 25.03.2024
-					</div>
+					</Button>
 				</div>
 				{/* tasks: */}
 				<div className='flex flex-col gap-2'>
@@ -144,9 +146,9 @@ const page = () => {
 					{TASKS.map(task => (
 						<Task key={task.id} {...task} />
 					))}
-					<button className='h-10 w-full rounded-md bg-gray-100 text-center font-semibold leading-10'>
+					<Button variant='primary' size='medium'>
 						+ Create a new task
-					</button>
+					</Button>
 				</div>
 				<div className='flex flex-col gap-2'>
 					<p className='text-xl font-semibold'>Teacher:</p>
