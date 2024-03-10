@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={inter.className + ' mt-16'}>
+			<body className={inter.className + ' pt-16'}>
 				<Navigation />
 				{children}
 			</body>
