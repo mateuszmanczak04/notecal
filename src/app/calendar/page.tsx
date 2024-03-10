@@ -2,7 +2,7 @@ const WeekDayName = ({ day, date }: { day: string; date: string }) => {
 	return (
 		<div className='flex-1'>
 			<p className='text-lg font-semibold'>{day}</p>
-			<p className='text-gray-500 text-sm'>{date}</p>
+			<p className='text-sm text-gray-500'>{date}</p>
 		</div>
 	);
 };
@@ -15,7 +15,7 @@ const HourRect = ({
 	bottomHour?: string;
 }) => {
 	return (
-		<div className='h-16 w-full relative'>
+		<div className='relative h-16 w-full'>
 			<p className='absolute -top-3'>{hour}</p>
 			{bottomHour && <p className='absolute -bottom-2'>{bottomHour}</p>}
 		</div>
@@ -24,34 +24,34 @@ const HourRect = ({
 
 const LeftBorderRect = ({ last = false }: { last?: boolean }) => {
 	if (last)
-		return <div className='w-4 h-16 box-border border-y border-gray-300'></div>;
-	return <div className='w-4 h-16 box-border border-t border-gray-300'></div>;
+		return <div className='box-border h-16 w-4 border-y border-gray-300'></div>;
+	return <div className='box-border h-16 w-4 border-t border-gray-300'></div>;
 };
 
 const GridRect = ({ last = false }: { last?: boolean }) => {
-	if (last) return <div className='w-full h-16 border-y border-gray-300'></div>;
-	return <div className='w-full h-16 border-t border-gray-300'></div>;
+	if (last) return <div className='h-16 w-full border-y border-gray-300'></div>;
+	return <div className='h-16 w-full border-t border-gray-300'></div>;
 };
 
 const page = () => {
 	return (
 		<div className='w-full min-w-[800px] p-4'>
 			{/* top bar: */}
-			<div className='flex flex-col justify-between w-full'>
+			<div className='flex w-full flex-col justify-between'>
 				{/* +, <, > */}
-				<div className='w-64 gap-2 flex justify-between'>
-					<button className='bg-pink-700 text-white flex-1 h-8 rounded-md text-2xl font-semibold'>
+				<div className='flex w-64 justify-between gap-2'>
+					<button className='h-8 flex-1 rounded-md bg-pink-700 text-2xl font-semibold text-white'>
 						+
 					</button>
-					<button className='bg-gray-200 flex-1 h-8 rounded-md text-xl font-semibold'>
+					<button className='h-8 flex-1 rounded-md bg-gray-200 text-xl font-semibold'>
 						L
 					</button>
-					<button className='bg-gray-200 flex-1 h-8 rounded-md text-xl font-semibold'>
+					<button className='h-8 flex-1 rounded-md bg-gray-200 text-xl font-semibold'>
 						R
 					</button>
 				</div>
 				{/* week day names */}
-				<div className='flex flex-1 justify-between mt-2'>
+				<div className='mt-2 flex flex-1 justify-between'>
 					<div className='w-16'></div>
 					<WeekDayName day='Mon' date='12.03.2024' />
 					<WeekDayName day='Tue' date='13.03.2024' />
@@ -92,7 +92,7 @@ const page = () => {
 					<HourRect hour='23:00' bottomHour='00:00' />
 				</div>
 				{/* left border: */}
-				<div className='w-2 ml-2 border-r border-gray-300'>
+				<div className='ml-2 w-2 border-r border-gray-300'>
 					{new Array(23).fill(0).map((_, i) => (
 						<LeftBorderRect key={i} />
 					))}

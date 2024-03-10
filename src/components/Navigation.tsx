@@ -6,7 +6,7 @@ interface NavigationProps {}
 const Navigation: FC<NavigationProps> = ({}) => {
 	return (
 		<div>
-			<div className='flex justify-between items-center w-full p-4 bg-gray-100 fixed top-0 left-0 w-scren z-50 h-16'>
+			<div className='w-scren fixed left-0 top-0 z-50 flex h-16 w-full items-center justify-between bg-gray-100 p-4'>
 				<Link href='/' className='text-2xl font-semibold'>
 					NoteCal
 				</Link>

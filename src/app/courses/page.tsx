@@ -1,13 +1,13 @@
 const Course = ({ title }: { title: string }) => {
 	return (
-		<div className='bg-blue-700 text-white w-full flex flex-col font-semibold text-lg rounded-md p-4'>
+		<div className='flex w-full flex-col rounded-md bg-blue-700 p-4 text-lg font-semibold text-white'>
 			<p>{title}</p>
-			<div className='flex w-full justify-between mt-2 gap-2'>
-				<button className='bg-white/10 h-8 px-3 rounded-md flex-1'>
+			<div className='mt-2 flex w-full justify-between gap-2'>
+				<button className='h-8 flex-1 rounded-md bg-white/10 px-3'>
 					Notes
 				</button>
-				<button className='bg-white/10 h-8 px-3 rounded-md flex-1'>Edit</button>
-				<button className='bg-white/10 h-8 px-3 rounded-md flex-1'>
+				<button className='h-8 flex-1 rounded-md bg-white/10 px-3'>Edit</button>
+				<button className='h-8 flex-1 rounded-md bg-white/10 px-3'>
 					Delete
 				</button>
 			</div>
@@ -34,8 +34,8 @@ const page = () => {
 	return (
 		<div className='p-4'>
 			<h1 className='text-2xl font-bold'>Your Courses:</h1>
-			<div className='flex flex-col gap-2 mt-2'>
-				<button className='bg-gray-100 hover:bg-gray-200 w-full h-12 grid place-content-center font-semibold text-lg rounded-md'>
+			<div className='mt-2 flex flex-col gap-2'>
+				<button className='grid h-12 w-full place-content-center rounded-md bg-gray-100 text-lg font-semibold hover:bg-gray-200'>
 					+ Create a New Course
 				</button>
 				{COURSES.map(course => (

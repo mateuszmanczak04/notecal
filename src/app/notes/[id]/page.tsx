@@ -10,16 +10,16 @@ const Task = ({
 	date: string;
 }) => {
 	return (
-		<div className='bg-gray-100 rounded-md p-4 flex flex-col gap-2 relative'>
+		<div className='relative flex flex-col gap-2 rounded-md bg-gray-100 p-4'>
 			<p className='text-xl font-semibold'>{title}</p>
 			<p>{description}</p>
-			<div className='flex gap-2 items-center'>
-				<div className='w-4 h-4 rounded-full bg-green-500'></div>
-				<p className='bg-gray-200 rounded-md min-w-16 px-1 h-6 leading-6'>
+			<div className='flex items-center gap-2'>
+				<div className='h-4 w-4 rounded-full bg-green-500'></div>
+				<p className='h-6 min-w-16 rounded-md bg-gray-200 px-1 leading-6'>
 					{date}
 				</p>
 			</div>
-			<button className='w-8 h-8 top-0 right-0 bg-gray-200 rounded-md absolute'>
+			<button className='absolute right-0 top-0 h-8 w-8 rounded-md bg-gray-200'>
 				❌
 			</button>
 		</div>
@@ -71,14 +71,14 @@ const TASKS = [
 
 const page = () => {
 	return (
-		<div className='w-full min-w-[800px] p-4 flex gap-4'>
+		<div className='flex w-full min-w-[800px] gap-4 p-4'>
 			{/* left column: */}
 			<div className='flex-1'>
 				<h1 className='text-xl font-semibold'>
 					Algorytmy i Struktury Danych (10.02.2024)
 				</h1>
 				{/* markdown: */}
-				<div className='bg-gray-100 rounded-md p-4 flex flex-col gap-4 mt-2'>
+				<div className='mt-2 flex flex-col gap-4 rounded-md bg-gray-100 p-4'>
 					<p className='text-2xl font-semibold'>Temat: Kopce Binarne</p>
 					<p className='text-xl font-semibold'>Geneza powstania</p>
 					<ol>
@@ -118,38 +118,38 @@ const page = () => {
 				</div>
 			</div>
 			{/* right column: */}
-			<div className='w-48 flex flex-col gap-8'>
+			<div className='flex w-48 flex-col gap-8'>
 				{/* lessons: */}
 				<div className='flex flex-col gap-2'>
-					<p className='font-semibold text-xl'>Lessons:</p>
-					<div className='bg-gray-100 text-center rounded-md'>
+					<p className='text-xl font-semibold'>Lessons:</p>
+					<div className='rounded-md bg-gray-100 text-center'>
 						Mon 03.03.2024
 					</div>
-					<div className='bg-gray-100 text-center rounded-md'>
+					<div className='rounded-md bg-gray-100 text-center'>
 						Mon 10.03.2024
 					</div>
-					<div className='bg-gray-100 text-center rounded-md'>
+					<div className='rounded-md bg-gray-100 text-center'>
 						Mon 17.03.2024
 					</div>
-					<div className='bg-pink-700 text-white text-center rounded-md'>
+					<div className='rounded-md bg-pink-700 text-center text-white'>
 						Mon 24.03.2024
 					</div>
-					<div className='bg-gray-100 text-center rounded-md'>
+					<div className='rounded-md bg-gray-100 text-center'>
 						Tue 25.03.2024
 					</div>
 				</div>
 				{/* tasks: */}
 				<div className='flex flex-col gap-2'>
-					<p className='font-semibold text-xl'>Tasks:</p>
+					<p className='text-xl font-semibold'>Tasks:</p>
 					{TASKS.map(task => (
 						<Task key={task.id} {...task} />
 					))}
-					<button className='bg-gray-100 w-full text-center rounded-md h-10 leading-10 font-semibold'>
+					<button className='h-10 w-full rounded-md bg-gray-100 text-center font-semibold leading-10'>
 						+ Create a new task
 					</button>
 				</div>
 				<div className='flex flex-col gap-2'>
-					<p className='font-semibold text-xl'>Teacher:</p>
+					<p className='text-xl font-semibold'>Teacher:</p>
 					<div>Profesor Andrew Huberman</div>
 				</div>
 			</div>

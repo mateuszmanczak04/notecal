@@ -12,21 +12,21 @@ const Task = ({
 	date: string;
 }) => {
 	return (
-		<div className='p-4 rounded-md bg-gray-100'>
+		<div className='rounded-md bg-gray-100 p-4'>
 			<p className='text-xl font-semibold'>{title}</p>
 			<p className='text-gray-500'>{description}</p>
-			<div className='flex gap-1 mt-2'>
-				<p className='bg-purple-600 text-white rounded-md min-w-16 px-1 text-center h-6 leading-6'>
+			<div className='mt-2 flex gap-1'>
+				<p className='h-6 min-w-16 rounded-md bg-purple-600 px-1 text-center leading-6 text-white'>
 					{course}
 				</p>
-				<p className='bg-green-500 rounded-md min-w-16 px-1 text-center h-6 leading-6'>
+				<p className='h-6 min-w-16 rounded-md bg-green-500 px-1 text-center leading-6'>
 					Low
 				</p>
-				<p className='bg-gray-200 rounded-md min-w-16 px-1 text-center h-6 leading-6'>
+				<p className='h-6 min-w-16 rounded-md bg-gray-200 px-1 text-center leading-6'>
 					{date}
 				</p>
 			</div>
-			<button className='h-8 w-full mt-2 bg-pink-700 text-white rounded-md'>
+			<button className='mt-2 h-8 w-full rounded-md bg-pink-700 text-white'>
 				Done
 			</button>
 		</div>
@@ -80,8 +80,8 @@ const page = () => {
 	return (
 		<div className='p-4'>
 			<h1 className='text-2xl font-bold'>Your Tasks To Do:</h1>
-			<div className='flex flex-col gap-2 mt-2'>
-				<button className='bg-gray-100 hover:bg-gray-200 w-full h-12 grid place-content-center font-semibold text-lg rounded-md'>
+			<div className='mt-2 flex flex-col gap-2'>
+				<button className='grid h-12 w-full place-content-center rounded-md bg-gray-100 text-lg font-semibold hover:bg-gray-200'>
 					+ Add Task
 				</button>
 				{TASKS.map(task => (
