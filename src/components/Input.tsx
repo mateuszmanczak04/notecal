@@ -3,7 +3,7 @@ import { VariantProps, cva } from 'class-variance-authority';
 import { FC, InputHTMLAttributes, forwardRef } from 'react';
 
 export const inputVariants = cva(
-	'transition rounded-md font-medium border-2 border-gray-200',
+	'transition rounded-md border-2 border-gray-200',
 	{
 		variants: {
 			variant: {
