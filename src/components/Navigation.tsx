@@ -16,7 +16,7 @@ const Navigation = () => {
 
 	return (
 		<>
-			<div className='bg-primary fixed left-0 top-0 z-50 flex h-16 w-screen items-center justify-between p-4 text-white sm:hidden'>
+			<div className='fixed left-0 top-0 z-50 flex h-16 w-screen items-center justify-between bg-primary p-4 text-white sm:hidden'>
 				<Link href='/' className='text-2xl font-semibold'>
 					NoteCal
 				</Link>
@@ -43,10 +43,16 @@ const Navigation = () => {
 							onClick={toggleOpen}>
 							Courses
 						</Link>
+						<Link
+							href='/auth/signup'
+							className='w-full rounded-md bg-gray-100 p-4 text-lg font-semibold transition hover:bg-gray-200'
+							onClick={toggleOpen}>
+							Sign Up
+						</Link>
 					</div>
 				)}
 			</div>
-			<div className='bg-primary fixed left-0 top-0 z-50 hidden h-16 w-screen items-center justify-between p-4 text-white sm:flex'>
+			<div className='fixed left-0 top-0 z-50 hidden h-16 w-screen items-center justify-between bg-primary p-4 text-white sm:flex'>
 				<Link href='/' className='text-2xl font-bold'>
 					NoteCal
 				</Link>
@@ -59,6 +65,9 @@ const Navigation = () => {
 					</Link>
 					<Link href='/courses' className='text-lg font-semibold'>
 						Courses
+					</Link>
+					<Link href='/auth/signup' className='text-lg font-semibold'>
+						Sign Up
 					</Link>
 				</div>
 			</div>
