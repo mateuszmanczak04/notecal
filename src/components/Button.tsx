@@ -5,7 +5,8 @@ import { ButtonHTMLAttributes, FC, forwardRef } from 'react';
 export const buttonVariants = cva('transition rounded-md font-medium', {
 	variants: {
 		variant: {
-			primary: 'bg-primary hover:bg-primary/90 text-white',
+			primary:
+				'bg-primary disabled:bg-primary/50 disabled:cursor-not-allowed hover:bg-primary/90 text-white',
 			secondary: 'bg-gray-200 text-black hover:bg-gray-300',
 		},
 		size: {
