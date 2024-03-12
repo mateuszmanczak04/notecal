@@ -10,9 +10,9 @@ export const buttonVariants = cva('transition rounded-md font-medium', {
 			secondary: 'bg-gray-200 text-black hover:bg-gray-300',
 		},
 		size: {
-			small: 'h-8 px-2',
-			medium: 'h-10 px-3',
-			large: 'h-12 px-4',
+			small: 'h-8 px-2 leading-8',
+			medium: 'h-10 px-3 leading-10',
+			large: 'h-12 px-4 leading-[1.5rem]',
 		},
 	},
 	defaultVariants: {
