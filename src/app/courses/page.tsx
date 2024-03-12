@@ -1,7 +1,12 @@
 import Button from '@/components/Button';
-import { Brain, Notebook, Pencil, Trash2 } from 'lucide-react';
+import { auth } from '@/utils/auth';
+import { Pencil, Trash2 } from 'lucide-react';
+import { redirect } from 'next/navigation';
 
-const Course = ({ title }: { title: string }) => {
+const Course = async ({ title }: { title: string }) => {
+	const session = await auth();
+	if (!session) redirect('/auth/signup');
+
 	return (
 		<div className='flex w-full flex-col rounded-md bg-gray-100 p-4 text-lg font-semibold text-black'>
 			<p>{title}</p>

@@ -1,4 +1,6 @@
 import Button from '@/components/Button';
+import { auth } from '@/utils/auth';
+import { redirect } from 'next/navigation';
 
 const Task = ({
 	title,
@@ -78,7 +80,10 @@ const TASKS = [
 	},
 ];
 
-const page = () => {
+const page = async () => {
+	const session = await auth();
+	if (!session) redirect('/auth/signup');
+
 	return (
 		<div className='p-4'>
 			<h1 className='text-2xl font-bold'>Your Tasks To Do:</h1>
