@@ -1,12 +1,37 @@
+'use client';
+
 import Input from './Input';
 import Button from './Button';
 import createCourse from '@/actions/createCourse';
+import { useFormState, useFormStatus } from 'react-dom';
+import { LoaderIcon } from 'lucide-react';
+
+const SubmitButton = () => {
+	const { pending } = useFormStatus();
+	return (
+		<Button
+			type='submit'
+			disabled={pending}
+			aria-disabled={pending}
+			className='flex w-full items-center justify-center gap-1'
+			variant='primary'
+			size='medium'>
+			{pending && <LoaderIcon className='animate-spin' />} Create a New Course
+		</Button>
+	);
+};
 
 const CreateCourse = () => {
+	const [course, dispatch] = useFormState(createCourse, undefined);
+
 	return (
 		<div className='w-full'>
 			<p className='text-2xl font-semibold'>Create a new Course</p>
-			<form action={createCourse} className='mt-4 flex flex-col gap-4'>
+			<form
+				action={async (fd: FormData) => {
+					dispatch(fd);
+				}}
+				className='mt-4 flex flex-col gap-4'>
 				<div className='w-full'>
 					<label htmlFor='course-name' className='block font-medium'>
 						Name of the Course<span className='text-red-500'> *</span>
@@ -32,13 +57,7 @@ const CreateCourse = () => {
 						className='mt-1 w-full'
 					/>
 				</div>
-				<Button
-					type='submit'
-					className='w-full'
-					variant='primary'
-					size='medium'>
-					Create a New Course
-				</Button>
+				<SubmitButton />
 			</form>
 		</div>
 	);
