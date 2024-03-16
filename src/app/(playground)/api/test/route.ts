@@ -1,8 +1,8 @@
 import User from '@/models/User';
 import dbConnect from '@/utils/dbConnect';
-import { NextApiRequest } from 'next';
+import { NextRequest } from 'next/server';
 
-export const POST = async (req: NextApiRequest) => {
+export const POST = async (req: NextRequest) => {
 	await dbConnect();
 
 	const user = await User.create({
