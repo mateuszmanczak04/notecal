@@ -3,14 +3,21 @@
 import { useFormState, useFormStatus } from 'react-dom';
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
-import authenticate from '@/actions/authenticate';
+import signup from '@/actions/signup';
+import { useRouter } from 'next/navigation';
 
 const SignUpForm = () => {
-	const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+	const [errorMessage, dispatch] = useFormState(signup, undefined);
 	const { pending } = useFormStatus();
+	const router = useRouter();
 
 	return (
-		<form className='mt-4 space-y-4' action={dispatch}>
+		<form
+			className='mt-4 space-y-4'
+			action={async (fd: FormData) => {
+				dispatch(fd);
+				router.refresh();
+			}}>
 			<div className='w-full'>
 				<label htmlFor='email' className='block font-medium'>
 					Email
@@ -38,13 +45,13 @@ const SignUpForm = () => {
 				/>
 			</div>
 			<div className='w-full'>
-				<label htmlFor='confirm-password' className='block font-medium'>
+				<label htmlFor='confirmPassword' className='block font-medium'>
 					Confirm Password
 				</label>
 				<Input
 					type='password'
-					id='confirm-password'
-					name='confirm-password'
+					id='confirmPassword'
+					name='confirmPassword'
 					required
 					placeholder='******** (same as above)'
 					className='mt-1 w-full'
@@ -58,6 +65,10 @@ const SignUpForm = () => {
 				size='medium'>
 				Create An Account
 			</Button>
+			{errorMessage && (
+				<p className='text-center text-red-500'>{errorMessage}</p>
+			)}
+			{pending && <p className='text-center'>Loading...</p>}
 		</form>
 	);
 };

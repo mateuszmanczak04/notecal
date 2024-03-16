@@ -8,7 +8,6 @@ interface pageProps {}
 const page: FC<pageProps> = ({}) => {
 	const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		console.log('click');
 
 		fetch('/api/test', {
 			method: 'POST',

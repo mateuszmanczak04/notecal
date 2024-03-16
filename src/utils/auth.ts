@@ -1,5 +1,7 @@
 import NextAuth, { NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import dbConnect from './dbConnect';
+import User from '@/models/User';
 
 const config: NextAuthConfig = {
 	session: {
@@ -8,8 +10,26 @@ const config: NextAuthConfig = {
 	providers: [
 		Credentials({
 			async authorize(credentials) {
-				console.log('credentials', credentials);
-				const user = { id: '1', name: 'Mateusz' };
+				const { email, password } = credentials;
+
+				if (!email || !password) {
+					return null;
+				}
+
+				await dbConnect();
+
+				const user = await User.findOne({
+					email,
+				});
+
+				if (!user) {
+					return null;
+				}
+
+				if (user.password !== password) {
+					return null;
+				}
+
 				return user;
 			},
 		}),

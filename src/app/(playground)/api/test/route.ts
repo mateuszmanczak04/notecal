@@ -10,8 +10,6 @@ export const POST = async (req: NextApiRequest) => {
 		password: 'secret-password',
 	});
 
-	console.log(user);
-
 	return new Response('Hello World', {
 		headers: {
 			'content-type': 'text/plain',

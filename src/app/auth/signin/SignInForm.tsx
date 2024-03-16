@@ -15,7 +15,7 @@ const SignInForm = () => {
 		<form
 			className='mt-4 space-y-4'
 			action={async (fd: FormData) => {
-				await dispatch(fd);
+				dispatch(fd);
 				router.refresh();
 			}}>
 			<div className='w-full'>
@@ -52,6 +52,10 @@ const SignInForm = () => {
 				size='medium'>
 				Log In to Your Account
 			</Button>
+			{errorMessage && (
+				<p className='text-center text-red-500'>{errorMessage}</p>
+			)}
+			{pending && <p className='text-center'>Loading...</p>}
 		</form>
 	);
 };

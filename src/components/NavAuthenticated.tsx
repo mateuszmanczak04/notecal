@@ -11,7 +11,6 @@ const NavAuthenticated = () => {
 
 	const toggleOpen = () => {
 		setOpen(!open);
-		console.log(!open);
 	};
 
 	return (

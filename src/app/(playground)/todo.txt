@@ -1,5 +1,1 @@
-change navigation view for authenticated vs authenticated
-
-check credentials and save users to database
-
-redirect to calendar route immediately after signing in/up
+hash password in db
