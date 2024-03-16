@@ -3,6 +3,7 @@
 import dbConnect from '@/utils/dbConnect';
 import authenticate from './authenticate';
 import User from '@/models/User';
+import bcrypt from 'bcryptjs';
 
 const signup = async (_currentState: unknown, formData: FormData) => {
 	try {
@@ -10,8 +11,15 @@ const signup = async (_currentState: unknown, formData: FormData) => {
 		const password = formData.get('password');
 		const confirmPassword = formData.get('confirmPassword');
 
-		if (!email || !password || !confirmPassword) {
-			return 'Missing fields.';
+		if (
+			!email ||
+			!password ||
+			!confirmPassword ||
+			typeof email !== 'string' ||
+			typeof password !== 'string' ||
+			typeof confirmPassword !== 'string'
+		) {
+			return 'Missing or wrong fields.';
 		}
 
 		await dbConnect();
@@ -22,8 +30,12 @@ const signup = async (_currentState: unknown, formData: FormData) => {
 
 		if (password !== confirmPassword) return 'Passwords do not match.';
 
+		// hash password
+		const salt = await bcrypt.genSalt(10);
+		const hashedPassword = await bcrypt.hash(password, salt);
+
 		// create user
-		await User.create({ email, password });
+		await User.create({ email, password: hashedPassword });
 
 		// sign user in after signing up
 		await authenticate(_currentState, formData);

@@ -2,6 +2,7 @@ import NextAuth, { NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import dbConnect from './dbConnect';
 import User from '@/models/User';
+import bcrypt from 'bcryptjs';
 
 const config: NextAuthConfig = {
 	session: {
@@ -12,7 +13,12 @@ const config: NextAuthConfig = {
 			async authorize(credentials) {
 				const { email, password } = credentials;
 
-				if (!email || !password) {
+				if (
+					!email ||
+					!password ||
+					typeof email !== 'string' ||
+					typeof password !== 'string'
+				) {
 					return null;
 				}
 
@@ -26,7 +32,9 @@ const config: NextAuthConfig = {
 					return null;
 				}
 
-				if (user.password !== password) {
+				// check if password matches
+				const isPasswordMatch = await bcrypt.compare(password, user.password);
+				if (!isPasswordMatch) {
 					return null;
 				}
 
