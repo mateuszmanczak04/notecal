@@ -1,9 +1,5 @@
-'use client';
-
 import Link from 'next/link';
-import { useState } from 'react';
-import Button, { buttonVariants } from './Button';
-import { Menu } from 'lucide-react';
+import { buttonVariants } from './Button';
 
 const NavUnauthenticated = () => {
 	return (
