@@ -55,7 +55,7 @@ const COURSES = [
 
 const page = () => {
 	return (
-		<div className='p-4'>
+		<div className='mx-auto max-w-screen-sm p-4'>
 			<h1 className='text-2xl font-bold'>Your Courses:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
 				<Link
