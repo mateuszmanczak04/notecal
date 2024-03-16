@@ -26,6 +26,7 @@ export default async function RootLayout({
 				<SessionProvider>
 					{session ? <NavAuthenticated /> : <NavUnauthenticated />}
 					{children}
+					<div id='modal-root'></div>
 				</SessionProvider>
 			</body>
 		</html>

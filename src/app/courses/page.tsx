@@ -1,6 +1,7 @@
-import Button from '@/components/Button';
+import Button, { buttonVariants } from '@/components/Button';
 import { auth } from '@/utils/auth';
-import { Pencil, Trash2 } from 'lucide-react';
+import { Pencil, Plus, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 const Course = async ({ title }: { title: string }) => {
@@ -57,9 +58,15 @@ const page = () => {
 		<div className='p-4'>
 			<h1 className='text-2xl font-bold'>Your Courses:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
-				<Button variant='secondary' size='large'>
-					+ Create a New Course
-				</Button>
+				<Link
+					href='/courses/create'
+					className={buttonVariants({
+						variant: 'secondary',
+						size: 'large',
+						className: 'flex items-center justify-center gap-1 font-semibold',
+					})}>
+					<Plus className='h-6 w-6' /> Create a New Course
+				</Link>
 				{COURSES.map(course => (
 					<Course key={course.id} {...course} />
 				))}
