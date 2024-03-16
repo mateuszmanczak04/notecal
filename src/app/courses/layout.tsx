@@ -6,7 +6,7 @@ const layout = ({
 	children: React.ReactNode;
 }) => {
 	return (
-		<div>
+		<div className='mx-auto max-w-screen-sm p-4'>
 			{children}
 			{modal}
 		</div>
