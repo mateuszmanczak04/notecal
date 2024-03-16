@@ -33,7 +33,7 @@ const Modal: FC<ModalProps> = ({ children }) => {
 		<div onClick={handleClose}>
 			<dialog
 				ref={dialogRef}
-				className='flex flex-col gap-4 bg-white p-4 backdrop:bg-black backdrop:bg-opacity-75'
+				className='flex flex-col gap-4 rounded-md bg-white p-4 backdrop:bg-black backdrop:bg-opacity-75'
 				onClose={handleClose}>
 				<Button variant='secondary' onClick={handleClose}>
 					Close
