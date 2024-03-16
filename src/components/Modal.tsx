@@ -2,7 +2,14 @@
 
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
-import { type ElementRef, FC, useEffect, useRef } from 'react';
+import {
+	type ElementRef,
+	FC,
+	useEffect,
+	useRef,
+	MouseEventHandler,
+	useCallback,
+} from 'react';
 import { createPortal } from 'react-dom';
 
 interface ModalProps {
@@ -13,34 +20,32 @@ const Modal: FC<ModalProps> = ({ children }) => {
 	const router = useRouter();
 	const dialogRef = useRef<ElementRef<'dialog'>>(null);
 
+	// close the modal when the user clicks the close button
+	const handleClose = useCallback(() => {
+		router.back();
+	}, [router]);
+
 	// open the modal when the component mounts
 	useEffect(() => {
 		if (!dialogRef.current?.open) {
 			dialogRef.current?.showModal();
 		}
-	}, []);
-
-	// close the modal when the user clicks the close button
-	const handleClose = () => {
-		router.back();
-	};
+	}, [handleClose]);
 
 	// using createPortal to render the modal as the last child of the body
 	// this is to ensure that the modal is not affected by the parent's styles
 	// and to avoid z-index issues
 	return createPortal(
-		// dialog by itself does not have a close button, so we wrap it in a div
-		<div onClick={handleClose}>
-			<dialog
-				ref={dialogRef}
-				className='flex flex-col gap-4 rounded-md bg-white p-4 backdrop:bg-black backdrop:bg-opacity-75'
-				onClose={handleClose}>
+		<dialog
+			ref={dialogRef}
+			className='backdrop:bg-black backdrop:bg-opacity-75'>
+			<div className='flex flex-col gap-4 rounded-md bg-white p-4'>
 				<Button variant='secondary' onClick={handleClose}>
 					Close
 				</Button>
 				{children}
-			</dialog>
-		</div>,
+			</div>
+		</dialog>,
 		document.getElementById('modal-root')!,
 	);
 };
