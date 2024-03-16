@@ -1,6 +1,7 @@
 'use client';
 
 import Button from '@/components/Button';
+import cn from '@/utils/cn';
 import { useRouter } from 'next/navigation';
 import {
 	type ElementRef,
@@ -14,9 +15,10 @@ import { createPortal } from 'react-dom';
 
 interface ModalProps {
 	children: React.ReactNode;
+	className?: string;
 }
 
-const Modal: FC<ModalProps> = ({ children }) => {
+const Modal: FC<ModalProps> = ({ children, className }) => {
 	const router = useRouter();
 	const dialogRef = useRef<ElementRef<'dialog'>>(null);
 
@@ -38,13 +40,14 @@ const Modal: FC<ModalProps> = ({ children }) => {
 	return createPortal(
 		<dialog
 			ref={dialogRef}
-			className='backdrop:bg-black backdrop:bg-opacity-75'>
-			<div className='flex flex-col gap-4 rounded-md bg-white p-4'>
-				<Button variant='secondary' onClick={handleClose}>
-					Close
-				</Button>
-				{children}
-			</div>
+			className={cn(
+				'flex w-full flex-col gap-4 rounded-md bg-white p-4 backdrop:bg-black backdrop:bg-opacity-75',
+				className,
+			)}>
+			<Button variant='secondary' onClick={handleClose}>
+				Close
+			</Button>
+			{children}
 		</dialog>,
 		document.getElementById('modal-root')!,
 	);

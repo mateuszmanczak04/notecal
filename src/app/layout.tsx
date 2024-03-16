@@ -26,6 +26,7 @@ export default async function RootLayout({
 				<SessionProvider>
 					{session ? <NavAuthenticated /> : <NavUnauthenticated />}
 					{children}
+					{/* a root for displaying modals on top of the page */}
 					<div id='modal-root'></div>
 				</SessionProvider>
 			</body>
