@@ -31,13 +31,16 @@ const CourseItem: FC<CourseItemProps> = ({ name, id }) => {
 					})}>
 					Notes
 				</Link>
-				<Button
-					size='small'
-					className='flex flex-1 items-center justify-center gap-1 '
-					variant='secondary'>
+				<Link
+					href={`/courses/${id}/edit`}
+					className={buttonVariants({
+						variant: 'secondary',
+						size: 'small',
+						className: 'flex flex-1 items-center justify-center gap-1',
+					})}>
 					<Pencil className='h-4 w-4' />
 					Edit
-				</Button>
+				</Link>
 				<Button
 					onClick={handleDelete}
 					size='small'
