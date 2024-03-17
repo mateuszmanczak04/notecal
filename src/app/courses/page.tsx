@@ -1,16 +1,11 @@
 import { buttonVariants } from '@/components/Button';
 import CourseItem from '@/components/CourseItem';
 import CourseModel from '@/models/Course';
-import { auth } from '@/utils/auth';
 import dbConnect from '@/utils/dbConnect';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 
 const page = async () => {
-	const session = await auth();
-	if (!session) redirect('/auth/signup');
-
 	await dbConnect();
 
 	const courses = await CourseModel.find({});
@@ -29,7 +24,11 @@ const page = async () => {
 					<Plus className='h-6 w-6' /> Create a New Course
 				</Link>
 				{courses.map(course => (
-					<CourseItem key={course._id} id={course._id} name={course.name} />
+					<CourseItem
+						key={course._id}
+						id={course._id.toString()}
+						name={course.name}
+					/>
 				))}
 				{!courses.length && (
 					<p className='text-lg text-gray-500'>

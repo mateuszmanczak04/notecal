@@ -1,7 +1,6 @@
 'use server';
 
 import Course from '@/models/Course';
-import { auth } from '@/utils/auth';
 import dbConnect from '@/utils/dbConnect';
 import { redirect } from 'next/navigation';
 
@@ -16,14 +15,9 @@ const createCourse = async (_currentState: unknown, fd: FormData) => {
 	try {
 		await dbConnect();
 
-		const course = await Course.create({
+		await Course.create({
 			name: courseName,
 			teacher: courseTeacher,
-		});
-
-		// todo: remove this after implementing the real-time feature
-		await new Promise(resolve => {
-			setTimeout(resolve, 2000);
 		});
 	} catch (error: any) {
 		throw new Error('Something went wrong');
