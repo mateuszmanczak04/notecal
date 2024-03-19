@@ -1,12 +1,7 @@
 import { auth } from '@/utils/auth';
 import { redirect } from 'next/navigation';
 
-const layout = async ({
-	children,
-}: {
-	modal: React.ReactNode;
-	children: React.ReactNode;
-}) => {
+const layout = async ({ children }: { children: React.ReactNode }) => {
 	const session = await auth();
 	if (!session) redirect('/auth/signup');
 
