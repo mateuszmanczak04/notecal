@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation';
 import { FC } from 'react';
 
 interface PageProps {
-	params: { slug: string };
 	searchParams?: { [key: string]: string | string[] | undefined };
 }
 
@@ -23,8 +22,6 @@ const page: FC<PageProps> = async ({ searchParams }) => {
 	if (!course) {
 		redirect('/courses');
 	}
-
-	console.log(course);
 
 	return <EditCourse id={id} name={course.name} teacher={course.teacher} />;
 };

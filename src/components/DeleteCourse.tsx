@@ -8,13 +8,14 @@ import { Trash2 } from 'lucide-react';
 
 interface DeleteCourseProps {
 	id: string;
+	className: string;
 }
 
-const DeleteCourse: FC<DeleteCourseProps> = ({ id }) => {
+const DeleteCourse: FC<DeleteCourseProps> = ({ id, className }) => {
 	const [course, dispatch] = useFormState(deleteCourse, undefined);
 
 	return (
-		<form action={dispatch} className='mt-8'>
+		<form action={dispatch} className={className}>
 			<input type='hidden' name='id' value={id} />
 			<SubmitButton
 				size='medium'
