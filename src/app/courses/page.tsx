@@ -28,6 +28,7 @@ const page = async () => {
 						key={course._id}
 						id={course._id.toString()}
 						name={course.name}
+						teacher={course.teacher}
 					/>
 				))}
 				{!courses.length && (

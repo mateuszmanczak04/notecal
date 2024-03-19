@@ -8,6 +8,7 @@ const courseSchema = new mongoose.Schema({
 	teacher: {
 		type: String,
 		required: false,
+		default: '',
 	},
 	user: {
 		type: mongoose.Schema.Types.ObjectId,

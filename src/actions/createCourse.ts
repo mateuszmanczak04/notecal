@@ -5,10 +5,10 @@ import dbConnect from '@/utils/dbConnect';
 import { redirect } from 'next/navigation';
 
 const createCourse = async (_currentState: unknown, fd: FormData) => {
-	const courseName = fd.get('courseName');
-	const courseTeacher = fd.get('courseTeacher');
+	const name = fd.get('name');
+	const teacher = fd.get('teacher');
 
-	if (!courseName) {
+	if (!name) {
 		throw new Error('Course name is required');
 	}
 
@@ -16,11 +16,11 @@ const createCourse = async (_currentState: unknown, fd: FormData) => {
 		await dbConnect();
 
 		await Course.create({
-			name: courseName,
-			teacher: courseTeacher,
+			name,
+			teacher,
 		});
 	} catch (error: any) {
-		throw new Error('Something went wrong');
+		return { status: 'error', message: 'Something went wrong' };
 	}
 
 	redirect('/courses');

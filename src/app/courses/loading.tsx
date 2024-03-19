@@ -1,7 +1,4 @@
-import { buttonVariants } from '@/components/Button';
-import { Plus } from 'lucide-react';
-
-const loading = ({}) => {
+const Loading = () => {
 	return (
 		<div className=''>
 			<h1 className='text-2xl font-bold'>Your Courses:</h1>
@@ -16,4 +13,4 @@ const loading = ({}) => {
 	);
 };
 
-export default loading;
+export default Loading;
