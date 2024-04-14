@@ -1,38 +1,11 @@
-import { Badge } from '@/components/ui/badge';
+import TaskItem from '@/components/task-item';
 import { Button } from '@/components/ui/button';
+import { type Task } from '@/types';
 import { auth } from '@/utils/auth';
+import { Plus } from 'lucide-react';
 import { redirect } from 'next/navigation';
 
-const Task = ({
-	title,
-	description,
-	course,
-	priority,
-	date,
-}: {
-	title: string;
-	description: string;
-	course: string;
-	priority: number;
-	date: string;
-}) => {
-	return (
-		<div className='rounded-md bg-gray-100 p-4'>
-			<p className='text-xl font-semibold'>{title}</p>
-			<p className='text-gray-500'>{description}</p>
-			<div className='mt-2 flex gap-1'>
-				<Badge className='bg-purple-600'>{course}</Badge>
-				<Badge className='bg-green-600'>{priority}</Badge>
-				<Badge className='bg-blue-500'>{date}</Badge>
-			</div>
-			<Button size='sm' className='mt-2 w-full'>
-				Done
-			</Button>
-		</div>
-	);
-};
-
-const TASKS = [
+const TASKS: Task[] = [
 	{
 		id: 1,
 		title: 'Task 1',
@@ -62,7 +35,7 @@ const TASKS = [
 		title: 'Task 4',
 		description: 'Description 4',
 		course: 'Course 4',
-		priority: 4,
+		priority: 3,
 		date: '15.12.2024',
 	},
 	{
@@ -70,7 +43,7 @@ const TASKS = [
 		title: 'Task 5',
 		description: 'Description 5',
 		course: 'Course 5',
-		priority: 5,
+		priority: 1,
 		date: '16.12.2024',
 	},
 ];
@@ -84,10 +57,10 @@ const page = async () => {
 			<h1 className='text-2xl font-bold'>Your Tasks To Do:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
 				<Button variant='secondary' size='lg' className='w-full'>
-					+ Add Task
+					<Plus className='h-6 w-6' /> Add Task
 				</Button>
 				{TASKS.map(task => (
-					<Task key={task.id} {...task} />
+					<TaskItem key={task.id} {...task} />
 				))}
 			</div>
 		</div>
