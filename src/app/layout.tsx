@@ -1,10 +1,11 @@
+import NavAuthenticated from '@/components/NavAuthenticated';
+import NavUnauthenticated from '@/components/NavUnauthenticated';
+import { cn } from '@/lib/utils';
+import { auth } from '@/utils/auth';
 import type { Metadata } from 'next';
+import { SessionProvider } from 'next-auth/react';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import NavUnauthenticated from '@/components/NavUnauthenticated';
-import { SessionProvider } from 'next-auth/react';
-import { auth } from '@/utils/auth';
-import NavAuthenticated from '@/components/NavAuthenticated';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,7 +23,7 @@ export default async function RootLayout({
 
 	return (
 		<html lang='en'>
-			<body className={inter.className + ' pt-16'}>
+			<body className={cn(inter.className, 'pt-16')}>
 				<SessionProvider>
 					{session ? <NavAuthenticated /> : <NavUnauthenticated />}
 					{children}

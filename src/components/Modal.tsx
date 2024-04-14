@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import cn from '@/utils/cn';
+import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { FC, useCallback, useEffect, useRef, type ElementRef } from 'react';
 import { createPortal } from 'react-dom';
