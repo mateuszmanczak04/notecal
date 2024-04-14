@@ -1,3 +1,4 @@
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { auth } from '@/utils/auth';
 import { redirect } from 'next/navigation';
@@ -20,15 +21,9 @@ const Task = ({
 			<p className='text-xl font-semibold'>{title}</p>
 			<p className='text-gray-500'>{description}</p>
 			<div className='mt-2 flex gap-1'>
-				<p className='h-6 min-w-16 rounded-md bg-purple-600 px-1 text-center leading-6 text-white'>
-					{course}
-				</p>
-				<p className='h-6 min-w-16 rounded-md bg-green-500 px-1 text-center leading-6'>
-					Low
-				</p>
-				<p className='h-6 min-w-16 rounded-md bg-gray-200 px-1 text-center leading-6'>
-					{date}
-				</p>
+				<Badge className='bg-purple-600'>{course}</Badge>
+				<Badge className='bg-green-600'>{priority}</Badge>
+				<Badge className='bg-blue-500'>{date}</Badge>
 			</div>
 			<Button size='sm' className='mt-2 w-full'>
 				Done
