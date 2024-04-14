@@ -1,5 +1,12 @@
 import { Button } from '@/components/ui/button';
-import { Pencil } from 'lucide-react';
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from '@/components/ui/card';
+import { NotebookPen, Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -13,27 +20,35 @@ interface CourseItemProps {
 // It just has 2 links to the notes page and the edit page
 const CourseItem: FC<CourseItemProps> = ({ name, teacher, id }) => {
 	return (
-		<div className='flex w-full flex-col rounded-md bg-gray-100 p-4 text-lg font-semibold text-black'>
-			<p>{name}</p>
-			<p className='text-sm font-normal text-gray-500'>{teacher}</p>
-			<div className='mt-2 flex w-full justify-between gap-2'>
-				<Button
-					asChild
-					className='flex flex-1 items-center justify-center gap-1'
-					size='sm'>
-					<Link href={`/courses/notes?id=${id}`}>Notes</Link>
-				</Button>
-				<Button
-					asChild
-					className='flex flex-1 items-center justify-center gap-1'
-					size='sm'>
-					<Link href={`/courses/edit?id=${id}`}>
-						<Pencil className='h-4 w-4' />
-						Edit
-					</Link>
-				</Button>
-			</div>
-		</div>
+		<Card>
+			<CardHeader>
+				<CardTitle>{name}</CardTitle>
+				<CardDescription>{teacher}</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<div className='flex h-full w-full gap-2'>
+					<Button
+						asChild
+						className='flex flex-1 items-center justify-center gap-1'
+						size='sm'>
+						<Link href={`/courses/notes?id=${id}`}>
+							<NotebookPen className='h-4 w-4' />
+							Notes
+						</Link>
+					</Button>
+					<Button
+						asChild
+						className='flex flex-1 items-center justify-center gap-1'
+						size='sm'
+						variant='secondary'>
+						<Link href={`/courses/edit?id=${id}`}>
+							<Pencil className='h-4 w-4' />
+							Edit
+						</Link>
+					</Button>
+				</div>
+			</CardContent>
+		</Card>
 	);
 };
 
