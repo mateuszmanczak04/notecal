@@ -1,16 +1,9 @@
 'use client';
 
-import Button from '@/components/Button';
+import { Button } from '@/components/ui/button';
 import cn from '@/utils/cn';
 import { useRouter } from 'next/navigation';
-import {
-	type ElementRef,
-	FC,
-	useEffect,
-	useRef,
-	MouseEventHandler,
-	useCallback,
-} from 'react';
+import { FC, useCallback, useEffect, useRef, type ElementRef } from 'react';
 import { createPortal } from 'react-dom';
 
 interface ModalProps {

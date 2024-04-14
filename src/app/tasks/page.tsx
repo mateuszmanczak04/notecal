@@ -1,4 +1,4 @@
-import Button from '@/components/Button';
+import { Button } from '@/components/ui/button';
 import { auth } from '@/utils/auth';
 import { redirect } from 'next/navigation';
 
@@ -30,7 +30,7 @@ const Task = ({
 					{date}
 				</p>
 			</div>
-			<Button variant='primary' size='small' className='mt-2 w-full'>
+			<Button size='sm' className='mt-2 w-full'>
 				Done
 			</Button>
 		</div>
@@ -88,7 +88,7 @@ const page = async () => {
 		<div className='p-4'>
 			<h1 className='text-2xl font-bold'>Your Tasks To Do:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
-				<Button variant='secondary' size='large' className='w-full'>
+				<Button variant='secondary' size='lg' className='w-full'>
 					+ Add Task
 				</Button>
 				{TASKS.map(task => (

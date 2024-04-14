@@ -1,9 +1,9 @@
 'use client';
 
-import Button, { type ButtonProps } from './Button';
-import { FC, forwardRef } from 'react';
+import { Button, type ButtonProps } from '@/components/ui/button';
 import cn from '@/utils/cn';
 import { useRouter } from 'next/navigation';
+import { FC, forwardRef } from 'react';
 
 export interface GoBackButtonProps extends ButtonProps {}
 

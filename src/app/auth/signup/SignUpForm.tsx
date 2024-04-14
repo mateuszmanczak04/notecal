@@ -1,8 +1,8 @@
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
-import Button from '../../../components/Button';
-import Input from '../../../components/Input';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import signup from '@/actions/signup';
 import { useRouter } from 'next/navigation';
 
@@ -57,12 +57,7 @@ const SignUpForm = () => {
 					className='mt-1 w-full'
 				/>
 			</div>
-			<Button
-				type='submit'
-				aria-disabled={pending}
-				className='w-full'
-				variant='primary'
-				size='medium'>
+			<Button type='submit' aria-disabled={pending} className='w-full'>
 				Create An Account
 			</Button>
 			{errorMessage && (

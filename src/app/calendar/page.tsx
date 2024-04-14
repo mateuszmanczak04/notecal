@@ -1,4 +1,4 @@
-import Button from '@/components/Button';
+import { Button } from '@/components/ui/button';
 import { auth } from '@/utils/auth';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { redirect } from 'next/navigation';
@@ -49,13 +49,13 @@ const page = async () => {
 				{/* +, <, > */}
 				<div className='flex gap-2'>
 					{/* <button className='bg-primary hover:bg-primary/90 h-8 w-16 rounded-md font-semibold text-white transition'></button> */}
-					<Button size='small' variant='primary' className='w-16'>
+					<Button size='sm' className='w-16'>
 						<Plus className='h-full w-full' />
 					</Button>
-					<Button size='small' variant='secondary' className='w-16'>
+					<Button size='sm' variant='secondary' className='w-16'>
 						<ChevronLeft className='h-full w-full' />
 					</Button>
-					<Button size='small' variant='secondary' className='w-16'>
+					<Button size='sm' variant='secondary' className='w-16'>
 						<ChevronRight className='h-full w-full' />
 					</Button>
 				</div>

@@ -1,9 +1,9 @@
 'use client';
 
-import { FC } from 'react';
-import Input from './Input';
-import SubmitButton from './SubmitButton';
 import renameCourse from '@/actions/renameCourse';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { FC } from 'react';
 import { useFormState } from 'react-dom';
 import ResultMessage from './ResultMessage';
 
@@ -30,7 +30,7 @@ const RenameCourse: FC<RenameCourseProps> = ({ id, name }) => {
 				defaultValue={name}
 				className='mt-1 w-full'
 			/>
-			<SubmitButton className='mt-2 w-full'>Save</SubmitButton>
+			<Button className='mt-2 w-full'>Save</Button>
 			{result && <ResultMessage result={result} />}
 		</form>
 	);

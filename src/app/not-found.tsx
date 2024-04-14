@@ -1,15 +1,13 @@
-import { buttonVariants } from '@/components/Button';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 const notFound = () => {
 	return (
 		<div className='mx-auto text-center'>
 			<p>This page does not exist</p>
-			<Link
-				href='/'
-				className={buttonVariants({ variant: 'primary', size: 'large' })}>
-				Go Back to Home
-			</Link>
+			<Button asChild size='lg'>
+				<Link href='/'>Go Back to Home</Link>
+			</Button>
 		</div>
 	);
 };

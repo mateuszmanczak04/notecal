@@ -1,5 +1,5 @@
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { buttonVariants } from './Button';
 
 const NavUnauthenticated = () => {
 	return (
@@ -7,15 +7,9 @@ const NavUnauthenticated = () => {
 			<Link href='/' className='text-2xl font-bold'>
 				NoteCal
 			</Link>
-			<Link
-				href='/auth/signup'
-				className={buttonVariants({
-					variant: 'secondary',
-					size: 'medium',
-					className: 'leading-10',
-				})}>
-				Sign Up
-			</Link>
+			<Button asChild className='leading-10' variant='secondary'>
+				<Link href='/auth/signup'>Sign Up</Link>
+			</Button>
 		</div>
 	);
 };

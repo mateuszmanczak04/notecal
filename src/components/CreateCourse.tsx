@@ -1,9 +1,9 @@
 'use client';
 
-import Input from './Input';
 import createCourse from '@/actions/createCourse';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { useFormState } from 'react-dom';
-import SubmitButton from './SubmitButton';
 import ResultMessage from './ResultMessage';
 
 const CreateCourse = () => {
@@ -42,7 +42,7 @@ const CreateCourse = () => {
 						className='mt-1 w-full'
 					/>
 				</div>
-				<SubmitButton>Create a New Course</SubmitButton>
+				<Button>Create a New Course</Button>
 				{result && <ResultMessage result={result} />}
 			</form>
 		</div>

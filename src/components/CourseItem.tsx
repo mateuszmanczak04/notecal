@@ -1,7 +1,7 @@
+import { Button } from '@/components/ui/button';
 import { Pencil } from 'lucide-react';
-import { buttonVariants } from './Button';
-import { FC } from 'react';
 import Link from 'next/link';
+import { FC } from 'react';
 
 interface CourseItemProps {
 	name: string;
@@ -17,25 +17,21 @@ const CourseItem: FC<CourseItemProps> = ({ name, teacher, id }) => {
 			<p>{name}</p>
 			<p className='text-sm font-normal text-gray-500'>{teacher}</p>
 			<div className='mt-2 flex w-full justify-between gap-2'>
-				<Link
-					href={`/courses/notes?id=${id}`}
-					className={buttonVariants({
-						variant: 'primary',
-						size: 'small',
-						className: 'flex flex-1 items-center justify-center gap-1',
-					})}>
-					Notes
-				</Link>
-				<Link
-					href={`/courses/edit?id=${id}`}
-					className={buttonVariants({
-						variant: 'secondary',
-						size: 'small',
-						className: 'flex flex-1 items-center justify-center gap-1',
-					})}>
-					<Pencil className='h-4 w-4' />
-					Edit
-				</Link>
+				<Button
+					asChild
+					className='flex flex-1 items-center justify-center gap-1'
+					size='sm'>
+					<Link href={`/courses/notes?id=${id}`}>Notes</Link>
+				</Button>
+				<Button
+					asChild
+					className='flex flex-1 items-center justify-center gap-1'
+					size='sm'>
+					<Link href={`/courses/edit?id=${id}`}>
+						<Pencil className='h-4 w-4' />
+						Edit
+					</Link>
+				</Button>
 			</div>
 		</div>
 	);

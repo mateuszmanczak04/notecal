@@ -1,10 +1,10 @@
 'use client';
 
-import { FC } from 'react';
-import SubmitButton from './SubmitButton';
-import Input from './Input';
-import { useFormState } from 'react-dom';
 import updateTeacher from '@/actions/updateTeacher';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { FC } from 'react';
+import { useFormState } from 'react-dom';
 import ResultMessage from './ResultMessage';
 
 interface UpdateTeacherProps {
@@ -29,7 +29,7 @@ const UpdateTeacher: FC<UpdateTeacherProps> = ({ id, teacher = '' }) => {
 				defaultValue={teacher}
 				className='mt-1 w-full'
 			/>
-			<SubmitButton className='mt-2 w-full'>Save</SubmitButton>
+			<Button className='mt-2 w-full'>Save</Button>
 			{result && <ResultMessage result={result} />}
 		</form>
 	);

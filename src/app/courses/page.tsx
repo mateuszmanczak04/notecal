@@ -1,5 +1,5 @@
-import { buttonVariants } from '@/components/Button';
 import CourseItem from '@/components/CourseItem';
+import { Button } from '@/components/ui/button';
 import CourseModel from '@/models/Course';
 import dbConnect from '@/utils/dbConnect';
 import { Plus } from 'lucide-react';
@@ -14,15 +14,15 @@ const page = async () => {
 		<>
 			<h1 className='text-2xl font-bold'>Your Courses:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
-				<Link
-					href='/courses/create'
-					className={buttonVariants({
-						variant: 'secondary',
-						size: 'large',
-						className: 'flex items-center justify-center gap-1 font-semibold',
-					})}>
-					<Plus className='h-6 w-6' /> Create a New Course
-				</Link>
+				<Button
+					asChild
+					variant='secondary'
+					size='lg'
+					className='flex items-center justify-center gap-1 font-semibold'>
+					<Link href='/courses/create'>
+						<Plus className='h-6 w-6' /> Create a New Course
+					</Link>
+				</Button>
 				{courses.map(course => (
 					<CourseItem
 						key={course._id}

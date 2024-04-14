@@ -1,4 +1,4 @@
-import Button from '@/components/Button';
+import { Button } from '@/components/ui/button';
 import { auth } from '@/utils/auth';
 import { redirect } from 'next/navigation';
 
@@ -23,7 +23,7 @@ const Task = ({
 					{date}
 				</p>
 			</div>
-			<Button variant='primary' className='mt-2' size='small'>
+			<Button className='mt-2' size='sm'>
 				Done
 			</Button>
 		</div>
@@ -129,19 +129,19 @@ const page = async () => {
 				{/* lessons: */}
 				<div className='flex flex-col gap-2'>
 					<p className='text-xl font-semibold'>Lessons:</p>
-					<Button variant='secondary' size='small'>
+					<Button variant='secondary' size='sm'>
 						Mon 03.03.2024
 					</Button>
-					<Button variant='secondary' size='small'>
+					<Button variant='secondary' size='sm'>
 						Mon 10.03.2024
 					</Button>
-					<Button variant='secondary' size='small'>
+					<Button variant='secondary' size='sm'>
 						Mon 17.03.2024
 					</Button>
-					<Button variant='primary' size='small'>
+					<Button variant='default' size='sm'>
 						Mon 24.03.2024
 					</Button>
-					<Button variant='secondary' size='small'>
+					<Button variant='secondary' size='sm'>
 						Tue 25.03.2024
 					</Button>
 				</div>
@@ -151,9 +151,7 @@ const page = async () => {
 					{TASKS.map(task => (
 						<Task key={task.id} {...task} />
 					))}
-					<Button variant='primary' size='medium'>
-						+ Create a new task
-					</Button>
+					<Button>+ Create a new task</Button>
 				</div>
 				<div className='flex flex-col gap-2'>
 					<p className='text-xl font-semibold'>Teacher:</p>

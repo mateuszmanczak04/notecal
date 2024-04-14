@@ -1,5 +1,4 @@
-import Button from '@/components/Button';
-import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
 	return (
@@ -12,7 +11,7 @@ export default function Home() {
 				Are you tired of grouping your university notes by a specific course
 				lesson or date? NoteCal has been made to decrease your fatigue.
 			</p>
-			<Button size='large' variant='primary' className='mt-8 w-full sm:w-fit'>
+			<Button size='lg' className='mt-8 w-full sm:w-fit'>
 				Click Here to Learn More
 			</Button>
 		</div>

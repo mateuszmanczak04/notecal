@@ -1,8 +1,8 @@
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
-import Button from '../../../components/Button';
-import Input from '../../../components/Input';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import authenticate from '@/actions/authenticate';
 import { useRouter } from 'next/navigation';
 
@@ -48,8 +48,7 @@ const SignInForm = () => {
 				type='submit'
 				aria-disabled={pending}
 				className='w-full'
-				variant='primary'
-				size='medium'>
+			>
 				Log In to Your Account
 			</Button>
 			{errorMessage && (

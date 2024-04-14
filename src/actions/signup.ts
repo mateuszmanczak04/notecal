@@ -1,9 +1,9 @@
 'use server';
 
-import dbConnect from '@/utils/dbConnect';
-import authenticate from './authenticate';
 import User from '@/models/User';
+import dbConnect from '@/utils/dbConnect';
 import bcrypt from 'bcryptjs';
+import authenticate from './authenticate';
 
 const signup = async (_currentState: unknown, formData: FormData) => {
 	try {
