@@ -20,7 +20,7 @@ interface CourseItemProps {
 // It just has 2 links to the notes page and the edit page
 const CourseItem: FC<CourseItemProps> = ({ name, teacher, id }) => {
 	return (
-		<Card>
+		<Card className='shadow-none'>
 			<CardHeader>
 				<CardTitle>{name}</CardTitle>
 				<CardDescription>{teacher}</CardDescription>
