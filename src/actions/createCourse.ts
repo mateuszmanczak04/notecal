@@ -1,15 +1,22 @@
 'use server';
 
 import Course from '@/models/Course';
+import { CreateCourseFormSchema } from '@/schemas';
 import dbConnect from '@/utils/dbConnect';
 import { redirect } from 'next/navigation';
+import { z } from 'zod';
 
-const createCourse = async (_currentState: unknown, fd: FormData) => {
-	const name = fd.get('name');
-	const teacher = fd.get('teacher');
+const createCourse = async (values: z.infer<typeof CreateCourseFormSchema>) => {
+	const validatedFields = CreateCourseFormSchema.safeParse(values);
+
+	if (!validatedFields.success) {
+		return { error: 'Invalid fields.' };
+	}
+
+	const { name, teacher } = validatedFields.data;
 
 	if (!name) {
-		throw new Error('Course name is required');
+		return { error: 'Course name is required.' };
 	}
 
 	try {
@@ -20,7 +27,7 @@ const createCourse = async (_currentState: unknown, fd: FormData) => {
 			teacher,
 		});
 	} catch (error: any) {
-		return { status: 'error', message: 'Something went wrong' };
+		return { error: 'Something went wrong' };
 	}
 
 	redirect('/courses');
