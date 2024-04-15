@@ -3,12 +3,10 @@
 import { Button, type ButtonProps } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
-import { FC, forwardRef } from 'react';
-
-export interface GoBackButtonProps extends ButtonProps {}
+import { forwardRef } from 'react';
 
 // It is a button which extends the Button component
-const GoBackButton: FC<GoBackButtonProps> = forwardRef(
+const GoBackButton = forwardRef<HTMLButtonElement, ButtonProps>(
 	({ children, className, size, variant, ...props }, ref) => {
 		const router = useRouter();
 

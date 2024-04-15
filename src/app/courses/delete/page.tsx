@@ -1,5 +1,7 @@
 import DeleteCourse from '@/components/DeleteCourse';
-import GoBackButton from '@/components/GoBackButton';
+import GoBackButton from '@/components/go-back-button';
+import { Button } from '@/components/ui/button';
+import { MoveLeft } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';
 
@@ -22,7 +24,8 @@ const page: FC<pageProps> = ({ searchParams }) => {
 				Are you sure you want to delete this course? <strong>{name}</strong>
 			</p>
 			<div className='mt-4 flex items-center gap-2'>
-				<GoBackButton variant='secondary' className='flex-1'>
+				<GoBackButton variant='secondary' className='flex-1 gap-1 shadow-none'>
+					<MoveLeft className='h-5 w-5' />
 					Cancel
 				</GoBackButton>
 				<DeleteCourse id={id} className='flex-1' />
