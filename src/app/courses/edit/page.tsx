@@ -6,13 +6,9 @@ import { FC } from 'react';
 
 interface EditCoursePageProps {
 	searchParams?: { [key: string]: string | string[] | undefined };
-	params?: { [key: string]: string | undefined };
 }
 
-const EditCoursePage: FC<EditCoursePageProps> = async ({
-	searchParams,
-	params,
-}) => {
+const EditCoursePage: FC<EditCoursePageProps> = async ({ searchParams }) => {
 	const id = searchParams?.id;
 
 	if (!id || typeof id !== 'string') {
@@ -22,8 +18,6 @@ const EditCoursePage: FC<EditCoursePageProps> = async ({
 	await dbConnect();
 
 	const course = await Course.findOne({ _id: id });
-
-	console.log(course);
 
 	return (
 		<EditCourse

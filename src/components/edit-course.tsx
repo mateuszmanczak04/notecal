@@ -34,7 +34,6 @@ interface EditCourseProps {
 const EditCourse: FC<EditCourseProps> = ({ course }) => {
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState('');
-	const router = useRouter();
 	const form = useForm<z.infer<typeof EditCourseFormSchema>>({
 		resolver: zodResolver(EditCourseFormSchema),
 		defaultValues: {
@@ -94,8 +93,7 @@ const EditCourse: FC<EditCourseProps> = ({ course }) => {
 			</Form>
 			<Separator className='my-8' />
 			<Button asChild variant='destructive' className='w-full gap-1'>
-				<Link
-					href={`/courses/delete?id=${course.id}&name=${'todo - put the name here'}`}>
+				<Link href={`/courses/delete?id=${course.id}&name=${course.name}`}>
 					<Trash2 className='h-4 w-4' />
 					Delete Course
 				</Link>
