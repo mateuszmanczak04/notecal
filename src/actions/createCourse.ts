@@ -19,6 +19,10 @@ const createCourse = async (values: z.infer<typeof CreateCourseFormSchema>) => {
 		return { error: 'Course name is required.' };
 	}
 
+	if (!teacher) {
+		return { error: 'Course teacher is required.' };
+	}
+
 	try {
 		await dbConnect();
 
