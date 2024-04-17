@@ -30,6 +30,8 @@ const createCourse = async (values: z.infer<typeof CreateCourseFormSchema>) => {
 			return { error: 'Unauthenticated.' };
 		}
 
+		console.log(session);
+
 		await db.course.create({
 			data: {
 				userId: session.user.id,
