@@ -1,6 +1,6 @@
 import { auth } from '@/auth';
 import NavAuthenticated from '@/components/nav-authenticated';
-import NavUnauthenticated from '@/components/nav-unauthenticated';
+import NavUnauthenticated from '@/components/_nav-unauthenticated';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
@@ -13,7 +13,6 @@ export const metadata: Metadata = {
 	title: 'NoteCal - Organize Your Notes',
 	description:
 		'A productivity app which was made to keep your school notes organised based on lesson.',
-
 };
 
 export default async function RootLayout({
@@ -25,9 +24,9 @@ export default async function RootLayout({
 
 	return (
 		<html lang='en'>
-			<body className={cn(inter.className, 'pt-16')}>
+			<body className={cn(inter.className, session ? 'pt-16' : 'pt-8')}>
 				<SessionProvider>
-					{session ? <NavAuthenticated /> : <NavUnauthenticated />}
+					{session && <NavAuthenticated />}
 					{children}
 					{/* a root for displaying modals on top of the page */}
 					<div id='modal-root'></div>
