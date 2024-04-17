@@ -1,6 +1,6 @@
 'use client';
 
-import editCourse from '@/actions/editCourse';
+import editCourse from '@/actions/edit-course';
 import { Button } from '@/components/ui/button';
 import {
 	Form,

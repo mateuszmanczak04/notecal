@@ -1,6 +1,6 @@
 'use client';
 
-import deleteCourse from '@/actions/deleteCourse';
+import deleteCourse from '@/actions/delete-course';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { FC } from 'react';

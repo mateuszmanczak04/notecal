@@ -1,6 +1,6 @@
 import { auth } from '@/auth';
-import NavAuthenticated from '@/components/NavAuthenticated';
-import NavUnauthenticated from '@/components/NavUnauthenticated';
+import NavAuthenticated from '@/components/nav-authenticated';
+import NavUnauthenticated from '@/components/nav-unauthenticated';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 	title: 'NoteCal - Organize Your Notes',
 	description:
 		'A productivity app which was made to keep your school notes organised based on lesson.',
-		
+
 };
 
 export default async function RootLayout({

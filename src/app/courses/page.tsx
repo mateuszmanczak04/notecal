@@ -1,4 +1,4 @@
-import CourseItem from '@/components/CourseItem';
+import CourseItem from '@/components/course-item';
 import { Button } from '@/components/ui/button';
 import { db } from '@/lib/db';
 import { Plus } from 'lucide-react';
