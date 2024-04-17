@@ -1,3 +1,4 @@
+import { auth } from '@/auth';
 import CourseItem from '@/components/course-item';
 import { Button } from '@/components/ui/button';
 import { db } from '@/lib/db';
@@ -5,7 +6,12 @@ import { Plus } from 'lucide-react';
 import Link from 'next/link';
 
 const page = async () => {
-	const courses = await db.course.findMany();
+	const session = await auth();
+	const courses = await db.course.findMany({
+		where: {
+			userId: session?.user?.id,
+		},
+	});
 
 	return (
 		<>
