@@ -1,7 +1,10 @@
+import { auth } from '@/auth';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-export default function Home() {
+export default async function Home() {
+	const session = await auth();
+
 	return (
 		<div className='mx-auto mt-16 w-[600px] max-w-[calc(100%-32px)] items-center text-center'>
 			<p className='text-xl font-semibold sm:text-2xl'>NoteCal</p>
@@ -13,7 +16,9 @@ export default function Home() {
 				lesson or date? NoteCal has been made to decrease your fatigue.
 			</p>
 			<Button size='lg' className='mt-8 w-full sm:w-fit' asChild>
-				<Link href='/auth/register'>Click Here to Join</Link>
+				<Link href='/auth/register'>
+					{session ? 'Go back to the dashboard' : 'Click Here to Join'}
+				</Link>
 			</Button>
 		</div>
 	);
