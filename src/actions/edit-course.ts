@@ -1,5 +1,6 @@
 'use server';
 
+import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { EditCourseFormSchema } from '@/schemas';
 import { redirect } from 'next/navigation';
@@ -27,10 +28,10 @@ const editCourse = async (values: z.infer<typeof EditCourseFormSchema>) => {
 	}
 
 	try {
-		// todo - check if user is authorized
+		const session = await auth();
 
 		await db.course.update({
-			where: { id },
+			where: { id, userId: session?.user?.id },
 			data: { name: newName, teacher: newTeacher },
 		});
 	} catch (error: any) {
