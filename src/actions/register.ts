@@ -37,7 +37,6 @@ const register = async (values: z.infer<typeof RegisterSchema>) => {
 
 		// todo - verification token
 	} catch (error: any) {
-		console.log(error);
 		return { error: 'Something went wrong.' };
 	}
 
