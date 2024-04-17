@@ -13,7 +13,7 @@ export default function Home() {
 				lesson or date? NoteCal has been made to decrease your fatigue.
 			</p>
 			<Button size='lg' className='mt-8 w-full sm:w-fit' asChild>
-				<Link href='/register'>Click Here to Join</Link>
+				<Link href='/auth/register'>Click Here to Join</Link>
 			</Button>
 		</div>
 	);
