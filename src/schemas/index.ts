@@ -1,5 +1,21 @@
 import { z } from 'zod';
 
+export const RegisterSchema = z
+	.object({
+		email: z.string().email({ message: 'Email is required.' }),
+		password: z.string().min(6, { message: 'Minimum 6 characters.' }),
+		confirmPassword: z.string().min(6, { message: 'Minimum 6 characters.' }),
+	})
+	.refine(data => data.password === data.confirmPassword, {
+		message: "Passwords don't match.",
+		path: ['confirmPassword'],
+	});
+
+export const LoginSchema = z.object({
+	email: z.string().email({ message: 'Email is required.' }),
+	password: z.string().min(1, { message: 'Password is required.' }),
+});
+
 export const CreateCourseFormSchema = z.object({
 	name: z.string().min(1, { message: 'Course name is required.' }).max(30, {
 		message: 'Maximum length of the course name is 30 characters.',

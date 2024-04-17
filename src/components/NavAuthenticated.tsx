@@ -1,6 +1,6 @@
 'use client';
 
-import SignOut from '@/app/auth/SignOut';
+import Logout from '@/components/auth/logout';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 import Link from 'next/link';
@@ -49,7 +49,7 @@ const NavAuthenticated = () => {
 								Courses
 							</Link>
 						</Button>
-						<SignOut variant='default' />
+						<Logout variant='default' />
 					</div>
 				)}
 			</div>
@@ -68,7 +68,7 @@ const NavAuthenticated = () => {
 					<Button asChild className='leading-10'>
 						<Link href='/courses'>Courses</Link>
 					</Button>
-					<SignOut variant='secondary' />
+					<Logout variant='secondary' />
 				</div>
 			</div>
 		</>

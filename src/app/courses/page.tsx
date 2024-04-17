@@ -1,27 +1,26 @@
 import CourseItem from '@/components/CourseItem';
 import { Button } from '@/components/ui/button';
-import CourseModel from '@/models/Course';
-import dbConnect from '@/utils/dbConnect';
+import { db } from '@/lib/db';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 
 const page = async () => {
-	await dbConnect();
-
-	const courses = await CourseModel.find({});
+	const courses = await db.course.findMany();
 
 	return (
 		<>
 			<h1 className='text-2xl font-bold'>Your Courses:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
-				{courses.map(course => (
-					<CourseItem
-						key={course._id}
-						id={course._id.toString()}
-						name={course.name}
-						teacher={course.teacher}
-					/>
-				))}
+				{courses &&
+					courses.length > 0 &&
+					courses.map(course => (
+						<CourseItem
+							key={course.id}
+							id={course.id}
+							name={course.name}
+							teacher={course.teacher}
+						/>
+					))}
 				{!courses.length && (
 					<p className='text-lg text-gray-500'>
 						You don&apos;t have any courses yet.

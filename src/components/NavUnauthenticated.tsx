@@ -8,7 +8,7 @@ const NavUnauthenticated = () => {
 				NoteCal
 			</Link>
 			<Button asChild className='leading-10' variant='secondary'>
-				<Link href='/auth/signup'>Sign Up</Link>
+				<Link href='/auth/register'>Register</Link>
 			</Button>
 		</div>
 	);

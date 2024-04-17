@@ -1,5 +1,5 @@
+import { auth } from '@/auth';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/utils/auth';
 import { redirect } from 'next/navigation';
 
 const Task = ({
@@ -75,7 +75,7 @@ const TASKS = [
 
 const page = async () => {
 	const session = await auth();
-	if (!session) redirect('/auth/signup');
+	if (!session) redirect('/auth/register');
 
 	return (
 		<div className='flex w-full min-w-[800px] gap-4 p-4'>

@@ -1,6 +1,5 @@
 import EditCourse from '@/components/edit-course';
-import Course from '@/models/Course';
-import dbConnect from '@/utils/dbConnect';
+import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';
 
@@ -15,13 +14,19 @@ const EditCoursePage: FC<EditCoursePageProps> = async ({ searchParams }) => {
 		redirect('/courses');
 	}
 
-	await dbConnect();
+	const course = await db.course.findUnique({
+		where: {
+			id,
+		},
+	});
 
-	const course = await Course.findOne({ _id: id });
+	if (!course) {
+		redirect('/courses');
+	}
 
 	return (
 		<EditCourse
-			course={{ id: course._id, name: course.name, teacher: course.teacher }}
+			course={{ id: course.id, name: course.name, teacher: course.teacher }}
 		/>
 	);
 };

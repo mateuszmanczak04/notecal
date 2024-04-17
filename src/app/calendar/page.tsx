@@ -1,5 +1,5 @@
+import { auth } from '@/auth';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/utils/auth';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { redirect } from 'next/navigation';
 
@@ -40,7 +40,7 @@ const GridRect = ({ last = false }: { last?: boolean }) => {
 
 const page = async () => {
 	const session = await auth();
-	if (!session) redirect('/auth/signup');
+	if (!session) redirect('/auth/register');
 
 	return (
 		<div className='w-full min-w-[800px] p-4'>

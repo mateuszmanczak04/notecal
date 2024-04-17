@@ -1,7 +1,7 @@
+import { auth } from '@/auth';
 import TaskItem from '@/components/task-item';
 import { Button } from '@/components/ui/button';
 import { type Task } from '@/types';
-import { auth } from '@/utils/auth';
 import { Plus } from 'lucide-react';
 import { redirect } from 'next/navigation';
 
@@ -50,7 +50,7 @@ const TASKS: Task[] = [
 
 const page = async () => {
 	const session = await auth();
-	if (!session) redirect('/auth/signup');
+	if (!session) redirect('/auth/register');
 
 	return (
 		<div className='p-4'>

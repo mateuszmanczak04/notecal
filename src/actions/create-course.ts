@@ -1,8 +1,8 @@
 'use server';
 
-import Course from '@/models/Course';
+import { auth } from '@/auth';
+import { db } from '@/lib/db';
 import { CreateCourseFormSchema } from '@/schemas';
-import dbConnect from '@/utils/dbConnect';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
@@ -24,11 +24,18 @@ const createCourse = async (values: z.infer<typeof CreateCourseFormSchema>) => {
 	}
 
 	try {
-		await dbConnect();
+		const session = await auth();
 
-		await Course.create({
-			name,
-			teacher,
+		if (!session?.user?.id) {
+			return { error: 'Unauthenticated.' };
+		}
+
+		await db.course.create({
+			data: {
+				userId: session.user.id,
+				name,
+				teacher,
+			},
 		});
 	} catch (error: any) {
 		return { error: 'Something went wrong' };

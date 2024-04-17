@@ -1,7 +1,7 @@
+import { auth } from '@/auth';
 import NavAuthenticated from '@/components/NavAuthenticated';
 import NavUnauthenticated from '@/components/NavUnauthenticated';
 import { cn } from '@/lib/utils';
-import { auth } from '@/utils/auth';
 import type { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
 import { Inter } from 'next/font/google';

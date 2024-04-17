@@ -1,10 +1,7 @@
 'use server';
 
-import Course from '@/models/Course';
+import { db } from '@/lib/db';
 import { EditCourseFormSchema } from '@/schemas';
-import dbConnect from '@/utils/dbConnect';
-import mongoose from 'mongoose';
-import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
@@ -30,17 +27,13 @@ const editCourse = async (values: z.infer<typeof EditCourseFormSchema>) => {
 	}
 
 	try {
-		await dbConnect();
+		// todo - check if user is authorized
 
-		await Course.findOneAndUpdate(
-			{
-				_id: id,
-			},
-			{ name: newName, teacher: newTeacher },
-			{ new: true },
-		).then(res => console.log('res', res));
+		await db.course.update({
+			where: { id },
+			data: { name: newName, teacher: newTeacher },
+		});
 	} catch (error: any) {
-		console.log(error);
 		return { error: 'Something went wrong.' };
 	}
 
