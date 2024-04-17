@@ -23,6 +23,14 @@ export const {
 		strategy: 'jwt', // "Signing in with credentials only supported if JWT strategy is enabled .Read more at https://errors.authjs.dev#unsupportedstrategy"
 	},
 	adapter: PrismaAdapter(prisma),
+	callbacks: {
+		session({ session, token }) {
+			if (session.user && token.sub) {
+				session.user.id = token.sub;
+			}
+			return session;
+		},
+	},
 	providers: [
 		credentials({
 			async authorize(credentials) {
