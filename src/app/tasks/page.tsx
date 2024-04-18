@@ -54,17 +54,21 @@ const page = async () => {
 	if (!session) redirect('/auth/register');
 
 	return (
-		<div className='p-4'>
+		<div>
 			<h1 className='text-2xl font-bold'>Your Tasks To Do:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
-				<Button variant='secondary' size='lg' className='w-full' asChild>
-					<Link href='/tasks/create'>
-						<Plus className='h-6 w-6' /> Add Task
-					</Link>
-				</Button>
 				{TASKS.map(task => (
 					<TaskItem key={task.id} {...task} />
 				))}
+				<Button
+					asChild
+					variant='secondary'
+					size='lg'
+					className='flex items-center justify-center gap-1 font-semibold'>
+					<Link href='/courses/create'>
+						<Plus className='h-6 w-6' /> Create a New Task
+					</Link>
+				</Button>
 			</div>
 		</div>
 	);
