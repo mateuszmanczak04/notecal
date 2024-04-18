@@ -1,6 +1,7 @@
 'use client';
 
 import createCourse from '@/actions/create-course';
+import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -84,7 +85,11 @@ const CreateCourse = () => {
 					<div className='flex w-full justify-center'>
 						{isPending && <ClipLoader className='mx-auto' />}
 					</div>
-					{/* todo - display potential error */}
+					{error && (
+						<Alert variant='destructive'>
+							<AlertTitle className='mb-0'>{error}</AlertTitle>
+						</Alert>
+					)}
 				</form>
 			</Form>
 		</div>

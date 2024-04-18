@@ -1,5 +1,6 @@
 'use client';
 
+import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -230,7 +231,11 @@ const CreateTask: FC<CreateTaskProps> = ({ courses }) => {
 					<div className='flex w-full justify-center'>
 						{isPending && <ClipLoader className='mx-auto' />}
 					</div>
-					{/* todo - display potential error */}
+					{error && (
+						<Alert variant='destructive'>
+							<AlertTitle className='mb-0'>{error}</AlertTitle>
+						</Alert>
+					)}
 				</form>
 			</Form>
 		</div>

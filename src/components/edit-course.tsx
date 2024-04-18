@@ -1,6 +1,7 @@
 'use client';
 
 import editCourse from '@/actions/edit-course';
+import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -17,7 +18,6 @@ import { EditCourseFormSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { FC, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { ClipLoader } from 'react-spinners';
@@ -88,7 +88,11 @@ const EditCourse: FC<EditCourseProps> = ({ course }) => {
 						{isPending && <ClipLoader size={20} color='foreground' />} Save
 						changes
 					</Button>
-					{/* todo - display potential error */}
+					{error && (
+						<Alert variant='destructive'>
+							<AlertTitle className='mb-0'>{error}</AlertTitle>
+						</Alert>
+					)}
 				</form>
 			</Form>
 			<Separator className='my-8' />
