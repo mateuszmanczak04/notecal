@@ -24,10 +24,10 @@ export default async function RootLayout({
 
 	return (
 		<html lang='en'>
-			<body className={cn(inter.className, session ? 'pt-16' : 'pt-8')}>
+			<body className={cn(inter.className)}>
 				<SessionProvider>
 					{session && <NavAuthenticated />}
-					{children}
+					<div className='pt-16'>{children}</div>
 					{/* a root for displaying modals on top of the page */}
 					<div id='modal-root'></div>
 				</SessionProvider>
