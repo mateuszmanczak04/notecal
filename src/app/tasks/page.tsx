@@ -3,6 +3,7 @@ import TaskItem from '@/components/task-item';
 import { Button } from '@/components/ui/button';
 import { type Task } from '@/types';
 import { Plus } from 'lucide-react';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 const TASKS: Task[] = [
@@ -56,8 +57,10 @@ const page = async () => {
 		<div className='p-4'>
 			<h1 className='text-2xl font-bold'>Your Tasks To Do:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
-				<Button variant='secondary' size='lg' className='w-full'>
-					<Plus className='h-6 w-6' /> Add Task
+				<Button variant='secondary' size='lg' className='w-full' asChild>
+					<Link href='/tasks/create'>
+						<Plus className='h-6 w-6' /> Add Task
+					</Link>
 				</Button>
 				{TASKS.map(task => (
 					<TaskItem key={task.id} {...task} />

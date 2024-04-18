@@ -1,6 +1,6 @@
 import { auth } from '@/auth';
-import NavAuthenticated from '@/components/nav-authenticated';
 import NavUnauthenticated from '@/components/_nav-unauthenticated';
+import NavAuthenticated from '@/components/nav-authenticated';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
