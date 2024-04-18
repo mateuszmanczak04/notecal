@@ -65,7 +65,7 @@ const page = async () => {
 					variant='secondary'
 					size='lg'
 					className='flex items-center justify-center gap-1 font-semibold'>
-					<Link href='/courses/create'>
+					<Link href='/tasks/create'>
 						<Plus className='h-6 w-6' /> Create a New Task
 					</Link>
 				</Button>
