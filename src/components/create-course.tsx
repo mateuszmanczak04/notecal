@@ -36,7 +36,7 @@ const CreateCourse = () => {
 		setError('');
 		startTransition(() => {
 			createCourse(values).then(res => {
-				if (res.error) {
+				if (res?.error) {
 					setError(res.error);
 				}
 			});

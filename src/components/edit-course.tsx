@@ -47,7 +47,7 @@ const EditCourse: FC<EditCourseProps> = ({ course }) => {
 		setError('');
 		startTransition(() => {
 			editCourse(values).then(res => {
-				if (res.error) {
+				if (res?.error) {
 					setError(res.error);
 				}
 			});

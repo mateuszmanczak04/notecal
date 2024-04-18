@@ -61,7 +61,7 @@ const CreateTask: FC<CreateTaskProps> = ({ courses }) => {
 		setError('');
 		startTransition(() => {
 			createTask(values).then(res => {
-				if (res.error) {
+				if (res?.error) {
 					setError(res.error);
 				}
 			});
