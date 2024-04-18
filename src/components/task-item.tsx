@@ -9,7 +9,15 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { type Task } from '@/types';
 
-const TaskItem = ({ title, description, course, priority, date }: Task) => {
+const TaskItem = ({
+	title,
+	description,
+	courseName,
+	priority,
+	dueDate,
+	completed,
+	id,
+}: Task) => {
 	return (
 		<Card className='shadow-none'>
 			<CardHeader>
@@ -20,19 +28,19 @@ const TaskItem = ({ title, description, course, priority, date }: Task) => {
 				<CardDescription>{description}</CardDescription>
 				<div className='flex items-center gap-1'>
 					<Badge className='pointer-events-none bg-purple-600 shadow-none'>
-						{course}
+						{courseName}
 					</Badge>
 					<Badge
 						className={cn(
 							'pointer-events-none shadow-none',
-							priority === 3 && 'bg-red-500',
-							priority === 2 && 'bg-amber-500',
-							priority === 1 && 'bg-green-500',
+							priority === 'high' && 'bg-red-500',
+							priority === 'medium' && 'bg-amber-500',
+							priority === 'low' && 'bg-green-500',
 						)}>
 						{priority}
 					</Badge>
 					<Badge className='pointer-events-none bg-neutral-200 text-neutral-800 shadow-none'>
-						{date}
+						{dueDate?.toLocaleDateString('en-US')}
 					</Badge>
 				</div>
 			</CardHeader>

@@ -1,8 +1,11 @@
+import { TaskPriority } from '@prisma/client';
+
 export interface Task {
-	id: number;
+	id: string;
 	title: string;
-	description: string;
-	course: string;
-	priority: 1 | 2 | 3;
-	date: string;
+	description?: string | null;
+	courseName: string;
+	priority?: TaskPriority | null;
+	dueDate?: Date | null;
+	completed: boolean;
 }
