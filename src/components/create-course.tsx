@@ -51,7 +51,9 @@ const CreateCourse = () => {
 						name='name'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Name</FormLabel>
+								<FormLabel>
+									Name <span className='text-red-500'>*</span>
+								</FormLabel>
 								<FormControl>
 									<Input placeholder='Computer Science' {...field} />
 								</FormControl>
@@ -65,7 +67,9 @@ const CreateCourse = () => {
 						name='teacher'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Teacher</FormLabel>
+								<FormLabel>
+									Teacher <span className='text-red-500'>*</span>
+								</FormLabel>
 								<FormControl>
 									<Input placeholder='John Doe' {...field} />
 								</FormControl>
