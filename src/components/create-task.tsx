@@ -58,12 +58,13 @@ const CreateTask: FC<CreateTaskProps> = ({ courses }) => {
 	});
 
 	const onSubmit = (values: z.infer<typeof CreateTaskFormSchema>) => {
-		console.log(values);
 		setError('');
 		startTransition(() => {
-			createTask(values)
-				.then(res => console.log(res))
-				.catch(err => console.log(err));
+			createTask(values).then(res => {
+				if (res.error) {
+					setError(res.error);
+				}
+			});
 		});
 	};
 

@@ -34,7 +34,6 @@ const TaskItem = ({
 			if (typeof res.completed === 'boolean') {
 				setCompleted(res.completed);
 			}
-			console.log(res);
 		});
 	};
 

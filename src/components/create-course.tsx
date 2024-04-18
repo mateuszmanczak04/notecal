@@ -35,9 +35,11 @@ const CreateCourse = () => {
 	const onSubmit = (values: z.infer<typeof CreateCourseFormSchema>) => {
 		setError('');
 		startTransition(() => {
-			createCourse(values)
-				.then(res => console.log(res))
-				.catch(err => console.log(err));
+			createCourse(values).then(res => {
+				if (res.error) {
+					setError(res.error);
+				}
+			});
 		});
 	};
 

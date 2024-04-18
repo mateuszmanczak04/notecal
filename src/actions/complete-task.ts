@@ -9,7 +9,6 @@ const completeTask = async (values: z.infer<typeof CompleteTaskSchema>) => {
 	const validatedFields = CompleteTaskSchema.safeParse(values);
 
 	if (!validatedFields.success) {
-		console.log(validatedFields);
 		return { error: 'Invalid fields.' };
 	}
 

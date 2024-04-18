@@ -46,9 +46,11 @@ const EditCourse: FC<EditCourseProps> = ({ course }) => {
 	const onSubmit = (values: z.infer<typeof EditCourseFormSchema>) => {
 		setError('');
 		startTransition(() => {
-			editCourse(values)
-				.then(res => console.log(res))
-				.catch(err => console.log(err));
+			editCourse(values).then(res => {
+				if (res.error) {
+					setError(res.error);
+				}
+			});
 		});
 	};
 
