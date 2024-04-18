@@ -12,6 +12,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 import { CreateCourseFormSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useTransition } from 'react';
@@ -41,6 +42,8 @@ const CreateCoursePage = () => {
 
 	return (
 		<div className='mx-auto max-w-screen-sm p-4'>
+			<h1 className='text-2xl font-semibold'>Create a New Course</h1>
+			<Separator className='mb-6 mt-2' />
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2'>
 					<FormField
