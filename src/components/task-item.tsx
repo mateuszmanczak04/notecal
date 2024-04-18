@@ -1,3 +1,6 @@
+'use client';
+
+import completeTask from '@/actions/complete-task';
 import { Badge } from '@/components/ui/badge';
 import {
 	Card,
@@ -8,6 +11,7 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { type Task } from '@/types';
+import { useOptimistic, useState, useTransition } from 'react';
 
 const TaskItem = ({
 	title,
@@ -15,15 +19,39 @@ const TaskItem = ({
 	courseName,
 	priority,
 	dueDate,
-	completed,
+	completed: done,
 	id,
 }: Task) => {
+	const [completed, setCompleted] = useState<boolean>(done);
+	const [optimisticCompleted, setOptimisticCompleted] =
+		useOptimistic<boolean>(completed);
+	const [isPending, startTransition] = useTransition();
+
+	const onToggle = () => {
+		startTransition(async () => {
+			setOptimisticCompleted(prev => !prev);
+			const res = await completeTask({ id, newValue: !completed });
+			if (typeof res.completed === 'boolean') {
+				setCompleted(res.completed);
+			}
+			console.log(res);
+		});
+	};
+
 	return (
-		<Card className='shadow-none'>
+		<Card
+			className={cn(
+				'shadow-none',
+				isPending && 'pointer-events-none opacity-75',
+			)}>
 			<CardHeader>
 				<CardTitle className='flex items-center gap-2'>
 					<p>{title}</p>
-					<Checkbox className='h-5 w-5 shadow-none' />
+					<Checkbox
+						onClick={onToggle}
+						checked={optimisticCompleted}
+						className='h-5 w-5 shadow-none'
+					/>
 				</CardTitle>
 				<CardDescription>{description}</CardDescription>
 				<div className='flex items-center gap-1'>

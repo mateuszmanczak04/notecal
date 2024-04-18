@@ -56,3 +56,8 @@ export const CreateTaskFormSchema = z.object({
 	dueDate: z.date().optional(),
 	completed: z.boolean().optional(),
 });
+
+export const CompleteTaskSchema = z.object({
+	id: z.string(),
+	newValue: z.boolean(),
+});
