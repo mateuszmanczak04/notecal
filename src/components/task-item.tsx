@@ -52,23 +52,27 @@ const TaskItem = ({
 						className='h-5 w-5 shadow-none'
 					/>
 				</CardTitle>
-				<CardDescription>{description}</CardDescription>
+				{description && <CardDescription>{description}</CardDescription>}
 				<div className='flex items-center gap-1'>
 					<Badge className='pointer-events-none bg-purple-600 shadow-none'>
 						{courseName}
 					</Badge>
-					<Badge
-						className={cn(
-							'pointer-events-none shadow-none',
-							priority === 'high' && 'bg-red-500',
-							priority === 'medium' && 'bg-amber-500',
-							priority === 'low' && 'bg-green-500',
-						)}>
-						{priority}
-					</Badge>
-					<Badge className='pointer-events-none bg-neutral-200 text-neutral-800 shadow-none'>
-						{dueDate?.toLocaleDateString('en-US')}
-					</Badge>
+					{priority && (
+						<Badge
+							className={cn(
+								'pointer-events-none shadow-none',
+								priority === 'high' && 'bg-red-500',
+								priority === 'medium' && 'bg-amber-500',
+								priority === 'low' && 'bg-green-500',
+							)}>
+							{priority}
+						</Badge>
+					)}
+					{dueDate && (
+						<Badge className='pointer-events-none bg-neutral-200 text-neutral-800 shadow-none'>
+							{dueDate?.toLocaleDateString('en-US')}
+						</Badge>
+					)}
 				</div>
 			</CardHeader>
 		</Card>
