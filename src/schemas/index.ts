@@ -1,3 +1,4 @@
+import { TaskPriority } from '@prisma/client';
 import { z } from 'zod';
 
 export const RegisterSchema = z
@@ -36,4 +37,20 @@ export const EditCourseFormSchema = z.object({
 		.max(30, {
 			message: 'Maximum length of the teacher name is 30 characters.',
 		}),
+});
+
+export const CreateTaskFormSchema = z.object({
+	title: z.string().min(1, { message: 'Task title is required.' }).max(60, {
+		message: 'Max length is 60 characters.',
+	}),
+	description: z
+		.string()
+		.max(300, {
+			message: 'Max length is 300 characters',
+		})
+		.optional(),
+	course: z.string().min(1, { message: 'Course is required.' }),
+	priority: z.enum([TaskPriority.high, TaskPriority.medium, TaskPriority.low]),
+	dueDate: z.date().optional(),
+	completed: z.boolean().optional(),
 });
