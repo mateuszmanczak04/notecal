@@ -50,7 +50,9 @@ export const CreateTaskFormSchema = z.object({
 		})
 		.optional(),
 	courseId: z.string().min(1, { message: 'Course is required.' }),
-	priority: z.enum([TaskPriority.high, TaskPriority.medium, TaskPriority.low]),
+	priority: z
+		.enum([TaskPriority.high, TaskPriority.medium, TaskPriority.low])
+		.optional(),
 	dueDate: z.date().optional(),
 	completed: z.boolean().optional(),
 });
