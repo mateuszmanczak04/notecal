@@ -22,6 +22,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   courses   Course[]
+  Task      Task[]
 }
 
 model Account {
@@ -84,4 +85,24 @@ model Course {
   teacher String
   user    User   @relation(fields: [userId], references: [id])
   userId  String
+  Task    Task[]
+}
+
+enum TaskPriority {
+  high
+  medium
+  low
+}
+
+model Task {
+  id          String        @id @default(cuid())
+  title       String
+  description String?
+  completed   Boolean       @default(false)
+  dueDate     DateTime?
+  priority    TaskPriority?
+  user        User          @relation(fields: [userId], references: [id])
+  userId      String
+  course      Course        @relation(fields: [courseId], references: [id])
+  courseId    String
 }
