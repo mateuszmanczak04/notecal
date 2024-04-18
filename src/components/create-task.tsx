@@ -1,5 +1,6 @@
 'use client';
 
+import createTask from '@/actions/create-task';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -58,12 +59,12 @@ const CreateTask: FC<CreateTaskProps> = ({ courses }) => {
 
 	const onSubmit = (values: z.infer<typeof CreateTaskFormSchema>) => {
 		console.log(values);
-		// setError('');
-		// startTransition(() => {
-		// 	createTask(values)
-		// 		.then(res => console.log(res))
-		// 		.catch(err => console.log(err));
-		// });
+		setError('');
+		startTransition(() => {
+			createTask(values)
+				.then(res => console.log(res))
+				.catch(err => console.log(err));
+		});
 	};
 
 	return (
