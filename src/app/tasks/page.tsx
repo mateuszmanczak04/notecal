@@ -1,9 +1,6 @@
 import { auth } from '@/auth';
 import TasksList from '@/components/tasks/tasks-list';
-import { Button } from '@/components/ui/button';
 import { db } from '@/lib/db';
-import { Plus } from 'lucide-react';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 const page = async () => {
@@ -13,7 +10,7 @@ const page = async () => {
 	const tasks = await db.task.findMany({
 		where: { userId: session.user.id },
 		include: { course: true },
-		orderBy: { createdAt: 'desc' },
+		orderBy: { title: 'asc' },
 	});
 
 	const processedTasks = tasks.map(task => ({
@@ -32,15 +29,6 @@ const page = async () => {
 			<h1 className='text-2xl font-bold'>Your Tasks To Do:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
 				<TasksList tasks={processedTasks} />
-				<Button
-					asChild
-					variant='secondary'
-					size='lg'
-					className='flex items-center justify-center gap-1 font-semibold'>
-					<Link href='/tasks/create'>
-						<Plus className='h-6 w-6' /> Create a New Task
-					</Link>
-				</Button>
 			</div>
 		</div>
 	);
