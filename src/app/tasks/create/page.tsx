@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import CreateTask from '@/components/create-task';
+import CreateTask from '@/components/tasks/create-task';
 import { db } from '@/lib/db';
 
 const CreateTaskPage = async () => {

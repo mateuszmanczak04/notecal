@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import CourseItem from '@/components/course-item';
+import CourseItem from '@/components/courses/course-item';
 import { Button } from '@/components/ui/button';
 import { db } from '@/lib/db';
 import { Plus } from 'lucide-react';

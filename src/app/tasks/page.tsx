@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import TaskItem from '@/components/task-item';
+import TaskItem from '@/components/tasks/task-item';
 import { Button } from '@/components/ui/button';
 import { db } from '@/lib/db';
 import { type Task } from '@/types';

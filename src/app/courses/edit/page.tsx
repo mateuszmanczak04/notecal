@@ -1,4 +1,4 @@
-import EditCourse from '@/components/edit-course';
+import EditCourse from '@/components/courses/edit-course';
 import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';

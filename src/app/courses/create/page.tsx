@@ -1,4 +1,4 @@
-import CreateCourse from '@/components/create-course';
+import CreateCourse from '@/components/courses/create-course';
 
 const CreateCoursePage = async () => {
 	return <CreateCourse />;
