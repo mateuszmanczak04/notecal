@@ -1,8 +1,7 @@
 import { auth } from '@/auth';
-import TaskItem from '@/components/tasks/task-item';
+import TasksList from '@/components/tasks/tasks-list';
 import { Button } from '@/components/ui/button';
 import { db } from '@/lib/db';
-import { type Task } from '@/types';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -17,22 +16,22 @@ const page = async () => {
 		orderBy: { createdAt: 'desc' },
 	});
 
+	const processedTasks = tasks.map(task => ({
+		id: task.id,
+		title: task.title,
+		description: task.description,
+		courseName: task.course.name,
+		priority: task.priority,
+		dueDate: task.dueDate,
+		completed: task.completed,
+		createdAt: task.createdAt,
+	}));
+
 	return (
 		<div>
 			<h1 className='text-2xl font-bold'>Your Tasks To Do:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
-				{tasks.map(task => (
-					<TaskItem
-						key={task.id}
-						title={task.title}
-						courseName={task.course.name}
-						description={task.description}
-						completed={task.completed}
-						dueDate={task.dueDate}
-						id={task.id}
-						priority={task.priority}
-					/>
-				))}
+				<TasksList tasks={processedTasks} />
 				<Button
 					asChild
 					variant='secondary'

@@ -8,4 +8,5 @@ export interface Task {
 	priority?: TaskPriority | null;
 	dueDate?: Date | null;
 	completed: boolean;
+	createdAt: Date;
 }
