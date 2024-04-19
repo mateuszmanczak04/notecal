@@ -73,7 +73,7 @@ const TasksList: FC<TasksListProps> = ({ tasks: initialTasks }) => {
 
 	return (
 		<>
-			<div className='flex flex-col items-center gap-2 md:flex-row'>
+			<div className='flex flex-col items-center gap-2 sm:flex-row'>
 				<SortTasks onChange={handleSort} />
 				<CreateTaskButton />
 			</div>

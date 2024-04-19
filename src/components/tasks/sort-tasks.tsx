@@ -16,7 +16,7 @@ interface SortTasksProps {
 const SortTasks: FC<SortTasksProps> = ({ onChange }) => {
 	return (
 		<Select onValueChange={onChange}>
-			<SelectTrigger className='md:flex-1'>
+			<SelectTrigger className='sm:flex-1'>
 				<SelectValue placeholder='Order by' />
 			</SelectTrigger>
 			<SelectContent className='md:flex-1'>
