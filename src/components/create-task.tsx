@@ -113,7 +113,7 @@ const CreateTask: FC<CreateTaskProps> = ({ courses }) => {
 					/>
 					<FormField
 						control={form.control}
-						name='description'
+						name='courseId'
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>
