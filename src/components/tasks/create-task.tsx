@@ -29,7 +29,7 @@ import {
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
-import { cn } from '@/lib/utils';
+import { OTHER_COURSE_NAME, cn } from '@/lib/utils';
 import { CreateTaskFormSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
@@ -53,7 +53,7 @@ const CreateTask: FC<CreateTaskProps> = ({ courses }) => {
 			description: '',
 			priority: undefined,
 			dueDate: undefined,
-			courseId: courses[0].id,
+			courseId: OTHER_COURSE_NAME,
 		},
 	});
 
@@ -111,41 +111,46 @@ const CreateTask: FC<CreateTaskProps> = ({ courses }) => {
 							</FormItem>
 						)}
 					/>
-					<FormField
-						control={form.control}
-						name='courseId'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>
-									Course <span className='text-red-500'>*</span>
-								</FormLabel>
-								<FormControl>
-									<Select
-										onValueChange={field.onChange}
-										defaultValue={field.value}>
-										<FormControl>
-											<SelectTrigger
-												className={cn(
-													'pl-3 text-left font-normal',
-													!field.value && 'text-muted-foreground',
-												)}>
-												<SelectValue placeholder='Choose from the list' />
-											</SelectTrigger>
-										</FormControl>
-										<SelectContent>
-											{courses.map(course => (
-												<SelectItem key={course.id} value={course.id}>
-													{course.name}
+					{courses && courses.length > 0 && (
+						<FormField
+							control={form.control}
+							name='courseId'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>
+										Course <span className='text-red-500'>*</span>
+									</FormLabel>
+									<FormControl>
+										<Select
+											onValueChange={field.onChange}
+											defaultValue={field.value}>
+											<FormControl>
+												<SelectTrigger
+													className={cn(
+														'pl-3 text-left font-normal',
+														!field.value && 'text-muted-foreground',
+													)}>
+													<SelectValue placeholder='Choose from the list' />
+												</SelectTrigger>
+											</FormControl>
+											<SelectContent>
+												{courses.map(course => (
+													<SelectItem key={course.id} value={course.id}>
+														{course.name}
+													</SelectItem>
+												))}
+												<SelectItem key='other' value={OTHER_COURSE_NAME}>
+													Other
 												</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
-								</FormControl>
-								<FormDescription />
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormDescription />
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					)}
 					<FormField
 						control={form.control}
 						name='priority'

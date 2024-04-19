@@ -2,6 +2,7 @@
 
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
+import { OTHER_COURSE_NAME } from '@/lib/utils';
 import { CreateTaskFormSchema } from '@/schemas';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
@@ -30,18 +31,20 @@ const createTask = async (values: z.infer<typeof CreateTaskFormSchema>) => {
 			};
 		}
 
-		const course = await db.course.findUnique({
-			where: { id: courseId, userId: session.user.id },
-		});
+		if (courseId !== OTHER_COURSE_NAME) {
+			const course = await db.course.findUnique({
+				where: { id: courseId, userId: session.user.id },
+			});
 
-		if (!course) {
-			return { error: 'Course not found.' };
+			if (course && course?.userId != session.user.id) {
+				return { error: 'Course not found.' };
+			}
 		}
 
 		await db.task.create({
 			data: {
 				userId: session.user.id,
-				courseId,
+				courseId: courseId === OTHER_COURSE_NAME ? null : courseId,
 				title,
 				completed,
 				description,
@@ -50,6 +53,7 @@ const createTask = async (values: z.infer<typeof CreateTaskFormSchema>) => {
 			},
 		});
 	} catch (error) {
+		console.log(error);
 		return { error: 'Something went wrong. Please try again.' };
 	}
 

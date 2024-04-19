@@ -54,9 +54,11 @@ const TaskItem = ({
 				</CardTitle>
 				{description && <CardDescription>{description}</CardDescription>}
 				<div className='flex items-center gap-1'>
-					<Badge className='pointer-events-none bg-purple-600 shadow-none'>
-						{courseName}
-					</Badge>
+					{courseName && (
+						<Badge className='pointer-events-none bg-purple-600 shadow-none'>
+							{courseName}
+						</Badge>
+					)}
 					{priority && (
 						<Badge
 							className={cn(

@@ -103,7 +103,7 @@ model Task {
   priority    TaskPriority?
   user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  course      Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  courseId    String
+  course      Course?       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId    String?
   createdAt   DateTime      @default(now())
 }

@@ -17,7 +17,7 @@ const page = async () => {
 		id: task.id,
 		title: task.title,
 		description: task.description,
-		courseName: task.course.name,
+		courseName: task?.course?.name || '',
 		priority: task.priority,
 		dueDate: task.dueDate,
 		completed: task.completed,

@@ -49,7 +49,7 @@ export const CreateTaskFormSchema = z.object({
 			message: 'Max length is 300 characters',
 		})
 		.optional(),
-	courseId: z.string().min(1, { message: 'Course is required.' }),
+	courseId: z.string(),
 	priority: z
 		.enum([TaskPriority.high, TaskPriority.medium, TaskPriority.low])
 		.optional(),
