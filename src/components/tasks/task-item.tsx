@@ -43,40 +43,43 @@ const TaskItem = ({
 				'shadow-none',
 				isPending && 'pointer-events-none opacity-75',
 			)}>
-			<CardHeader>
-				<CardTitle className='flex items-center gap-2'>
-					<p>{title}</p>
-					<Checkbox
-						onClick={onToggle}
-						checked={optimisticCompleted}
-						className='h-5 w-5 shadow-none'
-					/>
-				</CardTitle>
-				{description && <CardDescription>{description}</CardDescription>}
-				<div className='flex items-center gap-1'>
-					{courseName && (
-						<Badge className='pointer-events-none bg-purple-600 shadow-none'>
-							{courseName}
-						</Badge>
-					)}
-					{priority && (
-						<Badge
-							className={cn(
-								'pointer-events-none shadow-none',
-								priority === 'high' && 'bg-red-500',
-								priority === 'medium' && 'bg-amber-500',
-								priority === 'low' && 'bg-green-500',
-							)}>
-							{priority}
-						</Badge>
-					)}
-					{dueDate && (
-						<Badge className='pointer-events-none bg-neutral-200 text-neutral-800 shadow-none'>
-							{dueDate?.toLocaleDateString('en-US')}
-						</Badge>
-					)}
-				</div>
-			</CardHeader>
+			<div className='flex items-center'>
+				<Checkbox
+					onClick={onToggle}
+					checked={optimisticCompleted}
+					className='ml-4 h-8 w-8 shadow-none'
+				/>
+				<div></div>
+				<CardHeader>
+					<CardTitle className='flex items-center gap-2'>
+						<p>{title}</p>
+					</CardTitle>
+					{description && <CardDescription>{description}</CardDescription>}
+					<div className='flex items-center gap-1'>
+						{courseName && (
+							<Badge className='pointer-events-none bg-purple-600 shadow-none'>
+								{courseName}
+							</Badge>
+						)}
+						{priority && (
+							<Badge
+								className={cn(
+									'pointer-events-none shadow-none',
+									priority === 'high' && 'bg-red-500',
+									priority === 'medium' && 'bg-amber-500',
+									priority === 'low' && 'bg-green-500',
+								)}>
+								{priority}
+							</Badge>
+						)}
+						{dueDate && (
+							<Badge className='pointer-events-none bg-neutral-200 text-neutral-800 shadow-none'>
+								{dueDate?.toLocaleDateString('en-US')}
+							</Badge>
+						)}
+					</div>
+				</CardHeader>
+			</div>
 		</Card>
 	);
 };
