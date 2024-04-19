@@ -14,6 +14,7 @@ const page = async () => {
 	const tasks = await db.task.findMany({
 		where: { userId: session.user.id },
 		include: { course: true },
+		orderBy: { createdAt: 'desc' },
 	});
 
 	return (
