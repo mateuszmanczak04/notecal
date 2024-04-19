@@ -83,7 +83,7 @@ model Course {
   id      String @id @default(cuid())
   name    String
   teacher String
-  user    User   @relation(fields: [userId], references: [id])
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId  String
   Task    Task[]
 }
@@ -101,9 +101,9 @@ model Task {
   completed   Boolean       @default(false)
   dueDate     DateTime?
   priority    TaskPriority?
-  user        User          @relation(fields: [userId], references: [id])
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  course      Course        @relation(fields: [courseId], references: [id])
+  course      Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId    String
   createdAt   DateTime      @default(now())
 }
