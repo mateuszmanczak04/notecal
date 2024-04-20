@@ -23,6 +23,7 @@ import { type Task } from '@/types';
 import { Course } from '@prisma/client';
 import { EllipsisVertical, Trash } from 'lucide-react';
 import { FC, useOptimistic, useState, useTransition } from 'react';
+import TaskPriority from './task-priority';
 
 interface TaskItemProps {
 	task: Task;
@@ -87,17 +88,7 @@ const TaskItem: FC<TaskItemProps> = ({
 							id={id}
 							courses={courses}
 						/>
-						{priority && (
-							<Badge
-								className={cn(
-									'pointer-events-none shadow-none',
-									priority === 'high' && 'bg-red-500',
-									priority === 'medium' && 'bg-amber-500',
-									priority === 'low' && 'bg-green-500',
-								)}>
-								{priority}
-							</Badge>
-						)}
+						<TaskPriority id={id} priority={priority || undefined} />
 						<TaskDueDate id={id} dueDate={dueDate || undefined} />
 					</div>
 				</CardHeader>

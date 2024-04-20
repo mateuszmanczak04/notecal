@@ -85,3 +85,10 @@ export const UpdateTaskCourseIdSchema = z.object({
 	id: z.string(),
 	newCourseId: z.string(),
 });
+
+export const UpdateTaskPrioritySchema = z.object({
+	id: z.string(),
+	newPriority: z
+		.enum([TaskPriority.high, TaskPriority.medium, TaskPriority.low, 'none'])
+		.optional(),
+});
