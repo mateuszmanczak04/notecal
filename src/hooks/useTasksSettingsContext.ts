@@ -1,8 +1,8 @@
-import { SettingsContext } from '@/context/SettingsContext';
+import { TasksSettingsContext } from '@/context/TasksSettingsContext';
 import { useContext } from 'react';
 
 const useTasksSettingsContext = () => {
-	const context = useContext(SettingsContext);
+	const context = useContext(TasksSettingsContext);
 
 	if (!context) {
 		throw new Error(

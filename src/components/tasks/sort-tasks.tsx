@@ -7,15 +7,30 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import { FC } from 'react';
+import useTasksContext from '@/hooks/useTasksContext';
 
-interface SortTasksProps {
-	onChange: (value: string) => void;
-}
+const SortTasks = ({}) => {
+	const { orderByCompleted, orderByCreationDate, orderByTitle } =
+		useTasksContext();
 
-const SortTasks: FC<SortTasksProps> = ({ onChange }) => {
+	const onSortChange = (value: string) => {
+		switch (value) {
+			case 'title':
+				orderByTitle();
+				break;
+			case 'createdAt':
+				orderByCreationDate();
+				break;
+			case 'completed':
+				orderByCompleted();
+				break;
+			default:
+				break;
+		}
+	};
+
 	return (
-		<Select onValueChange={onChange}>
+		<Select onValueChange={onSortChange}>
 			<SelectTrigger className='sm:flex-1'>
 				<SelectValue placeholder='Order by' />
 			</SelectTrigger>
