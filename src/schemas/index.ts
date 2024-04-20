@@ -75,3 +75,8 @@ export const UpdateTaskDescriptionSchema = z.object({
 	id: z.string(),
 	newDescription: z.string(),
 });
+
+export const UpdateTaskDueDateSchema = z.object({
+	id: z.string(),
+	newDueDate: z.string(),
+});

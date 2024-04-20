@@ -53,7 +53,6 @@ const createTask = async (values: z.infer<typeof CreateTaskFormSchema>) => {
 			},
 		});
 	} catch (error) {
-		console.log(error);
 		return { error: 'Something went wrong. Please try again.' };
 	}
 

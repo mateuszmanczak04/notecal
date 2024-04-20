@@ -3,6 +3,7 @@
 import completeTask from '@/actions/complete-task';
 import { deleteTask } from '@/actions/delete-task';
 import TaskDescription from '@/components/tasks/task-description';
+import TaskDueDate from '@/components/tasks/task-due-date';
 import TaskTitle from '@/components/tasks/task-title';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -47,9 +48,7 @@ const TaskItem = ({
 
 	const onDelete = () => {
 		startTransition(async () => {
-			deleteTask({ id }).then(res => {
-				console.log(res);
-			});
+			deleteTask({ id });
 		});
 	};
 
@@ -87,11 +86,7 @@ const TaskItem = ({
 								{priority}
 							</Badge>
 						)}
-						{dueDate && (
-							<Badge className='pointer-events-none bg-neutral-200 text-neutral-800 shadow-none'>
-								{dueDate?.toLocaleDateString('en-US')}
-							</Badge>
-						)}
+						<TaskDueDate id={id} dueDate={dueDate || undefined} />
 					</div>
 				</CardHeader>
 				<div className='py-6 pr-6'>
