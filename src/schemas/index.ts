@@ -61,3 +61,7 @@ export const CompleteTaskSchema = z.object({
 	id: z.string(),
 	newValue: z.boolean(),
 });
+
+export const DeleteTaskSchema = z.object({
+	id: z.string(),
+});
