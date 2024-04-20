@@ -3,6 +3,8 @@
 import CreateTaskButton from '@/components/tasks/create-task-button';
 import SortTasks from '@/components/tasks/sort-tasks';
 import TaskItem from '@/components/tasks/task-item';
+import TaskItemCompact from '@/components/tasks/task-item-compact';
+import TasksViewMode from '@/components/tasks/tasks-view-mode';
 import { Task } from '@/types';
 import { Course } from '@prisma/client';
 import { FC, useState } from 'react';
@@ -14,6 +16,7 @@ interface TasksListProps {
 
 const TasksList: FC<TasksListProps> = ({ tasks: initialTasks, courses }) => {
 	const [tasks, setTasks] = useState(initialTasks);
+	const [viewMode, setViewMode] = useState<'default' | 'compact'>('default');
 
 	const orderByCompleted = () => {
 		setTasks(prev =>
@@ -78,10 +81,16 @@ const TasksList: FC<TasksListProps> = ({ tasks: initialTasks, courses }) => {
 			<div className='flex flex-col items-center gap-2 sm:flex-row'>
 				<SortTasks onChange={handleSort} />
 				<CreateTaskButton />
+				<TasksViewMode setViewMode={setViewMode} viewMode={viewMode} />
 			</div>
-			{tasks.map(task => (
-				<TaskItem key={task.id} courses={courses} task={task} />
-			))}
+			{viewMode === 'default' &&
+				tasks.map(task => (
+					<TaskItem key={task.id} courses={courses} task={task} />
+				))}
+			{viewMode === 'compact' &&
+				tasks.map(task => (
+					<TaskItemCompact key={task.id} courses={courses} task={task} />
+				))}
 		</>
 	);
 };
