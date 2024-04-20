@@ -1,3 +1,5 @@
+'use client';
+
 import { TasksSettingsContextProvider } from '@/context/TasksSettingsContext';
 import { ReactNode, createContext } from 'react';
 
