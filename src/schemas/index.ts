@@ -70,3 +70,8 @@ export const RenameTaskSchema = z.object({
 	id: z.string(),
 	newTitle: z.string().min(1, { message: 'Title is required.' }),
 });
+
+export const UpdateTaskDescriptionSchema = z.object({
+	id: z.string(),
+	newDescription: z.string(),
+});
