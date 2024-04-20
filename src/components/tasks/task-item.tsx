@@ -1,7 +1,9 @@
 'use client';
 
 import completeTask from '@/actions/complete-task';
+import { deleteTask } from '@/actions/delete-task';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
 	Card,
 	CardDescription,
@@ -9,8 +11,17 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { type Task } from '@/types';
+import { EllipsisVertical, Trash } from 'lucide-react';
 import { useOptimistic, useState, useTransition } from 'react';
 
 const TaskItem = ({
@@ -37,6 +48,14 @@ const TaskItem = ({
 		});
 	};
 
+	const onDelete = () => {
+		startTransition(async () => {
+			deleteTask({ id }).then(res => {
+				console.log(res);
+			});
+		});
+	};
+
 	return (
 		<Card
 			className={cn(
@@ -51,7 +70,7 @@ const TaskItem = ({
 						className='h-8 w-8 shadow-none'
 					/>
 				</div>
-				<CardHeader>
+				<CardHeader className='flex-1 overflow-x-hidden'>
 					<CardTitle className='flex items-center gap-2'>
 						<p>{title}</p>
 					</CardTitle>
@@ -80,6 +99,25 @@ const TaskItem = ({
 						)}
 					</div>
 				</CardHeader>
+				<div className='py-6 pr-6'>
+					<DropdownMenu>
+						<DropdownMenuTrigger>
+							<EllipsisVertical />
+						</DropdownMenuTrigger>
+						<DropdownMenuContent>
+							<DropdownMenuLabel>Options</DropdownMenuLabel>
+							<DropdownMenuSeparator />
+							<DropdownMenuItem>
+								<Button
+									onClick={onDelete}
+									className='flex w-full items-center gap-1'
+									variant='destructive'>
+									<Trash className='h-4 w-4' /> Delete
+								</Button>
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+				</div>
 			</div>
 		</Card>
 	);
