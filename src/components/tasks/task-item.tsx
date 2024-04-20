@@ -43,13 +43,14 @@ const TaskItem = ({
 				'shadow-none',
 				isPending && 'pointer-events-none opacity-75',
 			)}>
-			<div className='flex items-center'>
-				<Checkbox
-					onClick={onToggle}
-					checked={optimisticCompleted}
-					className='ml-4 h-8 w-8 shadow-none'
-				/>
-				<div></div>
+			<div className='flex items-start'>
+				<div className='py-6 pl-6'>
+					<Checkbox
+						onClick={onToggle}
+						checked={optimisticCompleted}
+						className='h-8 w-8 shadow-none'
+					/>
+				</div>
 				<CardHeader>
 					<CardTitle className='flex items-center gap-2'>
 						<p>{title}</p>
