@@ -3,7 +3,6 @@
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { DeleteTaskSchema } from '@/schemas';
-import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
 export const deleteTask = async (values: z.infer<typeof DeleteTaskSchema>) => {
@@ -36,7 +35,6 @@ export const deleteTask = async (values: z.infer<typeof DeleteTaskSchema>) => {
 
 		await db.task.delete({ where: { id } });
 
-		revalidatePath('/tasks');
 		return { deleted: true };
 	} catch (error) {
 		return { error: 'Something went wrong. Please try again later.' };
