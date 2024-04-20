@@ -1,5 +1,5 @@
+import '@/app/globals.css';
 import { auth } from '@/auth';
-import NavUnauthenticated from '@/components/_nav-unauthenticated';
 import NavAuthenticated from '@/components/nav-authenticated';
 import { CoursesContextProvider } from '@/context/CoursesContext';
 import { SettingsContextProvider } from '@/context/SettingsContext';
@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
 import { Inter } from 'next/font/google';
-import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
