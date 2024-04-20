@@ -3,6 +3,7 @@ import { auth } from '@/auth';
 import NavAuthenticated from '@/components/nav-authenticated';
 import { CoursesContextProvider } from '@/context/CoursesContext';
 import { SettingsContextProvider } from '@/context/SettingsContext';
+import { TasksContextProvider } from '@/context/TasksContext';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
@@ -29,10 +30,12 @@ export default async function RootLayout({
 				<SessionProvider>
 					<SettingsContextProvider>
 						<CoursesContextProvider>
-							{session && <NavAuthenticated />}
-							<div className='pt-16'>{children}</div>
-							{/* a root for displaying modals on top of the page */}
-							<div id='modal-root'></div>
+							<TasksContextProvider>
+								{session && <NavAuthenticated />}
+								<div className='pt-16'>{children}</div>
+								{/* a root for displaying modals on top of the page */}
+								<div id='modal-root'></div>
+							</TasksContextProvider>
 						</CoursesContextProvider>
 					</SettingsContextProvider>
 				</SessionProvider>
