@@ -2,14 +2,10 @@
 
 import completeTask from '@/actions/complete-task';
 import { deleteTask } from '@/actions/delete-task';
+import TaskTitle from '@/components/tasks/task-title';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-	Card,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card';
+import { Card, CardDescription, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
 	DropdownMenu,
@@ -71,9 +67,7 @@ const TaskItem = ({
 					/>
 				</div>
 				<CardHeader className='flex-1 overflow-x-hidden'>
-					<CardTitle className='flex items-center gap-2'>
-						<p>{title}</p>
-					</CardTitle>
+					<TaskTitle id={id} title={title} />
 					{description && <CardDescription>{description}</CardDescription>}
 					<div className='flex items-center gap-1'>
 						{courseName && (
