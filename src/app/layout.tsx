@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import NavUnauthenticated from '@/components/_nav-unauthenticated';
 import NavAuthenticated from '@/components/nav-authenticated';
+import { CoursesContextProvider } from '@/context/CoursesContext';
 import { SettingsContextProvider } from '@/context/SettingsContext';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
@@ -28,10 +29,12 @@ export default async function RootLayout({
 			<body className={cn(inter.className)}>
 				<SessionProvider>
 					<SettingsContextProvider>
-						{session && <NavAuthenticated />}
-						<div className='pt-16'>{children}</div>
-						{/* a root for displaying modals on top of the page */}
-						<div id='modal-root'></div>
+						<CoursesContextProvider>
+							{session && <NavAuthenticated />}
+							<div className='pt-16'>{children}</div>
+							{/* a root for displaying modals on top of the page */}
+							<div id='modal-root'></div>
+						</CoursesContextProvider>
 					</SettingsContextProvider>
 				</SessionProvider>
 			</body>
