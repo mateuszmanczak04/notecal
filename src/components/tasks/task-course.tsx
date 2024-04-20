@@ -62,11 +62,15 @@ const TaskCourse: FC<TaskCourseProps> = ({
 					{courses &&
 						courses.length > 0 &&
 						courses.map(course => (
-							<DropdownMenuRadioItem key={course.id} value={course.id}>
+							<DropdownMenuRadioItem
+								className='cursor-pointer'
+								key={course.id}
+								value={course.id}>
 								{course.name}
 							</DropdownMenuRadioItem>
 						))}
 					<DropdownMenuRadioItem
+						className='cursor-pointer'
 						key={OTHER_COURSE_NAME}
 						value={OTHER_COURSE_NAME}>
 						Other
