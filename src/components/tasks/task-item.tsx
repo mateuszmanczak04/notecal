@@ -2,6 +2,7 @@
 
 import completeTask from '@/actions/complete-task';
 import { deleteTask } from '@/actions/delete-task';
+import TaskCourse from '@/components/tasks/task-course';
 import TaskDescription from '@/components/tasks/task-description';
 import TaskDueDate from '@/components/tasks/task-due-date';
 import TaskTitle from '@/components/tasks/task-title';
@@ -19,18 +20,28 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { type Task } from '@/types';
+import { Course } from '@prisma/client';
 import { EllipsisVertical, Trash } from 'lucide-react';
-import { useOptimistic, useState, useTransition } from 'react';
+import { FC, useOptimistic, useState, useTransition } from 'react';
 
-const TaskItem = ({
-	title,
-	description,
-	courseName,
-	priority,
-	dueDate,
-	completed: done,
-	id,
-}: Task) => {
+interface TaskItemProps {
+	task: Task;
+	courses: Course[];
+}
+
+const TaskItem: FC<TaskItemProps> = ({
+	task: {
+		title,
+		description,
+		courseName,
+		courseId,
+		priority,
+		dueDate,
+		completed: done,
+		id,
+	},
+	courses,
+}) => {
 	const [completed, setCompleted] = useState<boolean>(done);
 	const [optimisticCompleted, setOptimisticCompleted] =
 		useOptimistic<boolean>(completed);
@@ -70,11 +81,12 @@ const TaskItem = ({
 					<TaskTitle id={id} title={title} />
 					<TaskDescription id={id} description={description || ''} />
 					<div className='flex items-center gap-1 pt-2'>
-						{courseName && (
-							<Badge className='pointer-events-none bg-purple-600 shadow-none'>
-								{courseName}
-							</Badge>
-						)}
+						<TaskCourse
+							courseName={courseName}
+							courseId={courseId}
+							id={id}
+							courses={courses}
+						/>
 						{priority && (
 							<Badge
 								className={cn(
@@ -90,6 +102,7 @@ const TaskItem = ({
 					</div>
 				</CardHeader>
 				<div className='py-6 pr-6'>
+					{/* menu */}
 					<DropdownMenu>
 						<DropdownMenuTrigger>
 							<EllipsisVertical />

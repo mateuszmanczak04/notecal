@@ -80,3 +80,8 @@ export const UpdateTaskDueDateSchema = z.object({
 	id: z.string(),
 	newDueDate: z.string(),
 });
+
+export const UpdateTaskCourseIdSchema = z.object({
+	id: z.string(),
+	newCourseId: z.string(),
+});

@@ -18,17 +18,22 @@ const page = async () => {
 		title: task.title,
 		description: task.description,
 		courseName: task?.course?.name || '',
+		courseId: task?.course?.id || '',
 		priority: task.priority,
 		dueDate: task.dueDate,
 		completed: task.completed,
 		createdAt: task.createdAt,
 	}));
 
+	const courses = await db.course.findMany({
+		where: { userId: session.user.id },
+	});
+
 	return (
 		<div>
 			<h1 className='text-2xl font-bold'>Your Tasks To Do:</h1>
 			<div className='mt-2 flex flex-col gap-2'>
-				<TasksList tasks={processedTasks} />
+				<TasksList tasks={processedTasks} courses={courses} />
 			</div>
 		</div>
 	);

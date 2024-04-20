@@ -4,13 +4,15 @@ import CreateTaskButton from '@/components/tasks/create-task-button';
 import SortTasks from '@/components/tasks/sort-tasks';
 import TaskItem from '@/components/tasks/task-item';
 import { Task } from '@/types';
+import { Course } from '@prisma/client';
 import { FC, useState } from 'react';
 
 interface TasksListProps {
 	tasks: Task[];
+	courses: Course[];
 }
 
-const TasksList: FC<TasksListProps> = ({ tasks: initialTasks }) => {
+const TasksList: FC<TasksListProps> = ({ tasks: initialTasks, courses }) => {
 	const [tasks, setTasks] = useState(initialTasks);
 
 	const orderByCompleted = () => {
@@ -78,7 +80,7 @@ const TasksList: FC<TasksListProps> = ({ tasks: initialTasks }) => {
 				<CreateTaskButton />
 			</div>
 			{tasks.map(task => (
-				<TaskItem key={task.id} {...task} />
+				<TaskItem key={task.id} courses={courses} task={task} />
 			))}
 		</>
 	);

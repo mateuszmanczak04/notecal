@@ -5,6 +5,7 @@ export interface Task {
 	title: string;
 	description?: string | null;
 	courseName: string;
+	courseId: string;
 	priority?: TaskPriority | null;
 	dueDate?: Date | null;
 	completed: boolean;
