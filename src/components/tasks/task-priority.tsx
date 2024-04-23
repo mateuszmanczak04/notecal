@@ -11,21 +11,21 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
+import { NO_TASK_PRIORITY, cn } from '@/lib/utils';
 import { TaskPriority as TaskPriorityEnum } from '@prisma/client';
 import { FC, useState, useTransition } from 'react';
 
 interface TaskPriorityProps {
 	id: string;
-	priority?: TaskPriorityEnum;
+	priority: TaskPriorityEnum | null;
 }
 
 const TaskPriority: FC<TaskPriorityProps> = ({
 	id,
 	priority: initialPriority,
 }) => {
-	const [priority, setPriority] = useState<TaskPriorityEnum | 'none'>(
-		initialPriority || 'none',
+	const [priority, setPriority] = useState<TaskPriorityEnum | null>(
+		initialPriority,
 	);
 	const [isPending, startTransition] = useTransition();
 
@@ -35,7 +35,7 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 			newPriority !== 'high' &&
 			newPriority !== 'medium' &&
 			newPriority !== 'low' &&
-			newPriority !== 'none'
+			newPriority !== NO_TASK_PRIORITY
 		)
 			return;
 		startTransition(() => {
@@ -43,27 +43,30 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 				id,
 				newPriority,
 			});
-			setPriority(newPriority);
+			setPriority(newPriority === NO_TASK_PRIORITY ? null : newPriority);
 		});
 	};
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger className='-mt-1 h-6 pt-0'>
+			<DropdownMenuTrigger className='-mt-1 h-6 select-none pt-0 outline-none'>
 				<Badge
 					className={cn(
 						'pointer-events-none shadow-none',
 						priority === 'high' && 'bg-red-500',
 						priority === 'medium' && 'bg-amber-500',
 						priority === 'low' && 'bg-green-500',
+						isPending && 'opacity-75',
 					)}>
-					{priority.toLocaleUpperCase()}
+					{(priority || NO_TASK_PRIORITY).toLocaleUpperCase()}
 				</Badge>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuLabel>Choose the priority</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuRadioGroup value={priority} onValueChange={onChange}>
+				<DropdownMenuRadioGroup
+					value={priority || NO_TASK_PRIORITY}
+					onValueChange={onChange}>
 					<DropdownMenuRadioItem value='high' className='cursor-pointer'>
 						High
 					</DropdownMenuRadioItem>
@@ -73,7 +76,9 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 					<DropdownMenuRadioItem value='low' className='cursor-pointer'>
 						Low
 					</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem value='none' className='cursor-pointer'>
+					<DropdownMenuRadioItem
+						value={NO_TASK_PRIORITY}
+						className='cursor-pointer'>
 						None
 					</DropdownMenuRadioItem>
 				</DropdownMenuRadioGroup>

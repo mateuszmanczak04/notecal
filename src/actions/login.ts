@@ -26,7 +26,7 @@ const login = async (values: z.infer<typeof LoginSchema>) => {
 			password,
 			redirect: false,
 		});
-	} catch (error: any) {
+	} catch (error) {
 		if (error instanceof AuthError && error.type === 'CredentialsSignin') {
 			return { error: 'Invalid credentials.' };
 		}

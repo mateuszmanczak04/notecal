@@ -34,7 +34,7 @@ const editCourse = async (values: z.infer<typeof EditCourseFormSchema>) => {
 			where: { id, userId: session?.user?.id },
 			data: { name: newName, teacher: newTeacher },
 		});
-	} catch (error: any) {
+	} catch (error) {
 		return { error: 'Something went wrong.' };
 	}
 

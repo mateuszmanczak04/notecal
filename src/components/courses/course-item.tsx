@@ -16,8 +16,6 @@ interface CourseItemProps {
 	teacher: string;
 }
 
-// This component is used to display a course item in the courses list
-// It just has 2 links to the notes page and the edit page
 const CourseItem: FC<CourseItemProps> = ({ name, teacher, id }) => {
 	return (
 		<Card className='shadow-none'>
@@ -31,7 +29,7 @@ const CourseItem: FC<CourseItemProps> = ({ name, teacher, id }) => {
 						asChild
 						className='flex flex-1 items-center justify-center gap-1'
 						size='sm'>
-						<Link href={`/courses/notes?id=${id}`}>
+						<Link href={`/notes/1`}>
 							<NotebookPen className='h-4 w-4' />
 							Notes
 						</Link>

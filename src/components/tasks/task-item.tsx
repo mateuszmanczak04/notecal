@@ -5,8 +5,8 @@ import { deleteTask } from '@/actions/delete-task';
 import TaskCourse from '@/components/tasks/task-course';
 import TaskDescription from '@/components/tasks/task-description';
 import TaskDueDate from '@/components/tasks/task-due-date';
+import TaskPriority from '@/components/tasks/task-priority';
 import TaskTitle from '@/components/tasks/task-title';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -18,30 +18,28 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import queryClient from '@/lib/query-client';
 import { cn } from '@/lib/utils';
-import { type Task } from '@/types';
-import { Course } from '@prisma/client';
+import { Task } from '@prisma/client';
 import { EllipsisVertical, Trash } from 'lucide-react';
 import { FC, useOptimistic, useState, useTransition } from 'react';
-import TaskPriority from './task-priority';
 
 interface TaskItemProps {
 	task: Task;
-	courses: Course[];
+	compact: boolean;
 }
 
 const TaskItem: FC<TaskItemProps> = ({
 	task: {
 		title,
 		description,
-		courseName,
 		courseId,
 		priority,
 		dueDate,
 		completed: done,
 		id,
 	},
-	courses,
+	compact, // todo - implement compact view
 }) => {
 	const [completed, setCompleted] = useState<boolean>(done);
 	const [optimisticCompleted, setOptimisticCompleted] =
@@ -60,7 +58,9 @@ const TaskItem: FC<TaskItemProps> = ({
 
 	const onDelete = () => {
 		startTransition(async () => {
-			deleteTask({ id });
+			deleteTask({ id }).then(() => {
+				queryClient.invalidateQueries({ queryKey: ['tasks'] });
+			});
 		});
 	};
 
@@ -82,14 +82,9 @@ const TaskItem: FC<TaskItemProps> = ({
 					<TaskTitle id={id} title={title} />
 					<TaskDescription id={id} description={description || ''} />
 					<div className='flex items-center gap-1 pt-2'>
-						<TaskCourse
-							courseName={courseName}
-							courseId={courseId}
-							id={id}
-							courses={courses}
-						/>
-						<TaskPriority id={id} priority={priority || undefined} />
-						<TaskDueDate id={id} dueDate={dueDate || undefined} />
+						<TaskCourse courseId={courseId} id={id} />
+						<TaskPriority id={id} priority={priority} />
+						<TaskDueDate id={id} dueDate={dueDate} />
 					</div>
 				</CardHeader>
 				<div className='py-6 pr-6'>

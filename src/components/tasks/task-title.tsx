@@ -1,6 +1,6 @@
 'use client';
 
-import { renameTask } from '@/actions/rename-task';
+import { updateTaskName } from '@/actions/update-task-name';
 import { Input } from '@/components/ui/input';
 import { FC, useRef, useState, useTransition } from 'react';
 
@@ -19,9 +19,9 @@ const TaskTitle: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 
 	// todo - add error handling and use of useOptimistic
 	const submit = () => {
-		if (title && title.length > 0) {
+		if (title && title.length > 0 && title !== titleBeforeEditing) {
 			startTransition(() => {
-				renameTask({ id, newTitle: title });
+				updateTaskName({ id, newTitle: title });
 				setIsEditing(false);
 			});
 		} else {

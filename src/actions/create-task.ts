@@ -4,7 +4,6 @@ import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { OTHER_COURSE_NAME } from '@/lib/utils';
 import { CreateTaskFormSchema } from '@/schemas';
-import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 const createTask = async (values: z.infer<typeof CreateTaskFormSchema>) => {
@@ -41,7 +40,7 @@ const createTask = async (values: z.infer<typeof CreateTaskFormSchema>) => {
 			}
 		}
 
-		await db.task.create({
+		const task = await db.task.create({
 			data: {
 				userId: session.user.id,
 				courseId: courseId === OTHER_COURSE_NAME ? null : courseId,
@@ -52,11 +51,11 @@ const createTask = async (values: z.infer<typeof CreateTaskFormSchema>) => {
 				priority,
 			},
 		});
+
+		return { task };
 	} catch (error) {
 		return { error: 'Something went wrong. Please try again.' };
 	}
-
-	redirect('/tasks');
 };
 
 export default createTask;

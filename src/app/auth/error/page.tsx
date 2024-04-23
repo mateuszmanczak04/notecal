@@ -1,5 +1,4 @@
-const AuthErrorPage = async () => {
-	// todo - improve this page
+const AuthErrorPage = () => {
 	return <div>Auth error occurred</div>;
 };
 

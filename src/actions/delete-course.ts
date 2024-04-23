@@ -1,20 +1,41 @@
 'use server';
 
+import { auth } from '@/auth';
 import { db } from '@/lib/db';
+import { DeleteCourseSchema } from '@/schemas';
 import { redirect } from 'next/navigation';
+import { z } from 'zod';
 
-const deleteCourse = async (_currentState: unknown, fd: FormData) => {
-	const id = fd.get('id')?.toString();
+const deleteCourse = async (values: z.infer<typeof DeleteCourseSchema>) => {
+	const validatedFields = DeleteCourseSchema.safeParse(values);
+
+	if (!validatedFields.success) {
+		throw new Error('Invalid fields.');
+	}
+
+	const id = validatedFields.data.id;
 
 	if (!id) {
 		throw new Error('Course id is required.');
 	}
 
 	try {
-		// todo - check if user is authorized
+		const session = await auth();
+
+		if (!session?.user?.id) {
+			throw new Error('Unauthorized.');
+		}
+
+		const course = await db.course.findUnique({
+			where: { id, userId: session.user.id },
+		});
+
+		if (!course) {
+			throw new Error('Course not found.');
+		}
 
 		await db.course.delete({ where: { id } });
-	} catch (error: any) {
+	} catch (error) {
 		throw new Error('Something went wrong.');
 	}
 

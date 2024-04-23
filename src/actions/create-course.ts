@@ -3,7 +3,6 @@
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { CreateCourseFormSchema } from '@/schemas';
-import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 const createCourse = async (values: z.infer<typeof CreateCourseFormSchema>) => {
@@ -30,18 +29,18 @@ const createCourse = async (values: z.infer<typeof CreateCourseFormSchema>) => {
 			return { error: 'Unauthenticated.' };
 		}
 
-		await db.course.create({
+		const course = await db.course.create({
 			data: {
 				userId: session.user.id,
 				name,
 				teacher,
 			},
 		});
-	} catch (error: any) {
+
+		return { course };
+	} catch (error) {
 		return { error: 'Something went wrong' };
 	}
-
-	redirect('/courses');
 };
 
 export default createCourse;

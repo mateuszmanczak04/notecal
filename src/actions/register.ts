@@ -1,10 +1,10 @@
 'use server';
 
+import login from '@/actions/login';
 import { db } from '@/lib/db';
 import { RegisterSchema } from '@/schemas';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
-import login from './login';
 
 const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const validatedFields = RegisterSchema.safeParse(values);
@@ -36,7 +36,7 @@ const register = async (values: z.infer<typeof RegisterSchema>) => {
 		});
 
 		// todo - verification token
-	} catch (error: any) {
+	} catch (error) {
 		return { error: 'Something went wrong.' };
 	}
 

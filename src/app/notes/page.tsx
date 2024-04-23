@@ -1,12 +1,7 @@
-import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 
-const page = async () => {
-	const session = await auth();
-	if (!session) redirect('/auth/register');
-
-	redirect('/calendar');
-	return <div>page</div>;
+const page = () => {
+	redirect('/notes/1');
 };
 
 export default page;

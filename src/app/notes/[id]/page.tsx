@@ -1,6 +1,4 @@
-import { auth } from '@/auth';
 import { Button } from '@/components/ui/button';
-import { redirect } from 'next/navigation';
 
 const Task = ({
 	title,
@@ -73,10 +71,7 @@ const TASKS = [
 	},
 ];
 
-const page = async () => {
-	const session = await auth();
-	if (!session) redirect('/auth/register');
-
+const page = () => {
 	return (
 		<div className='flex w-full min-w-[800px] gap-4 p-4'>
 			{/* left column: */}

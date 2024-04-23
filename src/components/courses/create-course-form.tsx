@@ -1,44 +1,49 @@
 'use client';
 
-import register from '@/actions/register';
+import createCourse from '@/actions/create-course';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
 	FormControl,
+	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { RegisterSchema } from '@/schemas';
+import queryClient from '@/lib/query-client';
+import { CreateCourseFormSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { ClipLoader } from 'react-spinners';
 import { z } from 'zod';
 
-const RegisterForm = () => {
+const CreateCourseForm = () => {
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState('');
-	const form = useForm<z.infer<typeof RegisterSchema>>({
-		resolver: zodResolver(RegisterSchema),
+	const form = useForm<z.infer<typeof CreateCourseFormSchema>>({
+		resolver: zodResolver(CreateCourseFormSchema),
 		defaultValues: {
-			email: '',
-			password: '',
-			confirmPassword: '',
+			name: '',
+			teacher: '',
 		},
 	});
+	const router = useRouter();
 
-	const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-		startTransition(() =>
-			register(values).then(res => {
+	const onSubmit = (values: z.infer<typeof CreateCourseFormSchema>) => {
+		setError('');
+		startTransition(() => {
+			createCourse(values).then(res => {
 				if (res?.error) {
 					setError(res.error);
 				}
-			}),
-		);
+				router.push('/courses');
+			});
+		});
 	};
 
 	return (
@@ -46,45 +51,38 @@ const RegisterForm = () => {
 			<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2'>
 				<FormField
 					control={form.control}
-					name='email'
+					name='name'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Email</FormLabel>
+							<FormLabel>
+								Name <span className='text-red-500'>*</span>
+							</FormLabel>
 							<FormControl>
-								<Input placeholder='john.doe@example.com' {...field} />
+								<Input placeholder='Computer Science' {...field} />
 							</FormControl>
+							<FormDescription />
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
 				<FormField
 					control={form.control}
-					name='password'
+					name='teacher'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Password</FormLabel>
+							<FormLabel>
+								Teacher <span className='text-red-500'>*</span>
+							</FormLabel>
 							<FormControl>
-								<Input placeholder='******' {...field} type='password' />
+								<Input placeholder='John Doe' {...field} />
 							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name='confirmPassword'
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Confirm password</FormLabel>
-							<FormControl>
-								<Input placeholder='******' {...field} type='password' />
-							</FormControl>
+							<FormDescription />
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
 				<Button type='submit' className='w-full'>
-					Create an account
+					Create a New Course
 				</Button>
 				<div className='flex w-full justify-center'>
 					{isPending && <ClipLoader className='mx-auto' />}
@@ -99,4 +97,4 @@ const RegisterForm = () => {
 	);
 };
 
-export default RegisterForm;
+export default CreateCourseForm;

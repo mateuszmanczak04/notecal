@@ -7,22 +7,18 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import useTasksContext from '@/hooks/useTasksContext';
 
 const SortTasks = ({}) => {
-	const { orderByCompleted, orderByCreationDate, orderByTitle } =
-		useTasksContext();
-
 	const onSortChange = (value: string) => {
 		switch (value) {
 			case 'title':
-				orderByTitle();
+				// orderByTitle();
 				break;
 			case 'createdAt':
-				orderByCreationDate();
+				// orderByCreationDate();
 				break;
 			case 'completed':
-				orderByCompleted();
+				// orderByCompleted();
 				break;
 			default:
 				break;

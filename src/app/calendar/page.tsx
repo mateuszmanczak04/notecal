@@ -1,7 +1,5 @@
-import { auth } from '@/auth';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
-import { redirect } from 'next/navigation';
 
 const WeekDayName = ({ day, date }: { day: string; date: string }) => {
 	return (
@@ -38,10 +36,7 @@ const GridRect = ({ last = false }: { last?: boolean }) => {
 	return <div className='h-16 w-full border-t border-gray-300'></div>;
 };
 
-const page = async () => {
-	const session = await auth();
-	if (!session) redirect('/auth/register');
-
+const page = () => {
 	return (
 		<div className='w-full min-w-[800px] p-4'>
 			{/* top bar: */}

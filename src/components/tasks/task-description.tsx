@@ -22,10 +22,12 @@ const TaskDescription: FC<TaskTitleProps> = ({
 
 	// todo - add error handling and use of useOptimistic
 	const submit = () => {
-		startTransition(() => {
-			updateTaskDescription({ id, newDescription: description });
-			setIsEditing(false);
-		});
+		if (description !== descriptionBeforeEditing) {
+			startTransition(() => {
+				updateTaskDescription({ id, newDescription: description });
+				setIsEditing(false);
+			});
+		}
 	};
 
 	const onFocus = () => {

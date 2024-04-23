@@ -1,32 +1,35 @@
 'use client';
 
-import { renameTask } from '@/actions/rename-task';
 import { updateTaskDueDate } from '@/actions/update-task-due-date';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-import { FC, useRef, useState, useTransition } from 'react';
-import { Badge } from '../ui/badge';
-import { Button } from '../ui/button';
-import { Calendar } from '../ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { FC, useState, useTransition } from 'react';
 
 interface TaskTitleProps {
 	id: string;
-	dueDate?: Date;
+	dueDate: Date | null;
 }
 
 const TaskDueDate: FC<TaskTitleProps> = ({ id, dueDate: initialDueDate }) => {
-	const [dueDate, setDueDate] = useState<Date | undefined>(initialDueDate);
+	const [dueDate, setDueDate] = useState<Date | null>(initialDueDate);
 	const [isPending, startTransition] = useTransition();
 
 	// todo - add error handling and use of useOptimistic
 	const onChange = (date: any) => {
-		startTransition(() => {
-			updateTaskDueDate({ id, newDueDate: date.toString() });
-			setDueDate(date);
-		});
+		if (date) {
+			startTransition(() => {
+				updateTaskDueDate({ id, newDueDate: date.toString() });
+				setDueDate(date);
+			});
+		}
 	};
 
 	return (
@@ -37,6 +40,7 @@ const TaskDueDate: FC<TaskTitleProps> = ({ id, dueDate: initialDueDate }) => {
 					className={cn(
 						'h-6 pl-3 text-left font-normal',
 						!dueDate && 'text-muted-foreground',
+						isPending && 'opacity-75',
 					)}>
 					{dueDate ? format(dueDate, 'PPP') : <span>Pick a date</span>}
 					<CalendarIcon className='ml-1 h-4 w-4 opacity-50' />
@@ -45,9 +49,8 @@ const TaskDueDate: FC<TaskTitleProps> = ({ id, dueDate: initialDueDate }) => {
 			<PopoverContent className='w-auto p-0' align='start'>
 				<Calendar
 					mode='single'
-					selected={dueDate}
+					selected={dueDate || undefined}
 					onSelect={onChange}
-					disabled={date => date < new Date()}
 					initialFocus
 				/>
 			</PopoverContent>

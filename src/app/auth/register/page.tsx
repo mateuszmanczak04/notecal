@@ -1,4 +1,4 @@
-import { auth } from '@/auth';
+import RegisterForm from '@/components/auth/register-form';
 import {
 	Card,
 	CardContent,
@@ -7,13 +7,8 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import RegisterForm from '../../../components/auth/register-form';
 
-const page = async () => {
-	const session = await auth();
-	if (session) redirect('/calendar');
-
+const page = () => {
 	return (
 		<div className='grid place-items-center p-4'>
 			<Card className='w-full max-w-sm'>

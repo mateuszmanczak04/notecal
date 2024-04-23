@@ -1,41 +1,36 @@
 'use client';
 
-import CreateTaskButton from '@/components/tasks/create-task-button';
-import SortTasks from '@/components/tasks/sort-tasks';
 import TaskItem from '@/components/tasks/task-item';
-import TaskItemCompact from '@/components/tasks/task-item-compact';
-import TasksViewMode from '@/components/tasks/tasks-view-mode';
-import useTasksContext from '@/hooks/useTasksContext';
-import { FC, useState } from 'react';
+import useTasks from '@/hooks/use-tasks';
+import { FC } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 interface TasksListProps {}
 
 const TasksList: FC<TasksListProps> = ({}) => {
-	const { tasks, isLoading } = useTasksContext();
+	const { data, isLoading, isError, error, isFetching } = useTasks();
+	const tasks = data?.tasks;
+	const viewMode = 'default' as 'default' | 'compact';
 
-	const [viewMode, setViewMode] = useState<'default' | 'compact'>('default');
-
-	if (isLoading) {
+	if (isLoading || isFetching) {
 		return <ClipLoader />;
 	}
 
-	return (
-		<>
-			<div className='flex flex-col items-center gap-2 sm:flex-row'>
-				<SortTasks />
-				<CreateTaskButton />
-				<TasksViewMode setViewMode={setViewMode} viewMode={viewMode} />
-			</div>
-			{isLoading && <p>Loading...</p>}
-			{viewMode === 'default' &&
-				tasks?.map(task => <TaskItem key={task.id} courses={[]} task={task} />)}
-			{viewMode === 'compact' &&
-				tasks?.map(task => (
-					<TaskItemCompact key={task.id} courses={[]} task={task} />
-				))}
-		</>
-	);
+	if (isError) {
+		return <p>Error: {error.message}</p>;
+	}
+
+	if (!tasks || tasks.length === 0) {
+		return (
+			<p className='text-lg text-gray-500'>
+				You don&apos;t have any tasks yet.
+			</p>
+		);
+	}
+
+	return tasks?.map(task => (
+		<TaskItem key={task.id} task={task} compact={viewMode === 'compact'} />
+	));
 };
 
 export default TasksList;

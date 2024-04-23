@@ -1,16 +1,14 @@
-import { auth } from '@/auth';
-import CreateTask from '@/components/tasks/create-task';
-import { db } from '@/lib/db';
+import CreateTaskForm from '@/components/tasks/create-task-form';
+import { Separator } from '@/components/ui/separator';
 
-const CreateTaskPage = async () => {
-	const session = await auth();
-	const courses = (
-		await db.course.findMany({
-			where: { userId: session?.user?.id },
-		})
-	).map(c => ({ name: c.name, id: c.id }));
-
-	return <CreateTask courses={courses} />;
+const CreateTaskPage = () => {
+	return (
+		<div className='mx-auto max-w-screen-sm p-4'>
+			<h1 className='text-2xl font-semibold'>Create a New Task</h1>
+			<Separator className='mb-6 mt-2' />
+			<CreateTaskForm />
+		</div>
+	);
 };
 
 export default CreateTaskPage;
