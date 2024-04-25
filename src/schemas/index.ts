@@ -97,6 +97,12 @@ export const DeleteCourseSchema = z.object({
 	id: z.string(),
 });
 
-export const GetTasksSchema = z.object({
-	orderBy: z.enum(['title', 'createdAt', 'dueDate', 'priority', 'completed']),
+export const GetTasksSchema = z.object({});
+
+export const UpdateSettingsSchema = z.object({
+	theme: z.enum(['light', 'dark']).optional(),
+	orderTasks: z
+		.enum(['title', 'createdAt', 'dueDate', 'priority', 'completed'])
+		.optional(),
+	language: z.enum(['en']).optional(),
 });

@@ -1,11 +1,15 @@
 import { getTasks } from '@/actions/get-tasks';
+import useSettings from '@/hooks/use-settings';
 import { useQuery } from '@tanstack/react-query';
 
-const useTasks = () =>
-	useQuery({
+const useTasks = () => {
+	const { data } = useSettings();
+
+	return useQuery({
 		queryKey: ['tasks'],
-		// by default fetch tasks by newest first:
-		queryFn: async () => await getTasks({ orderBy: 'createdAt' }),
+		queryFn: async () =>
+			await getTasks({ orderBy: data?.settings?.orderTasks || 'createdAt' }),
 	});
+};
 
 export default useTasks;

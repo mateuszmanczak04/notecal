@@ -1,6 +1,7 @@
 'use client';
 
-import { getTasks } from '@/actions/get-tasks';
+import { updateSettings } from '@/actions/update-settings';
+import { Button } from '@/components/ui/button';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -11,9 +12,11 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useQueryClient } from '@tanstack/react-query';
-import { Button } from '../ui/button';
+import { useTransition } from 'react';
+import { BeatLoader } from 'react-spinners';
 
 const SortTasks = ({}) => {
+	const [isPending, startTransition] = useTransition();
 	const queryClient = useQueryClient();
 
 	const onSortChange = (value: string) => {
@@ -25,9 +28,9 @@ const SortTasks = ({}) => {
 				value === 'priority' ||
 				value === 'completed')
 		) {
-			queryClient.fetchQuery({
-				queryKey: ['tasks'],
-				queryFn: async () => await getTasks({ orderBy: value }),
+			startTransition(async () => {
+				await updateSettings({ orderTasks: value });
+				await queryClient.invalidateQueries({ queryKey: ['tasks'] });
 			});
 		}
 	};
@@ -35,9 +38,12 @@ const SortTasks = ({}) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger
-				className=' w-full select-none outline-none sm:w-fit'
+				className=' w-full select-none outline-none sm:w-40'
 				asChild>
-				<Button variant='outline'>Order By</Button>
+				<Button variant='outline' className='flex items-center gap-1'>
+					<span>Order By</span>{' '}
+					{isPending && <BeatLoader className='h-4 w-4' />}
+				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuLabel>Order by</DropdownMenuLabel>

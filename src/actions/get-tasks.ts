@@ -12,8 +12,6 @@ export const getTasks = async (values: z.infer<typeof GetTasksSchema>) => {
 		return { error: 'Invalid fields.' };
 	}
 
-	const orderBy = validatedFields.data.orderBy;
-
 	try {
 		const session = await auth();
 
@@ -21,9 +19,23 @@ export const getTasks = async (values: z.infer<typeof GetTasksSchema>) => {
 			return { error: 'Unauthorized.' };
 		}
 
+		const userSettings = await db.settings.findUnique({
+			where: { userId: session.user.id },
+		});
+
+		if (!userSettings) {
+			await db.settings.create({
+				data: {
+					userId: session.user.id,
+					language: 'en',
+					orderTasks: 'createdAt',
+				},
+			});
+		}
+
 		const orderByObject: { [key: string]: string } = {};
 
-		switch (orderBy) {
+		switch (userSettings?.orderTasks || 'createdAt') {
 			case 'title':
 				orderByObject.title = 'asc';
 				break;
