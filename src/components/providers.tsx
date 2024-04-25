@@ -9,18 +9,9 @@ import { FC, ReactNode } from 'react';
 
 interface ProvidersProps {
 	children: ReactNode;
-	initialTasks: Task[];
-	initialCourses: Course[];
 }
 
-const Providers: FC<ProvidersProps> = ({
-	children,
-	initialTasks,
-	initialCourses,
-}) => {
-	// queryClient.setQueryData(['tasks'], initialTasks);
-	// queryClient.setQueryData(['courses'], initialCourses);
-
+const Providers: FC<ProvidersProps> = ({ children }) => {
 	return (
 		<SessionProvider>
 			<QueryClientProvider client={queryClient}>

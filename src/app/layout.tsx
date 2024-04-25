@@ -35,13 +35,10 @@ export default async function RootLayout({
 		);
 	}
 
-	const initialCourses = (await getCourses())?.courses || [];
-	const initialTasks = (await getTasks({ orderBy: 'createdAt' }))?.tasks || [];
-
 	return (
 		<html lang='en'>
 			<body className={cn(inter.className)}>
-				<Providers initialTasks={initialTasks} initialCourses={initialCourses}>
+				<Providers>
 					<NavAuthenticated />
 					<div className='pt-16'>{children}</div>
 				</Providers>
