@@ -1,12 +1,12 @@
-import CreateTaskButton from '@/components/tasks/create-task-button';
+import CreateTaskLink from '@/components/tasks/create-task-link';
 import SortTasks from '@/components/tasks/sort-tasks';
 import TasksViewMode from '@/components/tasks/tasks-view-mode';
 
 const TasksMenu = () => {
 	return (
-		<div className='flex flex-col items-center gap-2 sm:flex-row'>
+		<div className='flex flex-col gap-2 sm:flex-row'>
 			<SortTasks />
-			<CreateTaskButton />
+			<CreateTaskLink />
 			<TasksViewMode />
 		</div>
 	);

@@ -34,10 +34,10 @@ const SortTasks = ({}) => {
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger className='-mt-1 h-6 w-full flex-1 -translate-y-1 select-none pt-0 outline-none'>
-				<Button variant='outline' className='w-full'>
-					Order By
-				</Button>
+			<DropdownMenuTrigger
+				className=' w-full select-none outline-none sm:w-fit'
+				asChild>
+				<Button variant='outline'>Order By</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuLabel>Order by</DropdownMenuLabel>

@@ -36,7 +36,7 @@ export default async function RootLayout({
 	}
 
 	const initialCourses = (await getCourses())?.courses || [];
-	const initialTasks = (await getTasks())?.tasks || [];
+	const initialTasks = (await getTasks({ orderBy: 'createdAt' }))?.tasks || [];
 
 	return (
 		<html lang='en'>
