@@ -6,4 +6,3 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const OTHER_COURSE_NAME = 'other';
-export const NO_TASK_PRIORITY = 'none';

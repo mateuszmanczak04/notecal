@@ -11,7 +11,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { NO_TASK_PRIORITY, cn } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { TaskPriority as TaskPriorityEnum } from '@prisma/client';
 import { FC, useState, useTransition } from 'react';
 
@@ -19,6 +19,15 @@ interface TaskPriorityProps {
 	id: string;
 	priority: TaskPriorityEnum | null;
 }
+
+const NO_TASK_PRIORITY = 'none';
+
+const getPriorityName = (priority: TaskPriorityEnum | null) => {
+	if (priority === 'A') return 'High';
+	if (priority === 'B') return 'Medium';
+	if (priority === 'C') return 'Low';
+	return 'No priority';
+};
 
 const TaskPriority: FC<TaskPriorityProps> = ({
 	id,
@@ -32,16 +41,16 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 	// todo - add error handling and use of useOptimistic
 	const onChange = (newPriority: string) => {
 		if (
-			newPriority !== 'high' &&
-			newPriority !== 'medium' &&
-			newPriority !== 'low' &&
+			newPriority !== 'A' &&
+			newPriority !== 'B' &&
+			newPriority !== 'C' &&
 			newPriority !== NO_TASK_PRIORITY
 		)
 			return;
 		startTransition(() => {
 			updateTaskPriority({
 				id,
-				newPriority,
+				newPriority: newPriority === NO_TASK_PRIORITY ? undefined : newPriority,
 			});
 			setPriority(newPriority === NO_TASK_PRIORITY ? null : newPriority);
 		});
@@ -52,13 +61,13 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 			<DropdownMenuTrigger className='-mt-1 h-6 select-none pt-0 outline-none'>
 				<Badge
 					className={cn(
-						'pointer-events-none shadow-none',
-						priority === 'high' && 'bg-red-500',
-						priority === 'medium' && 'bg-amber-500',
-						priority === 'low' && 'bg-green-500',
+						'pointer-events-none bg-accent text-foreground shadow-none',
+						priority === 'A' && 'bg-red-500 text-white',
+						priority === 'B' && 'bg-amber-500 text-white',
+						priority === 'C' && 'bg-green-500 text-white',
 						isPending && 'opacity-75',
 					)}>
-					{(priority || NO_TASK_PRIORITY).toLocaleUpperCase()}
+					{getPriorityName(priority)}
 				</Badge>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
@@ -67,13 +76,13 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 				<DropdownMenuRadioGroup
 					value={priority || NO_TASK_PRIORITY}
 					onValueChange={onChange}>
-					<DropdownMenuRadioItem value='high' className='cursor-pointer'>
+					<DropdownMenuRadioItem value='A' className='cursor-pointer'>
 						High
 					</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem value='medium' className='cursor-pointer'>
+					<DropdownMenuRadioItem value='B' className='cursor-pointer'>
 						Medium
 					</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem value='low' className='cursor-pointer'>
+					<DropdownMenuRadioItem value='C' className='cursor-pointer'>
 						Low
 					</DropdownMenuRadioItem>
 					<DropdownMenuRadioItem

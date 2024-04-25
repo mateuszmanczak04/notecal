@@ -48,7 +48,7 @@ const createTask = async (values: z.infer<typeof CreateTaskFormSchema>) => {
 				completed,
 				description,
 				dueDate,
-				priority,
+				priority: priority || null,
 			},
 		});
 

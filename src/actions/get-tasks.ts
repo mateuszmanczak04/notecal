@@ -46,7 +46,7 @@ export const getTasks = async (values: z.infer<typeof GetTasksSchema>) => {
 				orderByObject.dueDate = 'asc';
 				break;
 			case 'priority':
-				orderByObject.priority = 'desc';
+				orderByObject.priority = 'asc';
 				break;
 			case 'completed':
 				orderByObject.completed = 'desc';

@@ -163,22 +163,19 @@ const CreateTaskForm = () => {
 									className='flex flex-col space-y-1'>
 									<FormItem className='flex cursor-pointer items-center space-x-2 space-y-0'>
 										<FormControl>
-											<RadioGroupItem className='text-red-500' value='high' />
+											<RadioGroupItem className='text-red-500' value='A' />
 										</FormControl>
 										<FormLabel className='cursor-pointer'>High</FormLabel>
 									</FormItem>
 									<FormItem className='flex cursor-pointer items-center space-x-2 space-y-0'>
 										<FormControl>
-											<RadioGroupItem
-												className='text-amber-500'
-												value='medium'
-											/>
+											<RadioGroupItem className='text-amber-500' value='B' />
 										</FormControl>
 										<FormLabel className='cursor-pointer'>Medium</FormLabel>
 									</FormItem>
 									<FormItem className='flex cursor-pointer items-center space-x-2 space-y-0'>
 										<FormControl>
-											<RadioGroupItem className='text-green-500' value='low' />
+											<RadioGroupItem className='text-green-500' value='C' />
 										</FormControl>
 										<FormLabel className='cursor-pointer'>Low</FormLabel>
 									</FormItem>

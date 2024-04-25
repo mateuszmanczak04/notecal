@@ -50,9 +50,7 @@ export const CreateTaskFormSchema = z.object({
 		})
 		.optional(),
 	courseId: z.string(),
-	priority: z
-		.enum([TaskPriority.high, TaskPriority.medium, TaskPriority.low])
-		.optional(),
+	priority: z.enum([TaskPriority.A, TaskPriority.B, TaskPriority.C]).optional(),
 	dueDate: z.date().optional(),
 	completed: z.boolean().optional(),
 });
@@ -89,7 +87,7 @@ export const UpdateTaskCourseIdSchema = z.object({
 export const UpdateTaskPrioritySchema = z.object({
 	id: z.string(),
 	newPriority: z
-		.enum([TaskPriority.high, TaskPriority.medium, TaskPriority.low, 'none'])
+		.enum([TaskPriority.A, TaskPriority.B, TaskPriority.C])
 		.optional(),
 });
 

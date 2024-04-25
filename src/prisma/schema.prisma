@@ -90,9 +90,9 @@ model Course {
 }
 
 enum TaskPriority {
-  high
-  medium
-  low
+  A
+  B
+  C
 }
 
 model Task {
