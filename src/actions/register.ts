@@ -28,10 +28,17 @@ const register = async (values: z.infer<typeof RegisterSchema>) => {
 
 		const hashedPassword = await bcrypt.hash(password, 10);
 
-		await db.user.create({
+		const user = await db.user.create({
 			data: {
 				email,
 				password: hashedPassword,
+			},
+		});
+
+		await db.settings.create({
+			data: {
+				userId: user.id,
+				language: 'en',
 			},
 		});
 
