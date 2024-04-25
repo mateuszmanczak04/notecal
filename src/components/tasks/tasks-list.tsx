@@ -2,7 +2,7 @@
 
 import TaskItem from '@/components/tasks/task-item';
 import useTasks from '@/hooks/use-tasks';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 interface TasksListProps {}
@@ -11,6 +11,16 @@ const TasksList: FC<TasksListProps> = ({}) => {
 	const { data, isLoading, isError, error, isFetching } = useTasks();
 	const tasks = data?.tasks;
 	const viewMode = 'default' as 'default' | 'compact';
+
+	useEffect(() => {
+		console.log(
+			JSON.stringify(
+				tasks?.map(t => t.title),
+				null,
+				2,
+			),
+		);
+	}, [tasks]);
 
 	if (isLoading || isFetching) {
 		return <ClipLoader />;

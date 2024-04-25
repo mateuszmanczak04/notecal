@@ -4,7 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 const useTasks = () =>
 	useQuery({
 		queryKey: ['tasks'],
-		queryFn: async () => await getTasks(),
+		// by default fetch tasks by newest first:
+		queryFn: async () => await getTasks({ orderBy: 'createdAt' }),
 	});
 
 export default useTasks;

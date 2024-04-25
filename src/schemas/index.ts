@@ -96,3 +96,7 @@ export const UpdateTaskPrioritySchema = z.object({
 export const DeleteCourseSchema = z.object({
 	id: z.string(),
 });
+
+export const GetTasksSchema = z.object({
+	orderBy: z.enum(['title', 'createdAt', 'dueDate', 'priority', 'completed']),
+});
