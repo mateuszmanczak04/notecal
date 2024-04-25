@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { TaskPriority as TaskPriorityEnum } from '@prisma/client';
+import { useQueryClient } from '@tanstack/react-query';
 import { FC, useState, useTransition } from 'react';
 
 interface TaskPriorityProps {
@@ -37,6 +38,7 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 		initialPriority,
 	);
 	const [isPending, startTransition] = useTransition();
+	const queryClient = useQueryClient();
 
 	// todo - add error handling and use of useOptimistic
 	const onChange = (newPriority: string) => {
@@ -47,11 +49,12 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 			newPriority !== NO_TASK_PRIORITY
 		)
 			return;
-		startTransition(() => {
-			updateTaskPriority({
+		startTransition(async () => {
+			await updateTaskPriority({
 				id,
 				newPriority: newPriority === NO_TASK_PRIORITY ? undefined : newPriority,
 			});
+			queryClient.invalidateQueries({ queryKey: ['tasks'] });
 			setPriority(newPriority === NO_TASK_PRIORITY ? null : newPriority);
 		});
 	};

@@ -21,6 +21,7 @@ import {
 import queryClient from '@/lib/query-client';
 import { cn } from '@/lib/utils';
 import { Task } from '@prisma/client';
+import { useQueryClient } from '@tanstack/react-query';
 import { EllipsisVertical, Trash } from 'lucide-react';
 import { FC, useOptimistic, useState, useTransition } from 'react';
 
@@ -45,6 +46,7 @@ const TaskItem: FC<TaskItemProps> = ({
 	const [optimisticCompleted, setOptimisticCompleted] =
 		useOptimistic<boolean>(completed);
 	const [isPending, startTransition] = useTransition();
+	const queryClient = useQueryClient();
 
 	const onToggle = () => {
 		startTransition(async () => {
@@ -53,6 +55,7 @@ const TaskItem: FC<TaskItemProps> = ({
 			if (typeof res.completed === 'boolean') {
 				setCompleted(res.completed);
 			}
+			queryClient.invalidateQueries({ queryKey: ['tasks'] });
 		});
 	};
 

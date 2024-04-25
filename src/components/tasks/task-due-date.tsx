@@ -9,6 +9,7 @@ import {
 	PopoverTrigger,
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { FC, useState, useTransition } from 'react';
@@ -21,12 +22,14 @@ interface TaskTitleProps {
 const TaskDueDate: FC<TaskTitleProps> = ({ id, dueDate: initialDueDate }) => {
 	const [dueDate, setDueDate] = useState<Date | null>(initialDueDate);
 	const [isPending, startTransition] = useTransition();
+	const queryClient = useQueryClient();
 
 	// todo - add error handling and use of useOptimistic
 	const onChange = (date: any) => {
 		if (date) {
-			startTransition(() => {
-				updateTaskDueDate({ id, newDueDate: date.toString() });
+			startTransition(async () => {
+				await updateTaskDueDate({ id, newDueDate: date.toString() });
+				queryClient.invalidateQueries({ queryKey: ['tasks'] });
 				setDueDate(date);
 			});
 		}

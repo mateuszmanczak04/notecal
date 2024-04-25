@@ -2,6 +2,7 @@
 
 import { updateTaskName } from '@/actions/update-task-name';
 import { Input } from '@/components/ui/input';
+import { useQueryClient } from '@tanstack/react-query';
 import { FC, useRef, useState, useTransition } from 'react';
 
 interface TaskTitleProps {
@@ -16,12 +17,14 @@ const TaskTitle: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 		useState<string>(initialTitle);
 	const [isPending, startTransition] = useTransition();
 	const inputRef = useRef<HTMLInputElement>(null);
+	const queryClient = useQueryClient();
 
 	// todo - add error handling and use of useOptimistic
 	const submit = () => {
 		if (title && title.length > 0 && title !== titleBeforeEditing) {
-			startTransition(() => {
-				updateTaskName({ id, newTitle: title });
+			startTransition(async () => {
+				await updateTaskName({ id, newTitle: title });
+				queryClient.invalidateQueries({ queryKey: ['tasks'] });
 				setIsEditing(false);
 			});
 		} else {
