@@ -10,17 +10,6 @@ interface TasksListProps {}
 const TasksList: FC<TasksListProps> = ({}) => {
 	const { data, isLoading, isError, error, isFetching } = useTasks();
 	const tasks = data?.tasks;
-	const viewMode = 'default' as 'default' | 'compact';
-
-	useEffect(() => {
-		console.log(
-			JSON.stringify(
-				tasks?.map(t => t.title),
-				null,
-				2,
-			),
-		);
-	}, [tasks]);
 
 	if (isLoading || isFetching) {
 		return <ClipLoader />;
@@ -38,9 +27,7 @@ const TasksList: FC<TasksListProps> = ({}) => {
 		);
 	}
 
-	return tasks?.map(task => (
-		<TaskItem key={task.id} task={task} compact={viewMode === 'compact'} />
-	));
+	return tasks?.map(task => <TaskItem key={task.id} task={task} />);
 };
 
 export default TasksList;

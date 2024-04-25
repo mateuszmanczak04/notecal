@@ -28,7 +28,6 @@ import { FC, useOptimistic, useState, useTransition } from 'react';
 
 interface TaskItemProps {
 	task: Task;
-	compact: boolean;
 }
 
 const TaskItem: FC<TaskItemProps> = ({
@@ -41,7 +40,6 @@ const TaskItem: FC<TaskItemProps> = ({
 		completed: done,
 		id,
 	},
-	compact, // todo - implement compact view
 }) => {
 	const [completed, setCompleted] = useState<boolean>(done);
 	const [optimisticCompleted, setOptimisticCompleted] =
