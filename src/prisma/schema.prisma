@@ -19,10 +19,11 @@ model User {
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   courses   Course[]
   Task      Task[]
+  Settings  Settings?
 }
 
 model Account {
@@ -106,4 +107,27 @@ model Task {
   course      Course?       @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId    String?
   createdAt   DateTime      @default(now())
+}
+
+enum ThemeEnum {
+  light
+  dark
+}
+
+enum OrderTasksEnum {
+  title
+  dueDate
+  priority
+  completed
+  createdAt
+}
+
+model Settings {
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String         @id
+  theme      ThemeEnum      @default(light)
+  language   String
+  orderTasks OrderTasksEnum @default(createdAt)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
 }
