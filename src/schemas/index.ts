@@ -76,7 +76,7 @@ export const UpdateTaskDescriptionSchema = z.object({
 
 export const UpdateTaskDueDateSchema = z.object({
 	id: z.string(),
-	newDueDate: z.string(),
+	newDueDate: z.string().optional(),
 });
 
 export const UpdateTaskCourseIdSchema = z.object({

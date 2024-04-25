@@ -14,9 +14,7 @@ export const updateTaskDueDate = async (
 		return { error: 'Invalid fields.' };
 	}
 
-	const { newDueDate: newDueDateString, id } = validatedFields.data;
-
-	const newDueDate = new Date(newDueDateString);
+	const { newDueDate, id } = validatedFields.data;
 
 	if (!id) {
 		return { error: 'Missing fields.' };
@@ -40,7 +38,7 @@ export const updateTaskDueDate = async (
 		await db.task.update({
 			where: { id },
 			data: {
-				dueDate: newDueDate,
+				dueDate: newDueDate ? new Date(newDueDate) : null,
 			},
 		});
 

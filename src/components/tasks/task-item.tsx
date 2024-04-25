@@ -2,6 +2,7 @@
 
 import completeTask from '@/actions/complete-task';
 import { deleteTask } from '@/actions/delete-task';
+import { updateTaskDueDate } from '@/actions/update-task-due-date';
 import TaskCourse from '@/components/tasks/task-course';
 import TaskDescription from '@/components/tasks/task-description';
 import TaskDueDate from '@/components/tasks/task-due-date';
@@ -67,6 +68,14 @@ const TaskItem: FC<TaskItemProps> = ({
 		});
 	};
 
+	const onResetDueDate = () => {
+		startTransition(async () => {
+			updateTaskDueDate({ id, newDueDate: undefined }).then(() => {
+				queryClient.invalidateQueries({ queryKey: ['tasks'] });
+			});
+		});
+	};
+
 	return (
 		<Card
 			className={cn(
@@ -105,6 +114,14 @@ const TaskItem: FC<TaskItemProps> = ({
 									className='flex w-full items-center gap-1'
 									variant='destructive'>
 									<Trash className='h-4 w-4' /> Delete
+								</Button>
+							</DropdownMenuItem>
+							<DropdownMenuItem>
+								<Button
+									onClick={onResetDueDate}
+									className='flex w-full items-center gap-1'
+									variant='secondary'>
+									<Trash className='h-4 w-4' /> Reset due date
 								</Button>
 							</DropdownMenuItem>
 						</DropdownMenuContent>
