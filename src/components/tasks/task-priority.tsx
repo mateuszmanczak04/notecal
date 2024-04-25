@@ -52,7 +52,7 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 		startTransition(async () => {
 			await updateTaskPriority({
 				id,
-				newPriority: newPriority === NO_TASK_PRIORITY ? undefined : newPriority,
+				newPriority: newPriority === NO_TASK_PRIORITY ? null : newPriority,
 			});
 			queryClient.invalidateQueries({ queryKey: ['tasks'] });
 			setPriority(newPriority === NO_TASK_PRIORITY ? null : newPriority);

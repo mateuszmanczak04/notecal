@@ -50,8 +50,8 @@ export const CreateTaskFormSchema = z.object({
 		})
 		.optional(),
 	courseId: z.string(),
-	priority: z.enum([TaskPriority.A, TaskPriority.B, TaskPriority.C]).optional(),
-	dueDate: z.date().optional(),
+	priority: z.enum([TaskPriority.A, TaskPriority.B, TaskPriority.C]).nullable(),
+	dueDate: z.date().nullable(),
 	completed: z.boolean().optional(),
 });
 
@@ -76,19 +76,19 @@ export const UpdateTaskDescriptionSchema = z.object({
 
 export const UpdateTaskDueDateSchema = z.object({
 	id: z.string(),
-	newDueDate: z.string().optional(),
+	newDueDate: z.string().nullable(),
 });
 
 export const UpdateTaskCourseIdSchema = z.object({
 	id: z.string(),
-	newCourseId: z.string(),
+	newCourseId: z.string().nullable(),
 });
 
 export const UpdateTaskPrioritySchema = z.object({
 	id: z.string(),
 	newPriority: z
 		.enum([TaskPriority.A, TaskPriority.B, TaskPriority.C])
-		.optional(),
+		.nullable(),
 });
 
 export const DeleteCourseSchema = z.object({

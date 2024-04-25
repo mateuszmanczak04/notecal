@@ -34,7 +34,6 @@ import queryClient from '@/lib/query-client';
 import { OTHER_COURSE_NAME, cn } from '@/lib/utils';
 import { CreateTaskFormSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Task } from '@prisma/client';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -54,8 +53,8 @@ const CreateTaskForm = () => {
 		defaultValues: {
 			title: '',
 			description: '',
-			priority: undefined,
-			dueDate: undefined,
+			priority: null,
+			dueDate: null,
 			courseId: OTHER_COURSE_NAME,
 		},
 	});
@@ -159,7 +158,7 @@ const CreateTaskForm = () => {
 							<FormControl>
 								<RadioGroup
 									onValueChange={field.onChange}
-									defaultValue={field.value}
+									defaultValue={field.value || undefined}
 									className='flex flex-col space-y-1'>
 									<FormItem className='flex cursor-pointer items-center space-x-2 space-y-0'>
 										<FormControl>
@@ -215,7 +214,7 @@ const CreateTaskForm = () => {
 								<PopoverContent className='w-auto p-0' align='start'>
 									<Calendar
 										mode='single'
-										selected={field.value}
+										selected={field.value || undefined}
 										onSelect={field.onChange}
 										initialFocus
 									/>

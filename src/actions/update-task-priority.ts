@@ -38,7 +38,7 @@ export const updateTaskPriority = async (
 		await db.task.update({
 			where: { id },
 			data: {
-				priority: newPriority || null,
+				priority: newPriority,
 			},
 		});
 

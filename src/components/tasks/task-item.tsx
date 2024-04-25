@@ -19,7 +19,6 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import queryClient from '@/lib/query-client';
 import { cn } from '@/lib/utils';
 import { Task } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
@@ -68,7 +67,7 @@ const TaskItem: FC<TaskItemProps> = ({
 
 	const onResetDueDate = () => {
 		startTransition(async () => {
-			updateTaskDueDate({ id, newDueDate: undefined }).then(() => {
+			updateTaskDueDate({ id, newDueDate: null }).then(() => {
 				queryClient.invalidateQueries({ queryKey: ['tasks'] });
 			});
 		});

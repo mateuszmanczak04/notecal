@@ -17,7 +17,7 @@ export const updateTaskCourseId = async (
 
 	const { newCourseId, id } = validatedFields.data;
 
-	if (!id || !newCourseId) {
+	if (!id) {
 		return { error: 'Missing fields.' };
 	}
 
@@ -36,25 +36,34 @@ export const updateTaskCourseId = async (
 			return { error: 'Task not found.' };
 		}
 
-		if (newCourseId !== OTHER_COURSE_NAME) {
-			const course = await db.course.findUnique({
-				where: {
-					id: newCourseId,
-					userId: session.user.id,
+		if (newCourseId) {
+			if (newCourseId !== OTHER_COURSE_NAME) {
+				const course = await db.course.findUnique({
+					where: {
+						id: newCourseId,
+						userId: session.user.id,
+					},
+				});
+
+				if (!course) {
+					return { error: 'Course not found.' };
+				}
+			}
+
+			await db.task.update({
+				where: { id },
+				data: {
+					courseId: newCourseId,
 				},
 			});
-
-			if (!course) {
-				return { error: 'Course not found.' };
-			}
+		} else {
+			await db.task.update({
+				where: { id },
+				data: {
+					courseId: null,
+				},
+			});
 		}
-
-		await db.task.update({
-			where: { id },
-			data: {
-				courseId: newCourseId === OTHER_COURSE_NAME ? null : newCourseId,
-			},
-		});
 
 		return { updated: true };
 	} catch (error) {
