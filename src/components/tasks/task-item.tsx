@@ -81,7 +81,7 @@ const TaskItem: FC<TaskItemProps> = ({
 				<CardHeader className='flex-1 space-y-0 overflow-x-hidden'>
 					<TaskTitle id={id} title={title} />
 					<TaskDescription id={id} description={description || ''} />
-					<div className='flex items-center gap-1 pt-2'>
+					<div className='flex flex-wrap items-center gap-1 pt-2'>
 						<TaskCourse courseId={courseId} id={id} />
 						<TaskPriority id={id} priority={priority} />
 						<TaskDueDate id={id} dueDate={dueDate} />
