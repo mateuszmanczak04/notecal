@@ -68,7 +68,9 @@ const TaskTitle: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 	}
 
 	return (
-		<p className='flex h-8 items-center gap-2 font-semibold' onClick={onFocus}>
+		<p
+			className='flex h-8 w-full items-center gap-2 truncate font-semibold'
+			onClick={onFocus}>
 			{title}
 		</p>
 	);

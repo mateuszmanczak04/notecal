@@ -69,7 +69,9 @@ const TaskDescription: FC<TaskTitleProps> = ({
 
 	if (description && description.length > 0) {
 		return (
-			<p className='flex h-6 items-center gap-2 text-sm' onClick={onFocus}>
+			<p
+				className='flex h-6 items-center gap-2 truncate text-sm'
+				onClick={onFocus}>
 				{description}
 			</p>
 		);
@@ -77,7 +79,7 @@ const TaskDescription: FC<TaskTitleProps> = ({
 
 	return (
 		<p
-			className='flex h-6 items-center gap-2 text-sm text-muted-foreground'
+			className='flex h-6 items-center gap-2 truncate text-sm text-muted-foreground'
 			onClick={onFocus}>
 			No description
 		</p>
