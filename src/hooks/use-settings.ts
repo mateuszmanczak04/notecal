@@ -5,6 +5,7 @@ const useSettings = () =>
 	useQuery({
 		queryKey: ['settings'],
 		queryFn: async () => await getSettings(),
+		staleTime: Infinity,
 	});
 
 export default useSettings;

@@ -9,6 +9,7 @@ const useTasks = () => {
 		queryKey: ['tasks'],
 		queryFn: async () =>
 			await getTasks({ orderBy: data?.settings?.orderTasks || 'createdAt' }),
+		staleTime: Infinity,
 	});
 };
 

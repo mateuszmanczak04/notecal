@@ -6,6 +6,7 @@ const useCourses = () =>
 	useQuery({
 		queryKey: ['courses'],
 		queryFn: async () => await getCourses(),
+		staleTime: Infinity,
 	});
 
 export default useCourses;
