@@ -2,11 +2,13 @@
 
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
-import { CompleteTaskSchema } from '@/schemas';
+import { UpdateTaskCompletedSchema } from '@/schemas';
 import { z } from 'zod';
 
-const completeTask = async (values: z.infer<typeof CompleteTaskSchema>) => {
-	const validatedFields = CompleteTaskSchema.safeParse(values);
+const updateTaskCompleted = async (
+	values: z.infer<typeof UpdateTaskCompletedSchema>,
+) => {
+	const validatedFields = UpdateTaskCompletedSchema.safeParse(values);
 
 	if (!validatedFields.success) {
 		return { error: 'Invalid fields.' };
@@ -51,4 +53,4 @@ const completeTask = async (values: z.infer<typeof CompleteTaskSchema>) => {
 	}
 };
 
-export default completeTask;
+export default updateTaskCompleted;

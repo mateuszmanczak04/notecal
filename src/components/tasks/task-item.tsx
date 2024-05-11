@@ -1,7 +1,7 @@
 'use client';
 
-import completeTask from '@/actions/complete-task';
 import { deleteTask } from '@/actions/delete-task';
+import updateTaskCompleted from '@/actions/update-task-completed';
 import { updateTaskDueDate } from '@/actions/update-task-due-date';
 import TaskCourse from '@/components/tasks/task-course';
 import TaskDescription from '@/components/tasks/task-description';
@@ -39,7 +39,7 @@ const TaskItem: FC<TaskItemProps> = ({
 
 	const onToggle = () => {
 		startTransition(() => {
-			completeTask({ id, newValue: !completed });
+			updateTaskCompleted({ id, newValue: !completed });
 			toggleTask(id);
 		});
 	};

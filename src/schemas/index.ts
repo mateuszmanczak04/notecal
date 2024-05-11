@@ -55,7 +55,7 @@ export const CreateTaskFormSchema = z.object({
 	completed: z.boolean().optional(),
 });
 
-export const CompleteTaskSchema = z.object({
+export const UpdateTaskCompletedSchema = z.object({
 	id: z.string(),
 	newValue: z.boolean(),
 });
