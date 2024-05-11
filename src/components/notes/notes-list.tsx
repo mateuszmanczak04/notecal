@@ -1,8 +1,10 @@
 'use client';
 
 import { getCourseNotes } from '@/actions/get-course-notes';
+import NewNoteButton from '@/components/notes/new-note-button';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import { FC } from 'react';
 
 interface NotesListProps {
@@ -32,10 +34,13 @@ const NotesList: FC<NotesListProps> = ({ courseId }) => {
 		<div className='flex flex-col gap-2'>
 			<p className='text-xl font-semibold'>Notes:</p>
 			{data?.notes?.map(note => (
-				<Button key={note.id} variant='secondary' size='sm'>
-					{note.startTime.toDateString()}
+				<Button key={note.id} variant='secondary' size='sm' asChild>
+					<Link href={`/notes/${courseId}/${note.id}`}>
+						{note.startTime.toDateString()}
+					</Link>
 				</Button>
 			))}
+			<NewNoteButton courseId={courseId} />
 		</div>
 	);
 };
