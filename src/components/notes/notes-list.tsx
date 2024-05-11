@@ -1,6 +1,6 @@
 'use client';
 
-import { getCourseNotes } from '@/actions/get-course-notes';
+import { getCourseNotes } from '@/actions/courses/get-course-notes';
 import NewNoteButton from '@/components/notes/new-note-button';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';

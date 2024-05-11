@@ -1,8 +1,8 @@
 'use client';
 
-import { deleteTask } from '@/actions/delete-task';
-import updateTaskCompleted from '@/actions/update-task-completed';
-import { updateTaskDueDate } from '@/actions/update-task-due-date';
+import { deleteTask } from '@/actions/tasks/delete-task';
+import updateTaskCompleted from '@/actions/tasks/update-task-completed';
+import { updateTaskDueDate } from '@/actions/tasks/update-task-due-date';
 import TaskCourse from '@/components/tasks/task-course';
 import TaskDescription from '@/components/tasks/task-description';
 import TaskDueDate from '@/components/tasks/task-due-date';

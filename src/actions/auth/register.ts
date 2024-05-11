@@ -1,6 +1,6 @@
 'use server';
 
-import login from '@/actions/login';
+import login from '@/actions/auth/login';
 import { db } from '@/lib/db';
 import { RegisterSchema } from '@/schemas';
 import bcrypt from 'bcryptjs';

@@ -1,6 +1,6 @@
 'use client';
 
-import { getCourseTeacher } from '@/actions/get-course-teacher';
+import { getCourseTeacher } from '@/actions/courses/get-course-teacher';
 import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import register from '@/actions/register';
+import register from '@/actions/auth/register';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {

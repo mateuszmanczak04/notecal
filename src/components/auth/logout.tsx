@@ -1,4 +1,4 @@
-import logout from '@/actions/logout';
+import logout from '@/actions/auth/logout';
 import { Button, type ButtonProps } from '@/components/ui/button';
 
 const Logout = ({ variant }: { variant: ButtonProps['variant'] }) => {

@@ -1,6 +1,6 @@
 'use client';
 
-import createCourse from '@/actions/create-course';
+import createCourse from '@/actions/courses/create-course';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {

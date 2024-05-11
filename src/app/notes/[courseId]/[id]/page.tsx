@@ -1,6 +1,6 @@
 'use client';
 
-import { getNote } from '@/actions/get-note';
+import { getNote } from '@/actions/notes/get-note';
 import NoteContent from '@/components/notes/note-content';
 import NoteTasksList from '@/components/notes/note-tasks-list';
 import NoteTeacher from '@/components/notes/note-teacher';

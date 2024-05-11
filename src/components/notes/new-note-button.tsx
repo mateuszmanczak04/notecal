@@ -1,6 +1,6 @@
 'use client';
 
-import { createNewNote } from '@/actions/create-new-note';
+import { createNewNote } from '@/actions/notes/create-new-note';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useQueryClient } from '@tanstack/react-query';

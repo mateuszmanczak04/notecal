@@ -1,4 +1,4 @@
-import { createNewNote } from '@/actions/create-new-note';
+import { createNewNote } from '@/actions/notes/create-new-note';
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';

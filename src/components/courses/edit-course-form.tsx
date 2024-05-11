@@ -1,6 +1,6 @@
 'use client';
 
-import updateCourse from '@/actions/update-course';
+import updateCourse from '@/actions/courses/update-course';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {

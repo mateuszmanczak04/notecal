@@ -1,5 +1,5 @@
-import { getCourses } from '@/actions/get-courses';
-import { getTasks } from '@/actions/get-tasks';
+import { getCourses } from '@/actions/courses/get-courses';
+import { getTasks } from '@/actions/tasks/get-tasks';
 import '@/app/globals.css';
 import { auth } from '@/auth';
 import NavAuthenticated from '@/components/nav-authenticated';

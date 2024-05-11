@@ -1,6 +1,6 @@
 'use client';
 
-import createTask from '@/actions/create-task';
+import createTask from '@/actions/tasks/create-task';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
