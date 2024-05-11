@@ -8,13 +8,9 @@ import { useParams } from 'next/navigation';
 import { ReactNode, createContext, useContext } from 'react';
 
 interface NoteContextProps {
-	note: Note;
-	noteIsLoading: boolean;
+	currentNote: Note;
 	course: Course;
-	courseIsLoading: boolean;
-	notes?: Note[];
-	notesError?: string;
-	notesIsLoading: boolean;
+	notes: Note[];
 	tasks?: Task[];
 	tasksError?: string;
 	tasksIsLoading: boolean;
@@ -26,11 +22,11 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 	const { id, courseId } = useParams();
 
 	// get note from db
-	const { data: noteData, isLoading: noteIsLoading } = useQuery({
-		enabled: !!id,
-		queryFn: async () => getNote({ id: id as string }),
-		queryKey: ['note', id],
-	});
+	// const { data: noteData, isLoading: noteIsLoading } = useQuery({
+	// 	enabled: !!id,
+	// 	queryFn: async () => getNote({ id: id as string }),
+	// 	queryKey: ['note', id],
+	// });
 
 	// get course from db
 	const { data: courseData, isLoading: courseIsLoading } = useQuery({
@@ -53,14 +49,14 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 		queryKey: ['course-tasks', courseId],
 	});
 
-	if (courseIsLoading || noteIsLoading) {
+	if (courseIsLoading || notesIsLoading) {
 		return <p className='animate-bounce'>Loading...</p>;
 	}
 
 	if (
-		!noteData?.note ||
+		!notesData?.notes ||
 		!courseData?.course ||
-		noteData.error ||
+		notesData.error ||
 		courseData.error
 	) {
 		return (
@@ -70,16 +66,14 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 		);
 	}
 
+	const currentNote = notesData?.notes?.filter(n => n.id === id)[0];
+
 	return (
 		<NoteContext.Provider
 			value={{
-				note: noteData.note,
-				noteIsLoading,
+				currentNote,
 				course: courseData.course,
-				courseIsLoading,
-				notes: notesData?.notes,
-				notesError: notesData?.error,
-				notesIsLoading,
+				notes: notesData.notes,
 				tasks: tasksData?.tasks,
 				tasksError: tasksData?.error,
 				tasksIsLoading,

@@ -6,20 +6,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 const NotesList = () => {
-	const {
-		course,
-		notes,
-		notesIsLoading: isLoading,
-		notesError: error,
-	} = useNoteContext();
-
-	if (error) {
-		return <p className='rounded-md bg-red-100 p-2 text-red-800'>{error}</p>;
-	}
-
-	if (isLoading) {
-		return <p className='animate-bounce'>Loading...</p>;
-	}
+	const { course, notes } = useNoteContext();
 
 	return (
 		<div className='flex flex-col gap-2'>
