@@ -24,6 +24,7 @@ model User {
   courses   Course[]
   Task      Task[]
   Settings  Settings?
+  Note      Note[]
 }
 
 model Account {
@@ -87,6 +88,7 @@ model Course {
   user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId  String
   Task    Task[]
+  Note    Note[]
 }
 
 enum TaskPriority {
@@ -130,4 +132,15 @@ model Settings {
   orderTasks OrderTasksEnum @default(createdAt)
   createdAt  DateTime       @default(now())
   updatedAt  DateTime       @updatedAt
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startTime DateTime
+  endTime   DateTime
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  content   String   @default("")
 }
