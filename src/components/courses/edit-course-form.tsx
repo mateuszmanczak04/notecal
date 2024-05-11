@@ -16,6 +16,8 @@ import { Input } from '@/components/ui/input';
 import useCourse from '@/hooks/use-course';
 import { EditCourseFormSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { FC, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { ClipLoader } from 'react-spinners';
@@ -37,6 +39,8 @@ const EditCourseForm: FC<EditCourseFormProps> = ({ id }) => {
 			newTeacher: course?.teacher || '',
 		},
 	});
+	const router = useRouter();
+	const queryClient = useQueryClient();
 
 	const onSubmit = (values: z.infer<typeof EditCourseFormSchema>) => {
 		setError('');
@@ -44,7 +48,10 @@ const EditCourseForm: FC<EditCourseFormProps> = ({ id }) => {
 			editCourse(values).then(res => {
 				if (res?.error) {
 					setError(res.error);
+					return;
 				}
+				queryClient.invalidateQueries({ queryKey: ['courses'] });
+				router.push('/courses');
 			});
 		});
 	};

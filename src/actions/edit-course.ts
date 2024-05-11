@@ -34,11 +34,11 @@ const editCourse = async (values: z.infer<typeof EditCourseFormSchema>) => {
 			where: { id, userId: session?.user?.id },
 			data: { name: newName, teacher: newTeacher },
 		});
+
+		return { success: true };
 	} catch (error) {
 		return { error: 'Something went wrong.' };
 	}
-
-	redirect('/courses');
 };
 
 export default editCourse;
