@@ -19,6 +19,8 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import useSettings from '@/hooks/use-settings';
+import sortTasks from '@/lib/sort-tasks';
 import { cn } from '@/lib/utils';
 import { Task } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
@@ -30,30 +32,25 @@ interface TaskItemProps {
 }
 
 const TaskItem: FC<TaskItemProps> = ({
-	task: {
-		title,
-		description,
-		courseId,
-		priority,
-		dueDate,
-		completed: done,
-		id,
-	},
+	task: { title, description, courseId, priority, dueDate, completed, id },
 }) => {
-	const [completed, setCompleted] = useState<boolean>(done);
-	const [optimisticCompleted, setOptimisticCompleted] =
-		useOptimistic<boolean>(completed);
 	const [isPending, startTransition] = useTransition();
 	const queryClient = useQueryClient();
 
 	const onToggle = () => {
-		startTransition(async () => {
-			setOptimisticCompleted(prev => !prev);
-			const res = await completeTask({ id, newValue: !completed });
-			if (typeof res.completed === 'boolean') {
-				setCompleted(res.completed);
-			}
-			queryClient.invalidateQueries({ queryKey: ['tasks'] });
+		startTransition(() => {
+			completeTask({ id, newValue: !completed });
+			queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
+				const oldTasks = old.tasks;
+				return {
+					tasks: oldTasks.map(task => {
+						if (task.id === id) {
+							return { ...task, completed: !task.completed };
+						}
+						return task;
+					}),
+				};
+			});
 		});
 	};
 
@@ -74,16 +71,12 @@ const TaskItem: FC<TaskItemProps> = ({
 	};
 
 	return (
-		<Card
-			className={cn(
-				'shadow-none',
-				isPending && 'pointer-events-none opacity-75',
-			)}>
+		<Card className={'shadow-none'}>
 			<div className='flex items-start'>
 				<div className='py-6 pl-6'>
 					<Checkbox
 						onClick={onToggle}
-						checked={optimisticCompleted}
+						checked={completed}
 						className='h-8 w-8 shadow-none'
 					/>
 				</div>
