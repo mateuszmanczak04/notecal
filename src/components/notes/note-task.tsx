@@ -1,13 +1,14 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { TaskPriority } from '@prisma/client';
 import { FC } from 'react';
 
 interface NoteTaskProps {
 	title: string;
-	description: string;
-	priority: number;
-	date: string;
+	description: string | null;
+	priority: TaskPriority | null;
+	date: Date | null;
 }
 
 const NoteTask: FC<NoteTaskProps> = ({
@@ -23,7 +24,7 @@ const NoteTask: FC<NoteTaskProps> = ({
 			<div className='flex items-center gap-2'>
 				<div className='h-4 w-4 rounded-full bg-green-500'></div>
 				<p className='h-6 min-w-16 rounded-md bg-gray-200 px-1 leading-6'>
-					{date}
+					{date?.toDateString()}
 				</p>
 			</div>
 			<Button className='mt-2' size='sm'>
