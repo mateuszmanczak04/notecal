@@ -3,9 +3,11 @@
 import { Button } from '@/components/ui/button';
 import { FC } from 'react';
 
-interface NoteLessonsListProps {}
+interface NotesListProps {
+	courseId: string;
+}
 
-const NoteLessonsList: FC<NoteLessonsListProps> = ({}) => {
+const NotesList: FC<NotesListProps> = ({ courseId }) => {
 	return (
 		<div className='flex flex-col gap-2'>
 			<p className='text-xl font-semibold'>Lessons:</p>
@@ -28,4 +30,4 @@ const NoteLessonsList: FC<NoteLessonsListProps> = ({}) => {
 	);
 };
 
-export default NoteLessonsList;
+export default NotesList;

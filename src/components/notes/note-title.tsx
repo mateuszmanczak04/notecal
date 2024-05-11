@@ -2,13 +2,15 @@
 
 import { FC } from 'react';
 
-interface NoteTitleProps {}
+interface NoteTitleProps {
+	title: string;
+}
 
-const NoteTitle: FC<NoteTitleProps> = ({}) => {
+const NoteTitle: FC<NoteTitleProps> = ({ title }) => {
 	return (
 		<div>
 			<h1 className='text-xl font-semibold'>
-				Algorytmy i Struktury Danych (10.02.2024)
+				{title}
 			</h1>
 		</div>
 	);

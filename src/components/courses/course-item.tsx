@@ -29,7 +29,7 @@ const CourseItem: FC<CourseItemProps> = ({ name, teacher, id }) => {
 						asChild
 						className='flex flex-1 items-center justify-center gap-1'
 						size='sm'>
-						<Link href={`/notes/1`}>
+						<Link href={`/notes/${id}`}>
 							<NotebookPen className='h-4 w-4' />
 							Notes
 						</Link>

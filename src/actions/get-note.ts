@@ -21,13 +21,9 @@ export const getNote = async (values: z.infer<typeof GetNoteSchema>) => {
 			return { error: 'Unauthorized.' };
 		}
 
-		console.log(session);
-
 		let note = await db.note.findUnique({
 			where: { userId: session.user.id, id },
 		});
-
-		console.log('note', note);
 
 		if (!note) {
 			return { error: 'Note does not exist.' };

@@ -2,19 +2,23 @@
 
 import { getNote } from '@/actions/get-note';
 import NoteContent from '@/components/notes/note-content';
-import NoteLessonsList from '@/components/notes/note-lessons-list';
 import NoteTasksList from '@/components/notes/note-tasks-list';
 import NoteTeacher from '@/components/notes/note-teacher';
 import NoteTitle from '@/components/notes/note-title';
+import NotesList from '@/components/notes/notes-list';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 
 const NotePage = () => {
-	const { id } = useParams();
+	const { courseId, id } = useParams();
 	const { data, isLoading, isError, error } = useQuery({
 		queryFn: async () => await getNote({ id: id as string }),
 		queryKey: ['notes', id],
 	});
+
+	// todo - these are fake:
+	const courseName = 'Algorytmy';
+	const teacherName = 'Andrew Huberman';
 
 	if (data?.error) {
 		// todo - improve appearance
@@ -33,13 +37,16 @@ const NotePage = () => {
 	return (
 		<div className='flex w-full min-w-[800px] gap-4 p-4'>
 			<div className='flex-1'>
-				<NoteTitle />
-				<NoteContent />
+				<NoteTitle
+					title={`${courseName} (${data?.note?.startTime.toLocaleDateString('en')})`}
+				/>
+				<NoteContent content={data?.note?.content || ''} />
 			</div>
 			<div className='flex w-48 flex-col gap-8'>
-				<NoteLessonsList />
-				<NoteTasksList />
-				<NoteTeacher />
+				<NotesList courseId={courseId as string} />
+				<NoteTasksList courseId={courseId as string} />
+				{/* todo - fetch real course teacher */}
+				<NoteTeacher teacher={teacherName} />
 			</div>
 		</div>
 	);
