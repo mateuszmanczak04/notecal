@@ -1,6 +1,6 @@
 'use client';
 
-import editCourse from '@/actions/edit-course';
+import updateCourse from '@/actions/update-course';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import useCourse from '@/hooks/use-course';
-import { EditCourseFormSchema } from '@/schemas';
+import { UpdateCourseFormSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -31,8 +31,8 @@ const EditCourseForm: FC<EditCourseFormProps> = ({ id }) => {
 	const course = useCourse(id);
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState('');
-	const form = useForm<z.infer<typeof EditCourseFormSchema>>({
-		resolver: zodResolver(EditCourseFormSchema),
+	const form = useForm<z.infer<typeof UpdateCourseFormSchema>>({
+		resolver: zodResolver(UpdateCourseFormSchema),
 		defaultValues: {
 			id: course?.id || '',
 			newName: course?.name || '',
@@ -42,10 +42,10 @@ const EditCourseForm: FC<EditCourseFormProps> = ({ id }) => {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const onSubmit = (values: z.infer<typeof EditCourseFormSchema>) => {
+	const onSubmit = (values: z.infer<typeof UpdateCourseFormSchema>) => {
 		setError('');
 		startTransition(() => {
-			editCourse(values).then(res => {
+			updateCourse(values).then(res => {
 				if (res?.error) {
 					setError(res.error);
 					return;

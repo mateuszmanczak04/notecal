@@ -26,7 +26,7 @@ export const CreateCourseFormSchema = z.object({
 	}),
 });
 
-export const EditCourseFormSchema = z.object({
+export const UpdateCourseFormSchema = z.object({
 	id: z.string().min(1, { message: 'Course id id required.' }),
 	newName: z.string().min(1, { message: 'Course name is required.' }).max(30, {
 		message: 'Maximum length of the course name is 30 characters.',

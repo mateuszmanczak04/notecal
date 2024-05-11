@@ -2,12 +2,12 @@
 
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
-import { EditCourseFormSchema } from '@/schemas';
+import { UpdateCourseFormSchema } from '@/schemas';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
-const editCourse = async (values: z.infer<typeof EditCourseFormSchema>) => {
-	const validatedFields = EditCourseFormSchema.safeParse(values);
+const updateCourse = async (values: z.infer<typeof UpdateCourseFormSchema>) => {
+	const validatedFields = UpdateCourseFormSchema.safeParse(values);
 
 	if (!validatedFields.success) {
 		return { error: 'Invalid fields.' };
@@ -41,4 +41,4 @@ const editCourse = async (values: z.infer<typeof EditCourseFormSchema>) => {
 	}
 };
 
-export default editCourse;
+export default updateCourse;
