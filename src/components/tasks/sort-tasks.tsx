@@ -30,7 +30,7 @@ const SortTasks = ({}) => {
 				value === 'completed')
 		) {
 			startTransition(async () => {
-				await updateSettings({ orderTasks: value });
+				updateSettings({ orderTasks: value });
 				queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
 					const oldTasks = old.tasks;
 					if (!oldTasks || oldTasks.length === 0) return { tasks: [] };
