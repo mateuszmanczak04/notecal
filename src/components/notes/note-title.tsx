@@ -1,29 +1,20 @@
 'use client';
 
-import { getCourseName } from '@/actions/courses/get-course-name';
-import { useQuery } from '@tanstack/react-query';
-import { FC } from 'react';
+import { useNoteContext } from '@/components/notes/note-context';
 
-interface NoteTitleProps {
-	courseId: string;
-	date: Date;
-}
+const NoteTitle = () => {
+	const { course, note } = useNoteContext();
 
-const NoteTitle: FC<NoteTitleProps> = ({ courseId, date }) => {
-	const { data, isLoading } = useQuery({
-		queryFn: async () => await getCourseName({ courseId }),
-		queryKey: ['course-name', courseId],
-	});
-
-	if (!isLoading) {
-		return (
-			<div>
-				<h1 className='text-xl font-semibold'>
-					{data?.courseName} ({date.toDateString()})
-				</h1>
-			</div>
-		);
-	}
+	return (
+		<div>
+			<h1 className='text-xl font-semibold'>
+				{course.name}{' '}
+				<span className='text-sm opacity-75'>
+					({note.startTime.toDateString()})
+				</span>
+			</h1>
+		</div>
+	);
 };
 
 export default NoteTitle;

@@ -1,15 +1,13 @@
 'use client';
 
-import { FC } from 'react';
+import { useNoteContext } from '@/components/notes/note-context';
 
-interface NoteContentProps {
-	content: string;
-}
+const NoteContent = () => {
+	const { note } = useNoteContext();
 
-const NoteContent: FC<NoteContentProps> = ({ content }) => {
 	return (
 		<div className='mt-2 flex flex-col gap-4 rounded-md bg-gray-100 p-4'>
-			{content}
+			{note.content}
 		</div>
 	);
 };

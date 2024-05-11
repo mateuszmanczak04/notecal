@@ -1,28 +1,25 @@
 'use client';
 
 import { createNewNote } from '@/actions/notes/create-new-note';
+import { useNoteContext } from '@/components/notes/note-context';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
-import { useParams } from 'next/navigation';
-import { FC, useTransition } from 'react';
+import { useTransition } from 'react';
 
-interface NewNoteButtonProps {
-	courseId: string;
-}
-
-const NewNoteButton: FC<NewNoteButtonProps> = ({ courseId }) => {
+const NewNoteButton = () => {
+	const { course } = useNoteContext();
 	const [isPending, startTransition] = useTransition();
 	const queryClient = useQueryClient();
 
 	const onClick = () => {
-		if (courseId && typeof courseId === 'string') {
-			startTransition(async () => {
-				await createNewNote({ courseId });
-				queryClient.invalidateQueries({ queryKey: ['notes', courseId] });
+		startTransition(async () => {
+			await createNewNote({ courseId: course.id! });
+			queryClient.invalidateQueries({
+				queryKey: ['course-notes', course.id!],
 			});
-		}
+		});
 	};
 
 	return (

@@ -1,24 +1,16 @@
 'use client';
 
+import { useNoteContext } from '@/components/notes/note-context';
 import NoteTask from '@/components/notes/note-task';
 import { Button } from '@/components/ui/button';
-import useTasks from '@/hooks/use-tasks';
-import { FC } from 'react';
 
-interface NoteTasksListProps {
-	courseId: string;
-}
-
-const NoteTasksList: FC<NoteTasksListProps> = ({ courseId }) => {
-	const { data: tasksData } = useTasks();
-	const courseTasks = tasksData?.tasks?.filter(
-		task => task.courseId === courseId,
-	);
+const NoteTasksList = () => {
+	const { tasks } = useNoteContext();
 
 	return (
 		<div className='flex flex-col gap-2'>
 			<p className='text-xl font-semibold'>Tasks:</p>
-			{courseTasks?.map(task => (
+			{tasks?.map(task => (
 				<NoteTask
 					key={task.id}
 					date={task.dueDate}
