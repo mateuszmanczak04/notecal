@@ -104,3 +104,7 @@ export const UpdateSettingsSchema = z.object({
 		.optional(),
 	language: z.enum(['en']).optional(),
 });
+
+export const GetNoteSchema = z.object({
+	id: z.string(),
+});
