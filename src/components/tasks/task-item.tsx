@@ -55,9 +55,13 @@ const TaskItem: FC<TaskItemProps> = ({
 	};
 
 	const onDelete = () => {
-		startTransition(async () => {
-			deleteTask({ id }).then(() => {
-				queryClient.invalidateQueries({ queryKey: ['tasks'] });
+		startTransition(() => {
+			deleteTask({ id });
+			queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
+				const oldTasks = old.tasks;
+				return {
+					tasks: oldTasks.filter(task => task.id !== id),
+				};
 			});
 		});
 	};
