@@ -1,3 +1,4 @@
+import { createNewNote } from '@/actions/create-new-note';
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
@@ -13,8 +14,12 @@ const page = async ({ params }: { params: { courseId: string } }) => {
 	});
 
 	if (latestNote.length === 0) {
-		// todo - display button to create a new note / redirect to create note page
-		redirect('/courses');
+		const { newNote } = await createNewNote({ courseId: params.courseId });
+		if (newNote) {
+			redirect(`/notes/${params.courseId}/${newNote.id}`);
+		} else {
+			redirect('/courses');
+		}
 	}
 
 	redirect(`/notes/${latestNote[0].courseId}/${latestNote[0].id}`);

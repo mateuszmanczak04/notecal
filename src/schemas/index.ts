@@ -120,3 +120,7 @@ export const GetCourseNameSchema = z.object({
 export const GetCourseTeacher = z.object({
 	courseId: z.string(),
 });
+
+export const CreateNewNoteSchema = z.object({
+	courseId: z.string(),
+});
