@@ -22,8 +22,7 @@ interface TaskTitleProps {
 	dueDate: Date | null;
 }
 
-const TaskDueDate: FC<TaskTitleProps> = ({ id, dueDate: initialDueDate }) => {
-	const [dueDate, setDueDate] = useState<Date | null>(initialDueDate);
+const TaskDueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 	const [isPending, startTransition] = useTransition();
 	const { data: settings } = useSettings();
 	const queryClient = useQueryClient();
@@ -47,7 +46,6 @@ const TaskDueDate: FC<TaskTitleProps> = ({ id, dueDate: initialDueDate }) => {
 				if (settings?.settings?.orderTasks) {
 					sortTasks(settings.settings.orderTasks);
 				}
-				setDueDate(date);
 			});
 		}
 	};

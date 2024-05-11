@@ -68,8 +68,17 @@ const TaskItem: FC<TaskItemProps> = ({
 
 	const onResetDueDate = () => {
 		startTransition(async () => {
-			updateTaskDueDate({ id, newDueDate: null }).then(() => {
-				queryClient.invalidateQueries({ queryKey: ['tasks'] });
+			updateTaskDueDate({ id, newDueDate: null });
+			queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
+				const oldTasks = old.tasks;
+				return {
+					tasks: oldTasks.map(task => {
+						if (task.id === id) {
+							return { ...task, dueDate: null };
+						}
+						return task;
+					}),
+				};
 			});
 		});
 	};
