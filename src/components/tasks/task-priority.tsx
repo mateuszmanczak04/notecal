@@ -11,8 +11,10 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import useSettings from '@/hooks/use-settings';
+import sortTasks from '@/lib/sort-tasks';
 import { cn } from '@/lib/utils';
-import { TaskPriority as TaskPriorityEnum } from '@prisma/client';
+import { Task, TaskPriority as TaskPriorityEnum } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { FC, useState, useTransition } from 'react';
 
@@ -39,6 +41,7 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 	);
 	const [isPending, startTransition] = useTransition();
 	const queryClient = useQueryClient();
+	const { data: settings } = useSettings();
 
 	// todo - add error handling and use of useOptimistic
 	const onChange = (newPriority: string) => {
@@ -50,11 +53,24 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 		)
 			return;
 		startTransition(async () => {
-			await updateTaskPriority({
+			updateTaskPriority({
 				id,
 				newPriority: newPriority === NO_TASK_PRIORITY ? null : newPriority,
 			});
-			queryClient.invalidateQueries({ queryKey: ['tasks'] });
+			queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
+				const oldTasks = old.tasks;
+				return {
+					tasks: oldTasks.map(task => {
+						if (task.id === id) {
+							return { ...task, priority: newPriority };
+						}
+						return task;
+					}),
+				};
+			});
+			if (settings?.settings?.orderTasks) {
+				sortTasks(settings.settings.orderTasks);
+			}
 			setPriority(newPriority === NO_TASK_PRIORITY ? null : newPriority);
 		});
 	};
