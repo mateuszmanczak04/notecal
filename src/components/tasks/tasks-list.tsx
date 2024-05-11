@@ -2,7 +2,7 @@
 
 import TaskItem from '@/components/tasks/task-item';
 import useTasks from '@/hooks/use-tasks';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 interface TasksListProps {}

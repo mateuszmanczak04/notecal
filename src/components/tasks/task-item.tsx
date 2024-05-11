@@ -19,10 +19,14 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+	deleteTask as deleteTaskLocal,
+	toggleTask,
+	updateTaskDueDate as updateTaskDueDateLocal,
+} from '@/lib/update-task';
 import { Task } from '@prisma/client';
-import { useQueryClient } from '@tanstack/react-query';
 import { EllipsisVertical, Trash } from 'lucide-react';
-import { FC, useOptimistic, useState, useTransition } from 'react';
+import { FC, useTransition } from 'react';
 
 interface TaskItemProps {
 	task: Task;
@@ -32,51 +36,25 @@ const TaskItem: FC<TaskItemProps> = ({
 	task: { title, description, courseId, priority, dueDate, completed, id },
 }) => {
 	const [isPending, startTransition] = useTransition();
-	const queryClient = useQueryClient();
 
 	const onToggle = () => {
 		startTransition(() => {
 			completeTask({ id, newValue: !completed });
-			queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
-				const oldTasks = old.tasks;
-				return {
-					tasks: oldTasks.map(task => {
-						if (task.id === id) {
-							return { ...task, completed: !task.completed };
-						}
-						return task;
-					}),
-				};
-			});
+			toggleTask(id);
 		});
 	};
 
 	const onDelete = () => {
 		startTransition(() => {
 			deleteTask({ id });
-			queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
-				const oldTasks = old.tasks;
-				return {
-					tasks: oldTasks.filter(task => task.id !== id),
-				};
-			});
+			deleteTaskLocal(id);
 		});
 	};
 
 	const onResetDueDate = () => {
 		startTransition(() => {
 			updateTaskDueDate({ id, newDueDate: null });
-			queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
-				const oldTasks = old.tasks;
-				return {
-					tasks: oldTasks.map(task => {
-						if (task.id === id) {
-							return { ...task, dueDate: null };
-						}
-						return task;
-					}),
-				};
-			});
+			updateTaskDueDateLocal(id, null);
 		});
 	};
 

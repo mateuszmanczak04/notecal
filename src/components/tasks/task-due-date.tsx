@@ -8,9 +8,8 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover';
+import { updateTaskDueDate as updateTaskDueDateLocal } from '@/lib/update-task';
 import { cn } from '@/lib/utils';
-import { Task } from '@prisma/client';
-import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { FC, useTransition } from 'react';
@@ -22,24 +21,13 @@ interface TaskTitleProps {
 
 const TaskDueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 	const [isPending, startTransition] = useTransition();
-	const queryClient = useQueryClient();
 
 	// todo - add error handling and use of useOptimistic
 	const onChange = (date: any) => {
 		if (date) {
 			startTransition(() => {
 				updateTaskDueDate({ id, newDueDate: date.toString() });
-				queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
-					const oldTasks = old.tasks;
-					return {
-						tasks: oldTasks.map(task => {
-							if (task.id === id) {
-								return { ...task, dueDate: date };
-							}
-							return task;
-						}),
-					};
-				});
+				updateTaskDueDateLocal(id, date);
 			});
 		}
 	};

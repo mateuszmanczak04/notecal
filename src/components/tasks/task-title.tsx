@@ -2,8 +2,7 @@
 
 import { updateTaskName } from '@/actions/update-task-name';
 import { Input } from '@/components/ui/input';
-import { Task } from '@prisma/client';
-import { useQueryClient } from '@tanstack/react-query';
+import { updateTaskTitle as updateTaskTitleLocal } from '@/lib/update-task';
 import { FC, useRef, useState, useTransition } from 'react';
 
 interface TaskTitleProps {
@@ -18,24 +17,13 @@ const TaskTitle: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 		useState<string>(initialTitle);
 	const [isPending, startTransition] = useTransition();
 	const inputRef = useRef<HTMLInputElement>(null);
-	const queryClient = useQueryClient();
 
 	// todo - add error handling and use of useOptimistic
 	const submit = () => {
 		if (title && title.length > 0 && title !== titleBeforeEditing) {
 			startTransition(() => {
 				updateTaskName({ id, newTitle: title });
-				queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
-					const oldTasks = old.tasks;
-					return {
-						tasks: oldTasks.map(task => {
-							if (task.id === id) {
-								return { ...task, title };
-							}
-							return task;
-						}),
-					};
-				});
+				updateTaskTitleLocal(id, title);
 				setIsEditing(false);
 			});
 		} else {

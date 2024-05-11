@@ -13,21 +13,18 @@ import {
 } from '@/components/ui/dropdown-menu';
 import useCourse from '@/hooks/use-course';
 import useCourses from '@/hooks/use-courses';
+import { updateTaskCourseId as updateTaskCourseIdLocal } from '@/lib/update-task';
 import { OTHER_COURSE_NAME, cn } from '@/lib/utils';
-import { Course } from '@prisma/client';
-import { FC, useState, useTransition } from 'react';
+import { FC, useTransition } from 'react';
 
 interface TaskCourseProps {
 	id: string;
 	courseId: string | null;
 }
 
-const TaskCourse: FC<TaskCourseProps> = ({ id, courseId: initialCourseId }) => {
+const TaskCourse: FC<TaskCourseProps> = ({ id, courseId }) => {
 	// here we store string as the course id
 	// or null when user selected "Other" option
-	const [courseId, setCourseId] = useState<string | null>(
-		initialCourseId || null,
-	);
 	const [isPending, startTransition] = useTransition();
 
 	const { data } = useCourses();
@@ -38,24 +35,14 @@ const TaskCourse: FC<TaskCourseProps> = ({ id, courseId: initialCourseId }) => {
 	const onChange = (newCourseId: string) => {
 		startTransition(() => {
 			updateTaskCourseId({ id, newCourseId });
-			if (newCourseId === OTHER_COURSE_NAME) {
-				// when choosed 'Other'
-				setCourseId(null);
-			} else if (courses && courses.length > 0) {
-				// when choosed a course
-				setCourseId(newCourseId);
-			}
+			updateTaskCourseIdLocal(id, newCourseId);
 		});
 	};
 
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger className='-mt-1 h-6 select-none pt-0 outline-none'>
-				<Badge
-					className={cn(
-						'pointer-events-none bg-purple-600 shadow-none',
-						isPending && 'opacity-75',
-					)}>
+				<Badge className='pointer-events-none bg-purple-600 shadow-none'>
 					{course?.name || 'Other'}
 				</Badge>
 			</DropdownMenuTrigger>

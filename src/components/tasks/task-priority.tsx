@@ -11,9 +11,9 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { updateTaskPriority as updateTaskPriorityLocal } from '@/lib/update-task';
 import { cn } from '@/lib/utils';
-import { Task, TaskPriority as TaskPriorityEnum } from '@prisma/client';
-import { useQueryClient } from '@tanstack/react-query';
+import { TaskPriority as TaskPriorityEnum } from '@prisma/client';
 import { FC, useTransition } from 'react';
 
 interface TaskPriorityProps {
@@ -32,7 +32,6 @@ const getPriorityName = (priority: TaskPriorityEnum | null) => {
 
 const TaskPriority: FC<TaskPriorityProps> = ({ id, priority }) => {
 	const [isPending, startTransition] = useTransition();
-	const queryClient = useQueryClient();
 
 	// todo - add error handling and use of useOptimistic
 	const onChange = (newPriority: string) => {
@@ -49,17 +48,10 @@ const TaskPriority: FC<TaskPriorityProps> = ({ id, priority }) => {
 				id,
 				newPriority: newPriority === NO_TASK_PRIORITY ? null : newPriority,
 			});
-			queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
-				const oldTasks = old.tasks;
-				return {
-					tasks: oldTasks.map(task => {
-						if (task.id === id) {
-							return { ...task, priority: newPriority };
-						}
-						return task;
-					}),
-				};
-			});
+			updateTaskPriorityLocal(
+				id,
+				newPriority === NO_TASK_PRIORITY ? null : newPriority,
+			);
 		});
 	};
 
@@ -72,7 +64,6 @@ const TaskPriority: FC<TaskPriorityProps> = ({ id, priority }) => {
 						priority === 'A' && 'bg-red-500 text-white',
 						priority === 'B' && 'bg-amber-500 text-white',
 						priority === 'C' && 'bg-green-500 text-white',
-						isPending && 'opacity-75',
 					)}>
 					{getPriorityName(priority)}
 				</Badge>
