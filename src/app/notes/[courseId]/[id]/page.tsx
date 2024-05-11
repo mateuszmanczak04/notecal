@@ -16,8 +16,6 @@ const NotePage = () => {
 		queryKey: ['notes', id],
 	});
 
-	const teacherName = 'Andrew Huberman';
-
 	if (data?.error) {
 		// todo - improve appearance
 		return (
@@ -32,22 +30,22 @@ const NotePage = () => {
 		return <p className='animate-bounce'>Loading...</p>;
 	}
 
-	return (
-		<div className='flex w-full min-w-[800px] gap-4 p-4'>
-			<div className='flex-1'>
-				{data?.note?.courseId && data?.note?.startTime && (
+	if (data?.note) {
+		return (
+			<div className='flex w-full min-w-[800px] gap-4 p-4'>
+				<div className='flex-1'>
 					<NoteTitle courseId={data.note.courseId} date={data.note.startTime} />
-				)}
-				<NoteContent content={data?.note?.content || ''} />
+					<NoteContent content={data.note.content || ''} />
+				</div>
+				<div className='flex w-48 flex-col gap-8'>
+					<NotesList courseId={data.note.courseId} />
+					<NoteTasksList courseId={data.note.courseId} />
+					{/* todo - fetch real course teacher */}
+					<NoteTeacher courseId={data.note.courseId} />
+				</div>
 			</div>
-			<div className='flex w-48 flex-col gap-8'>
-				<NotesList courseId={courseId as string} />
-				<NoteTasksList courseId={courseId as string} />
-				{/* todo - fetch real course teacher */}
-				<NoteTeacher teacher={teacherName} />
-			</div>
-		</div>
-	);
+		);
+	}
 };
 
 export default NotePage;
