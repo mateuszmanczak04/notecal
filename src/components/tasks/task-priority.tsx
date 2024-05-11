@@ -11,12 +11,10 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import useSettings from '@/hooks/use-settings';
-import sortTasks from '@/lib/sort-tasks';
 import { cn } from '@/lib/utils';
 import { Task, TaskPriority as TaskPriorityEnum } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
-import { FC, useState, useTransition } from 'react';
+import { FC, useTransition } from 'react';
 
 interface TaskPriorityProps {
 	id: string;
@@ -32,16 +30,9 @@ const getPriorityName = (priority: TaskPriorityEnum | null) => {
 	return 'No priority';
 };
 
-const TaskPriority: FC<TaskPriorityProps> = ({
-	id,
-	priority: initialPriority,
-}) => {
-	const [priority, setPriority] = useState<TaskPriorityEnum | null>(
-		initialPriority,
-	);
+const TaskPriority: FC<TaskPriorityProps> = ({ id, priority }) => {
 	const [isPending, startTransition] = useTransition();
 	const queryClient = useQueryClient();
-	const { data: settings } = useSettings();
 
 	// todo - add error handling and use of useOptimistic
 	const onChange = (newPriority: string) => {
@@ -50,9 +41,10 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 			newPriority !== 'B' &&
 			newPriority !== 'C' &&
 			newPriority !== NO_TASK_PRIORITY
-		)
+		) {
 			return;
-		startTransition(async () => {
+		}
+		startTransition(() => {
 			updateTaskPriority({
 				id,
 				newPriority: newPriority === NO_TASK_PRIORITY ? null : newPriority,
@@ -68,10 +60,6 @@ const TaskPriority: FC<TaskPriorityProps> = ({
 					}),
 				};
 			});
-			if (settings?.settings?.orderTasks) {
-				sortTasks(settings.settings.orderTasks);
-			}
-			setPriority(newPriority === NO_TASK_PRIORITY ? null : newPriority);
 		});
 	};
 

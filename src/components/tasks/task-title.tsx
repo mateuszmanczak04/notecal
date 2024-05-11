@@ -2,8 +2,6 @@
 
 import { updateTaskName } from '@/actions/update-task-name';
 import { Input } from '@/components/ui/input';
-import useSettings from '@/hooks/use-settings';
-import sortTasks from '@/lib/sort-tasks';
 import { Task } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { FC, useRef, useState, useTransition } from 'react';
@@ -21,7 +19,6 @@ const TaskTitle: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 	const [isPending, startTransition] = useTransition();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const queryClient = useQueryClient();
-	const { data: settings } = useSettings();
 
 	// todo - add error handling and use of useOptimistic
 	const submit = () => {
@@ -39,9 +36,6 @@ const TaskTitle: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 						}),
 					};
 				});
-				if (settings?.settings?.orderTasks) {
-					sortTasks(settings.settings.orderTasks);
-				}
 				setIsEditing(false);
 			});
 		} else {

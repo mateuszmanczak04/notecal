@@ -12,14 +12,11 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import sortTasks from '@/lib/sort-tasks';
-import { Task } from '@prisma/client';
-import { useQueryClient } from '@tanstack/react-query';
 import { useTransition } from 'react';
 import { BeatLoader } from 'react-spinners';
 
-const SortTasks = ({}) => {
+const SortTasks = () => {
 	const [isPending, startTransition] = useTransition();
-	const queryClient = useQueryClient();
 
 	const onSortChange = (value: string) => {
 		if (
@@ -30,7 +27,7 @@ const SortTasks = ({}) => {
 				value === 'priority' ||
 				value === 'completed')
 		) {
-			startTransition(async () => {
+			startTransition(() => {
 				updateSettings({ orderTasks: value });
 				sortTasks(value);
 			});

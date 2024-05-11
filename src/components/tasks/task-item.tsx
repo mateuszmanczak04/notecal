@@ -19,9 +19,6 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import useSettings from '@/hooks/use-settings';
-import sortTasks from '@/lib/sort-tasks';
-import { cn } from '@/lib/utils';
 import { Task } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { EllipsisVertical, Trash } from 'lucide-react';
@@ -67,7 +64,7 @@ const TaskItem: FC<TaskItemProps> = ({
 	};
 
 	const onResetDueDate = () => {
-		startTransition(async () => {
+		startTransition(() => {
 			updateTaskDueDate({ id, newDueDate: null });
 			queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
 				const oldTasks = old.tasks;
