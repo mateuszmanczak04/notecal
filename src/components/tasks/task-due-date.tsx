@@ -8,7 +8,10 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover';
+import useSettings from '@/hooks/use-settings';
+import sortTasks from '@/lib/sort-tasks';
 import { cn } from '@/lib/utils';
+import { Task } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
@@ -22,14 +25,28 @@ interface TaskTitleProps {
 const TaskDueDate: FC<TaskTitleProps> = ({ id, dueDate: initialDueDate }) => {
 	const [dueDate, setDueDate] = useState<Date | null>(initialDueDate);
 	const [isPending, startTransition] = useTransition();
+	const { data: settings } = useSettings();
 	const queryClient = useQueryClient();
 
 	// todo - add error handling and use of useOptimistic
 	const onChange = (date: any) => {
 		if (date) {
 			startTransition(async () => {
-				await updateTaskDueDate({ id, newDueDate: date.toString() });
-				queryClient.invalidateQueries({ queryKey: ['tasks'] });
+				updateTaskDueDate({ id, newDueDate: date.toString() });
+				queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
+					const oldTasks = old.tasks;
+					return {
+						tasks: oldTasks.map(task => {
+							if (task.id === id) {
+								return { ...task, dueDate: date };
+							}
+							return task;
+						}),
+					};
+				});
+				if (settings?.settings?.orderTasks) {
+					sortTasks(settings.settings.orderTasks);
+				}
 				setDueDate(date);
 			});
 		}
