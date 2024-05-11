@@ -108,3 +108,7 @@ export const UpdateSettingsSchema = z.object({
 export const GetNoteSchema = z.object({
 	id: z.string(),
 });
+
+export const GetCourseNotesSchema = z.object({
+	courseId: z.string(),
+});
