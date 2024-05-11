@@ -16,8 +16,6 @@ const NotePage = () => {
 		queryKey: ['notes', id],
 	});
 
-	// todo - these are fake:
-	const courseName = 'Algorytmy';
 	const teacherName = 'Andrew Huberman';
 
 	if (data?.error) {
@@ -37,9 +35,9 @@ const NotePage = () => {
 	return (
 		<div className='flex w-full min-w-[800px] gap-4 p-4'>
 			<div className='flex-1'>
-				<NoteTitle
-					title={`${courseName} (${data?.note?.startTime.toLocaleDateString('en')})`}
-				/>
+				{data?.note?.courseId && data?.note?.startTime && (
+					<NoteTitle courseId={data.note.courseId} date={data.note.startTime} />
+				)}
 				<NoteContent content={data?.note?.content || ''} />
 			</div>
 			<div className='flex w-48 flex-col gap-8'>

@@ -112,3 +112,7 @@ export const GetNoteSchema = z.object({
 export const GetCourseNotesSchema = z.object({
 	courseId: z.string(),
 });
+
+export const GetCourseNameSchema = z.object({
+	courseId: z.string(),
+});
