@@ -5,6 +5,7 @@ import { updateTaskDescription } from '@/actions/tasks/update-task-description';
 import { updateTaskPriority } from '@/actions/tasks/update-task-priority';
 import { updateTaskTitle } from '@/actions/tasks/update-task-title';
 import { Checkbox } from '@/components/ui/checkbox';
+import { cn } from '@/lib/utils';
 import { Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FC } from 'react';
@@ -72,7 +73,13 @@ const NoteTask: FC<NoteTaskProps> = ({
 					{dueDate.toDateString()}
 				</p>
 			)}
-			<div className='h-1 w-full bg-green-500'></div>
+			<div
+				className={cn(
+					'h-1 w-full',
+					priority === 'A' && 'bg-red-500 text-white',
+					priority === 'B' && 'bg-amber-500 text-white',
+					priority === 'C' && 'bg-green-500 text-white',
+				)}></div>
 		</div>
 	);
 };
