@@ -135,20 +135,18 @@ model Settings {
 }
 
 model NoteBlock {
-  id     String @id @default(cuid())
-  title  String
-  type   String
-  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade)
-  noteId String
+  id    String @id @default(cuid())
+  title String
+  type  String
 }
 
 model Note {
-  id        String      @id @default(cuid())
+  id        String   @id @default(cuid())
   userId    String
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   startTime DateTime
   endTime   DateTime
   courseId  String
-  course    Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  NoteBlock NoteBlock[]
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  blockIds  String[]
 }

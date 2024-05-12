@@ -1,8 +1,8 @@
 import { getCourse } from '@/actions/courses/get-course';
 import { getCourseNotes } from '@/actions/courses/get-course-notes';
 import { getCourseTasks } from '@/actions/courses/get-course-tasks';
-import { getNote } from '@/actions/notes/get-note';
-import { Course, Note, Task } from '@prisma/client';
+import { getNoteBlocks } from '@/actions/notes/get-note-blocks';
+import { Course, Note, NoteBlock, Task } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { ReactNode, createContext, useContext } from 'react';
@@ -14,6 +14,9 @@ interface NoteContextProps {
 	tasks?: Task[];
 	tasksError?: string;
 	tasksIsLoading: boolean;
+	blocks?: NoteBlock[];
+	blocksError?: string;
+	blocksIsLoading: boolean;
 }
 
 const NoteContext = createContext({} as NoteContextProps);
@@ -49,6 +52,13 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 		queryKey: ['course-tasks', courseId],
 	});
 
+	// note blocks from db
+	const { data: blocksData, isLoading: blocksIsLoading } = useQuery({
+		enabled: !!id,
+		queryFn: async () => await getNoteBlocks({ noteId: id as string }),
+		queryKey: ['note-blocks', id],
+	});
+
 	if (courseIsLoading || notesIsLoading) {
 		return <p className='animate-bounce'>Loading...</p>;
 	}
@@ -77,6 +87,9 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 				tasks: tasksData?.tasks,
 				tasksError: tasksData?.error,
 				tasksIsLoading,
+				blocks: blocksData?.blocks,
+				blocksError: blocksData?.error,
+				blocksIsLoading,
 			}}>
 			{children}
 		</NoteContext.Provider>
