@@ -134,13 +134,21 @@ model Settings {
   updatedAt  DateTime       @updatedAt
 }
 
+model NoteBlock {
+  id     String @id @default(cuid())
+  title  String
+  type   String
+  note   Note   @relation(fields: [noteId], references: [id])
+  noteId String
+}
+
 model Note {
-  id        String   @id @default(cuid())
+  id        String      @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   startTime DateTime
   endTime   DateTime
   courseId  String
-  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  content   String   @default("")
+  course    Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  NoteBlock NoteBlock[]
 }
