@@ -1,5 +1,8 @@
 'use client';
 
+import getWeekdayName from '@/lib/get-weekday-name';
+import { useCalendarContext } from './calendar-context';
+
 const WeekDayName = ({ day, date }: { day: string; date: string }) => {
 	return (
 		<div className='flex-1'>
@@ -10,16 +13,22 @@ const WeekDayName = ({ day, date }: { day: string; date: string }) => {
 };
 
 const CalendarWeekdayNames = () => {
+	const { currentFirstDay } = useCalendarContext();
+
 	return (
 		<div className='mt-2 flex flex-1 justify-between'>
 			<div className='w-16'></div>
-			<WeekDayName day='Mon' date='12.03.2024' />
-			<WeekDayName day='Tue' date='13.03.2024' />
-			<WeekDayName day='Wed' date='14.03.2024' />
-			<WeekDayName day='Thu' date='15.03.2024' />
-			<WeekDayName day='Fri' date='16.03.2024' />
-			<WeekDayName day='Sat' date='17.03.2024' />
-			<WeekDayName day='Sun' date='18.03.2024' />
+			{new Array(7).fill(0).map((_, i) => {
+				const date = new Date(currentFirstDay);
+				date.setTime(date.getTime() + i * 24 * 60 * 60 * 1000);
+				return (
+					<WeekDayName
+						key={date.toString()}
+						day={getWeekdayName(date.getDay())}
+						date={date.toDateString()}
+					/>
+				);
+			})}
 		</div>
 	);
 };

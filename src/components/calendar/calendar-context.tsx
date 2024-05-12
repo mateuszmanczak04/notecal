@@ -1,10 +1,11 @@
 import { getNotes } from '@/actions/notes/get-notes';
 import { Note } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
-import { ReactNode, createContext, useContext } from 'react';
+import { ReactNode, createContext, useContext, useState } from 'react';
 
 interface CalendarContextProps {
 	notes: Note[];
+	currentFirstDay: Date;
 }
 
 const CalendarContext = createContext({} as CalendarContextProps);
@@ -18,6 +19,7 @@ export const CalendarContextProvider = ({
 		queryFn: async () => await getNotes(),
 		queryKey: ['notes'],
 	});
+	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 
 	if (isLoading) {
 		return <p>Loading...</p>;
@@ -32,7 +34,8 @@ export const CalendarContextProvider = ({
 	}
 
 	return (
-		<CalendarContext.Provider value={{ notes: notesData!.notes! }}>
+		<CalendarContext.Provider
+			value={{ notes: notesData!.notes!, currentFirstDay }}>
 			{children}
 		</CalendarContext.Provider>
 	);
