@@ -148,5 +148,6 @@ model Note {
   endTime   DateTime
   courseId  String
   course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  blockIds  String[]
+  // blockIds  String[]
+  content   String   @default("")
 }

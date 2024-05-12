@@ -2,6 +2,7 @@
 
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
+import { NoteBlock } from '@prisma/client';
 import { z } from 'zod';
 
 const GetNoteBlocksSchema = z.object({
@@ -37,13 +38,15 @@ export const getNoteBlocks = async (
 			return { error: 'Note not found.' };
 		}
 
-		const blocks = await db.noteBlock.findMany({
-			where: {
-				id: {
-					in: note.blockIds,
-				},
-			},
-		});
+		// const blocks = await db.noteBlock.findMany({
+		// 	where: {
+		// 		id: {
+		// 			in: note.blockIds,
+		// 		},
+		// 	},
+		// });
+
+		const blocks = [] as NoteBlock[];
 
 		return { blocks };
 	} catch (error) {
