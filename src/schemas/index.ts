@@ -64,7 +64,7 @@ export const DeleteTaskSchema = z.object({
 	id: z.string(),
 });
 
-export const UpdateTaskNameSchema = z.object({
+export const UpdateTaskTitleSchema = z.object({
 	id: z.string(),
 	newTitle: z.string().min(1, { message: 'Title is required.' }),
 });

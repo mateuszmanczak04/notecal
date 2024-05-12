@@ -2,13 +2,13 @@
 
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
-import { UpdateTaskNameSchema } from '@/schemas';
+import { UpdateTaskTitleSchema } from '@/schemas';
 import { z } from 'zod';
 
-export const updateTaskName = async (
-	values: z.infer<typeof UpdateTaskNameSchema>,
+export const updateTaskTitle = async (
+	values: z.infer<typeof UpdateTaskTitleSchema>,
 ) => {
-	const validatedFields = UpdateTaskNameSchema.safeParse(values);
+	const validatedFields = UpdateTaskTitleSchema.safeParse(values);
 
 	if (!validatedFields.success) {
 		return { error: 'Invalid fields.' };
