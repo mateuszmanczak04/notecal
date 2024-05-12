@@ -1,6 +1,6 @@
 'use client';
 
-import { updateTaskName } from '@/actions/tasks/update-task-name';
+import { updateTaskTitle } from '@/actions/tasks/update-task-title';
 import { Input } from '@/components/ui/input';
 import { updateTaskTitle as updateTaskTitleLocal } from '@/lib/update-task';
 import { FC, useRef, useState, useTransition } from 'react';
@@ -22,7 +22,7 @@ const TaskTitle: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 	const submit = () => {
 		if (title && title.length > 0 && title !== titleBeforeEditing) {
 			startTransition(() => {
-				updateTaskName({ id, newTitle: title });
+				updateTaskTitle({ id, newTitle: title });
 				updateTaskTitleLocal(id, title);
 				setIsEditing(false);
 			});
