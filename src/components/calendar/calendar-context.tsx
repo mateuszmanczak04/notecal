@@ -6,6 +6,8 @@ import { ReactNode, createContext, useContext, useState } from 'react';
 interface CalendarContextProps {
 	notes: Note[];
 	currentFirstDay: Date;
+	goDayForward: () => void;
+	goDayBackward: () => void;
 }
 
 const CalendarContext = createContext({} as CalendarContextProps);
@@ -33,9 +35,30 @@ export const CalendarContextProvider = ({
 		);
 	}
 
+	const goDayForward = () => {
+		setCurrentFirstDay(prev => {
+			const newDate = new Date();
+			newDate.setTime(prev.getTime() + 24 * 60 * 60 * 1000);
+			return newDate;
+		});
+	};
+
+	const goDayBackward = () => {
+		setCurrentFirstDay(prev => {
+			const newDate = new Date();
+			newDate.setTime(prev.getTime() - 24 * 60 * 60 * 1000);
+			return newDate;
+		});
+	};
+
 	return (
 		<CalendarContext.Provider
-			value={{ notes: notesData!.notes!, currentFirstDay }}>
+			value={{
+				notes: notesData!.notes!,
+				currentFirstDay,
+				goDayForward,
+				goDayBackward,
+			}}>
 			{children}
 		</CalendarContext.Provider>
 	);
