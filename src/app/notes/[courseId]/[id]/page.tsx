@@ -14,8 +14,8 @@ import { useParams } from 'next/navigation';
 const NotePage = () => {
 	return (
 		<NoteContextProvider>
-			<div className='flex w-full min-w-[800px] gap-4 p-4'>
-				<div className='flex-1'>
+			<div className='flex h-[calc(100vh-96px)] min-h-80 w-full min-w-[800px] gap-4 p-4'>
+				<div className='flex h-full flex-1 flex-col'>
 					<NoteTitle />
 					<NoteTime />
 					<NoteContent />
