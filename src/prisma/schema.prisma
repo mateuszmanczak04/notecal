@@ -138,7 +138,7 @@ model NoteBlock {
   id     String @id @default(cuid())
   title  String
   type   String
-  note   Note   @relation(fields: [noteId], references: [id])
+  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade)
   noteId String
 }
 
