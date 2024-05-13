@@ -2,7 +2,8 @@
 
 import { useCalendarContext } from '@/components/calendar/calendar-context';
 import useCourses from '@/hooks/use-courses';
-import { FC, MouseEvent, useRef } from 'react';
+import { FC, MouseEvent, useRef, useState } from 'react';
+import CreateNotePopup from './create-note-popup';
 
 interface CalendarDayGridProps {
 	date: Date;
@@ -36,13 +37,15 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 	const { notes, addNewNote } = useCalendarContext();
 	const { data: coursesData } = useCourses();
 	const gridRef = useRef<HTMLDivElement | null>(null);
+	const [showPopup, setShowPopup] = useState<boolean>(false);
+	const [startTime, setStartTime] = useState<Date>(new Date());
 
 	const todayNotes = notes.filter(note => {
 		const startTime = note.startTime;
 		return startTime.toDateString() === date.toDateString();
 	});
 
-	const onAddNewNote = (e: MouseEvent<HTMLDivElement>) => {
+	const onClick = (e: MouseEvent<HTMLDivElement>) => {
 		const startTime = new Date(date);
 		const hours = parseInt(e.currentTarget.getAttribute('data-hour') || '0');
 		const minutesPercentage = ((e.nativeEvent.layerY + 40) % 64) / 64;
@@ -52,13 +55,8 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 		startTime.setMinutes(minutes);
 		startTime.setSeconds(0);
 		startTime.setMilliseconds(0);
-
-		// todo - get courseId and content from popup
-		addNewNote({
-			courseId: 'clvcjwkjv0001xjrzuz9lbfxy',
-			content: 'Testowa notatka hard coded',
-			startTime,
-		});
+		setStartTime(startTime);
+		setShowPopup(true);
 	};
 
 	return (
@@ -66,9 +64,9 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 			ref={gridRef}
 			className='relative flex-1 cursor-crosshair border-r border-gray-300'>
 			{new Array(23).fill(0).map((_, i) => (
-				<GridRect key={i} hour={i} onClick={onAddNewNote} />
+				<GridRect key={i} hour={i} onClick={onClick} />
 			))}
-			<GridRect last hour={23} onClick={onAddNewNote} />
+			<GridRect last hour={23} onClick={onClick} />
 			{/* notes: */}
 			{todayNotes.map(note => {
 				const hour = note.startTime.getHours();
@@ -84,6 +82,19 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 					</div>
 				);
 			})}
+			<CreateNotePopup
+				show={showPopup}
+				clickX={100}
+				clickY={100}
+				submit={(courseId: string) => {
+					addNewNote({
+						courseId,
+						content: 'Empty note',
+						startTime,
+					});
+					setShowPopup(false);
+				}}
+			/>
 		</div>
 	);
 };
