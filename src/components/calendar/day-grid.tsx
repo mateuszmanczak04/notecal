@@ -82,19 +82,20 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 					</div>
 				);
 			})}
-			<CreateNotePopup
-				show={showPopup}
-				clickX={100}
-				clickY={100}
-				submit={(courseId: string) => {
-					addNewNote({
-						courseId,
-						content: 'Empty note',
-						startTime,
-					});
-					setShowPopup(false);
-				}}
-			/>
+			{showPopup && (
+				<CreateNotePopup
+					clickX={100}
+					clickY={100}
+					submit={(courseId: string) => {
+						addNewNote({
+							courseId,
+							content: 'Empty note',
+							startTime,
+						});
+						setShowPopup(false);
+					}}
+				/>
+			)}
 		</div>
 	);
 };
