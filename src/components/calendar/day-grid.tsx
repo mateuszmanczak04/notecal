@@ -1,6 +1,7 @@
 'use client';
 
 import { useCalendarContext } from '@/components/calendar/calendar-context';
+import useCourses from '@/hooks/use-courses';
 import { FC, MouseEvent } from 'react';
 
 interface CalendarDayGridProps {
@@ -14,6 +15,7 @@ const GridRect = ({ last = false }: { last?: boolean }) => {
 
 const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 	const { notes, addNewNote } = useCalendarContext();
+	const { data: coursesData } = useCourses();
 
 	const todayNotes = notes.filter(note => {
 		const startTime = note.startTime;
@@ -58,7 +60,8 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 						className='absolute left-1 right-1 top-0 h-16 cursor-pointer select-none overflow-y-hidden rounded-md bg-blue-500 bg-opacity-10 p-2'
 						style={{ transform: `translateY(${topTranslate}px)` }}
 						key={note.id}>
-						{note.content}
+						{coursesData?.courses?.find(c => c.id === note.courseId)?.name ||
+							'Unknown course'}
 					</div>
 				);
 			})}
