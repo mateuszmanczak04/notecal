@@ -9,9 +9,9 @@ const CalendarMenu = () => {
 
 	return (
 		<div className='flex gap-2'>
-			<Button size='sm' className='w-16'>
+			{/* <Button size='sm' className='w-16'>
 				<Plus className='h-full w-full' />
-			</Button>
+			</Button> */}
 			<Button
 				size='sm'
 				variant='secondary'
