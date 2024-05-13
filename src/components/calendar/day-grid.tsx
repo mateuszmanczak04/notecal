@@ -25,7 +25,8 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 		const hoursPercentage = (e.nativeEvent.layerY + 40) / 1536;
 		const hours = Math.floor(hoursPercentage * 24);
 		const minutesPercentage = ((e.nativeEvent.layerY + 40) % 64) / 64;
-		const minutes = Math.floor(minutesPercentage * 60);
+		let minutes = Math.floor(minutesPercentage * 60);
+		minutes = minutes - (minutes % 15);
 		startTime.setHours(hours);
 		startTime.setMinutes(minutes);
 		startTime.setSeconds(0);
