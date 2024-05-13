@@ -14,7 +14,11 @@ const page = async ({ params }: { params: { courseId: string } }) => {
 	});
 
 	if (latestNote.length === 0) {
-		const { newNote } = await createNewNote({ courseId: params.courseId });
+		const { newNote } = await createNewNote({
+			courseId: params.courseId,
+			content: 'Empty note',
+			startTime: new Date(),
+		});
 		if (newNote) {
 			redirect(`/notes/${params.courseId}/${newNote.id}`);
 		} else {

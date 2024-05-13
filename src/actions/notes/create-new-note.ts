@@ -2,8 +2,13 @@
 
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
-import { CreateNewNoteSchema } from '@/schemas';
 import { z } from 'zod';
+
+const CreateNewNoteSchema = z.object({
+	courseId: z.string(),
+	content: z.string(),
+	startTime: z.date(),
+});
 
 export const createNewNote = async (
 	values: z.infer<typeof CreateNewNoteSchema>,
@@ -14,7 +19,7 @@ export const createNewNote = async (
 		return { error: 'Invalid fields.' };
 	}
 
-	const courseId = validatedFields.data.courseId;
+	const { courseId, content, startTime } = validatedFields.data;
 
 	try {
 		const session = await auth();
@@ -26,10 +31,10 @@ export const createNewNote = async (
 		const newNote = await db.note.create({
 			data: {
 				courseId,
-				startTime: new Date(),
-				endTime: new Date(Date.now() + 3600_000), // 1h duration
+				startTime,
+				endTime: new Date(startTime.getTime() + 3600_000), // 1h duration
 				userId: session.user.id,
-				content: 'Empty note',
+				content,
 			},
 		});
 
