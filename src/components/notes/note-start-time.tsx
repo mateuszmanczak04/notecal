@@ -2,6 +2,7 @@
 
 import { updateNoteStartTime } from '@/actions/notes/update-note-start-time';
 import { useNoteContext } from '@/components/notes/note-context';
+import TimePicker from '@/components/notes/time-picker';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -30,28 +31,48 @@ const NoteStartTime = () => {
 		}
 	};
 
+	const handleChangeHourAndMinute = ({
+		hour,
+		minute,
+	}: {
+		hour: number;
+		minute: number;
+	}) => {
+		const newStartTime = new Date(currentNote.startTime);
+		newStartTime.setHours(hour);
+		newStartTime.setMinutes(minute);
+		onChange(newStartTime);
+	};
+
 	return (
-		<Popover>
-			<PopoverTrigger asChild>
-				<Button
-					variant={'outline'}
-					className={cn(
-						'h-6 pl-3 text-left font-normal',
-						!startTime && 'text-muted-foreground',
-					)}>
-					{startTime ? format(startTime, 'PPP') : <span>Pick a date</span>}
-					<CalendarIcon className='ml-1 h-4 w-4 opacity-50' />
-				</Button>
-			</PopoverTrigger>
-			<PopoverContent className='w-auto p-0' align='start'>
-				<Calendar
-					mode='single'
-					selected={startTime || undefined}
-					onSelect={onChange}
-					initialFocus
-				/>
-			</PopoverContent>
-		</Popover>
+		<div className='flex items-center gap-1'>
+			<Popover>
+				<PopoverTrigger asChild>
+					<Button
+						variant={'outline'}
+						className={cn(
+							'pl-3 text-left font-normal',
+							!startTime && 'text-muted-foreground',
+						)}>
+						{startTime ? format(startTime, 'PPP') : <span>Pick a date</span>}
+						<CalendarIcon className='ml-1 h-4 w-4 opacity-50' />
+					</Button>
+				</PopoverTrigger>
+				<PopoverContent className='w-auto p-0' align='start'>
+					<Calendar
+						mode='single'
+						selected={startTime || undefined}
+						onSelect={onChange}
+						initialFocus
+					/>
+				</PopoverContent>
+			</Popover>
+			<TimePicker
+				initialHour={currentNote.startTime.getHours()}
+				initialMinute={currentNote.startTime.getMinutes()}
+				onChange={handleChangeHourAndMinute}
+			/>
+		</div>
 	);
 };
 

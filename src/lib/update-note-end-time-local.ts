@@ -1,7 +1,7 @@
 import queryClient from '@/lib/query-client';
 import { Note } from '@prisma/client';
 
-const updateNoteStartTimeLocal = (
+const updateNoteEndTimeLocal = (
 	id: string,
 	courseId: string,
 	newEndTime: Date,
@@ -22,4 +22,4 @@ const updateNoteStartTimeLocal = (
 	);
 };
 
-export default updateNoteStartTimeLocal;
+export default updateNoteEndTimeLocal;
