@@ -67,7 +67,8 @@ export const CalendarContextProvider = ({
 							courseId,
 							content,
 							startTime,
-							endTime: new Date(startTime.getTime() + 24 * 60 * 60 * 1000),
+							// default duration of newly created notes: 1h
+							endTime: new Date(startTime.getTime() + 60 * 60 * 1000),
 							id: newNoteTempId.current,
 						},
 					],
