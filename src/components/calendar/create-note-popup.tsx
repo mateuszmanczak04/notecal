@@ -2,18 +2,21 @@
 
 import { Button } from '@/components/ui/button';
 import useCourses from '@/hooks/use-courses';
-import { FC, useLayoutEffect, useRef, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useOnClickOutside } from 'usehooks-ts';
 
 interface CreateNotePopupProps {
 	clickX: number;
 	clickY: number;
 	submit: (courseId: string) => void;
+	hide: () => void;
 }
 
 const CreateNotePopup: FC<CreateNotePopupProps> = ({
 	clickX,
 	clickY,
 	submit,
+	hide,
 }) => {
 	const { data: coursesData } = useCourses();
 	const containerRef = useRef<HTMLDivElement | null>(null);
@@ -36,6 +39,21 @@ const CreateNotePopup: FC<CreateNotePopupProps> = ({
 			setDisplayY(clickY - containerHeight);
 		}
 	}, [clickX, clickY]);
+
+	useOnClickOutside(containerRef, hide);
+
+	useEffect(() => {
+		const detectKeyDown = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				e.preventDefault();
+				hide();
+			}
+		};
+
+		document.addEventListener('keydown', detectKeyDown, true);
+
+		return () => document.removeEventListener('keydown', detectKeyDown);
+	}, [hide]);
 
 	if (!coursesData?.courses) {
 		return null;

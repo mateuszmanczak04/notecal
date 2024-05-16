@@ -50,6 +50,11 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 		return startTime.toDateString() === date.toDateString();
 	});
 
+	const cancelNewNoteCreation = () => {
+		setClickPosition({ x: 0, y: 0 });
+		setShowPopup(false);
+	};
+
 	const onClick = (e: MouseEvent<HTMLDivElement>) => {
 		const startTime = new Date(date);
 		const hours = parseInt(e.currentTarget.getAttribute('data-hour') || '0');
@@ -100,6 +105,7 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 						});
 						setShowPopup(false);
 					}}
+					hide={cancelNewNoteCreation}
 				/>
 			)}
 		</div>
