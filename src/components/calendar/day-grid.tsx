@@ -62,7 +62,6 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 		startTime.setMilliseconds(0);
 		setStartTime(startTime);
 		setShowPopup(true);
-		console.log(e);
 		setClickPosition({ x: e.pageX, y: e.pageY });
 	};
 
