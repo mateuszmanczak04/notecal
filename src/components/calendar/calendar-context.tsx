@@ -2,7 +2,7 @@ import { createNewNote } from '@/actions/notes/create-new-note';
 import { getNotes } from '@/actions/notes/get-notes';
 import { Note } from '@prisma/client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ReactNode, createContext, useContext, useState } from 'react';
+import { ReactNode, createContext, useContext, useRef, useState } from 'react';
 
 interface CalendarContextProps {
 	notes: Note[];
@@ -18,6 +18,7 @@ interface CalendarContextProps {
 		content: string;
 		startTime: Date;
 	}) => void;
+	newNoteTempId: string | null;
 }
 
 const CalendarContext = createContext({} as CalendarContextProps);
@@ -33,6 +34,8 @@ export const CalendarContextProvider = ({
 	});
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const queryClient = useQueryClient();
+
+	const newNoteTempId = useRef<string>('new-note-temp-id');
 
 	const { mutate: addNewNote } = useMutation({
 		mutationFn: async ({
@@ -53,6 +56,9 @@ export const CalendarContextProvider = ({
 			content: string;
 			startTime: Date;
 		}) => {
+			// create a new note with fake temporary id and update that id
+			// when server returns a response with the new task in "onSuccess"
+			// callback
 			queryClient.setQueryData(['notes'], (prev: { notes: Note[] }) => {
 				return {
 					notes: [
@@ -62,9 +68,33 @@ export const CalendarContextProvider = ({
 							content,
 							startTime,
 							endTime: new Date(startTime.getTime() + 24 * 60 * 60 * 1000),
-							id: Math.random().toString(),
+							id: newNoteTempId.current,
 						},
 					],
+				};
+			});
+		},
+		onSuccess(data) {
+			if (!data.newNote) {
+				return;
+			}
+			const newNote = data.newNote;
+			queryClient.setQueryData(['notes'], (prev: { notes: Note[] }) => {
+				return {
+					notes: prev.notes.map(note =>
+						note.id === newNoteTempId.current
+							? { ...note, id: newNote.id }
+							: note,
+					),
+				};
+			});
+		},
+		onError() {
+			// simply remove a newly created note without showing any error
+			// todo - display some kind of error message, maybe as a toast or sth.
+			queryClient.setQueryData(['notes'], (prev: { notes: Note[] }) => {
+				return {
+					notes: prev.notes.filter(note => note.id !== newNoteTempId.current),
 				};
 			});
 		},
@@ -106,6 +136,7 @@ export const CalendarContextProvider = ({
 				goDayForward,
 				goDayBackward,
 				addNewNote,
+				newNoteTempId: newNoteTempId.current,
 			}}>
 			{children}
 		</CalendarContext.Provider>

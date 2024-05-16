@@ -3,6 +3,7 @@
 import { useCalendarContext } from '@/components/calendar/calendar-context';
 import CreateNotePopup from '@/components/calendar/create-note-popup';
 import useCourses from '@/hooks/use-courses';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { FC, MouseEvent, useRef, useState } from 'react';
 
@@ -35,7 +36,7 @@ const GridRect = ({
 };
 
 const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
-	const { notes, addNewNote } = useCalendarContext();
+	const { notes, addNewNote, newNoteTempId } = useCalendarContext();
 	const { data: coursesData } = useCourses();
 	const gridRef = useRef<HTMLDivElement | null>(null);
 	const [startTime, setStartTime] = useState<Date>(new Date());
@@ -86,8 +87,15 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 				const topTranslate = Math.floor((hour + minute / 60) * 64);
 				return (
 					<Link
-						href={`/notes/${note.courseId}/${note.id}`}
-						className='absolute left-2 right-0 top-0 h-16 cursor-pointer select-none overflow-y-hidden rounded-md bg-blue-500 bg-opacity-10 p-2'
+						href={
+							note.id === newNoteTempId
+								? '/notes'
+								: `/notes/${note.courseId}/${note.id}`
+						}
+						className={cn(
+							'absolute left-2 right-0 top-0 h-16 cursor-pointer select-none overflow-y-hidden rounded-md bg-blue-200 p-2 transition',
+							note.id === newNoteTempId && 'pointer-events-none opacity-75',
+						)}
 						style={{ transform: `translateY(${topTranslate}px)` }}
 						key={note.id}>
 						{coursesData?.courses?.find(c => c.id === note.courseId)?.name ||
