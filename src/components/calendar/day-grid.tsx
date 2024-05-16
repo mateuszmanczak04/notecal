@@ -3,6 +3,7 @@
 import { useCalendarContext } from '@/components/calendar/calendar-context';
 import CreateNotePopup from '@/components/calendar/create-note-popup';
 import useCourses from '@/hooks/use-courses';
+import Link from 'next/link';
 import { FC, MouseEvent, useRef, useState } from 'react';
 
 interface CalendarDayGridProps {
@@ -84,13 +85,14 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 				const minute = note.startTime.getMinutes();
 				const topTranslate = Math.floor((hour + minute / 60) * 64);
 				return (
-					<div
+					<Link
+						href={`/notes/${note.courseId}/${note.id}`}
 						className='absolute left-2 right-0 top-0 h-16 cursor-pointer select-none overflow-y-hidden rounded-md bg-blue-500 bg-opacity-10 p-2'
 						style={{ transform: `translateY(${topTranslate}px)` }}
 						key={note.id}>
 						{coursesData?.courses?.find(c => c.id === note.courseId)?.name ||
 							'Unknown course'}
-					</div>
+					</Link>
 				);
 			})}
 			{showPopup && (
