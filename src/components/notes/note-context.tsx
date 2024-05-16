@@ -78,6 +78,11 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 
 	const currentNote = notesData?.notes?.filter(n => n.id === id)[0];
 
+	if (!currentNote) {
+		// todo - add home page button
+		return <p>Note not found</p>;
+	}
+
 	return (
 		<NoteContext.Provider
 			value={{
