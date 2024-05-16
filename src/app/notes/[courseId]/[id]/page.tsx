@@ -1,6 +1,7 @@
 'use client';
 
 import { getNote } from '@/actions/notes/get-note';
+import DeleteNoteButton from '@/components/notes/delete-note-button';
 import NoteContent from '@/components/notes/note-content';
 import { NoteContextProvider } from '@/components/notes/note-context';
 import NoteTasksList from '@/components/notes/note-tasks-list';
@@ -25,6 +26,7 @@ const NotePage = () => {
 					<NoteTasksList />
 					{/* todo - fetch real course teacher */}
 					<NoteTeacher />
+					<DeleteNoteButton />
 				</div>
 			</div>
 		</NoteContextProvider>
