@@ -14,13 +14,13 @@ import { useParams } from 'next/navigation';
 const NotePage = () => {
 	return (
 		<NoteContextProvider>
-			<div className='flex h-[calc(100vh-96px)] min-h-80 w-full min-w-[800px] gap-4 p-4'>
+			<div className='min-w-screen-sm scrollbar-hide flex h-[calc(100vh-96px)] min-h-80 w-full gap-4 overflow-x-scroll p-4'>
 				<div className='flex h-full flex-1 flex-col'>
 					<NoteTitle />
 					<NoteTime />
 					<NoteContent />
 				</div>
-				<div className='flex w-48 flex-col gap-8'>
+				<div className='scrollbar-hide flex h-full w-48 shrink-0 flex-col gap-8 overflow-y-scroll'>
 					<NotesList />
 					<NoteTasksList />
 					{/* todo - fetch real course teacher */}

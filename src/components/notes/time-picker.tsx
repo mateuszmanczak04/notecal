@@ -47,7 +47,7 @@ const TimePicker: FC<TimePickerProps> = ({
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} autoComplete='off'>
 			<Input
 				ref={inputRef}
 				className='w-20'
