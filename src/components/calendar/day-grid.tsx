@@ -60,7 +60,8 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 	const onClick = (e: MouseEvent<HTMLDivElement>) => {
 		const startTime = new Date(date);
 		const hours = parseInt(e.currentTarget.getAttribute('data-hour') || '0');
-		const minutesPercentage = ((e.nativeEvent.layerY + 40) % 64) / 64;
+		const gridTopOffset = gridRef.current?.getBoundingClientRect().top || 0;
+		const minutesPercentage = ((e.nativeEvent.pageY - gridTopOffset) % 64) / 64;
 		let minutes = Math.floor(minutesPercentage * 60);
 		minutes = minutes - (minutes % 15);
 		startTime.setHours(hours);
@@ -69,13 +70,13 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 		startTime.setMilliseconds(0);
 		setStartTime(startTime);
 		setShowPopup(true);
-		setClickPosition({ x: e.pageX, y: e.pageY });
+		setClickPosition({ x: e.clientX, y: e.clientY });
 	};
 
 	return (
 		<div
 			ref={gridRef}
-			className='relative flex-1 cursor-crosshair border-r border-gray-300'>
+			className='relative flex-1 cursor-crosshair overflow-y-hidden border-r border-gray-300'>
 			{new Array(23).fill(0).map((_, i) => (
 				<GridRect key={i} hour={i} onClick={onClick} />
 			))}
