@@ -23,12 +23,16 @@ const NoteStartTime = () => {
 
 	// todo - add error handling and use of useOptimistic
 	const onChange = (newStartTime?: Date) => {
-		if (newStartTime) {
-			startTransition(() => {
-				updateNoteStartTime({ id: currentNote.id, newStartTime });
-				updateNoteStartTimeLocal(currentNote.id, course.id, newStartTime);
-			});
-		}
+		if (!newStartTime) return;
+
+		// todo - display a message telling you can't set it like that
+		// and set the input state to state before changes
+		if (newStartTime > currentNote.endTime) return;
+
+		startTransition(() => {
+			updateNoteStartTime({ id: currentNote.id, newStartTime });
+			updateNoteStartTimeLocal(currentNote.id, course.id, newStartTime);
+		});
 	};
 
 	const handleChangeHourAndMinute = ({
