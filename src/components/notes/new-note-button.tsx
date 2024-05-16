@@ -15,7 +15,11 @@ const NewNoteButton = () => {
 
 	const onClick = () => {
 		startTransition(async () => {
-			await createNewNote({ courseId: course.id! });
+			await createNewNote({
+				courseId: course.id!,
+				startTime: new Date(),
+				content: 'Empty note',
+			});
 			queryClient.invalidateQueries({
 				queryKey: ['course-notes', course.id!],
 			});
