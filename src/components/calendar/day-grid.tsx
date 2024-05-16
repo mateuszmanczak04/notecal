@@ -94,10 +94,17 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 								: `/notes/${note.courseId}/${note.id}`
 						}
 						className={cn(
-							'absolute left-2 right-0 top-0 h-16 cursor-pointer select-none overflow-y-hidden rounded-md bg-blue-200 p-2 transition',
+							'absolute left-2 right-0 top-0 min-h-4 cursor-pointer select-none overflow-y-hidden rounded-md bg-blue-200 p-2 transition',
 							note.id === newNoteTempId && 'pointer-events-none opacity-75',
 						)}
-						style={{ transform: `translateY(${topTranslate}px)` }}
+						style={{
+							transform: `translateY(${topTranslate}px)`,
+							height:
+								((note.endTime.getTime() - note.startTime.getTime()) /
+									3600_000) *
+									64 +
+								'px',
+						}}
 						key={note.id}>
 						{coursesData?.courses?.find(c => c.id === note.courseId)?.name ||
 							'Unknown course'}
