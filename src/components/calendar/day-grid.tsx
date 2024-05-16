@@ -1,9 +1,9 @@
 'use client';
 
 import { useCalendarContext } from '@/components/calendar/calendar-context';
+import CreateNotePopup from '@/components/calendar/create-note-popup';
 import useCourses from '@/hooks/use-courses';
 import { FC, MouseEvent, useRef, useState } from 'react';
-import CreateNotePopup from './create-note-popup';
 
 interface CalendarDayGridProps {
 	date: Date;
@@ -37,8 +37,13 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 	const { notes, addNewNote } = useCalendarContext();
 	const { data: coursesData } = useCourses();
 	const gridRef = useRef<HTMLDivElement | null>(null);
-	const [showPopup, setShowPopup] = useState<boolean>(false);
 	const [startTime, setStartTime] = useState<Date>(new Date());
+
+	const [showPopup, setShowPopup] = useState<boolean>(false);
+	const [clickPosition, setClickPosition] = useState<{ x: number; y: number }>({
+		x: 0,
+		y: 0,
+	});
 
 	const todayNotes = notes.filter(note => {
 		const startTime = note.startTime;
@@ -57,6 +62,8 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 		startTime.setMilliseconds(0);
 		setStartTime(startTime);
 		setShowPopup(true);
+		console.log(e);
+		setClickPosition({ x: e.pageX, y: e.pageY });
 	};
 
 	return (
@@ -84,8 +91,8 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 			})}
 			{showPopup && (
 				<CreateNotePopup
-					clickX={100}
-					clickY={100}
+					clickX={clickPosition.x}
+					clickY={clickPosition.y}
 					submit={(courseId: string) => {
 						addNewNote({
 							courseId,

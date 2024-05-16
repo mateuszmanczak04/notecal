@@ -1,15 +1,8 @@
 'use client';
 
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 import useCourses from '@/hooks/use-courses';
-import { cn } from '@/lib/utils';
-import { FC, useLayoutEffect } from 'react';
+import { FC, useLayoutEffect, useRef, useState } from 'react';
 
 interface CreateNotePopupProps {
 	clickX: number;
@@ -23,31 +16,46 @@ const CreateNotePopup: FC<CreateNotePopupProps> = ({
 	submit,
 }) => {
 	const { data: coursesData } = useCourses();
+	const containerRef = useRef<HTMLDivElement | null>(null);
+	const [displayX, setDisplayX] = useState<number>(clickX);
+	const [displayY, setDisplayY] = useState<number>(clickY);
+
+	useLayoutEffect(() => {
+		if (!containerRef.current) return;
+
+		const containerWidth = containerRef.current.getBoundingClientRect().width;
+		const containerHeight = containerRef.current.getBoundingClientRect().height;
+		const screenWidth = window.innerWidth;
+		const screenHeight = window.innerHeight;
+
+		if (screenWidth - clickX < containerWidth) {
+			setDisplayX(clickX - containerWidth);
+		}
+
+		if (screenHeight - clickY < containerHeight) {
+			setDisplayY(clickY - containerHeight);
+		}
+	}, [clickX, clickY]);
 
 	if (!coursesData?.courses) {
 		return null;
 	}
 
+	const courses = coursesData.courses;
+
 	return (
 		<div
-			className={cn(
-				'fixed z-50 -translate-x-1/2 -translate-y-1/2 bg-white p-4 shadow-xl',
-				`left-1/2 top-1/2`,
-			)}>
-			<Select onValueChange={value => submit(value)}>
-				<SelectTrigger className='w-[180px]'>
-					<SelectValue placeholder='Course' />
-				</SelectTrigger>
-				<SelectContent>
-					{coursesData.courses.map(course => {
-						return (
-							<SelectItem key={course.id} value={course.id}>
-								{course.name}
-							</SelectItem>
-						);
-					})}
-				</SelectContent>
-			</Select>
+			ref={containerRef}
+			className='fixed z-50 flex flex-col gap-2 rounded-md border bg-white p-2 shadow-xl'
+			style={{ left: `${displayX}px`, top: `${displayY}px` }}>
+			{courses.map(course => (
+				<Button
+					variant='secondary'
+					key={course.id}
+					onClick={() => submit(course.id)}>
+					{course.name}
+				</Button>
+			))}
 		</div>
 	);
 };
