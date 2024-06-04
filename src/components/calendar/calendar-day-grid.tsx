@@ -3,38 +3,13 @@
 import { useCalendarContext } from '@/components/calendar/calendar-context';
 import CreateNotePopup from '@/components/calendar/create-note-popup';
 import useCourses from '@/hooks/use-courses';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
 import { FC, MouseEvent, useRef, useState } from 'react';
-import CalendarNoteBlock from './calendar-note-block';
+import CalendarNoteBlock from '@/components/calendar/calendar-note-block';
+import CalendarDayGridRect from '@/components/calendar/calendar-day-grid-rect';
 
 interface CalendarDayGridProps {
 	date: Date;
 }
-
-const GridRect = ({
-	last = false,
-	hour,
-	onClick,
-}: {
-	last?: boolean;
-	hour: number;
-	onClick: (e: MouseEvent<HTMLDivElement>) => void;
-}) => {
-	if (last)
-		return (
-			<div
-				className='h-16 w-full border-y border-gray-300'
-				data-hour={hour}
-				onClick={onClick}></div>
-		);
-	return (
-		<div
-			className='h-16 w-full border-t border-gray-300'
-			data-hour={hour}
-			onClick={onClick}></div>
-	);
-};
 
 const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 	const { notes, addNewNote, newNoteTempId } = useCalendarContext();
@@ -79,9 +54,9 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 			ref={gridRef}
 			className='relative flex-1 cursor-crosshair overflow-y-hidden border-r border-gray-300'>
 			{new Array(23).fill(0).map((_, i) => (
-				<GridRect key={i} hour={i} onClick={onClick} />
+				<CalendarDayGridRect key={i} hour={i} onClick={onClick} />
 			))}
-			<GridRect last hour={23} onClick={onClick} />
+			<CalendarDayGridRect last hour={23} onClick={onClick} />
 			{/* notes: */}
 			{todayNotes.map(note => (
 				<CalendarNoteBlock
