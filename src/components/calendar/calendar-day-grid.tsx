@@ -6,6 +6,7 @@ import useCourses from '@/hooks/use-courses';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { FC, MouseEvent, useRef, useState } from 'react';
+import CalendarNoteBlock from './calendar-note-block';
 
 interface CalendarDayGridProps {
 	date: Date;
@@ -82,35 +83,16 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 			))}
 			<GridRect last hour={23} onClick={onClick} />
 			{/* notes: */}
-			{todayNotes.map(note => {
-				const hour = note.startTime.getHours();
-				const minute = note.startTime.getMinutes();
-				const topTranslate = Math.floor((hour + minute / 60) * 64);
-				return (
-					<Link
-						href={
-							note.id === newNoteTempId
-								? '/notes'
-								: `/notes/${note.courseId}/${note.id}`
-						}
-						className={cn(
-							'absolute left-2 right-0 top-0 min-h-4 cursor-pointer select-none overflow-y-hidden rounded-md bg-blue-200 p-2 transition',
-							note.id === newNoteTempId && 'pointer-events-none opacity-75',
-						)}
-						style={{
-							transform: `translateY(${topTranslate}px)`,
-							height:
-								((note.endTime.getTime() - note.startTime.getTime()) /
-									3600_000) *
-									64 +
-								'px',
-						}}
-						key={note.id}>
-						{coursesData?.courses?.find(c => c.id === note.courseId)?.name ||
-							'Unknown course'}
-					</Link>
-				);
-			})}
+			{todayNotes.map(note => (
+				<CalendarNoteBlock
+					id={note.id}
+					courseId={note.courseId}
+					endTime={note.endTime}
+					newNoteTempId={newNoteTempId}
+					startTime={note.startTime}
+					key={note.id}
+				/>
+			))}
 			{showPopup && (
 				<CreateNotePopup
 					clickX={clickPosition.x}
