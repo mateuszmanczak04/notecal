@@ -1,8 +1,8 @@
 'use client';
 
 import { useCalendarContext } from '@/components/calendar/calendar-context';
-import CalendarHours from '@/components/calendar/hours';
-import CalendarDayGrid from './day-grid';
+import CalendarHours from '@/components/calendar/calendar-hours';
+import CalendarDayGrid from './calendar-day-grid';
 
 const LeftBorderRect = ({ last = false }: { last?: boolean }) => {
 	if (last)

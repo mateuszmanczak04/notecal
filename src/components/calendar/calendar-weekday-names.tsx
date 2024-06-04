@@ -1,7 +1,7 @@
 'use client';
 
 import getWeekdayName from '@/lib/get-weekday-name';
-import { useCalendarContext } from './calendar-context';
+import { useCalendarContext } from '@/components/calendar/calendar-context';
 
 const WeekDayName = ({ day, date }: { day: string; date: string }) => {
 	return (

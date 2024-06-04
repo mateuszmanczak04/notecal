@@ -1,7 +1,7 @@
 'use client';
 
-import CalendarMenu from '@/components/calendar/menu';
-import CalendarWeekdayNames from '@/components/calendar/weekday-names';
+import CalendarMenu from '@/components/calendar/calendar-menu';
+import CalendarWeekdayNames from '@/components/calendar/calendar-weekday-names';
 
 const CalendarTopBar = () => {
 	return (

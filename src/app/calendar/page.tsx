@@ -1,8 +1,8 @@
 'use client';
 
 import { CalendarContextProvider } from '@/components/calendar/calendar-context';
-import CalendarGrid from '@/components/calendar/grid';
-import CalendarTopBar from '@/components/calendar/top-bar';
+import CalendarGrid from '@/components/calendar/calendar-grid';
+import CalendarTopBar from '@/components/calendar/calendar-top-bar';
 
 const CalendarPage = () => {
 	return (
