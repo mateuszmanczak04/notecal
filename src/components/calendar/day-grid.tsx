@@ -3,9 +3,10 @@
 import { useCalendarContext } from '@/components/calendar/calendar-context';
 import CreateNotePopup from '@/components/calendar/create-note-popup';
 import useCourses from '@/hooks/use-courses';
+import percentageToTime from '@/lib/percentage-to-time';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { FC, MouseEvent, useRef, useState } from 'react';
+import { FC, MouseEvent, useEffect, useRef, useState } from 'react';
 
 interface CalendarDayGridProps {
 	date: Date;
@@ -60,6 +61,7 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 	const onClick = (e: MouseEvent<HTMLDivElement>) => {
 		const startTime = new Date(date);
 		const hours = parseInt(e.currentTarget.getAttribute('data-hour') || '0');
+		// todo - fix this value to stay fixed
 		const gridTopOffset = gridRef.current?.getBoundingClientRect().top || 0;
 		const minutesPercentage = ((e.nativeEvent.pageY - gridTopOffset) % 64) / 64;
 		let minutes = Math.floor(minutesPercentage * 60);
@@ -72,6 +74,31 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 		setShowPopup(true);
 		setClickPosition({ x: e.clientX, y: e.clientY });
 	};
+
+	const currentlyDraggedNoteId = useRef<string | null>(null);
+	const noteInsideYOffset = useRef<number | null>(null);
+
+	const handleMouseMove = (e: MouseEvent) => {
+		console.log(currentlyDraggedNoteId.current);
+		// amount of pixels from the note's top edge
+		// to the click point
+		const gridTopOffset = 176; // todo - it is hardcoded for now
+		// 176 is amount of pixels from top of the page to the grid
+		const timePercentage = (e.nativeEvent.pageY - gridTopOffset) / (24 * 64);
+		const { hours, minutes } = percentageToTime(timePercentage);
+	};
+
+	useEffect(() => {
+		window.addEventListener('mousemove', e => handleMouseMove(e));
+
+		return () => {
+			window.removeEventListener('mousemove', handleMouseMove);
+		};
+	}, []);
+
+	// TODO - implement dragging detection
+
+	const hh = (e: any) => {};
 
 	return (
 		<div
@@ -88,6 +115,13 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 				const topTranslate = Math.floor((hour + minute / 60) * 64);
 				return (
 					<Link
+						onMouseDown={(e: MouseEvent) => {
+							currentlyDraggedNoteId.current = note.id;
+							noteInsideYOffset.current =
+								e.pageY -
+								window.scrollY -
+								e.currentTarget.getBoundingClientRect().y;
+						}}
 						href={
 							note.id === newNoteTempId
 								? '/notes'
