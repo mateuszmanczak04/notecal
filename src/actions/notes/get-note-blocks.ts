@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { NoteBlock } from '@prisma/client';
 import { z } from 'zod';
 
@@ -9,9 +9,7 @@ const GetNoteBlocksSchema = z.object({
 	noteId: z.string(),
 });
 
-export const getNoteBlocks = async (
-	values: z.infer<typeof GetNoteBlocksSchema>,
-) => {
+const getNoteBlocks = async (values: z.infer<typeof GetNoteBlocksSchema>) => {
 	const validatedFields = GetNoteBlocksSchema.safeParse(values);
 
 	if (!validatedFields.success) {
@@ -53,3 +51,5 @@ export const getNoteBlocks = async (
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default getNoteBlocks;

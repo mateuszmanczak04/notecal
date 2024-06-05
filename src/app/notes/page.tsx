@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { redirect } from 'next/navigation';
 
 const page = async () => {

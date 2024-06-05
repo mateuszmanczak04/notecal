@@ -1,9 +1,9 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 
-export const getNotes = async () => {
+const getNotes = async () => {
 	try {
 		const session = await auth();
 
@@ -20,3 +20,5 @@ export const getNotes = async () => {
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default getNotes;

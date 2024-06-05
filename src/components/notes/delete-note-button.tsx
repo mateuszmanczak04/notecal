@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteNote } from '@/actions/notes/delete-note';
+import deleteNote from '@/actions/notes/delete-note';
 import { useNoteContext } from '@/components/notes/note-context';
 import { Button } from '@/components/ui/button';
 import { Note } from '@prisma/client';

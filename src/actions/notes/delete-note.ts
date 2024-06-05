@@ -1,14 +1,14 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { z } from 'zod';
 
 const DeleteNoteSchema = z.object({
 	id: z.string(),
 });
 
-export const deleteNote = async (values: z.infer<typeof DeleteNoteSchema>) => {
+const deleteNote = async (values: z.infer<typeof DeleteNoteSchema>) => {
 	const validatedFields = DeleteNoteSchema.safeParse(values);
 
 	if (!validatedFields.success) {
@@ -31,3 +31,5 @@ export const deleteNote = async (values: z.infer<typeof DeleteNoteSchema>) => {
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default deleteNote;

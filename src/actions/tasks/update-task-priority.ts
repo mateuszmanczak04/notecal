@@ -1,11 +1,11 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { UpdateTaskPrioritySchema } from '@/schemas';
 import { z } from 'zod';
 
-export const updateTaskPriority = async (
+const updateTaskPriority = async (
 	values: z.infer<typeof UpdateTaskPrioritySchema>,
 ) => {
 	const validatedFields = UpdateTaskPrioritySchema.safeParse(values);
@@ -47,3 +47,5 @@ export const updateTaskPriority = async (
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default updateTaskPriority;

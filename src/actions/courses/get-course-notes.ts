@@ -1,13 +1,11 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { GetCourseNotesSchema } from '@/schemas';
 import { z } from 'zod';
 
-export const getCourseNotes = async (
-	values: z.infer<typeof GetCourseNotesSchema>,
-) => {
+const getCourseNotes = async (values: z.infer<typeof GetCourseNotesSchema>) => {
 	const validatedFields = GetCourseNotesSchema.safeParse(values);
 
 	if (!validatedFields.success) {
@@ -33,3 +31,5 @@ export const getCourseNotes = async (
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default getCourseNotes;

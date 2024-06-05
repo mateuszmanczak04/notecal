@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { z } from 'zod';
 
 const UpdateNoteContentSchema = z.object({
@@ -9,7 +9,7 @@ const UpdateNoteContentSchema = z.object({
 	newContent: z.string(),
 });
 
-export const updateNoteContent = async (
+const updateNoteContent = async (
 	values: z.infer<typeof UpdateNoteContentSchema>,
 ) => {
 	const validatedFields = UpdateNoteContentSchema.safeParse(values);
@@ -39,3 +39,5 @@ export const updateNoteContent = async (
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default updateNoteContent;

@@ -1,6 +1,6 @@
 'use client';
 
-import { updateTaskTitle } from '@/actions/tasks/update-task-title';
+import updateTaskTitle from '@/actions/tasks/update-task-title';
 import { Input } from '@/components/ui/input';
 import { updateTaskTitle as updateTaskTitleLocal } from '@/lib/update-task';
 import { FC, useRef, useState, useTransition } from 'react';

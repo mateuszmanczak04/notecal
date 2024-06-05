@@ -2,7 +2,7 @@
 
 import { useCalendarContext } from '@/components/calendar/calendar-context';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const CalendarMenu = () => {
 	const { goDayBackward, goDayForward } = useCalendarContext();

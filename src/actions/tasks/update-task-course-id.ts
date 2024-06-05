@@ -1,12 +1,12 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { OTHER_COURSE_NAME } from '@/lib/utils';
 import { UpdateTaskCourseIdSchema } from '@/schemas';
 import { z } from 'zod';
 
-export const updateTaskCourseId = async (
+const updateTaskCourseId = async (
 	values: z.infer<typeof UpdateTaskCourseIdSchema>,
 ) => {
 	const validatedFields = UpdateTaskCourseIdSchema.safeParse(values);
@@ -70,3 +70,5 @@ export const updateTaskCourseId = async (
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default updateTaskCourseId;

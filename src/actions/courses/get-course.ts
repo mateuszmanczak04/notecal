@@ -1,14 +1,14 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { z } from 'zod';
 
 const GetCourseSchema = z.object({
 	courseId: z.string(),
 });
 
-export const getCourse = async (values: z.infer<typeof GetCourseSchema>) => {
+const getCourse = async (values: z.infer<typeof GetCourseSchema>) => {
 	const validatedFields = GetCourseSchema.safeParse(values);
 
 	if (!validatedFields.success) {
@@ -35,3 +35,5 @@ export const getCourse = async (values: z.infer<typeof GetCourseSchema>) => {
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default getCourse;

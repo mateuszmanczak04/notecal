@@ -1,11 +1,11 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { UpdateTaskTitleSchema } from '@/schemas';
 import { z } from 'zod';
 
-export const updateTaskTitle = async (
+const updateTaskTitle = async (
 	values: z.infer<typeof UpdateTaskTitleSchema>,
 ) => {
 	const validatedFields = UpdateTaskTitleSchema.safeParse(values);
@@ -47,3 +47,5 @@ export const updateTaskTitle = async (
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default updateTaskTitle;

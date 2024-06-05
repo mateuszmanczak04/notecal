@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { z } from 'zod';
 
 const CreateNewNoteSchema = z.object({
@@ -10,9 +10,7 @@ const CreateNewNoteSchema = z.object({
 	startTime: z.date(),
 });
 
-export const createNewNote = async (
-	values: z.infer<typeof CreateNewNoteSchema>,
-) => {
+const createNewNote = async (values: z.infer<typeof CreateNewNoteSchema>) => {
 	const validatedFields = CreateNewNoteSchema.safeParse(values);
 
 	if (!validatedFields.success) {
@@ -43,3 +41,5 @@ export const createNewNote = async (
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default createNewNote;

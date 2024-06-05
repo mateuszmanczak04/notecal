@@ -1,4 +1,4 @@
-import { getCourses } from '@/actions/courses/get-courses';
+import getCourses from '@/actions/courses/get-courses';
 import { useQuery } from '@tanstack/react-query';
 
 /**

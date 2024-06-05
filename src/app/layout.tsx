@@ -1,10 +1,7 @@
-import { getCourses } from '@/actions/courses/get-courses';
-import { getTasks } from '@/actions/tasks/get-tasks';
 import '@/app/globals.css';
 import { auth } from '@/auth';
 import NavAuthenticated from '@/components/nav-authenticated';
 import Providers from '@/components/providers';
-import { db } from '@/lib/db';
 
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';

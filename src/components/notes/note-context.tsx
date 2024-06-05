@@ -1,7 +1,7 @@
-import { getCourse } from '@/actions/courses/get-course';
-import { getCourseNotes } from '@/actions/courses/get-course-notes';
-import { getCourseTasks } from '@/actions/courses/get-course-tasks';
-import { getNoteBlocks } from '@/actions/notes/get-note-blocks';
+import getCourse from '@/actions/courses/get-course';
+import getCourseNotes from '@/actions/courses/get-course-notes';
+import getCourseTasks from '@/actions/courses/get-course-tasks';
+import getNoteBlocks from '@/actions/notes/get-note-blocks';
 import { Course, Note, NoteBlock, Task } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';

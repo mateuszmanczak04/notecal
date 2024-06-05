@@ -1,6 +1,6 @@
-import { createNewNote } from '@/actions/notes/create-new-note';
+import createNewNote from '@/actions/notes/create-new-note';
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { redirect } from 'next/navigation';
 
 const page = async ({ params }: { params: { courseId: string } }) => {

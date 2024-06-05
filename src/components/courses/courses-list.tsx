@@ -3,7 +3,6 @@
 import CourseItem from '@/components/courses/course-item';
 import useCourses from '@/hooks/use-courses';
 import { FC } from 'react';
-import { ClipLoader } from 'react-spinners';
 
 interface CoursesListProps {}
 

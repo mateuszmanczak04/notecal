@@ -1,13 +1,11 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { UpdateSettingsSchema } from '@/schemas';
 import { z } from 'zod';
 
-export const updateSettings = async (
-	values: z.infer<typeof UpdateSettingsSchema>,
-) => {
+const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 	const validatedFields = UpdateSettingsSchema.safeParse(values);
 
 	if (!validatedFields.success) {
@@ -78,3 +76,5 @@ export const updateSettings = async (
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default updateSettings;

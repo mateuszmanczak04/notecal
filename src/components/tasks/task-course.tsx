@@ -1,6 +1,6 @@
 'use client';
 
-import { updateTaskCourseId } from '@/actions/tasks/update-task-course-id';
+import updateTaskCourseId from '@/actions/tasks/update-task-course-id';
 import { Badge } from '@/components/ui/badge';
 import {
 	DropdownMenu,

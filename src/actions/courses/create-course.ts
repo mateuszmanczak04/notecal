@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { CreateCourseFormSchema } from '@/schemas';
 import { z } from 'zod';
 

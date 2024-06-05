@@ -1,9 +1,8 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { UpdateCourseFormSchema } from '@/schemas';
-import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 const updateCourse = async (values: z.infer<typeof UpdateCourseFormSchema>) => {

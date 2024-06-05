@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { z } from 'zod';
 
 const UpdateNoteEndTimeSchema = z.object({
@@ -9,7 +9,7 @@ const UpdateNoteEndTimeSchema = z.object({
 	newEndTime: z.date(),
 });
 
-export const updateNoteEndTime = async (
+const updateNoteEndTime = async (
 	values: z.infer<typeof UpdateNoteEndTimeSchema>,
 ) => {
 	const validatedFields = UpdateNoteEndTimeSchema.safeParse(values);
@@ -43,3 +43,5 @@ export const updateNoteEndTime = async (
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default updateNoteEndTime;

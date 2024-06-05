@@ -1,9 +1,9 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 
-export const getCourses = async () => {
+const getCourses = async () => {
 	const session = await auth();
 
 	if (!session?.user?.id) {
@@ -22,3 +22,5 @@ export const getCourses = async () => {
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default getCourses;

@@ -1,7 +1,6 @@
 'use client';
 
-import { updateNoteEndTime } from '@/actions/notes/update-note-end-time';
-import { updateNoteStartTime } from '@/actions/notes/update-note-start-time';
+import updateNoteEndTime from '@/actions/notes/update-note-end-time';
 import { useNoteContext } from '@/components/notes/note-context';
 import TimePicker from '@/components/notes/time-picker';
 import { Button } from '@/components/ui/button';
@@ -12,7 +11,6 @@ import {
 	PopoverTrigger,
 } from '@/components/ui/popover';
 import updateNoteEndTimeLocal from '@/lib/update-note-end-time-local';
-import updateNoteStartTimeLocal from '@/lib/update-note-start-time-local';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';

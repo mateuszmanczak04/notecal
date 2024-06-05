@@ -1,6 +1,6 @@
 'use client';
 
-import { updateSettings } from '@/actions/settings/update-settings';
+import updateSettings from '@/actions/settings/update-settings';
 import { Button } from '@/components/ui/button';
 import {
 	DropdownMenu,

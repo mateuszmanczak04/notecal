@@ -1,11 +1,11 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { GetTasksSchema } from '@/schemas';
 import { z } from 'zod';
 
-export const getTasks = async (values: z.infer<typeof GetTasksSchema>) => {
+const getTasks = async (values: z.infer<typeof GetTasksSchema>) => {
 	const validatedFields = GetTasksSchema.safeParse(values);
 
 	if (!validatedFields.success) {
@@ -66,3 +66,5 @@ export const getTasks = async (values: z.infer<typeof GetTasksSchema>) => {
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default getTasks;

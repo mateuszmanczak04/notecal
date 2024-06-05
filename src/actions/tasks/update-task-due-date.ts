@@ -1,11 +1,11 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { UpdateTaskDueDateSchema } from '@/schemas';
 import { z } from 'zod';
 
-export const updateTaskDueDate = async (
+const updateTaskDueDate = async (
 	values: z.infer<typeof UpdateTaskDueDateSchema>,
 ) => {
 	const validatedFields = UpdateTaskDueDateSchema.safeParse(values);
@@ -47,3 +47,5 @@ export const updateTaskDueDate = async (
 		return { error: 'Something went wrong.' };
 	}
 };
+
+export default updateTaskDueDate;

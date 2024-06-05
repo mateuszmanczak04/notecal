@@ -1,6 +1,6 @@
 'use client';
 
-import { updateTaskPriority } from '@/actions/tasks/update-task-priority';
+import updateTaskPriority from '@/actions/tasks/update-task-priority';
 import { Badge } from '@/components/ui/badge';
 import {
 	DropdownMenu,

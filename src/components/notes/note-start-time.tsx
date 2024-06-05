@@ -1,6 +1,6 @@
 'use client';
 
-import { updateNoteStartTime } from '@/actions/notes/update-note-start-time';
+import updateNoteStartTime from '@/actions/notes/update-note-start-time';
 import { useNoteContext } from '@/components/notes/note-context';
 import TimePicker from '@/components/notes/time-picker';
 import { Button } from '@/components/ui/button';

@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { OTHER_COURSE_NAME } from '@/lib/utils';
 import { CreateTaskFormSchema } from '@/schemas';
 import { z } from 'zod';

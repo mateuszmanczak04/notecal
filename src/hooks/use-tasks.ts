@@ -1,4 +1,4 @@
-import { getTasks } from '@/actions/tasks/get-tasks';
+import getTasks from '@/actions/tasks/get-tasks';
 import useSettings from '@/hooks/use-settings';
 import { useQuery } from '@tanstack/react-query';
 

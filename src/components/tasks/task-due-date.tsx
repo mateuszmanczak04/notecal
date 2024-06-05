@@ -1,6 +1,6 @@
 'use client';
 
-import { updateTaskDueDate } from '@/actions/tasks/update-task-due-date';
+import updateTaskDueDate from '@/actions/tasks/update-task-due-date';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {

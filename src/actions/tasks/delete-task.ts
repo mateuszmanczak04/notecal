@@ -1,11 +1,11 @@
 'use server';
 
 import { auth } from '@/auth';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { DeleteTaskSchema } from '@/schemas';
 import { z } from 'zod';
 
-export const deleteTask = async (values: z.infer<typeof DeleteTaskSchema>) => {
+const deleteTask = async (values: z.infer<typeof DeleteTaskSchema>) => {
 	const validatedFields = DeleteTaskSchema.safeParse(values);
 
 	if (!validatedFields.success) {
@@ -40,3 +40,5 @@ export const deleteTask = async (values: z.infer<typeof DeleteTaskSchema>) => {
 		return { error: 'Something went wrong. Please try again later.' };
 	}
 };
+
+export default deleteTask;
