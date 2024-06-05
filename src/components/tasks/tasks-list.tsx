@@ -10,8 +10,6 @@ interface TasksListProps {}
 const TasksList: FC<TasksListProps> = ({}) => {
 	const { tasks, isPending, error } = useTasks();
 
-	console.log('TASK LIST', error);
-
 	if (isPending) return <ClipLoader />;
 
 	if (error) return <p className='text-red-500'>{error.message}</p>;

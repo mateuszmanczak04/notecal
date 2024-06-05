@@ -23,7 +23,6 @@ const TimePicker: FC<TimePickerProps> = ({
 	const save = () => {
 		const isValid = /^([0-1]?[0-9]|2[0-3]):([0-5]?[0-9])$/.test(value);
 		if (!isValid) {
-			console.log('invalid');
 			setValue(
 				`${initialHour.toString().padStart(2, '0')}:${initialMinute.toString().padStart(2, '0')}`,
 			);

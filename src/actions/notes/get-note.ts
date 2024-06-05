@@ -31,7 +31,6 @@ export const getNote = async (values: z.infer<typeof GetNoteSchema>) => {
 
 		return { note };
 	} catch (error) {
-		console.log(error);
 		return { error: 'Something went wrong.' };
 	}
 };
