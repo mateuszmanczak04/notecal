@@ -8,7 +8,7 @@ const CreateTaskSchema = z.object({
 	description: z.string().max(300, {
 		message: 'Max length is 300 characters',
 	}),
-	courseId: z.string(),
+	courseId: z.string().optional(),
 	priority: z.enum([TaskPriority.A, TaskPriority.B, TaskPriority.C]).nullable(),
 	dueDate: z.date().nullable(),
 	completed: z.boolean().optional(),

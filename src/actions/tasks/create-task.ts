@@ -2,7 +2,6 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
-import { OTHER_COURSE_NAME } from '@/lib/utils';
 import CreateTaskSchema from '@/schemas/create-task-schema';
 import { z } from 'zod';
 
@@ -30,7 +29,9 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 			};
 		}
 
-		if (courseId !== OTHER_COURSE_NAME) {
+		// if user specifies the course, we have to check if that course exists
+		// if not, it doesn't matter because courseId is going to be null in the database
+		if (courseId) {
 			const course = await db.course.findUnique({
 				where: { id: courseId, userId: session.user.id },
 			});
@@ -43,7 +44,7 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 		const task = await db.task.create({
 			data: {
 				userId: session.user.id,
-				courseId: courseId === OTHER_COURSE_NAME ? null : courseId,
+				courseId: courseId || null,
 				title,
 				completed,
 				description,
@@ -54,6 +55,7 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 
 		return { task };
 	} catch (error) {
+		console.log(error);
 		return { error: 'Something went wrong. Please try again.' };
 	}
 };

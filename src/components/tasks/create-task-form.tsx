@@ -66,7 +66,13 @@ const CreateTaskForm = () => {
 	const onSubmit = (values: z.infer<typeof CreateTaskSchema>) => {
 		setError('');
 		startTransition(() => {
-			createTask(values).then(res => {
+			createTask({
+				...values,
+				// check if courseId should be undefined in request in case it is equal OTHER_COURSE_NAME
+				courseId:
+					values.courseId === OTHER_COURSE_NAME ? undefined : values.courseId,
+			}).then(res => {
+				console.log(res);
 				if (res?.error) {
 					setError(res.error);
 				}
