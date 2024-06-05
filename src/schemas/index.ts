@@ -52,42 +52,6 @@ export const CreateTaskFormSchema = z.object({
 	completed: z.boolean().optional(),
 });
 
-export const UpdateTaskCompletedSchema = z.object({
-	id: z.string(),
-	newValue: z.boolean(),
-});
-
-export const DeleteTaskSchema = z.object({
-	id: z.string(),
-});
-
-export const UpdateTaskTitleSchema = z.object({
-	id: z.string(),
-	newTitle: z.string().min(1, { message: 'Title is required.' }),
-});
-
-export const UpdateTaskDescriptionSchema = z.object({
-	id: z.string(),
-	newDescription: z.string(),
-});
-
-export const UpdateTaskDueDateSchema = z.object({
-	id: z.string(),
-	newDueDate: z.string().nullable(),
-});
-
-export const UpdateTaskCourseIdSchema = z.object({
-	id: z.string(),
-	newCourseId: z.string().nullable(),
-});
-
-export const UpdateTaskPrioritySchema = z.object({
-	id: z.string(),
-	newPriority: z
-		.enum([TaskPriority.A, TaskPriority.B, TaskPriority.C])
-		.nullable(),
-});
-
 export const DeleteCourseSchema = z.object({
 	id: z.string(),
 });

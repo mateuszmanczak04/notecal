@@ -2,8 +2,11 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
-import { DeleteTaskSchema } from '@/schemas';
 import { z } from 'zod';
+
+const DeleteTaskSchema = z.object({
+	id: z.string(),
+});
 
 const deleteTask = async (values: z.infer<typeof DeleteTaskSchema>) => {
 	const validatedFields = DeleteTaskSchema.safeParse(values);

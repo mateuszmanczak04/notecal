@@ -1,6 +1,6 @@
 'use client';
 
-import updateTaskDueDate from '@/actions/tasks/update-task-due-date';
+import updateTask from '@/actions/tasks/update-task';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -26,7 +26,7 @@ const TaskDueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 	const onChange = (date: any) => {
 		if (date) {
 			startTransition(() => {
-				updateTaskDueDate({ id, newDueDate: date.toString() });
+				updateTask({ id, dueDate: date });
 				updateTaskDueDateLocal(id, date);
 			});
 		}

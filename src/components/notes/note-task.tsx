@@ -1,6 +1,6 @@
 'use client';
 
-import updateTaskCompleted from '@/actions/tasks/update-task-completed';
+import updateTask from '@/actions/tasks/update-task';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { Task } from '@prisma/client';
@@ -17,8 +17,7 @@ const NoteTask: FC<NoteTaskProps> = ({
 	const queryClient = useQueryClient();
 
 	const { mutate: toggleCompleted } = useMutation({
-		mutationFn: async () =>
-			await updateTaskCompleted({ id, newValue: !completed }),
+		mutationFn: async () => await updateTask({ id, completed: !completed }),
 		onMutate: () => {
 			queryClient.setQueryData(
 				['course-tasks', courseId],

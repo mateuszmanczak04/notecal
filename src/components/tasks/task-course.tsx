@@ -1,6 +1,6 @@
 'use client';
 
-import updateTaskCourseId from '@/actions/tasks/update-task-course-id';
+import updateTask from '@/actions/tasks/update-task';
 import { Badge } from '@/components/ui/badge';
 import {
 	DropdownMenu,
@@ -37,7 +37,7 @@ const TaskCourse: FC<TaskCourseProps> = ({ id, courseId }) => {
 	// todo - add error handling and use of useOptimistic
 	const onChange = (newCourseId: string) => {
 		startTransition(() => {
-			updateTaskCourseId({ id, newCourseId });
+			updateTask({ id, courseId: newCourseId });
 			updateTaskCourseIdLocal(id, newCourseId);
 		});
 	};

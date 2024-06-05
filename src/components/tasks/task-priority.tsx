@@ -1,6 +1,6 @@
 'use client';
 
-import updateTaskPriority from '@/actions/tasks/update-task-priority';
+import updateTask from '@/actions/tasks/update-task';
 import { Badge } from '@/components/ui/badge';
 import {
 	DropdownMenu,
@@ -44,9 +44,9 @@ const TaskPriority: FC<TaskPriorityProps> = ({ id, priority }) => {
 			return;
 		}
 		startTransition(() => {
-			updateTaskPriority({
+			updateTask({
 				id,
-				newPriority: newPriority === NO_TASK_PRIORITY ? null : newPriority,
+				priority: newPriority === NO_TASK_PRIORITY ? null : newPriority,
 			});
 			updateTaskPriorityLocal(
 				id,

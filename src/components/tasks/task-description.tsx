@@ -1,6 +1,6 @@
 'use client';
 
-import updateTaskDescription from '@/actions/tasks/update-task-description';
+import updateTask from '@/actions/tasks/update-task';
 import { Input } from '@/components/ui/input';
 import { FC, useRef, useState, useTransition } from 'react';
 
@@ -24,7 +24,7 @@ const TaskDescription: FC<TaskTitleProps> = ({
 	const submit = () => {
 		if (description !== descriptionBeforeEditing) {
 			startTransition(() => {
-				updateTaskDescription({ id, newDescription: description });
+				updateTask({ id, description });
 				setIsEditing(false);
 			});
 		}

@@ -1,8 +1,7 @@
 'use client';
 
 import deleteTask from '@/actions/tasks/delete-task';
-import updateTaskCompleted from '@/actions/tasks/update-task-completed';
-import updateTaskDueDate from '@/actions/tasks/update-task-due-date';
+import updateTask from '@/actions/tasks/update-task';
 import TaskCourse from '@/components/tasks/task-course';
 import TaskDescription from '@/components/tasks/task-description';
 import TaskDueDate from '@/components/tasks/task-due-date';
@@ -39,7 +38,7 @@ const TaskItem: FC<TaskItemProps> = ({
 
 	const onToggle = () => {
 		startTransition(() => {
-			updateTaskCompleted({ id, newValue: !completed });
+			updateTask({ id, completed: !completed });
 			toggleTask(id);
 		});
 	};
@@ -53,7 +52,7 @@ const TaskItem: FC<TaskItemProps> = ({
 
 	const onResetDueDate = () => {
 		startTransition(() => {
-			updateTaskDueDate({ id, newDueDate: null });
+			updateTask({ id, dueDate: null });
 			updateTaskDueDateLocal(id, null);
 		});
 	};
