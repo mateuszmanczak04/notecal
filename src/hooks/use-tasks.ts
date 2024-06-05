@@ -2,15 +2,28 @@ import { getTasks } from '@/actions/tasks/get-tasks';
 import useSettings from '@/hooks/use-settings';
 import { useQuery } from '@tanstack/react-query';
 
+/**
+ * Uses react query to get user tasks from the backend.
+ */
 const useTasks = () => {
-	const { data } = useSettings();
+	const { settings } = useSettings();
 
-	return useQuery({
+	const { data, isPending, error } = useQuery({
 		queryKey: ['tasks'],
-		queryFn: async () =>
-			await getTasks({ orderBy: data?.settings?.orderTasks || 'createdAt' }),
+		queryFn: async () => {
+			// if server action returns error message, throw it so it
+			// is accessible as result of useQuery
+			const { tasks, error } = await getTasks({
+				orderBy: settings?.orderTasks || 'createdAt',
+			});
+			if (error) throw new Error(error);
+			return { tasks };
+		},
 		staleTime: Infinity,
+		enabled: !!settings, // don't fetch tasks if settings are not ready yet
 	});
+
+	return { tasks: data?.tasks, isPending, error };
 };
 
 export default useTasks;

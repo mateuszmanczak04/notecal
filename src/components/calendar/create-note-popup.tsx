@@ -18,7 +18,11 @@ const CreateNotePopup: FC<CreateNotePopupProps> = ({
 	submit,
 	hide,
 }) => {
-	const { data: coursesData } = useCourses();
+	const {
+		courses,
+		isPending: isCoursesPending,
+		error: coursesError,
+	} = useCourses();
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const [displayX, setDisplayX] = useState<number>(clickX);
 	const [displayY, setDisplayY] = useState<number>(clickY);
@@ -55,25 +59,24 @@ const CreateNotePopup: FC<CreateNotePopupProps> = ({
 		return () => document.removeEventListener('keydown', detectKeyDown);
 	}, [hide]);
 
-	if (!coursesData?.courses) {
-		return null;
-	}
-
-	const courses = coursesData.courses;
-
 	return (
 		<div
 			ref={containerRef}
 			className='fixed z-50 flex flex-col gap-2 rounded-md border bg-white p-2 shadow-xl'
 			style={{ left: `${displayX}px`, top: `${displayY}px` }}>
-			{courses.map(course => (
-				<Button
-					variant='secondary'
-					key={course.id}
-					onClick={() => submit(course.id)}>
-					{course.name}
-				</Button>
-			))}
+			{isCoursesPending && <p>Loading courses...</p>}
+			{coursesError && <p className='text-red-500'>{coursesError.message}</p>}
+			{!courses ||
+				(courses.length === 0 && <p>Could not find any course for you</p>)}
+			{courses &&
+				courses.map(course => (
+					<Button
+						variant='secondary'
+						key={course.id}
+						onClick={() => submit(course.id)}>
+						{course.name}
+					</Button>
+				))}
 		</div>
 	);
 };

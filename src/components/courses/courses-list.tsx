@@ -8,16 +8,14 @@ import { ClipLoader } from 'react-spinners';
 interface CoursesListProps {}
 
 const CoursesList: FC<CoursesListProps> = ({}) => {
-	const { data, isLoading, isError, error, isFetching } = useCourses();
+	const { courses, error, isPending } = useCourses();
 
-	const courses = data?.courses || [];
-
-	if (isLoading || isFetching) {
-		return <ClipLoader />;
+	if (isPending) {
+		return <p>Loading...</p>;
 	}
 
-	if (isError) {
-		return <p>Error: {error.message}</p>;
+	if (error) {
+		return <p className='text-red-500'>{error.message}</p>;
 	}
 
 	if (!courses || courses.length === 0) {

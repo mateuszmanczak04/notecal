@@ -1,10 +1,12 @@
 import useCourses from '@/hooks/use-courses';
 
-// used to filter all courses to find the one with the matching id
+/**
+ * used to filter all courses and find the one with the matching id
+ */
 const useCourse = (courseId: string | null) => {
-	const { data } = useCourses();
+	const { courses } = useCourses();
 	if (!courseId) return null;
-	const course = data?.courses?.find(course => course.id === courseId);
+	const course = courses?.find(course => course.id === courseId) || null;
 	return course;
 };
 

@@ -27,8 +27,11 @@ const TaskCourse: FC<TaskCourseProps> = ({ id, courseId }) => {
 	// or null when user selected "Other" option
 	const [isPending, startTransition] = useTransition();
 
-	const { data } = useCourses();
-	const courses = data?.courses;
+	const {
+		courses,
+		isPending: isCoursesPending,
+		error: coursesError,
+	} = useCourses();
 	const course = useCourse(courseId);
 
 	// todo - add error handling and use of useOptimistic
@@ -38,6 +41,8 @@ const TaskCourse: FC<TaskCourseProps> = ({ id, courseId }) => {
 			updateTaskCourseIdLocal(id, newCourseId);
 		});
 	};
+
+	if (isCoursesPending || coursesError) return null;
 
 	return (
 		<DropdownMenu>

@@ -20,7 +20,13 @@ const CalendarNoteBlock: FC<CalendarNoteBlockProps> = ({
 	endTime,
 	courseId,
 }) => {
-	const { data: coursesData } = useCourses();
+	const {
+		courses,
+		isPending: isCoursesPending,
+		error: coursesError,
+	} = useCourses();
+
+	if (isCoursesPending || coursesError) return null;
 
 	const hour = startTime.getHours();
 	const minute = startTime.getMinutes();
@@ -39,8 +45,7 @@ const CalendarNoteBlock: FC<CalendarNoteBlockProps> = ({
 					((endTime.getTime() - startTime.getTime()) / 3600_000) * 64 + 'px',
 			}}
 			key={id}>
-			{coursesData?.courses?.find(c => c.id === courseId)?.name ||
-				'Unknown course'}
+			{courses && courses.find(c => c.id === courseId)?.name}
 		</Link>
 	);
 };

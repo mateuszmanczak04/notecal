@@ -8,16 +8,13 @@ import { ClipLoader } from 'react-spinners';
 interface TasksListProps {}
 
 const TasksList: FC<TasksListProps> = ({}) => {
-	const { data, isLoading, isError, error, isFetching } = useTasks();
-	const tasks = data?.tasks;
+	const { tasks, isPending, error } = useTasks();
 
-	if (isLoading || isFetching) {
-		return <ClipLoader />;
-	}
+	console.log('TASK LIST', error);
 
-	if (isError) {
-		return <p>Error: {error.message}</p>;
-	}
+	if (isPending) return <ClipLoader />;
+
+	if (error) return <p className='text-red-500'>{error.message}</p>;
 
 	if (!tasks || tasks.length === 0) {
 		return (

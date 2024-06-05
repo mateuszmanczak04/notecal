@@ -2,7 +2,6 @@
 
 import { useCalendarContext } from '@/components/calendar/calendar-context';
 import CreateNotePopup from '@/components/calendar/create-note-popup';
-import useCourses from '@/hooks/use-courses';
 import { FC, MouseEvent, useRef, useState } from 'react';
 import CalendarNoteBlock from '@/components/calendar/calendar-note-block';
 import CalendarDayGridRect from '@/components/calendar/calendar-day-grid-rect';
@@ -13,7 +12,6 @@ interface CalendarDayGridProps {
 
 const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 	const { notes, addNewNote, newNoteTempId } = useCalendarContext();
-	const { data: coursesData } = useCourses();
 	const gridRef = useRef<HTMLDivElement | null>(null);
 	const [startTime, setStartTime] = useState<Date>(new Date());
 
