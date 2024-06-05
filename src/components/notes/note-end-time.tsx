@@ -1,6 +1,6 @@
 'use client';
 
-import updateNoteEndTime from '@/actions/notes/update-note-end-time';
+import updateNote from '@/actions/notes/update-note';
 import { useNoteContext } from '@/components/notes/note-context';
 import TimePicker from '@/components/notes/time-picker';
 import { Button } from '@/components/ui/button';
@@ -30,7 +30,7 @@ const NoteEndTime = () => {
 		if (newEndTime < currentNote.startTime) return;
 
 		startTransition(() => {
-			updateNoteEndTime({ id: currentNote.id, newEndTime });
+			updateNote({ id: currentNote.id, endTime: newEndTime });
 			updateNoteEndTimeLocal(currentNote.id, course.id, newEndTime);
 		});
 	};

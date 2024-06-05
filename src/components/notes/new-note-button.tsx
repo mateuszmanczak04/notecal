@@ -1,6 +1,6 @@
 'use client';
 
-import createNewNote from '@/actions/notes/create-new-note';
+import createNote from '@/actions/notes/create-note';
 import { useNoteContext } from '@/components/notes/note-context';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -15,7 +15,7 @@ const NewNoteButton = () => {
 
 	const onClick = () => {
 		startTransition(async () => {
-			await createNewNote({
+			await createNote({
 				courseId: course.id!,
 				startTime: new Date(),
 				content: 'Empty note',

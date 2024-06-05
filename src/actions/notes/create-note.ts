@@ -4,14 +4,14 @@ import { auth } from '@/auth';
 import db from '@/lib/db';
 import { z } from 'zod';
 
-const CreateNewNoteSchema = z.object({
+const CreateNoteSchema = z.object({
 	courseId: z.string(),
 	content: z.string(),
 	startTime: z.date(),
 });
 
-const createNewNote = async (values: z.infer<typeof CreateNewNoteSchema>) => {
-	const validatedFields = CreateNewNoteSchema.safeParse(values);
+const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
+	const validatedFields = CreateNoteSchema.safeParse(values);
 
 	if (!validatedFields.success) {
 		return { error: 'Invalid fields.' };
@@ -42,4 +42,4 @@ const createNewNote = async (values: z.infer<typeof CreateNewNoteSchema>) => {
 	}
 };
 
-export default createNewNote;
+export default createNote;

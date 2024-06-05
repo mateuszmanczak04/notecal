@@ -4,23 +4,24 @@ import { auth } from '@/auth';
 import db from '@/lib/db';
 import { z } from 'zod';
 
-const UpdateNoteEndTimeSchema = z.object({
+const UpdateNoteSchema = z.object({
 	id: z.string(),
-	newEndTime: z.date(),
+	startTime: z.coerce.date().optional(),
+	endTime: z.coerce.date().optional(),
+	content: z.string().optional(),
+	courseId: z.string().optional(),
 });
 
-const updateNoteEndTime = async (
-	values: z.infer<typeof UpdateNoteEndTimeSchema>,
-) => {
-	const validatedFields = UpdateNoteEndTimeSchema.safeParse(values);
+const updateNote = async (values: z.infer<typeof UpdateNoteSchema>) => {
+	const validatedFields = UpdateNoteSchema.safeParse(values);
 
 	if (!validatedFields.success) {
 		return { error: 'Invalid fields.' };
 	}
 
-	const { newEndTime, id } = validatedFields.data;
+	const data = validatedFields.data;
 
-	if (!id) {
+	if (!data.id) {
 		return { error: 'Missing fields.' };
 	}
 
@@ -32,10 +33,8 @@ const updateNoteEndTime = async (
 		}
 
 		await db.note.update({
-			where: { id, userId: session.user.id },
-			data: {
-				endTime: newEndTime,
-			},
+			where: { id: data.id, userId: session.user.id },
+			data,
 		});
 
 		return { updated: true };
@@ -44,4 +43,4 @@ const updateNoteEndTime = async (
 	}
 };
 
-export default updateNoteEndTime;
+export default updateNote;

@@ -1,6 +1,6 @@
 'use client';
 
-import updateNoteStartTime from '@/actions/notes/update-note-start-time';
+import updateNote from '@/actions/notes/update-note';
 import { useNoteContext } from '@/components/notes/note-context';
 import TimePicker from '@/components/notes/time-picker';
 import { Button } from '@/components/ui/button';
@@ -30,7 +30,7 @@ const NoteStartTime = () => {
 		if (newStartTime > currentNote.endTime) return;
 
 		startTransition(() => {
-			updateNoteStartTime({ id: currentNote.id, newStartTime });
+			updateNote({ id: currentNote.id, startTime: newStartTime });
 			updateNoteStartTimeLocal(currentNote.id, course.id, newStartTime);
 		});
 	};

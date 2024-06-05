@@ -1,4 +1,4 @@
-import createNewNote from '@/actions/notes/create-new-note';
+import createNote from '@/actions/notes/create-note';
 import getNotes from '@/actions/notes/get-notes';
 import { Note } from '@prisma/client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -46,7 +46,7 @@ export const CalendarContextProvider = ({
 			courseId: string;
 			content: string;
 			startTime: Date;
-		}) => await createNewNote({ courseId, content, startTime }),
+		}) => await createNote({ courseId, content, startTime }),
 		onMutate: ({
 			courseId,
 			content,

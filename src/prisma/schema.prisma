@@ -134,12 +134,6 @@ model Settings {
   updatedAt  DateTime       @updatedAt
 }
 
-model NoteBlock {
-  id    String @id @default(cuid())
-  title String
-  type  String
-}
-
 model Note {
   id        String   @id @default(cuid())
   userId    String

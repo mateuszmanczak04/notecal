@@ -1,6 +1,6 @@
 'use client';
 
-import updateNoteContent from '@/actions/notes/update-note-content';
+import updateNote from '@/actions/notes/update-note';
 import { useNoteContext } from '@/components/notes/note-context';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -27,8 +27,7 @@ const NoteContent = () => {
 	const [content, setContent] = useState(currentNote.content);
 
 	const { mutate: updateContent, isPending } = useMutation({
-		mutationFn: async () =>
-			updateNoteContent({ id: currentNote.id, newContent: content }),
+		mutationFn: async () => updateNote({ id: currentNote.id, content }),
 	});
 
 	return (

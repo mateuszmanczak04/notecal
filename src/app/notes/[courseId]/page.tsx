@@ -1,4 +1,4 @@
-import createNewNote from '@/actions/notes/create-new-note';
+import createNote from '@/actions/notes/create-note';
 import { auth } from '@/auth';
 import db from '@/lib/db';
 import { redirect } from 'next/navigation';
@@ -14,7 +14,7 @@ const page = async ({ params }: { params: { courseId: string } }) => {
 	});
 
 	if (latestNote.length === 0) {
-		const { newNote } = await createNewNote({
+		const { newNote } = await createNote({
 			courseId: params.courseId,
 			content: 'Empty note',
 			startTime: new Date(),
