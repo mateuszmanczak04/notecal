@@ -14,7 +14,7 @@ import {
 import useCourse from '@/hooks/use-course';
 import useCourses from '@/hooks/use-courses';
 import { updateTaskCourseId as updateTaskCourseIdLocal } from '@/lib/update-task';
-import { OTHER_COURSE_NAME, cn } from '@/lib/utils';
+import { OTHER_COURSE_NAME } from '@/lib/utils';
 import { FC, useTransition } from 'react';
 
 interface TaskCourseProps {
@@ -37,7 +37,10 @@ const TaskCourse: FC<TaskCourseProps> = ({ id, courseId }) => {
 	// todo - add error handling and use of useOptimistic
 	const onChange = (newCourseId: string) => {
 		startTransition(() => {
-			updateTask({ id, courseId: newCourseId });
+			updateTask({
+				id,
+				courseId: newCourseId === OTHER_COURSE_NAME ? null : newCourseId,
+			});
 			updateTaskCourseIdLocal(id, newCourseId);
 		});
 	};
