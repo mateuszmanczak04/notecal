@@ -19,19 +19,16 @@ const NoteTask: FC<NoteTaskProps> = ({
 	const { mutate: toggleCompleted } = useMutation({
 		mutationFn: async () => await updateTask({ id, completed: !completed }),
 		onMutate: () => {
-			queryClient.setQueryData(
-				['course-tasks', courseId],
-				(prev: { tasks: Task[] }) => {
-					const oldTasks = prev.tasks;
-					const newTasks = oldTasks.map(task => {
-						if (task.id === id) {
-							return { ...task, completed: !task.completed };
-						}
-						return task;
-					});
-					return { tasks: newTasks };
-				},
-			);
+			queryClient.setQueryData(['tasks'], (prev: { tasks: Task[] }) => {
+				const oldTasks = prev.tasks;
+				const newTasks = oldTasks.map(task => {
+					if (task.id === id) {
+						return { ...task, completed: !task.completed };
+					}
+					return task;
+				});
+				return { tasks: newTasks };
+			});
 		},
 		onSettled: data => {},
 		onError: err => {},

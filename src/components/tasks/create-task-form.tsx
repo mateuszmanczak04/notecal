@@ -72,7 +72,6 @@ const CreateTaskForm = () => {
 				courseId:
 					values.courseId === OTHER_COURSE_NAME ? undefined : values.courseId,
 			}).then(res => {
-				console.log(res);
 				if (res?.error) {
 					setError(res.error);
 				}

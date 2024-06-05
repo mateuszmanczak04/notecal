@@ -20,8 +20,9 @@ const NewNoteButton = () => {
 				startTime: new Date(),
 				content: 'Empty note',
 			});
+			// add it do the local state instead of invalidating
 			queryClient.invalidateQueries({
-				queryKey: ['course-notes', course.id!],
+				queryKey: ['notes'],
 			});
 		});
 	};

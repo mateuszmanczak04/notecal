@@ -55,7 +55,6 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 
 		return { task };
 	} catch (error) {
-		console.log(error);
 		return { error: 'Something went wrong. Please try again.' };
 	}
 };
