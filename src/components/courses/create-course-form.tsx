@@ -13,7 +13,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { CreateCourseFormSchema } from '@/schemas';
+import CreateCourseSchema from '@/schemas/create-course-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
@@ -24,8 +24,8 @@ import { z } from 'zod';
 const CreateCourseForm = () => {
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState('');
-	const form = useForm<z.infer<typeof CreateCourseFormSchema>>({
-		resolver: zodResolver(CreateCourseFormSchema),
+	const form = useForm<z.infer<typeof CreateCourseSchema>>({
+		resolver: zodResolver(CreateCourseSchema),
 		defaultValues: {
 			name: '',
 			teacher: '',
@@ -33,7 +33,7 @@ const CreateCourseForm = () => {
 	});
 	const router = useRouter();
 
-	const onSubmit = (values: z.infer<typeof CreateCourseFormSchema>) => {
+	const onSubmit = (values: z.infer<typeof CreateCourseSchema>) => {
 		setError('');
 		startTransition(() => {
 			createCourse(values).then(res => {

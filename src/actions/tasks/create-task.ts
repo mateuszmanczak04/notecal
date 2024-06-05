@@ -3,11 +3,11 @@
 import { auth } from '@/auth';
 import db from '@/lib/db';
 import { OTHER_COURSE_NAME } from '@/lib/utils';
-import { CreateTaskFormSchema } from '@/schemas';
+import CreateTaskSchema from '@/schemas/create-task-schema';
 import { z } from 'zod';
 
-const createTask = async (values: z.infer<typeof CreateTaskFormSchema>) => {
-	const validatedFields = CreateTaskFormSchema.safeParse(values);
+const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
+	const validatedFields = CreateTaskSchema.safeParse(values);
 
 	if (!validatedFields.success) {
 		return { error: 'Invalid fields.' };

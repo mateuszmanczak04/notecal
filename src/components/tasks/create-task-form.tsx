@@ -32,7 +32,7 @@ import { Textarea } from '@/components/ui/textarea';
 import useCourses from '@/hooks/use-courses';
 import queryClient from '@/lib/query-client';
 import { OTHER_COURSE_NAME, cn } from '@/lib/utils';
-import { CreateTaskFormSchema } from '@/schemas';
+import CreateTaskSchema from '@/schemas/create-task-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
@@ -51,8 +51,8 @@ const CreateTaskForm = () => {
 
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState('');
-	const form = useForm<z.infer<typeof CreateTaskFormSchema>>({
-		resolver: zodResolver(CreateTaskFormSchema),
+	const form = useForm<z.infer<typeof CreateTaskSchema>>({
+		resolver: zodResolver(CreateTaskSchema),
 		defaultValues: {
 			title: '',
 			description: '',
@@ -63,7 +63,7 @@ const CreateTaskForm = () => {
 	});
 	const router = useRouter();
 
-	const onSubmit = (values: z.infer<typeof CreateTaskFormSchema>) => {
+	const onSubmit = (values: z.infer<typeof CreateTaskSchema>) => {
 		setError('');
 		startTransition(() => {
 			createTask(values).then(res => {

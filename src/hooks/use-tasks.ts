@@ -13,9 +13,7 @@ const useTasks = () => {
 		queryFn: async () => {
 			// if server action returns error message, throw it so it
 			// is accessible as result of useQuery
-			const { tasks, error } = await getTasks({
-				orderBy: settings?.orderTasks || 'createdAt',
-			});
+			const { tasks, error } = await getTasks();
 			if (error) throw new Error(error);
 			return { tasks };
 		},

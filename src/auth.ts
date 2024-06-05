@@ -1,5 +1,5 @@
 import db from '@/lib/db';
-import { LoginSchema } from '@/schemas';
+import LoginSchema from '@/schemas/login-schema';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';

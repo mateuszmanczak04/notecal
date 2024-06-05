@@ -2,8 +2,15 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
-import { UpdateSettingsSchema } from '@/schemas';
 import { z } from 'zod';
+
+const UpdateSettingsSchema = z.object({
+	theme: z.enum(['light', 'dark']).optional(),
+	orderTasks: z
+		.enum(['title', 'createdAt', 'dueDate', 'priority', 'completed'])
+		.optional(),
+	language: z.enum(['en']).optional(),
+});
 
 const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 	const validatedFields = UpdateSettingsSchema.safeParse(values);

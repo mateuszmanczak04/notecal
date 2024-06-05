@@ -2,11 +2,11 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
-import { UpdateCourseFormSchema } from '@/schemas';
+import UpdateCourseSchema from '@/schemas/update-course-schema';
 import { z } from 'zod';
 
-const updateCourse = async (values: z.infer<typeof UpdateCourseFormSchema>) => {
-	const validatedFields = UpdateCourseFormSchema.safeParse(values);
+const updateCourse = async (values: z.infer<typeof UpdateCourseSchema>) => {
+	const validatedFields = UpdateCourseSchema.safeParse(values);
 
 	if (!validatedFields.success) {
 		return { error: 'Invalid fields.' };

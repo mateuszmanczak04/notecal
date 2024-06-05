@@ -2,16 +2,8 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
-import { GetTasksSchema } from '@/schemas';
-import { z } from 'zod';
 
-const getTasks = async (values: z.infer<typeof GetTasksSchema>) => {
-	const validatedFields = GetTasksSchema.safeParse(values);
-
-	if (!validatedFields.success) {
-		return { error: 'Invalid fields.' };
-	}
-
+const getTasks = async () => {
 	try {
 		const session = await auth();
 

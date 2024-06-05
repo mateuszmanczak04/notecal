@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import useCourse from '@/hooks/use-course';
-import { UpdateCourseFormSchema } from '@/schemas';
+import UpdateCourseSchema from '@/schemas/update-course-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -31,8 +31,8 @@ const EditCourseForm: FC<EditCourseFormProps> = ({ id }) => {
 	const course = useCourse(id);
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState('');
-	const form = useForm<z.infer<typeof UpdateCourseFormSchema>>({
-		resolver: zodResolver(UpdateCourseFormSchema),
+	const form = useForm<z.infer<typeof UpdateCourseSchema>>({
+		resolver: zodResolver(UpdateCourseSchema),
 		defaultValues: {
 			id: course?.id || '',
 			newName: course?.name || '',
@@ -42,7 +42,7 @@ const EditCourseForm: FC<EditCourseFormProps> = ({ id }) => {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const onSubmit = (values: z.infer<typeof UpdateCourseFormSchema>) => {
+	const onSubmit = (values: z.infer<typeof UpdateCourseSchema>) => {
 		setError('');
 		startTransition(() => {
 			updateCourse(values).then(res => {

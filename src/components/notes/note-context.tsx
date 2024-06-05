@@ -1,8 +1,7 @@
-import getCourse from '@/actions/courses/get-course';
-import getCourseNotes from '@/actions/courses/get-course-notes';
-import getCourseTasks from '@/actions/courses/get-course-tasks';
+import useCourses from '@/hooks/use-courses';
+import useNotes from '@/hooks/use-notes';
+import useTasks from '@/hooks/use-tasks';
 import { Course, Note, Task } from '@prisma/client';
-import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { ReactNode, createContext, useContext } from 'react';
 
@@ -10,9 +9,7 @@ interface NoteContextProps {
 	currentNote: Note;
 	course: Course;
 	notes: Note[];
-	tasks?: Task[];
-	tasksError?: string;
-	tasksIsLoading: boolean;
+	tasks: Task[];
 }
 
 const NoteContext = createContext({} as NoteContextProps);
@@ -20,67 +17,41 @@ const NoteContext = createContext({} as NoteContextProps);
 export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 	const { id, courseId } = useParams();
 
-	// get note from db
-	// const { data: noteData, isLoading: noteIsLoading } = useQuery({
-	// 	enabled: !!id,
-	// 	queryFn: async () => getNote({ id: id as string }),
-	// 	queryKey: ['note', id],
-	// });
+	const { notes } = useNotes();
+	const { courses } = useCourses();
+	const { tasks } = useTasks();
 
-	// get course from db
-	const { data: courseData, isLoading: courseIsLoading } = useQuery({
-		enabled: !!courseId,
-		queryFn: async () => await getCourse({ courseId: courseId as string }),
-		queryKey: ['course', courseId],
-	});
+	// todo:
+	// - filter courses to get relevant
+	// - filter notes to get all relevant to this course
+	// - filter tasks to get relevant to this course
+	// - handle loading and error states
+	// - create hooks for filtering notes, courses and tasks
 
-	// get course notes from db
-	const { data: notesData, isLoading: notesIsLoading } = useQuery({
-		enabled: !!courseId,
-		queryFn: async () => await getCourseNotes({ courseId: courseId as string }),
-		queryKey: ['course-notes', courseId],
-	});
-
-	// note course tasks from db
-	const { data: tasksData, isLoading: tasksIsLoading } = useQuery({
-		enabled: !!courseId,
-		queryFn: async () => await getCourseTasks({ courseId: courseId as string }),
-		queryKey: ['course-tasks', courseId],
-	});
-
-	if (courseIsLoading || notesIsLoading) {
-		return <p className='animate-bounce'>Loading...</p>;
-	}
-
-	if (
-		!notesData?.notes ||
-		!courseData?.course ||
-		notesData.error ||
-		courseData.error
-	) {
-		return (
-			<p className='rounded-md bg-red-100 p-2 text-red-800'>
-				Note or course not found
-			</p>
-		);
-	}
-
-	const currentNote = notesData?.notes?.filter(n => n.id === id)[0];
-
+	const currentNote = notes?.filter(note => note.id === id)[0];
 	if (!currentNote) {
 		// todo - add home page button
 		return <p>Note not found</p>;
+	}
+
+	const currentCourse = courses?.find(course => course.id === courseId);
+	if (!currentCourse) {
+		// todo - add home page button
+		return <p>Course not found</p>;
+	}
+
+	if (!tasks) {
+		// todo - display error
+		return <p>Tasks not found</p>;
 	}
 
 	return (
 		<NoteContext.Provider
 			value={{
 				currentNote,
-				course: courseData.course,
-				notes: notesData.notes,
-				tasks: tasksData?.tasks,
-				tasksError: tasksData?.error,
-				tasksIsLoading,
+				course: currentCourse,
+				notes: notes.filter(note => note.courseId === courseId),
+				tasks: tasks.filter(task => task.courseId === courseId),
 			}}>
 			{children}
 		</NoteContext.Provider>

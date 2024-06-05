@@ -2,7 +2,7 @@
 
 import { signIn } from '@/auth';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
-import { LoginSchema } from '@/schemas';
+import LoginSchema from '@/schemas/login-schema';
 import { AuthError } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';

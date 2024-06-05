@@ -2,9 +2,12 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
-import { DeleteCourseSchema } from '@/schemas';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
+
+const DeleteCourseSchema = z.object({
+	id: z.string(),
+});
 
 const deleteCourse = async (values: z.infer<typeof DeleteCourseSchema>) => {
 	const validatedFields = DeleteCourseSchema.safeParse(values);
