@@ -12,12 +12,12 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { RegisterSchema } from '@/schemas';
+import RegisterSchema from '@/schemas/register-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-import { ClipLoader } from 'react-spinners';
 import { z } from 'zod';
+import LoadingSpinner from '@/components/loading-spinner';
 
 const RegisterForm = () => {
 	const [isPending, startTransition] = useTransition();
@@ -87,7 +87,7 @@ const RegisterForm = () => {
 					Create an account
 				</Button>
 				<div className='flex w-full justify-center'>
-					{isPending && <ClipLoader className='mx-auto' />}
+					{isPending && <LoadingSpinner />}
 				</div>
 				{error && (
 					<Alert variant='destructive'>

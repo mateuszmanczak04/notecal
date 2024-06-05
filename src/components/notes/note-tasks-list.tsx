@@ -5,17 +5,7 @@ import NoteTask from '@/components/notes/note-task';
 import { Button } from '@/components/ui/button';
 
 const NoteTasksList = () => {
-	const { tasks, tasksError, tasksIsLoading } = useNoteContext();
-
-	if (tasksIsLoading) {
-		return <p className='animate-bounce'>Loading...</p>;
-	}
-
-	if (tasksError) {
-		return (
-			<p className='rounded-md bg-red-100 p-2 text-red-800'>{tasksError}</p>
-		);
-	}
+	const { tasks } = useNoteContext();
 
 	return (
 		<div className='flex flex-col gap-2'>

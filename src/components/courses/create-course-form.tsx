@@ -18,8 +18,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-import { ClipLoader } from 'react-spinners';
 import { z } from 'zod';
+import LoadingSpinner from '@/components/loading-spinner';
 
 const CreateCourseForm = () => {
 	const [isPending, startTransition] = useTransition();
@@ -84,7 +84,7 @@ const CreateCourseForm = () => {
 					Create a New Course
 				</Button>
 				<div className='flex w-full justify-center'>
-					{isPending && <ClipLoader className='mx-auto' />}
+					{isPending && <LoadingSpinner />}
 				</div>
 				{error && (
 					<Alert variant='destructive'>

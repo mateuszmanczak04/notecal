@@ -39,8 +39,8 @@ import { CalendarIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-import { ClipLoader } from 'react-spinners';
 import { z } from 'zod';
+import LoadingSpinner from '@/components/loading-spinner';
 
 const CreateTaskForm = () => {
 	const {
@@ -118,7 +118,7 @@ const CreateTaskForm = () => {
 						</FormItem>
 					)}
 				/>
-				{isCoursesPending && <p>Loading courses</p>}
+				{isCoursesPending && <LoadingSpinner />}
 				{coursesError && <p className='text-red-500'>{coursesError.message}</p>}
 				{!coursesError &&
 					!isCoursesPending &&
@@ -241,7 +241,7 @@ const CreateTaskForm = () => {
 					Create a New Task
 				</Button>
 				<div className='flex w-full justify-center'>
-					{isPending && <ClipLoader className='mx-auto' />}
+					{isPending && <LoadingSpinner />}
 				</div>
 				{error && (
 					<Alert variant='destructive'>

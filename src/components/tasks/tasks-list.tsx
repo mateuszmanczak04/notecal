@@ -3,14 +3,14 @@
 import TaskItem from '@/components/tasks/task-item';
 import useTasks from '@/hooks/use-tasks';
 import { FC } from 'react';
-import { ClipLoader } from 'react-spinners';
+import LoadingSpinner from '@/components/loading-spinner';
 
 interface TasksListProps {}
 
 const TasksList: FC<TasksListProps> = ({}) => {
 	const { tasks, isPending, error } = useTasks();
 
-	if (isPending) return <ClipLoader />;
+	if (isPending) return <LoadingSpinner />;
 
 	if (error) return <p className='text-red-500'>{error.message}</p>;
 

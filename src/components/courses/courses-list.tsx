@@ -3,15 +3,14 @@
 import CourseItem from '@/components/courses/course-item';
 import useCourses from '@/hooks/use-courses';
 import { FC } from 'react';
+import LoadingSpinner from '@/components/loading-spinner';
 
 interface CoursesListProps {}
 
 const CoursesList: FC<CoursesListProps> = ({}) => {
 	const { courses, error, isPending } = useCourses();
 
-	if (isPending) {
-		return <p>Loading...</p>;
-	}
+	if (isPending) return <LoadingSpinner />;
 
 	if (error) {
 		return <p className='text-red-500'>{error.message}</p>;

@@ -20,8 +20,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { FC, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-import { ClipLoader } from 'react-spinners';
 import { z } from 'zod';
+import LoadingSpinner from '@/components/loading-spinner';
 
 interface EditCourseFormProps {
 	id: string;
@@ -92,8 +92,7 @@ const EditCourseForm: FC<EditCourseFormProps> = ({ id }) => {
 					)}
 				/>
 				<Button type='submit' className='w-full gap-1'>
-					{isPending && <ClipLoader size={20} color='foreground' />} Save
-					changes
+					{isPending && <LoadingSpinner />} Save changes
 				</Button>
 				{error && (
 					<Alert variant='destructive'>

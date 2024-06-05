@@ -3,6 +3,7 @@ import getNotes from '@/actions/notes/get-notes';
 import { Note } from '@prisma/client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, createContext, useContext, useRef, useState } from 'react';
+import LoadingSpinner from '@/components/loading-spinner';
 
 interface CalendarContextProps {
 	notes: Note[];
@@ -117,9 +118,7 @@ export const CalendarContextProvider = ({
 		});
 	};
 
-	if (isLoading) {
-		return <p>Loading...</p>;
-	}
+	if (isLoading) return <LoadingSpinner />;
 
 	if (notesData?.error) {
 		return (

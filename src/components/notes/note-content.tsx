@@ -9,20 +9,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 
 const NoteContent = () => {
-	const {
-		currentNote,
-		// blocksIsLoading: isLoading,
-		// blocks,
-		// blocksError: error,
-	} = useNoteContext();
-
-	// if (error) {
-	// 	return <p className='rounded-md bg-red-100 p-2 text-red-800'>{error}</p>;
-	// }
-
-	// if (isLoading) {
-	// 	return <p className='animate-bounce'>Loading...</p>;
-	// }
+	const { currentNote } = useNoteContext();
 
 	const [content, setContent] = useState(currentNote.content);
 

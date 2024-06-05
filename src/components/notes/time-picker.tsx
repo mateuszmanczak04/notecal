@@ -2,7 +2,7 @@
 
 import { FC, FormEvent, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
-import { Input } from '../ui/input';
+import { Input } from '@/components/ui/input';
 
 interface TimePickerProps {
 	initialHour: number;

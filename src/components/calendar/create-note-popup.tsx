@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import useCourses from '@/hooks/use-courses';
 import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
+import LoadingSpinner from '@/components/loading-spinner';
 
 interface CreateNotePopupProps {
 	clickX: number;
@@ -64,7 +65,7 @@ const CreateNotePopup: FC<CreateNotePopupProps> = ({
 			ref={containerRef}
 			className='fixed z-50 flex flex-col gap-2 rounded-md border bg-white p-2 shadow-xl'
 			style={{ left: `${displayX}px`, top: `${displayY}px` }}>
-			{isCoursesPending && <p>Loading courses...</p>}
+			{isCoursesPending && <LoadingSpinner />}
 			{coursesError && <p className='text-red-500'>{coursesError.message}</p>}
 			{!courses ||
 				(courses.length === 0 && <p>Could not find any course for you</p>)}
