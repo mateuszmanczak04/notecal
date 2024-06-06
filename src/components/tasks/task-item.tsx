@@ -58,7 +58,7 @@ const TaskItem: FC<TaskItemProps> = ({
 	};
 
 	return (
-		<Card className={'shadow-none'}>
+		<Card className='border-none bg-primary/5 shadow-none dark:bg-white/5'>
 			<div className='flex items-start'>
 				<div className='py-6 pl-6'>
 					<Checkbox

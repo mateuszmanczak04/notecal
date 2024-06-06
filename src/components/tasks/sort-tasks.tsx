@@ -37,7 +37,7 @@ const SortTasks = () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger
-				className=' w-full select-none outline-none sm:w-40'
+				className=' w-full select-none border-none bg-primary/5 shadow-none outline-none hover:bg-primary/10 sm:w-40 dark:bg-white/5 dark:hover:bg-white/10'
 				asChild>
 				<Button variant='outline' className='flex items-center gap-1'>
 					<span>Order By</span>{' '}

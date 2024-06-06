@@ -7,7 +7,7 @@ const CreateTaskLink = () => {
 		<Button
 			asChild
 			variant='default'
-			className='flex items-center justify-center gap-1 font-semibold sm:flex-1'>
+			className='flex items-center justify-center gap-1 font-semibold shadow-none sm:flex-1'>
 			<Link href='/tasks/create'>
 				<Plus className='h-6 w-6' /> Create a New Task
 			</Link>
