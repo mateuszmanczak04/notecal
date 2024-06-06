@@ -20,6 +20,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import LoadingSpinner from '@/components/loading-spinner';
 import ErrorMessage from '@/components/error-message';
+import { useQueryClient } from '@tanstack/react-query';
 
 const CreateCourseForm = () => {
 	const [isPending, startTransition] = useTransition();
@@ -32,6 +33,7 @@ const CreateCourseForm = () => {
 		},
 	});
 	const router = useRouter();
+	const queryClient = useQueryClient();
 
 	const onSubmit = (values: z.infer<typeof CreateCourseSchema>) => {
 		setError('');
@@ -40,6 +42,7 @@ const CreateCourseForm = () => {
 				if (res?.error) {
 					setError(res.error);
 				}
+				queryClient.invalidateQueries({ queryKey: ['courses'] });
 				router.push('/courses');
 			});
 		});
