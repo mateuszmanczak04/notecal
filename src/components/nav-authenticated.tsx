@@ -1,6 +1,5 @@
 'use client';
 
-import Logout from '@/components/auth/logout';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 import Link from 'next/link';
@@ -49,7 +48,14 @@ const NavAuthenticated = () => {
 								Courses
 							</Link>
 						</Button>
-						<Logout variant='default' />
+						<Button
+							asChild
+							variant='secondary'
+							className='w-full bg-gray-50 text-center leading-10 hover:bg-gray-100'>
+							<Link href='/settings' onClick={toggleOpen}>
+								Settings
+							</Link>
+						</Button>
 					</div>
 				)}
 			</div>
@@ -68,7 +74,9 @@ const NavAuthenticated = () => {
 					<Button asChild className='leading-10'>
 						<Link href='/courses'>Courses</Link>
 					</Button>
-					<Logout variant='secondary' />
+					<Button asChild className='leading-10'>
+						<Link href='/settings'>Settings</Link>
+					</Button>
 				</div>
 			</div>
 		</>
