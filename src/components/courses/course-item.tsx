@@ -18,7 +18,7 @@ interface CourseItemProps {
 
 const CourseItem: FC<CourseItemProps> = ({ name, teacher, id }) => {
 	return (
-		<Card className='shadow-none'>
+		<Card className='border-none bg-primary/5 shadow-none dark:bg-white/5'>
 			<CardHeader>
 				<CardTitle>{name}</CardTitle>
 				<CardDescription>{teacher}</CardDescription>

@@ -6,7 +6,6 @@ const CreateCourseLink = () => {
 	return (
 		<Button
 			asChild
-			variant='secondary'
 			size='lg'
 			className='flex items-center justify-center gap-1 font-semibold'>
 			<Link href='/courses/create'>
