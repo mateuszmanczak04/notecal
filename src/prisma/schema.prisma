@@ -124,11 +124,15 @@ enum OrderTasksEnum {
   createdAt
 }
 
+enum LanguageEnum {
+  en
+}
+
 model Settings {
   user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String         @id
   theme      ThemeEnum      @default(light)
-  language   String
+  language   LanguageEnum   @default(en)
   orderTasks OrderTasksEnum @default(createdAt)
   createdAt  DateTime       @default(now())
   updatedAt  DateTime       @updatedAt
