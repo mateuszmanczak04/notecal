@@ -32,13 +32,17 @@ const ThemeSetting: FC<ThemeSettingProps> = ({}) => {
 	return (
 		<Card className='flex flex-col gap-2 border-none bg-primary/5 p-4 shadow-none md:p-6 dark:border-none dark:bg-white/5'>
 			<h2 className='text-lg font-semibold'>Theme</h2>
-			<div className='flex items-center gap-2'>
+			<div className='flex items-center'>
 				<Switch
 					id='dark-mode-switch'
 					checked={isDarkMode}
 					onCheckedChange={handleChange}
 				/>
-				<Label htmlFor='dark-mode-switch'>Dark mode</Label>
+				<Label
+					htmlFor='dark-mode-switch'
+					className='cursor-pointer select-none pl-2'>
+					Dark mode
+				</Label>
 			</div>
 		</Card>
 	);
