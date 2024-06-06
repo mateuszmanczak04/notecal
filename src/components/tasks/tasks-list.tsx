@@ -4,6 +4,7 @@ import TaskItem from '@/components/tasks/task-item';
 import useTasks from '@/hooks/use-tasks';
 import { FC } from 'react';
 import LoadingSpinner from '@/components/loading-spinner';
+import ErrorMessage from '@/components/error-message';
 
 interface TasksListProps {}
 
@@ -12,7 +13,7 @@ const TasksList: FC<TasksListProps> = ({}) => {
 
 	if (isPending) return <LoadingSpinner />;
 
-	if (error) return <p className='text-red-500'>{error.message}</p>;
+	if (error) return <ErrorMessage>{error.message}</ErrorMessage>;
 
 	if (!tasks || tasks.length === 0) {
 		return (

@@ -1,7 +1,6 @@
 'use client';
 
 import createTask from '@/actions/tasks/create-task';
-import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -41,6 +40,7 @@ import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import LoadingSpinner from '@/components/loading-spinner';
+import ErrorMessage from '@/components/error-message';
 
 const CreateTaskForm = () => {
 	const {
@@ -242,11 +242,7 @@ const CreateTaskForm = () => {
 				<div className='flex w-full justify-center'>
 					{isPending && <LoadingSpinner />}
 				</div>
-				{error && (
-					<Alert variant='destructive'>
-						<AlertTitle className='mb-0'>{error}</AlertTitle>
-					</Alert>
-				)}
+				{error && <ErrorMessage>{error}</ErrorMessage>}
 			</form>
 		</Form>
 	);

@@ -4,6 +4,7 @@ import CourseItem from '@/components/courses/course-item';
 import useCourses from '@/hooks/use-courses';
 import { FC } from 'react';
 import LoadingSpinner from '@/components/loading-spinner';
+import ErrorMessage from '@/components/error-message';
 
 interface CoursesListProps {}
 
@@ -12,9 +13,7 @@ const CoursesList: FC<CoursesListProps> = ({}) => {
 
 	if (isPending) return <LoadingSpinner />;
 
-	if (error) {
-		return <p className='text-red-500'>{error.message}</p>;
-	}
+	if (error) return <ErrorMessage>{error.message}</ErrorMessage>;
 
 	if (!courses || courses.length === 0) {
 		return (

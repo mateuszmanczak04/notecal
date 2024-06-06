@@ -1,5 +1,6 @@
 'use client';
 
+import ErrorMessage from '@/components/error-message';
 import { Button } from '@/components/ui/button';
 import { FC } from 'react';
 
@@ -11,7 +12,7 @@ interface ErrorProps {
 const Error: FC<ErrorProps> = ({ error, reset }) => {
 	return (
 		<div className='mx-auto text-center'>
-			<p>{error.message}</p>
+			<ErrorMessage>{error.message}</ErrorMessage>
 			<Button onClick={reset} size='lg'>
 				Try Again
 			</Button>

@@ -1,7 +1,6 @@
 'use client';
 
 import updateCourse from '@/actions/courses/update-course';
-import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -22,6 +21,7 @@ import { FC, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import LoadingSpinner from '@/components/loading-spinner';
+import ErrorMessage from '@/components/error-message';
 
 interface EditCourseFormProps {
 	id: string;
@@ -94,11 +94,7 @@ const EditCourseForm: FC<EditCourseFormProps> = ({ id }) => {
 				<Button type='submit' className='w-full gap-1'>
 					{isPending && <LoadingSpinner />} Save changes
 				</Button>
-				{error && (
-					<Alert variant='destructive'>
-						<AlertTitle className='mb-0'>{error}</AlertTitle>
-					</Alert>
-				)}
+				{error && <ErrorMessage>{error}</ErrorMessage>}
 			</form>
 		</Form>
 	);

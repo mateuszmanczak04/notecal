@@ -4,6 +4,7 @@ import useTasks from '@/hooks/use-tasks';
 import { Course, Note, Task } from '@prisma/client';
 import { useParams } from 'next/navigation';
 import { ReactNode, createContext, useContext } from 'react';
+import ErrorMessage from '@/components/error-message';
 
 interface NoteContextProps {
 	currentNote: Note;
@@ -31,18 +32,18 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 	const currentNote = notes?.filter(note => note.id === id)[0];
 	if (!currentNote) {
 		// todo - add home page button
-		return <p>Note not found</p>;
+		return <ErrorMessage>Note not found</ErrorMessage>;
 	}
 
 	const currentCourse = courses?.find(course => course.id === courseId);
 	if (!currentCourse) {
 		// todo - add home page button
-		return <p>Course not found</p>;
+		return <ErrorMessage>Course not found</ErrorMessage>;
 	}
 
 	if (!tasks) {
-		// todo - display error
-		return <p>Tasks not found</p>;
+		// todo - add home page button
+		return <ErrorMessage>Tasks not found</ErrorMessage>;
 	}
 
 	return (

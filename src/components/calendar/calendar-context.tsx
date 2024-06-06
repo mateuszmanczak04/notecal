@@ -4,6 +4,7 @@ import { Note } from '@prisma/client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, createContext, useContext, useRef, useState } from 'react';
 import LoadingSpinner from '@/components/loading-spinner';
+import ErrorMessage from '@/components/error-message';
 
 interface CalendarContextProps {
 	notes: Note[];
@@ -121,11 +122,7 @@ export const CalendarContextProvider = ({
 	if (isLoading) return <LoadingSpinner />;
 
 	if (notesData?.error) {
-		return (
-			<p className='rounded-md bg-red-100 p-2 text-red-800'>
-				{notesData?.error}
-			</p>
-		);
+		return <ErrorMessage>{notesData?.error}</ErrorMessage>;
 	}
 
 	return (

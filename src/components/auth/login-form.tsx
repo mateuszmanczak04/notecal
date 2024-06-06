@@ -1,7 +1,6 @@
 'use client';
 
 import login from '@/actions/auth/login';
-import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -18,6 +17,7 @@ import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import LoadingSpinner from '@/components/loading-spinner';
+import ErrorMessage from '@/components/error-message';
 
 const LoginForm = () => {
 	const [isPending, startTransition] = useTransition();
@@ -75,11 +75,7 @@ const LoginForm = () => {
 				<div className='flex w-full justify-center'>
 					{isPending && <LoadingSpinner />}
 				</div>
-				{error && (
-					<Alert variant='destructive'>
-						<AlertTitle className='mb-0'>{error}</AlertTitle>
-					</Alert>
-				)}
+				{error && <ErrorMessage>{error}</ErrorMessage>}
 			</form>
 		</Form>
 	);
