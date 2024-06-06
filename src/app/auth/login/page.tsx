@@ -11,7 +11,7 @@ import Link from 'next/link';
 const page = () => {
 	return (
 		<div className='grid place-items-center p-4'>
-			<Card className='w-full max-w-sm'>
+			<Card className='w-full max-w-sm border-none bg-primary/5 shadow-none'>
 				<CardHeader>
 					<CardTitle className='text-2xl'>Login to your account</CardTitle>
 				</CardHeader>
@@ -21,7 +21,7 @@ const page = () => {
 				<CardFooter>
 					<Link
 						href='/auth/register'
-						className='mt-4 block text-center text-gray-500'>
+						className='mt-4 block text-center text-sm text-gray-500'>
 						Don&apos;t have an account yet? Register now
 					</Link>
 				</CardFooter>
