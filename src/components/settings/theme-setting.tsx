@@ -13,10 +13,8 @@ const ThemeSetting: FC<ThemeSettingProps> = ({}) => {
 	useLayoutEffect(() => {
 		if (localStorage.theme === 'dark') {
 			setIsDarkMode(true);
-			document.documentElement.classList.add('dark');
 		} else {
 			setIsDarkMode(false);
-			document.documentElement.classList.remove('dark');
 		}
 	}, []);
 
