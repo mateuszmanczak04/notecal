@@ -8,7 +8,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -20,6 +19,7 @@ import LoadingSpinner from '@/components/loading-spinner';
 import { useMutation } from '@tanstack/react-query';
 import ErrorMessage from '@/components/error-message';
 import SuccessMessage from '@/components/success-message';
+import { Card } from '@/components/ui/card';
 
 const ChangePasswordSetting = () => {
 	const { mutate, error, isPending, data } = useMutation({
@@ -45,7 +45,7 @@ const ChangePasswordSetting = () => {
 	};
 
 	return (
-		<div className='rounded-md border border-gray-200 bg-white p-4 md:p-6'>
+		<Card className='flex flex-col gap-2 p-4 shadow-none md:p-6'>
 			<h2 className='text-lg font-semibold'>Change password</h2>
 			<Form {...form}>
 				<form
@@ -96,7 +96,7 @@ const ChangePasswordSetting = () => {
 					{isPending && <LoadingSpinner />}
 				</form>
 			</Form>
-		</div>
+		</Card>
 	);
 };
 
