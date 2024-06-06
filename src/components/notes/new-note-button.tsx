@@ -31,7 +31,6 @@ const NewNoteButton = () => {
 		<Button
 			onClick={onClick}
 			size='sm'
-			variant='ghost'
 			className={cn(
 				'flex items-center gap-1',
 				isPending && 'pointer-events-none opacity-75 transition',

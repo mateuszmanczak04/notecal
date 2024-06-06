@@ -32,7 +32,7 @@ const DeleteNoteButton = () => {
 				<Button
 					variant='destructive'
 					onClick={confirmDeletion}
-					className='w-full'>
+					className='w-full bg-destructive'>
 					Yes
 				</Button>
 				<Button
