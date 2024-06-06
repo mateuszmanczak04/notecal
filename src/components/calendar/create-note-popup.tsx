@@ -63,7 +63,7 @@ const CreateNotePopup: FC<CreateNotePopupProps> = ({
 	return (
 		<div
 			ref={containerRef}
-			className='fixed z-50 flex flex-col gap-2 rounded-md border bg-white p-2 shadow-xl'
+			className='fixed z-50 flex flex-col gap-2 rounded-md bg-accent p-2 shadow-xl'
 			style={{ left: `${displayX}px`, top: `${displayY}px` }}>
 			{isCoursesPending && <LoadingSpinner />}
 			{coursesError && <p className='text-red-500'>{coursesError.message}</p>}
@@ -72,9 +72,9 @@ const CreateNotePopup: FC<CreateNotePopupProps> = ({
 			{courses &&
 				courses.map(course => (
 					<Button
-						variant='secondary'
 						key={course.id}
-						onClick={() => submit(course.id)}>
+						onClick={() => submit(course.id)}
+						variant='secondary'>
 						{course.name}
 					</Button>
 				))}

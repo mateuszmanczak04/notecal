@@ -36,7 +36,7 @@ const CalendarNoteBlock: FC<CalendarNoteBlockProps> = ({
 		<Link
 			href={id === newNoteTempId ? '/notes' : `/notes/${courseId}/${id}`}
 			className={cn(
-				'absolute left-2 right-0 top-0 min-h-4 cursor-pointer select-none overflow-y-hidden rounded-md bg-blue-200 p-2 transition',
+				'absolute left-2 right-0 top-0 min-h-4 cursor-pointer select-none overflow-y-hidden rounded-md border border-slate-200 bg-slate-100 p-2 text-sm transition dark:border-slate-500 dark:bg-slate-600 dark:text-white',
 				id === newNoteTempId && 'pointer-events-none opacity-75',
 			)}
 			style={{

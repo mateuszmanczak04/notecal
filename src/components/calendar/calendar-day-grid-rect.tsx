@@ -12,13 +12,13 @@ const CalendarDayGridRect = ({
 	if (last)
 		return (
 			<div
-				className='h-16 w-full border-y border-gray-300'
+				className='h-16 w-full border-y-2 border-accent'
 				data-hour={hour}
 				onClick={onClick}></div>
 		);
 	return (
 		<div
-			className='h-16 w-full border-t border-gray-300'
+			className='h-16 w-full border-t-2 border-accent'
 			data-hour={hour}
 			onClick={onClick}></div>
 	);

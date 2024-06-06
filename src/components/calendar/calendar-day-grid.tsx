@@ -50,7 +50,7 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 	return (
 		<div
 			ref={gridRef}
-			className='relative flex-1 cursor-crosshair overflow-y-hidden border-r border-gray-300'>
+			className='relative flex-1 cursor-crosshair overflow-y-hidden border-r-2 border-accent'>
 			{new Array(23).fill(0).map((_, i) => (
 				<CalendarDayGridRect key={i} hour={i} onClick={onClick} />
 			))}
