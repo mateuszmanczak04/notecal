@@ -23,11 +23,11 @@ const NavAuthenticated = () => {
 					<Menu className='h-8 w-8' />
 				</Button>
 				{open && (
-					<div className='absolute left-0 top-16 -z-10 flex w-screen flex-col gap-2 overflow-hidden bg-gray-200 p-2 text-black shadow-2xl'>
+					<div className='absolute left-0 top-16 -z-10 flex w-screen flex-col gap-2 overflow-hidden border-b-2 border-white/20 bg-background p-2 shadow-2xl'>
 						<Button
 							asChild
 							variant='secondary'
-							className='w-full bg-gray-50 text-center leading-10 hover:bg-gray-100'>
+							className='w-full bg-primary/10 text-center leading-10 hover:bg-primary/15 dark:bg-white/10 dark:hover:bg-white/15'>
 							<Link href='/calendar' onClick={toggleOpen}>
 								Calendar
 							</Link>
@@ -35,7 +35,7 @@ const NavAuthenticated = () => {
 						<Button
 							asChild
 							variant='secondary'
-							className='w-full bg-gray-50 text-center leading-10 hover:bg-gray-100'>
+							className='w-full bg-primary/10 text-center leading-10 hover:bg-primary/15 dark:bg-white/10 dark:hover:bg-white/15'>
 							<Link href='/tasks' onClick={toggleOpen}>
 								Tasks
 							</Link>
@@ -43,7 +43,7 @@ const NavAuthenticated = () => {
 						<Button
 							asChild
 							variant='secondary'
-							className='w-full bg-gray-50 text-center leading-10 hover:bg-gray-100'>
+							className='w-full bg-primary/10 text-center leading-10 hover:bg-primary/15 dark:bg-white/10 dark:hover:bg-white/15'>
 							<Link href='/courses' onClick={toggleOpen}>
 								Courses
 							</Link>
@@ -51,7 +51,7 @@ const NavAuthenticated = () => {
 						<Button
 							asChild
 							variant='secondary'
-							className='w-full bg-gray-50 text-center leading-10 hover:bg-gray-100'>
+							className='w-full bg-primary/10 text-center leading-10 hover:bg-primary/15 dark:bg-white/10 dark:hover:bg-white/15'>
 							<Link href='/settings' onClick={toggleOpen}>
 								Settings
 							</Link>
