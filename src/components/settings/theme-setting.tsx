@@ -1,20 +1,48 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useLayoutEffect, useState } from 'react';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import { Card } from '@/components/ui/card';
 
 interface ThemeSettingProps {}
 
 const ThemeSetting: FC<ThemeSettingProps> = ({}) => {
+	const [isDarkMode, setIsDarkMode] = useState(false);
+
+	useLayoutEffect(() => {
+		if (localStorage.theme === 'dark') {
+			setIsDarkMode(true);
+			document.documentElement.classList.add('dark');
+		} else {
+			setIsDarkMode(false);
+			document.documentElement.classList.remove('dark');
+		}
+	}, []);
+
+	const handleChange = (newValue: boolean) => {
+		if (newValue) {
+			localStorage.theme = 'dark';
+			document.documentElement.classList.add('dark');
+		} else {
+			localStorage.theme = 'light';
+			document.documentElement.classList.remove('dark');
+		}
+		setIsDarkMode(newValue);
+	};
+
 	return (
-		<div className='flex flex-col gap-2 rounded-md border border-gray-200 bg-white p-4 md:p-6'>
+		<Card className='flex flex-col gap-2 p-4 shadow-none md:p-6'>
 			<h2 className='text-lg font-semibold'>Theme</h2>
 			<div className='flex items-center gap-2'>
-				<Switch id='dark-mode-switch' />
+				<Switch
+					id='dark-mode-switch'
+					checked={isDarkMode}
+					onCheckedChange={handleChange}
+				/>
 				<Label htmlFor='dark-mode-switch'>Dark mode</Label>
 			</div>
-		</div>
+		</Card>
 	);
 };
 
