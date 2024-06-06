@@ -2,6 +2,7 @@
 
 import deleteCourse from '@/actions/courses/delete-course';
 import { Button } from '@/components/ui/button';
+import { useQueryClient } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';
 import { FC, useTransition } from 'react';
 
@@ -11,10 +12,13 @@ interface DeleteCourseButtonProps {
 
 const DeleteCourseButton: FC<DeleteCourseButtonProps> = ({ id }) => {
 	const [isPending, startTransition] = useTransition();
+	const queryClient = useQueryClient();
 
 	const onClick = () => {
 		startTransition(() => {
-			deleteCourse({ id });
+			deleteCourse({ id }).then(() => {
+				queryClient.invalidateQueries({ queryKey: ['courses'] });
+			});
 		});
 	};
 
