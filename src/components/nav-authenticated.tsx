@@ -19,7 +19,7 @@ const NavAuthenticated = () => {
 				<Link href='/' className='text-2xl font-semibold'>
 					NoteCal
 				</Link>
-				<Button onClick={toggleOpen}>
+				<Button onClick={toggleOpen} className='shadow-none'>
 					<Menu className='h-8 w-8' />
 				</Button>
 				{open && (
@@ -65,16 +65,16 @@ const NavAuthenticated = () => {
 					NoteCal
 				</Link>
 				<div className='flex items-center gap-2'>
-					<Button asChild className='leading-10'>
+					<Button asChild className='leading-10 shadow-none'>
 						<Link href='/calendar'>Calendar</Link>
 					</Button>
-					<Button asChild className='leading-10'>
+					<Button asChild className='leading-10 shadow-none'>
 						<Link href='/tasks'>Tasks</Link>
 					</Button>
-					<Button asChild className='leading-10'>
+					<Button asChild className='leading-10 shadow-none'>
 						<Link href='/courses'>Courses</Link>
 					</Button>
-					<Button asChild className='leading-10'>
+					<Button asChild className='leading-10 shadow-none'>
 						<Link href='/settings'>Settings</Link>
 					</Button>
 				</div>
