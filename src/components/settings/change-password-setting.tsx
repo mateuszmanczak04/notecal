@@ -45,7 +45,7 @@ const ChangePasswordSetting = () => {
 	};
 
 	return (
-		<Card className='flex flex-col gap-2 p-4 shadow-none md:p-6'>
+		<Card className='flex flex-col gap-2 p-4 shadow-none md:p-6 dark:border-none dark:bg-white/5'>
 			<h2 className='text-lg font-semibold'>Change password</h2>
 			<Form {...form}>
 				<form

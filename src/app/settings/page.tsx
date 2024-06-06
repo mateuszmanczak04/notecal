@@ -6,7 +6,7 @@ import DefaultNoteDurationSetting from '@/components/settings/default-note-durat
 
 const page = () => {
 	return (
-		<div className='flex flex-col gap-2'>
+		<div className='flex flex-col gap-2 pb-16'>
 			<h1 className='text-2xl font-semibold'>Settings</h1>
 			<ChangePasswordSetting />
 			<ThemeSetting />

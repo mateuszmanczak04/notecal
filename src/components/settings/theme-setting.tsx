@@ -32,7 +32,7 @@ const ThemeSetting: FC<ThemeSettingProps> = ({}) => {
 	};
 
 	return (
-		<Card className='flex flex-col gap-2 p-4 shadow-none md:p-6'>
+		<Card className='flex flex-col gap-2 border-none bg-primary/5 p-4 shadow-none md:p-6 dark:border-none dark:bg-white/5'>
 			<h2 className='text-lg font-semibold'>Theme</h2>
 			<div className='flex items-center gap-2'>
 				<Switch
