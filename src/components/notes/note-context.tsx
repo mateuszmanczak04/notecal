@@ -5,6 +5,7 @@ import { Course, Note, Task } from '@prisma/client';
 import { useParams } from 'next/navigation';
 import { ReactNode, createContext, useContext } from 'react';
 import ErrorMessage from '@/components/error-message';
+import LoadingSpinner from '@/components/loading-spinner';
 
 interface NoteContextProps {
 	currentNote: Note;
@@ -18,9 +19,9 @@ const NoteContext = createContext({} as NoteContextProps);
 export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 	const { id, courseId } = useParams();
 
-	const { notes } = useNotes();
-	const { courses } = useCourses();
-	const { tasks } = useTasks();
+	const { notes, isPending: notesIsPending } = useNotes();
+	const { courses, isPending: coursesIsPending } = useCourses();
+	const { tasks, isPending: tasksIsPending } = useTasks();
 
 	// todo:
 	// - filter courses to get relevant
@@ -28,6 +29,10 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 	// - filter tasks to get relevant to this course
 	// - handle loading and error states
 	// - create hooks for filtering notes, courses and tasks
+
+	if (notesIsPending || coursesIsPending || tasksIsPending) {
+		return <LoadingSpinner />;
+	}
 
 	const currentNote = notes?.filter(note => note.id === id)[0];
 	if (!currentNote) {
