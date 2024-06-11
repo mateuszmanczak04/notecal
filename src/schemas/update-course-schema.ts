@@ -1,15 +1,16 @@
+import { en } from '@/lib/dictionary';
 import { z } from 'zod';
 
 const UpdateCourseSchema = z.object({
-	id: z.string().min(1, { message: 'Course id id required.' }),
-	newName: z.string().min(1, { message: 'Course name is required.' }).max(30, {
-		message: 'Maximum length of the course name is 30 characters.',
+	id: z.string().min(1, { message: en.courses.ID_REQUIRED }),
+	newName: z.string().min(1, { message: en.courses.NAME_REQUIRED }).max(30, {
+		message: en.courses.MAX_NAME_LENGTH,
 	}),
 	newTeacher: z
 		.string()
-		.min(1, { message: 'Teacher name is required.' })
+		.min(1, { message: en.courses.TEACHER_REQUIRED })
 		.max(30, {
-			message: 'Maximum length of the teacher name is 30 characters.',
+			message: en.courses.MAX_TEACHER_NAME_LENGTH,
 		}),
 });
 

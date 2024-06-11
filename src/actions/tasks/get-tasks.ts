@@ -2,13 +2,14 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
+import { en } from '@/lib/dictionary';
 
 const getTasks = async () => {
 	try {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: 'Unauthorized.' };
+			return { error: en.UNAUTHENTICATED };
 		}
 
 		const userSettings = await db.settings.findUnique({
@@ -55,7 +56,7 @@ const getTasks = async () => {
 
 		return { tasks };
 	} catch (error) {
-		return { error: 'Something went wrong.' };
+		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
 

@@ -2,11 +2,12 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
+import { en } from '@/lib/dictionary';
 import { TaskPriority } from '@prisma/client';
 import { z } from 'zod';
 
 const UpdateTaskSchema = z.object({
-	id: z.string(),
+	id: z.string().min(1, { message: en.tasks.ID_REQUIRED }),
 	courseId: z.string().optional().nullable(),
 	completed: z.boolean().optional(),
 	title: z.string().optional(),
@@ -22,22 +23,17 @@ const updateTask = async (values: z.infer<typeof UpdateTaskSchema>) => {
 	const validatedFields = UpdateTaskSchema.safeParse(values);
 
 	if (!validatedFields.success) {
-		return { error: 'Invalid fields.' };
+		return { error: en.INVALID_DATA };
 	}
 
 	const data = validatedFields.data;
-
-	if (!data.id) {
-		return { error: 'Missing fields.' };
-	}
 
 	try {
 		const session = await auth();
 
 		if (!session?.user?.id) {
 			return {
-				error:
-					'Only users who logged in can toggle tasks. Try to logout and login again if you have it done.',
+				error: en.UNAUTHENTICATED,
 			};
 		}
 
@@ -48,7 +44,7 @@ const updateTask = async (values: z.infer<typeof UpdateTaskSchema>) => {
 
 		return { success: true };
 	} catch (error) {
-		return { error: 'Something went wrong. Please try again.' };
+		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
 

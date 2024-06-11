@@ -2,6 +2,7 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
+import { en } from '@/lib/dictionary';
 import { z } from 'zod';
 
 const UpdateSettingsSchema = z.object({
@@ -16,7 +17,7 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 	const validatedFields = UpdateSettingsSchema.safeParse(values);
 
 	if (!validatedFields.success) {
-		return { error: 'Invalid fields.' };
+		return { error: en.INVALID_DATA };
 	}
 
 	const { language, orderTasks, theme } = validatedFields.data;
@@ -25,7 +26,7 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: 'Unauthorized.' };
+			return { error: en.UNAUTHENTICATED };
 		}
 
 		const setting = await db.settings.findUnique({
@@ -36,43 +37,19 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 			await db.settings.create({
 				data: {
 					userId: session.user.id,
-					language: 'en',
+					language,
+					orderTasks,
+					theme,
 				},
 			});
-		}
-
-		if (!language && !orderTasks && !theme) {
-			return { error: 'Missing fields.' };
-		}
-
-		if (language) {
+		} else {
 			await db.settings.update({
 				where: {
 					userId: session.user.id,
 				},
 				data: {
 					language,
-				},
-			});
-		}
-
-		if (orderTasks) {
-			await db.settings.update({
-				where: {
-					userId: session.user.id,
-				},
-				data: {
 					orderTasks,
-				},
-			});
-		}
-
-		if (theme) {
-			await db.settings.update({
-				where: {
-					userId: session.user.id,
-				},
-				data: {
 					theme,
 				},
 			});
@@ -80,7 +57,7 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 
 		return { updated: true };
 	} catch (error) {
-		return { error: 'Something went wrong.' };
+		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
 

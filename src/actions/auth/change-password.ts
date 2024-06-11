@@ -5,12 +5,13 @@ import db from '@/lib/db';
 import { z } from 'zod';
 import bcrypt from 'bcryptjs';
 import ChangePasswordSchema from '@/schemas/change-password-schema';
+import { en } from '@/lib/dictionary';
 
 const changePassword = async (values: z.infer<typeof ChangePasswordSchema>) => {
 	const validatedFields = ChangePasswordSchema.safeParse(values);
 
 	if (!validatedFields.success) {
-		return { error: 'Invalid data' };
+		return { error: en.INVALID_DATA };
 	}
 
 	const { oldPassword, newPassword } = validatedFields.data;
@@ -19,7 +20,7 @@ const changePassword = async (values: z.infer<typeof ChangePasswordSchema>) => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: 'Unauthenticated' };
+			return { error: en.UNAUTHENTICATED };
 		}
 
 		const user = await db.user.findUnique({
@@ -28,13 +29,13 @@ const changePassword = async (values: z.infer<typeof ChangePasswordSchema>) => {
 		});
 
 		if (!user || !user.password) {
-			return { error: 'User does not exist.' };
+			return { error: en.USER_DOES_NOT_EXIST };
 		}
 
 		const passwordsMatch = await bcrypt.compare(oldPassword, user.password);
 
 		if (!passwordsMatch) {
-			return { error: 'Wrong old password.' };
+			return { error: en.WRONG_PASSWORD };
 		}
 
 		const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -44,9 +45,9 @@ const changePassword = async (values: z.infer<typeof ChangePasswordSchema>) => {
 			data: { password: hashedPassword },
 		});
 
-		return { message: 'Password updated successfully.' };
+		return { message: en.PASSWORD_UPDATED };
 	} catch (error) {
-		return { error: 'Something went wrong. Please try again.' };
+		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
 

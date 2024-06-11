@@ -2,44 +2,33 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
+import { en } from '@/lib/dictionary';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 const DeleteCourseSchema = z.object({
-	id: z.string(),
+	id: z.string().min(1, { message: en.courses.ID_REQUIRED }),
 });
 
 const deleteCourse = async (values: z.infer<typeof DeleteCourseSchema>) => {
 	const validatedFields = DeleteCourseSchema.safeParse(values);
 
 	if (!validatedFields.success) {
-		throw new Error('Invalid fields.');
+		return { error: en.INVALID_DATA };
 	}
 
 	const id = validatedFields.data.id;
-
-	if (!id) {
-		throw new Error('Course id is required.');
-	}
 
 	try {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			throw new Error('Unauthorized.');
+			return { error: en.UNAUTHENTICATED };
 		}
 
-		const course = await db.course.findUnique({
-			where: { id, userId: session.user.id },
-		});
-
-		if (!course) {
-			throw new Error('Course not found.');
-		}
-
-		await db.course.delete({ where: { id } });
+		await db.course.delete({ where: { id, userId: session.user.id } });
 	} catch (error) {
-		throw new Error('Something went wrong.');
+		return { error: en.SOMETHING_WENT_WRONG };
 	}
 
 	redirect('/courses');

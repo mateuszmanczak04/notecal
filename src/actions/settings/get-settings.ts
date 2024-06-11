@@ -2,13 +2,14 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
+import { en } from '@/lib/dictionary';
 
 const getSettings = async () => {
 	try {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: 'Unauthorized.' };
+			return { error: en.UNAUTHENTICATED };
 		}
 
 		let settings = await db.settings.findUnique({
@@ -19,14 +20,13 @@ const getSettings = async () => {
 			settings = await db.settings.create({
 				data: {
 					userId: session.user.id,
-					language: 'en',
 				},
 			});
 		}
 
 		return { settings };
 	} catch (error) {
-		return { error: 'Something went wrong.' };
+		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
 

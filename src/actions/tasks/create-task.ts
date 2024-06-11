@@ -2,6 +2,7 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
+import { en } from '@/lib/dictionary';
 import CreateTaskSchema from '@/schemas/create-task-schema';
 import { z } from 'zod';
 
@@ -9,23 +10,18 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 	const validatedFields = CreateTaskSchema.safeParse(values);
 
 	if (!validatedFields.success) {
-		return { error: 'Invalid fields.' };
+		return { error: en.INVALID_DATA };
 	}
 
 	const { courseId, title, completed, description, dueDate, priority } =
 		validatedFields.data;
-
-	if (!title) {
-		return { error: 'Task title is required.' };
-	}
 
 	try {
 		const session = await auth();
 
 		if (!session?.user?.id) {
 			return {
-				error:
-					'Only users who logged in can create tasks. Try to logout and login again if you have it done.',
+				error: en.UNAUTHENTICATED,
 			};
 		}
 
@@ -37,7 +33,7 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 			});
 
 			if (course && course?.userId != session.user.id) {
-				return { error: 'Course not found.' };
+				return { error: en.courses.NOT_FOUND };
 			}
 		}
 
@@ -49,13 +45,13 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 				completed,
 				description,
 				dueDate,
-				priority: priority || null,
+				priority,
 			},
 		});
 
 		return { task };
 	} catch (error) {
-		return { error: 'Something went wrong. Please try again.' };
+		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
 

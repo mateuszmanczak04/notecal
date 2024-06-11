@@ -3,8 +3,7 @@
 import DeleteCourseLink from '@/components/courses/delete-course-link';
 import EditCourseForm from '@/components/courses/edit-course-form';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { ChevronLeft, MoveLeft } from 'lucide-react';
+import { MoveLeft } from 'lucide-react';
 import { redirect, useRouter } from 'next/navigation';
 import { FC } from 'react';
 

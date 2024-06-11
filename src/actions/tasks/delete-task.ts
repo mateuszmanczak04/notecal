@@ -2,30 +2,27 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
+import { en } from '@/lib/dictionary';
 import { z } from 'zod';
 
 const DeleteTaskSchema = z.object({
-	id: z.string(),
+	id: z.string().min(1, { message: en.tasks.ID_REQUIRED }),
 });
 
 const deleteTask = async (values: z.infer<typeof DeleteTaskSchema>) => {
 	const validatedFields = DeleteTaskSchema.safeParse(values);
 
 	if (!validatedFields.success) {
-		return { error: 'Invalid fields.' };
+		return { error: en.INVALID_DATA };
 	}
 
 	const id = validatedFields.data.id;
-
-	if (!id) {
-		return { error: 'Missing task id.' };
-	}
 
 	try {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: 'Unauthenticated.' };
+			return { error: en.UNAUTHENTICATED };
 		}
 
 		const task = await db.task.findUnique({
@@ -33,14 +30,14 @@ const deleteTask = async (values: z.infer<typeof DeleteTaskSchema>) => {
 		});
 
 		if (!task) {
-			return { error: 'Task not found.' };
+			return { error: en.tasks.NOT_FOUND };
 		}
 
 		await db.task.delete({ where: { id } });
 
 		return { deleted: true };
 	} catch (error) {
-		return { error: 'Something went wrong. Please try again later.' };
+		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
 

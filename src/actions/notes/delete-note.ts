@@ -2,24 +2,25 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
+import { en } from '@/lib/dictionary';
 import { z } from 'zod';
 
 const DeleteNoteSchema = z.object({
-	id: z.string(),
+	id: z.string().min(1, { message: en.notes.ID_REQUIRED }),
 });
 
 const deleteNote = async (values: z.infer<typeof DeleteNoteSchema>) => {
 	const validatedFields = DeleteNoteSchema.safeParse(values);
 
 	if (!validatedFields.success) {
-		return { error: 'Invalid fields' };
+		return { error: en.INVALID_DATA };
 	}
 
 	try {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: 'Unauthorized.' };
+			return { error: en.UNAUTHENTICATED };
 		}
 
 		await db.note.delete({
@@ -28,7 +29,7 @@ const deleteNote = async (values: z.infer<typeof DeleteNoteSchema>) => {
 
 		return { deleted: true };
 	} catch (error) {
-		return { error: 'Something went wrong.' };
+		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
 

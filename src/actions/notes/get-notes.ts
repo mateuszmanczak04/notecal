@@ -2,13 +2,14 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
+import { en } from '@/lib/dictionary';
 
 const getNotes = async () => {
 	try {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: 'Unauthorized.' };
+			return { error: en.UNAUTHENTICATED };
 		}
 
 		let notes = await db.note.findMany({
@@ -17,7 +18,7 @@ const getNotes = async () => {
 
 		return { notes };
 	} catch (error) {
-		return { error: 'Something went wrong.' };
+		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
 

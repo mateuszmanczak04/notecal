@@ -2,15 +2,16 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
+import { en } from '@/lib/dictionary';
 
 const getCourses = async () => {
-	const session = await auth();
-
-	if (!session?.user?.id) {
-		return { error: 'Unauthorized.' };
-	}
-
 	try {
+		const session = await auth();
+
+		if (!session?.user?.id) {
+			return { error: en.UNAUTHENTICATED };
+		}
+
 		const courses = await db.course.findMany({
 			where: {
 				userId: session?.user?.id,
@@ -19,7 +20,7 @@ const getCourses = async () => {
 
 		return { courses };
 	} catch (error) {
-		return { error: 'Something went wrong.' };
+		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
 
