@@ -22,6 +22,7 @@ const DeleteNoteButton = () => {
 				return { notes: old.notes.filter(note => note.id !== currentNote.id) };
 			});
 			router.back();
+			router.refresh();
 		});
 	};
 
