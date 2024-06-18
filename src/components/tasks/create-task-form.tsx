@@ -35,7 +35,7 @@ import CreateTaskSchema from '@/schemas/create-task-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -49,6 +49,7 @@ const CreateTaskForm = () => {
 		error: coursesError,
 	} = useCourses();
 
+	const searchParams = useSearchParams();
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState('');
 	const form = useForm<z.infer<typeof CreateTaskSchema>>({
@@ -58,7 +59,7 @@ const CreateTaskForm = () => {
 			description: '',
 			priority: null,
 			dueDate: null,
-			courseId: OTHER_COURSE_NAME,
+			courseId: searchParams.get('courseId') || OTHER_COURSE_NAME,
 		},
 	});
 	const router = useRouter();
@@ -76,7 +77,8 @@ const CreateTaskForm = () => {
 					setError(res.error);
 				}
 				queryClient.invalidateQueries({ queryKey: ['tasks'] });
-				router.push('/tasks');
+				// router.push('/tasks');
+				router.back();
 			});
 		});
 	};
