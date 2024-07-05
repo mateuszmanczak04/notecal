@@ -1,6 +1,6 @@
 'use client';
 
-import Item from './item';
+import Course from './course';
 import useCourses from '@/app/courses/_hooks/use-courses';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
@@ -21,7 +21,7 @@ const List = () => {
 	}
 
 	return courses.map(course => (
-		<Item
+		<Course
 			color='#7701a9' // color specific to that course (course.colorHex)
 			key={course.id}
 			id={course.id}

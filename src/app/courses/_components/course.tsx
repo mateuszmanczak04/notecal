@@ -5,14 +5,14 @@ import NoteLink from './note-link';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import { Skeleton } from '@/components/ui/skeleton';
 
-interface CourseItemProps {
+interface CourseProps {
 	name: string;
 	id: string;
 	teacher: string;
 	color: string;
 }
 
-const Item: FC<CourseItemProps> = ({ name, teacher, id, color }) => {
+const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 	const { notes, isPending } = useNotes();
 	const filteredNotes = notes?.filter(note => note.courseId === id);
 
@@ -40,4 +40,4 @@ const Item: FC<CourseItemProps> = ({ name, teacher, id, color }) => {
 	);
 };
 
-export default Item;
+export default Course;
