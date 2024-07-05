@@ -1,5 +1,5 @@
-import CoursesList from '@/components/courses/courses-list';
-import CreateCourseLink from '@/components/courses/create-course-link';
+import CoursesList from '@/app/courses/_components/courses-list';
+import CreateCourseLink from '@/app/courses/_components/create-course-link';
 
 const page = () => {
 	return (

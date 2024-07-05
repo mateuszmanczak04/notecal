@@ -1,7 +1,7 @@
 'use client';
 
-import DeleteCourseLink from '@/components/courses/delete-course-link';
-import EditCourseForm from '@/components/courses/edit-course-form';
+import DeleteCourseLink from '@/app/courses/_components/delete-course-link';
+import EditCourseForm from '@/app/courses/_components/edit-course-form';
 import { Button } from '@/components/ui/button';
 import { MoveLeft } from 'lucide-react';
 import { redirect, useRouter } from 'next/navigation';

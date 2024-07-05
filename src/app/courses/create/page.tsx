@@ -1,4 +1,4 @@
-import CreateCourseForm from '@/components/courses/create-course-form';
+import CreateCourseForm from '@/app/courses/_components/create-course-form';
 import { Separator } from '@/components/ui/separator';
 
 const CreateCoursePage = () => {

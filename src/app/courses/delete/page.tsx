@@ -1,4 +1,4 @@
-import DeleteCourseButton from '@/components/courses/delete-course-button';
+import DeleteCourseButton from '@/app/courses/_components/delete-course-button';
 import GoBackButton from '@/components/go-back-button';
 import { MoveLeft } from 'lucide-react';
 import { redirect } from 'next/navigation';
