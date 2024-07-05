@@ -1,14 +1,11 @@
-import TasksList from '@/app/tasks/_components/tasks-list';
-import TasksMenu from '@/app/tasks/_components/tasks-menu';
+import List from '@/app/tasks/_components/list';
+import Controls from './_components/controls';
 
 const page = () => {
 	return (
-		<div>
-			<h1 className='text-2xl font-bold'>Your Tasks To Do:</h1>
-			<div className='mt-2 flex flex-col gap-2'>
-				<TasksMenu />
-				<TasksList />
-			</div>
+		<div className='flex flex-col gap-8'>
+			<Controls />
+			<List />
 		</div>
 	);
 };

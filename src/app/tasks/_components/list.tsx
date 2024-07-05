@@ -1,17 +1,19 @@
 'use client';
 
-import TaskItem from '@/app/tasks/_components/task-item';
+import Task from '@/app/tasks/_components/task';
 import useTasks from '../_hooks/use-tasks';
 import { FC } from 'react';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
+import useCourses from '@/app/courses/_hooks/use-courses';
 
 interface TasksListProps {}
 
-const TasksList: FC<TasksListProps> = ({}) => {
+const List: FC<TasksListProps> = ({}) => {
 	const { tasks, isPending, error } = useTasks();
+	const { isPending: isPendingCourses } = useCourses();
 
-	if (isPending) return <LoadingSpinner />;
+	if (isPending || isPendingCourses) return <LoadingSpinner />;
 
 	if (error) return <ErrorMessage>{error.message}</ErrorMessage>;
 
@@ -23,7 +25,7 @@ const TasksList: FC<TasksListProps> = ({}) => {
 		);
 	}
 
-	return tasks?.map(task => <TaskItem key={task.id} task={task} />);
+	return tasks?.map(task => <Task key={task.id} task={task} />);
 };
 
-export default TasksList;
+export default List;
