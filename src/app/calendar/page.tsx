@@ -1,6 +1,6 @@
 'use client';
 
-import { CalendarContextProvider } from './_components/calendar-context';
+import { CalendarContextProvider } from './_context/calendar-context';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const CalendarPage = () => {
