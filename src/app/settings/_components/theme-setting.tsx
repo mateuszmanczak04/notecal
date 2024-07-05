@@ -3,7 +3,6 @@
 import { FC, useLayoutEffect, useState } from 'react';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { Card } from '@/components/ui/card';
 
 interface ThemeSettingProps {}
 
@@ -30,7 +29,7 @@ const ThemeSetting: FC<ThemeSettingProps> = ({}) => {
 	};
 
 	return (
-		<Card className='flex flex-col gap-2 border-none bg-primary/5 p-4 shadow-none md:p-6 dark:border-none dark:bg-white/5'>
+		<div className='flex flex-col gap-2'>
 			<h2 className='text-lg font-semibold'>Theme</h2>
 			<div className='flex items-center'>
 				<Switch
@@ -44,7 +43,7 @@ const ThemeSetting: FC<ThemeSettingProps> = ({}) => {
 					Dark mode
 				</Label>
 			</div>
-		</Card>
+		</div>
 	);
 };
 

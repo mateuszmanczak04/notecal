@@ -19,7 +19,6 @@ import LoadingSpinner from '@/components/common/loading-spinner';
 import { useMutation } from '@tanstack/react-query';
 import ErrorMessage from '@/components/common/error-message';
 import SuccessMessage from '@/components/common/success-message';
-import { Card } from '@/components/ui/card';
 
 const ChangePasswordSetting = () => {
 	const { mutate, error, isPending, data } = useMutation({
@@ -45,7 +44,7 @@ const ChangePasswordSetting = () => {
 	};
 
 	return (
-		<Card className='flex flex-col gap-2 border-none bg-primary/5 p-4 shadow-none md:p-6 dark:border-none dark:bg-white/5'>
+		<div className='flex flex-col gap-2'>
 			<h2 className='text-lg font-semibold'>Change password</h2>
 			<Form {...form}>
 				<form
@@ -96,7 +95,7 @@ const ChangePasswordSetting = () => {
 					{isPending && <LoadingSpinner />}
 				</form>
 			</Form>
-		</Card>
+		</div>
 	);
 };
 
