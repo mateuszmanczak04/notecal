@@ -3,8 +3,8 @@ import getNotes from '@/actions/notes/get-notes';
 import { Note } from '@prisma/client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, createContext, useContext, useRef, useState } from 'react';
-import LoadingSpinner from '@/components/loading-spinner';
-import ErrorMessage from '@/components/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
+import ErrorMessage from '@/components/common/error-message';
 
 interface CalendarContextProps {
 	notes: Note[];

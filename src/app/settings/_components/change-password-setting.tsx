@@ -15,10 +15,10 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import changePassword from '@/actions/auth/change-password';
-import LoadingSpinner from '@/components/loading-spinner';
+import LoadingSpinner from '@/components/common/loading-spinner';
 import { useMutation } from '@tanstack/react-query';
-import ErrorMessage from '@/components/error-message';
-import SuccessMessage from '@/components/success-message';
+import ErrorMessage from '@/components/common/error-message';
+import SuccessMessage from '@/components/common/success-message';
 import { Card } from '@/components/ui/card';
 
 const ChangePasswordSetting = () => {

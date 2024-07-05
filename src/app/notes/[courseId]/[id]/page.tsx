@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingSpinner from '@/components/loading-spinner';
+import LoadingSpinner from '@/components/common/loading-spinner';
 import DeleteNoteButton from '@/app/notes/_components/delete-note-button';
 import NoteContent from '@/app/notes/_components/note-content';
 import { NoteContextProvider } from '@/app/notes/_components/note-context';

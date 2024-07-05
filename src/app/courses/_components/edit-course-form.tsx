@@ -20,8 +20,8 @@ import { useRouter } from 'next/navigation';
 import { FC, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import LoadingSpinner from '@/components/loading-spinner';
-import ErrorMessage from '@/components/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
+import ErrorMessage from '@/components/common/error-message';
 
 interface EditCourseFormProps {
 	id: string;

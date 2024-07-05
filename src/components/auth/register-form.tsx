@@ -16,8 +16,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import LoadingSpinner from '@/components/loading-spinner';
-import ErrorMessage from '@/components/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
+import ErrorMessage from '@/components/common/error-message';
 
 const RegisterForm = () => {
 	const [isPending, startTransition] = useTransition();

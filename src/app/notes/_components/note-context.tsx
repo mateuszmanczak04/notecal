@@ -4,8 +4,8 @@ import useTasks from '@/hooks/use-tasks';
 import { Course, Note, Task } from '@prisma/client';
 import { useParams } from 'next/navigation';
 import { ReactNode, createContext, useContext } from 'react';
-import ErrorMessage from '@/components/error-message';
-import LoadingSpinner from '@/components/loading-spinner';
+import ErrorMessage from '@/components/common/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
 
 interface NoteContextProps {
 	currentNote: Note;

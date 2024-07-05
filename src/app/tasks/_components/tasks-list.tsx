@@ -3,8 +3,8 @@
 import TaskItem from '@/app/tasks/_components/task-item';
 import useTasks from '@/hooks/use-tasks';
 import { FC } from 'react';
-import LoadingSpinner from '@/components/loading-spinner';
-import ErrorMessage from '@/components/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
+import ErrorMessage from '@/components/common/error-message';
 
 interface TasksListProps {}
 

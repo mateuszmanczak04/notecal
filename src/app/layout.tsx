@@ -1,7 +1,7 @@
 import '@/app/globals.css';
 import { auth } from '@/auth';
-import Navigation from '@/components/navigation';
-import Providers from '@/components/providers';
+import Navigation from '@/components/common/navigation';
+import Providers from '@/components/common/providers';
 
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
