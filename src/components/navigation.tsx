@@ -2,32 +2,48 @@
 
 import { cn } from '@/lib/utils';
 import { Calendar, Check, Cog, List } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const Navigation = () => {
 	const pathname = usePathname();
+	const session = useSession();
+	const router = useRouter();
 
-	/* mobile not supported yet */
-	/* tablet and desktop: */
+	useEffect(() => {
+		if (!session?.data?.user) {
+			router.push('/');
+		}
+	}, [session, router]);
+
+	if (!session?.data?.user) return;
+
+	// mobile is not supported yet
+
 	return (
 		<div className='flex w-80 shrink-0 flex-col gap-8 bg-gray-100 p-4'>
 			{/* Account and settings: */}
 			<Link
 				href='/settings'
-				className='flex items-center justify-between rounded-xl bg-white px-4 py-2'>
+				className='flex items-center justify-between gap-3 rounded-xl bg-white px-4 py-2'>
 				<div className='flex items-center gap-3'>
 					<Image
 						src='/avatar.jpg'
 						width={32}
 						height={32}
 						alt='profile picture'
-						className='h-8 w-8 rounded-lg bg-gray-900 object-cover'
+						className='h-8 w-8 overflow-hidden rounded-full object-cover'
 					/>
-					<div>
-						<p className='font-bold'>John Doe</p>
-						<p className='text-gray-500'>johndoe@example.com</p>
+					<div className='overflow-hidden'>
+						<p className='truncate text-sm font-bold'>
+							{session.data.user.email?.split('@')[0]}
+						</p>
+						<p className='truncate text-sm text-gray-500'>
+							{session.data.user.email}
+						</p>
 					</div>
 				</div>
 				<Cog className='h-4 w-4' />
