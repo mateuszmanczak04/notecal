@@ -1,6 +1,6 @@
 import '@/app/globals.css';
 import { auth } from '@/auth';
-import NavAuthenticated from '@/components/nav-authenticated';
+import Navigation from '@/components/navigation';
 import Providers from '@/components/providers';
 
 import { cn } from '@/lib/utils';
@@ -34,10 +34,10 @@ export default async function RootLayout({
 
 	return (
 		<html lang='en'>
-			<body className={cn(inter.className)}>
+			<body className={cn(inter.className, 'flex bg-gray-100 text-gray-900')}>
 				<Providers>
-					<NavAuthenticated />
-					<div className='pt-16'>{children}</div>
+					<Navigation />
+					{children}
 				</Providers>
 			</body>
 		</html>
