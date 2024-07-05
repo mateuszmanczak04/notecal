@@ -1,5 +1,5 @@
-import CreateTaskLink from '@/components/tasks/create-task-link';
-import SortTasks from '@/components/tasks/sort-tasks';
+import CreateTaskLink from '@/app/tasks/_components/create-task-link';
+import SortTasks from '@/app/tasks/_components/sort-tasks';
 
 const TasksMenu = () => {
 	return (

@@ -1,5 +1,5 @@
-import TasksList from '@/components/tasks/tasks-list';
-import TasksMenu from '@/components/tasks/tasks-menu';
+import TasksList from '@/app/tasks/_components/tasks-list';
+import TasksMenu from '@/app/tasks/_components/tasks-menu';
 
 const page = () => {
 	return (

@@ -2,11 +2,11 @@
 
 import deleteTask from '@/actions/tasks/delete-task';
 import updateTask from '@/actions/tasks/update-task';
-import TaskCourse from '@/components/tasks/task-course';
-import TaskDescription from '@/components/tasks/task-description';
-import TaskDueDate from '@/components/tasks/task-due-date';
-import TaskPriority from '@/components/tasks/task-priority';
-import TaskTitle from '@/components/tasks/task-title';
+import TaskCourse from '@/app/tasks/_components/task-course';
+import TaskDescription from '@/app/tasks/_components/task-description';
+import TaskDueDate from '@/app/tasks/_components/task-due-date';
+import TaskPriority from '@/app/tasks/_components/task-priority';
+import TaskTitle from '@/app/tasks/_components/task-title';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';

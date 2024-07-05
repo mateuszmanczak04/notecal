@@ -1,4 +1,4 @@
-import CreateTaskForm from '@/components/tasks/create-task-form';
+import CreateTaskForm from '@/app/tasks/_components/create-task-form';
 import { Separator } from '@/components/ui/separator';
 
 const CreateTaskPage = () => {
