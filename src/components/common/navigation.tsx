@@ -6,40 +6,43 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Skeleton } from '../ui/skeleton';
 
 const Navigation = () => {
 	const pathname = usePathname();
 	const session = useSession();
-
-	if (!session?.data?.user) return;
 
 	// mobile is not supported yet
 
 	return (
 		<div className='mr-4 flex h-full w-80 shrink-0 flex-col gap-8 p-4'>
 			{/* Account and settings: */}
-			<Link
-				href='/settings'
-				className='flex items-center justify-between gap-3 rounded-xl bg-white px-4 py-2'>
-				<div className='flex items-center gap-3'>
-					<Image
-						src='/avatar.jpg'
-						width={32}
-						height={32}
-						alt='profile picture'
-						className='h-8 w-8 overflow-hidden rounded-full object-cover'
-					/>
-					<div className='overflow-hidden'>
-						<p className='truncate text-sm font-bold'>
-							{session.data.user.email?.split('@')[0]}
-						</p>
-						<p className='truncate text-sm text-gray-500'>
-							{session.data.user.email}
-						</p>
+			{session?.data?.user ? (
+				<Link
+					href='/settings'
+					className='flex items-center justify-between gap-3 rounded-xl bg-white px-4 py-2'>
+					<div className='flex items-center gap-3'>
+						<Image
+							src='/avatar.jpg'
+							width={32}
+							height={32}
+							alt='profile picture'
+							className='h-8 w-8 overflow-hidden rounded-full object-cover'
+						/>
+						<div className='overflow-hidden'>
+							<p className='truncate text-sm font-bold'>
+								{session.data.user.email?.split('@')[0]}
+							</p>
+							<p className='truncate text-sm text-gray-500'>
+								{session.data.user.email}
+							</p>
+						</div>
 					</div>
-				</div>
-				<Cog className='h-4 w-4' />
-			</Link>
+					<Cog className='h-4 w-4' />
+				</Link>
+			) : (
+				<Skeleton className='h-12 w-full bg-white' />
+			)}
 			{/* Main menu: */}
 			<div>
 				<p className='text-sm font-semibold uppercase text-gray-500'>
