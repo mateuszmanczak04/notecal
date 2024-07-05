@@ -34,10 +34,16 @@ export default async function RootLayout({
 
 	return (
 		<html lang='en'>
-			<body className={cn(inter.className, 'flex bg-gray-100 text-gray-900')}>
+			<body
+				className={cn(
+					inter.className,
+					'flex h-screen bg-gray-100 p-4 text-gray-900',
+				)}>
 				<Providers>
 					<Navigation />
-					{children}
+					<div className='h-full flex-1 rounded-xl bg-white p-4'>
+						{/* {children} */}
+					</div>
 				</Providers>
 			</body>
 		</html>

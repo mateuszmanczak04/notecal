@@ -24,7 +24,7 @@ const Navigation = () => {
 	// mobile is not supported yet
 
 	return (
-		<div className='flex w-80 shrink-0 flex-col gap-8 bg-gray-100 p-4'>
+		<div className='mr-4 flex h-full w-80 shrink-0 flex-col gap-8 p-4'>
 			{/* Account and settings: */}
 			<Link
 				href='/settings'
