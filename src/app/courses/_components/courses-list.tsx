@@ -1,6 +1,6 @@
 'use client';
 
-import CourseItem from '@/components/courses/course-item';
+import CourseItem from './course-item';
 import useCourses from '@/app/courses/_hooks/use-courses';
 import { FC } from 'react';
 import LoadingSpinner from '@/components/common/loading-spinner';

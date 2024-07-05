@@ -1,8 +1,8 @@
 import Logout from '@/app/auth/_components/logout';
-import AmountOfDaysSetting from '@/components/settings/amount-of-days-setting';
-import ChangePasswordSetting from '@/components/settings/change-password-setting';
-import ThemeSetting from '@/components/settings/theme-setting';
-import DefaultNoteDurationSetting from '@/components/settings/default-note-duration-settings';
+import AmountOfDaysSetting from './_components/amount-of-days-setting';
+import ChangePasswordSetting from './_components/change-password-setting';
+import ThemeSetting from './_components/theme-setting';
+import DefaultNoteDurationSetting from './_components/default-note-duration-settings';
 
 const page = () => {
 	return (

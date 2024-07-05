@@ -14,7 +14,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import changePassword from '@/actions/auth/change-password';
+import changePassword from '@/app/auth/_actions/change-password';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import { useMutation } from '@tanstack/react-query';
 import ErrorMessage from '@/components/common/error-message';
