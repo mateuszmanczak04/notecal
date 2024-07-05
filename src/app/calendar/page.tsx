@@ -98,7 +98,7 @@ const CalendarPage = () => {
 					</div>
 				</div>
 				{/* monday column: */}
-				<div className='w-48'>
+				<div className='flex-1'>
 					<div className='h-calendar-header flex items-center justify-center border-b border-r border-t font-semibold text-gray-500'>
 						MON 11
 					</div>
@@ -128,7 +128,7 @@ const CalendarPage = () => {
 					<div className='h-calendar-row flex items-center justify-center border-b border-r font-semibold text-gray-500'></div>
 				</div>
 				{/* tuesday column: */}
-				<div className='w-48'>
+				<div className='flex-1'>
 					<div className='h-calendar-header flex items-center justify-center border-b border-r border-t font-semibold text-gray-500'>
 						TUE 11
 					</div>
@@ -158,7 +158,7 @@ const CalendarPage = () => {
 					<div className='h-calendar-row flex items-center justify-center border-b border-r font-semibold text-gray-500'></div>
 				</div>
 				{/* wednesday column: */}
-				<div className='w-48'>
+				<div className='flex-1'>
 					<div className='h-calendar-header flex items-center justify-center border-b border-r border-t bg-gray-100 font-semibold'>
 						WED 11
 					</div>
@@ -188,7 +188,7 @@ const CalendarPage = () => {
 					<div className='h-calendar-row flex items-center justify-center border-b border-r bg-gray-50 font-semibold text-gray-500'></div>
 				</div>
 				{/* thursday column: */}
-				<div className='w-48'>
+				<div className='flex-1'>
 					<div className='h-calendar-header flex items-center justify-center border-b border-r border-t font-semibold text-gray-500'>
 						THU 11
 					</div>
@@ -218,7 +218,7 @@ const CalendarPage = () => {
 					<div className='h-calendar-row flex items-center justify-center border-b border-r font-semibold text-gray-500'></div>
 				</div>
 				{/* friday column: */}
-				<div className='w-48'>
+				<div className='flex-1'>
 					<div className='h-calendar-header flex items-center justify-center rounded-tr-xl border-b border-r border-t font-semibold text-gray-500'>
 						FRI 11
 					</div>
