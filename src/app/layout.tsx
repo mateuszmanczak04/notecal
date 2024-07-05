@@ -41,7 +41,7 @@ export default async function RootLayout({
 				)}>
 				<Providers>
 					<Navigation />
-					<div className='h-full flex-1 overflow-y-scroll rounded-xl bg-white p-4'>
+					<div className='h-full flex-1 overflow-y-scroll rounded-xl bg-white p-4 scrollbar-hide'>
 						{children}
 					</div>
 				</Providers>
