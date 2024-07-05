@@ -2,7 +2,6 @@ import { EllipsisVertical } from 'lucide-react';
 import { FC } from 'react';
 import useNotes from '@/app/notes/_hooks/use-notes';
 import NoteLink from './note-link';
-import LoadingSpinner from '@/components/common/loading-spinner';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface CourseProps {
@@ -28,7 +27,7 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 						<Skeleton className='h-6 w-16 bg-gray-100' />
 					</div>
 				) : (
-					<div className='mt-2 flex gap-2'>
+					<div className='mt-2 flex flex-wrap gap-2'>
 						{filteredNotes?.map(note => <NoteLink key={note.id} note={note} />)}
 					</div>
 				)}
