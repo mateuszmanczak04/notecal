@@ -1,7 +1,7 @@
 'use client';
 
 import updateNote from '@/app/notes/_actions/update-note';
-import { useNoteContext } from '@/app/notes/_components/note-context';
+import { useNoteContext } from '@/app/notes/_context/note-context';
 import TimePicker from '@/app/notes/_components/time-picker';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';

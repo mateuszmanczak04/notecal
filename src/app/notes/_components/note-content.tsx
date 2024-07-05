@@ -1,7 +1,7 @@
 'use client';
 
 import updateNote from '@/app/notes/_actions/update-note';
-import { useNoteContext } from '@/app/notes/_components/note-context';
+import { useNoteContext } from '@/app/notes/_context/note-context';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';

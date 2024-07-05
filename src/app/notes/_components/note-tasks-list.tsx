@@ -1,6 +1,6 @@
 'use client';
 
-import { useNoteContext } from '@/app/notes/_components/note-context';
+import { useNoteContext } from '@/app/notes/_context/note-context';
 import NoteTask from '@/app/notes/_components/note-task';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';

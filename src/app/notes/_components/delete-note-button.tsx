@@ -1,7 +1,7 @@
 'use client';
 
 import deleteNote from '@/app/notes/_actions/delete-note';
-import { useNoteContext } from '@/app/notes/_components/note-context';
+import { useNoteContext } from '@/app/notes/_context/note-context';
 import { Button } from '@/components/ui/button';
 import { Note } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
@@ -33,7 +33,7 @@ const DeleteNoteButton = () => {
 				<Button
 					variant='destructive'
 					onClick={confirmDeletion}
-					className='w-full bg-destructive'>
+					className='bg-destructive w-full'>
 					Yes
 				</Button>
 				<Button
