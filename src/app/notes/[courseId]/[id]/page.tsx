@@ -28,7 +28,7 @@ const NotePage = () => {
 
 	return (
 		<NoteContextProvider>
-			<div className='flex h-full min-h-80 gap-4'>
+			<div className='mx-auto flex h-full min-h-80 max-w-[1200px] gap-4'>
 				<div className='flex h-full flex-1 flex-col'>
 					<NoteTitle />
 					<NoteTime />
