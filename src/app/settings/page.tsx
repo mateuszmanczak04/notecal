@@ -1,4 +1,4 @@
-import Logout from '@/components/auth/logout';
+import Logout from '@/app/auth/_components/logout';
 import AmountOfDaysSetting from '@/components/settings/amount-of-days-setting';
 import ChangePasswordSetting from '@/components/settings/change-password-setting';
 import ThemeSetting from '@/components/settings/theme-setting';
