@@ -14,7 +14,7 @@ const NoteTasksList = () => {
 			{tasks?.map(task => <NoteTask key={task.id} task={task} />)}
 			{/* todo - redirect to create new task page with specifiec course id */}
 
-			<Button asChild>
+			<Button asChild size='sm'>
 				<Link href={`/tasks/create?courseId=${course.id}`}>
 					+ Create a new task
 				</Link>

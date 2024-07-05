@@ -20,11 +20,11 @@ const NoteContent = () => {
 	return (
 		<div
 			className={cn(
-				'mt-2 flex flex-1 flex-col justify-between gap-4 rounded-md bg-primary/5 p-4 dark:bg-white/5',
-				isPending && 'pointer-events-none opacity-75',
+				'mt-2 flex flex-1 flex-col justify-between gap-4 rounded-md',
+				isPending && 'pointer-events-none  opacity-75',
 			)}>
 			<Textarea
-				className='flex-1 resize-none border-2 border-primary/15 shadow-none dark:border-white/15'
+				className='focus-visible:border-primary-500 flex-1 resize-none border-2 border-neutral-200 bg-neutral-100 shadow-none focus-visible:ring-0'
 				value={content}
 				onChange={e => setContent(e.target.value)}></Textarea>
 			<Button onClick={() => updateContent()}>Save</Button>
