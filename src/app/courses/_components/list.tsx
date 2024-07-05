@@ -1,14 +1,11 @@
 'use client';
 
-import CourseItem from './course-item';
+import Item from './item';
 import useCourses from '@/app/courses/_hooks/use-courses';
-import { FC } from 'react';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
 
-interface CoursesListProps {}
-
-const CoursesList: FC<CoursesListProps> = ({}) => {
+const List = () => {
 	const { courses, error, isPending } = useCourses();
 
 	if (isPending) return <LoadingSpinner />;
@@ -24,7 +21,8 @@ const CoursesList: FC<CoursesListProps> = ({}) => {
 	}
 
 	return courses.map(course => (
-		<CourseItem
+		<Item
+			color='#7701a9' // color specific to that course (course.colorHex)
 			key={course.id}
 			id={course.id}
 			name={course.name}
@@ -33,4 +31,4 @@ const CoursesList: FC<CoursesListProps> = ({}) => {
 	));
 };
 
-export default CoursesList;
+export default List;
