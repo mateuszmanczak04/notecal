@@ -1,8 +1,8 @@
 'use client';
 
 import updateNote from '@/actions/notes/update-note';
-import { useNoteContext } from '@/components/notes/note-context';
-import TimePicker from '@/components/notes/time-picker';
+import { useNoteContext } from '@/app/notes/_components/note-context';
+import TimePicker from '@/app/notes/_components/time-picker';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -10,28 +10,28 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover';
-import updateNoteEndTimeLocal from '@/lib/update-note-end-time-local';
+import updateNoteStartTimeLocal from '@/lib/update-note-start-time-local';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { useTransition } from 'react';
 
-const NoteEndTime = () => {
+const NoteStartTime = () => {
 	const { currentNote, course } = useNoteContext();
-	let endTime = currentNote.endTime;
+	let startTime = currentNote.startTime;
 	const [isPending, startTransition] = useTransition();
 
 	// todo - add error handling and use of useOptimistic
-	const onChange = (newEndTime?: Date) => {
-		if (!newEndTime) return;
+	const onChange = (newStartTime?: Date) => {
+		if (!newStartTime) return;
 
 		// todo - display a message telling you can't set it like that
 		// and set the input state to state before changes
-		if (newEndTime < currentNote.startTime) return;
+		if (newStartTime > currentNote.endTime) return;
 
 		startTransition(() => {
-			updateNote({ id: currentNote.id, endTime: newEndTime });
-			updateNoteEndTimeLocal(currentNote.id, course.id, newEndTime);
+			updateNote({ id: currentNote.id, startTime: newStartTime });
+			updateNoteStartTimeLocal(currentNote.id, course.id, newStartTime);
 		});
 	};
 
@@ -42,10 +42,10 @@ const NoteEndTime = () => {
 		hour: number;
 		minute: number;
 	}) => {
-		const newEndTime = new Date(currentNote.endTime);
-		newEndTime.setHours(hour);
-		newEndTime.setMinutes(minute);
-		onChange(newEndTime);
+		const newStartTime = new Date(currentNote.startTime);
+		newStartTime.setHours(hour);
+		newStartTime.setMinutes(minute);
+		onChange(newStartTime);
 	};
 
 	return (
@@ -56,28 +56,28 @@ const NoteEndTime = () => {
 						variant={'outline'}
 						className={cn(
 							'pl-3 text-left font-normal',
-							!endTime && 'text-muted-foreground',
+							!startTime && 'text-muted-foreground',
 						)}>
-						{endTime ? format(endTime, 'PPP') : <span>Pick a date</span>}
+						{startTime ? format(startTime, 'PPP') : <span>Pick a date</span>}
 						<CalendarIcon className='ml-1 h-4 w-4 opacity-50' />
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent className='w-auto p-0' align='start'>
 					<Calendar
 						mode='single'
-						selected={endTime || undefined}
+						selected={startTime || undefined}
 						onSelect={onChange}
 						initialFocus
 					/>
 				</PopoverContent>
 			</Popover>
 			<TimePicker
-				initialHour={currentNote.endTime.getHours()}
-				initialMinute={currentNote.endTime.getMinutes()}
+				initialHour={currentNote.startTime.getHours()}
+				initialMinute={currentNote.startTime.getMinutes()}
 				onChange={handleChangeHourAndMinute}
 			/>
 		</div>
 	);
 };
 
-export default NoteEndTime;
+export default NoteStartTime;

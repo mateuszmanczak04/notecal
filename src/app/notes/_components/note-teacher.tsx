@@ -1,6 +1,6 @@
 'use client';
 
-import { useNoteContext } from '@/components/notes/note-context';
+import { useNoteContext } from '@/app/notes/_components/note-context';
 
 const NoteTeacher = () => {
 	const { course } = useNoteContext();

@@ -1,7 +1,7 @@
 'use client';
 
 import deleteNote from '@/actions/notes/delete-note';
-import { useNoteContext } from '@/components/notes/note-context';
+import { useNoteContext } from '@/app/notes/_components/note-context';
 import { Button } from '@/components/ui/button';
 import { Note } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';

@@ -1,7 +1,7 @@
 'use client';
 
 import createNote from '@/actions/notes/create-note';
-import { useNoteContext } from '@/components/notes/note-context';
+import { useNoteContext } from '@/app/notes/_components/note-context';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useQueryClient } from '@tanstack/react-query';

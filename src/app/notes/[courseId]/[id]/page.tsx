@@ -1,14 +1,14 @@
 'use client';
 
 import LoadingSpinner from '@/components/loading-spinner';
-import DeleteNoteButton from '@/components/notes/delete-note-button';
-import NoteContent from '@/components/notes/note-content';
-import { NoteContextProvider } from '@/components/notes/note-context';
-import NoteTasksList from '@/components/notes/note-tasks-list';
-import NoteTeacher from '@/components/notes/note-teacher';
-import NoteTime from '@/components/notes/note-time';
-import NoteTitle from '@/components/notes/note-title';
-import NotesList from '@/components/notes/notes-list';
+import DeleteNoteButton from '@/app/notes/_components/delete-note-button';
+import NoteContent from '@/app/notes/_components/note-content';
+import { NoteContextProvider } from '@/app/notes/_components/note-context';
+import NoteTasksList from '@/app/notes/_components/note-tasks-list';
+import NoteTeacher from '@/app/notes/_components/note-teacher';
+import NoteTime from '@/app/notes/_components/note-time';
+import NoteTitle from '@/app/notes/_components/note-title';
+import NotesList from '@/app/notes/_components/notes-list';
 import useNotes from '@/hooks/use-notes';
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';

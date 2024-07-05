@@ -1,7 +1,7 @@
 'use client';
 
-import NoteEndTime from '@/components/notes/note-end-time';
-import NoteStartTime from '@/components/notes/note-start-time';
+import NoteEndTime from '@/app/notes/_components/note-end-time';
+import NoteStartTime from '@/app/notes/_components/note-start-time';
 
 const NoteTime = () => {
 	return (
