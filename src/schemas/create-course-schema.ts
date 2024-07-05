@@ -7,6 +7,7 @@ const CreateCourseSchema = z.object({
 	teacher: z.string().min(1, { message: 'Teacher name is required' }).max(30, {
 		message: 'Maximum length of the teacher name is 30 characters',
 	}),
+	color: z.string().min(1, { message: 'Course color is required' }),
 });
 
 export default CreateCourseSchema;
