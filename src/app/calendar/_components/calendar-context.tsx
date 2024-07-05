@@ -1,5 +1,5 @@
-import createNote from '@/actions/notes/create-note';
-import getNotes from '@/actions/notes/get-notes';
+import createNote from '@/app/notes/_actions/create-note';
+import getNotes from '@/app/notes/_actions/get-notes';
 import { Note } from '@prisma/client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, createContext, useContext, useRef, useState } from 'react';

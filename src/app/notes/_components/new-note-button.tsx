@@ -1,6 +1,6 @@
 'use client';
 
-import createNote from '@/actions/notes/create-note';
+import createNote from '@/app/notes/_actions/create-note';
 import { useNoteContext } from '@/app/notes/_components/note-context';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';

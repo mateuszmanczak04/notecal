@@ -1,6 +1,6 @@
 'use client';
 
-import deleteCourse from '@/actions/courses/delete-course';
+import deleteCourse from '@/app/courses/_actions/delete-course';
 import { Button } from '@/components/ui/button';
 import { useQueryClient } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';

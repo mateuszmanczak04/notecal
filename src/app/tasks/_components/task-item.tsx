@@ -1,7 +1,7 @@
 'use client';
 
-import deleteTask from '@/actions/tasks/delete-task';
-import updateTask from '@/actions/tasks/update-task';
+import deleteTask from '@/app/tasks/_actions/delete-task';
+import updateTask from '@/app/tasks/_actions/update-task';
 import TaskCourse from '@/app/tasks/_components/task-course';
 import TaskDescription from '@/app/tasks/_components/task-description';
 import TaskDueDate from '@/app/tasks/_components/task-due-date';

@@ -1,6 +1,6 @@
 'use client';
 
-import register from '@/actions/auth/register';
+import register from '@/app/auth/_actions/register';
 import { Button } from '@/components/ui/button';
 import {
 	Form,

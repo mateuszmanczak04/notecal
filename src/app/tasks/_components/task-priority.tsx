@@ -1,6 +1,6 @@
 'use client';
 
-import updateTask from '@/actions/tasks/update-task';
+import updateTask from '@/app/tasks/_actions/update-task';
 import { Badge } from '@/components/ui/badge';
 import {
 	DropdownMenu,

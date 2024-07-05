@@ -1,6 +1,6 @@
 'use client';
 
-import updateTask from '@/actions/tasks/update-task';
+import updateTask from '@/app/tasks/_actions/update-task';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { Task } from '@prisma/client';

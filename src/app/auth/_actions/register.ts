@@ -1,6 +1,6 @@
 'use server';
 
-import login from '@/actions/auth/login';
+import login from '@/app/auth/_actions/login';
 import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import RegisterSchema from '@/schemas/register-schema';
