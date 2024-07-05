@@ -9,7 +9,7 @@ import NoteTeacher from '@/app/notes/_components/note-teacher';
 import NoteTime from '@/app/notes/_components/note-time';
 import NoteTitle from '@/app/notes/_components/note-title';
 import NotesList from '@/app/notes/_components/notes-list';
-import useNotes from '@/hooks/use-notes';
+import useNotes from '@/app/notes/_hooks/use-notes';
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { useEffect } from 'react';

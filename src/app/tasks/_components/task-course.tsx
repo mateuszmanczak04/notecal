@@ -11,8 +11,8 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import useCourse from '@/hooks/use-course';
-import useCourses from '@/hooks/use-courses';
+import useCourse from '@/app/courses/_hooks/use-course';
+import useCourses from '@/app/courses/_hooks/use-courses';
 import { updateTaskCourseId as updateTaskCourseIdLocal } from '@/lib/update-task';
 import { OTHER_COURSE_NAME } from '@/lib/utils';
 import { FC, useTransition } from 'react';

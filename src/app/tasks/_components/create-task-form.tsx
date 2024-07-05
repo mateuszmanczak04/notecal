@@ -28,7 +28,7 @@ import {
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
-import useCourses from '@/hooks/use-courses';
+import useCourses from '@/app/courses/_hooks/use-courses';
 import queryClient from '@/lib/query-client';
 import { OTHER_COURSE_NAME, cn } from '@/lib/utils';
 import CreateTaskSchema from '@/schemas/create-task-schema';

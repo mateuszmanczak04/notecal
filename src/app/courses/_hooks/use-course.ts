@@ -1,4 +1,4 @@
-import useCourses from '@/hooks/use-courses';
+import useCourses from '@/app/courses/_hooks/use-courses';
 
 /**
  * used to filter all courses and find the one with the matching id

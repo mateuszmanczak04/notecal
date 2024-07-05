@@ -1,5 +1,5 @@
-import useCourses from '@/hooks/use-courses';
-import useNotes from '@/hooks/use-notes';
+import useCourses from '@/app/courses/_hooks/use-courses';
+import useNotes from '@/app/notes/_hooks/use-notes';
 import useTasks from '@/hooks/use-tasks';
 import { Course, Note, Task } from '@prisma/client';
 import { useParams } from 'next/navigation';

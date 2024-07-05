@@ -12,7 +12,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import useCourse from '@/hooks/use-course';
+import useCourse from '@/app/courses/_hooks/use-course';
 import UpdateCourseSchema from '@/schemas/update-course-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';

@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import useCourses from '@/hooks/use-courses';
+import useCourses from '@/app/courses/_hooks/use-courses';
 import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import LoadingSpinner from '@/components/common/loading-spinner';

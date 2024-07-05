@@ -1,6 +1,6 @@
 'use client';
 
-import useCourses from '@/hooks/use-courses';
+import useCourses from '@/app/courses/_hooks/use-courses';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { FC } from 'react';
