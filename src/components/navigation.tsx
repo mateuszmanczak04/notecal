@@ -5,19 +5,11 @@ import { Calendar, Check, Cog, List } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 const Navigation = () => {
 	const pathname = usePathname();
 	const session = useSession();
-	const router = useRouter();
-
-	useEffect(() => {
-		if (!session?.data?.user) {
-			router.push('/');
-		}
-	}, [session, router]);
 
 	if (!session?.data?.user) return;
 
