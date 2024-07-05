@@ -37,12 +37,12 @@ export default async function RootLayout({
 			<body
 				className={cn(
 					inter.className,
-					'flex h-screen bg-gray-100 p-4 text-gray-900',
+					'flex h-screen min-w-[1000px] bg-gray-100 p-4 text-gray-900',
 				)}>
 				<Providers>
 					<Navigation />
 					<div className='h-full flex-1 rounded-xl bg-white p-4'>
-						{/* {children} */}
+						{children}
 					</div>
 				</Providers>
 			</body>
