@@ -1,7 +1,6 @@
 'use client';
 
 import updateTask from '@/app/tasks/_actions/update-task';
-import { Badge } from '@/components/ui/badge';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -58,7 +57,7 @@ const TaskPriority: FC<TaskPriorityProps> = ({ id, priority }) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger className='-mt-1 h-6 select-none pt-0 outline-none'>
-				<Badge
+				{/* <Badge
 					className={cn(
 						'pointer-events-none bg-accent text-foreground shadow-none',
 						priority === 'A' && 'bg-red-500 text-white',
@@ -66,7 +65,7 @@ const TaskPriority: FC<TaskPriorityProps> = ({ id, priority }) => {
 						priority === 'C' && 'bg-green-500 text-white',
 					)}>
 					{getPriorityName(priority)}
-				</Badge>
+				</Badge> */}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuLabel>Choose the priority</DropdownMenuLabel>

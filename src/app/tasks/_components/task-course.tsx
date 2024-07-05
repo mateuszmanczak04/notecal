@@ -1,7 +1,6 @@
 'use client';
 
 import updateTask from '@/app/tasks/_actions/update-task';
-import { Badge } from '@/components/ui/badge';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -50,9 +49,9 @@ const TaskCourse: FC<TaskCourseProps> = ({ id, courseId }) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger className='-mt-1 h-6 select-none pt-0 outline-none'>
-				<Badge className='pointer-events-none bg-purple-600 shadow-none'>
+				{/* <Badge className='pointer-events-none bg-purple-600 shadow-none'>
 					{course?.name || 'Other'}
-				</Badge>
+				</Badge> */}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuLabel>Choose the course</DropdownMenuLabel>
