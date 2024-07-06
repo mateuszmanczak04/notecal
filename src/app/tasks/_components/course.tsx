@@ -41,21 +41,27 @@ const Course: FC<TaskCourseProps> = ({ id, courseId }) => {
 		setIsOpen(true);
 	};
 
+	const handleToggleMenu = () => {
+		if (isOpen) {
+			handleCloseMenu();
+		} else {
+			handleOpenMenu();
+		}
+	};
+
 	useOnClickOutside(menuRef, () => {
 		handleCloseMenu();
 	});
 
 	return (
-		<div className='relative'>
+		<div className='relative' ref={menuRef}>
 			<Tag
 				text={currentCourse?.name || 'No course'}
-				onClick={handleOpenMenu}
+				onClick={handleToggleMenu}
 				className={cn('transition', isPending && 'opacity-50')}
 			/>
 			{isOpen && (
-				<div
-					ref={menuRef}
-					className='absolute left-0 top-7 z-20 flex flex-col items-center justify-center rounded-md border bg-white shadow-xl'>
+				<div className='absolute left-0 top-7 z-20 flex flex-col items-center justify-center rounded-md border bg-white shadow-xl'>
 					<button
 						className='flex h-8 w-full cursor-pointer select-none items-center justify-center px-4 transition hover:bg-neutral-100'
 						onClick={() => {

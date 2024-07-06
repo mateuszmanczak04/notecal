@@ -45,15 +45,23 @@ const Priority: FC<PriorityProps> = ({ id, priority }) => {
 		setIsOpen(true);
 	};
 
+	const handleToggleMenu = () => {
+		if (isOpen) {
+			handleCloseMenu();
+		} else {
+			handleOpenMenu();
+		}
+	};
+
 	useOnClickOutside(menuRef, () => {
 		handleCloseMenu();
 	});
 
 	return (
-		<div className='relative'>
+		<div className='relative' ref={menuRef}>
 			<Tag
 				text={getPriorityName(priority)}
-				onClick={handleOpenMenu}
+				onClick={handleToggleMenu}
 				className={cn(
 					'transition',
 					priority === 'A' && 'bg-red-100 text-red-500 hover:bg-red-200',
@@ -64,9 +72,7 @@ const Priority: FC<PriorityProps> = ({ id, priority }) => {
 				)}
 			/>
 			{isOpen && (
-				<div
-					ref={menuRef}
-					className='absolute left-0 top-7 z-20 flex w-fit flex-col items-center justify-center rounded-md border bg-white shadow-xl'>
+				<div className='absolute left-0 top-7 z-20 flex w-fit flex-col items-center justify-center rounded-md border bg-white shadow-xl'>
 					<button
 						className='flex h-8 w-full cursor-pointer select-none items-center justify-center text-nowrap px-4 transition hover:bg-neutral-100'
 						onClick={() => {

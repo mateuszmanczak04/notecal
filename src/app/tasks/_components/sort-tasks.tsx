@@ -22,6 +22,14 @@ const SortTasks = () => {
 		setIsOpen(true);
 	};
 
+	const handleToggleMenu = () => {
+		if (isOpen) {
+			handleCloseMenu();
+		} else {
+			handleOpenMenu();
+		}
+	};
+
 	useOnClickOutside(menuRef, () => {
 		handleCloseMenu();
 	});
@@ -43,19 +51,17 @@ const SortTasks = () => {
 	};
 
 	return (
-		<div className='relative flex-1'>
+		<div className='relative flex-1' ref={menuRef}>
 			<Button
 				variant='secondary'
 				size='lg'
-				onClick={handleOpenMenu}
+				onClick={handleToggleMenu}
 				className={cn('w-full transition', isPending && 'opacity-50')}>
 				<ArrowUpDown className='h-5 w-5' />
 				Order By
 			</Button>
 			{isOpen && (
-				<div
-					ref={menuRef}
-					className='absolute left-0 top-11 z-20 flex w-full select-none flex-col items-stretch justify-center rounded-md border bg-white shadow-xl'>
+				<div className='absolute left-0 top-11 z-20 flex w-full select-none flex-col items-stretch justify-center rounded-md border bg-white shadow-xl'>
 					<div
 						className='flex h-8 cursor-pointer items-center justify-center gap-1 transition hover:bg-neutral-100'
 						onClick={() => {
