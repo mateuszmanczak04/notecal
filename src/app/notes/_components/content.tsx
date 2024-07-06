@@ -20,7 +20,7 @@ const Content = () => {
 	return (
 		<div
 			className={cn(
-				'mt-2 flex flex-1 flex-col justify-between gap-4 rounded-md',
+				'mt-4 flex flex-1 flex-col justify-between gap-4 rounded-md',
 				isPending && 'pointer-events-none  opacity-75',
 			)}>
 			<Textarea

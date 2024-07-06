@@ -11,6 +11,8 @@ import useNotes from '@/app/notes/_hooks/use-notes';
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
+import GoBackButton from '@/components/common/go-back-button';
+import { ArrowLeft } from 'lucide-react';
 
 const NotePage = () => {
 	const params = useParams();
@@ -28,6 +30,10 @@ const NotePage = () => {
 	return (
 		<div className='mx-auto flex h-full min-h-80 max-w-[1200px] gap-4'>
 			<div className='flex h-full flex-1 flex-col'>
+				<GoBackButton variant='secondary' className='w-fit'>
+					<ArrowLeft className='h-4 w-4' />
+					Go back
+				</GoBackButton>
 				<Title />
 				<Time />
 				<Content />
