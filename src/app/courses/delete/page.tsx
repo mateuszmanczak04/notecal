@@ -8,7 +8,7 @@ import { useTransition } from 'react';
 import deleteCourse from '../_actions/delete-course';
 import queryClient from '@/lib/query-client';
 
-const DeleteCoursePage = ({}) => {
+const DeleteCoursePage = () => {
 	const searchParams = useSearchParams();
 	const id = searchParams.get('id');
 	const router = useRouter();
