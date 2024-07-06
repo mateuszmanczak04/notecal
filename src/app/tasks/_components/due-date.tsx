@@ -78,14 +78,6 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 		setIsOpen(true);
 	};
 
-	const handleToggleMenu = () => {
-		if (isOpen) {
-			handleCloseMenu();
-		} else {
-			handleOpenMenu();
-		}
-	};
-
 	useOnClickOutside(menuRef, () => {
 		handleSaveChanges();
 		handleCloseMenu();
@@ -95,7 +87,7 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 		<div className='relative'>
 			<Tag
 				text={dueDate ? format(dueDate, 'yyyy-MM-dd - HH:mm') : 'No due date'}
-				onClick={handleToggleMenu}
+				onClick={handleOpenMenu}
 				className={cn('w-52 transition', isPending && 'opacity-50')}
 			/>
 			{isOpen && (
