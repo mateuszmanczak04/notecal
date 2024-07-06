@@ -144,7 +144,7 @@ const CreateTaskPage = () => {
 										className={cn(
 											'flex-1 bg-yellow-100 text-yellow-500 transition-all duration-500 hover:bg-yellow-200',
 											form.getValues('priority') === 'B' &&
-												'flex-[2] bg-yellow-500 text-white hover:bg-yellow-300',
+												'flex-[2] bg-yellow-500 text-white hover:bg-yellow-400',
 										)}
 										onClick={() => {
 											if (form.getValues('priority') === 'B') {
