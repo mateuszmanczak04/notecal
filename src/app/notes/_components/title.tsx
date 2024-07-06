@@ -2,7 +2,7 @@
 
 import { useNoteContext } from '@/app/notes/_context/note-context';
 
-const NoteTitle = () => {
+const Title = () => {
 	const { course, currentNote } = useNoteContext();
 
 	return (
@@ -17,4 +17,4 @@ const NoteTitle = () => {
 	);
 };
 
-export default NoteTitle;
+export default Title;

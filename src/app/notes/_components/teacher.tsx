@@ -2,7 +2,7 @@
 
 import { useNoteContext } from '@/app/notes/_context/note-context';
 
-const NoteTeacher = () => {
+const Teacher = () => {
 	const { course } = useNoteContext();
 
 	return (
@@ -13,4 +13,4 @@ const NoteTeacher = () => {
 	);
 };
 
-export default NoteTeacher;
+export default Teacher;

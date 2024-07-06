@@ -16,7 +16,7 @@ import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { useTransition } from 'react';
 
-const NoteEndTime = () => {
+const EndTime = () => {
 	const { currentNote, course } = useNoteContext();
 	let endTime = currentNote.endTime;
 	const [isPending, startTransition] = useTransition();
@@ -80,4 +80,4 @@ const NoteEndTime = () => {
 	);
 };
 
-export default NoteEndTime;
+export default EndTime;

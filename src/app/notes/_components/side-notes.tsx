@@ -5,7 +5,7 @@ import { useNoteContext } from '../_context/note-context';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-const NotesList = () => {
+const SideNotes = () => {
 	const { course, notes } = useNoteContext();
 
 	return (
@@ -28,4 +28,4 @@ const NotesList = () => {
 	);
 };
 
-export default NotesList;
+export default SideNotes;
