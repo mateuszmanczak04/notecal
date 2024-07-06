@@ -4,7 +4,7 @@ import updateTask from '@/app/tasks/_actions/update-task';
 import useCourse from '@/app/courses/_hooks/use-course';
 import useCourses from '@/app/courses/_hooks/use-courses';
 import { updateTaskCourseId as updateTaskCourseIdLocal } from '@/lib/update-task';
-import { cn, OTHER_COURSE_NAME } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { FC, useRef, useState, useTransition } from 'react';
 import Tag from './tag';
 import { useOnClickOutside } from 'usehooks-ts';
@@ -27,7 +27,7 @@ const Course: FC<TaskCourseProps> = ({ id, courseId }) => {
 		startTransition(() => {
 			updateTask({
 				id,
-				courseId: newCourseId === OTHER_COURSE_NAME ? null : newCourseId,
+				courseId: newCourseId,
 			});
 			updateTaskCourseIdLocal(id, newCourseId);
 		});

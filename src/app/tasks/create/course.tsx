@@ -1,10 +1,8 @@
 'use client';
 
-import updateTask from '@/app/tasks/_actions/update-task';
 import useCourse from '@/app/courses/_hooks/use-course';
 import useCourses from '@/app/courses/_hooks/use-courses';
-import { updateTaskCourseId as updateTaskCourseIdLocal } from '@/lib/update-task';
-import { cn, OTHER_COURSE_NAME } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { FC, useRef, useState, useTransition } from 'react';
 import Tag from '../_components/tag';
 import { useOnClickOutside } from 'usehooks-ts';
