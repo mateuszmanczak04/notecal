@@ -20,7 +20,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
-import { useQueryClient } from '@tanstack/react-query';
+import queryClient from '@/lib/query-client';
 
 const CreateCoursePage = () => {
 	const [isPending, startTransition] = useTransition();
@@ -30,13 +30,12 @@ const CreateCoursePage = () => {
 		defaultValues: {
 			name: '',
 			teacher: '',
-			color: '',
 		},
 	});
 	const router = useRouter();
-	const queryClient = useQueryClient();
 
 	const onSubmit = (values: z.infer<typeof CreateCourseSchema>) => {
+		console.log(values);
 		setError('');
 		startTransition(() => {
 			createCourse(values).then(res => {
@@ -89,40 +88,40 @@ const CreateCoursePage = () => {
 				/>
 				{/* TODO: move existing colors to separate file and make use of them 
 				on the backend */}
-				<FormField
+				{/* <FormField
 					control={form.control}
 					name='color'
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Accent color</FormLabel>
-							<FormControl>
-								<div className='flex gap-2'>
-									<div
-										className='bg-accent-1-500 h-9 flex-1 cursor-pointer rounded-md transition hover:opacity-90'
-										onClick={() => field.onChange('accent-1')}></div>
-									<div
-										className='bg-accent-2-500 h-9 flex-1 cursor-pointer rounded-md transition hover:opacity-90'
-										onClick={() => field.onChange('accent-2')}></div>
-									<div
-										className='bg-accent-3-500 h-9 flex-1 cursor-pointer rounded-md transition hover:opacity-90'
-										onClick={() => field.onChange('accent-2')}></div>
-									<div
-										className='bg-accent-4-500 h-9 flex-1 cursor-pointer rounded-md transition hover:opacity-90'
-										onClick={() => field.onChange('accent-3')}></div>
-									<div
-										className='bg-accent-5-500 h-9 flex-1 cursor-pointer rounded-md transition hover:opacity-90'
-										onClick={() => field.onChange('accent-4')}></div>
-									<div
-										className='bg-accent-6-500 h-9 flex-1 cursor-pointer rounded-md transition hover:opacity-90'
-										onClick={() => field.onChange('accent-5')}></div>
-									<div
-										className='bg-accent-7-500 h-9 flex-1 cursor-pointer rounded-md transition hover:opacity-90'
-										onClick={() => field.onChange('accent-6')}></div>
-								</div>
-							</FormControl>
+							<FormControl> */}
+				<div className='flex gap-2'>
+					<div
+						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-1-500 transition hover:opacity-90'
+						onClick={() => {}}></div>
+					<div
+						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-2-500 transition hover:opacity-90'
+						onClick={() => {}}></div>
+					<div
+						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-3-500 transition hover:opacity-90'
+						onClick={() => {}}></div>
+					<div
+						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-4-500 transition hover:opacity-90'
+						onClick={() => {}}></div>
+					<div
+						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-5-500 transition hover:opacity-90'
+						onClick={() => {}}></div>
+					<div
+						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-6-500 transition hover:opacity-90'
+						onClick={() => {}}></div>
+					<div
+						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-7-500 transition hover:opacity-90'
+						onClick={() => {}}></div>
+				</div>
+				{/* </FormControl>
 						</FormItem>
 					)}
-				/>
+				/> */}
 				<Button type='submit' className='w-full'>
 					Create
 				</Button>
