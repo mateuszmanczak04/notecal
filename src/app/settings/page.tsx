@@ -6,8 +6,8 @@ import DefaultNoteDurationSetting from './_components/default-note-duration-sett
 
 const page = () => {
 	return (
-		<div className='mx-auto flex max-w-[480px] flex-col gap-4'>
-			<h1 className='text-2xl font-semibold'>Settings</h1>
+		<div className='mx-auto mt-4 flex max-w-[480px] flex-col gap-4'>
+			<h1 className='text-3xl font-bold'>Settings</h1>
 			<ChangePasswordSetting />
 			<ThemeSetting />
 			<AmountOfDaysSetting />
