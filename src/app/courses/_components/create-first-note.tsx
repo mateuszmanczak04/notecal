@@ -3,6 +3,7 @@
 import createNote from '@/app/notes/_actions/create-note';
 import queryClient from '@/lib/query-client';
 import { cn } from '@/lib/utils';
+import { Note } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { FC, useTransition } from 'react';
 
@@ -21,10 +22,11 @@ const CreateFirstNote: FC<CreateFirstNoteProps> = ({ courseId }) => {
 				content: 'Empty note',
 				startTime: new Date(),
 			});
-			await queryClient.invalidateQueries({ queryKey: ['notes'] });
-			if (newNote) {
-				router.push(`/notes/${courseId}/${newNote.id}`);
-			}
+			if (!newNote) return;
+			queryClient.setQueryData(['notes'], (prev: { notes: Note[] }) => {
+				return { notes: [...prev.notes, newNote] };
+			});
+			router.push(`/notes/${courseId}/${newNote.id}`);
 		});
 	};
 
