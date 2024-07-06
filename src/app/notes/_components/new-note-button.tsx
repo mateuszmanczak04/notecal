@@ -3,7 +3,9 @@
 import createNote from '@/app/notes/_actions/create-note';
 import { useNoteContext } from '@/app/notes/_context/note-context';
 import { Button } from '@/components/ui/button';
+import queryClient from '@/lib/query-client';
 import { cn } from '@/lib/utils';
+import { Note } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import { useTransition } from 'react';
@@ -11,18 +13,19 @@ import { useTransition } from 'react';
 const NewNoteButton = () => {
 	const { course } = useNoteContext();
 	const [isPending, startTransition] = useTransition();
-	const queryClient = useQueryClient();
 
 	const onClick = () => {
 		startTransition(async () => {
-			await createNote({
+			const { newNote } = await createNote({
 				courseId: course.id!,
 				startTime: new Date(),
 				content: 'Empty note',
 			});
-			// add it do the local state instead of invalidating
-			queryClient.invalidateQueries({
-				queryKey: ['notes'],
+
+			queryClient.setQueryData(['notes'], (prev: { notes: Note[] }) => {
+				return {
+					notes: [...prev.notes, newNote],
+				};
 			});
 		});
 	};
