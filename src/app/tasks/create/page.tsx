@@ -12,7 +12,6 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import CreateCourseSchema from '@/schemas/create-course-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
@@ -20,23 +19,16 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
-import { useQueryClient } from '@tanstack/react-query';
-import useCourses from '@/app/courses/_hooks/use-courses';
 import CreateTaskSchema from '@/schemas/create-task-schema';
-import { cn, OTHER_COURSE_NAME } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import createTask from '../_actions/create-task';
 import queryClient from '@/lib/query-client';
 import Tag from '../_components/tag';
 import GoBackButton from '@/components/common/go-back-button';
 import { ArrowLeft } from 'lucide-react';
+import Course from './course';
 
 const CreateTaskPage = () => {
-	const {
-		courses,
-		isPending: isCoursesPending,
-		error: coursesError,
-	} = useCourses();
-
 	const searchParams = useSearchParams();
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState('');
@@ -47,7 +39,7 @@ const CreateTaskPage = () => {
 			description: '',
 			priority: null,
 			dueDate: null,
-			courseId: searchParams.get('courseId') || OTHER_COURSE_NAME,
+			courseId: searchParams.get('courseId') || null,
 		},
 	});
 	const router = useRouter();
@@ -57,9 +49,7 @@ const CreateTaskPage = () => {
 		startTransition(() => {
 			createTask({
 				...values,
-				// check if courseId should be undefined in request in case it is equal OTHER_COURSE_NAME
-				courseId:
-					values.courseId === OTHER_COURSE_NAME ? undefined : values.courseId,
+				courseId: values.courseId,
 			}).then(res => {
 				if (res?.error) {
 					setError(res.error);
@@ -175,7 +165,7 @@ const CreateTaskPage = () => {
 						</FormItem>
 					)}
 				/>
-				{/* TODO: make it work */}
+				{/* Course: */}
 				<FormField
 					control={form.control}
 					name='courseId'
@@ -183,10 +173,9 @@ const CreateTaskPage = () => {
 						<FormItem>
 							<FormLabel>Course</FormLabel>
 							<FormControl>
-								<Tag
-									className='w-full flex-1 bg-pink-100 text-pink-500 hover:bg-pink-200'
-									onClick={() => field.onChange('nullid')}
-									text={'Computer Science'}
+								<Course
+									onSelect={field.onChange}
+									currentCourseId={field.value || null}
 								/>
 							</FormControl>
 						</FormItem>
