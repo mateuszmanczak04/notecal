@@ -24,6 +24,7 @@ import { z } from 'zod';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
 import queryClient from '@/lib/query-client';
+import { Course } from '@prisma/client';
 
 const EditCoursePage = () => {
 	const searchParams = useSearchParams();
@@ -50,7 +51,16 @@ const EditCoursePage = () => {
 				setError(res.error);
 				return;
 			}
-			await queryClient.invalidateQueries({ queryKey: ['courses'] });
+			queryClient.setQueryData(['courses'], (prev: { courses: Course[] }) => {
+				return {
+					courses: prev.courses.map(course => {
+						if (course.id === values.id) {
+							return { ...course, ...values };
+						}
+						return course;
+					}),
+				};
+			});
 			router.push('/courses');
 		});
 	};
