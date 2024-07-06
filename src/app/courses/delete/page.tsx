@@ -1,19 +1,31 @@
-import DeleteCourseButton from '@/app/courses/_components/delete-course-button';
+'use client';
+
 import GoBackButton from '@/components/common/go-back-button';
-import { MoveLeft } from 'lucide-react';
-import { redirect } from 'next/navigation';
-import { FC } from 'react';
+import { Button } from '@/components/ui/button';
+import { MoveLeft, Trash2 } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useTransition } from 'react';
+import deleteCourse from '../_actions/delete-course';
+import queryClient from '@/lib/query-client';
 
-interface pageProps {
-	searchParams?: { [key: string]: string | string[] | undefined };
-}
+const DeleteCoursePage = ({}) => {
+	const searchParams = useSearchParams();
+	const id = searchParams.get('id');
+	const router = useRouter();
+	const [isPending, startTransition] = useTransition();
 
-const page: FC<pageProps> = ({ searchParams }) => {
-	const id = searchParams?.id;
-
-	if (!id || typeof id !== 'string') {
-		redirect('/courses');
+	if (!id) {
+		router.push('/courses');
+		return;
 	}
+
+	const handleDelete = () => {
+		startTransition(() => {
+			deleteCourse({ id }).then(() => {
+				queryClient.invalidateQueries({ queryKey: ['courses'] });
+			});
+		});
+	};
 
 	return (
 		<div className='mx-auto max-w-[600px]'>
@@ -29,10 +41,17 @@ const page: FC<pageProps> = ({ searchParams }) => {
 					<MoveLeft className='h-5 w-5' />
 					Cancel
 				</GoBackButton>
-				<DeleteCourseButton id={id} />
+				<Button
+					onClick={handleDelete}
+					variant='destructive'
+					className='w-full flex-1 gap-1'
+					disabled={isPending}>
+					<Trash2 className='h-4 w-4' />
+					Delete Permanently
+				</Button>
 			</div>
 		</div>
 	);
 };
 
-export default page;
+export default DeleteCoursePage;
