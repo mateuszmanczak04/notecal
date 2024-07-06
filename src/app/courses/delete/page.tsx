@@ -20,10 +20,9 @@ const DeleteCoursePage = () => {
 	}
 
 	const handleDelete = () => {
-		startTransition(() => {
-			deleteCourse({ id }).then(() => {
-				queryClient.invalidateQueries({ queryKey: ['courses'] });
-			});
+		startTransition(async () => {
+			await deleteCourse({ id });
+			await queryClient.invalidateQueries({ queryKey: ['courses'] });
 		});
 	};
 
