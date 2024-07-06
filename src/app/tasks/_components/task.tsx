@@ -8,6 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import DueDate from './due-date';
 import Priority from './priority';
 import { Checkbox } from '@/components/ui/checkbox';
+import Menu from './menu';
 
 interface TaskProps {
 	task: Task;
@@ -30,9 +31,7 @@ const Task: FC<TaskProps> = ({
 					<Priority id={id} priority={priority} />
 				</div>
 			</div>
-			<div>
-				<EllipsisVertical className='h-6 w-6' />
-			</div>
+			<Menu taskId={id} />
 		</div>
 	);
 };
