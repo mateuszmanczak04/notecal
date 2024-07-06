@@ -152,10 +152,7 @@ const CreateTaskPage = () => {
 						<FormItem>
 							<FormLabel>Due date</FormLabel>
 							<FormControl>
-								<DatePicker
-									currentDueDate={field.value}
-									onSelect={field.onChange}
-								/>
+								<DatePicker date={field.value} onSelect={field.onChange} />
 							</FormControl>
 						</FormItem>
 					)}
