@@ -8,39 +8,29 @@ import { format, isValid } from 'date-fns';
 
 interface DatePickerProps {
 	onSelect: (newDueDate: Date | null) => void;
-	currentDueDate: Date | null;
+	date: Date | null;
 	isPending?: boolean;
 }
 
-const DatePicker: FC<DatePickerProps> = ({
-	isPending,
-	onSelect,
-	currentDueDate,
-}) => {
+const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
 
 	// Inputs
 	const [year, setYear] = useState<string>(
-		currentDueDate ? currentDueDate.getFullYear().toString() : '',
+		date ? date.getFullYear().toString() : '',
 	);
 	const [month, setMonth] = useState<string>(
-		currentDueDate
-			? (currentDueDate.getMonth() + 1).toString().padStart(2, '00')
-			: '',
+		date ? (date.getMonth() + 1).toString().padStart(2, '00') : '',
 	);
 	const [day, setDay] = useState<string>(
-		currentDueDate ? currentDueDate.getDate().toString().padStart(2, '00') : '',
+		date ? date.getDate().toString().padStart(2, '00') : '',
 	);
 	const [hour, setHour] = useState<string>(
-		currentDueDate
-			? currentDueDate.getHours().toString().padStart(2, '00')
-			: '',
+		date ? date.getHours().toString().padStart(2, '00') : '',
 	);
 	const [minute, setMinute] = useState<string>(
-		currentDueDate
-			? currentDueDate.getMinutes().toString().padStart(2, '00')
-			: '',
+		date ? date.getMinutes().toString().padStart(2, '00') : '',
 	);
 
 	const handleCloseMenu = () => {
@@ -71,8 +61,7 @@ const DatePicker: FC<DatePickerProps> = ({
 		if (!isValid(newDate)) return;
 
 		// No need to update the date if these are the same:
-		if (currentDueDate && newDate.getTime() === currentDueDate.getTime())
-			return;
+		if (date && newDate.getTime() === date.getTime()) return;
 
 		onSelect(newDate);
 	};
@@ -83,37 +72,17 @@ const DatePicker: FC<DatePickerProps> = ({
 	});
 
 	useEffect(() => {
-		setYear(currentDueDate ? currentDueDate.getFullYear().toString() : '');
-		setMonth(
-			currentDueDate
-				? (currentDueDate.getMonth() + 1).toString().padStart(2, '00')
-				: '',
-		);
-		setDay(
-			currentDueDate
-				? currentDueDate.getDate().toString().padStart(2, '00')
-				: '',
-		);
-		setHour(
-			currentDueDate
-				? currentDueDate.getHours().toString().padStart(2, '00')
-				: '',
-		);
-		setMinute(
-			currentDueDate
-				? currentDueDate.getMinutes().toString().padStart(2, '00')
-				: '',
-		);
-	}, [currentDueDate]);
+		setYear(date ? date.getFullYear().toString() : '');
+		setMonth(date ? (date.getMonth() + 1).toString().padStart(2, '00') : '');
+		setDay(date ? date.getDate().toString().padStart(2, '00') : '');
+		setHour(date ? date.getHours().toString().padStart(2, '00') : '');
+		setMinute(date ? date.getMinutes().toString().padStart(2, '00') : '');
+	}, [date]);
 
 	return (
 		<div className='relative' ref={menuRef}>
 			<Tag
-				text={
-					currentDueDate
-						? format(currentDueDate, 'yyyy-MM-dd - HH:mm')
-						: 'No due date'
-				}
+				text={date ? format(date, 'yyyy-MM-dd - HH:mm') : 'No due date'}
 				onClick={handleToggleMenu}
 				className={cn('w-full', isPending && 'opacity-50')}
 			/>
