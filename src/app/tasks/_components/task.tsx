@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import Menu from './menu';
 import updateTask from '../_actions/update-task';
 import queryClient from '@/lib/query-client';
+import { cn } from '@/lib/utils';
 
 interface TaskProps {
 	task: Task;
@@ -43,13 +44,17 @@ const Task: FC<TaskProps> = ({
 		<div className='flex gap-4 border-b border-gray-200 p-4'>
 			<Checkbox checked={completed} onCheckedChange={handleToggleTask} />
 			<div className='flex flex-1 flex-col'>
-				<p className='font-bold'>{title}</p>
-				<p className='mt-1 text-neutral-500'>{description}</p>
-				<div className='mt-2 flex gap-2'>
-					<Course id={id} courseId={courseId} />
-					<DueDate id={id} dueDate={dueDate} />
-					<Priority id={id} priority={priority} />
-				</div>
+				<p className={cn('font-bold', completed && 'line-through')}>{title}</p>
+				<p className={cn('mt-1 text-neutral-500', completed && 'line-through')}>
+					{description}
+				</p>
+				{!completed && (
+					<div className='mt-2 flex gap-2'>
+						<Course id={id} courseId={courseId} />
+						<DueDate id={id} dueDate={dueDate} />
+						<Priority id={id} priority={priority} />
+					</div>
+				)}
 			</div>
 			<Menu taskId={id} />
 		</div>
