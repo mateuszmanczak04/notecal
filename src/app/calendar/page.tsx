@@ -1,6 +1,5 @@
 'use client';
 
-import DayColumn from './_components/day-column';
 import Grid from './_components/grid';
 import Header from './_components/header';
 import Notes from './_components/notes';
