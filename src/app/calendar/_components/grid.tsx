@@ -3,7 +3,6 @@
 import HoursColumn from './hours-column';
 import DayColumn from './day-column';
 import { useCalendarContext } from '../_context/calendar-context';
-import useSettings from '@/app/settings/_hooks/use-settings';
 
 export const AMOUNT_OF_DAYS = 5; // TODO: get from settings
 
