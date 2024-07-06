@@ -1,9 +1,9 @@
-import { EllipsisVertical } from 'lucide-react';
 import { FC } from 'react';
 import useNotes from '@/app/notes/_hooks/use-notes';
 import NoteLink from './note-link';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
+import Menu from './menu';
 
 interface CourseProps {
 	name: string;
@@ -41,9 +41,7 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 					</div>
 				)}
 			</div>
-			<div>
-				<EllipsisVertical className='h-6 w-6' />
-			</div>
+			<Menu courseId={id} />
 		</div>
 	);
 };
