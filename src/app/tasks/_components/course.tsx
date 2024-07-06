@@ -63,7 +63,7 @@ const Course: FC<TaskCourseProps> = ({ id, courseId }) => {
 			{isOpen && (
 				<div className='absolute left-0 top-7 z-20 flex flex-col items-center justify-center rounded-md border bg-white shadow-xl'>
 					<button
-						className='flex h-8 w-full cursor-pointer select-none items-center justify-center px-4 transition hover:bg-neutral-100'
+						className='flex h-8 w-full cursor-pointer select-none items-center justify-center text-nowrap px-4 transition hover:bg-neutral-100'
 						onClick={() => {
 							handleSaveChange(null);
 							handleCloseMenu();
