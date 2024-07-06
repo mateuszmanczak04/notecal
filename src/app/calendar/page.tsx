@@ -2,7 +2,6 @@
 
 import DayColumn from './_components/day-column';
 import HoursColumn from './_components/hours-column';
-import { CalendarContextProvider } from './_context/calendar-context';
 
 const CalendarPage = () => {
 	const currentDate = new Date();
@@ -10,7 +9,7 @@ const CalendarPage = () => {
 	const currentYear = currentDate.getFullYear();
 
 	return (
-		<CalendarContextProvider>
+		<>
 			<h2 className='text-3xl font-bold'>
 				{currentMonth} {currentYear}
 			</h2>
@@ -31,7 +30,7 @@ const CalendarPage = () => {
 					isLast
 				/>
 			</div>
-		</CalendarContextProvider>
+		</>
 	);
 };
 

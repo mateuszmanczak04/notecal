@@ -2,7 +2,6 @@
 
 import DeleteNoteButton from '@/app/notes/_components/delete-note-button';
 import NoteContent from '@/app/notes/_components/note-content';
-import { NoteContextProvider } from '@/app/notes/_context/note-context';
 import NoteTasksList from '@/app/notes/_components/note-tasks-list';
 import NoteTeacher from '@/app/notes/_components/note-teacher';
 import NoteTime from '@/app/notes/_components/note-time';
@@ -27,21 +26,19 @@ const NotePage = () => {
 	}, [notes, params.id, queryClient]);
 
 	return (
-		<NoteContextProvider>
-			<div className='mx-auto flex h-full min-h-80 max-w-[1200px] gap-4'>
-				<div className='flex h-full flex-1 flex-col'>
-					<NoteTitle />
-					<NoteTime />
-					<NoteContent />
-				</div>
-				<div className='flex h-full w-48 shrink-0 flex-col gap-8 overflow-y-scroll scrollbar-hide'>
-					<NotesList />
-					<NoteTasksList />
-					<NoteTeacher />
-					<DeleteNoteButton />
-				</div>
+		<div className='mx-auto flex h-full min-h-80 max-w-[1200px] gap-4'>
+			<div className='flex h-full flex-1 flex-col'>
+				<NoteTitle />
+				<NoteTime />
+				<NoteContent />
 			</div>
-		</NoteContextProvider>
+			<div className='flex h-full w-48 shrink-0 flex-col gap-8 overflow-y-scroll scrollbar-hide'>
+				<NotesList />
+				<NoteTasksList />
+				<NoteTeacher />
+				<DeleteNoteButton />
+			</div>
+		</div>
 	);
 };
 

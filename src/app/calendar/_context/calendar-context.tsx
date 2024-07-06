@@ -1,3 +1,5 @@
+'use client';
+
 import createNote from '@/app/notes/_actions/create-note';
 import getNotes from '@/app/notes/_actions/get-notes';
 import { Note } from '@prisma/client';

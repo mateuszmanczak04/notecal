@@ -1,3 +1,5 @@
+'use client';
+
 import useCourses from '@/app/courses/_hooks/use-courses';
 import useNotes from '@/app/notes/_hooks/use-notes';
 import useTasks from '@/app/tasks/_hooks/use-tasks';
