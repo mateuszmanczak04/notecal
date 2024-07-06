@@ -51,29 +51,33 @@ const NoteTask: FC<NoteTaskProps> = ({
 	// });
 
 	return (
-		<Card
-			className='relative flex cursor-pointer select-none flex-col overflow-hidden border-none bg-primary/5 shadow-none dark:bg-white/5'
-			onClick={() => toggleCompleted()}>
-			<div className='flex gap-2 p-4'>
-				<Checkbox checked={completed} className='h-5 w-5' />
-				<div className='-mt-1'>
-					<p className='text-normal font-semibold'>{title}</p>
-					<p className='text-sm opacity-75'>{description}</p>
-				</div>
-			</div>
-			{dueDate && (
-				<p className='mt-1 bg-primary/10 px-2 py-1 text-xs dark:bg-white/15'>
-					{dueDate.toDateString()}
-				</p>
+		<div
+			className={cn(
+				'flex cursor-pointer select-none gap-3	 rounded-md p-2 shadow-none',
+				priority === 'A' && 'bg-red-100',
+				priority === 'B' && 'bg-yellow-100',
+				priority === 'C' && 'bg-green-100',
 			)}
-			<div
+			onClick={() => toggleCompleted()}>
+			<Checkbox
+				checked={completed}
 				className={cn(
-					'h-1 w-full',
-					priority === 'A' && 'bg-red-500 text-white',
-					priority === 'B' && 'bg-amber-500 text-white',
-					priority === 'C' && 'bg-green-500 text-white',
-				)}></div>
-		</Card>
+					'border-2 border-primary-500 bg-white',
+					priority === 'A' && 'border-red-500 data-[state=checked]:bg-red-500',
+					priority === 'B' &&
+						'border-yellow-500 data-[state=checked]:bg-yellow-500',
+					priority === 'C' &&
+						'border-green-500 data-[state=checked]:bg-green-500',
+				)}
+			/>
+			<div>
+				<p className='font-semibold'>{title}</p>
+				{description && <p className='text-sm'>{description}</p>}
+				{dueDate && (
+					<p className='mt-1 rounded-md text-sm'>{dueDate.toDateString()}</p>
+				)}
+			</div>
+		</div>
 	);
 };
 

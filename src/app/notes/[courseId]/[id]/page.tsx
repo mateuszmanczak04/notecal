@@ -2,7 +2,7 @@
 
 import DeleteNoteButton from '@/app/notes/_components/delete-note-button';
 import NoteContent from '@/app/notes/_components/note-content';
-import NoteTasksList from '@/app/notes/_components/note-tasks-list';
+import NoteTasks from '@/app/notes/_components/note-tasks';
 import NoteTeacher from '@/app/notes/_components/note-teacher';
 import NoteTime from '@/app/notes/_components/note-time';
 import NoteTitle from '@/app/notes/_components/note-title';
@@ -34,7 +34,7 @@ const NotePage = () => {
 			</div>
 			<div className='flex h-full w-48 shrink-0 flex-col gap-8 overflow-y-scroll scrollbar-hide'>
 				<NotesList />
-				<NoteTasksList />
+				<NoteTasks />
 				<NoteTeacher />
 				<DeleteNoteButton />
 			</div>
