@@ -1,10 +1,8 @@
 'use client';
 
-import { useCalendarContext } from '@/components/calendar/calendar-context';
-import CreateNotePopup from '@/components/calendar/create-note-popup';
+import { useCalendarContext } from '../_context/calendar-context';
+import CreateNotePopup from './create-note-popup';
 import { FC, MouseEvent, useRef, useState } from 'react';
-import CalendarNoteBlock from '@/components/calendar/calendar-note-block';
-import CalendarDayGridRect from '@/components/calendar/calendar-day-grid-rect';
 
 interface CalendarDayGridProps {
 	date: Date;
@@ -50,22 +48,7 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 	return (
 		<div
 			ref={gridRef}
-			className='relative flex-1 cursor-crosshair overflow-y-hidden border-r-2 border-accent'>
-			{new Array(23).fill(0).map((_, i) => (
-				<CalendarDayGridRect key={i} hour={i} onClick={onClick} />
-			))}
-			<CalendarDayGridRect last hour={23} onClick={onClick} />
-			{/* notes: */}
-			{todayNotes.map(note => (
-				<CalendarNoteBlock
-					id={note.id}
-					courseId={note.courseId}
-					endTime={note.endTime}
-					newNoteTempId={newNoteTempId}
-					startTime={note.startTime}
-					key={note.id}
-				/>
-			))}
+			className='border-accent relative flex-1 cursor-crosshair overflow-y-hidden border-r-2'>
 			{showPopup && (
 				<CreateNotePopup
 					clickX={clickPosition.x}

@@ -23,6 +23,7 @@ interface CalendarContextProps {
 		startTime: Date;
 	}) => void;
 	newNoteTempId: string | null;
+	getDayAfter: (days: number) => Date;
 }
 
 const CalendarContext = createContext({} as CalendarContextProps);
@@ -121,6 +122,10 @@ export const CalendarContextProvider = ({
 		});
 	};
 
+	const getDayAfter = (days: number) => {
+		return new Date(currentFirstDay.getTime() + days * 24 * 60 * 60 * 1000);
+	};
+
 	if (isLoading) return <LoadingSpinner />;
 
 	if (notesData?.error) {
@@ -136,6 +141,7 @@ export const CalendarContextProvider = ({
 				goDayBackward,
 				addNewNote,
 				newNoteTempId: newNoteTempId.current,
+				getDayAfter,
 			}}>
 			{children}
 		</CalendarContext.Provider>
