@@ -56,7 +56,7 @@ const SortTasks = () => {
 				variant='secondary'
 				size='lg'
 				onClick={handleToggleMenu}
-				className={cn('w-full transition', isPending && 'opacity-50')}>
+				className={cn('w-full gap-1 transition', isPending && 'opacity-50')}>
 				<ArrowUpDown className='h-5 w-5' />
 				Order By
 			</Button>
