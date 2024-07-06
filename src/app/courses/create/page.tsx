@@ -23,6 +23,7 @@ import ErrorMessage from '@/components/common/error-message';
 import queryClient from '@/lib/query-client';
 import GoBackButton from '@/components/common/go-back-button';
 import { ArrowLeft } from 'lucide-react';
+import { Course } from '@prisma/client';
 
 const CreateCoursePage = () => {
 	const [isPending, startTransition] = useTransition();
@@ -39,11 +40,14 @@ const CreateCoursePage = () => {
 	const onSubmit = (values: z.infer<typeof CreateCourseSchema>) => {
 		setError('');
 		startTransition(async () => {
-			const res = await createCourse(values);
-			if (res?.error) {
-				setError(res.error);
+			const { error, course } = await createCourse(values);
+			if (error) {
+				setError(error);
 			}
-			await queryClient.invalidateQueries({ queryKey: ['courses'] });
+			if (!course) return;
+			queryClient.setQueryData(['courses'], (prev: { courses: Course[] }) => {
+				return { courses: [...prev.courses, course] };
+			});
 			router.push('/courses');
 		});
 	};
