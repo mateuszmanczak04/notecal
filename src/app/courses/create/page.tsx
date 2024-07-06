@@ -21,6 +21,8 @@ import { z } from 'zod';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
 import queryClient from '@/lib/query-client';
+import GoBackButton from '@/components/common/go-back-button';
+import { ArrowLeft } from 'lucide-react';
 
 const CreateCoursePage = () => {
 	const [isPending, startTransition] = useTransition();
@@ -53,6 +55,10 @@ const CreateCoursePage = () => {
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
 				className='mx-auto mt-4 w-full max-w-[600px] space-y-8'>
+				<GoBackButton variant='secondary'>
+					<ArrowLeft className='h-4 w-4' />
+					Go back
+				</GoBackButton>
 				<h2 className='text-3xl font-bold'>Create a new course</h2>
 				<FormField
 					control={form.control}
