@@ -9,9 +9,14 @@ import { format, isValid } from 'date-fns';
 interface DatePickerProps {
 	onSelect: (newDueDate: Date | null) => void;
 	currentDueDate: Date | null;
+	isPending?: boolean;
 }
 
-const DatePicker: FC<DatePickerProps> = ({ onSelect, currentDueDate }) => {
+const DatePicker: FC<DatePickerProps> = ({
+	isPending,
+	onSelect,
+	currentDueDate,
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -110,7 +115,7 @@ const DatePicker: FC<DatePickerProps> = ({ onSelect, currentDueDate }) => {
 						: 'No due date'
 				}
 				onClick={handleToggleMenu}
-				className={'w-full'}
+				className={cn('w-full', isPending && 'opacity-50')}
 			/>
 			{isOpen && (
 				<div className='absolute left-1/2 top-0 flex h-6 w-full -translate-x-1/2 items-center justify-center gap-2 rounded-md border bg-neutral-100 font-mono'>
