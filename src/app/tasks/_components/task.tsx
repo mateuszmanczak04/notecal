@@ -3,8 +3,6 @@
 import { type Task } from '@prisma/client';
 import { FC, useTransition } from 'react';
 import Course from './course';
-import { EllipsisVertical } from 'lucide-react';
-import { Skeleton } from '@/components/ui/skeleton';
 import DueDate from './due-date';
 import Priority from './priority';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -19,7 +17,7 @@ interface TaskProps {
 const Task: FC<TaskProps> = ({
 	task: { id, title, description, completed, courseId, dueDate, priority },
 }) => {
-	const [isPending, startTransition] = useTransition();
+	const [_, startTransition] = useTransition();
 	const handleToggleTask = (newValue: boolean) => {
 		startTransition(() => {
 			updateTask({ id, completed: newValue });
