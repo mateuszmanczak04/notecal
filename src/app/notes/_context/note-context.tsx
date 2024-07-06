@@ -8,6 +8,8 @@ import { useParams } from 'next/navigation';
 import { ReactNode, createContext, useContext } from 'react';
 import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
+import GoBackButton from '@/components/common/go-back-button';
+import { ArrowLeft } from 'lucide-react';
 
 interface NoteContextProps {
 	currentNote: Note;
@@ -39,18 +41,42 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 	const currentNote = notes?.filter(note => note.id === id)[0];
 	if (!currentNote) {
 		// todo - add home page button
-		return <ErrorMessage>Note not found</ErrorMessage>;
+		return (
+			<>
+				<GoBackButton variant='secondary' className='w-fit'>
+					<ArrowLeft className='h-4 w-4' />
+					Go back
+				</GoBackButton>
+				<ErrorMessage className='mt-2'>Note not found</ErrorMessage>
+			</>
+		);
 	}
 
 	const currentCourse = courses?.find(course => course.id === courseId);
 	if (!currentCourse) {
 		// todo - add home page button
-		return <ErrorMessage>Course not found</ErrorMessage>;
+		return (
+			<>
+				<GoBackButton variant='secondary' className='w-fit'>
+					<ArrowLeft className='h-4 w-4' />
+					Go back
+				</GoBackButton>
+				<ErrorMessage>Course not found</ErrorMessage>
+			</>
+		);
 	}
 
 	if (!tasks) {
 		// todo - add home page button
-		return <ErrorMessage>Tasks not found</ErrorMessage>;
+		return (
+			<>
+				<GoBackButton variant='secondary' className='w-fit'>
+					<ArrowLeft className='h-4 w-4' />
+					Go back
+				</GoBackButton>
+				<ErrorMessage>Tasks not found</ErrorMessage>
+			</>
+		);
 	}
 
 	return (
