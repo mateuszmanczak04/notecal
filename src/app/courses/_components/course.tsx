@@ -3,6 +3,7 @@ import { FC } from 'react';
 import useNotes from '@/app/notes/_hooks/use-notes';
 import NoteLink from './note-link';
 import { Skeleton } from '@/components/ui/skeleton';
+import Link from 'next/link';
 
 interface CourseProps {
 	name: string;
@@ -28,7 +29,15 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 					</div>
 				) : (
 					<div className='mt-2 flex flex-wrap gap-2'>
-						{filteredNotes?.map(note => <NoteLink key={note.id} note={note} />)}
+						{filteredNotes?.length === 0 ? (
+							<Link
+								href={`/notes/${id}`}
+								className='flex h-6 shrink-0 items-center justify-center rounded-md bg-gray-100 px-4 transition hover:bg-gray-200'>
+								Create the first note
+							</Link>
+						) : (
+							filteredNotes?.map(note => <NoteLink key={note.id} note={note} />)
+						)}
 					</div>
 				)}
 			</div>
