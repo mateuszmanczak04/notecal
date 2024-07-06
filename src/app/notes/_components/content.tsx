@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 
-const NoteContent = () => {
+const Content = () => {
 	const { currentNote } = useNoteContext();
 
 	const [content, setContent] = useState(currentNote.content);
@@ -32,4 +32,4 @@ const NoteContent = () => {
 	);
 };
 
-export default NoteContent;
+export default Content;

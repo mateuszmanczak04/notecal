@@ -3,7 +3,7 @@
 import updateTask from '@/app/tasks/_actions/update-task';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
-import { Task } from '@prisma/client';
+import { type Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FC } from 'react';
 import { Card } from '@/components/ui/card';
@@ -12,7 +12,7 @@ interface NoteTaskProps {
 	task: Task;
 }
 
-const NoteTask: FC<NoteTaskProps> = ({
+const Task: FC<NoteTaskProps> = ({
 	task: { id, title, completed, courseId, dueDate, priority, description },
 }) => {
 	const queryClient = useQueryClient();
@@ -81,4 +81,4 @@ const NoteTask: FC<NoteTaskProps> = ({
 	);
 };
 
-export default NoteTask;
+export default Task;

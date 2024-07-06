@@ -1,12 +1,12 @@
 'use client';
 
-import DeleteNoteButton from '@/app/notes/_components/delete-note-button';
-import NoteContent from '@/app/notes/_components/note-content';
-import NoteTasks from '@/app/notes/_components/note-tasks';
-import NoteTeacher from '@/app/notes/_components/note-teacher';
-import NoteTime from '@/app/notes/_components/note-time';
-import NoteTitle from '@/app/notes/_components/note-title';
-import NotesList from '@/app/notes/_components/notes-list';
+import DeleteButton from '@/app/notes/_components/delete-button';
+import Content from '@/app/notes/_components/content';
+import Tasks from '@/app/notes/_components/tasks';
+import Teacher from '@/app/notes/_components/teacher';
+import Time from '@/app/notes/_components/time';
+import Title from '@/app/notes/_components/title';
+import SideNotes from '../../_components/side-notes';
 import useNotes from '@/app/notes/_hooks/use-notes';
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
@@ -28,15 +28,15 @@ const NotePage = () => {
 	return (
 		<div className='mx-auto flex h-full min-h-80 max-w-[1200px] gap-4'>
 			<div className='flex h-full flex-1 flex-col'>
-				<NoteTitle />
-				<NoteTime />
-				<NoteContent />
+				<Title />
+				<Time />
+				<Content />
 			</div>
 			<div className='flex h-full w-48 shrink-0 flex-col gap-8 overflow-y-scroll scrollbar-hide'>
-				<NotesList />
-				<NoteTasks />
-				<NoteTeacher />
-				<DeleteNoteButton />
+				<SideNotes />
+				<Tasks />
+				<Teacher />
+				<DeleteButton />
 			</div>
 		</div>
 	);

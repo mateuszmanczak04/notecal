@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 
-const DeleteNoteButton = () => {
+const DeleteButton = () => {
 	const { currentNote } = useNoteContext();
 	const queryClient = useQueryClient();
 	const [isPending, startTransition] = useTransition();
@@ -56,4 +56,4 @@ const DeleteNoteButton = () => {
 	);
 };
 
-export default DeleteNoteButton;
+export default DeleteButton;
