@@ -37,16 +37,14 @@ const CreateCoursePage = () => {
 	const router = useRouter();
 
 	const onSubmit = (values: z.infer<typeof CreateCourseSchema>) => {
-		console.log(values);
 		setError('');
-		startTransition(() => {
-			createCourse(values).then(res => {
-				if (res?.error) {
-					setError(res.error);
-				}
-				queryClient.invalidateQueries({ queryKey: ['courses'] });
-				router.push('/courses');
-			});
+		startTransition(async () => {
+			const res = await createCourse(values);
+			if (res?.error) {
+				setError(res.error);
+			}
+			await queryClient.invalidateQueries({ queryKey: ['courses'] });
+			router.push('/courses');
 		});
 	};
 
