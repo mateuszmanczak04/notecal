@@ -27,6 +27,7 @@ import Tag from '../_components/tag';
 import GoBackButton from '@/components/common/go-back-button';
 import { ArrowLeft } from 'lucide-react';
 import Course from './course';
+import Priority from './priority';
 
 const CreateTaskPage = () => {
 	const searchParams = useSearchParams();
@@ -70,6 +71,8 @@ const CreateTaskPage = () => {
 					Go back
 				</GoBackButton>
 				<h2 className='text-3xl font-bold'>Create a new task</h2>
+
+				{/* Title: */}
 				<FormField
 					control={form.control}
 					name='title'
@@ -89,6 +92,8 @@ const CreateTaskPage = () => {
 						</FormItem>
 					)}
 				/>
+
+				{/* Description: */}
 				<FormField
 					control={form.control}
 					name='description'
@@ -106,6 +111,7 @@ const CreateTaskPage = () => {
 						</FormItem>
 					)}
 				/>
+
 				{/* Priority: */}
 				<FormField
 					control={form.control}
@@ -114,57 +120,12 @@ const CreateTaskPage = () => {
 						<FormItem>
 							<FormLabel>Priority</FormLabel>
 							<FormControl>
-								<div className='flex gap-2 transition'>
-									<Tag
-										className={cn(
-											'flex-1 bg-green-100 text-green-500 transition-all duration-500 hover:bg-green-200',
-											form.getValues('priority') === 'C' &&
-												'flex-[2] bg-green-500 text-white hover:bg-green-400',
-										)}
-										onClick={() => {
-											if (form.getValues('priority') === 'C') {
-												field.onChange(null);
-											} else {
-												field.onChange('C');
-											}
-										}}
-										text={'Low'}
-									/>
-									<Tag
-										className={cn(
-											'flex-1 bg-yellow-100 text-yellow-500 transition-all duration-500 hover:bg-yellow-200',
-											form.getValues('priority') === 'B' &&
-												'flex-[2] bg-yellow-500 text-white hover:bg-yellow-400',
-										)}
-										onClick={() => {
-											if (form.getValues('priority') === 'B') {
-												field.onChange(null);
-											} else {
-												field.onChange('B');
-											}
-										}}
-										text={'Medium'}
-									/>
-									<Tag
-										className={cn(
-											'flex-1 bg-red-100 text-red-500 transition-all duration-500 hover:bg-red-200',
-											form.getValues('priority') === 'A' &&
-												'flex-[2] bg-red-500 text-white hover:bg-red-400',
-										)}
-										onClick={() => {
-											if (form.getValues('priority') === 'A') {
-												field.onChange(null);
-											} else {
-												field.onChange('A');
-											}
-										}}
-										text={'High'}
-									/>
-								</div>
+								<Priority field={field} />
 							</FormControl>
 						</FormItem>
 					)}
 				/>
+
 				{/* Course: */}
 				<FormField
 					control={form.control}
@@ -181,6 +142,7 @@ const CreateTaskPage = () => {
 						</FormItem>
 					)}
 				/>
+
 				{/* TODO: make it work */}
 				<FormField
 					control={form.control}
