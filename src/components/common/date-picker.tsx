@@ -10,9 +10,15 @@ interface DatePickerProps {
 	onSelect: (newDueDate: Date | null) => void;
 	date: Date | null;
 	isPending?: boolean;
+	className?: string;
 }
 
-const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date }) => {
+const DatePicker: FC<DatePickerProps> = ({
+	isPending,
+	onSelect,
+	date,
+	className,
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -80,7 +86,7 @@ const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date }) => {
 	}, [date]);
 
 	return (
-		<div className='relative' ref={menuRef}>
+		<div className={cn('relative', className)} ref={menuRef}>
 			<Tag
 				text={date ? format(date, 'yyyy-MM-dd - HH:mm') : 'No due date'}
 				onClick={handleToggleMenu}
