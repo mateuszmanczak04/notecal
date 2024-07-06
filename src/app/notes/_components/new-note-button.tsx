@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import queryClient from '@/lib/query-client';
 import { cn } from '@/lib/utils';
 import { Note } from '@prisma/client';
-import { useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import { useTransition } from 'react';
 

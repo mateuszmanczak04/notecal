@@ -3,10 +3,11 @@
 import createNote from '@/app/notes/_actions/create-note';
 import getNotes from '@/app/notes/_actions/get-notes';
 import { Note } from '@prisma/client';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { ReactNode, createContext, useContext, useRef, useState } from 'react';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
+import queryClient from '@/lib/query-client';
 
 interface CalendarContextProps {
 	notes: Note[];
@@ -38,7 +39,6 @@ export const CalendarContextProvider = ({
 		queryKey: ['notes'],
 	});
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
-	const queryClient = useQueryClient();
 
 	const newNoteTempId = useRef<string>('new-note-temp-id');
 

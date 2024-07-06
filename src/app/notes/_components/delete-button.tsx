@@ -3,14 +3,13 @@
 import deleteNote from '@/app/notes/_actions/delete-note';
 import { useNoteContext } from '@/app/notes/_context/note-context';
 import { Button } from '@/components/ui/button';
+import queryClient from '@/lib/query-client';
 import { Note } from '@prisma/client';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 
 const DeleteButton = () => {
 	const { currentNote } = useNoteContext();
-	const queryClient = useQueryClient();
 	const [isPending, startTransition] = useTransition();
 	const router = useRouter();
 	const [isDeleting, setIsDeleting] = useState<boolean>(false);

@@ -4,9 +4,9 @@ import updateTask from '@/app/tasks/_actions/update-task';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { type Task } from '@prisma/client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { FC } from 'react';
-import { Card } from '@/components/ui/card';
+import queryClient from '@/lib/query-client';
 
 interface NoteTaskProps {
 	task: Task;
@@ -15,8 +15,6 @@ interface NoteTaskProps {
 const Task: FC<NoteTaskProps> = ({
 	task: { id, title, completed, courseId, dueDate, priority, description },
 }) => {
-	const queryClient = useQueryClient();
-
 	const { mutate: toggleCompleted } = useMutation({
 		mutationFn: async () => await updateTask({ id, completed: !completed }),
 		onMutate: () => {
