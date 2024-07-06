@@ -1,9 +1,9 @@
 'use client';
 
-import DeleteCourseLink from '@/app/courses/_components/delete-course-link';
 import EditCourseForm from '@/app/courses/_components/edit-course-form';
 import { Button } from '@/components/ui/button';
-import { MoveLeft } from 'lucide-react';
+import { MoveLeft, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 import { redirect, useRouter } from 'next/navigation';
 import { FC } from 'react';
 
@@ -20,7 +20,7 @@ const EditCoursePage: FC<EditCoursePageProps> = ({ searchParams }) => {
 	}
 
 	return (
-		<div className='flex flex-col gap-4'>
+		<div className='mx-auto flex max-w-[600px] flex-col gap-4'>
 			<Button
 				variant='secondary'
 				onClick={() => router.back()}
@@ -29,7 +29,12 @@ const EditCoursePage: FC<EditCoursePageProps> = ({ searchParams }) => {
 				Go back
 			</Button>
 			<EditCourseForm id={id} />
-			<DeleteCourseLink id={id} />
+			<Link
+				href={`/courses/delete?id=${id}`}
+				className='flex h-10 shrink-0 items-center justify-center gap-1 rounded-md bg-red-50 px-4 text-red-500 transition hover:bg-red-100'>
+				<Trash2 className='h-4 w-4' />
+				Delete
+			</Link>
 		</div>
 	);
 };
