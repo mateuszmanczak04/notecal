@@ -110,7 +110,7 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 					{/* Year, month, day: */}
 					<div className='flex overflow-hidden rounded-md'>
 						<input
-							placeholder='2024'
+							placeholder={new Date().getFullYear().toString()}
 							type='text'
 							value={year}
 							onChange={e => setYear(e.target.value)}
@@ -119,7 +119,9 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 						/>
 						/
 						<input
-							placeholder='07'
+							placeholder={(new Date().getMonth() + 1)
+								.toString()
+								.padStart(2, '00')}
 							type='text'
 							value={month}
 							onChange={e => setMonth(e.target.value)}
@@ -127,7 +129,7 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 						/>
 						/
 						<input
-							placeholder='16'
+							placeholder={new Date().getDate().toString().padStart(2, '00')}
 							type='text'
 							value={day}
 							onChange={e => setDay(e.target.value)}
@@ -138,7 +140,7 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 					{/* Hour, minute: */}
 					<div className='flex overflow-hidden rounded-md'>
 						<input
-							placeholder='12'
+							placeholder={new Date().getHours().toString().padStart(2, '00')}
 							type='text'
 							value={hour}
 							onChange={e => setHour(e.target.value)}
@@ -146,7 +148,7 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 						/>
 						:
 						<input
-							placeholder='45'
+							placeholder={new Date().getMinutes().toString().padStart(2, '00')}
 							type='text'
 							value={minute}
 							onChange={e => setMinute(e.target.value)}
