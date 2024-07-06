@@ -38,7 +38,7 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 	// Should be fired always when closing the menu:
 	const handleSaveChanges = () => {
 		const newDate = new Date(
-			parseInt(year || '0'),
+			parseInt(year),
 			parseInt(month || '1') - 1,
 			parseInt(day || '1'),
 			parseInt(hour || '0'),

@@ -1,7 +1,5 @@
 'use client';
 
-import useCourse from '@/app/courses/_hooks/use-course';
-import useCourses from '@/app/courses/_hooks/use-courses';
 import { cn } from '@/lib/utils';
 import { FC, useEffect, useRef, useState, useTransition } from 'react';
 import Tag from '../_components/tag';
@@ -59,7 +57,7 @@ const DueDate: FC<DueDateProps> = ({ onSelect, currentDueDate }) => {
 
 	const handleSubmit = () => {
 		const newDate = new Date(
-			parseInt(year || '0'),
+			parseInt(year),
 			parseInt(month || '1') - 1,
 			parseInt(day || '1'),
 			parseInt(hour || '0'),
