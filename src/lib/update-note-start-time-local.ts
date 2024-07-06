@@ -1,11 +1,7 @@
 import queryClient from '@/lib/query-client';
 import { Note } from '@prisma/client';
 
-const updateNoteStartTimeLocal = (
-	id: string,
-	courseId: string,
-	newStartTime: Date,
-) => {
+const updateNoteStartTimeLocal = (id: string, newStartTime: Date) => {
 	queryClient.setQueryData(['notes'], (old: { notes: Note[] }) => {
 		const oldNotes = old.notes;
 		return {

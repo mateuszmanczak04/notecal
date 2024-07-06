@@ -1,24 +1,39 @@
-import DeleteCourseButton from '@/components/courses/delete-course-button';
-import GoBackButton from '@/components/go-back-button';
-import { MoveLeft } from 'lucide-react';
-import { redirect } from 'next/navigation';
-import { FC } from 'react';
+'use client';
 
-interface pageProps {
-	searchParams?: { [key: string]: string | string[] | undefined };
-}
+import GoBackButton from '@/components/common/go-back-button';
+import { Button } from '@/components/ui/button';
+import { MoveLeft, Trash2 } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useTransition } from 'react';
+import deleteCourse from '../_actions/delete-course';
+import queryClient from '@/lib/query-client';
+import { Course } from '@prisma/client';
 
-const page: FC<pageProps> = ({ searchParams }) => {
-	const id = searchParams?.id;
+const DeleteCoursePage = () => {
+	const searchParams = useSearchParams();
+	const id = searchParams.get('id');
+	const router = useRouter();
+	const [isPending, startTransition] = useTransition();
 
-	if (!id || typeof id !== 'string') {
-		redirect('/courses');
+	if (!id) {
+		router.push('/courses');
+		return;
 	}
 
+	const handleDelete = () => {
+		startTransition(async () => {
+			const res = await deleteCourse({ id });
+			if (res.error) return;
+			queryClient.setQueryData(['courses'], (prev: { courses: Course[] }) => {
+				return { courses: prev.courses.filter(course => course.id !== id) };
+			});
+		});
+	};
+
 	return (
-		<>
+		<div className='mx-auto max-w-[600px]'>
 			<h1 className='text-2xl font-semibold'>Delete Course</h1>
-			<p>
+			<p className='mt-2'>
 				Are you sure you want to delete this course with all it&apos;s tasks and
 				notes?
 			</p>
@@ -29,10 +44,17 @@ const page: FC<pageProps> = ({ searchParams }) => {
 					<MoveLeft className='h-5 w-5' />
 					Cancel
 				</GoBackButton>
-				<DeleteCourseButton id={id} />
+				<Button
+					onClick={handleDelete}
+					variant='destructive'
+					className='w-full flex-1 gap-1'
+					disabled={isPending}>
+					<Trash2 className='h-4 w-4' />
+					Delete Permanently
+				</Button>
 			</div>
-		</>
+		</div>
 	);
 };
 
-export default page;
+export default DeleteCoursePage;

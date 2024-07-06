@@ -1,4 +1,4 @@
-import ErrorMessage from '@/components/error-message';
+import ErrorMessage from '@/components/common/error-message';
 
 const AuthErrorPage = () => {
 	return <ErrorMessage>Auth error occurred</ErrorMessage>;

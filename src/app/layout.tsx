@@ -1,7 +1,7 @@
 import '@/app/globals.css';
 import { auth } from '@/auth';
-import NavAuthenticated from '@/components/nav-authenticated';
-import Providers from '@/components/providers';
+import Navigation from '@/components/common/navigation';
+import Providers from '@/components/common/providers';
 
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
@@ -34,10 +34,16 @@ export default async function RootLayout({
 
 	return (
 		<html lang='en'>
-			<body className={cn(inter.className)}>
+			<body
+				className={cn(
+					inter.className,
+					'flex h-screen min-w-[1200px] overflow-y-hidden overflow-x-scroll bg-gray-100 p-4 text-gray-900',
+				)}>
 				<Providers>
-					<NavAuthenticated />
-					<div className='pt-16'>{children}</div>
+					<Navigation />
+					<div className='h-full flex-1 overflow-y-scroll rounded-xl bg-white p-4 scrollbar-hide'>
+						{children}
+					</div>
 				</Providers>
 			</body>
 		</html>

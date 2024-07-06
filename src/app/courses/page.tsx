@@ -1,13 +1,12 @@
-import CoursesList from '@/components/courses/courses-list';
-import CreateCourseLink from '@/components/courses/create-course-link';
+import Controls from './_components/controls';
+import Courses from './_components/courses';
 
 const page = () => {
 	return (
 		<>
-			<h1 className='text-2xl font-bold'>Your Courses:</h1>
-			<div className='mt-4 flex flex-col gap-4'>
-				<CreateCourseLink />
-				<CoursesList />
+			<div className='mx-auto flex max-w-[800px] flex-col gap-8'>
+				<Controls />
+				<Courses />
 			</div>
 		</>
 	);

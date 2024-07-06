@@ -1,17 +1,23 @@
 'use client';
 
-import { CalendarContextProvider } from '@/components/calendar/calendar-context';
-import CalendarGrid from '@/components/calendar/calendar-grid';
-import CalendarTopBar from '@/components/calendar/calendar-top-bar';
+import Grid from './_components/grid';
+import Header from './_components/header';
+import Notes from './_components/notes';
 
 const CalendarPage = () => {
 	return (
-		<CalendarContextProvider>
-			<div className='w-full min-w-[800px] p-4'>
-				<CalendarTopBar />
-				<CalendarGrid />
+		<>
+			{/* Year and month: */}
+			<Header />
+
+			<div className='relative mt-2'>
+				{/* Just grid: */}
+				<Grid />
+
+				{/* Notes on top: */}
+				<Notes />
 			</div>
-		</CalendarContextProvider>
+		</>
 	);
 };
 

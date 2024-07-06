@@ -29,15 +29,6 @@ export const toggleTask = (id: string) => {
 	});
 };
 
-export const deleteTask = (id: string) => {
-	queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
-		const oldTasks = old.tasks;
-		return {
-			tasks: oldTasks.filter(task => task.id !== id),
-		};
-	});
-};
-
 export const updateTaskPriority = (
 	id: string,
 	priority: TaskPriority | null,
@@ -69,7 +60,7 @@ export const updateTaskTitle = (id: string, title: string) => {
 	});
 };
 
-export const updateTaskCourseId = (id: string, courseId: string) => {
+export const updateTaskCourseId = (id: string, courseId: string | null) => {
 	queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
 		const oldTasks = old.tasks;
 		return {

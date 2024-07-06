@@ -1,6 +1,6 @@
 'use client';
 
-import ErrorMessage from '@/components/error-message';
+import ErrorMessage from '@/components/common/error-message';
 import { Button } from '@/components/ui/button';
 import { FC } from 'react';
 
