@@ -44,15 +44,14 @@ const EditCoursePage = () => {
 
 	const onSubmit = (values: z.infer<typeof UpdateCourseSchema>) => {
 		setError('');
-		startTransition(() => {
-			updateCourse(values).then(res => {
-				if (res?.error) {
-					setError(res.error);
-					return;
-				}
-				queryClient.invalidateQueries({ queryKey: ['courses'] });
-				router.push('/courses');
-			});
+		startTransition(async () => {
+			const res = await updateCourse(values);
+			if (res?.error) {
+				setError(res.error);
+				return;
+			}
+			await queryClient.invalidateQueries({ queryKey: ['courses'] });
+			router.push('/courses');
 		});
 	};
 
