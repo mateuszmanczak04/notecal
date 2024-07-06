@@ -7,8 +7,8 @@ import { z } from 'zod';
 
 const UpdateNoteSchema = z.object({
 	id: z.string().min(1, en.notes.ID_REQUIRED),
-	startTime: z.coerce.date().optional(),
-	endTime: z.coerce.date().optional(),
+	startTime: z.coerce.date().nullable().optional(),
+	endTime: z.coerce.date().nullable().optional(),
 	content: z.string().optional(),
 	courseId: z.string().optional(),
 });
@@ -31,7 +31,11 @@ const updateNote = async (values: z.infer<typeof UpdateNoteSchema>) => {
 
 		await db.note.update({
 			where: { id: data.id, userId: session.user.id },
-			data,
+			data: {
+				...data,
+				startTime: data.startTime || undefined,
+				endTime: data.endTime || undefined,
+			},
 		});
 
 		return { updated: true };
