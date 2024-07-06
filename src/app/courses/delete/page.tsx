@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useTransition } from 'react';
 import deleteCourse from '../_actions/delete-course';
 import queryClient from '@/lib/query-client';
+import { Course } from '@prisma/client';
 
 const DeleteCoursePage = () => {
 	const searchParams = useSearchParams();
@@ -21,8 +22,11 @@ const DeleteCoursePage = () => {
 
 	const handleDelete = () => {
 		startTransition(async () => {
-			await deleteCourse({ id });
-			await queryClient.invalidateQueries({ queryKey: ['courses'] });
+			const res = await deleteCourse({ id });
+			if (res.error) return;
+			queryClient.setQueryData(['courses'], (prev: { courses: Course[] }) => {
+				return { courses: prev.courses.filter(course => course.id !== id) };
+			});
 		});
 	};
 
