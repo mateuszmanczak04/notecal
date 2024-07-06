@@ -2,15 +2,6 @@
 
 import updateSettings from '@/app/settings/_actions/update-settings';
 import { Button } from '@/components/ui/button';
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuLabel,
-	DropdownMenuRadioGroup,
-	DropdownMenuRadioItem,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import sortTasks from '@/lib/sort-tasks';
 import { cn } from '@/lib/utils';
 import { ArrowUpDown } from 'lucide-react';
@@ -108,42 +99,6 @@ const SortTasks = () => {
 				</div>
 			)}
 		</div>
-	);
-
-	return (
-		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
-				<Button
-					variant='secondary'
-					size='lg'
-					className='flex flex-1 items-center gap-1'>
-					<ArrowUpDown className='h-5 w-5' />
-					<span>Order By</span>{' '}
-					{isPending && <BeatLoader className='h-4 w-4' />}
-				</Button>
-			</DropdownMenuTrigger>
-			<DropdownMenuContent>
-				<DropdownMenuLabel>Order by</DropdownMenuLabel>
-				<DropdownMenuSeparator />
-				<DropdownMenuRadioGroup defaultValue='title' onValueChange={handleSort}>
-					<DropdownMenuRadioItem value='title' className='cursor-pointer'>
-						Title
-					</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem value='dueDate' className='cursor-pointer'>
-						Due date
-					</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem value='priority' className='cursor-pointer'>
-						Priority
-					</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem value='createdAt' className='cursor-pointer'>
-						Newest first
-					</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem value='completed' className='cursor-pointer'>
-						Completed first
-					</DropdownMenuRadioItem>
-				</DropdownMenuRadioGroup>
-			</DropdownMenuContent>
-		</DropdownMenu>
 	);
 };
 
