@@ -28,7 +28,7 @@ import GoBackButton from '@/components/common/go-back-button';
 import { ArrowLeft } from 'lucide-react';
 import Course from './course';
 import Priority from './priority';
-import DueDate from './due-date';
+import DatePicker from '../../../components/common/date-picker';
 
 const CreateTaskPage = () => {
 	const searchParams = useSearchParams();
@@ -152,7 +152,7 @@ const CreateTaskPage = () => {
 						<FormItem>
 							<FormLabel>Due date</FormLabel>
 							<FormControl>
-								<DueDate
+								<DatePicker
 									currentDueDate={field.value}
 									onSelect={field.onChange}
 								/>

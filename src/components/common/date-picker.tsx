@@ -2,18 +2,17 @@
 
 import { cn } from '@/lib/utils';
 import { FC, useEffect, useRef, useState, useTransition } from 'react';
-import Tag from '../_components/tag';
+import Tag from '../../app/tasks/_components/tag';
 import { useOnClickOutside } from 'usehooks-ts';
 import { format, isValid } from 'date-fns';
 
-interface DueDateProps {
+interface DatePickerProps {
 	onSelect: (newDueDate: Date | null) => void;
 	currentDueDate: Date | null;
 }
 
-const DueDate: FC<DueDateProps> = ({ onSelect, currentDueDate }) => {
+const DatePicker: FC<DatePickerProps> = ({ onSelect, currentDueDate }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [isPending, startTransition] = useTransition();
 	const menuRef = useRef<HTMLDivElement | null>(null);
 
 	// Inputs
@@ -111,7 +110,7 @@ const DueDate: FC<DueDateProps> = ({ onSelect, currentDueDate }) => {
 						: 'No due date'
 				}
 				onClick={handleToggleMenu}
-				className={cn('w-full transition', isPending && 'opacity-50')}
+				className={'w-full'}
 			/>
 			{isOpen && (
 				<div className='absolute left-1/2 top-0 flex h-6 w-full -translate-x-1/2 items-center justify-center gap-2 rounded-md border bg-neutral-100 font-mono'>
@@ -169,4 +168,4 @@ const DueDate: FC<DueDateProps> = ({ onSelect, currentDueDate }) => {
 	);
 };
 
-export default DueDate;
+export default DatePicker;
