@@ -7,7 +7,7 @@ import { useTransition } from 'react';
 import DatePicker from '@/components/common/date-picker';
 
 const StartTime = () => {
-	const { currentNote, course } = useNoteContext();
+	const { currentNote } = useNoteContext();
 	const [isPending, startTransition] = useTransition();
 
 	const onChange = (newStartTime: Date | null) => {
