@@ -60,7 +60,7 @@ export const updateTaskTitle = (id: string, title: string) => {
 	});
 };
 
-export const updateTaskCourseId = (id: string, courseId: string) => {
+export const updateTaskCourseId = (id: string, courseId: string | null) => {
 	queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
 		const oldTasks = old.tasks;
 		return {
