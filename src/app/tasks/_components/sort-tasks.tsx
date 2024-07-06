@@ -12,6 +12,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import sortTasks from '@/lib/sort-tasks';
+import { ArrowUpDown } from 'lucide-react';
 import { useTransition } from 'react';
 import { BeatLoader } from 'react-spinners';
 
@@ -36,10 +37,12 @@ const SortTasks = () => {
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger
-				className=' w-full select-none border-none bg-primary/5 shadow-none outline-none hover:bg-primary/10 sm:w-40 dark:bg-white/5 dark:hover:bg-white/10'
-				asChild>
-				<Button variant='outline' className='flex items-center gap-1'>
+			<DropdownMenuTrigger asChild>
+				<Button
+					variant='secondary'
+					size='lg'
+					className='flex flex-1 items-center gap-1'>
+					<ArrowUpDown className='h-5 w-5' />
 					<span>Order By</span>{' '}
 					{isPending && <BeatLoader className='h-4 w-4' />}
 				</Button>

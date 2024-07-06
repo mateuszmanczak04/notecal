@@ -9,7 +9,7 @@ interface TaskTitleProps {
 	description: string;
 }
 
-const TaskDescription: FC<TaskTitleProps> = ({
+const Description: FC<TaskTitleProps> = ({
 	id,
 	description: initialDescription,
 }) => {
@@ -55,7 +55,7 @@ const TaskDescription: FC<TaskTitleProps> = ({
 		return (
 			<Input
 				ref={inputRef}
-				className='h-6 rounded-none border-none bg-accent px-0 py-0 text-sm shadow-none outline-none ring-0 focus:border-none focus:outline-none focus-visible:ring-0'
+				className='bg-accent h-6 rounded-none border-none px-0 py-0 text-sm shadow-none outline-none ring-0 focus:border-none focus:outline-none focus-visible:ring-0'
 				value={description}
 				onChange={e => setDescription(e.target.value)}
 				onBlur={onBlur}
@@ -79,11 +79,11 @@ const TaskDescription: FC<TaskTitleProps> = ({
 
 	return (
 		<p
-			className='flex h-6 items-center gap-2 truncate text-sm text-muted-foreground'
+			className='text-muted-foreground flex h-6 items-center gap-2 truncate text-sm'
 			onClick={onFocus}>
 			No description
 		</p>
 	);
 };
 
-export default TaskDescription;
+export default Description;

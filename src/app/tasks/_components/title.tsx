@@ -10,7 +10,7 @@ interface TaskTitleProps {
 	title: string;
 }
 
-const TaskTitle: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
+const Title: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const [title, setTitle] = useState<string>(initialTitle);
 	const [titleBeforeEditing, setTitleBeforeEditing] =
@@ -57,7 +57,7 @@ const TaskTitle: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 		return (
 			<Input
 				ref={inputRef}
-				className='h-8 rounded-none border-none bg-accent px-0 py-0 text-base font-semibold shadow-none outline-none ring-0 focus:border-none focus:outline-none focus-visible:ring-0'
+				className='bg-accent h-8 rounded-none border-none px-0 py-0 text-base font-semibold shadow-none outline-none ring-0 focus:border-none focus:outline-none focus-visible:ring-0'
 				value={title}
 				onChange={e => setTitle(e.target.value)}
 				onBlur={onBlur}
@@ -78,4 +78,4 @@ const TaskTitle: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 	);
 };
 
-export default TaskTitle;
+export default Title;
