@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Calendar, Check, Cog, List } from 'lucide-react';
+import { Calendar, Check, Cog, List, User } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -22,13 +22,14 @@ const Navigation = () => {
 					href='/settings'
 					className='flex items-center justify-between gap-3 rounded-xl bg-white px-4 py-2'>
 					<div className='flex items-center gap-3'>
-						<Image
+						{/* <Image
 							src='/avatar.jpg'
 							width={32}
 							height={32}
 							alt='profile picture'
 							className='h-8 w-8 overflow-hidden rounded-full object-cover'
-						/>
+						/> */}
+						<User className='h-8 w-8 rounded-full bg-neutral-100 p-1' />
 						<div className='overflow-hidden'>
 							<p className='truncate text-sm font-bold'>
 								{session.data.user.email?.split('@')[0]}
