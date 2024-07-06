@@ -16,9 +16,9 @@ const page: FC<pageProps> = ({ searchParams }) => {
 	}
 
 	return (
-		<>
+		<div className='mx-auto max-w-[600px]'>
 			<h1 className='text-2xl font-semibold'>Delete Course</h1>
-			<p>
+			<p className='mt-2'>
 				Are you sure you want to delete this course with all it&apos;s tasks and
 				notes?
 			</p>
@@ -31,7 +31,7 @@ const page: FC<pageProps> = ({ searchParams }) => {
 				</GoBackButton>
 				<DeleteCourseButton id={id} />
 			</div>
-		</>
+		</div>
 	);
 };
 
