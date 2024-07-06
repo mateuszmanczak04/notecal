@@ -80,7 +80,7 @@ const CreateTaskPage = () => {
 					<ArrowLeft className='h-4 w-4' />
 					Go back
 				</GoBackButton>
-				<h2 className='text-3xl font-bold'>Create a new course</h2>
+				<h2 className='text-3xl font-bold'>Create a new task</h2>
 				<FormField
 					control={form.control}
 					name='title'
