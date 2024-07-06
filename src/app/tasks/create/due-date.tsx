@@ -1,42 +1,63 @@
 'use client';
 
-import updateTask from '@/app/tasks/_actions/update-task';
-import { updateTaskDueDate as updateTaskDueDateLocal } from '@/lib/update-task';
-import { format, isValid } from 'date-fns';
-import { FC, useEffect, useRef, useState, useTransition } from 'react';
-import Tag from './tag';
-import { useOnClickOutside } from 'usehooks-ts';
+import useCourse from '@/app/courses/_hooks/use-course';
+import useCourses from '@/app/courses/_hooks/use-courses';
 import { cn } from '@/lib/utils';
+import { FC, useEffect, useRef, useState, useTransition } from 'react';
+import Tag from '../_components/tag';
+import { useOnClickOutside } from 'usehooks-ts';
+import { format, isValid } from 'date-fns';
 
-interface TaskTitleProps {
-	id: string;
-	dueDate: Date | null;
+interface DueDateProps {
+	onSelect: (newDueDate: Date | null) => void;
+	currentDueDate: Date | null;
 }
 
-const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
+const DueDate: FC<DueDateProps> = ({ onSelect, currentDueDate }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const menuRef = useRef<HTMLFormElement | null>(null);
 	const [isPending, startTransition] = useTransition();
+	const menuRef = useRef<HTMLDivElement | null>(null);
 
 	// Inputs
 	const [year, setYear] = useState<string>(
-		dueDate ? dueDate.getFullYear().toString() : '',
+		currentDueDate ? currentDueDate.getFullYear().toString() : '',
 	);
 	const [month, setMonth] = useState<string>(
-		dueDate ? (dueDate.getMonth() + 1).toString().padStart(2, '00') : '',
+		currentDueDate
+			? (currentDueDate.getMonth() + 1).toString().padStart(2, '00')
+			: '',
 	);
 	const [day, setDay] = useState<string>(
-		dueDate ? dueDate.getDate().toString().padStart(2, '00') : '',
+		currentDueDate ? currentDueDate.getDate().toString().padStart(2, '00') : '',
 	);
 	const [hour, setHour] = useState<string>(
-		dueDate ? dueDate.getHours().toString().padStart(2, '00') : '',
+		currentDueDate
+			? currentDueDate.getHours().toString().padStart(2, '00')
+			: '',
 	);
 	const [minute, setMinute] = useState<string>(
-		dueDate ? dueDate.getMinutes().toString().padStart(2, '00') : '',
+		currentDueDate
+			? currentDueDate.getMinutes().toString().padStart(2, '00')
+			: '',
 	);
 
-	// Should be fired always when closing the menu:
-	const handleSaveChanges = () => {
+	const handleCloseMenu = () => {
+		setIsOpen(false);
+	};
+
+	const handleOpenMenu = () => {
+		setIsOpen(true);
+	};
+
+	const handleToggleMenu = () => {
+		if (isOpen) {
+			handleCloseMenu();
+		} else {
+			handleOpenMenu();
+		}
+	};
+
+	const handleSubmit = () => {
 		const newDate = new Date(
 			parseInt(year || '0'),
 			parseInt(month || '1') - 1,
@@ -48,53 +69,54 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 		if (!isValid(newDate)) return;
 
 		// No need to update the date if these are the same:
-		if (dueDate && newDate.getTime() === dueDate.getTime()) return;
+		if (currentDueDate && newDate.getTime() === currentDueDate.getTime())
+			return;
 
-		startTransition(() => {
-			updateTask({ id, dueDate: newDate });
-			updateTaskDueDateLocal(id, newDate);
-		});
-	};
-
-	useEffect(() => {
-		setYear(dueDate ? dueDate.getFullYear().toString() : '');
-		setMonth(
-			dueDate ? (dueDate.getMonth() + 1).toString().padStart(2, '00') : '',
-		);
-		setDay(dueDate ? dueDate.getDate().toString().padStart(2, '00') : '');
-		setHour(dueDate ? dueDate.getHours().toString().padStart(2, '00') : '');
-		setMinute(dueDate ? dueDate.getMinutes().toString().padStart(2, '00') : '');
-	}, [dueDate]);
-
-	const handleCloseMenu = () => {
-		setIsOpen(false);
-	};
-
-	const handleOpenMenu = () => {
-		setIsOpen(true);
+		onSelect(newDate);
 	};
 
 	useOnClickOutside(menuRef, () => {
-		handleSaveChanges();
+		handleSubmit();
 		handleCloseMenu();
 	});
 
+	useEffect(() => {
+		setYear(currentDueDate ? currentDueDate.getFullYear().toString() : '');
+		setMonth(
+			currentDueDate
+				? (currentDueDate.getMonth() + 1).toString().padStart(2, '00')
+				: '',
+		);
+		setDay(
+			currentDueDate
+				? currentDueDate.getDate().toString().padStart(2, '00')
+				: '',
+		);
+		setHour(
+			currentDueDate
+				? currentDueDate.getHours().toString().padStart(2, '00')
+				: '',
+		);
+		setMinute(
+			currentDueDate
+				? currentDueDate.getMinutes().toString().padStart(2, '00')
+				: '',
+		);
+	}, [currentDueDate]);
+
 	return (
-		<div className='relative'>
+		<div className='relative' ref={menuRef}>
 			<Tag
-				text={dueDate ? format(dueDate, 'yyyy-MM-dd - HH:mm') : 'No due date'}
-				onClick={handleOpenMenu}
-				className={cn('w-52 transition', isPending && 'opacity-50')}
+				text={
+					currentDueDate
+						? format(currentDueDate, 'yyyy-MM-dd - HH:mm')
+						: 'No due date'
+				}
+				onClick={handleToggleMenu}
+				className={cn('w-full transition', isPending && 'opacity-50')}
 			/>
 			{isOpen && (
-				<form
-					onSubmit={e => {
-						e.preventDefault();
-						handleSaveChanges();
-						handleCloseMenu();
-					}}
-					ref={menuRef}
-					className='absolute left-1/2 top-0 flex h-6 w-52 -translate-x-1/2 items-center justify-center gap-2 rounded-md bg-neutral-100 font-mono'>
+				<div className='absolute left-1/2 top-0 flex h-6 w-full -translate-x-1/2 items-center justify-center gap-2 rounded-md border bg-neutral-100 font-mono'>
 					{/* Year, month, day: */}
 					<div className='flex overflow-hidden rounded-md'>
 						<input
@@ -143,10 +165,7 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 							className='w-7 bg-neutral-100 px-1 focus:outline-none'
 						/>
 					</div>
-
-					{/* Without this button "onSubmit" doesn't work when clicking enter */}
-					<button type='submit' hidden></button>
-				</form>
+				</div>
 			)}
 		</div>
 	);

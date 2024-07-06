@@ -28,6 +28,7 @@ import GoBackButton from '@/components/common/go-back-button';
 import { ArrowLeft } from 'lucide-react';
 import Course from './course';
 import Priority from './priority';
+import DueDate from './due-date';
 
 const CreateTaskPage = () => {
 	const searchParams = useSearchParams();
@@ -151,10 +152,9 @@ const CreateTaskPage = () => {
 						<FormItem>
 							<FormLabel>Due date</FormLabel>
 							<FormControl>
-								<Tag
-									className='w-full flex-1'
-									onClick={() => field.onChange(new Date())}
-									text={'Computer Science'}
+								<DueDate
+									currentDueDate={field.value}
+									onSelect={field.onChange}
 								/>
 							</FormControl>
 						</FormItem>
