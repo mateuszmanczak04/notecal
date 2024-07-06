@@ -29,6 +29,8 @@ import { ArrowLeft } from 'lucide-react';
 import Course from './course';
 import Priority from './priority';
 import DatePicker from '../../../components/common/date-picker';
+import { Task } from '@prisma/client';
+import Tasks from '@/app/notes/_components/tasks';
 
 const CreateTaskPage = () => {
 	const searchParams = useSearchParams();
@@ -48,17 +50,18 @@ const CreateTaskPage = () => {
 
 	const onSubmit = (values: z.infer<typeof CreateTaskSchema>) => {
 		setError('');
-		startTransition(() => {
-			createTask({
+		startTransition(async () => {
+			const { task, error } = await createTask({
 				...values,
 				courseId: values.courseId,
-			}).then(res => {
-				if (res?.error) {
-					setError(res.error);
-				}
-				queryClient.invalidateQueries({ queryKey: ['tasks'] });
-				router.back();
 			});
+			if (error) {
+				setError(error);
+			}
+			queryClient.setQueryData(['tasks'], (prev: { tasks: Task[] }) => {
+				return { tasks: [...prev.tasks, task] };
+			});
+			router.back();
 		});
 	};
 
