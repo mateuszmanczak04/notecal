@@ -19,7 +19,11 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 	return (
 		<div className='flex border-b border-gray-200 p-4'>
 			<div className='flex flex-1 flex-col'>
-				<p className={`font-bold text-[${color}]`}>{name}</p>
+				<p
+					className='font-bold underline underline-offset-4'
+					style={{ textDecorationColor: color }}>
+					{name}
+				</p>
 				<p className='mt-1'>{teacher}</p>
 				{isPending ? (
 					<div className='mt-2 flex gap-2'>

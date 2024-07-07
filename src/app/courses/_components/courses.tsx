@@ -22,7 +22,7 @@ const Courses = () => {
 
 	return courses.map(course => (
 		<Course
-			color='#7701a9' // color specific to that course (course.colorHex)
+			color={course.color}
 			key={course.id}
 			id={course.id}
 			name={course.name}
