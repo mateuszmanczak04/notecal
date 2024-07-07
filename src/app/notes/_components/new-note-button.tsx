@@ -27,6 +27,7 @@ const NewNoteButton = () => {
 
 	return (
 		<Button
+			style={{ background: course?.color }}
 			onClick={onClick}
 			size='sm'
 			className={cn(
