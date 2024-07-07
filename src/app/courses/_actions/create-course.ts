@@ -13,7 +13,14 @@ const createCourse = async (values: z.infer<typeof CreateCourseSchema>) => {
 		return { error: en.INVALID_DATA };
 	}
 
-	const { name, teacher } = validatedFields.data;
+	const { name, teacher, color } = validatedFields.data;
+
+	const colorRegex = /^#[0-9A-F]{6}$/i;
+	const isValidColor = colorRegex.test(color);
+
+	if (!isValidColor) {
+		return { error: en.courses.INVALID_COLOR };
+	}
 
 	try {
 		const session = await auth();
@@ -27,6 +34,7 @@ const createCourse = async (values: z.infer<typeof CreateCourseSchema>) => {
 				userId: session.user.id,
 				name,
 				teacher,
+				color,
 			},
 		});
 

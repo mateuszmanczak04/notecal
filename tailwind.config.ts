@@ -15,13 +15,6 @@ const config = {
 			colors: {
 				primary: colors.blue,
 				neutral: colors.gray,
-				'accent-1': colors.blue,
-				'accent-2': colors.green,
-				'accent-3': colors.yellow,
-				'accent-4': colors.orange,
-				'accent-5': colors.red,
-				'accent-6': colors.pink,
-				'accent-7': colors.purple,
 				success: colors.green,
 				warning: colors.orange,
 				error: colors.red,

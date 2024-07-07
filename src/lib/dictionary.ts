@@ -9,6 +9,8 @@ export const en = {
 		TEACHER_REQUIRED: 'Teacher name is required',
 		MAX_TEACHER_NAME_LENGTH: 'Maximum teacher name length is 40 characters',
 		NOT_FOUND: 'Course not found',
+		COLOR_REQUIRED: 'Color is required',
+		INVALID_COLOR: 'Invalid color hex',
 	},
 	notes: {
 		ID_REQUIRED: 'Note id is required',

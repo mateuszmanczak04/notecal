@@ -59,7 +59,7 @@ const Title: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 		return (
 			<Input
 				ref={inputRef}
-				className='bg-accent h-8 rounded-none border-none px-0 py-0 text-base font-semibold shadow-none outline-none ring-0 focus:border-none focus:outline-none focus-visible:ring-0'
+				className='h-8 rounded-none border-none px-0 py-0 text-base font-semibold shadow-none outline-none ring-0 focus:border-none focus:outline-none focus-visible:ring-0'
 				value={title}
 				onChange={e => setTitle(e.target.value)}
 				onBlur={handleBlur}

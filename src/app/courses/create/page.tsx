@@ -23,6 +23,17 @@ import ErrorMessage from '@/components/common/error-message';
 import GoBackButton from '@/components/common/go-back-button';
 import { ArrowLeft } from 'lucide-react';
 import LocalCourses from '@/lib/local-courses';
+import { cn } from '@/lib/utils';
+
+const COLORS = [
+	{ description: 'Blue', hex: '#3b82f6' },
+	{ description: 'Green', hex: '#22c55e' },
+	{ description: 'Yellow', hex: '#eab308' },
+	{ description: 'Orange', hex: '#f97316' },
+	{ description: 'Red', hex: '#ef4444' },
+	{ description: 'Pink', hex: '#ec4899' },
+	{ description: 'Purple', hex: '#a855f7' },
+];
 
 const CreateCoursePage = () => {
 	const [isPending, startTransition] = useTransition();
@@ -32,6 +43,7 @@ const CreateCoursePage = () => {
 		defaultValues: {
 			name: '',
 			teacher: '',
+			color: COLORS[0].hex,
 		},
 	});
 	const router = useRouter();
@@ -89,42 +101,44 @@ const CreateCoursePage = () => {
 						</FormItem>
 					)}
 				/>
-				{/* TODO: move existing colors to separate file and make use of them 
-				on the backend */}
-				{/* <FormField
+
+				{/* Color: */}
+				<FormField
 					control={form.control}
 					name='color'
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Accent color</FormLabel>
-							<FormControl> */}
-				<div className='flex gap-2'>
-					<div
-						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-1-500 transition hover:opacity-90'
-						onClick={() => {}}></div>
-					<div
-						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-2-500 transition hover:opacity-90'
-						onClick={() => {}}></div>
-					<div
-						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-3-500 transition hover:opacity-90'
-						onClick={() => {}}></div>
-					<div
-						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-4-500 transition hover:opacity-90'
-						onClick={() => {}}></div>
-					<div
-						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-5-500 transition hover:opacity-90'
-						onClick={() => {}}></div>
-					<div
-						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-6-500 transition hover:opacity-90'
-						onClick={() => {}}></div>
-					<div
-						className='h-9 flex-1 cursor-pointer rounded-md bg-accent-7-500 transition hover:opacity-90'
-						onClick={() => {}}></div>
-				</div>
-				{/* </FormControl>
+							<FormControl>
+								<div className='flex h-12 items-center gap-2'>
+									{COLORS.map(color => {
+										return (
+											<div
+												className={cn(
+													'flex h-9 w-full flex-1 cursor-pointer items-center justify-center rounded-md border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
+													field.value === color.hex &&
+														'h-12 flex-[2] border-white/50',
+												)}
+												style={{ backgroundColor: color.hex }}
+												onClick={() => field.onChange(color.hex)}
+												key={color.hex}>
+												<span
+													className={cn(
+														'rounded-sm bg-neutral-900/50 px-1 leading-5 transition',
+														field.value === color.hex
+															? 'opacity-1'
+															: 'opacity-0',
+													)}>
+													{color.description}
+												</span>
+											</div>
+										);
+									})}
+								</div>
+							</FormControl>
 						</FormItem>
 					)}
-				/> */}
+				/>
 				<Button type='submit' className='w-full'>
 					Create
 				</Button>
