@@ -62,9 +62,9 @@ const Course: FC<TaskCourseProps> = ({ id, courseId }) => {
 				className={cn('transition', isPending && 'opacity-50')}
 			/>
 			{isOpen && (
-				<div className='absolute left-0 top-7 z-20 flex flex-col items-center justify-center rounded-md border bg-white shadow-xl'>
+				<div className='absolute left-0 top-7 z-20 flex flex-col justify-center rounded-md border bg-white shadow-xl'>
 					<button
-						className='flex h-8 w-full cursor-pointer select-none items-center justify-center text-nowrap px-4 transition hover:bg-neutral-100'
+						className='h-8 w-full cursor-pointer select-none text-nowrap px-4 transition hover:bg-neutral-100'
 						onClick={() => {
 							handleSaveChange(null);
 							handleCloseMenu();
@@ -73,7 +73,7 @@ const Course: FC<TaskCourseProps> = ({ id, courseId }) => {
 					</button>
 					{courses?.map(course => (
 						<button
-							className='flex h-8 w-full cursor-pointer select-none items-center justify-center px-4 transition hover:bg-neutral-100'
+							className='h-8 w-full cursor-pointer select-none text-nowrap px-4 transition hover:bg-neutral-100'
 							key={course.id}
 							onClick={() => {
 								handleSaveChange(course.id);
