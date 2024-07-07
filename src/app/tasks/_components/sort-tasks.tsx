@@ -54,14 +54,14 @@ const SortTasks = () => {
 		<div className='relative flex-1' ref={menuRef}>
 			<Button
 				variant='secondary'
-				size='lg'
+				size='sm'
 				onClick={handleToggleMenu}
 				className={cn('w-full gap-1 transition', isPending && 'opacity-50')}>
-				<ArrowUpDown className='h-5 w-5' />
+				<ArrowUpDown className='h-4 w-4' />
 				Order By
 			</Button>
 			{isOpen && (
-				<div className='absolute left-0 top-11 z-20 flex w-full select-none flex-col items-stretch justify-center rounded-md border bg-white shadow-xl'>
+				<div className='absolute left-0 top-8 z-20 flex w-full select-none flex-col items-stretch justify-center rounded-b-md border bg-white shadow-xl'>
 					<div
 						className='flex h-8 cursor-pointer items-center justify-center gap-1 transition hover:bg-neutral-100'
 						onClick={() => {

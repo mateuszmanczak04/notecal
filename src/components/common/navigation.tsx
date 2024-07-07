@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Skeleton } from '../ui/skeleton';
 import { Button } from '../ui/button';
+import SortTasks from '@/app/tasks/_components/sort-tasks';
 
 const Navigation = () => {
 	const pathname = usePathname();
@@ -75,7 +76,7 @@ const Navigation = () => {
 						)}>
 						<List className='h-4 w-4' /> Courses
 					</Link>
-					<div className='mt-8'>
+					<div className='mt-8 flex flex-col gap-2'>
 						{pathname.includes('/courses') && (
 							<Button
 								asChild
@@ -85,6 +86,19 @@ const Navigation = () => {
 									<Plus className='h-6 w-6' /> Create a New Course
 								</Link>
 							</Button>
+						)}
+						{pathname === '/tasks' && (
+							<>
+								<Button
+									asChild
+									size='sm'
+									className='flex w-full items-center justify-center gap-1 font-semibold'>
+									<Link href='/tasks/create'>
+										<Plus className='h-4 w-4' /> Create a New Task
+									</Link>
+								</Button>
+								<SortTasks />
+							</>
 						)}
 					</div>
 				</div>
