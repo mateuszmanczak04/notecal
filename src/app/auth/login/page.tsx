@@ -32,13 +32,13 @@ const LoginPage = () => {
 	});
 
 	const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-		startTransition(() =>
-			login(values).then(res => {
-				if (res?.error) {
-					setError(res.error);
-				}
-			}),
-		);
+		setError('');
+		startTransition(async () => {
+			const res = await login(values);
+			if (res?.error) {
+				setError(res.error);
+			}
+		});
 	};
 
 	return (
@@ -82,7 +82,11 @@ const LoginPage = () => {
 					Don&apos;t have an account yet? Register now
 				</Link>
 				<div className='flex w-full justify-center'>
-					{isPending && <LoadingSpinner />}
+					{isPending && (
+						<>
+							<LoadingSpinner />
+						</>
+					)}
 				</div>
 				{error && <ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>}
 			</form>

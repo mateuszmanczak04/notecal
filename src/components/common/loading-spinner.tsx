@@ -1,6 +1,6 @@
 import { ScaleLoader } from 'react-spinners';
 
-const LoadingSpinner = async () => {
+const LoadingSpinner = () => {
 	return <ScaleLoader className='mx-auto' />;
 };
 
