@@ -12,6 +12,7 @@ const UpdateCourseSchema = z.object({
 		.max(40, {
 			message: en.courses.MAX_TEACHER_NAME_LENGTH,
 		}),
+	color: z.string().min(1, { message: en.courses.COLOR_REQUIRED }),
 });
 
 export default UpdateCourseSchema;

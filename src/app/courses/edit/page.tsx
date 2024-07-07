@@ -24,6 +24,7 @@ import { z } from 'zod';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
 import LocalCourses from '@/lib/local-courses';
+import { cn, COLORS } from '@/lib/utils';
 
 const EditCoursePage = () => {
 	const searchParams = useSearchParams();
@@ -39,6 +40,7 @@ const EditCoursePage = () => {
 			id: course?.id || '',
 			newName: course?.name || '',
 			newTeacher: course?.teacher || '',
+			color: course?.color || COLORS[0].hex,
 		},
 	});
 
@@ -50,6 +52,7 @@ const EditCoursePage = () => {
 			await LocalCourses.update(values.id, {
 				name: values.newName,
 				teacher: values.newTeacher,
+				color: values.color,
 			});
 			router.push('/courses');
 		});
@@ -74,6 +77,7 @@ const EditCoursePage = () => {
 			{/* Form: */}
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2'>
+					{/* Color: */}
 					<FormField
 						control={form.control}
 						name='newName'
@@ -88,6 +92,8 @@ const EditCoursePage = () => {
 							</FormItem>
 						)}
 					/>
+
+					{/* Teacher: */}
 					<FormField
 						control={form.control}
 						name='newTeacher'
@@ -102,9 +108,49 @@ const EditCoursePage = () => {
 							</FormItem>
 						)}
 					/>
+
+					{/* Color: */}
+					<FormField
+						control={form.control}
+						name='color'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Accent color</FormLabel>
+								<FormControl>
+									<div className='flex h-12 items-center gap-2'>
+										{COLORS.map(color => {
+											return (
+												<div
+													className={cn(
+														'flex h-9 w-full flex-1 cursor-pointer items-center justify-center rounded-md border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
+														field.value === color.hex &&
+															'h-12 flex-[2] border-white/50',
+													)}
+													style={{ backgroundColor: color.hex }}
+													onClick={() => field.onChange(color.hex)}
+													key={color.hex}>
+													<span
+														className={cn(
+															'rounded-sm bg-neutral-900/50 px-1 leading-5 transition',
+															field.value === color.hex
+																? 'opacity-1'
+																: 'opacity-0',
+														)}>
+														{color.description}
+													</span>
+												</div>
+											);
+										})}
+									</div>
+								</FormControl>
+							</FormItem>
+						)}
+					/>
+
 					<Button type='submit' className='w-full gap-1'>
-						{isPending && <LoadingSpinner />} Save changes
+						Save changes
 					</Button>
+					{isPending && <LoadingSpinner />}
 					{error && <ErrorMessage>{error}</ErrorMessage>}
 				</form>
 			</Form>

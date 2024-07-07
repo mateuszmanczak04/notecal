@@ -23,17 +23,7 @@ import ErrorMessage from '@/components/common/error-message';
 import GoBackButton from '@/components/common/go-back-button';
 import { ArrowLeft } from 'lucide-react';
 import LocalCourses from '@/lib/local-courses';
-import { cn } from '@/lib/utils';
-
-const COLORS = [
-	{ description: 'Blue', hex: '#3b82f6' },
-	{ description: 'Green', hex: '#22c55e' },
-	{ description: 'Yellow', hex: '#eab308' },
-	{ description: 'Orange', hex: '#f97316' },
-	{ description: 'Red', hex: '#ef4444' },
-	{ description: 'Pink', hex: '#ec4899' },
-	{ description: 'Purple', hex: '#a855f7' },
-];
+import { cn, COLORS } from '@/lib/utils';
 
 const CreateCoursePage = () => {
 	const [isPending, startTransition] = useTransition();
