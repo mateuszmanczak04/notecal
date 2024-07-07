@@ -37,18 +37,24 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 
 	// Should be fired always when closing the menu:
 	const handleSaveChanges = () => {
-		const newDate = new Date(
-			parseInt(year),
-			parseInt(month || '1') - 1,
-			parseInt(day || '1'),
-			parseInt(hour || '0'),
-			parseInt(minute || '0'),
-		);
+		let newDate: Date | null;
 
-		if (!isValid(newDate)) return;
+		if (parseInt(year) === 0 || !year) {
+			newDate = null;
+		} else {
+			newDate = new Date(
+				parseInt(year),
+				parseInt(month || '1') - 1,
+				parseInt(day || '1'),
+				parseInt(hour || '0'),
+				parseInt(minute || '0'),
+			);
 
-		// No need to update the date if these are the same:
-		if (dueDate && newDate.getTime() === dueDate.getTime()) return;
+			if (!isValid(newDate)) return;
+
+			// No need to update the date if these are the same:
+			if (dueDate && newDate.getTime() === dueDate.getTime()) return;
+		}
 
 		startTransition(async () => {
 			// TODO: optimistic updates
