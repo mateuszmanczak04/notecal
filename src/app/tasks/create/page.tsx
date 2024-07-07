@@ -1,6 +1,5 @@
 'use client';
 
-import createCourse from '@/app/courses/_actions/create-course';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -20,18 +19,14 @@ import { z } from 'zod';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
 import CreateTaskSchema from '@/schemas/create-task-schema';
-import { cn } from '@/lib/utils';
 import createTask from '../_actions/create-task';
-import queryClient from '@/lib/query-client';
-import Tag from '../_components/tag';
 import GoBackButton from '@/components/common/go-back-button';
 import { ArrowLeft } from 'lucide-react';
 import Course from './course';
 import Priority from './priority';
 import DatePicker from '../../../components/common/date-picker';
-import { Task } from '@prisma/client';
-import Tasks from '@/app/notes/_components/tasks';
 import LocalTasks from '@/lib/local-tasks';
+import useSettings from '@/app/settings/_hooks/use-settings';
 
 const CreateTaskPage = () => {
 	const searchParams = useSearchParams();
@@ -48,17 +43,25 @@ const CreateTaskPage = () => {
 		},
 	});
 	const router = useRouter();
+	const { settings } = useSettings();
 
 	const onSubmit = (values: z.infer<typeof CreateTaskSchema>) => {
 		setError('');
+
 		startTransition(async () => {
 			// TODO: optimistic updates
 			const { task } = await createTask({
 				...values,
 				courseId: values.courseId,
 			});
+
 			if (!task) return;
 			await LocalTasks.append(task);
+
+			if (settings) {
+				await LocalTasks.sort(settings.orderTasks);
+			}
+
 			router.back();
 		});
 	};
