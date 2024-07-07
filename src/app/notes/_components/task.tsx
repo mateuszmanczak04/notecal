@@ -63,9 +63,15 @@ const Task: FC<NoteTaskProps> = ({
 				)}
 			/>
 			<div>
-				<p className='font-semibold'>{title}</p>
-				{description && <p className='text-sm'>{description}</p>}
-				{dueDate && (
+				<p className={cn('font-semibold', completed && 'line-through')}>
+					{title}
+				</p>
+				{description && (
+					<p className={cn('text-sm', completed && 'line-through')}>
+						{description}
+					</p>
+				)}
+				{dueDate && !completed && (
 					<p className='mt-1 rounded-md text-sm'>{dueDate.toDateString()}</p>
 				)}
 			</div>
