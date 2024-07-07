@@ -1,12 +1,13 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Calendar, Check, Cog, List, User } from 'lucide-react';
+import { Calendar, Check, Cog, List, Plus, User } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Skeleton } from '../ui/skeleton';
+import { Button } from '../ui/button';
 
 const Navigation = () => {
 	const pathname = usePathname();
@@ -74,6 +75,18 @@ const Navigation = () => {
 						)}>
 						<List className='h-4 w-4' /> Courses
 					</Link>
+					<div className='mt-8'>
+						{pathname.includes('/courses') && (
+							<Button
+								asChild
+								size='sm'
+								className='flex w-full items-center justify-center gap-1 font-semibold'>
+								<Link href='/courses/create'>
+									<Plus className='h-6 w-6' /> Create a New Course
+								</Link>
+							</Button>
+						)}
+					</div>
 				</div>
 			</div>
 		</div>
