@@ -6,6 +6,7 @@ import { useCalendarContext } from '../_context/calendar-context';
 import { differenceInCalendarDays } from 'date-fns';
 import Link from 'next/link';
 import { AMOUNT_OF_DAYS } from './grid';
+import useCourse from '@/app/courses/_hooks/use-course';
 
 interface NoteProps {
 	note: Note;
@@ -13,6 +14,7 @@ interface NoteProps {
 
 const Note: FC<NoteProps> = ({ note }) => {
 	const { currentFirstDay } = useCalendarContext();
+	const course = useCourse(note.courseId);
 
 	const getLeftOffset = () => {
 		const daysFromFirstDay = differenceInCalendarDays(
@@ -60,12 +62,15 @@ const Note: FC<NoteProps> = ({ note }) => {
 	return (
 		<Link
 			href={`/notes/${note.courseId}/${note.id}`}
-			className='absolute z-20 select-none rounded-md bg-primary-500 p-4 text-white transition hover:bg-primary-400'
+			className='absolute z-20 select-none rounded-md bg-primary-500 p-4 text-white transition hover:opacity-90'
 			style={{
 				top: getTopOffset(),
 				left: getLeftOffset(),
 				width: getWidth(),
 				height: getHeight(),
+				// If course was not found, the color will be undefined so
+				// the note should have "bg-primary-500" color as in className above
+				backgroundColor: course?.color,
 			}}>
 			{note.content.slice(0, 20)}
 		</Link>
