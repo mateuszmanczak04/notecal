@@ -26,7 +26,7 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		const setting = await db.settings.findUnique({

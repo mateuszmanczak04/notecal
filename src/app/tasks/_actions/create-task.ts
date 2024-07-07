@@ -21,7 +21,7 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 
 		if (!session?.user?.id) {
 			return {
-				error: en.UNAUTHENTICATED,
+				error: en.auth.UNAUTHENTICATED,
 			};
 		}
 

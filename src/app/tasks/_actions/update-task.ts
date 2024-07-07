@@ -33,7 +33,7 @@ const updateTask = async (values: z.infer<typeof UpdateTaskSchema>) => {
 
 		if (!session?.user?.id) {
 			return {
-				error: en.UNAUTHENTICATED,
+				error: en.auth.UNAUTHENTICATED,
 			};
 		}
 

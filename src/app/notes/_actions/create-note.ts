@@ -24,7 +24,7 @@ const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		const newNote = await db.note.create({

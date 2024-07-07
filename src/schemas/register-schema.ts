@@ -1,13 +1,16 @@
+import { en } from '@/lib/dictionary';
 import { z } from 'zod';
 
 const RegisterSchema = z
 	.object({
-		email: z.string().email({ message: 'Email is required.' }),
-		password: z.string().min(6, { message: 'Minimum 6 characters.' }),
-		confirmPassword: z.string().min(6, { message: 'Minimum 6 characters.' }),
+		email: z.string().email({ message: en.auth.EMAIL_REQUIRED }),
+		password: z.string().min(6, { message: en.auth.MIN_PASSWORD_LENGTH }),
+		confirmPassword: z
+			.string()
+			.min(6, { message: en.auth.MIN_PASSWORD_LENGTH }),
 	})
 	.refine(data => data.password === data.confirmPassword, {
-		message: "Passwords don't match.",
+		message: en.auth.PASSWORDS_DO_NOT_MATCH,
 		path: ['confirmPassword'],
 	});
 

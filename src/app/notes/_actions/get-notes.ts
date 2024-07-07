@@ -9,7 +9,7 @@ const getNotes = async () => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		let notes = await db.note.findMany({

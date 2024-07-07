@@ -23,7 +23,7 @@ const deleteCourse = async (values: z.infer<typeof DeleteCourseSchema>) => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		await db.course.delete({ where: { id, userId: session.user.id } });

@@ -20,7 +20,7 @@ const changePassword = async (values: z.infer<typeof ChangePasswordSchema>) => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		const user = await db.user.findUnique({
@@ -29,13 +29,13 @@ const changePassword = async (values: z.infer<typeof ChangePasswordSchema>) => {
 		});
 
 		if (!user || !user.password) {
-			return { error: en.USER_DOES_NOT_EXIST };
+			return { error: en.auth.USER_DOES_NOT_EXIST };
 		}
 
 		const passwordsMatch = await bcrypt.compare(oldPassword, user.password);
 
 		if (!passwordsMatch) {
-			return { error: en.WRONG_PASSWORD };
+			return { error: en.auth.WRONG_PASSWORD };
 		}
 
 		const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -45,7 +45,7 @@ const changePassword = async (values: z.infer<typeof ChangePasswordSchema>) => {
 			data: { password: hashedPassword },
 		});
 
-		return { message: en.PASSWORD_UPDATED };
+		return { message: en.auth.PASSWORD_UPDATED };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

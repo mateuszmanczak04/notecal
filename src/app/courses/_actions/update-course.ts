@@ -19,7 +19,7 @@ const updateCourse = async (values: z.infer<typeof UpdateCourseSchema>) => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		await db.course.update({

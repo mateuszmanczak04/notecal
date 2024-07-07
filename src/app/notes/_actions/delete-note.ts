@@ -20,7 +20,7 @@ const deleteNote = async (values: z.infer<typeof DeleteNoteSchema>) => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		await db.note.delete({

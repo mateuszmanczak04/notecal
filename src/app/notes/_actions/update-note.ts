@@ -26,7 +26,7 @@ const updateNote = async (values: z.infer<typeof UpdateNoteSchema>) => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		await db.note.update({

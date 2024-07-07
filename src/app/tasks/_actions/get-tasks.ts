@@ -9,7 +9,7 @@ const getTasks = async () => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		const userSettings = await db.settings.findUnique({

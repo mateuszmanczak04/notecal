@@ -22,7 +22,7 @@ const deleteTask = async (values: z.infer<typeof DeleteTaskSchema>) => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		const task = await db.task.findUnique({

@@ -9,7 +9,7 @@ const getSettings = async () => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		let settings = await db.settings.findUnique({

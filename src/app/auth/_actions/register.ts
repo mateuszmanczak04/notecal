@@ -17,14 +17,14 @@ const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const { email, password, confirmPassword } = validatedFields.data;
 
 	if (password !== confirmPassword) {
-		return { error: en.PASSWORDS_DO_NOT_MATCH };
+		return { error: en.auth.PASSWORDS_DO_NOT_MATCH };
 	}
 
 	try {
 		// Email taken:
 		const existingUser = await db.user.findUnique({ where: { email } });
 		if (existingUser) {
-			return { error: en.EMAIL_TAKEN };
+			return { error: en.auth.EMAIL_TAKEN };
 		}
 
 		const hashedPassword = await bcrypt.hash(password, 10);

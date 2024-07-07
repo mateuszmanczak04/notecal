@@ -9,7 +9,7 @@ const getCourses = async () => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		const courses = await db.course.findMany({

@@ -1,19 +1,13 @@
 export const en = {
 	SOMETHING_WENT_WRONG: 'Something went wrong, please try again later',
-	PASSWORD_UPDATED: 'Password updated successfully',
-	WRONG_PASSWORD: 'Wrong password',
-	UNAUTHENTICATED: 'Unauthenticated',
-	USER_DOES_NOT_EXIST: 'User does not exist',
 	INVALID_DATA: 'Invalid data',
 	INVALID_CREDENTIALS: 'Invalid credentials',
-	EMAIL_TAKEN: 'Email is already taken',
-	PASSWORDS_DO_NOT_MATCH: 'Passwords do not match',
 	courses: {
 		ID_REQUIRED: 'Course id is required',
 		NAME_REQUIRED: 'Name is required',
-		MAX_NAME_LENGTH: 'Maximum course name length is 30 characters',
+		MAX_NAME_LENGTH: 'Maximum course name length is 60 characters',
 		TEACHER_REQUIRED: 'Teacher name is required',
-		MAX_TEACHER_NAME_LENGTH: 'Maximum teacher name length is 30 characters',
+		MAX_TEACHER_NAME_LENGTH: 'Maximum teacher name length is 40 characters',
 		NOT_FOUND: 'Course not found',
 	},
 	notes: {
@@ -22,5 +16,20 @@ export const en = {
 	tasks: {
 		ID_REQUIRED: 'Task id is required',
 		NOT_FOUND: 'Task not found',
+		TITLE_REQUIRED: 'Title is required',
+		MAX_TITLE_LENGTH: 'Maximum title length is 60 characters',
+		MAX_DESCRIPTION_LENGTH: 'Maximum description length is 300 characters',
+	},
+	auth: {
+		UNAUTHENTICATED: 'Unauthenticated',
+		USER_DOES_NOT_EXIST: 'User does not exist',
+		EMAIL_REQUIRED: 'Email is required',
+		EMAIL_TAKEN: 'Email is already taken',
+		OLD_PASSWORD_REQUIRED: 'Old password is required.',
+		PASSWORD_REQUIRED: 'Password is required',
+		PASSWORD_UPDATED: 'Password updated successfully',
+		MIN_PASSWORD_LENGTH: 'Minimum password length is 6 characters.',
+		PASSWORDS_DO_NOT_MATCH: 'Passwords do not match',
+		WRONG_PASSWORD: 'Wrong password',
 	},
 };

@@ -19,7 +19,7 @@ const createCourse = async (values: z.infer<typeof CreateCourseSchema>) => {
 		const session = await auth();
 
 		if (!session?.user?.id) {
-			return { error: en.UNAUTHENTICATED };
+			return { error: en.auth.UNAUTHENTICATED };
 		}
 
 		const course = await db.course.create({
