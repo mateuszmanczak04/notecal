@@ -38,8 +38,8 @@ const EditCoursePage = () => {
 		resolver: zodResolver(UpdateCourseSchema),
 		defaultValues: {
 			id: course?.id || '',
-			newName: course?.name || '',
-			newTeacher: course?.teacher || '',
+			name: course?.name || '',
+			teacher: course?.teacher || '',
 			color: course?.color || COLORS[0].hex,
 		},
 	});
@@ -50,8 +50,8 @@ const EditCoursePage = () => {
 			// TODO: optimistic updates
 			updateCourse(values);
 			await LocalCourses.update(values.id, {
-				name: values.newName,
-				teacher: values.newTeacher,
+				name: values.name,
+				teacher: values.teacher,
 				color: values.color,
 			});
 			router.push('/courses');
@@ -80,7 +80,7 @@ const EditCoursePage = () => {
 					{/* Color: */}
 					<FormField
 						control={form.control}
-						name='newName'
+						name='name'
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>New name</FormLabel>
@@ -96,7 +96,7 @@ const EditCoursePage = () => {
 					{/* Teacher: */}
 					<FormField
 						control={form.control}
-						name='newTeacher'
+						name='teacher'
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>New teacher</FormLabel>
