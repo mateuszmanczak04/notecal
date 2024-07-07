@@ -1,6 +1,7 @@
 'use client';
 
 import createNote from '@/app/notes/_actions/create-note';
+import LocalNotes from '@/lib/local-notes';
 import queryClient from '@/lib/query-client';
 import { cn } from '@/lib/utils';
 import { Note } from '@prisma/client';
@@ -17,15 +18,14 @@ const CreateFirstNote: FC<CreateFirstNoteProps> = ({ courseId }) => {
 
 	const handleClick = () => {
 		startTransition(async () => {
+			// TODO: optimistic updates
 			const { newNote } = await createNote({
 				courseId,
 				content: 'Empty note',
 				startTime: new Date(),
 			});
 			if (!newNote) return;
-			queryClient.setQueryData(['notes'], (prev: { notes: Note[] }) => {
-				return { notes: [...prev.notes, newNote] };
-			});
+			await LocalNotes.append(newNote);
 			router.push(`/notes/${courseId}/${newNote.id}`);
 		});
 	};

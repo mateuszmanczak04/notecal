@@ -1,12 +1,12 @@
 'use client';
 
 import updateTask from '@/app/tasks/_actions/update-task';
-import { updateTaskDueDate as updateTaskDueDateLocal } from '@/lib/update-task';
 import { format, isValid } from 'date-fns';
 import { FC, useEffect, useRef, useState, useTransition } from 'react';
 import Tag from './tag';
 import { useOnClickOutside } from 'usehooks-ts';
 import { cn } from '@/lib/utils';
+import LocalTasks from '@/lib/local-tasks';
 
 interface TaskTitleProps {
 	id: string;
@@ -50,9 +50,10 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 		// No need to update the date if these are the same:
 		if (dueDate && newDate.getTime() === dueDate.getTime()) return;
 
-		startTransition(() => {
+		startTransition(async () => {
+			// TODO: optimistic updates
 			updateTask({ id, dueDate: newDate });
-			updateTaskDueDateLocal(id, newDate);
+			await LocalTasks.update(id, { dueDate: newDate });
 		});
 	};
 

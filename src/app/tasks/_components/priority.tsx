@@ -1,12 +1,12 @@
 'use client';
 
 import updateTask from '@/app/tasks/_actions/update-task';
-import { updateTaskPriority as updateTaskPriorityLocal } from '@/lib/update-task';
 import { FC, useRef, useState, useTransition } from 'react';
 import Tag from './tag';
 import { useOnClickOutside } from 'usehooks-ts';
 import { cn } from '@/lib/utils';
 import { TaskPriority } from '@prisma/client';
+import LocalTasks from '@/lib/local-tasks';
 
 interface PriorityProps {
 	id: string;
@@ -28,12 +28,13 @@ const Priority: FC<PriorityProps> = ({ id, priority }) => {
 	const handleSaveChange = (newPriority: TaskPriority | null) => {
 		if (priority && newPriority === priority) return;
 
-		startTransition(() => {
+		startTransition(async () => {
+			// TODO: optimistic updates
 			updateTask({
 				id,
 				priority: newPriority,
 			});
-			updateTaskPriorityLocal(id, newPriority);
+			await LocalTasks.update(id, { priority: newPriority });
 		});
 	};
 

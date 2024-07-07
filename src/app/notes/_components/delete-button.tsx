@@ -3,8 +3,7 @@
 import deleteNote from '@/app/notes/_actions/delete-note';
 import { useNoteContext } from '@/app/notes/_context/note-context';
 import { Button } from '@/components/ui/button';
-import queryClient from '@/lib/query-client';
-import { Note } from '@prisma/client';
+import LocalNotes from '@/lib/local-notes';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 
@@ -16,12 +15,10 @@ const DeleteButton = () => {
 
 	const confirmDeletion = () => {
 		startTransition(async () => {
-			await deleteNote({ id: currentNote.id });
-			queryClient.setQueryData(['notes'], (old: { notes: Note[] }) => {
-				return { notes: old.notes.filter(note => note.id !== currentNote.id) };
-			});
+			// TODO: optimistic updates
+			deleteNote({ id: currentNote.id });
+			await LocalNotes.remove(currentNote.id);
 			router.back();
-			router.refresh();
 		});
 	};
 

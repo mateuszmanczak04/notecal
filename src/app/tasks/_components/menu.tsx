@@ -5,8 +5,7 @@ import { EllipsisVertical, Trash2 } from 'lucide-react';
 import { FC, useRef, useState, useTransition } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import deleteTask from '../_actions/delete-task';
-import { Task } from '@prisma/client';
-import queryClient from '@/lib/query-client';
+import LocalTasks from '@/lib/local-tasks';
 
 interface MenuProps {
 	taskId: string;
@@ -28,16 +27,10 @@ const Menu: FC<MenuProps> = ({ taskId }) => {
 	useOnClickOutside(menuRef, handleCloseMenu);
 
 	const handleDelete = () => {
-		startTransition(() => {
+		startTransition(async () => {
+			// TODO: optimistic updates
 			deleteTask({ id: taskId });
-
-			// Delete task also from local cache:
-			queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
-				const oldTasks = old.tasks;
-				return {
-					tasks: oldTasks.filter(task => task.id !== taskId),
-				};
-			});
+			await LocalTasks.remove(taskId);
 		});
 		handleCloseMenu();
 	};

@@ -11,7 +11,9 @@ const Tasks = () => {
 	return (
 		<div className='flex flex-col gap-2'>
 			<p className='text-xl font-semibold'>Tasks:</p>
-			{tasks?.map(task => <Task key={task.id} task={task} />)}
+			{tasks &&
+				tasks.length > 0 &&
+				tasks.map(task => <Task key={task.id} task={task} />)}
 			<Button asChild size='sm'>
 				<Link href={`/tasks/create?courseId=${course.id}`}>
 					+ Create a new task

@@ -6,8 +6,7 @@ import { MoveLeft, Trash2 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTransition } from 'react';
 import deleteCourse from '../_actions/delete-course';
-import queryClient from '@/lib/query-client';
-import { Course } from '@prisma/client';
+import LocalCourses from '@/lib/local-courses';
 
 const DeleteCoursePage = () => {
 	const searchParams = useSearchParams();
@@ -22,11 +21,9 @@ const DeleteCoursePage = () => {
 
 	const handleDelete = () => {
 		startTransition(async () => {
-			const res = await deleteCourse({ id });
-			if (res.error) return;
-			queryClient.setQueryData(['courses'], (prev: { courses: Course[] }) => {
-				return { courses: prev.courses.filter(course => course.id !== id) };
-			});
+			// TODO: optimistic updates
+			deleteCourse({ id });
+			await LocalCourses.remove(id);
 		});
 	};
 

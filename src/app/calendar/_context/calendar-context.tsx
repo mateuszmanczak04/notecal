@@ -1,13 +1,13 @@
 'use client';
 
 import createNote from '@/app/notes/_actions/create-note';
-import getNotes from '@/app/notes/_actions/get-notes';
 import { Note } from '@prisma/client';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { ReactNode, createContext, useContext, useRef, useState } from 'react';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
-import queryClient from '@/lib/query-client';
+import LocalNotes from '@/lib/local-notes';
+import useNotes from '@/app/notes/_hooks/use-notes';
 
 interface CalendarContextProps {
 	notes: Note[];
@@ -34,10 +34,7 @@ export const CalendarContextProvider = ({
 }: {
 	children: ReactNode;
 }) => {
-	const { data: notesData, isLoading } = useQuery({
-		queryFn: async () => await getNotes(),
-		queryKey: ['notes'],
-	});
+	const { notes, error, isPending } = useNotes();
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 
 	const newNoteTempId = useRef<string>('new-note-temp-id');
@@ -52,7 +49,7 @@ export const CalendarContextProvider = ({
 			content: string;
 			startTime: Date;
 		}) => await createNote({ courseId, content, startTime }),
-		onMutate: ({
+		onMutate: async ({
 			courseId,
 			content,
 			startTime,
@@ -64,78 +61,52 @@ export const CalendarContextProvider = ({
 			// create a new note with fake temporary id and update that id
 			// when server returns a response with the new task in "onSuccess"
 			// callback
-			queryClient.setQueryData(['notes'], (prev: { notes: Note[] }) => {
-				return {
-					notes: [
-						...prev.notes,
-						{
-							courseId,
-							content,
-							startTime,
-							// default duration of newly created notes: 1h
-							endTime: new Date(startTime.getTime() + 60 * 60 * 1000),
-							id: newNoteTempId.current,
-						},
-					],
-				};
-			});
+			const newTemporaryNote = {
+				courseId,
+				content,
+				startTime,
+				// TODO: default duration of new notes should be taken from settings
+				endTime: new Date(startTime.getTime() + 60 * 60 * 1000),
+				id: newNoteTempId.current,
+				userId: '',
+			};
+			await LocalNotes.append(newTemporaryNote);
 		},
-		onSuccess(data) {
+		onSuccess: async data => {
 			if (!data.newNote) {
 				return;
 			}
-			const newNote = data.newNote;
-			queryClient.setQueryData(['notes'], (prev: { notes: Note[] }) => {
-				return {
-					notes: prev.notes.map(note =>
-						note.id === newNoteTempId.current
-							? { ...note, id: newNote.id }
-							: note,
-					),
-				};
-			});
+			LocalNotes.update(newNoteTempId.current, data.newNote);
 		},
-		onError() {
-			// simply remove a newly created note without showing any error
-			// todo - display some kind of error message, maybe as a toast or sth.
-			queryClient.setQueryData(['notes'], (prev: { notes: Note[] }) => {
-				return {
-					notes: prev.notes.filter(note => note.id !== newNoteTempId.current),
-				};
-			});
+		onError: async () => {
+			// TODO: display some kind of error message, maybe as a toast
+			await LocalNotes.remove(newNoteTempId.current);
 		},
 	});
 
-	const goDayForward = () => {
-		setCurrentFirstDay(prev => {
-			const newDate = new Date();
-			newDate.setTime(prev.getTime() + 24 * 60 * 60 * 1000);
-			return newDate;
-		});
-	};
-
-	const goDayBackward = () => {
-		setCurrentFirstDay(prev => {
-			const newDate = new Date();
-			newDate.setTime(prev.getTime() - 24 * 60 * 60 * 1000);
-			return newDate;
-		});
-	};
-
+	// Returns a date object which is X days after "currentFirstDay"
 	const getDayAfter = (days: number) => {
 		return new Date(currentFirstDay.getTime() + days * 24 * 60 * 60 * 1000);
 	};
 
-	if (isLoading) return <LoadingSpinner />;
+	const goDayForward = () => {
+		setCurrentFirstDay(getDayAfter(1));
+	};
 
-	if (notesData?.error) {
-		return <ErrorMessage>{notesData?.error}</ErrorMessage>;
+	const goDayBackward = () => {
+		setCurrentFirstDay(getDayAfter(-1));
+	};
+
+	if (isPending || !notes) return <LoadingSpinner />;
+
+	if (error) {
+		return <ErrorMessage>{error.message}</ErrorMessage>;
 	}
 
 	return (
 		<CalendarContext.Provider
 			value={{
-				notes: notesData!.notes!,
+				notes,
 				currentFirstDay,
 				goDayForward,
 				goDayBackward,

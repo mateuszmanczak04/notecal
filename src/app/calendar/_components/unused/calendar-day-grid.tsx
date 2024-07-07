@@ -1,6 +1,6 @@
 'use client';
 
-import { useCalendarContext } from '../_context/calendar-context';
+import { useCalendarContext } from '../../_context/calendar-context';
 import CreateNotePopup from './create-note-popup';
 import { FC, MouseEvent, useRef, useState } from 'react';
 
@@ -9,7 +9,7 @@ interface CalendarDayGridProps {
 }
 
 const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
-	const { notes, addNewNote, newNoteTempId } = useCalendarContext();
+	const { addNewNote } = useCalendarContext();
 	const gridRef = useRef<HTMLDivElement | null>(null);
 	const [startTime, setStartTime] = useState<Date>(new Date());
 
@@ -17,11 +17,6 @@ const CalendarDayGrid: FC<CalendarDayGridProps> = ({ date }) => {
 	const [clickPosition, setClickPosition] = useState<{ x: number; y: number }>({
 		x: 0,
 		y: 0,
-	});
-
-	const todayNotes = notes.filter(note => {
-		const startTime = note.startTime;
-		return startTime.toDateString() === date.toDateString();
 	});
 
 	const cancelNewNoteCreation = () => {

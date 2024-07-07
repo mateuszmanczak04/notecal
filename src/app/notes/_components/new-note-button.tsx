@@ -3,9 +3,8 @@
 import createNote from '@/app/notes/_actions/create-note';
 import { useNoteContext } from '@/app/notes/_context/note-context';
 import { Button } from '@/components/ui/button';
-import queryClient from '@/lib/query-client';
+import LocalNotes from '@/lib/local-notes';
 import { cn } from '@/lib/utils';
-import { Note } from '@prisma/client';
 import { Plus } from 'lucide-react';
 import { useTransition } from 'react';
 
@@ -15,17 +14,14 @@ const NewNoteButton = () => {
 
 	const onClick = () => {
 		startTransition(async () => {
+			// TODO: optimistic updates
 			const { newNote } = await createNote({
 				courseId: course.id!,
 				startTime: new Date(),
 				content: 'Empty note',
 			});
-
-			queryClient.setQueryData(['notes'], (prev: { notes: Note[] }) => {
-				return {
-					notes: [...prev.notes, newNote],
-				};
-			});
+			if (!newNote) return;
+			await LocalNotes.append(newNote);
 		});
 	};
 

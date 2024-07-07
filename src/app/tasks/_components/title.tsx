@@ -2,7 +2,7 @@
 
 import updateTask from '@/app/tasks/_actions/update-task';
 import { Input } from '@/components/ui/input';
-import { updateTaskTitle as updateTaskTitleLocal } from '@/lib/update-task';
+import LocalTasks from '@/lib/local-tasks';
 import { FC, useRef, useState, useTransition } from 'react';
 
 interface TaskTitleProps {
@@ -19,11 +19,13 @@ const Title: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	// todo - add error handling and use of useOptimistic
-	const submit = () => {
+	const handleSubmit = () => {
 		if (title && title.length > 0 && title !== titleBeforeEditing) {
-			startTransition(() => {
+			startTransition(async () => {
+				// TODO: optimistic updates
 				updateTask({ id, title });
-				updateTaskTitleLocal(id, title);
+				await LocalTasks.update(id, { title });
+
 				setIsEditing(false);
 			});
 		} else {
@@ -32,7 +34,7 @@ const Title: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 		}
 	};
 
-	const onFocus = () => {
+	const handleFocus = () => {
 		setIsEditing(true);
 		setTitleBeforeEditing(title);
 		setTimeout(() => {
@@ -43,12 +45,12 @@ const Title: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 	};
 
 	// on clicking outside
-	const onBlur = () => {
+	const handleBlur = () => {
 		setIsEditing(false);
-		submit();
+		handleSubmit();
 	};
 
-	const onCancel = () => {
+	const handleCancel = () => {
 		setTitle(titleBeforeEditing);
 		setIsEditing(false);
 	};
@@ -60,10 +62,10 @@ const Title: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 				className='bg-accent h-8 rounded-none border-none px-0 py-0 text-base font-semibold shadow-none outline-none ring-0 focus:border-none focus:outline-none focus-visible:ring-0'
 				value={title}
 				onChange={e => setTitle(e.target.value)}
-				onBlur={onBlur}
+				onBlur={handleBlur}
 				onKeyDown={e => {
-					if (e.key === 'Enter') submit();
-					else if (e.key === 'Escape') onCancel();
+					if (e.key === 'Enter') handleSubmit();
+					else if (e.key === 'Escape') handleCancel();
 				}}
 			/>
 		);
@@ -72,7 +74,7 @@ const Title: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
 	return (
 		<p
 			className='flex h-8 w-full items-center gap-2 truncate font-semibold'
-			onClick={onFocus}>
+			onClick={handleFocus}>
 			{title}
 		</p>
 	);

@@ -2,7 +2,6 @@ import { FC } from 'react';
 import useNotes from '@/app/notes/_hooks/use-notes';
 import NoteLink from './note-link';
 import { Skeleton } from '@/components/ui/skeleton';
-import Link from 'next/link';
 import Menu from './menu';
 import CreateFirstNote from './create-first-note';
 

@@ -23,8 +23,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
-import queryClient from '@/lib/query-client';
-import { Course } from '@prisma/client';
+import LocalCourses from '@/lib/local-courses';
 
 const EditCoursePage = () => {
 	const searchParams = useSearchParams();
@@ -46,20 +45,11 @@ const EditCoursePage = () => {
 	const onSubmit = (values: z.infer<typeof UpdateCourseSchema>) => {
 		setError('');
 		startTransition(async () => {
-			const res = await updateCourse(values);
-			if (res?.error) {
-				setError(res.error);
-				return;
-			}
-			queryClient.setQueryData(['courses'], (prev: { courses: Course[] }) => {
-				return {
-					courses: prev.courses.map(course => {
-						if (course.id === values.id) {
-							return { ...course, ...values };
-						}
-						return course;
-					}),
-				};
+			// TODO: optimistic updates
+			updateCourse(values);
+			await LocalCourses.update(values.id, {
+				name: values.newName,
+				teacher: values.newTeacher,
 			});
 			router.push('/courses');
 		});

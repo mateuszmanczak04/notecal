@@ -7,9 +7,9 @@ import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
 import useCourses from '@/app/courses/_hooks/use-courses';
 
-interface TasksListProps {}
+interface TasksProps {}
 
-const List: FC<TasksListProps> = ({}) => {
+const Tasks: FC<TasksProps> = ({}) => {
 	const { tasks, isPending, error } = useTasks();
 	const { isPending: isPendingCourses } = useCourses();
 
@@ -25,7 +25,7 @@ const List: FC<TasksListProps> = ({}) => {
 		);
 	}
 
-	return tasks?.map(task => <Task key={task.id} task={task} />);
+	return tasks.map(task => <Task key={task.id} task={task} />);
 };
 
-export default List;
+export default Tasks;

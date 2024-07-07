@@ -8,7 +8,7 @@ const Notes = () => {
 	const { notes } = useCalendarContext();
 
 	const handleClick = (event: MouseEvent) => {
-		console.log('TODO: get mouse position and create a new note');
+		// TODO: get mouse position and create a new note
 	};
 
 	return (

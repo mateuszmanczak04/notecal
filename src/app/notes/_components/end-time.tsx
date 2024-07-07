@@ -2,26 +2,24 @@
 
 import updateNote from '@/app/notes/_actions/update-note';
 import { useNoteContext } from '@/app/notes/_context/note-context';
-import updateNoteEndTimeLocal from '@/lib/update-note-end-time-local';
 import { useTransition } from 'react';
 import DatePicker from '@/components/common/date-picker';
+import LocalNotes from '@/lib/local-notes';
 
 const EndTime = () => {
 	const { currentNote } = useNoteContext();
 	const [isPending, startTransition] = useTransition();
 
 	const onChange = (newEndTime: Date | null) => {
-		console.log(newEndTime);
-
 		if (!newEndTime) return;
 
-		// todo - display a message telling you can't set it like that
-		// and set the input state to state before changes
+		// TODO: display a message telling you can't set it like that
 		if (newEndTime < currentNote.startTime) return;
 
-		startTransition(() => {
+		startTransition(async () => {
+			// TODO: optimistic updates
 			updateNote({ id: currentNote.id, endTime: newEndTime });
-			updateNoteEndTimeLocal(currentNote.id, newEndTime);
+			await LocalNotes.update(currentNote.id, { endTime: newEndTime });
 		});
 	};
 

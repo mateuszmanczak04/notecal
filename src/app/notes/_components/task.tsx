@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { type Task } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
 import { FC } from 'react';
-import queryClient from '@/lib/query-client';
+import LocalTasks from '@/lib/local-tasks';
 
 interface NoteTaskProps {
 	task: Task;
@@ -16,24 +16,18 @@ const Task: FC<NoteTaskProps> = ({
 	task: { id, title, completed, courseId, dueDate, priority, description },
 }) => {
 	const { mutate: toggleCompleted } = useMutation({
-		mutationFn: async () => await updateTask({ id, completed: !completed }),
-		onMutate: () => {
-			queryClient.setQueryData(['tasks'], (prev: { tasks: Task[] }) => {
-				const oldTasks = prev.tasks;
-				const newTasks = oldTasks.map(task => {
-					if (task.id === id) {
-						return { ...task, completed: !task.completed };
-					}
-					return task;
-				});
-				return { tasks: newTasks };
-			});
+		mutationFn: async () => {
+			// TODO: optimistic updates
+			await updateTask({ id, completed: !completed });
+		},
+		onMutate: async () => {
+			await LocalTasks.update(id, { completed: !completed });
 		},
 		onSettled: data => {},
 		onError: err => {},
 	});
 
-	// todo: add functionalities below
+	// TODO: add functionalities below
 	// const { mutate: updateTitle } = useMutation({
 	// 	mutationFn: async () => await updateTaskTitle({ id, newTitle: title }),
 	// });

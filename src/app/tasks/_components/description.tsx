@@ -2,6 +2,7 @@
 
 import updateTask from '@/app/tasks/_actions/update-task';
 import { Input } from '@/components/ui/input';
+import LocalTasks from '@/lib/local-tasks';
 import { FC, useRef, useState, useTransition } from 'react';
 
 interface TaskTitleProps {
@@ -20,17 +21,18 @@ const Description: FC<TaskTitleProps> = ({
 	const [isPending, startTransition] = useTransition();
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	// todo - add error handling and use of useOptimistic
-	const submit = () => {
+	const handleSubmit = () => {
 		if (description !== descriptionBeforeEditing) {
-			startTransition(() => {
+			startTransition(async () => {
+				// TODO: optimistic updates
 				updateTask({ id, description });
+				await LocalTasks.update(id, { description });
 				setIsEditing(false);
 			});
 		}
 	};
 
-	const onFocus = () => {
+	const handleFocus = () => {
 		setIsEditing(true);
 		setDescriptionBeforeEditing(description);
 		setTimeout(() => {
@@ -41,12 +43,12 @@ const Description: FC<TaskTitleProps> = ({
 	};
 
 	// on clicking outside
-	const onBlur = () => {
+	const handleBlur = () => {
 		setIsEditing(false);
-		submit();
+		handleSubmit();
 	};
 
-	const onCancel = () => {
+	const handleCancel = () => {
 		setDescription(descriptionBeforeEditing);
 		setIsEditing(false);
 	};
@@ -58,10 +60,10 @@ const Description: FC<TaskTitleProps> = ({
 				className='bg-accent h-6 rounded-none border-none px-0 py-0 text-sm shadow-none outline-none ring-0 focus:border-none focus:outline-none focus-visible:ring-0'
 				value={description}
 				onChange={e => setDescription(e.target.value)}
-				onBlur={onBlur}
+				onBlur={handleBlur}
 				onKeyDown={e => {
-					if (e.key === 'Enter') submit();
-					else if (e.key === 'Escape') onCancel();
+					if (e.key === 'Enter') handleSubmit();
+					else if (e.key === 'Escape') handleCancel();
 				}}
 			/>
 		);
@@ -71,7 +73,7 @@ const Description: FC<TaskTitleProps> = ({
 		return (
 			<p
 				className='flex h-6 items-center gap-2 truncate text-sm'
-				onClick={onFocus}>
+				onClick={handleFocus}>
 				{description}
 			</p>
 		);
@@ -80,7 +82,7 @@ const Description: FC<TaskTitleProps> = ({
 	return (
 		<p
 			className='text-muted-foreground flex h-6 items-center gap-2 truncate text-sm'
-			onClick={onFocus}>
+			onClick={handleFocus}>
 			No description
 		</p>
 	);

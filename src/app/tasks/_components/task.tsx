@@ -8,8 +8,8 @@ import Priority from './priority';
 import { Checkbox } from '@/components/ui/checkbox';
 import Menu from './menu';
 import updateTask from '../_actions/update-task';
-import queryClient from '@/lib/query-client';
 import { cn } from '@/lib/utils';
+import LocalTasks from '@/lib/local-tasks';
 
 interface TaskProps {
 	task: Task;
@@ -19,24 +19,12 @@ const Task: FC<TaskProps> = ({
 	task: { id, title, description, completed, courseId, dueDate, priority },
 }) => {
 	const [_, startTransition] = useTransition();
-	const handleToggleTask = (newValue: boolean) => {
-		startTransition(() => {
-			updateTask({ id, completed: newValue });
 
-			// Also update local task value:
-			queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
-				const oldTasks = old.tasks;
-				return {
-					tasks: oldTasks.map(task => {
-						if (task.id === id)
-							return {
-								...task,
-								completed: newValue,
-							};
-						return task;
-					}),
-				};
-			});
+	const handleToggleTask = (newValue: boolean) => {
+		startTransition(async () => {
+			// TODO: optimistic updates
+			updateTask({ id, completed: newValue });
+			await LocalTasks.update(id, { completed: newValue });
 		});
 	};
 

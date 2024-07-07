@@ -31,6 +31,7 @@ import Priority from './priority';
 import DatePicker from '../../../components/common/date-picker';
 import { Task } from '@prisma/client';
 import Tasks from '@/app/notes/_components/tasks';
+import LocalTasks from '@/lib/local-tasks';
 
 const CreateTaskPage = () => {
 	const searchParams = useSearchParams();
@@ -51,16 +52,13 @@ const CreateTaskPage = () => {
 	const onSubmit = (values: z.infer<typeof CreateTaskSchema>) => {
 		setError('');
 		startTransition(async () => {
-			const { task, error } = await createTask({
+			// TODO: optimistic updates
+			const { task } = await createTask({
 				...values,
 				courseId: values.courseId,
 			});
-			if (error) {
-				setError(error);
-			}
-			queryClient.setQueryData(['tasks'], (prev: { tasks: Task[] }) => {
-				return { tasks: [...prev.tasks, task] };
-			});
+			if (!task) return;
+			await LocalTasks.append(task);
 			router.back();
 		});
 	};

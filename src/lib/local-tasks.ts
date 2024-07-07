@@ -1,8 +1,37 @@
 import queryClient from '@/lib/query-client';
 import { Task } from '@prisma/client';
 
-const sortTasks = (order: string) => {
-	queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
+const append = async (task: Task) => {
+	await queryClient.setQueryData(['tasks'], (prev: { tasks: Task[] }) => {
+		return {
+			tasks: [...prev.tasks, task],
+		};
+	});
+};
+
+const update = async (id: string, properties: Object) => {
+	await queryClient.setQueryData(['tasks'], (prev: { tasks: Task[] }) => {
+		return {
+			tasks: prev.tasks.map(task => {
+				if (task.id === id) {
+					return { ...task, ...properties };
+				}
+				return task;
+			}),
+		};
+	});
+};
+
+const remove = async (id: string) => {
+	await queryClient.setQueryData(['tasks'], (prev: { tasks: Task[] }) => {
+		return {
+			tasks: prev.tasks.filter(task => task.id !== id),
+		};
+	});
+};
+
+const sort = async (order: string) => {
+	await queryClient.setQueryData(['tasks'], (old: { tasks: Task[] }) => {
 		const oldTasks = old.tasks;
 		if (!oldTasks || oldTasks.length === 0) return { tasks: [] };
 		switch (order) {
@@ -52,4 +81,11 @@ const sortTasks = (order: string) => {
 	});
 };
 
-export default sortTasks;
+const LocalTasks = {
+	append,
+	update,
+	remove,
+	sort,
+};
+
+export default LocalTasks;

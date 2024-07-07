@@ -41,7 +41,6 @@ const Note: FC<NoteProps> = ({ note }) => {
 			note.startTime.getMonth() !== note.endTime.getMonth() ||
 			note.startTime.getDate() !== note.endTime.getDate()
 		) {
-			console.log('100% height');
 			return '100%';
 		}
 		const startHours = note.startTime.getHours();

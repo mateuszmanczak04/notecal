@@ -2,11 +2,10 @@
 
 import updateSettings from '@/app/settings/_actions/update-settings';
 import { Button } from '@/components/ui/button';
-import sortTasks from '@/lib/sort-tasks';
+import LocalTasks from '@/lib/local-tasks';
 import { cn } from '@/lib/utils';
 import { ArrowUpDown } from 'lucide-react';
 import { useRef, useState, useTransition } from 'react';
-import { BeatLoader } from 'react-spinners';
 import { useOnClickOutside } from 'usehooks-ts';
 
 const SortTasks = () => {
@@ -43,9 +42,10 @@ const SortTasks = () => {
 				value === 'priority' ||
 				value === 'completed')
 		) {
-			startTransition(() => {
+			startTransition(async () => {
+				// TODO: optimistic updates
 				updateSettings({ orderTasks: value });
-				sortTasks(value);
+				await LocalTasks.sort(value);
 			});
 		}
 	};
