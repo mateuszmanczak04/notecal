@@ -77,7 +77,7 @@ const Navigation = () => {
 						<List className='h-4 w-4' /> Courses
 					</Link>
 					<div className='mt-8 flex flex-col gap-2'>
-						{pathname.includes('/courses') && (
+						{pathname === '/courses' && (
 							<Button
 								asChild
 								size='sm'
