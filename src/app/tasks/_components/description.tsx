@@ -20,7 +20,7 @@ const Description: FC<DescriptionProps> = ({ id, description, completed }) => {
 		const newDescription = descriptionRef.current.innerText;
 
 		// Don't want to update the same value:
-		if (newDescription === description) return;
+		if (newDescription.trim() === description) return;
 
 		startTransition(async () => {
 			updateTask({ id, description: newDescription }); // TODO: optimistic updates
