@@ -3,7 +3,7 @@
 import { type Note } from '@prisma/client';
 import { FC } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
-import { differenceInCalendarDays } from 'date-fns';
+import { addDays, differenceInCalendarDays, startOfDay } from 'date-fns';
 import Link from 'next/link';
 import { AMOUNT_OF_DAYS } from './grid';
 import useCourse from '@/app/courses/_hooks/use-course';
@@ -16,15 +16,41 @@ const Note: FC<NoteProps> = ({ note }) => {
 	const { currentFirstDay } = useCalendarContext();
 	const course = useCourse(note.courseId);
 
-	const getLeftOffset = () => {
-		const daysFromFirstDay = differenceInCalendarDays(
-			note.startTime,
-			currentFirstDay,
-		);
+	const blockWidth = (100 / AMOUNT_OF_DAYS) * 0.9 + '%';
+
+	const durationInDays =
+		differenceInCalendarDays(note.endTime, note.startTime) + 1;
+
+	// Days which are included in note's duration,
+	// All of them are set to 00:00:
+	const includedDays: Date[] = new Array(durationInDays)
+		.fill(note.startTime)
+		.map((day, index) => {
+			return startOfDay(addDays(day, index));
+		})
+		.filter((day, index) => {
+			// If it's the last day:
+			if (index === durationInDays - 1) {
+				// And note ends at midnight:
+				if (startOfDay(note.endTime).getTime() === note.endTime.getTime()) {
+					// Don't render that last day
+					return null;
+				}
+			}
+			return day;
+		});
+
+	const getLeftOffset = (date: Date) => {
+		const daysFromFirstDay = differenceInCalendarDays(date, currentFirstDay);
 		return daysFromFirstDay * (100 / AMOUNT_OF_DAYS) + '%';
 	};
 
-	const getTopOffset = () => {
+	const getTopOffset = (date: Date) => {
+		// Check if it is not the first day of multi-day note:
+		if (startOfDay(note.startTime).getTime() !== date.getTime()) {
+			return 0;
+		}
+
 		const hours = note.startTime.getHours();
 		const minutes = note.startTime.getMinutes();
 		const totalMinutes = 60 * hours + minutes;
@@ -33,47 +59,75 @@ const Note: FC<NoteProps> = ({ note }) => {
 		return ratio * 100 + '%';
 	};
 
-	const getWidth = () => {
-		return (100 / AMOUNT_OF_DAYS) * 0.9 + '%';
-	};
-
-	const getHeight = () => {
+	const getHeight = (date: Date) => {
+		// Note starts and ends the same day:
 		if (
-			note.startTime.getFullYear() !== note.endTime.getFullYear() ||
-			note.startTime.getMonth() !== note.endTime.getMonth() ||
-			note.startTime.getDate() !== note.endTime.getDate()
+			startOfDay(note.startTime).getTime() ===
+			startOfDay(note.endTime).getTime()
 		) {
-			return '100%';
+			const startHours = note.startTime.getHours();
+			const startMinutes = note.startTime.getMinutes();
+			const totalStartMinutes = 60 * startHours + startMinutes;
+
+			const endHours = note.endTime.getHours();
+			const endMinutes = note.endTime.getMinutes();
+			const totalEndMinutes = 60 * endHours + endMinutes;
+
+			const totalDuration = totalEndMinutes - totalStartMinutes;
+			const totalMinutesIn24h = 24 * 60;
+			const ratio = totalDuration / totalMinutesIn24h;
+			return ratio * 100 + '%';
 		}
-		const startHours = note.startTime.getHours();
-		const startMinutes = note.startTime.getMinutes();
-		const totalStartMinutes = 60 * startHours + startMinutes;
 
-		const endHours = note.endTime.getHours();
-		const endMinutes = note.endTime.getMinutes();
-		const totalEndMinutes = 60 * endHours + endMinutes;
+		// If it's the first day of multi-day note:
+		if (startOfDay(note.startTime).getTime() === date.getTime()) {
+			const startHours = note.startTime.getHours();
+			const startMinutes = note.startTime.getMinutes();
+			const totalStartMinutes = 60 * startHours + startMinutes;
 
-		const totalDuration = totalEndMinutes - totalStartMinutes;
-		const totalMinutesIn24h = 24 * 60;
-		const ratio = totalDuration / totalMinutesIn24h;
-		return ratio * 100 + '%';
+			const totalMinutesIn24h = 24 * 60;
+			const totalDuration = totalMinutesIn24h - totalStartMinutes;
+			const ratio = totalDuration / totalMinutesIn24h;
+			return ratio * 100 + '%';
+		}
+
+		// It's the last day of multi-day note:
+		if (startOfDay(note.endTime).getTime() === date.getTime()) {
+			const endHours = note.endTime.getHours();
+			const endMinutes = note.endTime.getMinutes();
+
+			const totalEndMinutes = 60 * endHours + endMinutes;
+			const totalMinutesIn24h = 24 * 60;
+			const ratio = totalEndMinutes / totalMinutesIn24h;
+			return ratio * 100 + '%';
+		}
+
+		// It's the day in the middle of >=3 day long notes
+		// (can't be last and first):
+		return '100%';
 	};
 
 	return (
-		<Link
-			href={`/notes/${note.courseId}/${note.id}`}
-			className='absolute z-20 select-none rounded-md bg-primary-500 p-4 text-white transition hover:opacity-90'
-			style={{
-				top: getTopOffset(),
-				left: getLeftOffset(),
-				width: getWidth(),
-				height: getHeight(),
-				// If course was not found, the color will be undefined so
-				// the note should have "bg-primary-500" color as in className above
-				backgroundColor: course?.color,
-			}}>
-			{note.content.slice(0, 20)}
-		</Link>
+		<>
+			{includedDays?.length > 0 &&
+				includedDays.map(day => (
+					<Link
+						key={day.toString()}
+						href={`/notes/${note.courseId}/${note.id}`}
+						className='absolute z-20 select-none rounded-xl bg-primary-500 p-4 text-white transition hover:opacity-90'
+						style={{
+							top: getTopOffset(day),
+							left: getLeftOffset(day),
+							width: blockWidth,
+							height: getHeight(day),
+							// If course was not found, the color will be undefined so
+							// the note should have "bg-primary-500" color as in className above
+							backgroundColor: course?.color,
+						}}>
+						{note.content.slice(0, 20)}
+					</Link>
+				))}
+		</>
 	);
 };
 
