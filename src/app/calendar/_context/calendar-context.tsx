@@ -76,7 +76,7 @@ export const CalendarContextProvider = ({
 			if (!data.newNote) {
 				return;
 			}
-			LocalNotes.update(newNoteTempId.current, data.newNote);
+			await LocalNotes.update(newNoteTempId.current, data.newNote);
 		},
 		onError: async () => {
 			// TODO: display some kind of error message, maybe as a toast
