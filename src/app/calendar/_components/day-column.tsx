@@ -22,15 +22,11 @@ const DayColumn: FC<DayColumnProps> = ({ date, isLast = false }) => {
 
 	return (
 		<div className='flex-1'>
-			<div
-				className={cn(
-					'flex h-calendar-header items-center justify-center border-b border-r border-t font-semibold text-gray-500',
-					isLast && 'rounded-tr-xl',
-				)}>
+			<div className='flex h-calendar-header items-center justify-center border-b border-r border-t font-semibold text-gray-500'>
 				{dayOfTheWeek} {dayOfTheMonth}
 			</div>
 			{new Array(24).fill(0).map((_, index) => (
-				<Row key={index} isLast={index === 23} />
+				<Row key={index} isLast={index === 23 && isLast} />
 			))}
 		</div>
 	);
