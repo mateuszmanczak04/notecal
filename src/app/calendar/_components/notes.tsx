@@ -6,9 +6,11 @@ import Note from './note';
 import { AMOUNT_OF_DAYS } from './grid';
 import { addDays } from 'date-fns';
 import CoursePicker from './course-picker';
+import useNotes from '@/app/notes/_hooks/use-notes';
 
 const Notes = () => {
-	const { notes, currentFirstDay } = useCalendarContext();
+	const { notes } = useNotes();
+	const { currentFirstDay } = useCalendarContext();
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const [clickX, setClickX] = useState(0);
@@ -59,9 +61,7 @@ const Notes = () => {
 			ref={containerRef}
 			className='absolute left-20 top-10 h-[calc(100%-40px)] w-[calc(100%-80px)] cursor-crosshair overflow-hidden'
 			onClick={handleClick}>
-			{notes.map(note => (
-				<Note key={note.id} note={note} />
-			))}
+			{notes?.map(note => <Note key={note.id} note={note} />)}
 			{selectedTime && (
 				<CoursePicker
 					time={selectedTime}

@@ -10,7 +10,6 @@ import LocalNotes from '@/lib/local-notes';
 import useNotes from '@/app/notes/_hooks/use-notes';
 
 interface CalendarContextProps {
-	notes: Note[];
 	currentFirstDay: Date;
 	goDayForward: () => void;
 	goDayBackward: () => void;
@@ -34,7 +33,6 @@ export const CalendarContextProvider = ({
 }: {
 	children: ReactNode;
 }) => {
-	const { notes, error, isPending } = useNotes();
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 
 	const newNoteTempId = useRef<string>('new-note-temp-id');
@@ -97,16 +95,9 @@ export const CalendarContextProvider = ({
 		setCurrentFirstDay(getDayAfter(-1));
 	};
 
-	if (isPending || !notes) return <LoadingSpinner />;
-
-	if (error) {
-		return <ErrorMessage>{error.message}</ErrorMessage>;
-	}
-
 	return (
 		<CalendarContext.Provider
 			value={{
-				notes,
 				currentFirstDay,
 				goDayForward,
 				goDayBackward,
