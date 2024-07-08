@@ -11,6 +11,7 @@ import updateTask from '../_actions/update-task';
 import { cn } from '@/lib/utils';
 import LocalTasks from '@/lib/local-tasks';
 import Title from './title';
+import Description from './description';
 
 interface TaskProps {
 	task: Task;
@@ -34,9 +35,7 @@ const Task: FC<TaskProps> = ({
 			<Checkbox checked={completed} onCheckedChange={handleToggleTask} />
 			<div className='flex flex-1 flex-col'>
 				<Title id={id} title={title} completed={completed} />
-				<p className={cn('mt-1 text-neutral-500', completed && 'line-through')}>
-					{description}
-				</p>
+				<Description id={id} description={description} completed={completed} />
 				{!completed && (
 					<div className='mt-2 flex gap-2'>
 						<Course id={id} courseId={courseId} />
