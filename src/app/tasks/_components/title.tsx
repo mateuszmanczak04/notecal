@@ -1,13 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, {
-	FC,
-	useCallback,
-	useEffect,
-	useRef,
-	useTransition,
-} from 'react';
+import React, { FC, useEffect, useRef, useTransition } from 'react';
 import updateTask from '../_actions/update-task';
 import LocalTasks from '@/lib/local-tasks';
 
@@ -26,11 +20,11 @@ const Title: FC<TitleProps> = ({ id, title, completed }) => {
 		const newTitle = titleRef.current.innerText;
 
 		// Don't want to update the same value:
-		if (newTitle === title) return;
+		if (newTitle.trim() === title) return;
 
 		startTransition(async () => {
 			updateTask({ id, title: newTitle }); // TODO: optimistic updates
-			await LocalTasks.update(id, { title: newTitle });
+			await LocalTasks.update(id, { title: newTitle.trim() });
 		});
 	};
 
