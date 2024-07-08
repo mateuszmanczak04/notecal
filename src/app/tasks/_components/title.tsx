@@ -1,82 +1,71 @@
 'use client';
 
-import updateTask from '@/app/tasks/_actions/update-task';
-import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import React, {
+	FC,
+	useCallback,
+	useEffect,
+	useRef,
+	useTransition,
+} from 'react';
+import updateTask from '../_actions/update-task';
 import LocalTasks from '@/lib/local-tasks';
-import { FC, useRef, useState, useTransition } from 'react';
 
-interface TaskTitleProps {
+interface TitleProps {
 	id: string;
 	title: string;
+	completed: boolean;
 }
 
-const Title: FC<TaskTitleProps> = ({ id, title: initialTitle }) => {
-	const [isEditing, setIsEditing] = useState<boolean>(false);
-	const [title, setTitle] = useState<string>(initialTitle);
-	const [titleBeforeEditing, setTitleBeforeEditing] =
-		useState<string>(initialTitle);
+const Title: FC<TitleProps> = ({ id, title, completed }) => {
+	const titleRef = useRef<HTMLParagraphElement | null>(null);
 	const [isPending, startTransition] = useTransition();
-	const inputRef = useRef<HTMLInputElement>(null);
 
-	// todo - add error handling and use of useOptimistic
 	const handleSubmit = () => {
-		if (title && title.length > 0 && title !== titleBeforeEditing) {
-			startTransition(async () => {
-				// TODO: optimistic updates
-				updateTask({ id, title });
-				await LocalTasks.update(id, { title });
+		if (!titleRef.current) return;
+		const newTitle = titleRef.current.innerText;
 
-				setIsEditing(false);
-			});
-		} else {
-			setTitle(titleBeforeEditing);
-			setIsEditing(false);
+		// Don't want to update the same value:
+		if (newTitle === title) return;
+
+		startTransition(async () => {
+			updateTask({ id, title: newTitle }); // TODO: optimistic updates
+			await LocalTasks.update(id, { title: newTitle });
+		});
+	};
+
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLParagraphElement>) => {
+		if (!titleRef.current) return;
+
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			titleRef.current.blur(); // It automatically triggers handleSubmit()
+			return;
+		}
+		if (event.key === 'Escape') {
+			titleRef.current.innerText = title;
+			titleRef.current.blur();
+			return;
 		}
 	};
 
-	const handleFocus = () => {
-		setIsEditing(true);
-		setTitleBeforeEditing(title);
-		setTimeout(() => {
-			if (inputRef?.current) {
-				inputRef.current.focus();
-			}
-		}, 10);
-	};
-
-	// on clicking outside
-	const handleBlur = () => {
-		setIsEditing(false);
-		handleSubmit();
-	};
-
-	const handleCancel = () => {
-		setTitle(titleBeforeEditing);
-		setIsEditing(false);
-	};
-
-	if (isEditing) {
-		return (
-			<Input
-				ref={inputRef}
-				className='h-8 rounded-none border-none px-0 py-0 text-base font-semibold shadow-none outline-none ring-0 focus:border-none focus:outline-none focus-visible:ring-0'
-				value={title}
-				onChange={e => setTitle(e.target.value)}
-				onBlur={handleBlur}
-				onKeyDown={e => {
-					if (e.key === 'Enter') handleSubmit();
-					else if (e.key === 'Escape') handleCancel();
-				}}
-			/>
-		);
-	}
+	// Set initial title:
+	useEffect(() => {
+		if (!titleRef.current) return;
+		titleRef.current.innerText = title;
+	}, [title]);
 
 	return (
 		<p
-			className='flex h-8 w-full items-center gap-2 truncate font-semibold'
-			onClick={handleFocus}>
-			{title}
-		</p>
+			ref={titleRef}
+			contentEditable={!completed}
+			className={cn(
+				'font-bold outline-none',
+				completed && 'line-through',
+				isPending && 'opacity-50',
+			)}
+			onKeyDown={handleKeyDown}
+			onBlur={handleSubmit}></p>
 	);
 };
 
