@@ -61,7 +61,8 @@ const Description: FC<DescriptionProps> = ({ id, description, completed }) => {
 				isPending && 'opacity-50',
 			)}
 			onKeyDown={handleKeyDown}
-			onBlur={handleSubmit}></p>
+			onBlur={handleSubmit}
+			spellCheck={false}></p>
 	);
 };
 

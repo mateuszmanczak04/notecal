@@ -59,7 +59,8 @@ const Title: FC<TitleProps> = ({ id, title, completed }) => {
 				isPending && 'opacity-50',
 			)}
 			onKeyDown={handleKeyDown}
-			onBlur={handleSubmit}></p>
+			onBlur={handleSubmit}
+			spellCheck={false}></p>
 	);
 };
 
