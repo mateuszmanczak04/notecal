@@ -1,11 +1,10 @@
 'use client';
 
 import { type Note } from '@prisma/client';
-import { FC } from 'react';
+import { DragEventHandler, FC, useRef } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import { addDays, differenceInCalendarDays, startOfDay } from 'date-fns';
 import Link from 'next/link';
-import { AMOUNT_OF_DAYS } from './grid';
 import useCourse from '@/app/courses/_hooks/use-course';
 
 interface NoteProps {
@@ -13,10 +12,12 @@ interface NoteProps {
 }
 
 const Note: FC<NoteProps> = ({ note }) => {
-	const { currentFirstDay } = useCalendarContext();
+	const { currentFirstDay, daysToSee } = useCalendarContext();
 	const course = useCourse(note.courseId);
+	const topEdgeRef = useRef<HTMLDivElement | null>(null);
+	const bottomEdgeRef = useRef<HTMLDivElement | null>(null);
 
-	const blockWidth = (100 / AMOUNT_OF_DAYS) * 0.9 + '%';
+	const blockWidth = (100 / daysToSee) * 0.9 + '%';
 
 	const durationInDays =
 		differenceInCalendarDays(note.endTime, note.startTime) + 1;
@@ -42,7 +43,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 
 	const getLeftOffset = (date: Date) => {
 		const daysFromFirstDay = differenceInCalendarDays(date, currentFirstDay);
-		return daysFromFirstDay * (100 / AMOUNT_OF_DAYS) + '%';
+		return daysFromFirstDay * (100 / daysToSee) + '%';
 	};
 
 	const getTopOffset = (date: Date) => {
@@ -107,6 +108,21 @@ const Note: FC<NoteProps> = ({ note }) => {
 		return '100%';
 	};
 
+	// Dragging edges
+	const handleDragStartTop = (event: React.DragEvent) => {
+		console.log('drag start');
+	};
+
+	const handleDragTop = (event: React.DragEvent) => {
+		console.log('drag');
+		const x = event.clientX;
+		console.log(x);
+	};
+
+	const handleDragEndTop = (event: React.DragEvent) => {
+		console.log('drag end');
+	};
+
 	return (
 		<>
 			{includedDays?.length > 0 &&
@@ -124,7 +140,17 @@ const Note: FC<NoteProps> = ({ note }) => {
 							// the note should have "bg-primary-500" color as in className above
 							backgroundColor: course?.color,
 						}}>
+						<div
+							draggable
+							onDragStart={handleDragStartTop}
+							onDragEnd={handleDragEndTop}
+							onDrag={handleDragTop}
+							ref={topEdgeRef}
+							className='absolute inset-x-0 top-0 h-2 cursor-ns-resize bg-black'></div>
 						{note.content.slice(0, 20)}
+						<div
+							ref={bottomEdgeRef}
+							className='absolute inset-x-0 bottom-0 h-2 cursor-ns-resize bg-black'></div>
 					</Link>
 				))}
 		</>
