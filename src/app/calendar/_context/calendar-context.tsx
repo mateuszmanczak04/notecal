@@ -1,13 +1,16 @@
 'use client';
 
 import createNote from '@/app/notes/_actions/create-note';
-import { Note } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
-import { ReactNode, createContext, useContext, useRef, useState } from 'react';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import ErrorMessage from '@/components/common/error-message';
+import {
+	MutableRefObject,
+	ReactNode,
+	createContext,
+	useContext,
+	useRef,
+	useState,
+} from 'react';
 import LocalNotes from '@/lib/local-notes';
-import useNotes from '@/app/notes/_hooks/use-notes';
 
 interface CalendarContextProps {
 	currentFirstDay: Date;
@@ -24,6 +27,7 @@ interface CalendarContextProps {
 	}) => void;
 	newNoteTempId: string | null;
 	getDayAfter: (days: number) => Date;
+	containerRef: MutableRefObject<HTMLDivElement | null>;
 }
 
 const CalendarContext = createContext({} as CalendarContextProps);
@@ -34,6 +38,7 @@ export const CalendarContextProvider = ({
 	children: ReactNode;
 }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
+	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const newNoteTempId = useRef<string>('new-note-temp-id');
 
@@ -98,6 +103,7 @@ export const CalendarContextProvider = ({
 	return (
 		<CalendarContext.Provider
 			value={{
+				containerRef,
 				currentFirstDay,
 				goDayForward,
 				goDayBackward,

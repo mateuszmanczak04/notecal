@@ -2,9 +2,10 @@
 
 import { Button } from '@/components/ui/button';
 import useCourses from '@/app/courses/_hooks/use-courses';
-import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import LoadingSpinner from '@/components/common/loading-spinner';
+import { useCalendarContext } from '../../_context/calendar-context';
 
 interface CreateNotePopupProps {
 	clickX: number;
@@ -24,7 +25,7 @@ const CreateNotePopup: FC<CreateNotePopupProps> = ({
 		isPending: isCoursesPending,
 		error: coursesError,
 	} = useCourses();
-	const containerRef = useRef<HTMLDivElement | null>(null);
+	const { containerRef } = useCalendarContext();
 	const [displayX, setDisplayX] = useState<number>(clickX);
 	const [displayY, setDisplayY] = useState<number>(clickY);
 
@@ -43,7 +44,7 @@ const CreateNotePopup: FC<CreateNotePopupProps> = ({
 		if (screenHeight - clickY < containerHeight) {
 			setDisplayY(clickY - containerHeight);
 		}
-	}, [clickX, clickY]);
+	}, [clickX, clickY, containerRef]);
 
 	useOnClickOutside(containerRef, hide);
 
@@ -63,7 +64,7 @@ const CreateNotePopup: FC<CreateNotePopupProps> = ({
 	return (
 		<div
 			ref={containerRef}
-			className='fixed z-50 flex flex-col gap-2 rounded-md bg-accent p-2 shadow-xl'
+			className='bg-accent fixed z-50 flex flex-col gap-2 rounded-md p-2 shadow-xl'
 			style={{ left: `${displayX}px`, top: `${displayY}px` }}>
 			{isCoursesPending && <LoadingSpinner />}
 			{coursesError && <p className='text-red-500'>{coursesError.message}</p>}

@@ -10,8 +10,7 @@ import useNotes from '@/app/notes/_hooks/use-notes';
 
 const Notes = () => {
 	const { notes } = useNotes();
-	const { currentFirstDay } = useCalendarContext();
-	const containerRef = useRef<HTMLDivElement | null>(null);
+	const { currentFirstDay, containerRef } = useCalendarContext();
 
 	const [clickX, setClickX] = useState(0);
 	const [clickY, setClickY] = useState(0);
