@@ -35,6 +35,7 @@ const Notes = () => {
 		// TODO: hard coded sizes and position - should be based
 		// on tailwind variables describing grid sizes
 		<div
+			onDragOver={e => e.preventDefault()}
 			ref={containerRef}
 			className='absolute left-20 top-10 h-[calc(100%-40px)] w-[calc(100%-80px)] cursor-crosshair overflow-hidden'
 			onClick={handleClick}>
