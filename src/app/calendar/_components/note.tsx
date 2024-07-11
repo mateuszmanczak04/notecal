@@ -61,6 +61,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 			});
 	};
 
+	// Get positions and sizes of each day block:
 	const getLeftOffset = (date: Date) => {
 		const daysFromFirstDay = differenceInCalendarDays(date, currentFirstDay);
 		return daysFromFirstDay * (100 / daysToSee) + '%';
@@ -252,33 +253,25 @@ const Note: FC<NoteProps> = ({ note }) => {
 						)}
 					</Link>
 				))}
+
 			{/* Visible only if user is currently dragging and edge: */}
 			{isDragging &&
 				tempDays?.length > 0 &&
-				tempDays.map(day => {
-					const startTime =
-						tempStartTime < tempEndTime ? tempStartTime : tempEndTime;
-					const endTime =
-						tempStartTime < tempEndTime ? tempEndTime : tempStartTime;
-
-					return (
-						<div
-							onDragOver={e => e.preventDefault()}
-							key={day.toString()}
-							className='pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl bg-primary-500 text-white transition'
-							style={{
-								top: getTopOffset(day, startTime),
-								left: getLeftOffset(day),
-								width: blockWidth,
-								height: getHeight(day, startTime, endTime),
-								// If course was not found, the color will be undefined so
-								// the note should have "bg-primary-500" color as in className above
-								backgroundColor: course?.color,
-							}}>
-							<p className='m-4'>{note.content.slice(0, 20)}</p>
-						</div>
-					);
-				})}
+				tempDays.map(day => (
+					<div
+						onDragOver={e => e.preventDefault()}
+						key={day.toString()}
+						className='pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl bg-primary-500 text-white transition'
+						style={{
+							top: getTopOffset(day, tempStartTime),
+							left: getLeftOffset(day),
+							width: blockWidth,
+							height: getHeight(day, tempStartTime, tempEndTime),
+							backgroundColor: course?.color,
+						}}>
+						<p className='m-4'>{note.content.slice(0, 20)}</p>
+					</div>
+				))}
 		</>
 	);
 };
