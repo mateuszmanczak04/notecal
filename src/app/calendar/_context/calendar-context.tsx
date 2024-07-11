@@ -119,6 +119,7 @@ export const CalendarContextProvider = ({
 	};
 
 	// Get day and time from relative position:
+	// Round to 15 minutes
 	const getDateFromPosition = (x: number, y: number) => {
 		if (!containerRef.current) return null;
 
