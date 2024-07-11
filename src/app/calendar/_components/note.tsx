@@ -204,6 +204,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 		});
 	};
 
+	// TODO: swap start and end time with onDrag
 	// TODO: fix - showing 1 rect too much after setting time to midnight
 	// TODO: handle escape key for cancelling
 
@@ -239,7 +240,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 								ref={topEdgeRef}
 								className='absolute inset-x-0 top-0 h-2 cursor-ns-resize opacity-0'></div>
 						)}
-						<p className='m-4'>{note.content.slice(0, 20)}</p>
+						{!isDragging && <p className='m-4'>{note.content.slice(0, 20)}</p>}
 						{index === includedDays.length - 1 && (
 							<div
 								draggable
@@ -260,14 +261,11 @@ const Note: FC<NoteProps> = ({ note }) => {
 					const endTime =
 						tempStartTime < tempEndTime ? tempEndTime : tempStartTime;
 
-					if (tempEndTime <= tempStartTime) {
-						console.log(tempStartTime < tempEndTime);
-					}
 					return (
 						<div
 							onDragOver={e => e.preventDefault()}
 							key={day.toString()}
-							className='pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl bg-primary-500 p-4 text-white transition'
+							className='pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl bg-primary-500 text-white transition'
 							style={{
 								top: getTopOffset(day, startTime),
 								left: getLeftOffset(day),
@@ -277,7 +275,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 								// the note should have "bg-primary-500" color as in className above
 								backgroundColor: course?.color,
 							}}>
-							{note.content.slice(0, 20)}
+							<p className='m-4'>{note.content.slice(0, 20)}</p>
 						</div>
 					);
 				})}
