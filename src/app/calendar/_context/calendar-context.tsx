@@ -1,13 +1,17 @@
 'use client';
 
 import createNote from '@/app/notes/_actions/create-note';
-import { Note } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
-import { ReactNode, createContext, useContext, useRef, useState } from 'react';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import ErrorMessage from '@/components/common/error-message';
+import {
+	MutableRefObject,
+	ReactNode,
+	createContext,
+	useContext,
+	useRef,
+	useState,
+} from 'react';
 import LocalNotes from '@/lib/local-notes';
-import useNotes from '@/app/notes/_hooks/use-notes';
+import { addDays } from 'date-fns';
 
 interface CalendarContextProps {
 	currentFirstDay: Date;
@@ -24,6 +28,13 @@ interface CalendarContextProps {
 	}) => void;
 	newNoteTempId: string | null;
 	getDayAfter: (days: number) => Date;
+	containerRef: MutableRefObject<HTMLDivElement | null>;
+	getRelativePosition: (
+		x: number,
+		y: number,
+	) => { x: number | null; y: number | null };
+	getDateFromPosition: (x: number, y: number) => Date | null;
+	daysToSee: number;
 }
 
 const CalendarContext = createContext({} as CalendarContextProps);
@@ -34,6 +45,8 @@ export const CalendarContextProvider = ({
 	children: ReactNode;
 }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
+	const containerRef = useRef<HTMLDivElement | null>(null);
+	const [daysToSee, setDaysToSee] = useState(5); // TODO: get it from user settings
 
 	const newNoteTempId = useRef<string>('new-note-temp-id');
 
@@ -95,15 +108,53 @@ export const CalendarContextProvider = ({
 		setCurrentFirstDay(getDayAfter(-1));
 	};
 
+	// Returns a relative position to grid container:
+	const getRelativePosition = (x: number, y: number) => {
+		if (!containerRef.current) return { x: null, y: null };
+
+		const { x: containerLeft, y: containerTop } =
+			containerRef.current.getBoundingClientRect();
+
+		return { x: x - containerLeft, y: y - containerTop };
+	};
+
+	// Get day and time from relative position:
+	// Round to 15 minutes
+	const getDateFromPosition = (x: number, y: number) => {
+		if (!containerRef.current) return null;
+
+		const { width, height } = containerRef.current.getBoundingClientRect();
+
+		// Get day (YYYY-MM-DD):
+		const columnWidth = width / daysToSee;
+		const dayIndex = Math.floor(x / columnWidth);
+		const time = addDays(currentFirstDay, dayIndex);
+
+		// Get time (HH:MM):
+		const yRatio = y / height;
+		const minutesIn24H = 24 * 60;
+		const totalMinutes = yRatio * minutesIn24H;
+		const hours = Math.floor(totalMinutes / 60);
+		const minutes = Math.round((totalMinutes % 60) / 15) * 15;
+		time.setHours(hours);
+		time.setMinutes(minutes);
+
+		return time;
+	};
+
 	return (
 		<CalendarContext.Provider
 			value={{
+				containerRef,
 				currentFirstDay,
 				goDayForward,
 				goDayBackward,
 				addNewNote,
 				newNoteTempId: newNoteTempId.current,
 				getDayAfter,
+				getRelativePosition,
+				getDateFromPosition,
+				daysToSee,
 			}}>
 			{children}
 		</CalendarContext.Provider>
