@@ -1,19 +1,13 @@
 'use client';
 
-import { type Note } from '@prisma/client';
-import { FC, useEffect, useRef, useState, useTransition } from 'react';
-import { useCalendarContext } from '../_context/calendar-context';
-import {
-	addDays,
-	differenceInCalendarDays,
-	format,
-	startOfDay,
-} from 'date-fns';
-import Link from 'next/link';
 import useCourse from '@/app/courses/_hooks/use-course';
 import updateNote from '@/app/notes/_actions/update-note';
 import LocalNotes from '@/lib/local-notes';
-import EndTime from '@/app/notes/_components/end-time';
+import { type Note } from '@prisma/client';
+import { addDays, differenceInCalendarDays, startOfDay } from 'date-fns';
+import Link from 'next/link';
+import { FC, useEffect, useRef, useState, useTransition } from 'react';
+import { useCalendarContext } from '../_context/calendar-context';
 
 interface NoteProps {
 	note: Note;
@@ -31,10 +25,6 @@ const Note: FC<NoteProps> = ({ note }) => {
 
 	const topEdgeRef = useRef<HTMLDivElement | null>(null);
 	const bottomEdgeRef = useRef<HTMLDivElement | null>(null);
-	// const [startTime, setStartTime] = useState(note.startTime);
-	// const [endTime, setEndTime] = useState(note.endTime);
-	// const [prevStartTime, setPrevStartTime] = useState(note.startTime);
-	// const [prevEndTime, setPrevEndTime] = useState(note.endTime);
 
 	// Used to display a visual overlay for dragged note:
 	const [isDragging, setIsDragging] = useState(false);
@@ -46,12 +36,12 @@ const Note: FC<NoteProps> = ({ note }) => {
 		setDragEndTime(note.endTime);
 	}, [note.startTime, note.endTime]);
 
-	// 90% of day column width:
+	// Width of a note block - 90% of day column width:
 	const blockWidth = (100 / daysToSee) * 0.9 + '%';
 
 	// Returns days which are included in note's duration,
 	// All of them are set to 00:00:
-	const getIncludedDays = (startTime: Date, endTime: Date) => {
+	const getDaysBetween = (startTime: Date, endTime: Date) => {
 		const durationInDays = differenceInCalendarDays(endTime, startTime) + 1;
 		return new Array(durationInDays)
 			.fill(startTime)
@@ -138,7 +128,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 	};
 
 	// Dragging top edge
-	const handleDragStartTop = async (event: React.DragEvent) => {
+	const handleDragStartTop = async () => {
 		setIsDragging(true);
 	};
 
@@ -175,7 +165,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 	};
 
 	// Dragging bottom edge
-	const handleDragStartBottom = (event: React.DragEvent) => {
+	const handleDragStartBottom = () => {
 		setIsDragging(true);
 	};
 
@@ -211,11 +201,10 @@ const Note: FC<NoteProps> = ({ note }) => {
 		});
 	};
 
-	// TODO: swap start and end time with onDrag (in progress)
 	// TODO: fix - showing 1 rect too much after setting time to midnight
 	// TODO: handle escape key for cancelling
 
-	const includedDays = getIncludedDays(note.startTime, note.endTime);
+	const noteDays = getDaysBetween(note.startTime, note.endTime);
 
 	// Used to swap them if start is greater than end
 	const [actualDragStartTime, actualDragEndTime] = [
@@ -224,14 +213,16 @@ const Note: FC<NoteProps> = ({ note }) => {
 	];
 
 	// Days displayed on top when dragging
-	const dragDays = getIncludedDays(actualDragStartTime, actualDragEndTime);
+	const dragDays = getDaysBetween(actualDragStartTime, actualDragEndTime);
 
 	return (
 		<>
 			{/* TODO: replace this with better indicator: */}
 			{isPending && <p>Pending...</p>}
-			{includedDays?.length > 0 &&
-				includedDays.map((day, index) => (
+
+			{/* Primary notes: */}
+			{noteDays?.length > 0 &&
+				noteDays.map((day, index) => (
 					<Link
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
@@ -247,6 +238,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 							// the note should have "bg-primary-500" color as in className above
 							backgroundColor: course?.color,
 						}}>
+						{/* Top edge to drag: */}
 						{index === 0 && (
 							<div
 								draggable
@@ -256,8 +248,12 @@ const Note: FC<NoteProps> = ({ note }) => {
 								ref={topEdgeRef}
 								className='absolute inset-x-0 top-0 h-2 cursor-ns-resize opacity-0'></div>
 						)}
+
+						{/* Title: */}
 						{!isDragging && <p className='m-4'>{note.content.slice(0, 20)}</p>}
-						{index === includedDays.length - 1 && (
+
+						{/* Bottom edge to drag: */}
+						{index === noteDays.length - 1 && (
 							<div
 								draggable
 								onDragStart={handleDragStartBottom}
@@ -269,7 +265,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 					</Link>
 				))}
 
-			{/* Visible only if user is currently dragging and edge: */}
+			{/* Drag notes, visible only if user is currently dragging edge: */}
 			{isDragging &&
 				dragDays?.length > 0 &&
 				dragDays.map(day => (
