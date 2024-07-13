@@ -1,14 +1,19 @@
 'use client';
 
 import { type Note } from '@prisma/client';
-import { DragEventHandler, FC, useRef, useState, useTransition } from 'react';
+import { FC, useEffect, useRef, useState, useTransition } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
-import { addDays, differenceInCalendarDays, startOfDay } from 'date-fns';
+import {
+	addDays,
+	differenceInCalendarDays,
+	format,
+	startOfDay,
+} from 'date-fns';
 import Link from 'next/link';
 import useCourse from '@/app/courses/_hooks/use-course';
-import queryClient from '@/lib/query-client';
 import updateNote from '@/app/notes/_actions/update-note';
 import LocalNotes from '@/lib/local-notes';
+import EndTime from '@/app/notes/_components/end-time';
 
 interface NoteProps {
 	note: Note;
@@ -33,8 +38,13 @@ const Note: FC<NoteProps> = ({ note }) => {
 
 	// Used to display a visual overlay for dragged note:
 	const [isDragging, setIsDragging] = useState(false);
-	const [tempStartTime, setTempStartTime] = useState(note.startTime);
-	const [tempEndTime, setTempEndTime] = useState(note.endTime);
+	const [dragStartTime, setDragStartTime] = useState(note.startTime);
+	const [dragEndTime, setDragEndTime] = useState(note.endTime);
+
+	useEffect(() => {
+		setDragStartTime(note.startTime);
+		setDragEndTime(note.endTime);
+	}, [note.startTime, note.endTime]);
 
 	// 90% of day column width:
 	const blockWidth = (100 / daysToSee) * 0.9 + '%';
@@ -139,9 +149,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 		const newStartTime = getDateFromPosition(x, y);
 		if (!newStartTime) return;
 
-		if (newStartTime < note.endTime) {
-			setTempStartTime(newStartTime);
-		}
+		setDragStartTime(newStartTime);
 	};
 
 	const handleDragEndTop = (event: React.DragEvent) => {
@@ -178,9 +186,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 		const newEndTime = getDateFromPosition(x, y);
 		if (!newEndTime) return;
 
-		if (newEndTime > note.startTime) {
-			setTempEndTime(newEndTime);
-		}
+		setDragEndTime(newEndTime);
 	};
 
 	const handleDragEndBottom = (event: React.DragEvent) => {
@@ -205,12 +211,20 @@ const Note: FC<NoteProps> = ({ note }) => {
 		});
 	};
 
-	// TODO: swap start and end time with onDrag
+	// TODO: swap start and end time with onDrag (in progress)
 	// TODO: fix - showing 1 rect too much after setting time to midnight
 	// TODO: handle escape key for cancelling
 
 	const includedDays = getIncludedDays(note.startTime, note.endTime);
-	const tempDays = getIncludedDays(tempStartTime, tempEndTime);
+
+	// Used to swap them if start is greater than end
+	const [actualDragStartTime, actualDragEndTime] = [
+		dragStartTime < dragEndTime ? dragStartTime : dragEndTime,
+		dragStartTime < dragEndTime ? dragEndTime : dragStartTime,
+	];
+
+	// Days displayed on top when dragging
+	const dragDays = getIncludedDays(actualDragStartTime, actualDragEndTime);
 
 	return (
 		<>
@@ -222,12 +236,13 @@ const Note: FC<NoteProps> = ({ note }) => {
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
 						href={`/notes/${note.courseId}/${note.id}`}
-						className='absolute z-20 min-h-4 select-none overflow-hidden rounded-xl bg-primary-500 text-white transition hover:opacity-75'
+						className='absolute z-20 min-h-4 select-none overflow-hidden rounded-xl bg-primary-500 text-white transition hover:opacity-90'
 						style={{
 							top: getTopOffset(day, note.startTime),
 							left: getLeftOffset(day),
 							width: blockWidth,
 							height: getHeight(day, note.startTime, note.endTime),
+							opacity: (isDragging && 0.5) || 1,
 							// If course was not found, the color will be undefined so
 							// the note should have "bg-primary-500" color as in className above
 							backgroundColor: course?.color,
@@ -256,17 +271,17 @@ const Note: FC<NoteProps> = ({ note }) => {
 
 			{/* Visible only if user is currently dragging and edge: */}
 			{isDragging &&
-				tempDays?.length > 0 &&
-				tempDays.map(day => (
+				dragDays?.length > 0 &&
+				dragDays.map(day => (
 					<div
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
 						className='pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl bg-primary-500 text-white transition'
 						style={{
-							top: getTopOffset(day, tempStartTime),
+							top: getTopOffset(day, actualDragStartTime),
 							left: getLeftOffset(day),
 							width: blockWidth,
-							height: getHeight(day, tempStartTime, tempEndTime),
+							height: getHeight(day, actualDragStartTime, actualDragEndTime),
 							backgroundColor: course?.color,
 						}}>
 						<p className='m-4'>{note.content.slice(0, 20)}</p>
