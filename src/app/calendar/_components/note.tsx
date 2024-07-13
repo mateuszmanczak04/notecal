@@ -4,7 +4,13 @@ import useCourse from '@/app/courses/_hooks/use-course';
 import updateNote from '@/app/notes/_actions/update-note';
 import LocalNotes from '@/lib/local-notes';
 import { type Note } from '@prisma/client';
-import { addDays, differenceInCalendarDays, startOfDay } from 'date-fns';
+import {
+	addDays,
+	addMilliseconds,
+	differenceInCalendarDays,
+	format,
+	startOfDay,
+} from 'date-fns';
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState, useTransition } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
@@ -22,6 +28,9 @@ const Note: FC<NoteProps> = ({ note }) => {
 	} = useCalendarContext();
 	const [isPending, startTransition] = useTransition();
 	const course = useCourse(note.courseId);
+
+	const noteRef = useRef<(HTMLAnchorElement | null)[]>([]);
+	const initialDragDate = useRef<Date | null>(null);
 
 	const topEdgeRef = useRef<HTMLDivElement | null>(null);
 	const bottomEdgeRef = useRef<HTMLDivElement | null>(null);
@@ -60,10 +69,6 @@ const Note: FC<NoteProps> = ({ note }) => {
 				return day;
 			});
 
-		// console.log(
-		// 	'days between:\n',
-		// 	result.map(d => format(d, 'dd, HH:mm')).join('\n'),
-		// );
 		return result;
 	};
 
@@ -133,12 +138,63 @@ const Note: FC<NoteProps> = ({ note }) => {
 		return '100%';
 	};
 
-	// Dragging top edge
-	const handleDragStartTop = async () => {
+	// Dragging entire note
+	const handleDragStart = (event: React.DragEvent) => {
+		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
+
+		const { x, y } = getRelativePosition(event.clientX, event.clientY);
+		if (x === null || y === null) return;
+
+		const date = getDateFromPosition(x, y);
+		if (!date) return;
+
+		initialDragDate.current = date;
 		setIsDragging(true);
 	};
 
-	const handleDragTop = async (event: React.DragEvent) => {
+	const handleDrag = (event: React.DragEvent) => {
+		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
+
+		if (!initialDragDate.current) return;
+
+		const { x, y } = getRelativePosition(event.clientX, event.clientY);
+		if (x === null || y === null) return;
+
+		const date = getDateFromPosition(x, y);
+		if (!date) return;
+
+		const dateDifference = date.getTime() - initialDragDate.current.getTime();
+
+		const newStartTime = addMilliseconds(note.startTime, dateDifference);
+		const newEndTime = addMilliseconds(note.endTime, dateDifference);
+
+		setDragStartTime(newStartTime);
+		setDragEndTime(newEndTime);
+	};
+
+	const handleDragEnd = (event: React.DragEvent) => {
+		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
+
+		startTransition(async () => {
+			setIsDragging(false);
+			await LocalNotes.update(note.id, {
+				startTime: dragStartTime,
+				endTime: dragEndTime,
+			});
+			await updateNote({
+				id: note.id,
+				startTime: dragStartTime,
+				endTime: dragEndTime,
+			});
+		});
+	};
+
+	// Dragging top edge
+	const handleDragStartTop = () => {
+		setIsDragging(true);
+	};
+
+	const handleDragTop = (event: React.DragEvent) => {
 		const { x, y } = getRelativePosition(event.clientX, event.clientY);
 		if (x === null || y === null) return; // TODO: display error message
 
@@ -175,7 +231,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 		setIsDragging(true);
 	};
 
-	const handleDragBottom = async (event: React.DragEvent) => {
+	const handleDragBottom = (event: React.DragEvent) => {
 		const { x, y } = getRelativePosition(event.clientX, event.clientY);
 		if (x === null || y === null) return; // TODO: display error message
 
@@ -230,6 +286,11 @@ const Note: FC<NoteProps> = ({ note }) => {
 			{noteDays?.length > 0 &&
 				noteDays.map((day, index) => (
 					<Link
+						draggable
+						onDragStart={handleDragStart}
+						onDrag={handleDrag}
+						onDragEnd={handleDragEnd}
+						ref={el => (noteRef.current![index] = el)}
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
 						href={`/notes/${note.courseId}/${note.id}`}
