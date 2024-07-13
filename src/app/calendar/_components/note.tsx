@@ -43,7 +43,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 	// All of them are set to 00:00:
 	const getDaysBetween = (startTime: Date, endTime: Date) => {
 		const durationInDays = differenceInCalendarDays(endTime, startTime) + 1;
-		return new Array(durationInDays)
+		const result = new Array(durationInDays)
 			.fill(startTime)
 			.map((day, index) => {
 				return startOfDay(addDays(day, index));
@@ -52,13 +52,19 @@ const Note: FC<NoteProps> = ({ note }) => {
 				// If it's the last day:
 				if (index === durationInDays - 1) {
 					// And note ends at midnight:
-					if (startOfDay(endTime).getTime() === endTime.getTime()) {
+					if (endTime.getHours() === 0 && endTime.getMinutes() === 0) {
 						// Don't render that last day
 						return null;
 					}
 				}
 				return day;
 			});
+
+		// console.log(
+		// 	'days between:\n',
+		// 	result.map(d => format(d, 'dd, HH:mm')).join('\n'),
+		// );
+		return result;
 	};
 
 	// Get positions and sizes of each day block:
