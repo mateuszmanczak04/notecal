@@ -34,4 +34,7 @@ export const en = {
 		PASSWORDS_DO_NOT_MATCH: 'Passwords do not match',
 		WRONG_PASSWORD: 'Wrong password',
 	},
+	settings: {
+		DEFAULT_NOTE_DURATION_REQUIRED: 'Default note duration is required',
+	},
 };

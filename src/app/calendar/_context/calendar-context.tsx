@@ -12,6 +12,7 @@ import {
 } from 'react';
 import LocalNotes from '@/lib/local-notes';
 import { addDays } from 'date-fns';
+import useSettings from '@/app/settings/_hooks/use-settings';
 
 interface CalendarContextProps {
 	currentFirstDay: Date;
@@ -47,6 +48,7 @@ export const CalendarContextProvider = ({
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const [daysToSee, setDaysToSee] = useState(5); // TODO: get it from user settings
+	const { settings } = useSettings();
 
 	const newNoteTempId = useRef<string>('new-note-temp-id');
 
@@ -69,6 +71,7 @@ export const CalendarContextProvider = ({
 			content: string;
 			startTime: Date;
 		}) => {
+			if (!settings) return;
 			// create a new note with fake temporary id and update that id
 			// when server returns a response with the new task in "onSuccess"
 			// callback
@@ -76,8 +79,9 @@ export const CalendarContextProvider = ({
 				courseId,
 				content,
 				startTime,
-				// TODO: default duration of new notes should be taken from settings
-				endTime: new Date(startTime.getTime() + 60 * 60 * 1000),
+				endTime: new Date(
+					startTime.getTime() + settings.defaultNoteDuration * 60 * 1000,
+				),
 				id: newNoteTempId.current,
 				userId: '',
 			};

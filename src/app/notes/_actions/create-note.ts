@@ -27,11 +27,29 @@ const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
 			return { error: en.auth.UNAUTHENTICATED };
 		}
 
+		const userSettings = await db.settings.findUnique({
+			where: {
+				userId: session.user.id,
+			},
+		});
+
+		if (!userSettings) {
+			await db.settings.create({
+				data: {
+					userId: session.user.id,
+					language: 'en',
+					orderTasks: 'createdAt',
+				},
+			});
+		}
+
 		const newNote = await db.note.create({
 			data: {
 				courseId,
 				startTime,
-				endTime: new Date(startTime.getTime() + 3600_000), // todo - replace it with user settings for default note duration
+				endTime: new Date(
+					startTime.getTime() + userSettings!.defaultNoteDuration * 1000 * 60,
+				),
 				userId: session.user.id,
 				content,
 			},
