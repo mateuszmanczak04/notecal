@@ -36,5 +36,6 @@ export const en = {
 	},
 	settings: {
 		DEFAULT_NOTE_DURATION_REQUIRED: 'Default note duration is required',
+		DISPLAYED_DAYS_REQUIRED: 'Displayed days amount is required',
 	},
 };
