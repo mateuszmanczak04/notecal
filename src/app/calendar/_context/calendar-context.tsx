@@ -35,7 +35,7 @@ interface CalendarContextProps {
 		y: number,
 	) => { x: number | null; y: number | null };
 	getDateFromPosition: (x: number, y: number) => Date | null;
-	daysToSee: number;
+	displayedDays: number;
 }
 
 const CalendarContext = createContext({} as CalendarContextProps);
@@ -47,7 +47,6 @@ export const CalendarContextProvider = ({
 }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const [daysToSee, setDaysToSee] = useState(5); // TODO: get it from user settings
 	const { settings } = useSettings();
 
 	const newNoteTempId = useRef<string>('new-note-temp-id');
@@ -99,6 +98,8 @@ export const CalendarContextProvider = ({
 		},
 	});
 
+	if (!settings) return null; // TOOD: handle this
+
 	// Returns a date object which is X days after "currentFirstDay"
 	const getDayAfter = (days: number) => {
 		return new Date(currentFirstDay.getTime() + days * 24 * 60 * 60 * 1000);
@@ -130,7 +131,7 @@ export const CalendarContextProvider = ({
 		const { width, height } = containerRef.current.getBoundingClientRect();
 
 		// Get day (YYYY-MM-DD):
-		const columnWidth = width / daysToSee;
+		const columnWidth = width / settings.displayedDays;
 		const dayIndex = Math.floor(x / columnWidth);
 		const time = addDays(currentFirstDay, dayIndex);
 
@@ -158,7 +159,7 @@ export const CalendarContextProvider = ({
 				getDayAfter,
 				getRelativePosition,
 				getDateFromPosition,
-				daysToSee,
+				displayedDays: settings.displayedDays,
 			}}>
 			{children}
 		</CalendarContext.Provider>

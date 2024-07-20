@@ -11,6 +11,9 @@ const UpdateSettingsSchema = z.object({
 		.enum(['title', 'createdAt', 'dueDate', 'priority', 'completed'])
 		.optional(),
 	language: z.enum(['en']).optional(),
+	displayedDays: z.coerce.number({
+		required_error: en.settings.DISPLAYED_DAYS_REQUIRED,
+	}),
 });
 
 const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
@@ -20,7 +23,7 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 		return { error: en.INVALID_DATA };
 	}
 
-	const { language, orderTasks, theme } = validatedFields.data;
+	const { language, orderTasks, theme, displayedDays } = validatedFields.data;
 
 	try {
 		const session = await auth();
@@ -40,6 +43,7 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 					language,
 					orderTasks,
 					theme,
+					displayedDays,
 				},
 			});
 		} else {
@@ -51,6 +55,7 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 					language,
 					orderTasks,
 					theme,
+					displayedDays,
 				},
 			});
 		}

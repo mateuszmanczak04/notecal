@@ -8,7 +8,6 @@ import {
 	addDays,
 	addMilliseconds,
 	differenceInCalendarDays,
-	format,
 	startOfDay,
 } from 'date-fns';
 import Link from 'next/link';
@@ -22,7 +21,7 @@ interface NoteProps {
 const Note: FC<NoteProps> = ({ note }) => {
 	const {
 		currentFirstDay,
-		daysToSee,
+		displayedDays,
 		getRelativePosition,
 		getDateFromPosition,
 	} = useCalendarContext();
@@ -46,7 +45,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 	}, [note.startTime, note.endTime]);
 
 	// Width of a note block - 90% of day column width:
-	const blockWidth = (100 / daysToSee) * 0.9 + '%';
+	const blockWidth = (100 / displayedDays) * 0.9 + '%';
 
 	// Returns days which are included in note's duration,
 	// All of them are set to 00:00:
@@ -75,7 +74,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 	// Get positions and sizes of each day block:
 	const getLeftOffset = (date: Date) => {
 		const daysFromFirstDay = differenceInCalendarDays(date, currentFirstDay);
-		return daysFromFirstDay * (100 / daysToSee) + '%';
+		return daysFromFirstDay * (100 / displayedDays) + '%';
 	};
 
 	const getTopOffset = (date: Date, startTime: Date) => {
