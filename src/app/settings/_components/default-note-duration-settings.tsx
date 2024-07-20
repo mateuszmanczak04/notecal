@@ -19,9 +19,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import UpdateDefaultNoteDurationSchema from '@/schemas/update-default-note-duration-schema';
 import { z } from 'zod';
 
-import updateDefaultNoteDuration from '../_actions/update-default-note-duration';
 import LocalSettings from '@/lib/local-settings';
 import { Button } from '@/components/ui/button';
+import updateSettings from '../_actions/update-settings';
 
 interface DefaultNoteDurationSettingProps {}
 
@@ -53,7 +53,7 @@ const DefaultNoteDurationSetting: FC<
 		values: z.infer<typeof UpdateDefaultNoteDurationSchema>,
 	) => {
 		startTransition(async () => {
-			const res = await updateDefaultNoteDuration({
+			const res = await updateSettings({
 				defaultNoteDuration: values.defaultNoteDuration,
 			});
 			if (res?.error) return; // TODO: optimistic updates

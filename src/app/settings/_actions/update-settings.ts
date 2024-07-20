@@ -11,9 +11,16 @@ const UpdateSettingsSchema = z.object({
 		.enum(['title', 'createdAt', 'dueDate', 'priority', 'completed'])
 		.optional(),
 	language: z.enum(['en']).optional(),
-	displayedDays: z.coerce.number({
-		required_error: en.settings.DISPLAYED_DAYS_REQUIRED,
-	}),
+	displayedDays: z.coerce
+		.number({
+			required_error: en.settings.DISPLAYED_DAYS_REQUIRED,
+		})
+		.optional(),
+	defaultNoteDuration: z.coerce
+		.number({
+			required_error: en.settings.DEFAULT_NOTE_DURATION_REQUIRED,
+		})
+		.optional(),
 });
 
 const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
