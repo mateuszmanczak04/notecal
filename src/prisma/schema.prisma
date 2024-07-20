@@ -138,6 +138,7 @@ model Settings {
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
   defaultNoteDuration Int            @default(60) // in minutes
+  displayedDays       Int            @default(5)
 }
 
 model Note {
