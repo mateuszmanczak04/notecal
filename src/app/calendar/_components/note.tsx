@@ -13,6 +13,7 @@ import {
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState, useTransition } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
+import useNotes from '@/app/notes/_hooks/use-notes';
 
 interface NoteProps {
 	note: Note;
@@ -25,6 +26,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 		getRelativePosition,
 		getDateFromPosition,
 	} = useCalendarContext();
+	const { notes } = useNotes();
 	const [isPending, startTransition] = useTransition();
 	const course = useCourse(note.courseId);
 
@@ -72,9 +74,23 @@ const Note: FC<NoteProps> = ({ note }) => {
 	};
 
 	// Get positions and sizes of each day block:
+	const getAmountOfOverflowingNotes = () => {
+		let result = 0;
+		notes?.forEach(n => {
+			if (n.endTime > note.startTime && n.startTime <= note.startTime) {
+				result += 1;
+			}
+		});
+		return result;
+	};
+
 	const getLeftOffset = (date: Date) => {
 		const daysFromFirstDay = differenceInCalendarDays(date, currentFirstDay);
-		return daysFromFirstDay * (100 / displayedDays) + '%';
+		return `calc(${daysFromFirstDay * (100 / displayedDays) + '%'} + ${getAmountOfOverflowingNotes() * 24 + 'px'}`;
+	};
+
+	const getWidth = () => {
+		return `calc(${100 / displayedDays}% - ${getAmountOfOverflowingNotes() * 24 + 'px'})`;
 	};
 
 	const getTopOffset = (date: Date, startTime: Date) => {
@@ -262,9 +278,6 @@ const Note: FC<NoteProps> = ({ note }) => {
 		});
 	};
 
-	// TODO: fix - showing 1 rect too much after setting time to midnight
-	// TODO: handle escape key for cancelling
-
 	const noteDays = getDaysBetween(note.startTime, note.endTime);
 
 	// Used to swap them if start is greater than end
@@ -293,17 +306,16 @@ const Note: FC<NoteProps> = ({ note }) => {
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
 						href={`/notes/${note.courseId}/${note.id}`}
-						className='absolute z-20 min-h-4 select-none overflow-hidden rounded-xl border-4 bg-primary-500 text-white transition hover:opacity-90'
+						className='absolute z-20 min-h-4 select-none overflow-hidden rounded-xl border border-white bg-primary-500 text-white transition hover:opacity-90'
 						style={{
 							top: getTopOffset(day, note.startTime),
 							left: getLeftOffset(day),
-							width: blockWidth,
+							width: getWidth(),
 							height: getHeight(day, note.startTime, note.endTime),
 							opacity: isDragging ? 0.5 : 1,
 							// If course was not found, the color will be undefined so
 							// the note should have "bg-primary-500" color as in className above
-							backgroundColor: course?.color + 'dd',
-							borderColor: course?.color,
+							backgroundColor: course?.color,
 						}}>
 						{/* Top edge to drag: */}
 						{index === 0 && (
@@ -339,14 +351,13 @@ const Note: FC<NoteProps> = ({ note }) => {
 					<div
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
-						className='pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl bg-primary-500 text-white transition'
+						className='pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl border bg-primary-500 text-white transition'
 						style={{
 							top: getTopOffset(day, actualDragStartTime),
 							left: getLeftOffset(day),
-							width: blockWidth,
+							width: getWidth(),
 							height: getHeight(day, actualDragStartTime, actualDragEndTime),
-							backgroundColor: course?.color + 'dd',
-							borderColor: course?.color,
+							backgroundColor: course?.color,
 						}}>
 						<p className='m-4'>{note.content.slice(0, 20)}</p>
 					</div>
