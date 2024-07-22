@@ -1,74 +1,51 @@
 'use client';
 
-import React, { FC, useEffect, useState, useTransition } from 'react';
-import useSettings from '../_hooks/use-settings';
-import { Input } from '@/components/ui/input';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import ErrorMessage from '@/components/common/error-message';
-import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
-	FormLabel,
 	FormMessage,
 } from '@/components/ui/form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import UpdateDefaultNoteDurationSchema from '@/schemas/update-default-note-duration-schema';
-import { z } from 'zod';
-
+import { Input } from '@/components/ui/input';
 import LocalSettings from '@/lib/local-settings';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import UpdateDefaultNoteDurationSchema from '@/schemas/update-default-note-duration-schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FC, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import updateSettings from '../_actions/update-settings';
 
-interface DefaultNoteDurationSettingProps {}
+interface DefaultNoteDurationSettingProps {
+	initialDefaultNoteDuration: number;
+}
 
-const DefaultNoteDurationSetting: FC<
-	DefaultNoteDurationSettingProps
-> = ({}) => {
-	// Initial value:
-	const {
-		settings,
-		isPending: isSettingsPending,
-		error: settingsError,
-	} = useSettings();
-
+const DefaultNoteDurationSetting: FC<DefaultNoteDurationSettingProps> = ({
+	initialDefaultNoteDuration,
+}) => {
 	const form = useForm<z.infer<typeof UpdateDefaultNoteDurationSchema>>({
 		resolver: zodResolver(UpdateDefaultNoteDurationSchema),
 		defaultValues: {
-			defaultNoteDuration: settings?.defaultNoteDuration || 60,
+			defaultNoteDuration: initialDefaultNoteDuration,
 		},
 	});
 	const [isPending, startTransition] = useTransition();
-
-	useEffect(() => {
-		if (settings) {
-			form.setValue('defaultNoteDuration', settings.defaultNoteDuration);
-		}
-	}, [settings, form]);
 
 	const handleSubmit = (
 		values: z.infer<typeof UpdateDefaultNoteDurationSchema>,
 	) => {
 		startTransition(async () => {
-			const res = await updateSettings({
-				defaultNoteDuration: values.defaultNoteDuration,
-			});
-			if (res?.error) return; // TODO: optimistic updates
 			await LocalSettings.update({
 				defaultNoteDuration: values.defaultNoteDuration,
 			});
+			await updateSettings({
+				defaultNoteDuration: values.defaultNoteDuration,
+			});
+			// TODO: optimistic updates
 		});
 	};
-
-	if (isSettingsPending || isPending) return <LoadingSpinner />;
-
-	if (settingsError)
-		return <ErrorMessage>{settingsError.message}</ErrorMessage>;
-
-	if (!settings) return null;
 
 	return (
 		<Form {...form}>
@@ -76,12 +53,12 @@ const DefaultNoteDurationSetting: FC<
 				<h2 className='mb-2 text-lg font-semibold'>
 					Default note duration (in minutes)
 				</h2>
-				<div className='flex gap-2'>
+				<div className='grid grid-cols-2 gap-2'>
 					<FormField
 						control={form.control}
 						name='defaultNoteDuration'
 						render={({ field }) => (
-							<FormItem className='flex-1'>
+							<FormItem>
 								<FormControl>
 									<Input
 										placeholder='60'
@@ -94,16 +71,9 @@ const DefaultNoteDurationSetting: FC<
 							</FormItem>
 						)}
 					/>
-					<Button type='submit' className='flex-1'>
+					<Button type='submit' className={cn(isPending && 'opacity-50')}>
 						Save
 					</Button>
-				</div>
-				<div className='flex w-full justify-center'>
-					{isPending && (
-						<>
-							<LoadingSpinner />
-						</>
-					)}
 				</div>
 			</form>
 		</Form>

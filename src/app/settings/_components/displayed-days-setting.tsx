@@ -1,11 +1,6 @@
 'use client';
 
-import React, { useEffect, useTransition } from 'react';
-import useSettings from '../_hooks/use-settings';
-import { Input } from '@/components/ui/input';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import ErrorMessage from '@/components/common/error-message';
-import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
 import {
 	Form,
 	FormControl,
@@ -13,55 +8,40 @@ import {
 	FormItem,
 	FormMessage,
 } from '@/components/ui/form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-
+import { Input } from '@/components/ui/input';
 import LocalSettings from '@/lib/local-settings';
-import { Button } from '@/components/ui/button';
 import UpdateDisplayedDaysSchema from '@/schemas/update-displayed-days-schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import updateSettings from '../_actions/update-settings';
+import { cn } from '@/lib/utils';
 
-const DisplayedDaysSetting = () => {
-	// Initial value:
-	const {
-		settings,
-		isPending: isSettingsPending,
-		error: settingsError,
-	} = useSettings();
+type Props = {
+	initialDisplayedDays: number;
+};
 
+const DisplayedDaysSetting = ({ initialDisplayedDays }: Props) => {
 	const form = useForm<z.infer<typeof UpdateDisplayedDaysSchema>>({
 		resolver: zodResolver(UpdateDisplayedDaysSchema),
 		defaultValues: {
-			displayedDays: settings?.displayedDays || 5,
+			displayedDays: initialDisplayedDays,
 		},
 	});
 	const [isPending, startTransition] = useTransition();
 
-	useEffect(() => {
-		if (settings) {
-			console.log(settings);
-			form.setValue('displayedDays', settings.displayedDays);
-		}
-	}, [settings, form]);
-
 	const handleSubmit = (values: z.infer<typeof UpdateDisplayedDaysSchema>) => {
 		startTransition(async () => {
-			const res = await updateSettings({
-				displayedDays: values.displayedDays,
-			});
-			if (res?.error) return; // TODO: optimistic updates
 			await LocalSettings.update({
 				displayedDays: values.displayedDays,
 			});
+			await updateSettings({
+				displayedDays: values.displayedDays,
+			});
+			// TODO: optimistic updates
 		});
 	};
-
-	if (isSettingsPending || isPending) return <LoadingSpinner />;
-
-	if (settingsError)
-		return <ErrorMessage>{settingsError.message}</ErrorMessage>;
-
-	if (!settings) return null;
 
 	return (
 		<Form {...form}>
@@ -87,14 +67,9 @@ const DisplayedDaysSetting = () => {
 							</FormItem>
 						)}
 					/>
-					<Button type='submit'>Save</Button>
-				</div>
-				<div className='flex w-full justify-center'>
-					{isPending && (
-						<>
-							<LoadingSpinner />
-						</>
-					)}
+					<Button type='submit' className={cn(isPending && 'opacity-50')}>
+						Save
+					</Button>
 				</div>
 			</form>
 		</Form>
