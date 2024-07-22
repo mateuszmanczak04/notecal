@@ -15,21 +15,9 @@ const useSettings = () => {
 			return { settings };
 		},
 		staleTime: Infinity,
-		initialData: {
-			settings: {
-				displayedDays: 5,
-				defaultNoteDuration: 60,
-				orderTasks: 'createdAt',
-				theme: 'light',
-				language: 'en',
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				userId: '',
-			},
-		},
 	});
 
-	return { settings: data.settings, isPending, error };
+	return { settings: data?.settings, isPending, error };
 };
 
 export default useSettings;

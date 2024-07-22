@@ -1,9 +1,16 @@
 import { auth } from '@/auth';
 import { Button } from '@/components/ui/button';
+import queryClient from '@/lib/query-client';
 import Link from 'next/link';
+import getSettings from './settings/_actions/get-settings';
 
 export default async function Home() {
 	const session = await auth();
+
+	await queryClient.prefetchQuery({
+		queryKey: ['settings'],
+		queryFn: getSettings,
+	});
 
 	return (
 		<div className='mx-auto mt-16 w-[600px] max-w-[calc(100%-32px)] items-center text-center'>
