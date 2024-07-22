@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useMemo, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import Note from './note';
 import CoursePicker from './course-picker';
@@ -31,6 +31,35 @@ const Notes = () => {
 		setSelectedTime(time);
 	};
 
+	// TODO: move this to "notes" state:
+	const leftOffsets = useMemo(() => {
+		if (!notes || notes.length === 0) return [];
+
+		let results = new Array(notes.length).fill(0);
+		for (let i = 0; i < notes?.length; i++) {
+			for (let j = 0; j < i; j++) {
+				if (
+					notes[j].endTime > notes[i].startTime &&
+					notes[j].startTime <= notes[i].startTime &&
+					notes[j].id !== notes[i].id
+				) {
+					results[i] = results[i - 1] + 1;
+				}
+
+				for (let k = results[j]; k >= 3; k--) {
+					if (
+						notes[j - k].endTime <= notes[i].startTime ||
+						notes[j - k].startTime > notes[i].startTime
+					) {
+						results[i] = 0;
+					}
+				}
+			}
+		}
+
+		return results.map(r => (r > 2 ? 2 : r));
+	}, [notes]);
+
 	return (
 		// TODO: hard coded sizes and position - should be based
 		// on tailwind variables describing grid sizes
@@ -39,7 +68,9 @@ const Notes = () => {
 			ref={containerRef}
 			className='absolute left-20 top-10 h-[calc(100%-40px)] w-[calc(100%-80px)] cursor-crosshair overflow-hidden'
 			onClick={handleClick}>
-			{notes?.map(note => <Note key={note.id} note={note} />)}
+			{notes?.map((note, index) => (
+				<Note key={note.id} note={note} leftOffset={leftOffsets[index]} />
+			))}
 			{selectedTime && (
 				<CoursePicker
 					time={selectedTime}

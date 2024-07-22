@@ -11,15 +11,16 @@ import {
 	startOfDay,
 } from 'date-fns';
 import Link from 'next/link';
-import { FC, useEffect, useRef, useState, useTransition } from 'react';
+import { FC, useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import useNotes from '@/app/notes/_hooks/use-notes';
 
 interface NoteProps {
 	note: Note;
+	leftOffset: number;
 }
 
-const Note: FC<NoteProps> = ({ note }) => {
+const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 	const {
 		currentFirstDay,
 		displayedDays,
@@ -74,27 +75,14 @@ const Note: FC<NoteProps> = ({ note }) => {
 	};
 
 	// Get positions and sizes of each day block:
-	const getAmountOfOverflowingNotes = () => {
-		let result = 0;
-		notes?.forEach(n => {
-			if (
-				n.endTime > note.startTime &&
-				n.startTime <= note.startTime &&
-				n.id !== note.id
-			) {
-				result += 1;
-			}
-		});
-		return result >= 4 ? 3 : result;
-	};
 
 	const getLeftOffset = (date: Date) => {
 		const daysFromFirstDay = differenceInCalendarDays(date, currentFirstDay);
-		return `calc(${daysFromFirstDay * (100 / displayedDays) + '%'} + ${getAmountOfOverflowingNotes() * 24 + 'px'}`;
+		return `calc(${daysFromFirstDay * (100 / displayedDays) + '%'} + ${leftOffset * 16 + 'px'}`;
 	};
 
 	const getWidth = () => {
-		return `calc(${100 / displayedDays}% - ${getAmountOfOverflowingNotes() * 24 + 'px'})`;
+		return `calc(${100 / displayedDays}% - ${32 + 'px'})`;
 	};
 
 	const getTopOffset = (date: Date, startTime: Date) => {
