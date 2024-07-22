@@ -77,11 +77,15 @@ const Note: FC<NoteProps> = ({ note }) => {
 	const getAmountOfOverflowingNotes = () => {
 		let result = 0;
 		notes?.forEach(n => {
-			if (n.endTime > note.startTime && n.startTime <= note.startTime) {
+			if (
+				n.endTime > note.startTime &&
+				n.startTime <= note.startTime &&
+				n.id !== note.id
+			) {
 				result += 1;
 			}
 		});
-		return result >= 4 ? 3 : result - 1;
+		return result >= 4 ? 3 : result;
 	};
 
 	const getLeftOffset = (date: Date) => {
