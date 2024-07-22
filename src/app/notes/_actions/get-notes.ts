@@ -14,6 +14,11 @@ const getNotes = async () => {
 
 		let notes = await db.note.findMany({
 			where: { userId: session.user.id },
+			orderBy: [
+				{
+					startTime: 'asc',
+				},
+			],
 		});
 
 		return { notes };
