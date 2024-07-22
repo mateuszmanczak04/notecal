@@ -191,7 +191,6 @@ const Note: FC<NoteProps> = ({ note }) => {
 		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
 
 		startTransition(async () => {
-			setIsDragging(false);
 			await LocalNotes.update(note.id, {
 				startTime: dragStartTime,
 				endTime: dragEndTime,
@@ -201,6 +200,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 				startTime: dragStartTime,
 				endTime: dragEndTime,
 			});
+			setIsDragging(false);
 		});
 	};
 
