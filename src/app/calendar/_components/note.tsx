@@ -81,7 +81,7 @@ const Note: FC<NoteProps> = ({ note }) => {
 				result += 1;
 			}
 		});
-		return result;
+		return result - 1;
 	};
 
 	const getLeftOffset = (date: Date) => {
