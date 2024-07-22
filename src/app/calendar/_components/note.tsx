@@ -293,16 +293,17 @@ const Note: FC<NoteProps> = ({ note }) => {
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
 						href={`/notes/${note.courseId}/${note.id}`}
-						className='absolute z-20 min-h-4 select-none overflow-hidden rounded-xl bg-primary-500 text-white transition hover:opacity-90'
+						className='absolute z-20 min-h-4 select-none overflow-hidden rounded-xl border-4 bg-primary-500 text-white transition hover:opacity-90'
 						style={{
 							top: getTopOffset(day, note.startTime),
 							left: getLeftOffset(day),
 							width: blockWidth,
 							height: getHeight(day, note.startTime, note.endTime),
-							opacity: (isDragging && 0.5) || 1,
+							opacity: isDragging ? 0.5 : 1,
 							// If course was not found, the color will be undefined so
 							// the note should have "bg-primary-500" color as in className above
-							backgroundColor: course?.color,
+							backgroundColor: course?.color + 'dd',
+							borderColor: course?.color,
 						}}>
 						{/* Top edge to drag: */}
 						{index === 0 && (
@@ -344,7 +345,8 @@ const Note: FC<NoteProps> = ({ note }) => {
 							left: getLeftOffset(day),
 							width: blockWidth,
 							height: getHeight(day, actualDragStartTime, actualDragEndTime),
-							backgroundColor: course?.color,
+							backgroundColor: course?.color + 'dd',
+							borderColor: course?.color,
 						}}>
 						<p className='m-4'>{note.content.slice(0, 20)}</p>
 					</div>
