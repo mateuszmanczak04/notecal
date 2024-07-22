@@ -1,13 +1,15 @@
 'use client';
 
-import { FC, useRef } from 'react';
-import { useCalendarContext } from '../_context/calendar-context';
 import useCourses from '@/app/courses/_hooks/use-courses';
+import createNote from '@/app/notes/_actions/create-note';
+import useSettings from '@/app/settings/_hooks/use-settings';
 import LoadingSpinner from '@/components/common/loading-spinner';
-import { useEventListener, useOnClickOutside } from 'usehooks-ts';
-import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
+import LocalNotes from '@/lib/local-notes';
+import { format } from 'date-fns';
 import Link from 'next/link';
+import { FC, useRef, useTransition } from 'react';
+import { useEventListener, useOnClickOutside } from 'usehooks-ts';
 
 interface CoursePickerProps {
 	time: Date;
@@ -17,13 +19,30 @@ interface CoursePickerProps {
 }
 
 const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
-	const { addNewNote } = useCalendarContext();
 	const { courses, isPending } = useCourses(); // TODO: error handling
 	const pickerRef = useRef<HTMLDivElement | null>(null);
+	const { settings } = useSettings();
+	const [_, startTransition] = useTransition();
 
 	const handleSelect = (courseId: string) => {
-		addNewNote({ courseId, content: 'Empty note', startTime: time });
-		hidePicker();
+		if (!settings) return;
+
+		// TODO: optimistic updates
+		startTransition(async () => {
+			const newTemporaryNote = {
+				courseId,
+				content: 'Empty note',
+				startTime: new Date(time.setMilliseconds(0)),
+				endTime: new Date(
+					time.setMilliseconds(0) + settings.defaultNoteDuration * 60 * 1000,
+				),
+				id: crypto.randomUUID(),
+				userId: '',
+			};
+			await LocalNotes.append(newTemporaryNote);
+			await createNote({ courseId, content: 'Empty note', startTime: time });
+			hidePicker();
+		});
 	};
 
 	useOnClickOutside(pickerRef, hidePicker);

@@ -1,7 +1,7 @@
 'use client';
 
-import createNote from '@/app/notes/_actions/create-note';
-import { useMutation } from '@tanstack/react-query';
+import useSettings from '@/app/settings/_hooks/use-settings';
+import { addDays } from 'date-fns';
 import {
 	MutableRefObject,
 	ReactNode,
@@ -10,23 +10,11 @@ import {
 	useRef,
 	useState,
 } from 'react';
-import LocalNotes from '@/lib/local-notes';
-import { addDays } from 'date-fns';
-import useSettings from '@/app/settings/_hooks/use-settings';
 
 interface CalendarContextProps {
 	currentFirstDay: Date;
 	goDayForward: () => void;
 	goDayBackward: () => void;
-	addNewNote: ({
-		courseId,
-		content,
-		startTime,
-	}: {
-		courseId: string;
-		content: string;
-		startTime: Date;
-	}) => void;
 	getDayAfter: (days: number) => Date;
 	containerRef: MutableRefObject<HTMLDivElement | null>;
 	getRelativePosition: (
@@ -46,56 +34,8 @@ export const CalendarContextProvider = ({
 }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement | null>(null);
+
 	const { settings } = useSettings();
-
-	const newNoteTempId = useRef<string>('new-note-temp-id');
-
-	const { mutate: addNewNote } = useMutation({
-		mutationFn: async ({
-			courseId,
-			content,
-			startTime,
-		}: {
-			courseId: string;
-			content: string;
-			startTime: Date;
-		}) => await createNote({ courseId, content, startTime }),
-		onMutate: async ({
-			courseId,
-			content,
-			startTime,
-		}: {
-			courseId: string;
-			content: string;
-			startTime: Date;
-		}) => {
-			if (!settings) return;
-			// create a new note with fake temporary id and update that id
-			// when server returns a response with the new task in "onSuccess"
-			// callback
-			const newTemporaryNote = {
-				courseId,
-				content,
-				startTime,
-				endTime: new Date(
-					startTime.getTime() + settings.defaultNoteDuration * 60 * 1000,
-				),
-				id: newNoteTempId.current,
-				userId: '',
-			};
-			await LocalNotes.append(newTemporaryNote);
-		},
-		onSuccess: async data => {
-			if (!data.newNote) {
-				return;
-			}
-			await LocalNotes.update(newNoteTempId.current, data.newNote);
-		},
-		onError: async () => {
-			// TODO: display some kind of error message, maybe as a toast
-			await LocalNotes.remove(newNoteTempId.current);
-		},
-	});
 
 	if (!settings) return null; // TOOD: handle this
 
@@ -153,7 +93,7 @@ export const CalendarContextProvider = ({
 				currentFirstDay,
 				goDayForward,
 				goDayBackward,
-				addNewNote,
+
 				getDayAfter,
 				getRelativePosition,
 				getDateFromPosition,
