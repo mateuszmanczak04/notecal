@@ -57,7 +57,7 @@ const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
 
 		return { newNote };
 	} catch (error) {
-		return { error: 'Something went wrong' };
+		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
 
