@@ -65,6 +65,7 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 					orderTasks,
 					theme,
 					displayedDays,
+					defaultNoteDuration,
 				},
 			});
 		}
