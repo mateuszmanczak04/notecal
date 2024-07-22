@@ -27,7 +27,6 @@ interface CalendarContextProps {
 		content: string;
 		startTime: Date;
 	}) => void;
-	newNoteTempId: string | null;
 	getDayAfter: (days: number) => Date;
 	containerRef: MutableRefObject<HTMLDivElement | null>;
 	getRelativePosition: (
@@ -155,7 +154,6 @@ export const CalendarContextProvider = ({
 				goDayForward,
 				goDayBackward,
 				addNewNote,
-				newNoteTempId: newNoteTempId.current,
 				getDayAfter,
 				getRelativePosition,
 				getDateFromPosition,
