@@ -10,11 +10,13 @@ import useNotes from '../notes/_hooks/use-notes';
 const CalendarPage = () => {
 	const { notes, error, isPending } = useNotes();
 
-	if (isPending || !notes) return <LoadingSpinner />;
+	if (isPending) return <LoadingSpinner />;
 
 	if (error) {
 		return <ErrorMessage>{error.message}</ErrorMessage>;
 	}
+
+	if (!notes) return null;
 
 	return (
 		<>
