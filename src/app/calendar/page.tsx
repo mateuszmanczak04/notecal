@@ -6,6 +6,7 @@ import Header from './_components/header';
 import Notes from './_components/notes';
 import ErrorMessage from '@/components/common/error-message';
 import useNotes from '../notes/_hooks/use-notes';
+import TopBar from './_components/top-bar';
 
 const CalendarPage = () => {
 	const { notes, error, isPending } = useNotes();
@@ -19,11 +20,12 @@ const CalendarPage = () => {
 	if (!notes) return null;
 
 	return (
-		<div className='flex h-full flex-col justify-between'>
+		<div className='flex h-full flex-col'>
 			{/* Year and month: */}
 			<Header />
+			<TopBar />
 
-			<div className='relative mt-2 flex-1'>
+			<div className='relative overflow-y-scroll'>
 				{/* Just grid: */}
 				<Grid />
 
