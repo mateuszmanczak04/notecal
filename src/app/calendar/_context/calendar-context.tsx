@@ -1,6 +1,8 @@
 'use client';
 
+import updateSettings from '@/app/settings/_actions/update-settings';
 import useSettings from '@/app/settings/_hooks/use-settings';
+import LocalSettings from '@/lib/local-settings';
 import { addDays } from 'date-fns';
 import {
 	MutableRefObject,
@@ -37,7 +39,6 @@ export const CalendarContextProvider = ({
 }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const [zoomLevel, setZoomLevel] = useState<number>(3);
 
 	const { settings } = useSettings();
 
@@ -91,7 +92,7 @@ export const CalendarContextProvider = ({
 	};
 
 	const getRowHeight = () => {
-		switch (zoomLevel) {
+		switch (settings.zoomLevel) {
 			case 1:
 				return 40;
 			case 2:
@@ -108,14 +109,16 @@ export const CalendarContextProvider = ({
 	};
 
 	const zoomIn = () => {
-		if (zoomLevel !== 5) {
-			setZoomLevel(prev => prev + 1);
+		if (settings.zoomLevel !== 5) {
+			LocalSettings.update({ zoomLevel: settings.zoomLevel + 1 });
+			updateSettings({ zoomLevel: settings.zoomLevel + 1 }); // TODO: error handling
 		}
 	};
 
 	const zoomOut = () => {
-		if (zoomLevel !== 1) {
-			setZoomLevel(prev => prev - 1);
+		if (settings.zoomLevel !== 1) {
+			LocalSettings.update({ zoomLevel: settings.zoomLevel - 1 });
+			updateSettings({ zoomLevel: settings.zoomLevel - 1 }); // TODO: error handling
 		}
 	};
 

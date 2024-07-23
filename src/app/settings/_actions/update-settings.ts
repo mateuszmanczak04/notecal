@@ -21,6 +21,7 @@ const UpdateSettingsSchema = z.object({
 			required_error: en.settings.DEFAULT_NOTE_DURATION_REQUIRED,
 		})
 		.optional(),
+	zoomLevel: z.number().int().gte(1).lte(5),
 });
 
 const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
@@ -29,9 +30,6 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 	if (!validatedFields.success) {
 		return { error: en.INVALID_DATA };
 	}
-
-	const { language, orderTasks, theme, displayedDays, defaultNoteDuration } =
-		validatedFields.data;
 
 	try {
 		const session = await auth();
@@ -48,11 +46,7 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 			await db.settings.create({
 				data: {
 					userId: session.user.id,
-					language,
-					orderTasks,
-					theme,
-					displayedDays,
-					defaultNoteDuration,
+					...validatedFields.data,
 				},
 			});
 		} else {
@@ -61,11 +55,7 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 					userId: session.user.id,
 				},
 				data: {
-					language,
-					orderTasks,
-					theme,
-					displayedDays,
-					defaultNoteDuration,
+					...validatedFields.data,
 				},
 			});
 		}
