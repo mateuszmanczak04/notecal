@@ -8,7 +8,7 @@ const Grid = () => {
 	const { displayedDays } = useCalendarContext();
 
 	return (
-		<div className='flex pb-4'>
+		<div className='flex'>
 			{/* Hours: */}
 			<div className='w-20'>
 				{new Array(24).fill(0).map((_, index) => (
