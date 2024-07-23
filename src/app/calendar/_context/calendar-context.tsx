@@ -24,6 +24,8 @@ interface CalendarContextProps {
 	getDateFromPosition: (x: number, y: number) => Date | null;
 	displayedDays: number;
 	rowHeight: number;
+	zoomIn: () => void;
+	zoomOut: () => void;
 }
 
 const CalendarContext = createContext({} as CalendarContextProps);
@@ -35,7 +37,7 @@ export const CalendarContextProvider = ({
 }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const [zoomLevel, setZoomLevel] = useState<1 | 2 | 3 | 4 | 5>(3);
+	const [zoomLevel, setZoomLevel] = useState<number>(3);
 
 	const { settings } = useSettings();
 
@@ -105,6 +107,18 @@ export const CalendarContextProvider = ({
 		}
 	};
 
+	const zoomIn = () => {
+		if (zoomLevel !== 5) {
+			setZoomLevel(prev => prev + 1);
+		}
+	};
+
+	const zoomOut = () => {
+		if (zoomLevel !== 1) {
+			setZoomLevel(prev => prev - 1);
+		}
+	};
+
 	return (
 		<CalendarContext.Provider
 			value={{
@@ -113,6 +127,8 @@ export const CalendarContextProvider = ({
 				goDayForward,
 				goDayBackward,
 				rowHeight: getRowHeight(),
+				zoomIn,
+				zoomOut,
 				getDayAfter,
 				getRelativePosition,
 				getDateFromPosition,
