@@ -139,6 +139,7 @@ model Settings {
   updatedAt           DateTime       @updatedAt
   defaultNoteDuration Int            @default(60) // in minutes
   displayedDays       Int            @default(5)
+  zoomLevel           Int            @default(3)
 }
 
 model Note {
