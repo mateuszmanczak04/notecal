@@ -4,9 +4,18 @@ import queryClient from './query-client';
 const append = async (note: Note) => {
 	await queryClient.setQueryData(['notes'], (prev: { notes: Note[] }) => {
 		return {
-			notes: [...prev.notes, note].toSorted((a, b) =>
-				a.startTime > b.startTime ? 1 : -1,
-			),
+			notes: [
+				...prev.notes,
+				{
+					...note,
+					startTime: new Date(
+						new Date(note.startTime.setSeconds(0)).setMilliseconds(0),
+					),
+					endTime: new Date(
+						new Date(note.endTime.setSeconds(0)).setMilliseconds(0),
+					),
+				},
+			].toSorted((a, b) => (a.startTime > b.startTime ? 1 : -1)),
 		};
 	});
 };

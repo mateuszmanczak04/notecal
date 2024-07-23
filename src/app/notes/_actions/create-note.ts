@@ -46,9 +46,11 @@ const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
 		const newNote = await db.note.create({
 			data: {
 				courseId,
-				startTime: new Date(startTime.setMilliseconds(0)),
+				startTime: new Date(
+					new Date(startTime.setSeconds(0)).setMilliseconds(0),
+				),
 				endTime: new Date(
-					startTime.setMilliseconds(0) +
+					new Date(startTime.setSeconds(0)).setMilliseconds(0) +
 						userSettings!.defaultNoteDuration * 1000 * 60,
 				),
 				userId: session.user.id,

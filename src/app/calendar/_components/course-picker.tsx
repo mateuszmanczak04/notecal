@@ -32,9 +32,9 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 			const newTemporaryNote = {
 				courseId,
 				content: 'Empty note',
-				startTime: new Date(time.setMilliseconds(0)),
+				startTime: time,
 				endTime: new Date(
-					time.setMilliseconds(0) + settings.defaultNoteDuration * 60 * 1000,
+					time.getTime() + settings.defaultNoteDuration * 60 * 1000,
 				),
 				id: crypto.randomUUID(),
 				userId: '',
