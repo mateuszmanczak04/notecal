@@ -14,9 +14,14 @@ import Link from 'next/link';
 import { FC, useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import useNotes from '@/app/notes/_hooks/use-notes';
+import { cn } from '@/lib/utils';
+
+interface NoteWithPending extends Note {
+	pending?: boolean;
+}
 
 interface NoteProps {
-	note: Note;
+	note: NoteWithPending;
 	leftOffset: number;
 }
 
@@ -298,13 +303,16 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
 						href={`/notes/${note.courseId}/${note.id}`}
-						className='absolute z-20 min-h-4 select-none overflow-hidden rounded-xl border border-white bg-primary-500 text-white transition hover:opacity-90'
+						className={cn(
+							'absolute z-20 min-h-4 select-none overflow-hidden rounded-xl border border-white bg-primary-500 text-white transition hover:opacity-90',
+							note.pending && 'pointer-events-none opacity-50',
+							isDragging && 'opacity-50',
+						)}
 						style={{
 							top: getTopOffset(day, note.startTime),
 							left: getLeftOffset(day),
 							width: getWidth(),
 							height: getHeight(day, note.startTime, note.endTime),
-							opacity: isDragging ? 0.5 : 1,
 							// If course was not found, the color will be undefined so
 							// the note should have "bg-primary-500" color as in className above
 							backgroundColor: course?.color,

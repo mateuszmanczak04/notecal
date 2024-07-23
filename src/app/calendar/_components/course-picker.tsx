@@ -38,6 +38,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 				),
 				id: crypto.randomUUID(),
 				userId: '',
+				pending: true,
 			};
 			await LocalNotes.append(newTemporaryNote);
 			createNote({ courseId, content: 'Empty note', startTime: time });
