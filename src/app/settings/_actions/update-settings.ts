@@ -21,7 +21,7 @@ const UpdateSettingsSchema = z.object({
 			required_error: en.settings.DEFAULT_NOTE_DURATION_REQUIRED,
 		})
 		.optional(),
-	zoomLevel: z.number().int().gte(1).lte(5),
+	zoomLevel: z.number().int().gte(1).lte(5).optional(),
 });
 
 const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
