@@ -13,10 +13,6 @@ const Header = () => {
 
 	return (
 		<div className='flex items-center gap-2'>
-			<GoBackButton variant='secondary'>
-				<ArrowLeft className='h-4 w-4' />
-				Go back
-			</GoBackButton>
 			<h2 className='text-3xl font-bold'>
 				{currentMonth} {currentYear}
 			</h2>

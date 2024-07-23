@@ -35,7 +35,7 @@ export const CalendarContextProvider = ({
 }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const [zoomLevel, setZoomLevel] = useState<1 | 2 | 3 | 4 | 5>(1);
+	const [zoomLevel, setZoomLevel] = useState<1 | 2 | 3 | 4 | 5>(3);
 
 	const { settings } = useSettings();
 
