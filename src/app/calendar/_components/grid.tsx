@@ -20,11 +20,8 @@ const Grid = () => {
 			<div
 				className='grid flex-1 overflow-y-scroll'
 				style={{ gridTemplateColumns: `repeat(${displayedDays}, 1fr)` }}>
-				{new Array(displayedDays).fill(0).map((day, index) => (
-					<DayColumn
-						key={day.toString()}
-						isLast={index === displayedDays - 1}
-					/>
+				{new Array(displayedDays).fill(0).map((_, index) => (
+					<DayColumn key={index} isLast={index === displayedDays - 1} />
 				))}
 			</div>
 		</div>
