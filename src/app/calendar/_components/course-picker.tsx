@@ -40,7 +40,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 				userId: '',
 			};
 			await LocalNotes.append(newTemporaryNote);
-			await createNote({ courseId, content: 'Empty note', startTime: time });
+			createNote({ courseId, content: 'Empty note', startTime: time });
 			hidePicker();
 		});
 	};
