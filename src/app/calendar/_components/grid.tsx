@@ -1,26 +1,39 @@
 'use client';
 
-import HoursColumn from './hours-column';
+import HourRow from './hour-row';
 import DayColumn from './day-column';
 import { useCalendarContext } from '../_context/calendar-context';
 import DayHeading from './day-heading';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Grid = () => {
-	const { getDayAfter, displayedDays } = useCalendarContext();
+	const { getDayAfter, displayedDays, goDayBackward, goDayForward } =
+		useCalendarContext();
 	const days = new Array(displayedDays)
 		.fill(0)
 		.map((_, index) => getDayAfter(index));
 
-	console.log(displayedDays);
-
 	return (
-		<div className='flex'>
-			<HoursColumn />
+		<div className='flex flex-col'>
+			{/* Top bar: */}
+			<div className='flex flex-1'>
+				{/* Left & Right: */}
+				<div className='flex h-calendar-header w-20 font-semibold'>
+					<button
+						className='flex flex-1 cursor-pointer items-center justify-center rounded-tl-xl border hover:bg-gray-100'
+						onClick={goDayBackward}>
+						<ChevronLeft className='h-5 w-5' />
+					</button>
+					<button
+						className='flex flex-1 cursor-pointer items-center justify-center border-b border-r border-t hover:bg-gray-100'
+						onClick={goDayForward}>
+						<ChevronRight className='h-5 w-5' />
+					</button>
+				</div>
 
-			<div className='flex-1'>
-				{/* Headings: */}
+				{/* Mon, Tue, Wed, etc.: */}
 				<div
-					className='grid'
+					className='grid flex-1'
 					style={{ gridTemplateColumns: `repeat(${displayedDays}, 1fr)` }}>
 					{days.map((day, index) => (
 						<DayHeading
@@ -30,10 +43,17 @@ const Grid = () => {
 						/>
 					))}
 				</div>
+			</div>
 
-				{/* Grid */}
+			{/* Grid */}
+			<div className='flex'>
+				<div className='w-20'>
+					{new Array(24).fill(0).map((_, index) => (
+						<HourRow key={index} hour={index} />
+					))}
+				</div>
 				<div
-					className='grid'
+					className='grid flex-1 overflow-y-scroll'
 					style={{ gridTemplateColumns: `repeat(${displayedDays}, 1fr)` }}>
 					{days.map((day, index) => (
 						<DayColumn

@@ -19,18 +19,18 @@ const CalendarPage = () => {
 	if (!notes) return null;
 
 	return (
-		<>
+		<div className='flex h-full flex-col justify-between'>
 			{/* Year and month: */}
 			<Header />
 
-			<div className='relative mt-2'>
+			<div className='relative mt-2 flex-1'>
 				{/* Just grid: */}
 				<Grid />
 
 				{/* Notes on top: */}
 				<Notes />
 			</div>
-		</>
+		</div>
 	);
 };
 
