@@ -1,13 +1,19 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import { FC } from 'react';
+import { useCalendarContext } from '../_context/calendar-context';
 
 const Row = ({ isLast }: { isLast: boolean }) => {
+	const { rowHeight } = useCalendarContext();
+
 	return (
 		<div
 			className={cn(
-				'flex h-calendar-row items-center justify-center border-b border-r font-semibold text-gray-500',
+				'flex items-center justify-center border-b border-r font-semibold text-gray-500',
 				isLast && 'rounded-br-xl',
-			)}></div>
+			)}
+			style={{ height: rowHeight + 'px' }}></div>
 	);
 };
 

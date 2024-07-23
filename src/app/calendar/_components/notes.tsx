@@ -8,7 +8,7 @@ import useNotes from '@/app/notes/_hooks/use-notes';
 
 const Notes = () => {
 	const { notes } = useNotes();
-	const { containerRef, getRelativePosition, getDateFromPosition } =
+	const { containerRef, getRelativePosition, getDateFromPosition, rowHeight } =
 		useCalendarContext();
 
 	const [popupX, setPopupX] = useState(0);
@@ -68,7 +68,7 @@ const Notes = () => {
 			ref={containerRef}
 			className='absolute left-20 top-0 w-[calc(100%-80px)] cursor-crosshair overflow-hidden'
 			onClick={handleClick}
-			style={{ height: 24 * 80 + 'px' }}>
+			style={{ height: rowHeight * 24 + 'px' }}>
 			{notes?.map((note, index) => (
 				<Note key={note.id} note={note} leftOffset={leftOffsets[index]} />
 			))}
