@@ -3,6 +3,7 @@
 import HoursColumn from './hours-column';
 import DayColumn from './day-column';
 import { useCalendarContext } from '../_context/calendar-context';
+import DayHeading from './day-heading';
 
 const Grid = () => {
 	const { getDayAfter, displayedDays } = useCalendarContext();
@@ -10,14 +11,38 @@ const Grid = () => {
 		.fill(0)
 		.map((_, index) => getDayAfter(index));
 
+	console.log(displayedDays);
+
 	return (
 		<div className='flex'>
 			<HoursColumn />
-			{days.map((day, index) => {
-				if (index === displayedDays - 1)
-					return <DayColumn key={day.toString()} date={day} isLast />;
-				return <DayColumn key={day.toString()} date={day} />;
-			})}
+
+			<div className='flex-1'>
+				{/* Headings: */}
+				<div
+					className='grid'
+					style={{ gridTemplateColumns: `repeat(${displayedDays}, 1fr)` }}>
+					{days.map((day, index) => (
+						<DayHeading
+							key={day.toString()}
+							date={day}
+							isLast={index === displayedDays - 1}
+						/>
+					))}
+				</div>
+
+				{/* Grid */}
+				<div
+					className='grid'
+					style={{ gridTemplateColumns: `repeat(${displayedDays}, 1fr)` }}>
+					{days.map((day, index) => (
+						<DayColumn
+							key={day.toString()}
+							isLast={index === displayedDays - 1}
+						/>
+					))}
+				</div>
+			</div>
 		</div>
 	);
 };

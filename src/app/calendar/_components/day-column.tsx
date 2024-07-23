@@ -12,19 +12,12 @@ const Row = ({ isLast }: { isLast: boolean }) => {
 };
 
 interface DayColumnProps {
-	date: Date;
 	isLast?: boolean;
 }
 
-const DayColumn: FC<DayColumnProps> = ({ date, isLast = false }) => {
-	const dayOfTheMonth = date.getDate();
-	const dayOfTheWeek = date.toLocaleString('default', { weekday: 'short' });
-
+const DayColumn: FC<DayColumnProps> = ({ isLast = false }) => {
 	return (
-		<div className='flex-1'>
-			<div className='flex h-calendar-header items-center justify-center border-b border-r border-t font-semibold text-gray-500'>
-				{dayOfTheWeek} {dayOfTheMonth}
-			</div>
+		<div className='grid'>
 			{new Array(24).fill(0).map((_, index) => (
 				<Row key={index} isLast={index === 23 && isLast} />
 			))}
