@@ -57,12 +57,12 @@ const ConfirmEmailPage = () => {
 			</div>
 			{error && <ErrorMessage className='mt-4'>{error}</ErrorMessage>}
 			{message && (
-				<>
-					<SuccessMessage className='mt-4'>{message}</SuccessMessage>
-					<Link className='mt-2' href='/auth/login'>
-						Or go there now
-					</Link>
-				</>
+				<div className='mt-4 space-y-4'>
+					<SuccessMessage>{message}</SuccessMessage>
+					<Button asChild variant='secondary' size='lg'>
+						<Link href='/auth/login'>Or go there now</Link>
+					</Button>
+				</div>
 			)}
 		</div>
 	);

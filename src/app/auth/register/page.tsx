@@ -20,6 +20,7 @@ import Link from 'next/link';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import sendConfirmationEmail from '../_actions/send-confirmation-email';
 
 const RegisterPage = () => {
 	const [isPending, startTransition] = useTransition();
@@ -51,6 +52,25 @@ const RegisterPage = () => {
 			}
 		});
 	};
+
+	const handleResendEmail = () => {
+		const email = form.getValues('email');
+		if (!email) {
+			setError('Something went wrong, try refreshing page and try again');
+			return;
+		}
+
+		startTransition(async () => {
+			await sendConfirmationEmail({ email });
+		});
+	};
+
+	if (isPending)
+		return (
+			<div className='flex w-full justify-center'>
+				<LoadingSpinner className='mt-2' />
+			</div>
+		);
 
 	return (
 		<Form {...form}>
@@ -112,15 +132,21 @@ const RegisterPage = () => {
 							className='mt-4 block text-center text-sm text-gray-500'>
 							Already have an account? Log in
 						</Link>
-						<div className='flex w-full justify-center'>
-							{isPending && <LoadingSpinner className='mt-2' />}
-						</div>
 						{error && (
 							<ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>
 						)}
 					</>
 				) : (
-					<SuccessMessage className='mt-4 w-full'>{message}</SuccessMessage>
+					<>
+						<SuccessMessage className='mt-4 w-full'>{message}</SuccessMessage>
+						<Button
+							variant='secondary'
+							size='lg'
+							className='mt-2 w-full'
+							onClick={handleResendEmail}>
+							Didn&apos;t get an email? Click here
+						</Button>
+					</>
 				)}
 			</form>
 		</Form>

@@ -37,7 +37,7 @@ const register = async (values: z.infer<typeof RegisterSchema>) => {
 			const hasExpired = isAfter(new Date(), verificationToken.expires);
 
 			if (!hasExpired) {
-				return { message: en.auth.EMAIL_ALREADY_SENT };
+				return { message: en.auth.CONFIRMATION_EMAIL_SENT };
 			}
 		} else {
 			// Create user only if does not exist yet:
@@ -62,7 +62,6 @@ const register = async (values: z.infer<typeof RegisterSchema>) => {
 
 		return { message: en.auth.CONFIRMATION_EMAIL_SENT };
 	} catch (error) {
-		console.log(error);
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
