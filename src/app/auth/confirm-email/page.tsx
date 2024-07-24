@@ -59,7 +59,9 @@ const ConfirmEmailPage = () => {
 			{message && (
 				<>
 					<SuccessMessage className='mt-4'>{message}</SuccessMessage>
-					<Link href='/auth/login'>Or go there now</Link>
+					<Link className='mt-2' href='/auth/login'>
+						Or go there now
+					</Link>
 				</>
 			)}
 		</div>
