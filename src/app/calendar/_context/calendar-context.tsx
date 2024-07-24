@@ -57,14 +57,30 @@ export const CalendarContextProvider = ({
 		setCurrentFirstDay(getDayAfter(-1));
 	};
 
-	// Returns a relative position to grid container:
+	// Returns a relative position to grid container,
+	// Returns null when position is outside the container:
 	const getRelativePosition = (x: number, y: number) => {
 		if (!containerRef.current) return { x: null, y: null };
 
-		const { x: containerLeft, y: containerTop } =
-			containerRef.current.getBoundingClientRect();
+		const {
+			x: containerLeft,
+			y: containerTop,
+			width,
+			height,
+		} = containerRef.current.getBoundingClientRect();
 
-		return { x: x - containerLeft, y: y - containerTop };
+		const relativeX = x - containerLeft;
+		const relativeY = y - containerTop;
+
+		if (
+			relativeX < 0 ||
+			relativeY < 0 ||
+			relativeX > width ||
+			relativeY > height
+		)
+			return { x: null, y: null };
+
+		return { x: relativeX, y: relativeY };
 	};
 
 	// Get day and time from relative position:
