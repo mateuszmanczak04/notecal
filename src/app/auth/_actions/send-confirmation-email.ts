@@ -3,10 +3,45 @@
 import { en } from '@/lib/dictionary';
 import { z } from 'zod';
 import nodemailer from 'nodemailer';
+import db from '@/lib/db';
 
 const Schema = z.object({
 	email: z.string().min(1, { message: en.auth.EMAIL_REQUIRED }).email(),
 });
+
+const getVerficationTokenByEmail = async (email: string) => {
+	const verificationToken = await db.verificationToken.findFirst({
+		where: {
+			email,
+		},
+	});
+	return verificationToken;
+};
+
+const generateVerificationToken = async (email: string) => {
+	const token = crypto.randomUUID();
+	const expires = new Date(new Date().getTime() + 3600 * 1000); // 1h
+
+	const existingToken = await getVerficationTokenByEmail(email);
+
+	if (existingToken) {
+		await db.verificationToken.delete({
+			where: {
+				id: existingToken.id,
+			},
+		});
+	}
+
+	const verificationToken = await db.verificationToken.create({
+		data: {
+			email,
+			token,
+			expires,
+		},
+	});
+
+	return verificationToken;
+};
 
 const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
 	const validatedFields = Schema.safeParse(values);
@@ -14,8 +49,6 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
 	if (!validatedFields.success) {
 		return { error: en.INVALID_DATA };
 	}
-
-	const url = 'x';
 
 	try {
 		const transporter = nodemailer.createTransport({
@@ -28,11 +61,24 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
 			},
 		});
 
-		const info = await transporter.sendMail({
+		const email = validatedFields.data.email;
+		const token = await generateVerificationToken(email);
+		const url = `${process.env.APP_DOMAIN}/auth/confirm-email?token=${token.token}`;
+		console.log(url);
+
+		const html = `
+      <div>
+        <h1>Confirm account creation</h1>
+        <p>Click the button bellow to confirm Your new account</p>
+        <a href="${url}">Click</a>
+      </div>
+    `;
+
+		await transporter.sendMail({
 			from: 'Notecal <noreply@notecal.app>',
-			to: validatedFields.data.email,
+			to: email,
 			subject: 'Confirm Your account',
-			html: '<p>Click <a href="${url}">here</a> to confirm your account creation</p>',
+			html,
 		});
 
 		return { success: true };
