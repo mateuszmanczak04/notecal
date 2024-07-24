@@ -67,10 +67,35 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
 		console.log(url);
 
 		const html = `
-      <div>
-        <h1>Confirm account creation</h1>
-        <p>Click the button bellow to confirm Your new account</p>
-        <a href="${url}">Click</a>
+     <div
+        style="
+          font-family: sans-serif;
+          padding: 16px;
+          border-radius: 16px;
+          text-align: center;
+          max-width: 400px;
+        ">
+        <h1 style="font-size: 32px; margin: 0">Confirm account creation</h1>
+        <p style="font-size: 16px; margin: 0; margin-top: 8px">
+          Click the button bellow to confirm Your new account
+        </p>
+        <a
+          href="${url}"
+          style="
+            margin-top: 16px;
+            display: block;
+            text-decoration: none;
+            background-color: #3b82f6;
+            color: #ffffff;
+            height: 40px;
+            font-size: 16px;
+            padding: 0 32px;
+            line-height: 40px;
+            border-radius: 6px;
+            font-family: inherit;
+          ">
+          Click
+        </a>
       </div>
     `;
 
