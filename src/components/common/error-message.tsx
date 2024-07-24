@@ -10,7 +10,7 @@ const ErrorMessage: FC<Props> = ({ children, className }) => {
 	return (
 		<div
 			className={cn(
-				'flex h-8 items-center justify-center rounded-md bg-red-100 px-4 text-red-500',
+				'flex items-center justify-center rounded-md bg-red-100 px-3 py-2 text-red-500',
 				className,
 			)}>
 			{children}
