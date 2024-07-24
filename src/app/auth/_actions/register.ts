@@ -6,6 +6,7 @@ import { en } from '@/lib/dictionary';
 import RegisterSchema from '@/schemas/register-schema';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
+import sendConfirmationEmail from './send-confirmation-email';
 
 const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const validatedFields = RegisterSchema.safeParse(values);
@@ -43,12 +44,12 @@ const register = async (values: z.infer<typeof RegisterSchema>) => {
 			},
 		});
 
-		// todo - verification token
+		await sendConfirmationEmail({ email });
+
+		return { message: en.auth.CONFIRMATION_EMAIL_SENT };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
-
-	await login({ email, password });
 };
 
 export default register;
