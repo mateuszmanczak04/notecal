@@ -8,6 +8,14 @@ This is a web application which was made to help students organize their univers
 npm install
 ```
 
+Move `.env.example` content into `.env` file and replace variables with your own. It should look like this:
+
+```env
+DATABASE_URL="postgresql://..."
+AUTH_SECRET="anything you want"
+AUTH_URL="http://localhost:3000/api/auth"
+```
+
 ### Running dev server
 
 ```bash
