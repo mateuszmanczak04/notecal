@@ -19,18 +19,18 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
 
 	try {
 		const transporter = nodemailer.createTransport({
-			host: '',
-			port: 465,
-			secure: true,
+			host: process.env.EMAIL_HOST,
+			port: 587,
+			secure: false,
 			auth: {
-				user: '',
-				pass: '',
+				user: process.env.EMAIL_USER,
+				pass: process.env.EMAIL_PASSWORD,
 			},
 		});
 
-		await transporter.sendMail({
-			from: 'Notecal <do-not-reply@notecal.com>',
-			to: '',
+		const info = await transporter.sendMail({
+			from: 'Notecal <noreply@notecal.app>',
+			to: validatedFields.data.email,
 			subject: 'Confirm Your account',
 			html: '<p>Click <a href="${url}">here</a> to confirm your account creation</p>',
 		});
