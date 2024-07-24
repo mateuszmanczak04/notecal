@@ -10,7 +10,7 @@ export default async function Home() {
 	});
 
 	return (
-		<div className='flex min-h-screen flex-col'>
+		<div className='flex flex-col'>
 			<Hero />
 			<Footer />
 		</div>
