@@ -33,6 +33,11 @@ export const en = {
 		MIN_PASSWORD_LENGTH: 'Minimum password length is 6 characters.',
 		PASSWORDS_DO_NOT_MATCH: 'Passwords do not match',
 		WRONG_PASSWORD: 'Wrong password',
+		TOKEN_REQUIRED: 'Token is required',
+		INVALID_TOKEN: 'Invalid token',
+		TOKEN_EXPIRED: 'Token has expired',
+		CONFIRMATION_EMAIL_SENT:
+			'Confirmation email has been sent, check your inbox',
 	},
 	settings: {
 		DEFAULT_NOTE_DURATION_REQUIRED: 'Default note duration is required',
