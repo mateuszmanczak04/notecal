@@ -2,6 +2,7 @@
 
 import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
+import { isAfter } from 'date-fns';
 import { z } from 'zod';
 
 const Schema = z.object({
@@ -28,9 +29,9 @@ const confirmEmail = async (values: z.infer<typeof Schema>) => {
 			return { error: en.auth.INVALID_TOKEN };
 		}
 
-		const hasExpires = Date.now() < verificationToken.expires.getTime();
+		const hasExpired = isAfter(new Date(), verificationToken.expires);
 
-		if (hasExpires) {
+		if (hasExpired) {
 			return { error: en.auth.TOKEN_EXPIRED };
 		}
 

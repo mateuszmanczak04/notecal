@@ -9,7 +9,7 @@ const Schema = z.object({
 	email: z.string().min(1, { message: en.auth.EMAIL_REQUIRED }).email(),
 });
 
-const getVerficationTokenByEmail = async (email: string) => {
+export const getVerficationTokenByEmail = async (email: string) => {
 	const verificationToken = await db.verificationToken.findFirst({
 		where: {
 			email,
@@ -63,8 +63,8 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
 
 		const email = validatedFields.data.email;
 		const token = await generateVerificationToken(email);
+		console.log(token);
 		const url = `${process.env.APP_DOMAIN}/auth/confirm-email?token=${token.token}`;
-		console.log(url);
 
 		const html = `
      <div

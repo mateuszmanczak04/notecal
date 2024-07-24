@@ -33,15 +33,20 @@ const RegisterPage = () => {
 			confirmPassword: '',
 		},
 	});
+	const [isEmailSent, setIsEmailSent] = useState(false);
 
 	const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
 		startTransition(async () => {
+			setError('');
+			setMessage('');
+
 			const res = await register(values);
 			if (res?.error) {
 				setError(res.error);
 				return;
 			}
 			if (res?.message) {
+				setIsEmailSent(true);
 				setMessage(res.message);
 			}
 		});
@@ -53,6 +58,7 @@ const RegisterPage = () => {
 				onSubmit={form.handleSubmit(onSubmit)}
 				className='mx-auto flex max-w-[400px] flex-col items-center'>
 				<p className='text-3xl font-bold'>Create an account</p>
+
 				<FormField
 					control={form.control}
 					name='email'
@@ -60,51 +66,60 @@ const RegisterPage = () => {
 						<FormItem className='mt-4 w-full'>
 							<FormLabel>Email</FormLabel>
 							<FormControl>
-								<Input placeholder='john.doe@example.com' {...field} />
+								<Input
+									disabled={isEmailSent}
+									placeholder='john.doe@example.com'
+									{...field}
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
-				<FormField
-					control={form.control}
-					name='password'
-					render={({ field }) => (
-						<FormItem className='mt-4 w-full'>
-							<FormLabel>Password</FormLabel>
-							<FormControl>
-								<Input placeholder='******' {...field} type='password' />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name='confirmPassword'
-					render={({ field }) => (
-						<FormItem className='mt-4 w-full'>
-							<FormLabel>Password</FormLabel>
-							<FormControl>
-								<Input placeholder='******' {...field} type='password' />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<Button type='submit' className='mt-8 w-full'>
-					Register
-				</Button>
-				<Link
-					href='/auth/login'
-					className='mt-4 block text-center text-sm text-gray-500'>
-					Already have an account? Log in
-				</Link>
-				<div className='flex w-full justify-center'>
-					{isPending && <LoadingSpinner />}
-				</div>
-				{error && <ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>}
-				{message && (
+				{!isEmailSent ? (
+					<>
+						<FormField
+							control={form.control}
+							name='password'
+							render={({ field }) => (
+								<FormItem className='mt-4 w-full'>
+									<FormLabel>Password</FormLabel>
+									<FormControl>
+										<Input placeholder='******' {...field} type='password' />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='confirmPassword'
+							render={({ field }) => (
+								<FormItem className='mt-4 w-full'>
+									<FormLabel>Password</FormLabel>
+									<FormControl>
+										<Input placeholder='******' {...field} type='password' />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<Button type='submit' className='mt-8 w-full'>
+							Register
+						</Button>
+						<Link
+							href='/auth/login'
+							className='mt-4 block text-center text-sm text-gray-500'>
+							Already have an account? Log in
+						</Link>
+						<div className='flex w-full justify-center'>
+							{isPending && <LoadingSpinner className='mt-2' />}
+						</div>
+						{error && (
+							<ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>
+						)}
+					</>
+				) : (
 					<SuccessMessage className='mt-4 w-full'>{message}</SuccessMessage>
 				)}
 			</form>
