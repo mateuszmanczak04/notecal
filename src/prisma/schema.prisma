@@ -59,11 +59,10 @@ model Session {
 }
 
 model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
-
-  @@id([identifier, token])
+  id      String   @id @default(cuid())
+  email   String
+  token   String
+  expires DateTime
 }
 
 // Optional for WebAuthn support

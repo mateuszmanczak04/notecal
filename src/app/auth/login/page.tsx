@@ -82,11 +82,7 @@ const LoginPage = () => {
 					Don&apos;t have an account yet? Register now
 				</Link>
 				<div className='flex w-full justify-center'>
-					{isPending && (
-						<>
-							<LoadingSpinner />
-						</>
-					)}
+					{isPending && <LoadingSpinner className='mt-2' />}
 				</div>
 				{error && <ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>}
 			</form>

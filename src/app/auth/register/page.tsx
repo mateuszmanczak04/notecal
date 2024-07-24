@@ -1,7 +1,9 @@
 'use client';
 
-import Link from 'next/link';
 import register from '@/app/auth/_actions/register';
+import ErrorMessage from '@/components/common/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
+import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -14,15 +16,16 @@ import {
 import { Input } from '@/components/ui/input';
 import RegisterSchema from '@/schemas/register-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import ErrorMessage from '@/components/common/error-message';
+import sendConfirmationEmail from '../_actions/send-confirmation-email';
 
 const RegisterPage = () => {
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState('');
+	const [message, setMessage] = useState('');
 	const form = useForm<z.infer<typeof RegisterSchema>>({
 		resolver: zodResolver(RegisterSchema),
 		defaultValues: {
@@ -31,16 +34,43 @@ const RegisterPage = () => {
 			confirmPassword: '',
 		},
 	});
+	const [isEmailSent, setIsEmailSent] = useState(false);
 
 	const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-		startTransition(() =>
-			register(values).then(res => {
-				if (res?.error) {
-					setError(res.error);
-				}
-			}),
-		);
+		startTransition(async () => {
+			setError('');
+			setMessage('');
+
+			const res = await register(values);
+			if (res?.error) {
+				setError(res.error);
+				return;
+			}
+			if (res?.message) {
+				setIsEmailSent(true);
+				setMessage(res.message);
+			}
+		});
 	};
+
+	const handleResendEmail = () => {
+		const email = form.getValues('email');
+		if (!email) {
+			setError('Something went wrong, try refreshing page and try again');
+			return;
+		}
+
+		startTransition(async () => {
+			await sendConfirmationEmail({ email });
+		});
+	};
+
+	if (isPending)
+		return (
+			<div className='flex w-full justify-center'>
+				<LoadingSpinner className='mt-2' />
+			</div>
+		);
 
 	return (
 		<Form {...form}>
@@ -48,6 +78,7 @@ const RegisterPage = () => {
 				onSubmit={form.handleSubmit(onSubmit)}
 				className='mx-auto flex max-w-[400px] flex-col items-center'>
 				<p className='text-3xl font-bold'>Create an account</p>
+
 				<FormField
 					control={form.control}
 					name='email'
@@ -55,50 +86,68 @@ const RegisterPage = () => {
 						<FormItem className='mt-4 w-full'>
 							<FormLabel>Email</FormLabel>
 							<FormControl>
-								<Input placeholder='john.doe@example.com' {...field} />
+								<Input
+									disabled={isEmailSent}
+									placeholder='john.doe@example.com'
+									{...field}
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
-				<FormField
-					control={form.control}
-					name='password'
-					render={({ field }) => (
-						<FormItem className='mt-4 w-full'>
-							<FormLabel>Password</FormLabel>
-							<FormControl>
-								<Input placeholder='******' {...field} type='password' />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name='confirmPassword'
-					render={({ field }) => (
-						<FormItem className='mt-4 w-full'>
-							<FormLabel>Password</FormLabel>
-							<FormControl>
-								<Input placeholder='******' {...field} type='password' />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<Button type='submit' className='mt-8 w-full'>
-					Register
-				</Button>
-				<Link
-					href='/auth/login'
-					className='mt-4 block text-center text-sm text-gray-500'>
-					Already have an account? Log in
-				</Link>
-				<div className='flex w-full justify-center'>
-					{isPending && <LoadingSpinner />}
-				</div>
-				{error && <ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>}
+				{!isEmailSent ? (
+					<>
+						<FormField
+							control={form.control}
+							name='password'
+							render={({ field }) => (
+								<FormItem className='mt-4 w-full'>
+									<FormLabel>Password</FormLabel>
+									<FormControl>
+										<Input placeholder='******' {...field} type='password' />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='confirmPassword'
+							render={({ field }) => (
+								<FormItem className='mt-4 w-full'>
+									<FormLabel>Password</FormLabel>
+									<FormControl>
+										<Input placeholder='******' {...field} type='password' />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<Button type='submit' className='mt-8 w-full'>
+							Register
+						</Button>
+						<Link
+							href='/auth/login'
+							className='mt-4 block text-center text-sm text-gray-500'>
+							Already have an account? Log in
+						</Link>
+						{error && (
+							<ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>
+						)}
+					</>
+				) : (
+					<>
+						<SuccessMessage className='mt-4 w-full'>{message}</SuccessMessage>
+						<Button
+							variant='secondary'
+							size='lg'
+							className='mt-2 w-full'
+							onClick={handleResendEmail}>
+							Didn&apos;t get an email? Click here
+						</Button>
+					</>
+				)}
 			</form>
 		</Form>
 	);

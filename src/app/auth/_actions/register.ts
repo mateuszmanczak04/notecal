@@ -6,6 +6,10 @@ import { en } from '@/lib/dictionary';
 import RegisterSchema from '@/schemas/register-schema';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
+import sendConfirmationEmail, {
+	getVerficationTokenByEmail,
+} from './send-confirmation-email';
+import { isAfter } from 'date-fns';
 
 const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const validatedFields = RegisterSchema.safeParse(values);
@@ -24,31 +28,42 @@ const register = async (values: z.infer<typeof RegisterSchema>) => {
 		// Email taken:
 		const existingUser = await db.user.findUnique({ where: { email } });
 		if (existingUser) {
-			return { error: en.auth.EMAIL_TAKEN };
+			const verificationToken = await getVerficationTokenByEmail(email);
+
+			if (!verificationToken) {
+				return { error: en.SOMETHING_WENT_WRONG };
+			}
+
+			const hasExpired = isAfter(new Date(), verificationToken.expires);
+
+			if (!hasExpired) {
+				return { message: en.auth.CONFIRMATION_EMAIL_SENT };
+			}
+		} else {
+			// Create user only if does not exist yet:
+			const hashedPassword = await bcrypt.hash(password, 10);
+
+			const user = await db.user.create({
+				data: {
+					email,
+					password: hashedPassword,
+				},
+			});
+
+			await db.settings.create({
+				data: {
+					userId: user.id,
+					language: 'en',
+				},
+			});
 		}
 
-		const hashedPassword = await bcrypt.hash(password, 10);
+		await sendConfirmationEmail({ email });
 
-		const user = await db.user.create({
-			data: {
-				email,
-				password: hashedPassword,
-			},
-		});
-
-		await db.settings.create({
-			data: {
-				userId: user.id,
-				language: 'en',
-			},
-		});
-
-		// todo - verification token
+		return { message: en.auth.CONFIRMATION_EMAIL_SENT };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
-
-	await login({ email, password });
 };
 
 export default register;
