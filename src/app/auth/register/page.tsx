@@ -1,7 +1,9 @@
 'use client';
 
-import Link from 'next/link';
 import register from '@/app/auth/_actions/register';
+import ErrorMessage from '@/components/common/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
+import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -14,15 +16,15 @@ import {
 import { Input } from '@/components/ui/input';
 import RegisterSchema from '@/schemas/register-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import ErrorMessage from '@/components/common/error-message';
 
 const RegisterPage = () => {
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState('');
+	const [message, setMessage] = useState('');
 	const form = useForm<z.infer<typeof RegisterSchema>>({
 		resolver: zodResolver(RegisterSchema),
 		defaultValues: {
@@ -33,13 +35,16 @@ const RegisterPage = () => {
 	});
 
 	const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-		startTransition(() =>
-			register(values).then(res => {
-				if (res?.error) {
-					setError(res.error);
-				}
-			}),
-		);
+		startTransition(async () => {
+			const res = await register(values);
+			if (res?.error) {
+				setError(res.error);
+				return;
+			}
+			if (res?.message) {
+				setMessage(res.message);
+			}
+		});
 	};
 
 	return (
@@ -99,6 +104,9 @@ const RegisterPage = () => {
 					{isPending && <LoadingSpinner />}
 				</div>
 				{error && <ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>}
+				{message && (
+					<SuccessMessage className='mt-4 w-full'>{message}</SuccessMessage>
+				)}
 			</form>
 		</Form>
 	);
