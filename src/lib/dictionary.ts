@@ -39,6 +39,8 @@ export const en = {
 		CONFIRMATION_EMAIL_SENT:
 			'Confirmation email has been sent, check your inbox',
 		EMAIL_ALREADY_SENT: 'Email has already been sent',
+		CONFIRM_EMAIL_FIRST:
+			"In order to login, you have to confirm your email first. If you didn't get an email try repeating registration flow again",
 	},
 	settings: {
 		DEFAULT_NOTE_DURATION_REQUIRED: 'Default note duration is required',

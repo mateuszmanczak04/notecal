@@ -1,6 +1,7 @@
 'use server';
 
 import { signIn } from '@/auth';
+import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import LoginSchema from '@/schemas/login-schema';
@@ -17,7 +18,19 @@ const login = async (values: z.infer<typeof LoginSchema>) => {
 
 	const { email, password } = validatedFields.data;
 
-	// todo - send verification email
+	const user = await db.user.findUnique({
+		where: {
+			email,
+		},
+	});
+
+	if (!user) {
+		return { error: en.INVALID_CREDENTIALS };
+	}
+
+	if (!user.emailVerified) {
+		return { error: en.auth.CONFIRM_EMAIL_FIRST };
+	}
 
 	// todo - handle 2FA
 
