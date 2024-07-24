@@ -2,7 +2,9 @@
 
 import useCourse from '@/app/courses/_hooks/use-course';
 import updateNote from '@/app/notes/_actions/update-note';
+import useNotes from '@/app/notes/_hooks/use-notes';
 import LocalNotes from '@/lib/local-notes';
+import { cn } from '@/lib/utils';
 import { type Note } from '@prisma/client';
 import {
 	addDays,
@@ -11,10 +13,8 @@ import {
 	startOfDay,
 } from 'date-fns';
 import Link from 'next/link';
-import { FC, useEffect, useMemo, useRef, useState, useTransition } from 'react';
+import { FC, useEffect, useRef, useState, useTransition } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
-import useNotes from '@/app/notes/_hooks/use-notes';
-import { cn } from '@/lib/utils';
 
 interface NoteWithPending extends Note {
 	pending?: boolean;
@@ -51,9 +51,6 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		setDragStartTime(note.startTime);
 		setDragEndTime(note.endTime);
 	}, [note.startTime, note.endTime]);
-
-	// Width of a note block - 90% of day column width:
-	const blockWidth = (100 / displayedDays) * 0.9 + '%';
 
 	// Returns days which are included in note's duration,
 	// All of them are set to 00:00:
