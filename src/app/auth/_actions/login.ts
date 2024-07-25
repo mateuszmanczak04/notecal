@@ -28,10 +28,6 @@ const login = async (values: z.infer<typeof LoginSchema>) => {
 		return { error: en.INVALID_CREDENTIALS };
 	}
 
-	if (!user.emailVerified) {
-		return { error: en.auth.CONFIRM_EMAIL_FIRST };
-	}
-
 	// todo - handle 2FA
 
 	try {

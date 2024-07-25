@@ -38,8 +38,6 @@ export const en = {
 		TOKEN_EXPIRED: 'Token has expired',
 		CONFIRMATION_EMAIL_SENT:
 			'Confirmation email has been sent, check your inbox',
-		CONFIRM_EMAIL_FIRST:
-			"In order to login, you have to confirm your email first. If you didn't get an email try repeating registration flow again",
 	},
 	settings: {
 		DEFAULT_NOTE_DURATION_REQUIRED: 'Default note duration is required',
