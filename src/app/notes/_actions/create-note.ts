@@ -43,16 +43,18 @@ const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
 			});
 		}
 
+		const properStartTime = new Date(
+			new Date(startTime.setSeconds(0)).setMilliseconds(0),
+		);
+		const properEndTime = new Date(
+			properStartTime.getTime() + userSettings!.defaultNoteDuration * 1000 * 60,
+		);
+
 		const newNote = await db.note.create({
 			data: {
 				courseId,
-				startTime: new Date(
-					new Date(startTime.setSeconds(0)).setMilliseconds(0),
-				),
-				endTime: new Date(
-					new Date(startTime.setSeconds(0)).setMilliseconds(0) +
-						userSettings!.defaultNoteDuration * 1000 * 60,
-				),
+				startTime: properStartTime,
+				endTime: properEndTime,
 				userId: session.user.id,
 				content,
 			},
