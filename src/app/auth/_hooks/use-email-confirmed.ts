@@ -4,7 +4,7 @@ import getEmailConfirmed from '../_actions/get-email-confirmed';
 const useEmailConfirmed = () => {
 	const { data, error, isPending } = useQuery({
 		queryKey: ['email-confirmed'],
-		queryFn: getEmailConfirmed,
+		queryFn: async () => await getEmailConfirmed(),
 	});
 
 	return {

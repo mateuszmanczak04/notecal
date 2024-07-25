@@ -1,10 +1,6 @@
-export const publicRoutes: string[] = ['/'];
+export const publicRoutes: string[] = ['/', '/auth/confirm-email'];
 
-export const authRoutes: string[] = [
-	'/auth/login',
-	'/auth/register',
-	'/auth/confirm-email',
-];
+export const authRoutes: string[] = ['/auth/login', '/auth/register'];
 
 export const apiAuthPrefix: string = '/api/auth';
 

@@ -13,7 +13,8 @@ import EmailNotConfirmed from './_components/email-not-confirmed';
 
 const SettingsPage = () => {
 	const { settings, isPending, error } = useSettings();
-	const { emailConfirmed } = useEmailConfirmed();
+	const { emailConfirmed, isPending: emailConfirmedIsPending } =
+		useEmailConfirmed();
 
 	if (isPending) return <LoadingSpinner />;
 
@@ -24,6 +25,7 @@ const SettingsPage = () => {
 	return (
 		<div className='mx-auto mt-4 flex max-w-[480px] flex-col gap-4'>
 			<h1 className='text-3xl font-bold'>Settings</h1>
+			{emailConfirmedIsPending && <LoadingSpinner />}
 			{emailConfirmed === false && <EmailNotConfirmed />}
 			<ChangePasswordSetting />
 			<ThemeSetting />
