@@ -7,8 +7,9 @@ import { z } from 'zod';
 
 const CreateNoteSchema = z.object({
 	courseId: z.string().min(1, { message: en.courses.ID_REQUIRED }),
-	content: z.string().optional().default(''),
-	startTime: z.date().optional().default(new Date()),
+	content: z.string().default(''),
+	startTime: z.date(),
+	endTime: z.date(),
 });
 
 const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
@@ -18,7 +19,7 @@ const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
 		return { error: en.INVALID_DATA };
 	}
 
-	const { courseId, content, startTime } = validatedFields.data;
+	const { courseId, content, startTime, endTime } = validatedFields.data;
 
 	try {
 		const session = await auth();
@@ -27,27 +28,12 @@ const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
 			return { error: en.auth.UNAUTHENTICATED };
 		}
 
-		const userSettings = await db.settings.findUnique({
-			where: {
-				userId: session.user.id,
-			},
-		});
-
-		if (!userSettings) {
-			await db.settings.create({
-				data: {
-					userId: session.user.id,
-					language: 'en',
-					orderTasks: 'createdAt',
-				},
-			});
-		}
-
+		// Set seconds and milliseconds to 0:
 		const properStartTime = new Date(
 			new Date(startTime.setSeconds(0)).setMilliseconds(0),
 		);
 		const properEndTime = new Date(
-			properStartTime.getTime() + userSettings!.defaultNoteDuration * 1000 * 60,
+			new Date(endTime.setSeconds(0)).setMilliseconds(0),
 		);
 
 		const newNote = await db.note.create({
