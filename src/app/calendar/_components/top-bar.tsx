@@ -15,7 +15,7 @@ const TopBar: FC<TopBarProps> = ({}) => {
 		.map((_, index) => getDayAfter(index));
 
 	return (
-		<div className='mt-4 flex flex-1'>
+		<div className='mt-4 flex'>
 			{/* Left & Right: */}
 			<div className='flex h-calendar-header w-20 font-semibold'>
 				<button

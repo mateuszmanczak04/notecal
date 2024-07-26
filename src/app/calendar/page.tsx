@@ -25,7 +25,7 @@ const CalendarPage = () => {
 			<Header />
 			<TopBar />
 
-			<div className='relative overflow-y-scroll'>
+			<div className='relative overflow-y-scroll scrollbar-hide'>
 				{/* Just grid: */}
 				<Grid />
 
