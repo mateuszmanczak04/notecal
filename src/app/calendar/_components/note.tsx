@@ -2,7 +2,6 @@
 
 import useCourse from '@/app/courses/_hooks/use-course';
 import updateNote from '@/app/notes/_actions/update-note';
-import useNotes from '@/app/notes/_hooks/use-notes';
 import LocalNotes from '@/lib/local-notes';
 import { cn } from '@/lib/utils';
 import { type Note } from '@prisma/client';
@@ -16,12 +15,8 @@ import Link from 'next/link';
 import { FC, useEffect, useRef, useState, useTransition } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 
-interface NoteWithPending extends Note {
-	pending?: boolean;
-}
-
 interface NoteProps {
-	note: NoteWithPending;
+	note: Note & { loading?: boolean };
 	leftOffset: number;
 }
 
@@ -32,7 +27,6 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		getRelativePosition,
 		getDateFromPosition,
 	} = useCalendarContext();
-	const { notes } = useNotes();
 	const [isPending, startTransition] = useTransition();
 	const course = useCourse(note.courseId);
 
@@ -302,7 +296,7 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 						href={`/notes/${note.courseId}/${note.id}`}
 						className={cn(
 							'absolute z-20 min-h-4 select-none overflow-hidden rounded-xl border border-white bg-primary-500 text-white transition hover:opacity-90',
-							note.pending && 'pointer-events-none opacity-50',
+							note.loading && 'pointer-events-none opacity-50',
 							isDragging && 'opacity-50',
 						)}
 						style={{
