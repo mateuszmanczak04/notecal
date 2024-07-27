@@ -102,7 +102,7 @@ const useCourses = () => {
 	});
 
 	// Deleting
-	// TODO: delete all related notes
+	// TODO: delete all related notes and tasks
 	const { mutate: remove } = useMutation({
 		mutationFn: async (id: string) => {
 			const { error } = await deleteCourse({ id });
