@@ -14,6 +14,7 @@ import {
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState, useTransition } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
+import useNotes from '@/app/notes/_hooks/use-notes';
 
 interface NoteProps {
 	note: Note & { loading?: boolean };
@@ -29,6 +30,7 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 	} = useCalendarContext();
 	const [isPending, startTransition] = useTransition();
 	const course = useCourse(note.courseId);
+	const { update: updateNote } = useNotes();
 
 	const noteRef = useRef<(HTMLAnchorElement | null)[]>([]);
 	const initialDragDate = useRef<Date | null>(null);
@@ -178,18 +180,13 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 	const handleDragEnd = (event: React.DragEvent) => {
 		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
 
-		startTransition(async () => {
-			await LocalNotes.update(note.id, {
-				startTime: dragStartTime,
-				endTime: dragEndTime,
-			});
-			await updateNote({
-				id: note.id,
-				startTime: dragStartTime,
-				endTime: dragEndTime,
-			});
-			setIsDragging(false);
+		updateNote({
+			id: note.id,
+			startTime: dragStartTime,
+			endTime: dragEndTime,
 		});
+
+		setIsDragging(false);
 	};
 
 	// Dragging top edge
@@ -216,13 +213,13 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 			if (!newStartTime) return;
 
 			if (newStartTime < note.endTime) {
-				await LocalNotes.update(note.id, { startTime: newStartTime });
-				await updateNote({ id: note.id, startTime: newStartTime }); // TODO: optimistic updates
+				updateNote({ id: note.id, startTime: newStartTime });
 			} else {
-				await LocalNotes.update(note.id, { startTime: note.endTime });
-				await LocalNotes.update(note.id, { endTime: newStartTime });
-				await updateNote({ id: note.id, startTime: note.endTime }); // TODO: optimistic updates
-				await updateNote({ id: note.id, endTime: newStartTime }); // TODO: optimistic updates
+				updateNote({
+					id: note.id,
+					startTime: note.endTime,
+					endTime: newStartTime,
+				});
 			}
 
 			setIsDragging(false);
@@ -253,13 +250,13 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 			if (!newEndTime) return;
 
 			if (newEndTime > note.startTime) {
-				await LocalNotes.update(note.id, { endTime: newEndTime });
-				await updateNote({ id: note.id, endTime: newEndTime }); // TODO: optimistic updates
+				updateNote({ id: note.id, endTime: newEndTime });
 			} else {
-				await LocalNotes.update(note.id, { endTime: note.startTime });
-				await LocalNotes.update(note.id, { startTime: newEndTime });
-				await updateNote({ id: note.id, endTime: note.endTime }); // TODO: optimistic updates
-				await updateNote({ id: note.id, startTime: newEndTime }); // TODO: optimistic updates
+				updateNote({
+					id: note.id,
+					endTime: note.startTime,
+					startTime: newEndTime,
+				});
 			}
 
 			setIsDragging(false);

@@ -4,12 +4,21 @@ import createNote from '../_actions/create-note';
 import { Note } from '@prisma/client';
 import queryClient from '@/lib/query-client';
 import { z } from 'zod';
+import updateNote from '../_actions/update-note';
 
 type CreateNoteSchema = {
 	content: string;
 	courseId: string;
 	startTime: Date;
 	endTime: Date;
+};
+
+type UpdateNoteSchema = {
+	id: string;
+	content?: string;
+	courseId?: string;
+	startTime?: Date;
+	endTime?: Date;
 };
 
 type NoteWithLoading = Note & { loading?: boolean };
@@ -33,7 +42,7 @@ const useNotes = () => {
 		},
 	});
 
-	const { mutate: addNewNote } = useMutation({
+	const { mutate: add } = useMutation({
 		mutationFn: async (values: CreateNoteSchema) => {
 			const { newNote, error } = await createNote(values);
 			if (error) throw new Error(error);
@@ -45,10 +54,11 @@ const useNotes = () => {
 
 			const newTempNote = createTempNote(values);
 
-			queryClient.setQueryData(['notes'], (oldNotes: Note[]) => [
-				...oldNotes,
-				newTempNote,
-			]);
+			await queryClient.setQueryData(['notes'], (oldNotes: Note[]) =>
+				[...oldNotes, newTempNote].toSorted((a, b) =>
+					a.startTime > b.startTime ? 1 : -1,
+				),
+			);
 
 			return previousNotes;
 		},
@@ -61,7 +71,41 @@ const useNotes = () => {
 		},
 	});
 
-	return { notes: data, isPending, error, addNewNote };
+	const { mutate: update } = useMutation({
+		mutationFn: async (values: UpdateNoteSchema) => {
+			const { updatedNote, error } = await updateNote(values);
+			if (error) throw new Error(error);
+			return updatedNote;
+		},
+		onMutate: async (values: UpdateNoteSchema) => {
+			await queryClient.cancelQueries({ queryKey: ['notes'] });
+			const previousNotes = queryClient.getQueryData(['notes']);
+
+			await queryClient.setQueryData(['notes'], (oldNotes: Note[]) => {
+				return oldNotes
+					.map(note => {
+						if (note.id === values.id) {
+							return { ...note, ...values };
+						}
+						return note;
+					})
+					.toSorted((a, b) => (a.startTime > b.startTime ? 1 : -1));
+			});
+
+			return previousNotes;
+		},
+		onError: (_err, _variables, context) => {
+			// Rollback previous state
+			queryClient.setQueryData(['notes'], context);
+		},
+		onSettled: async () => {
+			return await queryClient.invalidateQueries({ queryKey: ['notes'] });
+		},
+	});
+
+	// TODO: deleteNote
+
+	return { notes: data, isPending, error, add, update };
 };
 
 export default useNotes;

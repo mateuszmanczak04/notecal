@@ -1,28 +1,32 @@
 'use client';
 
-import createNote from '@/app/notes/_actions/create-note';
 import { useNoteContext } from '@/app/notes/_context/note-context';
+import useSettings from '@/app/settings/_hooks/use-settings';
 import { Button } from '@/components/ui/button';
-import LocalNotes from '@/lib/local-notes';
-import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
-import { useTransition } from 'react';
+import useNotes from '../_hooks/use-notes';
 
 const NewNoteButton = () => {
 	const { course } = useNoteContext();
-	const [isPending, startTransition] = useTransition();
+	const { settings } = useSettings();
+	const { add: addNewNote } = useNotes();
 
 	const onClick = () => {
-		startTransition(async () => {
-			// TODO: optimistic updates
-			const { newNote } = await createNote({
-				courseId: course.id!,
-				startTime: new Date(),
-				content: 'Empty note',
-			});
-			if (!newNote) return;
-			await LocalNotes.append(newNote);
+		if (!settings) return;
+
+		const startTime = new Date();
+		const endTime = new Date(
+			startTime.getTime() + settings.defaultNoteDuration * 60 * 1000,
+		);
+
+		addNewNote({
+			courseId: course.id,
+			content: 'Empty note',
+			startTime,
+			endTime,
 		});
+
+		// TODO: don't allow user to route to new note until final creation
 	};
 
 	return (
@@ -30,10 +34,7 @@ const NewNoteButton = () => {
 			style={{ background: course?.color }}
 			onClick={onClick}
 			size='sm'
-			className={cn(
-				'flex items-center gap-1',
-				isPending && 'pointer-events-none opacity-75 transition',
-			)}>
+			className='flex items-center gap-1'>
 			<Plus className='h-4 w-4' /> Create New Note
 		</Button>
 	);

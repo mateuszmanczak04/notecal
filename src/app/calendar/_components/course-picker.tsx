@@ -22,7 +22,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 	const pickerRef = useRef<HTMLDivElement | null>(null);
 	const { settings } = useSettings();
 
-	const { addNewNote } = useNotes();
+	const { add: addNewNote } = useNotes();
 
 	const handleSelect = (courseId: string) => {
 		if (!settings) return;
