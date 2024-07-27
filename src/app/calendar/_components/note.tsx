@@ -1,8 +1,7 @@
 'use client';
 
 import useCourse from '@/app/courses/_hooks/use-course';
-import updateNote from '@/app/notes/_actions/update-note';
-import LocalNotes from '@/lib/local-notes';
+import useNotes from '@/app/notes/_hooks/use-notes';
 import { cn } from '@/lib/utils';
 import { type Note } from '@prisma/client';
 import {
@@ -14,7 +13,6 @@ import {
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState, useTransition } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
-import useNotes from '@/app/notes/_hooks/use-notes';
 
 interface NoteProps {
 	note: Note & { loading?: boolean };

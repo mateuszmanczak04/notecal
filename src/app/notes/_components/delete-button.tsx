@@ -1,25 +1,20 @@
 'use client';
 
-import deleteNote from '@/app/notes/_actions/delete-note';
 import { useNoteContext } from '@/app/notes/_context/note-context';
 import { Button } from '@/components/ui/button';
-import LocalNotes from '@/lib/local-notes';
 import { useRouter } from 'next/navigation';
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
+import useNotes from '../_hooks/use-notes';
 
 const DeleteButton = () => {
 	const { currentNote } = useNoteContext();
-	const [isPending, startTransition] = useTransition();
 	const router = useRouter();
-	const [isDeleting, setIsDeleting] = useState<boolean>(false);
+	const [isDeleting, setIsDeleting] = useState(false);
+	const { remove: removeNote } = useNotes();
 
 	const confirmDeletion = () => {
-		startTransition(async () => {
-			// TODO: optimistic updates
-			deleteNote({ id: currentNote.id });
-			await LocalNotes.remove(currentNote.id);
-			router.back();
-		});
+		removeNote(currentNote.id);
+		router.back();
 	};
 
 	if (isDeleting) {
@@ -43,10 +38,7 @@ const DeleteButton = () => {
 	}
 
 	return (
-		<Button
-			variant='destructive'
-			disabled={isPending}
-			onClick={() => setIsDeleting(true)}>
+		<Button variant='destructive' onClick={() => setIsDeleting(true)}>
 			Delete this note
 		</Button>
 	);

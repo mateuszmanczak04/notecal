@@ -5,6 +5,7 @@ import { Note } from '@prisma/client';
 import queryClient from '@/lib/query-client';
 import { z } from 'zod';
 import updateNote from '../_actions/update-note';
+import deleteNote from '../_actions/delete-note';
 
 type CreateNoteSchema = {
 	content: string;
@@ -42,6 +43,7 @@ const useNotes = () => {
 		},
 	});
 
+	// Inserting
 	const { mutate: add } = useMutation({
 		mutationFn: async (values: CreateNoteSchema) => {
 			const { newNote, error } = await createNote(values);
@@ -71,6 +73,7 @@ const useNotes = () => {
 		},
 	});
 
+	// Updating
 	const { mutate: update } = useMutation({
 		mutationFn: async (values: UpdateNoteSchema) => {
 			const { updatedNote, error } = await updateNote(values);
@@ -103,9 +106,38 @@ const useNotes = () => {
 		},
 	});
 
-	// TODO: deleteNote
+	// Deleting
+	const { mutate: remove } = useMutation({
+		mutationFn: async (id: string) => {
+			const { error } = await deleteNote({ id });
+			if (error) throw new Error(error);
+			return id;
+		},
+		onMutate: async (id: string) => {
+			await queryClient.cancelQueries({ queryKey: ['notes'] });
+			const previousNotes = queryClient.getQueryData(['notes']);
 
-	return { notes: data, isPending, error, add, update };
+			await queryClient.setQueryData(['notes'], (oldNotes: Note[]) => {
+				return oldNotes.filter(note => {
+					if (note.id === id) {
+						return null;
+					}
+					return note;
+				});
+			});
+
+			return previousNotes;
+		},
+		onError: (_err, _variables, context) => {
+			// Rollback previous state
+			queryClient.setQueryData(['notes'], context);
+		},
+		onSettled: async () => {
+			return await queryClient.invalidateQueries({ queryKey: ['notes'] });
+		},
+	});
+
+	return { notes: data, isPending, error, add, update, remove };
 };
 
 export default useNotes;

@@ -1,7 +1,6 @@
-import { Course, Note, Task } from '@prisma/client';
-import queryClient from './query-client';
-import LocalNotes from './local-notes';
+import { Course, Task } from '@prisma/client';
 import LocalTasks from './local-tasks';
+import queryClient from './query-client';
 
 const append = async (course: Course) => {
 	await queryClient.setQueryData(['courses'], (prev: { courses: Course[] }) => {
@@ -31,13 +30,13 @@ const remove = async (id: string) => {
 		};
 	});
 
-	// Remove all related notes (cascade):
-	const notes: Note[] | undefined = await queryClient.getQueryData(['notes']);
-	if (notes) {
-		for await (const note of notes) {
-			await LocalNotes.remove(note.id);
-		}
-	}
+	// TODO: Remove all related notes (cascade):
+	// const notes: Note[] | undefined = await queryClient.getQueryData(['notes']);
+	// if (notes) {
+	// 	for await (const note of notes) {
+	// 		await LocalNotes.remove(note.id);
+	// 	}
+	// }
 
 	// Remove all related tasks (cascade):
 	const tasks: Task[] | undefined = await queryClient.getQueryData(['tasks']);
