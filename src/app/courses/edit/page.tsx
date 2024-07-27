@@ -1,10 +1,7 @@
 'use client';
 
+import useCourse from '@/app/courses/_hooks/use-course';
 import { Button } from '@/components/ui/button';
-import { MoveLeft, Trash2 } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import updateCourse from '@/app/courses/_actions/update-course';
 import {
 	Form,
 	FormControl,
@@ -15,25 +12,23 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import useCourse from '@/app/courses/_hooks/use-course';
+import { cn, COLORS } from '@/lib/utils';
 import UpdateCourseSchema from '@/schemas/update-course-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState, useTransition } from 'react';
+import { MoveLeft, Trash2 } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import ErrorMessage from '@/components/common/error-message';
-import LocalCourses from '@/lib/local-courses';
-import { cn, COLORS } from '@/lib/utils';
+import useCourses from '../_hooks/use-courses';
 
 const EditCoursePage = () => {
 	const searchParams = useSearchParams();
 	const id = searchParams.get('id');
 	const router = useRouter();
 	const course = useCourse(id);
+	const { update: updateCourse } = useCourses();
 
-	const [isPending, startTransition] = useTransition();
-	const [error, setError] = useState('');
 	const form = useForm<z.infer<typeof UpdateCourseSchema>>({
 		resolver: zodResolver(UpdateCourseSchema),
 		defaultValues: {
@@ -45,17 +40,8 @@ const EditCoursePage = () => {
 	});
 
 	const onSubmit = (values: z.infer<typeof UpdateCourseSchema>) => {
-		setError('');
-		startTransition(async () => {
-			// TODO: optimistic updates
-			updateCourse(values);
-			await LocalCourses.update(values.id, {
-				name: values.name,
-				teacher: values.teacher,
-				color: values.color,
-			});
-			router.push('/courses');
-		});
+		updateCourse(values);
+		router.push('/courses');
 	};
 
 	if (!id || !course) {
@@ -150,8 +136,6 @@ const EditCoursePage = () => {
 					<Button type='submit' className='w-full gap-1'>
 						Save changes
 					</Button>
-					{isPending && <LoadingSpinner />}
-					{error && <ErrorMessage>{error}</ErrorMessage>}
 				</form>
 			</Form>
 

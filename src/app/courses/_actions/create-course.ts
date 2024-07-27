@@ -29,7 +29,7 @@ const createCourse = async (values: z.infer<typeof CreateCourseSchema>) => {
 			return { error: en.auth.UNAUTHENTICATED };
 		}
 
-		const course = await db.course.create({
+		const newCourse = await db.course.create({
 			data: {
 				userId: session.user.id,
 				name,
@@ -38,7 +38,7 @@ const createCourse = async (values: z.infer<typeof CreateCourseSchema>) => {
 			},
 		});
 
-		return { course };
+		return { newCourse };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

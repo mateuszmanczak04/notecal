@@ -13,8 +13,6 @@ const updateCourse = async (values: z.infer<typeof UpdateCourseSchema>) => {
 		return { error: en.INVALID_DATA };
 	}
 
-	const { id, name, teacher, color } = validatedFields.data;
-
 	try {
 		const session = await auth();
 
@@ -22,12 +20,12 @@ const updateCourse = async (values: z.infer<typeof UpdateCourseSchema>) => {
 			return { error: en.auth.UNAUTHENTICATED };
 		}
 
-		await db.course.update({
-			where: { id, userId: session?.user?.id },
-			data: { name, teacher, color },
+		const updatedCourse = await db.course.update({
+			where: { id: validatedFields.data.id, userId: session?.user?.id },
+			data: validatedFields.data,
 		});
 
-		return { success: true };
+		return { updatedCourse };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

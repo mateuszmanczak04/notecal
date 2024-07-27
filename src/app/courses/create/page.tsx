@@ -1,6 +1,6 @@
 'use client';
 
-import createCourse from '@/app/courses/_actions/create-course';
+import GoBackButton from '@/components/common/go-back-button';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -12,22 +12,16 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { cn, COLORS } from '@/lib/utils';
 import CreateCourseSchema from '@/schemas/create-course-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import ErrorMessage from '@/components/common/error-message';
-import GoBackButton from '@/components/common/go-back-button';
-import { ArrowLeft } from 'lucide-react';
-import LocalCourses from '@/lib/local-courses';
-import { cn, COLORS } from '@/lib/utils';
+import useCourses from '../_hooks/use-courses';
 
 const CreateCoursePage = () => {
-	const [isPending, startTransition] = useTransition();
-	const [error, setError] = useState('');
 	const form = useForm<z.infer<typeof CreateCourseSchema>>({
 		resolver: zodResolver(CreateCourseSchema),
 		defaultValues: {
@@ -37,16 +31,11 @@ const CreateCoursePage = () => {
 		},
 	});
 	const router = useRouter();
+	const { add: addCourse } = useCourses();
 
 	const onSubmit = (values: z.infer<typeof CreateCourseSchema>) => {
-		setError('');
-		startTransition(async () => {
-			// TODO: optimistic updates
-			const { course } = await createCourse(values);
-			if (!course) return;
-			await LocalCourses.append(course);
-			router.push('/courses');
-		});
+		addCourse(values);
+		router.push('/courses');
 	};
 
 	return (
@@ -132,10 +121,6 @@ const CreateCoursePage = () => {
 				<Button type='submit' className='w-full'>
 					Create
 				</Button>
-				<div className='flex w-full justify-center'>
-					{isPending && <LoadingSpinner />}
-				</div>
-				{error && <ErrorMessage>{error}</ErrorMessage>}
 			</form>
 		</Form>
 	);

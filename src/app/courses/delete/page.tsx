@@ -4,15 +4,13 @@ import GoBackButton from '@/components/common/go-back-button';
 import { Button } from '@/components/ui/button';
 import { MoveLeft, Trash2 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useTransition } from 'react';
-import deleteCourse from '../_actions/delete-course';
-import LocalCourses from '@/lib/local-courses';
+import useCourses from '../_hooks/use-courses';
 
 const DeleteCoursePage = () => {
 	const searchParams = useSearchParams();
 	const id = searchParams.get('id');
 	const router = useRouter();
-	const [isPending, startTransition] = useTransition();
+	const { remove: removeCourse } = useCourses();
 
 	if (!id) {
 		router.push('/courses');
@@ -20,11 +18,7 @@ const DeleteCoursePage = () => {
 	}
 
 	const handleDelete = () => {
-		startTransition(async () => {
-			// TODO: optimistic updates
-			deleteCourse({ id });
-			await LocalCourses.remove(id);
-		});
+		removeCourse(id);
 	};
 
 	return (
@@ -44,8 +38,7 @@ const DeleteCoursePage = () => {
 				<Button
 					onClick={handleDelete}
 					variant='destructive'
-					className='w-full flex-1 gap-1'
-					disabled={isPending}>
+					className='w-full flex-1 gap-1'>
 					<Trash2 className='h-4 w-4' />
 					Delete Permanently
 				</Button>
