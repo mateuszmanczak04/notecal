@@ -42,15 +42,17 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 			where: { userId: session.user.id },
 		});
 
+		let updatedSettings;
+
 		if (!setting) {
-			await db.settings.create({
+			updatedSettings = await db.settings.create({
 				data: {
 					userId: session.user.id,
 					...validatedFields.data,
 				},
 			});
 		} else {
-			await db.settings.update({
+			updatedSettings = await db.settings.update({
 				where: {
 					userId: session.user.id,
 				},
@@ -60,7 +62,7 @@ const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
 			});
 		}
 
-		return { updated: true };
+		return { updatedSettings };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

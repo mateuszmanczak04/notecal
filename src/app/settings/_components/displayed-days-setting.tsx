@@ -9,14 +9,11 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import LocalSettings from '@/lib/local-settings';
 import UpdateDisplayedDaysSchema from '@/schemas/update-displayed-days-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import updateSettings from '../_actions/update-settings';
-import { cn } from '@/lib/utils';
+import useSettings from '../_hooks/use-settings';
 
 type Props = {
 	initialDisplayedDays: number;
@@ -29,17 +26,11 @@ const DisplayedDaysSetting = ({ initialDisplayedDays }: Props) => {
 			displayedDays: initialDisplayedDays,
 		},
 	});
-	const [isPending, startTransition] = useTransition();
+	const { update: updateSettings } = useSettings();
 
 	const handleSubmit = (values: z.infer<typeof UpdateDisplayedDaysSchema>) => {
-		startTransition(async () => {
-			await LocalSettings.update({
-				displayedDays: values.displayedDays,
-			});
-			await updateSettings({
-				displayedDays: values.displayedDays,
-			});
-			// TODO: optimistic updates
+		updateSettings({
+			displayedDays: values.displayedDays,
 		});
 	};
 
@@ -67,9 +58,7 @@ const DisplayedDaysSetting = ({ initialDisplayedDays }: Props) => {
 							</FormItem>
 						)}
 					/>
-					<Button type='submit' className={cn(isPending && 'opacity-50')}>
-						Save
-					</Button>
+					<Button type='submit'>Save</Button>
 				</div>
 			</form>
 		</Form>

@@ -1,8 +1,6 @@
 'use client';
 
-import updateSettings from '@/app/settings/_actions/update-settings';
 import useSettings from '@/app/settings/_hooks/use-settings';
-import LocalSettings from '@/lib/local-settings';
 import { addDays } from 'date-fns';
 import {
 	MutableRefObject,
@@ -39,8 +37,7 @@ export const CalendarContextProvider = ({
 }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement | null>(null);
-
-	const { settings } = useSettings();
+	const { settings, update: updateSettings } = useSettings();
 
 	if (!settings) return null; // TOOD: handle this
 
@@ -126,15 +123,17 @@ export const CalendarContextProvider = ({
 
 	const zoomIn = () => {
 		if (settings.zoomLevel !== 5) {
-			LocalSettings.update({ zoomLevel: settings.zoomLevel + 1 });
-			updateSettings({ zoomLevel: settings.zoomLevel + 1 }); // TODO: error handling
+			updateSettings({
+				zoomLevel: (settings.zoomLevel + 1) as 1 | 2 | 3 | 4 | 5,
+			});
 		}
 	};
 
 	const zoomOut = () => {
 		if (settings.zoomLevel !== 1) {
-			LocalSettings.update({ zoomLevel: settings.zoomLevel - 1 });
-			updateSettings({ zoomLevel: settings.zoomLevel - 1 }); // TODO: error handling
+			updateSettings({
+				zoomLevel: (settings.zoomLevel - 1) as 1 | 2 | 3 | 4 | 5,
+			});
 		}
 	};
 

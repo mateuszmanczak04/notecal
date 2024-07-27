@@ -9,14 +9,12 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import LocalSettings from '@/lib/local-settings';
-import { cn } from '@/lib/utils';
 import UpdateDefaultNoteDurationSchema from '@/schemas/update-default-note-duration-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FC, useTransition } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import updateSettings from '../_actions/update-settings';
+import useSettings from '../_hooks/use-settings';
 
 interface DefaultNoteDurationSettingProps {
 	initialDefaultNoteDuration: number;
@@ -31,19 +29,13 @@ const DefaultNoteDurationSetting: FC<DefaultNoteDurationSettingProps> = ({
 			defaultNoteDuration: initialDefaultNoteDuration,
 		},
 	});
-	const [isPending, startTransition] = useTransition();
+	const { update: updateSettings } = useSettings();
 
 	const handleSubmit = (
 		values: z.infer<typeof UpdateDefaultNoteDurationSchema>,
 	) => {
-		startTransition(async () => {
-			await LocalSettings.update({
-				defaultNoteDuration: values.defaultNoteDuration,
-			});
-			await updateSettings({
-				defaultNoteDuration: values.defaultNoteDuration,
-			});
-			// TODO: optimistic updates
+		updateSettings({
+			defaultNoteDuration: values.defaultNoteDuration,
 		});
 	};
 
@@ -71,9 +63,7 @@ const DefaultNoteDurationSetting: FC<DefaultNoteDurationSettingProps> = ({
 							</FormItem>
 						)}
 					/>
-					<Button type='submit' className={cn(isPending && 'opacity-50')}>
-						Save
-					</Button>
+					<Button type='submit'>Save</Button>
 				</div>
 			</form>
 		</Form>
