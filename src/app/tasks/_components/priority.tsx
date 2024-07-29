@@ -1,12 +1,11 @@
 'use client';
 
-import updateTask from '@/app/tasks/_actions/update-task';
-import { FC, useRef, useState, useTransition } from 'react';
-import Tag from './tag';
-import { useOnClickOutside } from 'usehooks-ts';
 import { cn } from '@/lib/utils';
 import { TaskPriority } from '@prisma/client';
-import LocalTasks from '@/lib/local-tasks';
+import { FC, useRef, useState } from 'react';
+import { useOnClickOutside } from 'usehooks-ts';
+import useTasks from '../_hooks/use-tasks';
+import Tag from './tag';
 
 interface PriorityProps {
 	id: string;
@@ -23,18 +22,14 @@ const getPriorityName = (priority: TaskPriority | null) => {
 const Priority: FC<PriorityProps> = ({ id, priority }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
-	const [isPending, startTransition] = useTransition();
+	const { update: updateTask } = useTasks();
 
 	const handleSaveChange = (newPriority: TaskPriority | null) => {
 		if (priority && newPriority === priority) return;
 
-		startTransition(async () => {
-			// TODO: optimistic updates
-			updateTask({
-				id,
-				priority: newPriority,
-			});
-			await LocalTasks.update(id, { priority: newPriority });
+		updateTask({
+			id,
+			priority: newPriority,
 		});
 	};
 
@@ -69,7 +64,6 @@ const Priority: FC<PriorityProps> = ({ id, priority }) => {
 					priority === 'B' &&
 						'bg-yellow-100 text-yellow-500 hover:bg-yellow-200',
 					priority === 'C' && 'bg-green-100 text-green-500 hover:bg-green-200',
-					isPending && 'opacity-50',
 				)}
 			/>
 			{isOpen && (

@@ -1,13 +1,11 @@
 'use client';
 
-import updateTask from '@/app/tasks/_actions/update-task';
 import useCourse from '@/app/courses/_hooks/use-course';
 import useCourses from '@/app/courses/_hooks/use-courses';
-import { cn } from '@/lib/utils';
-import { FC, useRef, useState, useTransition } from 'react';
-import Tag from './tag';
+import { FC, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
-import LocalTasks from '@/lib/local-tasks';
+import useTasks from '../_hooks/use-tasks';
+import Tag from './tag';
 
 interface TaskCourseProps {
 	id: string;
@@ -16,22 +14,14 @@ interface TaskCourseProps {
 
 const Course: FC<TaskCourseProps> = ({ id, courseId }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [isPending, startTransition] = useTransition();
 	const menuRef = useRef<HTMLDivElement | null>(null);
 	const currentCourse = useCourse(courseId);
 	const { courses } = useCourses();
+	const { update: updateTask } = useTasks();
 
 	const handleSaveChange = (newCourseId: string | null) => {
 		if (currentCourse && newCourseId === currentCourse.id) return;
-
-		startTransition(async () => {
-			// TODO: optimistic updates
-			updateTask({
-				id,
-				courseId: newCourseId,
-			});
-			await LocalTasks.update(id, { courseId: newCourseId });
-		});
+		updateTask({ id, courseId: newCourseId });
 	};
 
 	const handleCloseMenu = () => {
@@ -59,7 +49,6 @@ const Course: FC<TaskCourseProps> = ({ id, courseId }) => {
 			<Tag
 				text={currentCourse?.name || 'No course'}
 				onClick={handleToggleMenu}
-				className={cn('transition', isPending && 'opacity-50')}
 			/>
 			{isOpen && (
 				<div className='absolute left-0 top-7 z-20 flex flex-col justify-center rounded-md border bg-white shadow-xl'>

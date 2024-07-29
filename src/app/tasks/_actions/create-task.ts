@@ -37,7 +37,7 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 			}
 		}
 
-		const task = await db.task.create({
+		const newTask = await db.task.create({
 			data: {
 				userId: session.user.id,
 				courseId: courseId || null,
@@ -49,7 +49,7 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 			},
 		});
 
-		return { task };
+		return { newTask };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

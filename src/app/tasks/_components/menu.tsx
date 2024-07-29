@@ -2,10 +2,9 @@
 
 import { Button } from '@/components/ui/button';
 import { EllipsisVertical, Trash2 } from 'lucide-react';
-import { FC, useRef, useState, useTransition } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
-import deleteTask from '../_actions/delete-task';
-import LocalTasks from '@/lib/local-tasks';
+import useTasks from '../_hooks/use-tasks';
 
 interface MenuProps {
 	taskId: string;
@@ -14,7 +13,7 @@ interface MenuProps {
 const Menu: FC<MenuProps> = ({ taskId }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
-	const [_, startTransition] = useTransition();
+	const { remove: removeTask } = useTasks();
 
 	const handleCloseMenu = () => {
 		setIsOpen(false);
@@ -27,11 +26,7 @@ const Menu: FC<MenuProps> = ({ taskId }) => {
 	useOnClickOutside(menuRef, handleCloseMenu);
 
 	const handleDelete = () => {
-		startTransition(async () => {
-			// TODO: optimistic updates
-			deleteTask({ id: taskId });
-			await LocalTasks.remove(taskId);
-		});
+		removeTask(taskId);
 		handleCloseMenu();
 	};
 

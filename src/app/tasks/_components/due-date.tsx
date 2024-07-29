@@ -1,12 +1,10 @@
 'use client';
 
-import updateTask from '@/app/tasks/_actions/update-task';
 import { format, isValid } from 'date-fns';
-import { FC, useEffect, useRef, useState, useTransition } from 'react';
-import Tag from './tag';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
-import { cn } from '@/lib/utils';
-import LocalTasks from '@/lib/local-tasks';
+import useTasks from '../_hooks/use-tasks';
+import Tag from './tag';
 
 interface TaskTitleProps {
 	id: string;
@@ -16,7 +14,7 @@ interface TaskTitleProps {
 const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLFormElement | null>(null);
-	const [isPending, startTransition] = useTransition();
+	const { update: updateTask } = useTasks();
 
 	// Inputs
 	const [year, setYear] = useState<string>(
@@ -41,6 +39,8 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 
 		if (parseInt(year) === 0 || !year) {
 			newDate = null;
+
+			if (dueDate === newDate) return;
 		} else {
 			newDate = new Date(
 				parseInt(year),
@@ -56,11 +56,7 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 			if (dueDate && newDate.getTime() === dueDate.getTime()) return;
 		}
 
-		startTransition(async () => {
-			// TODO: optimistic updates
-			updateTask({ id, dueDate: newDate });
-			await LocalTasks.update(id, { dueDate: newDate });
-		});
+		updateTask({ id, dueDate: newDate });
 	};
 
 	useEffect(() => {
@@ -91,7 +87,7 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 			<Tag
 				text={dueDate ? format(dueDate, 'yyyy-MM-dd - HH:mm') : 'No due date'}
 				onClick={handleOpenMenu}
-				className={cn('w-52 transition', isPending && 'opacity-50')}
+				className='w-52'
 			/>
 			{isOpen && (
 				<form

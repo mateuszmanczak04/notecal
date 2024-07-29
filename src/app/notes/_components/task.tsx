@@ -1,12 +1,10 @@
 'use client';
 
-import updateTask from '@/app/tasks/_actions/update-task';
+import useTasks from '@/app/tasks/_hooks/use-tasks';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { type Task } from '@prisma/client';
-import { useMutation } from '@tanstack/react-query';
 import { FC } from 'react';
-import LocalTasks from '@/lib/local-tasks';
 
 interface NoteTaskProps {
 	task: Task;
@@ -15,17 +13,11 @@ interface NoteTaskProps {
 const Task: FC<NoteTaskProps> = ({
 	task: { id, title, completed, courseId, dueDate, priority, description },
 }) => {
-	const { mutate: toggleCompleted } = useMutation({
-		mutationFn: async () => {
-			// TODO: optimistic updates
-			await updateTask({ id, completed: !completed });
-		},
-		onMutate: async () => {
-			await LocalTasks.update(id, { completed: !completed });
-		},
-		onSettled: data => {},
-		onError: err => {},
-	});
+	const { update } = useTasks();
+
+	const toggleCompleted = () => {
+		update({ id, completed: !completed });
+	};
 
 	// TODO: add functionalities below
 	// const { mutate: updateTitle } = useMutation({

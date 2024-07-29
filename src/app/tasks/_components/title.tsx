@@ -1,9 +1,8 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { FC, useEffect, useRef, useTransition } from 'react';
-import updateTask from '../_actions/update-task';
-import LocalTasks from '@/lib/local-tasks';
+import React, { FC, useEffect, useRef } from 'react';
+import useTasks from '../_hooks/use-tasks';
 
 interface TitleProps {
 	id: string;
@@ -13,7 +12,7 @@ interface TitleProps {
 
 const Title: FC<TitleProps> = ({ id, title, completed }) => {
 	const titleRef = useRef<HTMLParagraphElement | null>(null);
-	const [isPending, startTransition] = useTransition();
+	const { update: updateTask } = useTasks();
 
 	const handleSubmit = () => {
 		if (!titleRef.current) return;
@@ -22,10 +21,7 @@ const Title: FC<TitleProps> = ({ id, title, completed }) => {
 		// Don't want to update the same value:
 		if (newTitle.trim() === title) return;
 
-		startTransition(async () => {
-			updateTask({ id, title: newTitle }); // TODO: optimistic updates
-			await LocalTasks.update(id, { title: newTitle.trim() });
-		});
+		updateTask({ id, title: newTitle });
 	};
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLParagraphElement>) => {
@@ -53,11 +49,7 @@ const Title: FC<TitleProps> = ({ id, title, completed }) => {
 		<p
 			ref={titleRef}
 			contentEditable={!completed}
-			className={cn(
-				'font-bold outline-none',
-				completed && 'line-through',
-				isPending && 'opacity-50',
-			)}
+			className={cn('font-bold outline-none', completed && 'line-through')}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}
 			spellCheck={false}></p>

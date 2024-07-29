@@ -1,9 +1,8 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { FC, useEffect, useRef, useTransition } from 'react';
-import updateTask from '../_actions/update-task';
-import LocalTasks from '@/lib/local-tasks';
+import React, { FC, useEffect, useRef } from 'react';
+import useTasks from '../_hooks/use-tasks';
 
 interface DescriptionProps {
 	id: string;
@@ -13,7 +12,7 @@ interface DescriptionProps {
 
 const Description: FC<DescriptionProps> = ({ id, description, completed }) => {
 	const descriptionRef = useRef<HTMLParagraphElement | null>(null);
-	const [isPending, startTransition] = useTransition();
+	const { update: updateTask } = useTasks();
 
 	const handleSubmit = () => {
 		if (!descriptionRef.current) return;
@@ -22,12 +21,7 @@ const Description: FC<DescriptionProps> = ({ id, description, completed }) => {
 		// Don't want to update the same value:
 		if (newDescription.trim() === description) return;
 
-		startTransition(async () => {
-			updateTask({ id, description: newDescription }); // TODO: optimistic updates
-			await LocalTasks.update(id, {
-				description: newDescription.trim(),
-			});
-		});
+		updateTask({ id, description: newDescription.trim() });
 	};
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLParagraphElement>) => {
@@ -58,7 +52,6 @@ const Description: FC<DescriptionProps> = ({ id, description, completed }) => {
 			className={cn(
 				'mt-1 text-neutral-500 outline-none',
 				completed && 'line-through',
-				isPending && 'opacity-50',
 			)}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}

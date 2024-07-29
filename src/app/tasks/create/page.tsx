@@ -1,5 +1,6 @@
 'use client';
 
+import GoBackButton from '@/components/common/go-back-button';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -11,27 +12,19 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import CreateTaskSchema from '@/schemas/create-task-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowLeft } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import ErrorMessage from '@/components/common/error-message';
-import CreateTaskSchema from '@/schemas/create-task-schema';
-import createTask from '../_actions/create-task';
-import GoBackButton from '@/components/common/go-back-button';
-import { ArrowLeft } from 'lucide-react';
+import DatePicker from '../../../components/common/date-picker';
+import useTasks from '../_hooks/use-tasks';
 import Course from './course';
 import Priority from './priority';
-import DatePicker from '../../../components/common/date-picker';
-import LocalTasks from '@/lib/local-tasks';
-import useSettings from '@/app/settings/_hooks/use-settings';
 
 const CreateTaskPage = () => {
 	const searchParams = useSearchParams();
-	const [isPending, startTransition] = useTransition();
-	const [error, setError] = useState('');
 	const form = useForm<z.infer<typeof CreateTaskSchema>>({
 		resolver: zodResolver(CreateTaskSchema),
 		defaultValues: {
@@ -43,27 +36,16 @@ const CreateTaskPage = () => {
 		},
 	});
 	const router = useRouter();
-	const { settings } = useSettings();
+	const { add: addTask } = useTasks();
 
 	const onSubmit = (values: z.infer<typeof CreateTaskSchema>) => {
-		setError('');
-
-		startTransition(async () => {
-			// TODO: optimistic updates
-			const { task } = await createTask({
-				...values,
-				courseId: values.courseId,
-			});
-
-			if (!task) return;
-			await LocalTasks.append(task);
-
-			if (settings) {
-				await LocalTasks.sort(settings.orderTasks);
-			}
-
-			router.back();
+		addTask({
+			...values,
+			courseId: values.courseId,
 		});
+		// TODO: sort tasks by settings
+
+		router.back();
 	};
 
 	return (
@@ -164,10 +146,6 @@ const CreateTaskPage = () => {
 				<Button type='submit' className='w-full'>
 					Create
 				</Button>
-				<div className='flex w-full justify-center'>
-					{isPending && <LoadingSpinner />}
-				</div>
-				{error && <ErrorMessage>{error}</ErrorMessage>}
 			</form>
 		</Form>
 	);

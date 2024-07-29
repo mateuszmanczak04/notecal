@@ -1,17 +1,15 @@
 'use client';
 
-import updateSettings from '@/app/settings/_actions/update-settings';
+import useSettings from '@/app/settings/_hooks/use-settings';
 import { Button } from '@/components/ui/button';
-import LocalTasks from '@/lib/local-tasks';
-import { cn } from '@/lib/utils';
 import { ArrowUpDown } from 'lucide-react';
-import { useRef, useState, useTransition } from 'react';
+import { useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
 const SortTasks = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
-	const [isPending, startTransition] = useTransition();
+	const { update: updateSettings } = useSettings();
 
 	const handleCloseMenu = () => {
 		setIsOpen(false);
@@ -42,11 +40,8 @@ const SortTasks = () => {
 				value === 'priority' ||
 				value === 'completed')
 		) {
-			startTransition(async () => {
-				// TODO: optimistic updates
-				updateSettings({ orderTasks: value });
-				await LocalTasks.sort(value);
-			});
+			updateSettings({ orderTasks: value });
+			// TODO: sort tasks
 		}
 	};
 
@@ -56,7 +51,7 @@ const SortTasks = () => {
 				variant='secondary'
 				size='sm'
 				onClick={handleToggleMenu}
-				className={cn('w-full gap-1 transition', isPending && 'opacity-50')}>
+				className='w-full gap-1 transition'>
 				<ArrowUpDown className='h-4 w-4' />
 				Order By
 			</Button>

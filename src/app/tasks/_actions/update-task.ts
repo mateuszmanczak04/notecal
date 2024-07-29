@@ -37,12 +37,12 @@ const updateTask = async (values: z.infer<typeof UpdateTaskSchema>) => {
 			};
 		}
 
-		await db.task.update({
+		const updatedTask = await db.task.update({
 			where: { id: data.id, userId: session.user.id },
 			data,
 		});
 
-		return { success: true };
+		return { updatedTask };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

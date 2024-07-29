@@ -1,17 +1,15 @@
 'use client';
 
-import { type Task } from '@prisma/client';
-import { FC, useTransition } from 'react';
-import Course from './course';
-import DueDate from './due-date';
-import Priority from './priority';
 import { Checkbox } from '@/components/ui/checkbox';
-import Menu from './menu';
-import updateTask from '../_actions/update-task';
-import { cn } from '@/lib/utils';
-import LocalTasks from '@/lib/local-tasks';
-import Title from './title';
+import { type Task } from '@prisma/client';
+import { FC } from 'react';
+import useTasks from '../_hooks/use-tasks';
+import Course from './course';
 import Description from './description';
+import DueDate from './due-date';
+import Menu from './menu';
+import Priority from './priority';
+import Title from './title';
 
 interface TaskProps {
 	task: Task;
@@ -20,14 +18,10 @@ interface TaskProps {
 const Task: FC<TaskProps> = ({
 	task: { id, title, description, completed, courseId, dueDate, priority },
 }) => {
-	const [_, startTransition] = useTransition();
+	const { update: updateTask } = useTasks();
 
 	const handleToggleTask = (newValue: boolean) => {
-		startTransition(async () => {
-			// TODO: optimistic updates
-			updateTask({ id, completed: newValue });
-			await LocalTasks.update(id, { completed: newValue });
-		});
+		updateTask({ id, completed: newValue });
 	};
 
 	return (
