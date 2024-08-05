@@ -54,7 +54,7 @@ const Priority: FC<PriorityProps> = ({ id, priority }) => {
 	});
 
 	return (
-		<div className='relative' ref={menuRef}>
+		<div className='relative text-sm sm:text-base' ref={menuRef}>
 			<Tag
 				text={getPriorityName(priority)}
 				onClick={handleToggleMenu}

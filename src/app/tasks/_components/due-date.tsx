@@ -83,7 +83,7 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 	});
 
 	return (
-		<div className='relative'>
+		<div className='relative  text-sm sm:text-base'>
 			<Tag
 				text={dueDate ? format(dueDate, 'yyyy-MM-dd - HH:mm') : 'No due date'}
 				onClick={handleOpenMenu}

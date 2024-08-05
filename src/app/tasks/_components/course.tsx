@@ -45,7 +45,7 @@ const Course: FC<TaskCourseProps> = ({ id, courseId }) => {
 	});
 
 	return (
-		<div className='relative' ref={menuRef}>
+		<div className='relative text-sm sm:text-base' ref={menuRef}>
 			<Tag
 				text={currentCourse?.name || 'No course'}
 				onClick={handleToggleMenu}
