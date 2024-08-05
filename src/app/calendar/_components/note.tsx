@@ -26,7 +26,6 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		getRelativePosition,
 		getDateFromPosition,
 	} = useCalendarContext();
-	const [isPending, startTransition] = useTransition();
 	const course = useCourse(note.courseId);
 	const { update: updateNote } = useNotes();
 
@@ -203,25 +202,23 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 	};
 
 	const handleDragEndTop = (event: React.DragEvent) => {
-		startTransition(async () => {
-			const { x, y } = getRelativePosition(event.clientX, event.clientY);
-			if (x === null || y === null) return; // TODO: display error message
+		const { x, y } = getRelativePosition(event.clientX, event.clientY);
+		if (x === null || y === null) return; // TODO: display error message
 
-			const newStartTime = getDateFromPosition(x, y);
-			if (!newStartTime) return;
+		const newStartTime = getDateFromPosition(x, y);
+		if (!newStartTime) return;
 
-			if (newStartTime < note.endTime) {
-				updateNote({ id: note.id, startTime: newStartTime });
-			} else {
-				updateNote({
-					id: note.id,
-					startTime: note.endTime,
-					endTime: newStartTime,
-				});
-			}
+		if (newStartTime < note.endTime) {
+			updateNote({ id: note.id, startTime: newStartTime });
+		} else {
+			updateNote({
+				id: note.id,
+				startTime: note.endTime,
+				endTime: newStartTime,
+			});
+		}
 
-			setIsDragging(false);
-		});
+		setIsDragging(false);
 	};
 
 	// Dragging bottom edge
@@ -240,25 +237,23 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 	};
 
 	const handleDragEndBottom = (event: React.DragEvent) => {
-		startTransition(async () => {
-			const { x, y } = getRelativePosition(event.clientX, event.clientY);
-			if (x === null || y === null) return; // TODO: display error message
+		const { x, y } = getRelativePosition(event.clientX, event.clientY);
+		if (x === null || y === null) return; // TODO: display error message
 
-			const newEndTime = getDateFromPosition(x, y);
-			if (!newEndTime) return;
+		const newEndTime = getDateFromPosition(x, y);
+		if (!newEndTime) return;
 
-			if (newEndTime > note.startTime) {
-				updateNote({ id: note.id, endTime: newEndTime });
-			} else {
-				updateNote({
-					id: note.id,
-					endTime: note.startTime,
-					startTime: newEndTime,
-				});
-			}
+		if (newEndTime > note.startTime) {
+			updateNote({ id: note.id, endTime: newEndTime });
+		} else {
+			updateNote({
+				id: note.id,
+				endTime: note.startTime,
+				startTime: newEndTime,
+			});
+		}
 
-			setIsDragging(false);
-		});
+		setIsDragging(false);
 	};
 
 	const noteDays = getDaysBetween(note.startTime, note.endTime);
@@ -274,8 +269,7 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 
 	return (
 		<>
-			{/* TODO: replace this with better indicator: */}
-			{isPending && <p>Pending...</p>}
+			{/* TODO: show loading indicator somewhere */}
 
 			{/* Primary notes: */}
 			{noteDays?.length > 0 &&
