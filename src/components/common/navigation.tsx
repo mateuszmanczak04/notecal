@@ -6,9 +6,9 @@ import { Calendar, Check, Cog, List, Menu, Plus, User, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Skeleton } from '../ui/skeleton';
-import { useState } from 'react';
 
 const Navigation = () => {
 	const pathname = usePathname();
@@ -19,10 +19,9 @@ const Navigation = () => {
 	return (
 		<>
 			<Button
-				size='icon'
 				variant='secondary'
 				className={cn(
-					'transiton fixed left-8 top-8 h-12 w-12 translate-x-0 shadow-md xl:hidden',
+					'transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none xl:hidden',
 					isOpen && '-translate-x-32',
 				)}
 				onClick={() => setIsOpen(true)}>
@@ -30,13 +29,12 @@ const Navigation = () => {
 			</Button>
 			<div
 				className={cn(
-					'fixed left-0 top-0 z-40 mr-4 flex h-full w-screen max-w-80 shrink-0 translate-x-0 flex-col gap-8 bg-neutral-100 p-8 shadow-xl transition xl:static xl:shadow-none',
-					!isOpen && '-translate-x-80 xl:translate-x-0',
+					'fixed left-0 top-0 z-40 mr-4 flex h-full w-screen shrink-0 translate-x-0 flex-col gap-8 bg-neutral-100 p-8 pl-20 shadow-xl transition sm:w-96 xl:static xl:max-w-80 xl:p-4 xl:shadow-none',
+					!isOpen && '-translate-x-full xl:translate-x-0',
 				)}>
 				<Button
-					size='icon'
 					variant='secondary'
-					className='-mb-4 h-12 w-12 xl:hidden'
+					className='transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none bg-neutral-200 xl:hidden'
 					onClick={() => setIsOpen(false)}>
 					<X />
 				</Button>
