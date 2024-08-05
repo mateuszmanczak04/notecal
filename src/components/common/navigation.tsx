@@ -30,7 +30,7 @@ const Navigation = () => {
 			</Button>
 			<div
 				className={cn(
-					'fixed left-0 top-0 z-40 mr-4 flex h-full w-80 shrink-0 translate-x-0 flex-col gap-8 bg-neutral-100 p-8 shadow-xl transition xl:static xl:shadow-none',
+					'fixed left-0 top-0 z-40 mr-4 flex h-full w-screen max-w-80 shrink-0 translate-x-0 flex-col gap-8 bg-neutral-100 p-8 shadow-xl transition xl:static xl:shadow-none',
 					!isOpen && '-translate-x-80 xl:translate-x-0',
 				)}>
 				<Button
