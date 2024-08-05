@@ -10,7 +10,7 @@ const Grid = () => {
 	return (
 		<div className='flex'>
 			{/* Hours: */}
-			<div className='w-20'>
+			<div className='w-12 text-sm sm:w-20 sm:text-base'>
 				{new Array(24).fill(0).map((_, index) => (
 					<HourRow key={index} hour={index} />
 				))}

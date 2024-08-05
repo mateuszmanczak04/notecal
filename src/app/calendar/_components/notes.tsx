@@ -66,7 +66,7 @@ const Notes = () => {
 		<div
 			onDragOver={e => e.preventDefault()}
 			ref={containerRef}
-			className='absolute left-20 top-0 w-[calc(100%-80px)] cursor-crosshair overflow-hidden'
+			className='absolute left-12 top-0 w-[calc(100%-48px)] cursor-crosshair overflow-hidden sm:left-20 sm:w-[calc(100%-80px)]'
 			onClick={handleClick}
 			style={{ height: rowHeight * 24 + 'px' }}>
 			{notes?.map((note, index) => (
