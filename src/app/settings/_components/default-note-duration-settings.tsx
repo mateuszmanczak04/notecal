@@ -45,7 +45,7 @@ const DefaultNoteDurationSetting: FC<DefaultNoteDurationSettingProps> = ({
 				<h2 className='mb-2 text-lg font-semibold'>
 					Default note duration (in minutes)
 				</h2>
-				<div className='grid grid-cols-2 gap-2'>
+				<div className='grid gap-2 sm:grid-cols-2'>
 					<FormField
 						control={form.control}
 						name='defaultNoteDuration'
