@@ -1,14 +1,13 @@
 'use client';
 
+import SortTasks from '@/app/tasks/_components/sort-tasks';
 import { cn } from '@/lib/utils';
 import { Calendar, Check, Cog, List, Plus, User } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Skeleton } from '../ui/skeleton';
 import { Button } from '../ui/button';
-import SortTasks from '@/app/tasks/_components/sort-tasks';
+import { Skeleton } from '../ui/skeleton';
 
 const Navigation = () => {
 	const pathname = usePathname();

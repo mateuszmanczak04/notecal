@@ -1,0 +1,24 @@
+'use client';
+
+import Navigation from '@/components/common/navigation';
+import Providers from '@/components/common/providers';
+import React from 'react';
+
+type MainLayoutProps = {
+	children: React.ReactNode;
+};
+
+const MainLayout = ({ children }: MainLayoutProps) => {
+	return (
+		<Providers>
+			<div className='flex h-screen min-w-[1200px] overflow-y-hidden overflow-x-scroll bg-gray-100 p-4 text-gray-900'>
+				<Navigation />
+				<div className='h-full flex-1 overflow-y-scroll rounded-xl bg-white p-4 scrollbar-hide'>
+					{children}
+				</div>
+			</div>
+		</Providers>
+	);
+};
+
+export default MainLayout;

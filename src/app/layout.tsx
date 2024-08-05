@@ -1,12 +1,11 @@
 import '@/app/globals.css';
 import { auth } from '@/auth';
-import Navigation from '@/components/common/navigation';
-import Providers from '@/components/common/providers';
 import UnauthenticatedProviders from '@/components/common/unauthenticated-providers';
 
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import MainLayout from './_components/MainLayout';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -37,17 +36,8 @@ export default async function RootLayout({
 
 	return (
 		<html lang='en'>
-			<body
-				className={cn(
-					inter.className,
-					'flex h-screen min-w-[1200px] overflow-y-hidden overflow-x-scroll bg-gray-100 p-4 text-gray-900',
-				)}>
-				<Providers>
-					<Navigation />
-					<div className='h-full flex-1 overflow-y-scroll rounded-xl bg-white p-4 scrollbar-hide'>
-						{children}
-					</div>
-				</Providers>
+			<body className={inter.className}>
+				<MainLayout>{children}</MainLayout>
 			</body>
 		</html>
 	);
