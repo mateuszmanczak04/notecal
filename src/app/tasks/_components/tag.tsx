@@ -12,10 +12,10 @@ const Tag: FC<TagProps> = ({ text, className, onClick }) => {
 		<div
 			onClick={onClick}
 			className={cn(
-				'flex h-6 w-fit cursor-pointer select-none items-center justify-center overflow-hidden truncate text-nowrap rounded-md bg-gray-100 px-4 transition hover:bg-gray-200',
+				'flex h-6 max-w-52 cursor-pointer select-none items-center text-nowrap rounded-md bg-gray-100 px-4 transition hover:bg-gray-200',
 				className,
 			)}>
-			{text}
+			<p className='truncate'>{text}</p>
 		</div>
 	);
 };

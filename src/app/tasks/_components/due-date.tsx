@@ -87,7 +87,7 @@ const DueDate: FC<TaskTitleProps> = ({ id, dueDate }) => {
 			<Tag
 				text={dueDate ? format(dueDate, 'yyyy-MM-dd - HH:mm') : 'No due date'}
 				onClick={handleOpenMenu}
-				className='w-52'
+				className='w-52 justify-center'
 			/>
 			{isOpen && (
 				<form
