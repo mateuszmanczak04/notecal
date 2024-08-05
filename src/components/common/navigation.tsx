@@ -2,106 +2,130 @@
 
 import SortTasks from '@/app/tasks/_components/sort-tasks';
 import { cn } from '@/lib/utils';
-import { Calendar, Check, Cog, List, Plus, User } from 'lucide-react';
+import { Calendar, Check, Cog, List, Menu, Plus, User, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '../ui/button';
 import { Skeleton } from '../ui/skeleton';
+import { useState } from 'react';
 
 const Navigation = () => {
 	const pathname = usePathname();
 	const session = useSession();
 
-	// mobile is not supported yet
+	const [isOpen, setIsOpen] = useState(false);
 
 	return (
-		<div className='mr-4 flex h-full w-80 shrink-0 flex-col gap-8 p-4'>
-			{/* Account and settings: */}
-			{session?.data?.user ? (
-				<Link
-					href='/settings'
-					className='flex items-center justify-between gap-3 rounded-xl bg-white px-4 py-2'>
-					{/* <Image
+		<>
+			<Button
+				size='icon'
+				variant='secondary'
+				className={cn(
+					'transiton fixed left-8 top-8 h-12 w-12 translate-x-0 shadow-md xl:hidden',
+					isOpen && '-translate-x-32',
+				)}
+				onClick={() => setIsOpen(true)}>
+				<Menu />
+			</Button>
+			<div
+				className={cn(
+					'fixed left-0 top-0 z-40 mr-4 flex h-full w-80 shrink-0 translate-x-0 flex-col gap-8 bg-neutral-100 p-8 shadow-xl transition xl:static xl:shadow-none',
+					!isOpen && '-translate-x-80 xl:translate-x-0',
+				)}>
+				<Button
+					size='icon'
+					variant='secondary'
+					className='-mb-4 h-12 w-12 xl:hidden'
+					onClick={() => setIsOpen(false)}>
+					<X />
+				</Button>
+				{/* Account and settings: */}
+				{session?.data?.user ? (
+					<Link
+						href='/settings'
+						className='flex items-center justify-between gap-3 rounded-xl bg-white px-4 py-2'>
+						{/* <Image
 							src='/avatar.jpg'
 							width={32}
 							height={32}
 							alt='profile picture'
 							className='h-8 w-8 overflow-hidden rounded-full object-cover'
 						/> */}
-					<User className='h-8 w-8 shrink-0 rounded-full bg-neutral-100 p-1' />
-					<div className='overflow-hidden'>
-						<p className='truncate text-sm font-bold'>
-							{session.data.user.email?.split('@')[0]}
-						</p>
-						<p className='truncate text-sm text-gray-500'>
-							{session.data.user.email}
-						</p>
-					</div>
+						<User className='h-8 w-8 shrink-0 rounded-full bg-neutral-100 p-1' />
+						<div className='overflow-hidden'>
+							<p className='truncate text-sm font-bold'>
+								{session.data.user.email?.split('@')[0]}
+							</p>
+							<p className='truncate text-sm text-gray-500'>
+								{session.data.user.email}
+							</p>
+						</div>
 
-					<Cog className='shrin h-4 w-4' />
-				</Link>
-			) : (
-				<Skeleton className='h-12 w-full bg-white' />
-			)}
-			{/* Main menu: */}
-			<div>
-				<p className='text-sm font-semibold uppercase text-gray-500'>
-					MAIN MENU
-				</p>
-				<div className='mt-2'>
-					<Link
-						href='/calendar'
-						className={cn(
-							'flex items-center gap-2 rounded-sm p-2 font-semibold',
-							pathname.includes('/calendar') && 'bg-white',
-						)}>
-						<Calendar className='h-4 w-4' /> Calendar
+						<Cog className='shrin h-4 w-4' />
 					</Link>
-					<Link
-						href='/tasks'
-						className={cn(
-							'mt-2 flex items-center gap-2 rounded-sm p-2 font-semibold',
-							pathname.includes('/tasks') && 'bg-white',
-						)}>
-						<Check className='h-4 w-4' /> Tasks
-					</Link>
-					<Link
-						href='/courses'
-						className={cn(
-							'mt-2 flex items-center gap-2 rounded-sm p-2 font-semibold',
-							pathname.includes('/courses') && 'bg-white',
-						)}>
-						<List className='h-4 w-4' /> Courses
-					</Link>
-					<div className='mt-8 flex flex-col gap-2'>
-						{pathname === '/courses' && (
-							<Button
-								asChild
-								size='sm'
-								className='flex w-full items-center justify-center gap-1 font-semibold'>
-								<Link href='/courses/create'>
-									<Plus className='h-6 w-6' /> Create a New Course
-								</Link>
-							</Button>
-						)}
-						{pathname === '/tasks' && (
-							<>
+				) : (
+					<Skeleton className='h-12 w-full bg-white' />
+				)}
+				{/* Main menu: */}
+				<div>
+					<p className='text-sm font-semibold uppercase text-gray-500'>
+						MAIN MENU
+					</p>
+					<div className='mt-2'>
+						<Link
+							href='/calendar'
+							className={cn(
+								'flex items-center gap-2 rounded-sm p-2 font-semibold',
+								pathname.includes('/calendar') && 'bg-white',
+							)}>
+							<Calendar className='h-4 w-4' /> Calendar
+						</Link>
+						<Link
+							href='/tasks'
+							className={cn(
+								'mt-2 flex items-center gap-2 rounded-sm p-2 font-semibold',
+								pathname.includes('/tasks') && 'bg-white',
+							)}>
+							<Check className='h-4 w-4' /> Tasks
+						</Link>
+						<Link
+							href='/courses'
+							className={cn(
+								'mt-2 flex items-center gap-2 rounded-sm p-2 font-semibold',
+								pathname.includes('/courses') && 'bg-white',
+							)}>
+							<List className='h-4 w-4' /> Courses
+						</Link>
+						<div className='mt-8 flex flex-col gap-2'>
+							{pathname === '/courses' && (
 								<Button
 									asChild
 									size='sm'
 									className='flex w-full items-center justify-center gap-1 font-semibold'>
-									<Link href='/tasks/create'>
-										<Plus className='h-4 w-4' /> Create a New Task
+									<Link href='/courses/create'>
+										<Plus className='h-6 w-6' /> Create a New Course
 									</Link>
 								</Button>
-								<SortTasks />
-							</>
-						)}
+							)}
+							{pathname === '/tasks' && (
+								<>
+									<Button
+										asChild
+										size='sm'
+										className='flex w-full items-center justify-center gap-1 font-semibold'>
+										<Link href='/tasks/create'>
+											<Plus className='h-4 w-4' /> Create a New Task
+										</Link>
+									</Button>
+									<SortTasks />
+								</>
+							)}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
