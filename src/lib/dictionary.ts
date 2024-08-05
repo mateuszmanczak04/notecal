@@ -38,6 +38,8 @@ export const en = {
 		TOKEN_EXPIRED: 'Token has expired',
 		CONFIRMATION_EMAIL_SENT:
 			'Confirmation email has been sent, check your inbox',
+		EMAIL_UPDATED: 'Email has updated, check your inbox to confirm it now',
+		EMAIL_IS_IDENTICAL: 'New email is identical to the old one',
 	},
 	settings: {
 		DEFAULT_NOTE_DURATION_REQUIRED: 'Default note duration is required',

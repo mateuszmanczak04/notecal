@@ -10,6 +10,8 @@ import ThemeSetting from './_components/theme-setting';
 import useSettings from './_hooks/use-settings';
 import useEmailConfirmed from '../auth/_hooks/use-email-confirmed';
 import EmailNotConfirmed from './_components/email-not-confirmed';
+import ChangeEmailSetting from './_components/change-email-setting';
+import { Separator } from '@/components/ui/separator';
 
 const SettingsPage = () => {
 	const { settings, isPending, error } = useSettings();
@@ -27,6 +29,7 @@ const SettingsPage = () => {
 			<h1 className='text-3xl font-bold'>Settings</h1>
 			{emailConfirmedIsPending && <LoadingSpinner />}
 			{emailConfirmed === false && <EmailNotConfirmed />}
+			<ChangeEmailSetting />
 			<ChangePasswordSetting />
 			<ThemeSetting />
 			<DisplayedDaysSetting initialDisplayedDays={settings.displayedDays} />

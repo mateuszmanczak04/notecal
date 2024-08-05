@@ -13,7 +13,7 @@ model User {
   email         String          @unique
   emailVerified DateTime?
   image         String?
-  password      String?
+  password      String // Make it optional when implementing Google/Apple providers
   accounts      Account[]
   sessions      Session[]
   // Optional for WebAuthn support
