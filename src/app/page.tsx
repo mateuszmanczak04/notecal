@@ -1,6 +1,6 @@
 import queryClient from '@/lib/query-client';
-import Footer from './_components/footer';
-import Hero from './_components/hero';
+import Footer from '../components/common/footer';
+import Hero from '../components/common/hero';
 import getSettings from './settings/_actions/get-settings';
 
 export default async function Home() {

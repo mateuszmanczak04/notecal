@@ -4,7 +4,7 @@ import UnauthenticatedProviders from '@/components/common/unauthenticated-provid
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import MainLayout from './_components/main-layout';
+import MainLayout from '../components/common/main-layout';
 
 const inter = Inter({ subsets: ['latin'] });
 
