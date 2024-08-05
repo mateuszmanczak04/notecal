@@ -65,6 +65,13 @@ model VerificationToken {
   expires DateTime
 }
 
+model ResetPasswordToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String
+  expires DateTime
+}
+
 // Optional for WebAuthn support
 model Authenticator {
   id                   String  @id @default(cuid())

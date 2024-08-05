@@ -1,7 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import login from '@/app/auth/_actions/login';
+import ErrorMessage from '@/components/common/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -14,11 +15,10 @@ import {
 import { Input } from '@/components/ui/input';
 import LoginSchema from '@/schemas/login-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import ErrorMessage from '@/components/common/error-message';
 
 const LoginPage = () => {
 	const [isPending, startTransition] = useTransition();
@@ -73,6 +73,11 @@ const LoginPage = () => {
 						</FormItem>
 					)}
 				/>
+				<Link
+					href={`/auth/forgot-password${form.getValues('email') && `?email=${form.getValues('email')}`}`}
+					className='text-neutral mr-auto mt-2 text-sm hover:underline'>
+					Forgot password?
+				</Link>
 				<Button type='submit' className='mt-8 w-full'>
 					Login
 				</Button>

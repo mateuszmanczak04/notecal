@@ -52,6 +52,7 @@ const changeEmail = async (values: z.infer<typeof ChangeEmailSchema>) => {
 
 		// Delete old tokens
 		await db.verificationToken.deleteMany({ where: { email: user.email } });
+		await db.resetPasswordToken.deleteMany({ where: { email: user.email } });
 
 		// Update email & reset their email confirmed
 		await db.user.update({
