@@ -1,10 +1,10 @@
 'use client';
 
-import { Input } from '@/components/ui/input';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import ChangePasswordSchema from '@/schemas/change-password-schema';
-import { zodResolver } from '@hookform/resolvers/zod';
+import changePassword from '@/app/auth/_actions/change-password';
+import ErrorMessage from '@/components/common/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
+import SuccessMessage from '@/components/common/success-message';
+import { Button } from '@/components/ui/button';
 import {
 	Form,
 	FormControl,
@@ -13,12 +13,13 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
-import changePassword from '@/app/auth/_actions/change-password';
-import LoadingSpinner from '@/components/common/loading-spinner';
+import { Input } from '@/components/ui/input';
+import ChangePasswordSchema from '@/schemas/change-password-schema';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import ErrorMessage from '@/components/common/error-message';
-import SuccessMessage from '@/components/common/success-message';
+import { Pencil } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 const ChangePasswordSetting = () => {
 	const { mutate, error, isPending, data } = useMutation({
@@ -89,7 +90,9 @@ const ChangePasswordSetting = () => {
 							</FormItem>
 						)}
 					/>
-					<Button type='submit'>Submit</Button>
+					<Button type='submit' className='gap-2'>
+						Change password <Pencil className='h-5 w-5' />
+					</Button>
 					{data && <SuccessMessage>{data.message}</SuccessMessage>}
 					{error && <ErrorMessage>{error.message}</ErrorMessage>}
 					{isPending && <LoadingSpinner />}
