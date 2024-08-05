@@ -23,25 +23,24 @@ const Navigation = () => {
 				<Link
 					href='/settings'
 					className='flex items-center justify-between gap-3 rounded-xl bg-white px-4 py-2'>
-					<div className='flex items-center gap-3'>
-						{/* <Image
+					{/* <Image
 							src='/avatar.jpg'
 							width={32}
 							height={32}
 							alt='profile picture'
 							className='h-8 w-8 overflow-hidden rounded-full object-cover'
 						/> */}
-						<User className='h-8 w-8 rounded-full bg-neutral-100 p-1' />
-						<div className='overflow-hidden'>
-							<p className='truncate text-sm font-bold'>
-								{session.data.user.email?.split('@')[0]}
-							</p>
-							<p className='truncate text-sm text-gray-500'>
-								{session.data.user.email}
-							</p>
-						</div>
+					<User className='h-8 w-8 shrink-0 rounded-full bg-neutral-100 p-1' />
+					<div className='overflow-hidden'>
+						<p className='truncate text-sm font-bold'>
+							{session.data.user.email?.split('@')[0]}
+						</p>
+						<p className='truncate text-sm text-gray-500'>
+							{session.data.user.email}
+						</p>
 					</div>
-					<Cog className='h-4 w-4' />
+
+					<Cog className='shrin h-4 w-4' />
 				</Link>
 			) : (
 				<Skeleton className='h-12 w-full bg-white' />
