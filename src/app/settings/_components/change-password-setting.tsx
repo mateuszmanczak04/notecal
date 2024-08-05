@@ -1,6 +1,6 @@
 'use client';
 
-import changePassword from '@/app/auth/_actions/change-password';
+import changePassword from '@/app/settings/_actions/change-password';
 import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import SuccessMessage from '@/components/common/success-message';

@@ -2,10 +2,10 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
-import { z } from 'zod';
-import bcrypt from 'bcryptjs';
-import ChangePasswordSchema from '@/schemas/change-password-schema';
 import { en } from '@/lib/dictionary';
+import ChangePasswordSchema from '@/schemas/change-password-schema';
+import bcrypt from 'bcryptjs';
+import { z } from 'zod';
 
 const changePassword = async (values: z.infer<typeof ChangePasswordSchema>) => {
 	const validatedFields = ChangePasswordSchema.safeParse(values);
