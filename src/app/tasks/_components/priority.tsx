@@ -67,7 +67,7 @@ const Priority: FC<PriorityProps> = ({ id, priority }) => {
 				)}
 			/>
 			{isOpen && (
-				<div className='absolute left-0 top-7 z-20 flex w-fit flex-col items-center justify-center rounded-md border bg-white shadow-xl'>
+				<div className='absolute left-0 top-7 z-20 flex w-full flex-col items-center justify-center rounded-md border bg-white shadow-xl sm:w-fit'>
 					<button
 						className='flex h-8 w-full cursor-pointer select-none items-center justify-center text-nowrap px-4 transition hover:bg-neutral-100'
 						onClick={() => {

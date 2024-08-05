@@ -51,7 +51,7 @@ const Course: FC<TaskCourseProps> = ({ id, courseId }) => {
 				onClick={handleToggleMenu}
 			/>
 			{isOpen && (
-				<div className='absolute left-0 top-7 z-20 flex flex-col justify-center rounded-md border bg-white shadow-xl'>
+				<div className='absolute left-0 top-7 z-20 flex w-fit flex-col justify-center rounded-md border bg-white shadow-xl'>
 					<button
 						className='h-8 w-full cursor-pointer select-none text-nowrap px-4 transition hover:bg-neutral-100'
 						onClick={() => {

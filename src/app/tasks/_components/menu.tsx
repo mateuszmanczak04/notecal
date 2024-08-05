@@ -31,7 +31,7 @@ const Menu: FC<MenuProps> = ({ taskId }) => {
 	};
 
 	return (
-		<div className='relative' ref={menuRef}>
+		<div className='relative shrink-0' ref={menuRef}>
 			<Button size='icon' variant='secondary' onClick={handleToggleIsOpen}>
 				<EllipsisVertical className='h-6 w-6' />
 			</Button>

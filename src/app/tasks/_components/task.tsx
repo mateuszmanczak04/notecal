@@ -26,12 +26,16 @@ const Task: FC<TaskProps> = ({
 
 	return (
 		<div className='flex gap-4 border-b border-gray-200 p-4'>
-			<Checkbox checked={completed} onCheckedChange={handleToggleTask} />
-			<div className='flex flex-1 flex-col'>
+			<Checkbox
+				checked={completed}
+				onCheckedChange={handleToggleTask}
+				className='shrink-0'
+			/>
+			<div className='flex flex-1 shrink-0 flex-col'>
 				<Title id={id} title={title} completed={completed} />
 				<Description id={id} description={description} completed={completed} />
 				{!completed && (
-					<div className='mt-2 flex gap-2'>
+					<div className='mt-2 flex flex-wrap items-stretch gap-2'>
 						<Course id={id} courseId={courseId} />
 						<DueDate id={id} dueDate={dueDate} />
 						<Priority id={id} priority={priority} />
