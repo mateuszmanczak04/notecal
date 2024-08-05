@@ -15,6 +15,23 @@ const ForgotPasswordPage = () => {
 	const [email, setEmail] = useState<string>(
 		(searchParams.get('email') as string) || '',
 	);
+	const [timeToNextAttempt, setTimeToNextAttempt] = useState(0);
+
+	const startCounter = () => {
+		let timeLeft = 30;
+		setTimeToNextAttempt(timeLeft);
+
+		const repeat = () => {
+			setTimeout(() => {
+				if (timeLeft === 0) return;
+				timeLeft -= 1;
+				setTimeToNextAttempt(timeLeft);
+				repeat();
+			}, 1000);
+		};
+
+		repeat();
+	};
 
 	const { data, error, isPending, mutate } = useMutation({
 		mutationFn: async () => {
@@ -24,6 +41,7 @@ const ForgotPasswordPage = () => {
 			}
 			return { message };
 		},
+		onSuccess: startCounter,
 	});
 
 	const handleSubmit = (event: React.FormEvent) => {
@@ -47,11 +65,16 @@ const ForgotPasswordPage = () => {
 					className='mt-2'
 				/>
 			</div>
-			<Button>Send recovery email</Button>
+			<Button disabled={isPending || timeToNextAttempt !== 0}>
+				Send recovery email
+			</Button>
 			<small>
 				Please note that email will be sent only if you have confirmed your
 				email address previously
 			</small>
+			{timeToNextAttempt !== 0 && (
+				<p>Wait {timeToNextAttempt} seconds until you send the email again</p>
+			)}
 			{isPending && <LoadingSpinner />}
 			{error && <ErrorMessage>{error.message}</ErrorMessage>}
 			{data?.message && <SuccessMessage>{data.message}</SuccessMessage>}
