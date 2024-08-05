@@ -6,7 +6,7 @@ import { ArrowUpDown } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
-const SortTasks = () => {
+const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
 	const { update: updateSettings } = useSettings();
@@ -41,6 +41,7 @@ const SortTasks = () => {
 				value === 'completed')
 		) {
 			updateSettings({ orderTasks: value });
+			closeNavigation();
 			// TODO: sort tasks
 		}
 	};
