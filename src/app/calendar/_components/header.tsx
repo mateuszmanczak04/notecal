@@ -13,7 +13,7 @@ const Header = () => {
 
 	return (
 		<div className='flex items-center justify-between gap-2'>
-			<h2 className='text-3xl font-bold'>
+			<h2 className='text-2xl font-bold sm:text-3xl'>
 				{currentMonth} {currentYear}
 			</h2>
 
