@@ -62,7 +62,7 @@ const Course: FC<TaskCourseProps> = ({ id, courseId }) => {
 					</button>
 					{courses?.map(course => (
 						<button
-							className='h-8 w-full cursor-pointer select-none text-nowrap px-4 transition hover:bg-neutral-100'
+							className='h-8 w-full max-w-48 cursor-pointer select-none truncate text-nowrap px-4 transition hover:bg-neutral-100 sm:max-w-none'
 							key={course.id}
 							onClick={() => {
 								handleSaveChange(course.id);
