@@ -26,7 +26,11 @@ const Task: FC<TaskProps> = ({
 
 	return (
 		<div className='flex gap-4 border-b border-gray-200 pb-4 sm:p-4'>
-			<Checkbox checked={completed} onCheckedChange={handleToggleTask} />
+			<Checkbox
+				checked={completed}
+				onCheckedChange={handleToggleTask}
+				className='h-6 w-6 rounded-full'
+			/>
 			<div className='min-w-0'>
 				<Title id={id} title={title} completed={completed} />
 				<Description id={id} description={description} completed={completed} />
@@ -38,7 +42,6 @@ const Task: FC<TaskProps> = ({
 					</div>
 				)}
 			</div>
-			<Menu taskId={id} />
 		</div>
 	);
 };
