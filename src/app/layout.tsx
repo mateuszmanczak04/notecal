@@ -2,6 +2,7 @@ import '@/app/globals.css';
 import { auth } from '@/auth';
 import Navigation from '@/components/common/navigation';
 import Providers from '@/components/common/providers';
+import UnauthenticatedProviders from '@/components/common/unauthenticated-providers';
 
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
@@ -26,7 +27,9 @@ export default async function RootLayout({
 		return (
 			<html lang='en'>
 				<body className={cn(inter.className)}>
-					<div className='pt-16'>{children}</div>
+					<UnauthenticatedProviders>
+						<div className='pt-16'>{children}</div>
+					</UnauthenticatedProviders>
 				</body>
 			</html>
 		);
