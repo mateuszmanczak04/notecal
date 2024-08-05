@@ -25,7 +25,7 @@ const SettingsPage = () => {
 	if (!settings) return null;
 
 	return (
-		<div className='mx-auto mt-4 flex max-w-[480px] flex-col gap-8'>
+		<div className='mx-auto mb-32 flex max-w-[480px] flex-col gap-8'>
 			<h1 className='text-3xl font-bold'>Settings</h1>
 			{emailConfirmedIsPending && <LoadingSpinner />}
 			{emailConfirmed === false && <EmailNotConfirmed />}
