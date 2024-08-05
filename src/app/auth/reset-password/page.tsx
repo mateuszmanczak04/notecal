@@ -91,7 +91,7 @@ const ResetPasswordPage = () => {
 							</FormItem>
 						)}
 					/>
-					<Button type='submit' className='gap-2'>
+					<Button type='submit' className='gap-2' disabled={isPending}>
 						Change password <Pencil className='h-5 w-5' />
 					</Button>
 					{data && (
