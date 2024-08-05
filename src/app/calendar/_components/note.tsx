@@ -284,7 +284,7 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 						key={day.toString()}
 						href={`/notes/${note.courseId}/${note.id}`}
 						className={cn(
-							'absolute z-20 min-h-4 select-none overflow-hidden rounded-xl border border-white bg-primary-500 text-white transition hover:opacity-90',
+							'absolute z-20 min-h-4 min-w-8 select-none overflow-hidden rounded-xl border border-white bg-primary-500 text-white transition hover:opacity-90',
 							note.loading && 'pointer-events-none opacity-50',
 							isDragging && 'opacity-50',
 						)}
