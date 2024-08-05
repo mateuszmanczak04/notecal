@@ -1,11 +1,10 @@
 import '@/app/globals.css';
 import { auth } from '@/auth';
 import UnauthenticatedProviders from '@/components/common/unauthenticated-providers';
-
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import MainLayout from './_components/MainLayout';
+import MainLayout from './_components/main-layout';
 
 const inter = Inter({ subsets: ['latin'] });
 
