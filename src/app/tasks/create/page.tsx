@@ -52,7 +52,7 @@ const CreateTaskPage = () => {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='mx-auto mt-4 w-full max-w-[600px] space-y-8'>
+				className='mx-auto mt-4 w-full max-w-[600px] space-y-4 sm:space-y-6 md:space-y-8'>
 				<GoBackButton variant='secondary'>
 					<ArrowLeft className='h-4 w-4' />
 					Go back
