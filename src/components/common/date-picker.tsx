@@ -87,15 +87,15 @@ const DatePicker: FC<DatePickerProps> = ({
 
 	return (
 		<div
-			className={cn('relative text-sm sm:text-base', className)}
+			className={cn('relative h-9 text-sm sm:text-base', className)}
 			ref={menuRef}>
 			<Tag
 				text={date ? format(date, 'yyyy-MM-dd - HH:mm') : 'No due date'}
 				onClick={handleToggleMenu}
-				className={cn('h-9 w-full max-w-none', isPending && 'opacity-50')}
+				className={cn('h-full w-full max-w-none', isPending && 'opacity-50')}
 			/>
 			{isOpen && (
-				<div className='absolute left-1/2 top-0 flex h-9 w-full -translate-x-1/2 items-center justify-center gap-2 rounded-xl border bg-neutral-100 font-mono dark:border-neutral-500 dark:bg-neutral-700'>
+				<div className='absolute left-1/2 top-0 flex h-full w-full -translate-x-1/2 items-center justify-center gap-2 rounded-xl border bg-neutral-100 font-mono dark:border-neutral-500 dark:bg-neutral-700'>
 					{/* Year, month, day: */}
 					<div className='flex overflow-hidden rounded-md dark:text-neutral-100'>
 						<input
