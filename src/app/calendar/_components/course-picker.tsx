@@ -50,7 +50,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 	if (isPending)
 		return (
 			<div
-				className='absolute rounded-xl bg-white p-4 shadow-xl'
+				className='absolute rounded-xl bg-white p-4 shadow-xl dark:bg-neutral-700'
 				ref={pickerRef}
 				style={{ left: x, top: y }}>
 				<LoadingSpinner />
@@ -60,7 +60,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 	if (!courses || courses.length === 0) {
 		return (
 			<div
-				className='absolute flex flex-col gap-2 rounded-xl bg-white p-4 shadow-xl'
+				className='absolute flex flex-col gap-2 rounded-xl bg-white p-4 shadow-xl dark:bg-neutral-700'
 				ref={pickerRef}
 				style={{ left: x, top: y }}>
 				You don&apos;t have any courses yet
@@ -74,10 +74,10 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 	return (
 		<>
 			{/* Backdrop: */}
-			<div className='absolute inset-0 z-30 bg-neutral-300/50'></div>
+			<div className='absolute inset-0 z-30 bg-neutral-300 opacity-50 dark:bg-neutral-900'></div>
 			{/* Popup: */}
 			<div
-				className='absolute z-40 flex min-w-40 max-w-96 flex-col overflow-hidden rounded-xl border bg-white shadow-xl'
+				className='absolute z-40 flex min-w-40 max-w-96 flex-col overflow-hidden rounded-xl bg-white shadow-xl dark:bg-neutral-700'
 				ref={pickerRef}
 				style={{ left: x, top: y }}>
 				<p className='w-full py-1 text-center text-sm '>
@@ -87,7 +87,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 					<button
 						key={course.id}
 						onClick={() => handleSelect(course.id)}
-						className='flex w-full items-center justify-center px-4 py-2 text-white transition hover:bg-neutral-100'
+						className='flex w-full items-center justify-center px-4 py-2 text-white transition hover:bg-neutral-100 dark:hover:bg-neutral-600'
 						style={{ color: course.color }}>
 						{course.name}
 					</button>
