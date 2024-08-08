@@ -73,7 +73,7 @@ const DropdownMenu = ({
 			{isOpen && (
 				<div
 					className={cn(
-						'absolute left-0 z-20 flex w-full flex-col justify-center rounded-b-xl border-b border-l border-r bg-white shadow-xl dark:border-neutral-500 dark:bg-neutral-600',
+						'absolute left-0 z-20 flex w-full flex-col justify-center overflow-hidden rounded-b-xl border-b border-l border-r bg-white shadow-xl dark:border-neutral-500 dark:bg-neutral-600',
 						`top-${height}`,
 					)}>
 					<button
@@ -84,7 +84,7 @@ const DropdownMenu = ({
 						onClick={() => {
 							handleSelect(null);
 						}}>
-						No course
+						{currentOption.label || 'None'}
 					</button>
 					{options?.map(option => (
 						<button
