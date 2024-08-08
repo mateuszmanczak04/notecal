@@ -2,9 +2,9 @@
 
 import { cn } from '@/lib/utils';
 import { useRef, useState } from 'react';
+import { ClassNameValue } from 'tailwind-merge';
 import { useOnClickOutside } from 'usehooks-ts';
 import Tag from './tag';
-import { ClassNameValue } from 'tailwind-merge';
 
 type Props = {
 	currentOption: {
