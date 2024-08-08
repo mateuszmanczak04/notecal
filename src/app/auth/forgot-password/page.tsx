@@ -52,7 +52,7 @@ const ForgotPasswordPage = () => {
 
 	return (
 		<form
-			className='mx-auto flex max-w-[400px] flex-col gap-4'
+			className='mx-auto flex max-w-[400px] flex-col gap-4 px-8'
 			onSubmit={handleSubmit}>
 			<div>
 				<label htmlFor='reset-password-input`'>
