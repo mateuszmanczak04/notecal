@@ -10,10 +10,12 @@ type Props = {
 	currentOption: {
 		value: any;
 		label: string;
+		className?: ClassNameValue;
 	};
 	options: {
 		value: any;
 		label: string;
+		className?: ClassNameValue;
 	}[];
 	onChange: (value: string) => void;
 	className?: ClassNameValue;
@@ -65,6 +67,7 @@ const DropdownMenu = ({
 				className={cn(
 					'h-full max-w-none rounded-none border border-l border-r border-t border-transparent',
 					isOpen ? 'rounded-t-xl dark:border-neutral-500' : 'rounded-xl',
+					currentOption.className,
 				)}
 			/>
 			{isOpen && (
@@ -88,6 +91,7 @@ const DropdownMenu = ({
 							className={cn(
 								'cursor-pointer select-none truncate text-nowrap px-4 transition hover:bg-neutral-100 dark:hover:bg-neutral-500 sm:max-w-none',
 								`h-${height}`,
+								option.className,
 							)}
 							key={option.value}
 							onClick={() => {
