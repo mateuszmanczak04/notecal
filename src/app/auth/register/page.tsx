@@ -129,7 +129,7 @@ const RegisterPage = () => {
 						</Button>
 						<Link
 							href='/auth/login'
-							className='mt-4 block text-center text-sm text-gray-500'>
+							className='mt-4 block text-center text-sm text-neutral-500'>
 							Already have an account? Log in
 						</Link>
 						{error && (

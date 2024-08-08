@@ -83,7 +83,7 @@ const LoginPage = () => {
 				</Button>
 				<Link
 					href='/auth/register'
-					className='mt-4 block text-center text-sm text-gray-500'>
+					className='mt-4 block text-center text-sm text-neutral-500'>
 					Don&apos;t have an account yet? Register now
 				</Link>
 				<div className='flex w-full justify-center'>

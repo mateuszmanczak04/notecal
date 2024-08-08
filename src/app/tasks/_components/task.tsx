@@ -25,7 +25,7 @@ const Task: FC<TaskProps> = ({
 	};
 
 	return (
-		<div className='flex gap-4 border-b border-gray-200 pb-4 sm:p-4'>
+		<div className='flex gap-4 border-b border-neutral-200 pb-4 sm:p-4'>
 			<Checkbox
 				checked={completed}
 				onCheckedChange={handleToggleTask}

@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { Calendar, Check, Cog, List, Menu, Plus, User, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Skeleton } from '../ui/skeleton';
@@ -64,7 +64,7 @@ const Navigation = () => {
 							<p className='truncate text-sm font-bold'>
 								{session.data.user.email?.split('@')[0]}
 							</p>
-							<p className='truncate text-sm text-gray-500'>
+							<p className='truncate text-sm text-neutral-500'>
 								{session.data.user.email}
 							</p>
 						</div>
@@ -76,7 +76,7 @@ const Navigation = () => {
 				)}
 				{/* Main menu: */}
 				<div>
-					<p className='text-sm font-semibold uppercase text-gray-500'>
+					<p className='text-sm font-semibold uppercase text-neutral-500'>
 						MAIN MENU
 					</p>
 					<div className='mt-2'>

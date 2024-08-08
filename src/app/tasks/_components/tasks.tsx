@@ -19,7 +19,7 @@ const Tasks: FC<TasksProps> = ({}) => {
 
 	if (!tasks || tasks.length === 0) {
 		return (
-			<p className='text-lg text-gray-500'>
+			<p className='text-lg text-neutral-500'>
 				You don&apos;t have any tasks yet.
 			</p>
 		);

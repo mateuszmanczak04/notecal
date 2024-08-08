@@ -29,7 +29,7 @@ const CreateFirstNote: FC<CreateFirstNoteProps> = ({ courseId }) => {
 	return (
 		<button
 			onClick={handleClick}
-			className='flex h-6 shrink-0 items-center justify-center text-nowrap rounded-md bg-gray-100 px-4 transition hover:bg-gray-200'>
+			className='flex h-6 shrink-0 items-center justify-center text-nowrap rounded-md bg-neutral-100 px-4 transition hover:bg-neutral-200'>
 			Create the first note
 		</button>
 	);
