@@ -42,7 +42,7 @@ const CreateCoursePage = () => {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='mx-auto mt-4 w-full max-w-[600px] space-y-8'>
+				className='mx-auto mt-4 w-full max-w-[600px] space-y-4 sm:space-y-6 md:space-y-8'>
 				<GoBackButton variant='secondary'>
 					<ArrowLeft className='h-4 w-4' />
 					Go back
@@ -89,21 +89,20 @@ const CreateCoursePage = () => {
 						<FormItem>
 							<FormLabel>Accent color</FormLabel>
 							<FormControl>
-								<div className='flex h-12 items-center gap-2'>
+								<div className='grid grid-cols-3 gap-2 sm:grid-cols-4	md:grid-cols-7'>
 									{COLORS.map(color => {
 										return (
 											<div
 												className={cn(
-													'flex h-9 w-full flex-1 cursor-pointer items-center justify-center rounded-md border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
-													field.value === color.hex &&
-														'h-12 flex-[2] border-white/50',
+													'grid h-9 w-full cursor-pointer place-content-center rounded-md border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
+													field.value === color.hex && 'border-white/50',
 												)}
 												style={{ backgroundColor: color.hex }}
 												onClick={() => field.onChange(color.hex)}
 												key={color.hex}>
 												<span
 													className={cn(
-														'rounded-sm bg-neutral-900/50 px-1 leading-5 transition',
+														'rounded-sm bg-neutral-900/50 px-1 text-sm leading-5 transition',
 														field.value === color.hex
 															? 'opacity-1'
 															: 'opacity-0',
