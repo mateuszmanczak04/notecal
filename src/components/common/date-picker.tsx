@@ -86,7 +86,9 @@ const DatePicker: FC<DatePickerProps> = ({
 	}, [date]);
 
 	return (
-		<div className={cn('relative', className)} ref={menuRef}>
+		<div
+			className={cn('relative text-sm sm:text-base', className)}
+			ref={menuRef}>
 			<Tag
 				text={date ? format(date, 'yyyy-MM-dd - HH:mm') : 'No due date'}
 				onClick={handleToggleMenu}
