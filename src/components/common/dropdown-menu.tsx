@@ -25,7 +25,7 @@ const DropdownMenu = ({
 	options,
 	onChange,
 	className,
-	height,
+	height = 9,
 }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
