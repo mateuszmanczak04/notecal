@@ -76,7 +76,7 @@ const RegisterPage = () => {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='mx-auto flex max-w-[400px] flex-col items-center'>
+				className='mx-auto flex max-w-[400px] flex-col items-center px-8'>
 				<p className='text-3xl font-bold'>Create an account</p>
 
 				<FormField
