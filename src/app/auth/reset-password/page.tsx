@@ -59,7 +59,7 @@ const ResetPasswordPage = () => {
 	}
 
 	return (
-		<div className='mx-auto flex max-w-[480px] flex-col gap-2'>
+		<div className='mx-auto flex max-w-[480px] flex-col gap-2 px-8'>
 			<h2 className='text-lg font-semibold'>Reset your password</h2>
 			<Form {...form}>
 				<form
