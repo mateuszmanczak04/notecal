@@ -130,7 +130,7 @@ const CreateTaskPage = () => {
 					)}
 				/>
 
-				{/* TODO: make it work */}
+				{/* Date picker */}
 				<FormField
 					control={form.control}
 					name='dueDate'
