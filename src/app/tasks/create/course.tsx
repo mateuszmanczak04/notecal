@@ -14,7 +14,6 @@ interface TaskCourseProps {
 
 const Course: FC<TaskCourseProps> = ({ onSelect, currentCourseId }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [isPending, startTransition] = useTransition();
 	const menuRef = useRef<HTMLDivElement | null>(null);
 	const { courses } = useCourses();
 	const currentCourse = useCourse(currentCourseId);
@@ -40,16 +39,16 @@ const Course: FC<TaskCourseProps> = ({ onSelect, currentCourseId }) => {
 	});
 
 	return (
-		<div className='relative' ref={menuRef}>
+		<div className='relative text-sm sm:text-base' ref={menuRef}>
 			<Tag
 				text={currentCourse?.name || 'No course'}
 				onClick={handleToggleMenu}
-				className={cn('w-full transition', isPending && 'opacity-50')}
+				className='max-w-none'
 			/>
 			{isOpen && (
-				<div className='absolute left-0 top-7 z-20 flex w-full flex-col items-center justify-center rounded-md border bg-white shadow-xl'>
+				<div className='absolute left-0 top-7 z-20 flex w-full flex-col justify-center rounded-md border bg-white shadow-xl'>
 					<button
-						className='flex h-8 w-full cursor-pointer select-none items-center justify-center px-4 transition hover:bg-neutral-100'
+						className='h-8 w-full cursor-pointer select-none text-nowrap px-4 transition hover:bg-neutral-100'
 						onClick={() => {
 							onSelect(null);
 							handleCloseMenu();
@@ -58,7 +57,7 @@ const Course: FC<TaskCourseProps> = ({ onSelect, currentCourseId }) => {
 					</button>
 					{courses?.map(course => (
 						<button
-							className='flex h-8 w-full cursor-pointer select-none items-center justify-center px-4 transition hover:bg-neutral-100'
+							className='h-8 cursor-pointer select-none truncate text-nowrap px-4 transition hover:bg-neutral-100 sm:max-w-none'
 							key={course.id}
 							onClick={() => {
 								onSelect(course.id);
