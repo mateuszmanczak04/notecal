@@ -25,22 +25,22 @@ const SettingsPage = () => {
 	if (!settings) return null;
 
 	return (
-		<div className='mx-auto mb-32 flex max-w-[480px] flex-col gap-8'>
+		<div className='mx-auto mb-32 mt-4 flex max-w-[480px] flex-col gap-8'>
 			<h1 className='text-3xl font-bold'>Settings</h1>
 			{emailConfirmedIsPending && <LoadingSpinner />}
 			{emailConfirmed === false && <EmailNotConfirmed />}
 			<ChangeEmailSetting />
-			<Separator className='bg-neutral-300' />
+			<Separator />
 			<ChangePasswordSetting />
-			<Separator className='bg-neutral-300' />
+			<Separator />
 			<ThemeSetting />
-			<Separator className='bg-neutral-300' />
+			<Separator />
 			<DisplayedDaysSetting initialDisplayedDays={settings.displayedDays} />
-			<Separator className='bg-neutral-300' />
+			<Separator />
 			<DefaultNoteDurationSetting
 				initialDefaultNoteDuration={settings.defaultNoteDuration}
 			/>
-			<Separator className='bg-neutral-300' />
+			<Separator />
 			<Logout variant='secondary' />
 		</div>
 	);
