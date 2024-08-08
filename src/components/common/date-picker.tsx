@@ -1,10 +1,10 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { FC, useEffect, useRef, useState, useTransition } from 'react';
-import Tag from '../../app/tasks/_components/tag';
-import { useOnClickOutside } from 'usehooks-ts';
 import { format, isValid } from 'date-fns';
+import { FC, useEffect, useRef, useState } from 'react';
+import { useOnClickOutside } from 'usehooks-ts';
+import Tag from './tag';
 
 interface DatePickerProps {
 	onSelect: (newDueDate: Date | null) => void;

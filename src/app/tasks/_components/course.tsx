@@ -5,7 +5,7 @@ import useCourses from '@/app/courses/_hooks/use-courses';
 import { FC, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import useTasks from '../_hooks/use-tasks';
-import Tag from './tag';
+import Tag from '../../../components/common/tag';
 
 interface TaskCourseProps {
 	id: string;

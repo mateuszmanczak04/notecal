@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import Tag from '../_components/tag';
+import Tag from '../../../components/common/tag';
 import { cn } from '@/lib/utils';
 import { ControllerRenderProps } from 'react-hook-form';
 

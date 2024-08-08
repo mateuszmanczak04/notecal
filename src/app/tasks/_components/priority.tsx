@@ -5,7 +5,7 @@ import { TaskPriority } from '@prisma/client';
 import { FC, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import useTasks from '../_hooks/use-tasks';
-import Tag from './tag';
+import Tag from '../../../components/common/tag';
 
 interface PriorityProps {
 	id: string;
