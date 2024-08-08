@@ -284,7 +284,7 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 						key={day.toString()}
 						href={`/notes/${note.courseId}/${note.id}`}
 						className={cn(
-							'absolute z-20 min-h-4 min-w-8 select-none overflow-hidden rounded-xl border border-white bg-primary-500 text-white transition hover:opacity-90',
+							'absolute z-20 min-h-4 min-w-8 select-none overflow-hidden rounded-xl border-2 border-white bg-primary-500 text-white transition dark:border-neutral-800',
 							note.loading && 'pointer-events-none opacity-50',
 							isDragging && 'opacity-50',
 						)}
@@ -331,7 +331,7 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 					<div
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
-						className='pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl border bg-primary-500 text-white transition'
+						className='pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl border-2 border-white bg-primary-500 text-white transition dark:border-neutral-800'
 						style={{
 							top: getTopOffset(day, actualDragStartTime),
 							left: getLeftOffset(day),

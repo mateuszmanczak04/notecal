@@ -1,9 +1,8 @@
 'use client';
 
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { FC } from 'react';
-import DayHeading from './day-heading';
 import { useCalendarContext } from '../_context/calendar-context';
+import DayHeading from './day-heading';
 
 interface TopBarProps {}
 
@@ -15,7 +14,7 @@ const TopBar: FC<TopBarProps> = ({}) => {
 
 	return (
 		<div className='mt-4 flex'>
-			<div className='h-calendar-header w-12 rounded-tl-xl border sm:w-20'></div>
+			<div className='h-calendar-header w-12 rounded-tl-xl border sm:w-20 dark:border-neutral-600'></div>
 
 			{/* Mon, Tue, Wed, etc.: */}
 			<div

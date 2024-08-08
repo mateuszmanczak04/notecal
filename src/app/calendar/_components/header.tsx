@@ -1,7 +1,7 @@
 'use client';
 
-import { useCalendarContext } from '../_context/calendar-context';
 import { ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
+import { useCalendarContext } from '../_context/calendar-context';
 
 const Header = () => {
 	const { currentFirstDay, zoomIn, zoomOut, goDayBackward, goDayForward } =
@@ -21,12 +21,12 @@ const Header = () => {
 				{/* Left & Right */}
 				<div className='flex h-calendar-header w-20'>
 					<button
-						className='flex flex-1 cursor-pointer items-center justify-center rounded-l-md border hover:bg-neutral-100'
+						className='flex flex-1 cursor-pointer items-center justify-center rounded-l-md border hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
 						onClick={goDayBackward}>
 						<ChevronLeft className='h-5 w-5' />
 					</button>
 					<button
-						className='flex flex-1 cursor-pointer items-center justify-center rounded-r-md border-b border-r border-t hover:bg-neutral-100'
+						className='flex flex-1 cursor-pointer items-center justify-center rounded-r-md border-b border-r border-t hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
 						onClick={goDayForward}>
 						<ChevronRight className='h-5 w-5' />
 					</button>
@@ -35,12 +35,12 @@ const Header = () => {
 				{/* Zoom in/out */}
 				<div className='flex h-calendar-header w-20'>
 					<button
-						className='flex flex-1 cursor-pointer items-center justify-center rounded-l-md border hover:bg-neutral-100'
+						className='flex flex-1 cursor-pointer items-center justify-center rounded-l-md border hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
 						onClick={zoomOut}>
 						<Minus className='h-5 w-5' />
 					</button>
 					<button
-						className='flex flex-1 cursor-pointer items-center justify-center rounded-r-md border-b border-r border-t hover:bg-neutral-100'
+						className='flex flex-1 cursor-pointer items-center justify-center rounded-r-md border-b border-r border-t hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
 						onClick={zoomIn}>
 						<Plus className='h-5 w-5' />
 					</button>

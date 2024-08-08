@@ -1,8 +1,8 @@
 'use client';
 
-import HourRow from './hour-row';
-import DayColumn from './day-column';
 import { useCalendarContext } from '../_context/calendar-context';
+import DayColumn from './day-column';
+import HourRow from './hour-row';
 
 const Grid = () => {
 	const { displayedDays } = useCalendarContext();
@@ -10,7 +10,7 @@ const Grid = () => {
 	return (
 		<div className='flex'>
 			{/* Hours: */}
-			<div className='w-12 text-sm sm:w-20 sm:text-base'>
+			<div className='w-12 text-sm sm:w-20 sm:text-base '>
 				{new Array(24).fill(0).map((_, index) => (
 					<HourRow key={index} hour={index} />
 				))}
