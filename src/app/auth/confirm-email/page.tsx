@@ -8,6 +8,7 @@ import ErrorMessage from '@/components/common/error-message';
 import SuccessMessage from '@/components/common/success-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 const ConfirmEmailPage = () => {
 	const [isPending, startTransition] = useTransition();
@@ -59,8 +60,15 @@ const ConfirmEmailPage = () => {
 			{message && (
 				<div className='mt-4 space-y-4'>
 					<SuccessMessage>{message}</SuccessMessage>
-					<Button asChild variant='secondary' size='lg'>
-						<Link href='/auth/login'>Or go there now</Link>
+					<Button
+						asChild
+						variant='secondary'
+						size='lg'
+						className='ites-center flex gap-1'>
+						<Link href='/auth/login'>
+							<ArrowLeft className='h-5 w-5' />
+							Or go there now
+						</Link>
 					</Button>
 				</div>
 			)}
