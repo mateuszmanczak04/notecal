@@ -8,7 +8,7 @@ import { ClassNameValue } from 'tailwind-merge';
 type Props = {
 	onSelect: (courseId: string | null) => void;
 	currentCourseId: string | null;
-	className: ClassNameValue;
+	className?: ClassNameValue;
 };
 
 const Course = ({ onSelect, currentCourseId, className }: Props) => {
