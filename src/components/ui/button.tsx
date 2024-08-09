@@ -15,7 +15,7 @@ const buttonVariants = cva(
 				outline:
 					'border border-primary-500 bg-white hover:bg-primary-100 hover:text-primary-400',
 				secondary:
-					'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-100',
+					'bg-neutral-100 text-neutral-800 dark:hover:bg-neutral-600 hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-100',
 				ghost: 'hover:bg-neutral-100 hover:text-neutral-700',
 				link: 'text-primary-500 underline-offset-4 hover:underline',
 			},
