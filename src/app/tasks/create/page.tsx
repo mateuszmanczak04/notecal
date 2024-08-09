@@ -19,9 +19,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import DatePicker from '../../../components/common/date-picker';
-import useTasks from '../_hooks/use-tasks';
 import Course from '../_components/course';
-import Priority from './priority';
+import CreatePriority from '../_components/create-priority';
+import useTasks from '../_hooks/use-tasks';
 
 const CreateTaskPage = () => {
 	const searchParams = useSearchParams();
@@ -107,7 +107,7 @@ const CreateTaskPage = () => {
 						<FormItem>
 							<FormLabel>Priority</FormLabel>
 							<FormControl>
-								<Priority field={field} />
+								<CreatePriority field={field} />
 							</FormControl>
 						</FormItem>
 					)}

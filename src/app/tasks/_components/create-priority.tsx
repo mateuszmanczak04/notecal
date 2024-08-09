@@ -1,11 +1,10 @@
 'use client';
 
-import { FC } from 'react';
-import Tag from '../../../components/common/tag';
 import { cn } from '@/lib/utils';
 import { ControllerRenderProps } from 'react-hook-form';
+import Tag from '../../../components/common/tag';
 
-interface PriorityProps {
+interface Props {
 	field: ControllerRenderProps<
 		{
 			title: string;
@@ -19,7 +18,7 @@ interface PriorityProps {
 	>;
 }
 
-const Priority: FC<PriorityProps> = ({ field }) => {
+const CreatePriority = ({ field }: Props) => {
 	return (
 		<div className='grid grid-cols-3 gap-2 transition'>
 			<Tag
@@ -74,4 +73,4 @@ const Priority: FC<PriorityProps> = ({ field }) => {
 	);
 };
 
-export default Priority;
+export default CreatePriority;
