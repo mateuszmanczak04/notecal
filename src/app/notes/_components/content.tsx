@@ -24,7 +24,7 @@ const Content = () => {
 				isPending && 'pointer-events-none  opacity-75',
 			)}>
 			<Textarea
-				className='flex-1 resize-none border-2 border-neutral-200 bg-neutral-100 shadow-none focus-visible:border-primary-500 focus-visible:ring-0'
+				className='flex-1 resize-none border-2 border-neutral-200 bg-neutral-100 shadow-none focus-visible:border-primary-500 focus-visible:ring-0 dark:border-neutral-600 dark:bg-neutral-700'
 				value={content}
 				onChange={e => setContent(e.target.value)}></Textarea>
 			<Button
