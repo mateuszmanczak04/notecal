@@ -33,8 +33,6 @@ const SettingsPage = () => {
 			<Separator />
 			<ChangePasswordSetting />
 			<Separator />
-			<ThemeSetting />
-			<Separator />
 			<DisplayedDaysSetting initialDisplayedDays={settings.displayedDays} />
 			<Separator />
 			<DefaultNoteDurationSetting
