@@ -20,7 +20,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import DatePicker from '../../../components/common/date-picker';
 import useTasks from '../_hooks/use-tasks';
-import Course from './course';
+import Course from '../_components/course';
 import Priority from './priority';
 
 const CreateTaskPage = () => {
