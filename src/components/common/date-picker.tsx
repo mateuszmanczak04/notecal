@@ -1,10 +1,10 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { FC, useEffect, useRef, useState, useTransition } from 'react';
-import Tag from '../../app/tasks/_components/tag';
-import { useOnClickOutside } from 'usehooks-ts';
 import { format, isValid } from 'date-fns';
+import { FC, useEffect, useRef, useState } from 'react';
+import { useOnClickOutside } from 'usehooks-ts';
+import Tag from './tag';
 
 interface DatePickerProps {
 	onSelect: (newDueDate: Date | null) => void;
@@ -87,23 +87,23 @@ const DatePicker: FC<DatePickerProps> = ({
 
 	return (
 		<div
-			className={cn('relative text-sm sm:text-base', className)}
+			className={cn('relative h-9 text-sm sm:text-base', className)}
 			ref={menuRef}>
 			<Tag
 				text={date ? format(date, 'yyyy-MM-dd - HH:mm') : 'No due date'}
 				onClick={handleToggleMenu}
-				className={cn('w-full max-w-none', isPending && 'opacity-50')}
+				className={cn('h-full w-full max-w-none', isPending && 'opacity-50')}
 			/>
 			{isOpen && (
-				<div className='absolute left-1/2 top-0 flex h-6 w-full -translate-x-1/2 items-center justify-center gap-2 rounded-md border bg-neutral-100 font-mono'>
+				<div className='absolute left-1/2 top-0 flex h-full w-full -translate-x-1/2 items-center justify-center gap-2 rounded-xl border bg-neutral-100 font-mono dark:border-neutral-500 dark:bg-neutral-700'>
 					{/* Year, month, day: */}
-					<div className='flex overflow-hidden rounded-md'>
+					<div className='flex overflow-hidden rounded-md dark:text-neutral-100'>
 						<input
 							placeholder={new Date().getFullYear().toString()}
 							type='text'
 							value={year}
 							onChange={e => setYear(e.target.value)}
-							className='w-12 bg-neutral-100 px-1 focus:outline-none'
+							className='w-12 bg-neutral-100 px-1 focus:outline-none dark:bg-neutral-700'
 							autoFocus
 						/>
 						/
@@ -114,7 +114,7 @@ const DatePicker: FC<DatePickerProps> = ({
 							type='text'
 							value={month}
 							onChange={e => setMonth(e.target.value)}
-							className='w-7 bg-neutral-100 px-1 focus:outline-none'
+							className='w-7 bg-neutral-100 px-1 focus:outline-none dark:bg-neutral-700'
 						/>
 						/
 						<input
@@ -122,7 +122,7 @@ const DatePicker: FC<DatePickerProps> = ({
 							type='text'
 							value={day}
 							onChange={e => setDay(e.target.value)}
-							className='w-7 bg-neutral-100 px-1 focus:outline-none'
+							className='w-7 bg-neutral-100 px-1 focus:outline-none dark:bg-neutral-700'
 						/>
 					</div>
 
@@ -133,7 +133,7 @@ const DatePicker: FC<DatePickerProps> = ({
 							type='text'
 							value={hour}
 							onChange={e => setHour(e.target.value)}
-							className='w-7 bg-neutral-100 px-1 focus:outline-none'
+							className='w-7 bg-neutral-100 px-1 focus:outline-none dark:bg-neutral-700'
 						/>
 						:
 						<input
@@ -141,7 +141,7 @@ const DatePicker: FC<DatePickerProps> = ({
 							type='text'
 							value={minute}
 							onChange={e => setMinute(e.target.value)}
-							className='w-7 bg-neutral-100 px-1 focus:outline-none'
+							className='w-7 bg-neutral-100 px-1 focus:outline-none dark:bg-neutral-700'
 						/>
 					</div>
 				</div>

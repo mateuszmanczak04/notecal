@@ -9,7 +9,7 @@ const HourRow = ({ hour }: { hour: number }) => {
 	return (
 		<div
 			className={cn(
-				'flex flex-col items-center justify-center border-b border-l border-r font-semibold text-neutral-500  sm:flex-row',
+				'flex flex-col items-center justify-center border-b border-l border-r font-semibold text-neutral-500 sm:flex-row dark:border-neutral-600 dark:text-neutral-400',
 				hour === 23 && 'rounded-bl-xl',
 			)}
 			style={{ height: rowHeight + 'px' }}>

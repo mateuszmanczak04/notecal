@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-	* {
-		@apply box-border;
-	}
+* {
+	color-scheme: light dark;
 }

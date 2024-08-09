@@ -10,7 +10,7 @@ const Row = ({ isLast }: { isLast: boolean }) => {
 	return (
 		<div
 			className={cn(
-				'flex items-center justify-center border-b border-r font-semibold text-gray-500',
+				'flex items-center justify-center border-b border-r font-semibold text-neutral-500 dark:border-neutral-600',
 				isLast && 'rounded-br-xl',
 			)}
 			style={{ height: rowHeight + 'px' }}></div>

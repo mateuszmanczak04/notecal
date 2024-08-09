@@ -24,7 +24,11 @@ export default async function RootLayout({
 	if (!session?.user?.id) {
 		return (
 			<html lang='en'>
-				<body className={cn(inter.className)}>
+				<body
+					className={cn(
+						inter.className,
+						'bg-white fill-neutral-800 text-neutral-800 dark:bg-neutral-900 dark:fill-neutral-100 dark:text-neutral-100',
+					)}>
 					<UnauthenticatedProviders>
 						<div className='pt-16'>{children}</div>
 					</UnauthenticatedProviders>
@@ -35,7 +39,11 @@ export default async function RootLayout({
 
 	return (
 		<html lang='en'>
-			<body className={inter.className}>
+			<body
+				className={cn(
+					inter.className,
+					'bg-neutral-100 fill-neutral-800 text-neutral-800 dark:bg-neutral-900 dark:fill-neutral-100 dark:text-neutral-100',
+				)}>
 				<MainLayout>{children}</MainLayout>
 			</body>
 		</html>

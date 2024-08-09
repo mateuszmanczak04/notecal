@@ -1,31 +1,42 @@
 'use client';
 
+import useCourse from '@/app/courses/_hooks/use-course';
+import DatePicker from '@/components/common/date-picker';
 import { Checkbox } from '@/components/ui/checkbox';
 import { type Task } from '@prisma/client';
-import { FC } from 'react';
 import useTasks from '../_hooks/use-tasks';
 import Course from './course';
 import Description from './description';
-import DueDate from './due-date';
-import Menu from './menu';
 import Priority from './priority';
 import Title from './title';
 
-interface TaskProps {
+type Props = {
 	task: Task;
-}
+};
 
-const Task: FC<TaskProps> = ({
+const Task = ({
 	task: { id, title, description, completed, courseId, dueDate, priority },
-}) => {
+}: Props) => {
 	const { update: updateTask } = useTasks();
+	const course = useCourse(courseId);
 
 	const handleToggleTask = (newValue: boolean) => {
 		updateTask({ id, completed: newValue });
 	};
 
+	const handleChangeDueDate = (dueDate: Date | null) => {
+		updateTask({ id, dueDate });
+	};
+
+	const handleChangeCourse = (newCourseId: string | null) => {
+		// We don't want to update the identical value
+		if (course && newCourseId === course.id) return;
+
+		updateTask({ id, courseId: newCourseId });
+	};
+
 	return (
-		<div className='flex gap-4 border-b border-gray-200 pb-4 sm:p-4'>
+		<div className='flex gap-4 border-b border-neutral-200 pb-4 sm:p-4'>
 			<Checkbox
 				checked={completed}
 				onCheckedChange={handleToggleTask}
@@ -36,8 +47,21 @@ const Task: FC<TaskProps> = ({
 				<Description id={id} description={description} completed={completed} />
 				{!completed && (
 					<div className='mt-2 flex flex-wrap gap-2'>
-						<Course id={id} courseId={courseId} />
-						<DueDate id={id} dueDate={dueDate} />
+						{/* Course */}
+						<Course
+							currentCourseId={courseId}
+							onSelect={handleChangeCourse}
+							className='w-52'
+						/>
+
+						{/* Due date */}
+						<DatePicker
+							date={dueDate}
+							onSelect={handleChangeDueDate}
+							className='h-9 w-56'
+						/>
+
+						{/* Priority */}
 						<Priority id={id} priority={priority} />
 					</div>
 				)}
