@@ -66,7 +66,7 @@ const Priority: FC<PriorityProps> = ({ id, priority }) => {
 
 	return (
 		<DropdownMenu
-			height={6}
+			height={9}
 			className='w-52'
 			currentOption={currentOption}
 			options={options}

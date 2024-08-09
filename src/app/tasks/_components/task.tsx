@@ -64,7 +64,7 @@ const Task = ({
 							currentOption={currentCourse}
 							options={coursesOptions}
 							onChange={handleChangeCourse}
-							height={6}
+							height={9}
 							className='w-52'
 						/>
 
@@ -72,7 +72,7 @@ const Task = ({
 						<DatePicker
 							date={dueDate}
 							onSelect={handleChangeDueDate}
-							className='h-6 w-56'
+							className='h-9 w-56'
 						/>
 
 						{/* Priority */}
