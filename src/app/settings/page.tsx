@@ -10,7 +10,6 @@ import ChangePasswordSetting from './_components/change-password-setting';
 import DefaultNoteDurationSetting from './_components/default-note-duration-settings';
 import DisplayedDaysSetting from './_components/displayed-days-setting';
 import EmailNotConfirmed from './_components/email-not-confirmed';
-import ThemeSetting from './_components/theme-setting';
 import useSettings from './_hooks/use-settings';
 
 const SettingsPage = () => {
