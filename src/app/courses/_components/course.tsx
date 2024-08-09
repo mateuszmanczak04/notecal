@@ -41,7 +41,7 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 					</div>
 				)}
 			</div>
-			<Menu courseId={id} />
+			{/* <Menu courseId={id} /> */}
 		</div>
 	);
 };
