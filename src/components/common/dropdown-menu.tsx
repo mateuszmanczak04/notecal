@@ -20,6 +20,7 @@ type Props = {
 	onChange: (value: string) => void;
 	className?: ClassNameValue;
 	height?: number;
+	emptyChoiceLabel?: string;
 };
 
 const DropdownMenu = ({
@@ -28,6 +29,7 @@ const DropdownMenu = ({
 	onChange,
 	className,
 	height = 9,
+	emptyChoiceLabel,
 }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
@@ -84,7 +86,7 @@ const DropdownMenu = ({
 						onClick={() => {
 							handleSelect(null);
 						}}>
-						{currentOption.label || 'None'}
+						{emptyChoiceLabel || 'None'}
 					</button>
 					{options?.map(option => (
 						<button

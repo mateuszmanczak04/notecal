@@ -17,6 +17,16 @@ const getPriorityName = (priority: TaskPriority | null) => {
 	return 'No priority';
 };
 
+const getPriorityClassName = (priority: TaskPriority | null) => {
+	if (priority === 'A')
+		return 'bg-red-500 text-white hover:bg-red-400 dark:bg-red-500 dark:text-white dark:hover:bg-red-600 dark:border-transparent';
+	if (priority === 'B')
+		return 'bg-yellow-500 text-white hover:bg-yellow-400 dark:bg-yellow-500 dark:text-white dark:hover:bg-yellow-600 dark:border-transparent';
+	if (priority === 'C')
+		return 'bg-green-500 text-white hover:bg-green-400 dark:bg-green-500 dark:text-white dark:hover:bg-green-600 dark:border-transparent';
+	return '';
+};
+
 const Priority: FC<PriorityProps> = ({ id, priority }) => {
 	const { update: updateTask } = useTasks();
 
@@ -24,26 +34,24 @@ const Priority: FC<PriorityProps> = ({ id, priority }) => {
 		{
 			value: 'C',
 			label: getPriorityName('C'),
-			className:
-				'bg-green-200 text-green-600 hover:bg-green-300 dark:bg-green-800 dark:text-white dark:hover:bg-green-700',
+			className: getPriorityClassName('C'),
 		},
 		{
 			value: 'B',
 			label: getPriorityName('B'),
-			className:
-				'bg-yellow-200 text-yellow-600 hover:bg-yellow-300 dark:bg-yellow-800 dark:text-white dark:hover:bg-yellow-700',
+			className: getPriorityClassName('B'),
 		},
 		{
 			value: 'A',
 			label: getPriorityName('A'),
-			className:
-				'bg-red-200 text-red-600 hover:bg-red-300 dark:bg-red-800 dark:text-white dark:hover:bg-red-700',
+			className: getPriorityClassName('A'),
 		},
 	];
 
 	const currentOption = {
 		value: priority,
 		label: getPriorityName(priority),
+		className: getPriorityClassName(priority),
 	} || {
 		value: null,
 		label: getPriorityName(null),
