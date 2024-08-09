@@ -16,7 +16,6 @@ const SideNotes = () => {
 					key={note.id}
 					variant='secondary'
 					className='shadow-none'
-					size='sm'
 					asChild>
 					<Link href={`/notes/${course?.id}/${note.id}`}>
 						{note.startTime.toDateString()}

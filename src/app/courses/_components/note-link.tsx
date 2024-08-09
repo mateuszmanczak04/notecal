@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { Note } from '@prisma/client';
 import { format } from 'date-fns';
 import Link from 'next/link';
@@ -11,12 +12,11 @@ interface NoteLinkProps {
 
 const NoteLink: FC<NoteLinkProps> = ({ note }) => {
 	return (
-		<Link
-			href={`/notes/${note.courseId}/${note.id}`}
-			key={note.id}
-			className='flex h-6 shrink-0 items-center justify-center text-nowrap rounded-md bg-neutral-100 px-4 transition hover:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-600'>
-			{format(note.startTime, 'yyyy-MM-dd')}
-		</Link>
+		<Button variant='secondary' asChild>
+			<Link href={`/notes/${note.courseId}/${note.id}`} key={note.id}>
+				{format(note.startTime, 'yyyy-MM-dd')}
+			</Link>
+		</Button>
 	);
 };
 

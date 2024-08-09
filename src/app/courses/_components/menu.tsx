@@ -35,14 +35,14 @@ const Menu: FC<MenuProps> = ({ courseId }) => {
 				<div className='absolute right-10 top-0 flex flex-col gap-2 rounded-xl border bg-white p-2 shadow-xl'>
 					<Link
 						href={`/courses/edit?id=${courseId}`}
-						className='flex h-10 shrink-0 items-center gap-1 rounded-md px-4 transition hover:bg-neutral-100'
+						className='flex h-10 shrink-0 items-center gap-1 rounded-xl px-4 transition hover:bg-neutral-100'
 						onClick={handleCloseMenu}>
 						<Pencil className='h-4 w-4' />
 						Edit
 					</Link>
 					<Link
 						href={`/courses/delete?id=${courseId}`}
-						className='flex h-10 shrink-0 items-center gap-1 rounded-md bg-red-50 px-4 text-red-500 transition hover:bg-red-100'
+						className='flex h-10 shrink-0 items-center gap-1 rounded-xl bg-red-50 px-4 text-red-500 transition hover:bg-red-100'
 						onClick={handleCloseMenu}>
 						<Trash2 className='h-4 w-4' />
 						Delete

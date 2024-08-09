@@ -50,7 +50,6 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 		<div className='relative flex-1' ref={menuRef}>
 			<Button
 				variant='secondary'
-				size='sm'
 				onClick={handleToggleMenu}
 				className='w-full gap-1 transition'>
 				<ArrowUpDown className='h-4 w-4' />

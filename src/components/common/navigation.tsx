@@ -34,7 +34,7 @@ const Navigation = () => {
 			<Button
 				variant='secondary'
 				className={cn(
-					'transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none xl:hidden dark:bg-neutral-900 dark:text-neutral-100',
+					'transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none dark:bg-neutral-900 dark:text-neutral-100 xl:hidden',
 					isOpen && '-translate-x-32',
 				)}
 				onClick={handleOpen}>
@@ -42,13 +42,13 @@ const Navigation = () => {
 			</Button>
 			<div
 				className={cn(
-					'fixed left-0 top-0 z-40 mr-4 flex h-full w-screen shrink-0 translate-x-0 flex-col gap-8 rounded-xl bg-neutral-100 p-8 pl-20 shadow-lg transition sm:w-96 xl:static xl:max-w-80 xl:p-4 xl:shadow-none dark:bg-neutral-800',
+					'fixed left-0 top-0 z-40 mr-4 flex h-full w-screen shrink-0 translate-x-0 flex-col gap-8 rounded-xl bg-neutral-100 p-8 pl-20 shadow-lg transition dark:bg-neutral-800 sm:w-96 xl:static xl:max-w-80 xl:p-4 xl:shadow-none',
 					!isOpen && '-translate-x-full xl:translate-x-0',
 				)}>
 				{/* Close button */}
 				<Button
 					variant='secondary'
-					className='transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none bg-neutral-200 xl:hidden dark:bg-neutral-900 dark:text-neutral-100'
+					className='transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none bg-neutral-200 dark:bg-neutral-900 dark:text-neutral-100 xl:hidden'
 					onClick={handleClose}>
 					<X />
 				</Button>
@@ -86,7 +86,7 @@ const Navigation = () => {
 						<Link
 							href='/calendar'
 							className={cn(
-								'flex items-center gap-2 rounded-xl px-3 py-2 font-semibold',
+								'flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
 								pathname.includes('/calendar') &&
 									'bg-white dark:bg-neutral-700',
 							)}
@@ -96,7 +96,7 @@ const Navigation = () => {
 						<Link
 							href='/tasks'
 							className={cn(
-								'mt-2 flex items-center gap-2 rounded-xl px-3 py-2 font-semibold',
+								'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
 								pathname.includes('/tasks') && 'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
@@ -105,7 +105,7 @@ const Navigation = () => {
 						<Link
 							href='/courses'
 							className={cn(
-								'mt-2 flex items-center gap-2 rounded-xl px-3 py-2 font-semibold',
+								'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
 								pathname.includes('/courses') && 'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
@@ -115,7 +115,6 @@ const Navigation = () => {
 							{pathname === '/courses' && (
 								<Button
 									asChild
-									size='sm'
 									className='flex w-full items-center justify-center gap-1 font-semibold'
 									onClick={handleClose}>
 									<Link href='/courses/create'>
@@ -127,7 +126,6 @@ const Navigation = () => {
 								<>
 									<Button
 										asChild
-										size='sm'
 										className='flex w-full items-center justify-center gap-1 font-semibold'
 										onClick={handleClose}>
 										<Link href='/tasks/create'>

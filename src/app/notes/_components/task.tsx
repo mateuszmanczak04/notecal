@@ -37,7 +37,7 @@ const Task: FC<NoteTaskProps> = ({
 	return (
 		<div
 			className={cn(
-				'flex cursor-pointer select-none gap-3 rounded-md bg-neutral-100 p-2 shadow-none dark:bg-neutral-700',
+				'flex cursor-pointer select-none gap-3 rounded-xl bg-neutral-100 p-2 shadow-none dark:bg-neutral-700',
 			)}
 			onClick={toggleCompleted}>
 			<div>
@@ -54,7 +54,7 @@ const Task: FC<NoteTaskProps> = ({
 					</p>
 				)}
 				{dueDate && !completed && (
-					<p className='mt-1 rounded-md bg-neutral-200 px-2 py-1 text-sm dark:bg-neutral-600'>
+					<p className='mt-1 rounded-xl bg-neutral-200 px-2 py-1 text-sm dark:bg-neutral-600'>
 						{dueDate.toDateString()}
 					</p>
 				)}

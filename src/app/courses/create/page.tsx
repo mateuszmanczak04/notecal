@@ -94,7 +94,7 @@ const CreateCoursePage = () => {
 										return (
 											<div
 												className={cn(
-													'grid h-9 w-full cursor-pointer place-content-center rounded-md border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
+													'grid h-9 w-full cursor-pointer place-content-center rounded-xl border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
 													field.value === color.hex && 'border-white/50',
 												)}
 												style={{ backgroundColor: color.hex }}
@@ -102,7 +102,7 @@ const CreateCoursePage = () => {
 												key={color.hex}>
 												<span
 													className={cn(
-														'rounded-sm bg-neutral-900/50 px-1 text-sm leading-5 transition',
+														'rounded-xl bg-neutral-900/50 px-1 text-sm leading-5 transition',
 														field.value === color.hex
 															? 'opacity-1'
 															: 'opacity-0',

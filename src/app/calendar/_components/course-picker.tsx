@@ -64,7 +64,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 				ref={pickerRef}
 				style={{ left: x, top: y }}>
 				You don&apos;t have any courses yet
-				<Button size='sm' asChild>
+				<Button asChild>
 					<Link href='/courses/create'>Create one</Link>
 				</Button>
 			</div>

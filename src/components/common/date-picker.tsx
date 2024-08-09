@@ -97,7 +97,7 @@ const DatePicker: FC<DatePickerProps> = ({
 			{isOpen && (
 				<div className='absolute left-1/2 top-0 flex h-full w-full -translate-x-1/2 items-center justify-center gap-2 rounded-xl border bg-neutral-100 font-mono dark:border-neutral-500 dark:bg-neutral-700'>
 					{/* Year, month, day: */}
-					<div className='flex overflow-hidden rounded-md dark:text-neutral-100'>
+					<div className='flex overflow-hidden rounded-xl dark:text-neutral-100'>
 						<input
 							placeholder={new Date().getFullYear().toString()}
 							type='text'
@@ -127,7 +127,7 @@ const DatePicker: FC<DatePickerProps> = ({
 					</div>
 
 					{/* Hour, minute: */}
-					<div className='flex overflow-hidden rounded-md'>
+					<div className='flex overflow-hidden rounded-xl'>
 						<input
 							placeholder={new Date().getHours().toString().padStart(2, '00')}
 							type='text'

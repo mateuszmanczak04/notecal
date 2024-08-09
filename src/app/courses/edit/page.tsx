@@ -108,7 +108,7 @@ const EditCoursePage = () => {
 											return (
 												<div
 													className={cn(
-														'flex h-9 w-full flex-1 cursor-pointer items-center justify-center rounded-md border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
+														'flex h-9 w-full flex-1 cursor-pointer items-center justify-center rounded-xl border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
 														field.value === color.hex &&
 															'h-12 flex-[2] border-white/50',
 													)}
@@ -117,7 +117,7 @@ const EditCoursePage = () => {
 													key={color.hex}>
 													<span
 														className={cn(
-															'rounded-sm bg-neutral-900/50 px-1 leading-5 transition',
+															'rounded-xl bg-neutral-900/50 px-1 leading-5 transition',
 															field.value === color.hex
 																? 'opacity-1'
 																: 'opacity-0',
@@ -142,7 +142,7 @@ const EditCoursePage = () => {
 			{/* Delete button: */}
 			<Link
 				href={`/courses/delete?id=${id}`}
-				className='flex h-9 shrink-0 items-center justify-center gap-1 rounded-md bg-red-50 px-4 text-red-500 transition hover:bg-red-100'>
+				className='flex h-9 shrink-0 items-center justify-center gap-1 rounded-xl bg-red-50 px-4 text-red-500 transition hover:bg-red-100'>
 				<Trash2 className='h-4 w-4' />
 				Delete
 			</Link>
