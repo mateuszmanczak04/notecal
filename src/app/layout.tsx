@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import MainLayout from '../components/common/main-layout';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -34,6 +35,7 @@ export default async function RootLayout({
 						<div className='pt-16'>{children}</div>
 					</UnauthenticatedProviders>
 					<Analytics />
+					<SpeedInsights />
 				</body>
 			</html>
 		);
