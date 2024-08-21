@@ -1,5 +1,8 @@
 'use client';
 
+import DropdownMenu, {
+	DropdownMenuValueType,
+} from '@/components/common/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -8,7 +11,6 @@ import {
 	FormItem,
 	FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import UpdateDisplayedDaysSchema from '@/schemas/update-displayed-days-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -34,6 +36,46 @@ const DisplayedDaysSetting = ({ initialDisplayedDays }: Props) => {
 		});
 	};
 
+	const options = [
+		{
+			value: 1,
+			label: '1',
+		},
+		{
+			value: 2,
+			label: '2',
+		},
+		{
+			value: 3,
+			label: '3',
+		},
+		{
+			value: 4,
+			label: '4',
+		},
+		{
+			value: 5,
+			label: '5',
+		},
+		{
+			value: 6,
+			label: '6',
+		},
+		{
+			value: 7,
+			label: '7',
+		},
+	];
+
+	const currentOption = {
+		value: initialDisplayedDays,
+		label: initialDisplayedDays.toString(),
+	};
+
+	const handleChange = (value: DropdownMenuValueType) => {
+		updateSettings({ displayedDays: value as number });
+	};
+
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -47,11 +89,16 @@ const DisplayedDaysSetting = ({ initialDisplayedDays }: Props) => {
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
-									<Input
+									{/* <Input
 										placeholder='5'
 										type='number'
 										{...field}
 										className='w-full'
+									/> */}
+									<DropdownMenu
+										options={options}
+										currentOption={currentOption}
+										onChange={handleChange}
 									/>
 								</FormControl>
 								<FormMessage />

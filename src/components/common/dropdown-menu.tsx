@@ -6,18 +6,20 @@ import { ClassNameValue } from 'tailwind-merge';
 import { useOnClickOutside } from 'usehooks-ts';
 import Tag from './tag';
 
+export type DropdownMenuValueType = string | number | null;
+
 type Props = {
 	currentOption: {
-		value: any;
+		value: DropdownMenuValueType;
 		label: string;
 		className?: ClassNameValue;
 	};
 	options: {
-		value: any;
+		value: DropdownMenuValueType;
 		label: string;
 		className?: ClassNameValue;
 	}[];
-	onChange: (value: string) => void;
+	onChange: (value: DropdownMenuValueType) => void;
 	className?: ClassNameValue;
 	height?: number;
 	emptyChoiceLabel?: string;
@@ -50,7 +52,7 @@ const DropdownMenu = ({
 		}
 	};
 
-	const handleSelect = (value: any) => {
+	const handleSelect = (value: DropdownMenuValueType) => {
 		onChange(value);
 		handleCloseMenu();
 	};
