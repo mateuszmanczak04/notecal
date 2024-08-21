@@ -27,9 +27,10 @@ const Course = ({ onSelect, currentCourseId, className }: Props) => {
 
 	return (
 		<DropdownMenu
+			showNullOption
 			options={dropdownMenuOptions}
 			currentOption={currentOption}
-			onChange={onSelect}
+			onChange={value => onSelect(value as string | null)}
 			className={className}
 		/>
 	);
