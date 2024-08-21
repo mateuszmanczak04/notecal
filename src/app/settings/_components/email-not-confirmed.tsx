@@ -36,7 +36,7 @@ const EmailNotConfirmed: FC<EmailNotConfirmedProps> = ({}) => {
 	};
 
 	return (
-		<div className='rounded-xl border-2 border-orange-300 bg-orange-100 p-4'>
+		<div className='rounded-xl border-2 border-orange-300 bg-orange-100 p-4 dark:border-orange-800 dark:bg-orange-950 dark:text-white'>
 			<p>Your email is not confirmed</p>
 			<small className='font-bold opacity-50'>({email})</small>
 			<p className='mt-4 opacity-50'>
