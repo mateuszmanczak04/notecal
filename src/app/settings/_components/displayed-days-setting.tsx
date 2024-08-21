@@ -3,18 +3,6 @@
 import DropdownMenu, {
 	DropdownMenuValueType,
 } from '@/components/common/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormMessage,
-} from '@/components/ui/form';
-import UpdateDisplayedDaysSchema from '@/schemas/update-displayed-days-schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import useSettings from '../_hooks/use-settings';
 
 type Props = {
@@ -22,19 +10,7 @@ type Props = {
 };
 
 const DisplayedDaysSetting = ({ initialDisplayedDays }: Props) => {
-	const form = useForm<z.infer<typeof UpdateDisplayedDaysSchema>>({
-		resolver: zodResolver(UpdateDisplayedDaysSchema),
-		defaultValues: {
-			displayedDays: initialDisplayedDays,
-		},
-	});
 	const { update: updateSettings } = useSettings();
-
-	const handleSubmit = (values: z.infer<typeof UpdateDisplayedDaysSchema>) => {
-		updateSettings({
-			displayedDays: values.displayedDays,
-		});
-	};
 
 	const options = [
 		{
@@ -77,38 +53,16 @@ const DisplayedDaysSetting = ({ initialDisplayedDays }: Props) => {
 	};
 
 	return (
-		<Form {...form}>
-			<form onSubmit={form.handleSubmit(handleSubmit)}>
-				<h2 className='mb-2 text-lg font-semibold'>
-					Amount of days in week view
-				</h2>
-				<div className='grid gap-2 sm:grid-cols-2'>
-					<FormField
-						control={form.control}
-						name='displayedDays'
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									{/* <Input
-										placeholder='5'
-										type='number'
-										{...field}
-										className='w-full'
-									/> */}
-									<DropdownMenu
-										options={options}
-										currentOption={currentOption}
-										onChange={handleChange}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<Button type='submit'>Save</Button>
-				</div>
-			</form>
-		</Form>
+		<div>
+			<h2 className='mb-2 text-lg font-semibold'>
+				Amount of days in week view
+			</h2>
+			<DropdownMenu
+				options={options}
+				currentOption={currentOption}
+				onChange={handleChange}
+			/>
+		</div>
 	);
 };
 
