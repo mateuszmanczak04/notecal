@@ -36,6 +36,8 @@ const Navigation = () => {
 					'transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none dark:bg-neutral-900 dark:text-neutral-100 xl:hidden',
 					isOpen && '-translate-x-32',
 				)}
+				aria-label='open menu button'
+				title='open menu button'
 				onClick={handleOpen}>
 				<Menu />
 			</Button>
@@ -48,7 +50,9 @@ const Navigation = () => {
 				<Button
 					variant='secondary'
 					className='transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none bg-neutral-200 dark:bg-neutral-900 dark:text-neutral-100 xl:hidden'
-					onClick={handleClose}>
+					onClick={handleClose}
+					aria-label='close menu button'
+					title='close menu button'>
 					<X />
 				</Button>
 

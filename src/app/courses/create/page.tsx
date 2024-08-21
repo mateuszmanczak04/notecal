@@ -127,7 +127,7 @@ const CreateCoursePage = () => {
 					)}
 				/>
 				<Button type='submit' className='w-full'>
-					Create
+					Create a Course
 				</Button>
 			</form>
 		</Form>

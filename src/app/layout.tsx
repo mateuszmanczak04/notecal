@@ -34,7 +34,7 @@ export default async function RootLayout({
 					<UnauthenticatedProviders>
 						<div className='pt-16'>{children}</div>
 					</UnauthenticatedProviders>
-					<p className='fixed inset-x-0 bottom-0 z-50 bg-red-500 text-center text-white'>
+					<p className='fixed inset-x-0 bottom-0 z-50 bg-black text-center text-white'>
 						This app is still in development stage
 					</p>
 					<Analytics />
@@ -52,7 +52,7 @@ export default async function RootLayout({
 					'bg-neutral-100 fill-neutral-800 text-neutral-800 dark:bg-neutral-900 dark:fill-neutral-100 dark:text-neutral-100',
 				)}>
 				<MainLayout>{children}</MainLayout>
-				<p className='fixed inset-x-0 bottom-0 z-50 bg-red-500 text-center text-white'>
+				<p className='fixed inset-x-0 bottom-0 z-50 bg-black text-center text-white'>
 					This app is still in development stage
 				</p>
 				<Analytics />

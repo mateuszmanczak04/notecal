@@ -19,11 +19,11 @@ const getPriorityName = (priority: TaskPriority | null) => {
 
 const getPriorityClassName = (priority: TaskPriority | null) => {
 	if (priority === 'A')
-		return 'bg-red-500 text-white hover:bg-red-400 dark:bg-red-500 dark:text-white dark:hover:bg-red-600 dark:border-transparent';
+		return 'bg-red-500 text-black hover:bg-red-400 dark:bg-red-500 dark:text-black dark:hover:bg-red-400 dark:border-transparent';
 	if (priority === 'B')
-		return 'bg-yellow-500 text-white hover:bg-yellow-400 dark:bg-yellow-500 dark:text-white dark:hover:bg-yellow-600 dark:border-transparent';
+		return 'bg-yellow-400 text-black hover:bg-yellow-300 dark:bg-yellow-400 dark:text-black dark:hover:bg-yellow-300 dark:border-transparent';
 	if (priority === 'C')
-		return 'bg-green-500 text-white hover:bg-green-400 dark:bg-green-500 dark:text-white dark:hover:bg-green-600 dark:border-transparent';
+		return 'bg-green-500 text-black hover:bg-green-400 dark:bg-green-500 dark:text-black dark:hover:bg-green-400 dark:border-transparent';
 	return '';
 };
 

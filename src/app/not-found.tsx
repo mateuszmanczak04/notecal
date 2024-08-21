@@ -6,7 +6,7 @@ const notFound = () => {
 		<div className='mx-auto text-center'>
 			<p>This page does not exist</p>
 			<Button asChild size='lg'>
-				<Link href='/'>Go Back to Home</Link>
+				<Link href='/'>Go Back Home</Link>
 			</Button>
 		</div>
 	);

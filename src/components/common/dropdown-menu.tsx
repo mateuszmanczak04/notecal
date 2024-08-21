@@ -75,7 +75,7 @@ const DropdownMenu = ({
 				text={currentOption.label || 'None'}
 				onClick={handleToggleMenu}
 				className={cn(
-					'h-full max-w-none rounded-none border border-l border-r border-t border-transparent',
+					'h-full max-w-none rounded-none border border-l border-r border-t border-transparent font-medium',
 					isOpen
 						? 'rounded-t-xl dark:border-neutral-500'
 						: 'rounded-xl',
@@ -91,7 +91,7 @@ const DropdownMenu = ({
 					{showNullOption && (
 						<button
 							className={cn(
-								'w-full cursor-pointer select-none text-nowrap px-4 transition hover:bg-neutral-100 dark:hover:bg-neutral-500',
+								'w-full cursor-pointer select-none text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500',
 								`h-${height}`,
 							)}
 							onClick={() => {
@@ -103,7 +103,7 @@ const DropdownMenu = ({
 					{options?.map(option => (
 						<button
 							className={cn(
-								'cursor-pointer select-none truncate text-nowrap px-4 transition hover:bg-neutral-100 dark:hover:bg-neutral-500 sm:max-w-none',
+								'cursor-pointer select-none truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500 sm:max-w-none',
 								`h-${height}`,
 								option.className,
 							)}

@@ -52,7 +52,7 @@ const Description: FC<DescriptionProps> = ({ id, description, completed }) => {
 			ref={descriptionRef}
 			contentEditable={!completed}
 			className={cn(
-				'mt-1 text-neutral-500 outline-none',
+				'mt-1 text-neutral-500 outline-none dark:text-neutral-400',
 				completed && 'line-through',
 			)}
 			onKeyDown={handleKeyDown}

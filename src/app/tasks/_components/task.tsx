@@ -41,6 +41,8 @@ const Task = ({
 				checked={completed}
 				onCheckedChange={handleToggleTask}
 				className='rounded-full'
+				aria-label='task completed checkbox'
+				title='task completed checkbox'
 			/>
 			<div className='min-w-0'>
 				<Title id={id} title={title} completed={completed} />

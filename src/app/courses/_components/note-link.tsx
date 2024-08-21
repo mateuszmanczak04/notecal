@@ -12,7 +12,11 @@ interface NoteLinkProps {
 
 const NoteLink: FC<NoteLinkProps> = ({ note }) => {
 	return (
-		<Button variant='secondary' asChild>
+		<Button
+			variant='secondary'
+			asChild
+			aria-label={`link to note with date ${format(note.startTime, 'yyyy-MM-dd')}`}
+			title={`link to note with date ${format(note.startTime, 'yyyy-MM-dd')}`}>
 			<Link href={`/notes/${note.courseId}/${note.id}`} key={note.id}>
 				{format(note.startTime, 'yyyy-MM-dd')}
 			</Link>

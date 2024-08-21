@@ -34,7 +34,7 @@ const NewNoteButton = () => {
 			style={{ background: course?.color }}
 			onClick={onClick}
 			className='flex items-center gap-1'>
-			<Plus /> Create New Note
+			<Plus /> Create a New Note
 		</Button>
 	);
 };

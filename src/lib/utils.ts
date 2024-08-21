@@ -6,11 +6,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const COLORS = [
-	{ description: 'Blue', hex: '#3b82f6' },
-	{ description: 'Green', hex: '#22c55e' },
-	{ description: 'Yellow', hex: '#eab308' },
-	{ description: 'Orange', hex: '#f97316' },
-	{ description: 'Red', hex: '#ef4444' },
-	{ description: 'Pink', hex: '#ec4899' },
-	{ description: 'Purple', hex: '#a855f7' },
+	{ description: 'Blue', hex: '#2563eb' },
+	{ description: 'Green', hex: '#16a34a' },
+	{ description: 'Yellow', hex: '#ca8a04' },
+	{ description: 'Orange', hex: '#ea580c' },
+	{ description: 'Red', hex: '#dc2626' },
+	{ description: 'Pink', hex: '#db2777' },
+	{ description: 'Purple', hex: '#9333ea' },
 ];
