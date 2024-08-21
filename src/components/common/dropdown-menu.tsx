@@ -23,6 +23,7 @@ type Props = {
 	className?: ClassNameValue;
 	height?: number;
 	emptyChoiceLabel?: string;
+	showNullOption?: boolean;
 };
 
 const DropdownMenu = ({
@@ -32,6 +33,7 @@ const DropdownMenu = ({
 	className,
 	height = 9,
 	emptyChoiceLabel,
+	showNullOption,
 }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
@@ -80,16 +82,18 @@ const DropdownMenu = ({
 						'absolute left-0 z-20 flex w-full flex-col justify-center overflow-hidden rounded-b-xl border-b border-l border-r bg-white shadow-xl dark:border-neutral-500 dark:bg-neutral-600',
 						`top-${height}`,
 					)}>
-					<button
-						className={cn(
-							'w-full cursor-pointer select-none text-nowrap px-4 transition hover:bg-neutral-100 dark:hover:bg-neutral-500',
-							`h-${height}`,
-						)}
-						onClick={() => {
-							handleSelect(null);
-						}}>
-						{emptyChoiceLabel || 'None'}
-					</button>
+					{showNullOption && (
+						<button
+							className={cn(
+								'w-full cursor-pointer select-none text-nowrap px-4 transition hover:bg-neutral-100 dark:hover:bg-neutral-500',
+								`h-${height}`,
+							)}
+							onClick={() => {
+								handleSelect(null);
+							}}>
+							{emptyChoiceLabel || 'None'}
+						</button>
+					)}
 					{options?.map(option => (
 						<button
 							className={cn(
