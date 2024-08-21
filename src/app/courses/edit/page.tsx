@@ -143,7 +143,7 @@ const EditCoursePage = () => {
 			<Link
 				href={`/courses/delete?id=${id}`}
 				className='flex h-9 shrink-0 items-center justify-center gap-1 rounded-xl bg-red-50 px-4 text-red-500 transition hover:bg-red-100'>
-				<Trash2 className='h-4 w-4' />
+				<Trash2 />
 				Delete
 			</Link>
 		</div>

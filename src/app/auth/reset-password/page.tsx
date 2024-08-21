@@ -92,14 +92,14 @@ const ResetPasswordPage = () => {
 						)}
 					/>
 					<Button type='submit' className='gap-2' disabled={isPending}>
-						Change password <Pencil className='h-5 w-5' />
+						Change password <Pencil />
 					</Button>
 					{data && (
 						<>
 							<SuccessMessage>{data.message}</SuccessMessage>
 							<Button asChild variant='secondary' className='gap-1'>
 								<Link href='/auth/login'>
-									<ArrowLeft className='h-5 w-5' />
+									<ArrowLeft />
 									Go back to login page
 								</Link>
 							</Button>

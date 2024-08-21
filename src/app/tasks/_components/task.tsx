@@ -40,11 +40,15 @@ const Task = ({
 			<Checkbox
 				checked={completed}
 				onCheckedChange={handleToggleTask}
-				className='h-6 w-6 rounded-full'
+				className='rounded-full'
 			/>
 			<div className='min-w-0'>
 				<Title id={id} title={title} completed={completed} />
-				<Description id={id} description={description} completed={completed} />
+				<Description
+					id={id}
+					description={description}
+					completed={completed}
+				/>
 				{!completed && (
 					<div className='mt-2 flex flex-wrap gap-2'>
 						{/* Course */}

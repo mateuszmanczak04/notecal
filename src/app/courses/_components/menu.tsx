@@ -29,7 +29,7 @@ const Menu: FC<MenuProps> = ({ courseId }) => {
 	return (
 		<div className='relative' ref={menuRef}>
 			<Button size='icon' variant='secondary' onClick={handleToggleIsOpen}>
-				<EllipsisVertical className='h-6 w-6' />
+				<EllipsisVertical />
 			</Button>
 			{isOpen && (
 				<div className='absolute right-10 top-0 flex flex-col gap-2 rounded-xl border bg-white p-2 shadow-xl'>
@@ -37,14 +37,14 @@ const Menu: FC<MenuProps> = ({ courseId }) => {
 						href={`/courses/edit?id=${courseId}`}
 						className='flex h-10 shrink-0 items-center gap-1 rounded-xl px-4 transition hover:bg-neutral-100'
 						onClick={handleCloseMenu}>
-						<Pencil className='h-4 w-4' />
+						<Pencil />
 						Edit
 					</Link>
 					<Link
 						href={`/courses/delete?id=${courseId}`}
 						className='flex h-10 shrink-0 items-center gap-1 rounded-xl bg-red-50 px-4 text-red-500 transition hover:bg-red-100'
 						onClick={handleCloseMenu}>
-						<Trash2 className='h-4 w-4' />
+						<Trash2 />
 						Delete
 					</Link>
 				</div>

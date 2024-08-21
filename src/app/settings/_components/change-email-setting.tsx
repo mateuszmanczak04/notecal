@@ -93,7 +93,7 @@ const ChangeEmailSetting = () => {
 
 					{/* Button and results */}
 					<Button type='submit' className='gap-2'>
-						Change email <Pencil className='h-5 w-5' />
+						Change email <Pencil />
 					</Button>
 					{data && <SuccessMessage>{data.message}</SuccessMessage>}
 					{error && <ErrorMessage>{error.message}</ErrorMessage>}

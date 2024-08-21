@@ -1,9 +1,10 @@
 'use client';
 
 import { useNoteContext } from '@/app/notes/_context/note-context';
-import Task from './task';
 import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
 import Link from 'next/link';
+import Task from './task';
 
 const Tasks = () => {
 	const { tasks, course } = useNoteContext();
@@ -14,9 +15,9 @@ const Tasks = () => {
 			{tasks &&
 				tasks.length > 0 &&
 				tasks.map(task => <Task key={task.id} task={task} />)}
-			<Button asChild style={{ background: course?.color }}>
+			<Button asChild style={{ background: course?.color }} className='gap-1'>
 				<Link href={`/tasks/create?courseId=${course.id}`}>
-					+ Create a new task
+					<Plus /> Create a new task
 				</Link>
 			</Button>
 		</div>

@@ -1,14 +1,14 @@
 'use client';
 
+import ErrorMessage from '@/components/common/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
+import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import confirmEmail from '../_actions/confirm-email';
-import ErrorMessage from '@/components/common/error-message';
-import SuccessMessage from '@/components/common/success-message';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 
 const ConfirmEmailPage = () => {
 	const [isPending, startTransition] = useTransition();
@@ -66,7 +66,7 @@ const ConfirmEmailPage = () => {
 						size='lg'
 						className='ites-center flex gap-1'>
 						<Link href='/auth/login'>
-							<ArrowLeft className='h-5 w-5' />
+							<ArrowLeft />
 							Or go there now
 						</Link>
 					</Button>

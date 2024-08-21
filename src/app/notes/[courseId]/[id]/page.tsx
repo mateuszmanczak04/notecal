@@ -13,7 +13,7 @@ const NotePage = () => {
 		<div className='mx-auto flex h-full min-h-80 max-w-[1200px] gap-4'>
 			<div className='flex h-full flex-1 flex-col'>
 				<GoBackButton variant='secondary' className='w-fit'>
-					<ArrowLeft className='h-4 w-4' />
+					<ArrowLeft />
 					Go back
 				</GoBackButton>
 				<Title />

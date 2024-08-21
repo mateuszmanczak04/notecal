@@ -32,14 +32,14 @@ const DeleteCoursePage = () => {
 				<GoBackButton
 					variant='secondary'
 					className='w-full flex-1 gap-1 shadow-none'>
-					<MoveLeft className='h-5 w-5' />
+					<MoveLeft />
 					Cancel
 				</GoBackButton>
 				<Button
 					onClick={handleDelete}
 					variant='destructive'
 					className='w-full flex-1 gap-1'>
-					<Trash2 className='h-4 w-4' />
+					<Trash2 />
 					Delete Permanently
 				</Button>
 			</div>

@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from '../ui/button';
-import { Skeleton } from '../ui/skeleton';
 
 const Navigation = () => {
 	const pathname = usePathname();
@@ -74,7 +73,7 @@ const Navigation = () => {
 							{session.data.user.email}
 						</p>
 					</div>
-					<Cog className='shrin h-4 w-4' />
+					<Cog className='h-4 w-4' />
 				</Link>
 
 				{/* Main menu */}
@@ -91,25 +90,27 @@ const Navigation = () => {
 									'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
-							<Calendar className='h-4 w-4' /> Calendar
+							<Calendar /> Calendar
 						</Link>
 						<Link
 							href='/tasks'
 							className={cn(
 								'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
-								pathname.includes('/tasks') && 'bg-white dark:bg-neutral-700',
+								pathname.includes('/tasks') &&
+									'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
-							<Check className='h-4 w-4' /> Tasks
+							<Check /> Tasks
 						</Link>
 						<Link
 							href='/courses'
 							className={cn(
 								'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
-								pathname.includes('/courses') && 'bg-white dark:bg-neutral-700',
+								pathname.includes('/courses') &&
+									'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
-							<List className='h-4 w-4' /> Courses
+							<List /> Courses
 						</Link>
 						<div className='mt-8 flex flex-col gap-2'>
 							{pathname === '/courses' && (
@@ -118,7 +119,7 @@ const Navigation = () => {
 									className='flex w-full items-center justify-center gap-1 font-semibold'
 									onClick={handleClose}>
 									<Link href='/courses/create'>
-										<Plus className='h-6 w-6' /> Create a New Course
+										<Plus /> Create a New Course
 									</Link>
 								</Button>
 							)}
@@ -129,7 +130,8 @@ const Navigation = () => {
 										className='flex w-full items-center justify-center gap-1 font-semibold'
 										onClick={handleClose}>
 										<Link href='/tasks/create'>
-											<Plus className='h-4 w-4' /> Create a New Task
+											<Plus />
+											Create a New Task
 										</Link>
 									</Button>
 									<SortTasks closeNavigation={handleClose} />

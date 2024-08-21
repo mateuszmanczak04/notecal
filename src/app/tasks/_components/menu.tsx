@@ -32,8 +32,11 @@ const Menu: FC<MenuProps> = ({ taskId }) => {
 
 	return (
 		<div className='relative' ref={menuRef}>
-			<Button size='icon' variant='secondary' onClick={handleToggleIsOpen}>
-				<EllipsisVertical className='h-6 w-6' />
+			<Button
+				size='icon'
+				variant='secondary'
+				onClick={handleToggleIsOpen}>
+				<EllipsisVertical />
 			</Button>
 			{isOpen && (
 				<div className='absolute right-10 top-0 flex flex-col gap-2 rounded-xl border bg-white p-2 shadow-xl'>
@@ -41,7 +44,7 @@ const Menu: FC<MenuProps> = ({ taskId }) => {
 						variant='destructive'
 						className='flex items-center gap-1'
 						onClick={handleDelete}>
-						<Trash2 className='h-4 w-4' />
+						<Trash2 />
 						Delete
 					</Button>
 				</div>
