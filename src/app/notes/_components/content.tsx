@@ -32,7 +32,7 @@ const Content = () => {
 			<Button
 				onClick={() => updateContent()}
 				style={{ background: course?.color }}>
-				Save Content
+				Save content
 			</Button>
 		</div>
 	);

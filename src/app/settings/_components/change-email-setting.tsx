@@ -50,9 +50,7 @@ const ChangeEmailSetting = () => {
 
 	return (
 		<div className='flex flex-col gap-2'>
-			<h2 className='text-lg font-semibold'>
-				Change Your Email Address{' '}
-			</h2>
+			<h2 className='text-lg font-semibold'>Change your email address</h2>
 			<p className='opacity-75'>({session.data?.user?.email})</p>
 			<p className='opacity-75'>
 				You will have to log in again afterwards
@@ -67,7 +65,7 @@ const ChangeEmailSetting = () => {
 						name='email'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>New Email</FormLabel>
+								<FormLabel>New email</FormLabel>
 								<FormControl>
 									<Input
 										placeholder='example@abc.com'
@@ -86,7 +84,7 @@ const ChangeEmailSetting = () => {
 						name='password'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Your Password</FormLabel>
+								<FormLabel>Your password</FormLabel>
 								<FormControl>
 									<Input
 										placeholder='******'

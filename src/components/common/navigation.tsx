@@ -123,7 +123,7 @@ const Navigation = () => {
 									className='flex w-full items-center justify-center gap-1 font-semibold'
 									onClick={handleClose}>
 									<Link href='/courses/create'>
-										<Plus /> Create a New Course
+										<Plus /> Create a new course
 									</Link>
 								</Button>
 							)}
@@ -135,7 +135,7 @@ const Navigation = () => {
 										onClick={handleClose}>
 										<Link href='/tasks/create'>
 											<Plus />
-											Create a New Task
+											Create a new task
 										</Link>
 									</Button>
 									<SortTasks closeNavigation={handleClose} />

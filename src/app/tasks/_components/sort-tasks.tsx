@@ -53,7 +53,7 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 				onClick={handleToggleMenu}
 				className='w-full gap-1 transition'>
 				<ArrowUpDown />
-				Order By
+				Order by
 			</Button>
 			{isOpen && (
 				<div className='absolute left-0 top-8 z-20 flex w-full select-none flex-col items-stretch justify-center rounded-b-md border bg-white shadow-xl'>
