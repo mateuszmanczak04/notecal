@@ -79,7 +79,9 @@ const DatePicker: FC<DatePickerProps> = ({
 
 	useEffect(() => {
 		setYear(date ? date.getFullYear().toString() : '');
-		setMonth(date ? (date.getMonth() + 1).toString().padStart(2, '00') : '');
+		setMonth(
+			date ? (date.getMonth() + 1).toString().padStart(2, '00') : '',
+		);
 		setDay(date ? date.getDate().toString().padStart(2, '00') : '');
 		setHour(date ? date.getHours().toString().padStart(2, '00') : '');
 		setMinute(date ? date.getMinutes().toString().padStart(2, '00') : '');
@@ -92,7 +94,10 @@ const DatePicker: FC<DatePickerProps> = ({
 			<Tag
 				text={date ? format(date, 'yyyy-MM-dd - HH:mm') : 'No due date'}
 				onClick={handleToggleMenu}
-				className={cn('h-full w-full max-w-none', isPending && 'opacity-50')}
+				className={cn(
+					'h-full w-full max-w-none',
+					isPending && 'opacity-50',
+				)}
 			/>
 			{isOpen && (
 				<div className='absolute left-1/2 top-0 flex h-full w-full -translate-x-1/2 items-center justify-center gap-2 rounded-xl border bg-neutral-100 font-mono dark:border-neutral-500 dark:bg-neutral-700'>
@@ -118,7 +123,10 @@ const DatePicker: FC<DatePickerProps> = ({
 						/>
 						/
 						<input
-							placeholder={new Date().getDate().toString().padStart(2, '00')}
+							placeholder={new Date()
+								.getDate()
+								.toString()
+								.padStart(2, '00')}
 							type='text'
 							value={day}
 							onChange={e => setDay(e.target.value)}
@@ -129,7 +137,10 @@ const DatePicker: FC<DatePickerProps> = ({
 					{/* Hour, minute: */}
 					<div className='flex overflow-hidden rounded-xl'>
 						<input
-							placeholder={new Date().getHours().toString().padStart(2, '00')}
+							placeholder={new Date()
+								.getHours()
+								.toString()
+								.padStart(2, '00')}
 							type='text'
 							value={hour}
 							onChange={e => setHour(e.target.value)}
@@ -137,7 +148,10 @@ const DatePicker: FC<DatePickerProps> = ({
 						/>
 						:
 						<input
-							placeholder={new Date().getMinutes().toString().padStart(2, '00')}
+							placeholder={new Date()
+								.getMinutes()
+								.toString()
+								.padStart(2, '00')}
 							type='text'
 							value={minute}
 							onChange={e => setMinute(e.target.value)}

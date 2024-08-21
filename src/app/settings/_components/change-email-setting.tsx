@@ -50,9 +50,13 @@ const ChangeEmailSetting = () => {
 
 	return (
 		<div className='flex flex-col gap-2'>
-			<h2 className='text-lg font-semibold'>Change Your Email Address </h2>
+			<h2 className='text-lg font-semibold'>
+				Change Your Email Address{' '}
+			</h2>
 			<p className='opacity-75'>({session.data?.user?.email})</p>
-			<p className='opacity-75'>You will have to log in again afterwards</p>
+			<p className='opacity-75'>
+				You will have to log in again afterwards
+			</p>
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}
@@ -84,7 +88,11 @@ const ChangeEmailSetting = () => {
 							<FormItem>
 								<FormLabel>Your Password</FormLabel>
 								<FormControl>
-									<Input placeholder='******' type='password' {...field} />
+									<Input
+										placeholder='******'
+										type='password'
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

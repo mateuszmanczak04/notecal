@@ -11,7 +11,7 @@ import {
 	startOfDay,
 } from 'date-fns';
 import Link from 'next/link';
-import { FC, useEffect, useRef, useState, useTransition } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 
 interface NoteProps {
@@ -58,7 +58,10 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 				// If it's the last day:
 				if (index === durationInDays - 1) {
 					// And note ends at midnight:
-					if (endTime.getHours() === 0 && endTime.getMinutes() === 0) {
+					if (
+						endTime.getHours() === 0 &&
+						endTime.getMinutes() === 0
+					) {
 						// Don't render that last day
 						return null;
 					}
@@ -72,7 +75,10 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 	// Get positions and sizes of each day block:
 
 	const getLeftOffset = (date: Date) => {
-		const daysFromFirstDay = differenceInCalendarDays(date, currentFirstDay);
+		const daysFromFirstDay = differenceInCalendarDays(
+			date,
+			currentFirstDay,
+		);
 		return `calc(${daysFromFirstDay * (100 / displayedDays) + '%'} + ${leftOffset * 16 + 'px'}`;
 	};
 
@@ -142,7 +148,8 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 
 	// Dragging entire note
 	const handleDragStart = (event: React.DragEvent) => {
-		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
+		if (!noteRef.current?.includes(event.target as HTMLAnchorElement))
+			return;
 
 		const { x, y } = getRelativePosition(event.clientX, event.clientY);
 		if (x === null || y === null) return;
@@ -155,7 +162,8 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 	};
 
 	const handleDrag = (event: React.DragEvent) => {
-		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
+		if (!noteRef.current?.includes(event.target as HTMLAnchorElement))
+			return;
 
 		if (!initialDragDate.current) return;
 
@@ -165,7 +173,8 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		const date = getDateFromPosition(x, y);
 		if (!date) return;
 
-		const dateDifference = date.getTime() - initialDragDate.current.getTime();
+		const dateDifference =
+			date.getTime() - initialDragDate.current.getTime();
 
 		const newStartTime = addMilliseconds(note.startTime, dateDifference);
 		const newEndTime = addMilliseconds(note.endTime, dateDifference);
@@ -175,7 +184,8 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 	};
 
 	const handleDragEnd = (event: React.DragEvent) => {
-		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
+		if (!noteRef.current?.includes(event.target as HTMLAnchorElement))
+			return;
 
 		updateNote({
 			id: note.id,
@@ -292,7 +302,11 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 							top: getTopOffset(day, note.startTime),
 							left: getLeftOffset(day),
 							width: getWidth(),
-							height: getHeight(day, note.startTime, note.endTime),
+							height: getHeight(
+								day,
+								note.startTime,
+								note.endTime,
+							),
 							// If course was not found, the color will be undefined so
 							// the note should have "bg-primary-500" color as in className above
 							backgroundColor: course?.color,
@@ -309,7 +323,9 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 						)}
 
 						{/* Title: */}
-						{!isDragging && <p className='m-4'>{note.content.slice(0, 20)}</p>}
+						{!isDragging && (
+							<p className='m-4'>{note.content.slice(0, 20)}</p>
+						)}
 
 						{/* Bottom edge to drag: */}
 						{index === noteDays.length - 1 && (
@@ -336,7 +352,11 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 							top: getTopOffset(day, actualDragStartTime),
 							left: getLeftOffset(day),
 							width: getWidth(),
-							height: getHeight(day, actualDragStartTime, actualDragEndTime),
+							height: getHeight(
+								day,
+								actualDragStartTime,
+								actualDragEndTime,
+							),
 							backgroundColor: course?.color,
 						}}>
 						<p className='m-4'>{note.content.slice(0, 20)}</p>

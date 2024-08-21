@@ -65,14 +65,20 @@ const DropdownMenu = ({
 
 	return (
 		<div
-			className={cn('relative text-sm sm:text-base', className, `h-${height}`)}
+			className={cn(
+				'relative text-sm sm:text-base',
+				className,
+				`h-${height}`,
+			)}
 			ref={menuRef}>
 			<Tag
 				text={currentOption.label || 'None'}
 				onClick={handleToggleMenu}
 				className={cn(
 					'h-full max-w-none rounded-none border border-l border-r border-t border-transparent',
-					isOpen ? 'rounded-t-xl dark:border-neutral-500' : 'rounded-xl',
+					isOpen
+						? 'rounded-t-xl dark:border-neutral-500'
+						: 'rounded-xl',
 					currentOption.className,
 				)}
 			/>

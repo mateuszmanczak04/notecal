@@ -1,9 +1,9 @@
 'use client';
 
 import NewNoteButton from '@/app/notes/_components/new-note-button';
-import { useNoteContext } from '../_context/note-context';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useNoteContext } from '../_context/note-context';
 
 const SideNotes = () => {
 	const { course, notes } = useNoteContext();

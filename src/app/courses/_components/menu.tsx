@@ -28,7 +28,10 @@ const Menu: FC<MenuProps> = ({ courseId }) => {
 
 	return (
 		<div className='relative' ref={menuRef}>
-			<Button size='icon' variant='secondary' onClick={handleToggleIsOpen}>
+			<Button
+				size='icon'
+				variant='secondary'
+				onClick={handleToggleIsOpen}>
 				<EllipsisVertical />
 			</Button>
 			{isOpen && (

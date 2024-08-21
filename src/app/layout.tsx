@@ -2,11 +2,11 @@ import '@/app/globals.css';
 import { auth } from '@/auth';
 import UnauthenticatedProviders from '@/components/common/unauthenticated-providers';
 import { cn } from '@/lib/utils';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import MainLayout from '../components/common/main-layout';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({ subsets: ['latin'] });
 

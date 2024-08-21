@@ -40,7 +40,8 @@ const EmailNotConfirmed: FC<EmailNotConfirmedProps> = ({}) => {
 			<p>Your email is not confirmed</p>
 			<small className='font-bold opacity-50'>({email})</small>
 			<p className='mt-4 opacity-50'>
-				Confirm your email to secure your account in case you lose your password
+				Confirm your email to secure your account in case you lose your
+				password
 			</p>
 			<Button
 				variant='link'
@@ -49,7 +50,9 @@ const EmailNotConfirmed: FC<EmailNotConfirmedProps> = ({}) => {
 				Resend confirmation link
 			</Button>
 			{error && <ErrorMessage className='mt-2'>{error}</ErrorMessage>}
-			{message && <SuccessMessage className='mt-2'>{message}</SuccessMessage>}
+			{message && (
+				<SuccessMessage className='mt-2'>{message}</SuccessMessage>
+			)}
 			{isPending && <LoadingSpinner className='mt-2' />}
 		</div>
 	);

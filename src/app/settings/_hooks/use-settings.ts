@@ -37,9 +37,12 @@ const useSettings = () => {
 			await queryClient.cancelQueries({ queryKey: ['settings'] });
 			const previousSettings = queryClient.getQueryData(['settings']);
 
-			await queryClient.setQueryData(['settings'], (oldSettings: Settings) => {
-				return { ...oldSettings, ...values };
-			});
+			await queryClient.setQueryData(
+				['settings'],
+				(oldSettings: Settings) => {
+					return { ...oldSettings, ...values };
+				},
+			);
 
 			return previousSettings;
 		},
@@ -48,7 +51,9 @@ const useSettings = () => {
 			queryClient.setQueryData(['settings'], context);
 		},
 		onSettled: async () => {
-			return await queryClient.invalidateQueries({ queryKey: ['settings'] });
+			return await queryClient.invalidateQueries({
+				queryKey: ['settings'],
+			});
 		},
 	});
 

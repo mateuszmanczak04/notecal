@@ -1,9 +1,9 @@
 'use client';
 
-import Course from './course';
 import useCourses from '@/app/courses/_hooks/use-courses';
-import LoadingSpinner from '@/components/common/loading-spinner';
 import ErrorMessage from '@/components/common/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
+import Course from './course';
 
 const Courses = () => {
 	const { courses, error, isPending } = useCourses();

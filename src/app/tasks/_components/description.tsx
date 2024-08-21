@@ -24,7 +24,9 @@ const Description: FC<DescriptionProps> = ({ id, description, completed }) => {
 		updateTask({ id, description: newDescription.trim() });
 	};
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLParagraphElement>) => {
+	const handleKeyDown = (
+		event: React.KeyboardEvent<HTMLParagraphElement>,
+	) => {
 		if (!descriptionRef.current) return;
 
 		if (event.key === 'Enter') {

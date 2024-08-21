@@ -30,7 +30,10 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
 				<CalendarContextProvider>
 					<ReactQueryDevtools />
 					{children}
-					<ReactQueryDevtools initialIsOpen={false} position='bottom' />
+					<ReactQueryDevtools
+						initialIsOpen={false}
+						position='bottom'
+					/>
 				</CalendarContextProvider>
 			</QueryClientProvider>
 		</SessionProvider>

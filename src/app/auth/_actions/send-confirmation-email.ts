@@ -1,9 +1,9 @@
 'use server';
 
-import { en } from '@/lib/dictionary';
-import { z } from 'zod';
-import nodemailer from 'nodemailer';
 import db from '@/lib/db';
+import { en } from '@/lib/dictionary';
+import nodemailer from 'nodemailer';
+import { z } from 'zod';
 
 const Schema = z.object({
 	email: z.string().min(1, { message: en.auth.EMAIL_REQUIRED }).email(),

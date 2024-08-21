@@ -10,7 +10,9 @@ const CreateTaskSchema = z.object({
 		message: en.tasks.MAX_DESCRIPTION_LENGTH,
 	}),
 	courseId: z.string().nullable(),
-	priority: z.enum([TaskPriority.A, TaskPriority.B, TaskPriority.C]).nullable(),
+	priority: z
+		.enum([TaskPriority.A, TaskPriority.B, TaskPriority.C])
+		.nullable(),
 	dueDate: z.date().nullable(),
 	completed: z.boolean().optional(),
 });

@@ -57,7 +57,10 @@ const CreateCoursePage = () => {
 								Name <span className='text-red-500'>*</span>
 							</FormLabel>
 							<FormControl>
-								<Input placeholder='Computer Science' {...field} />
+								<Input
+									placeholder='Computer Science'
+									{...field}
+								/>
 							</FormControl>
 							<FormDescription />
 							<FormMessage />
@@ -95,15 +98,21 @@ const CreateCoursePage = () => {
 											<div
 												className={cn(
 													'grid h-9 w-full cursor-pointer place-content-center rounded-xl border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
-													field.value === color.hex && 'border-white/50',
+													field.value === color.hex &&
+														'border-white/50',
 												)}
-												style={{ backgroundColor: color.hex }}
-												onClick={() => field.onChange(color.hex)}
+												style={{
+													backgroundColor: color.hex,
+												}}
+												onClick={() =>
+													field.onChange(color.hex)
+												}
 												key={color.hex}>
 												<span
 													className={cn(
 														'rounded-xl bg-neutral-900/50 px-1 text-sm leading-5 transition',
-														field.value === color.hex
+														field.value ===
+															color.hex
 															? 'opacity-1'
 															: 'opacity-0',
 													)}>

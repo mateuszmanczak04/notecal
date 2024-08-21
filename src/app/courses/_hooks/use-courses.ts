@@ -3,9 +3,8 @@ import queryClient from '@/lib/query-client';
 import { Course } from '@prisma/client';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import createCourse from '../_actions/create-course';
-import updateCourse from '../_actions/update-course';
 import deleteCourse from '../_actions/delete-course';
-import useNotes from '@/app/notes/_hooks/use-notes';
+import updateCourse from '../_actions/update-course';
 
 type CourseWithLoading = Course & { loading?: boolean };
 
@@ -54,10 +53,10 @@ const useCourses = () => {
 
 			const newTempCourse = createTempCourse(values);
 
-			await queryClient.setQueryData(['courses'], (oldCourses: Course[]) => [
-				...oldCourses,
-				newTempCourse,
-			]);
+			await queryClient.setQueryData(
+				['courses'],
+				(oldCourses: Course[]) => [...oldCourses, newTempCourse],
+			);
 
 			return previousCourses;
 		},
@@ -66,7 +65,9 @@ const useCourses = () => {
 			queryClient.setQueryData(['courses'], context);
 		},
 		onSettled: async () => {
-			return await queryClient.invalidateQueries({ queryKey: ['courses'] });
+			return await queryClient.invalidateQueries({
+				queryKey: ['courses'],
+			});
 		},
 	});
 
@@ -81,14 +82,17 @@ const useCourses = () => {
 			await queryClient.cancelQueries({ queryKey: ['courses'] });
 			const previousCourses = queryClient.getQueryData(['courses']);
 
-			await queryClient.setQueryData(['courses'], (oldCourses: Course[]) => {
-				return oldCourses.map(course => {
-					if (course.id === values.id) {
-						return { ...course, ...values };
-					}
-					return course;
-				});
-			});
+			await queryClient.setQueryData(
+				['courses'],
+				(oldCourses: Course[]) => {
+					return oldCourses.map(course => {
+						if (course.id === values.id) {
+							return { ...course, ...values };
+						}
+						return course;
+					});
+				},
+			);
 
 			return previousCourses;
 		},
@@ -97,7 +101,9 @@ const useCourses = () => {
 			queryClient.setQueryData(['courses'], context);
 		},
 		onSettled: async () => {
-			return await queryClient.invalidateQueries({ queryKey: ['courses'] });
+			return await queryClient.invalidateQueries({
+				queryKey: ['courses'],
+			});
 		},
 	});
 
@@ -113,14 +119,17 @@ const useCourses = () => {
 			await queryClient.cancelQueries({ queryKey: ['courses'] });
 			const previousCourses = queryClient.getQueryData(['courses']);
 
-			await queryClient.setQueryData(['courses'], (oldCourses: Course[]) => {
-				return oldCourses.filter(course => {
-					if (course.id === id) {
-						return null;
-					}
-					return course;
-				});
-			});
+			await queryClient.setQueryData(
+				['courses'],
+				(oldCourses: Course[]) => {
+					return oldCourses.filter(course => {
+						if (course.id === id) {
+							return null;
+						}
+						return course;
+					});
+				},
+			);
 
 			return previousCourses;
 		},
@@ -129,7 +138,9 @@ const useCourses = () => {
 			queryClient.setQueryData(['courses'], context);
 		},
 		onSettled: async () => {
-			return await queryClient.invalidateQueries({ queryKey: ['courses'] });
+			return await queryClient.invalidateQueries({
+				queryKey: ['courses'],
+			});
 		},
 	});
 

@@ -54,7 +54,10 @@ const LoginPage = () => {
 						<FormItem className='mt-4 w-full'>
 							<FormLabel>Email</FormLabel>
 							<FormControl>
-								<Input placeholder='john.doe@example.com' {...field} />
+								<Input
+									placeholder='john.doe@example.com'
+									{...field}
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -67,7 +70,11 @@ const LoginPage = () => {
 						<FormItem className='mt-4 w-full'>
 							<FormLabel>Password</FormLabel>
 							<FormControl>
-								<Input placeholder='******' {...field} type='password' />
+								<Input
+									placeholder='******'
+									{...field}
+									type='password'
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -89,7 +96,9 @@ const LoginPage = () => {
 				<div className='flex w-full justify-center'>
 					{isPending && <LoadingSpinner className='mt-2' />}
 				</div>
-				{error && <ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>}
+				{error && (
+					<ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>
+				)}
 			</form>
 		</Form>
 	);

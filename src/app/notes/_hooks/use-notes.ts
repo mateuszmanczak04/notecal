@@ -1,11 +1,10 @@
 import getNotes from '@/app/notes/_actions/get-notes';
+import queryClient from '@/lib/query-client';
+import { Note } from '@prisma/client';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import createNote from '../_actions/create-note';
-import { Note } from '@prisma/client';
-import queryClient from '@/lib/query-client';
-import { z } from 'zod';
-import updateNote from '../_actions/update-note';
 import deleteNote from '../_actions/delete-note';
+import updateNote from '../_actions/update-note';
 
 type CreateNoteSchema = {
 	content: string;

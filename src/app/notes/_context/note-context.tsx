@@ -3,11 +3,11 @@
 import useCourses from '@/app/courses/_hooks/use-courses';
 import useNotes from '@/app/notes/_hooks/use-notes';
 import useTasks from '@/app/tasks/_hooks/use-tasks';
+import ErrorMessage from '@/components/common/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
 import { Course, Note, Task } from '@prisma/client';
 import { useParams, useRouter } from 'next/navigation';
 import { ReactNode, createContext, useContext } from 'react';
-import ErrorMessage from '@/components/common/error-message';
-import LoadingSpinner from '@/components/common/loading-spinner';
 
 interface NoteContextProps {
 	currentNote: Note;

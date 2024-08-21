@@ -1,7 +1,7 @@
 'use client';
 
-import StartTime from './start-time';
 import EndTime from './end-time';
+import StartTime from './start-time';
 
 const Time = () => {
 	return (

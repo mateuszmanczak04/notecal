@@ -40,7 +40,8 @@ export const en = {
 			'Confirmation email has been sent, check your inbox',
 		EMAIL_UPDATED: 'Email has updated, check your inbox to confirm it now',
 		EMAIL_IS_IDENTICAL: 'New email is identical to the old one',
-		RESET_PASSWORD_EMAIL_SENT: 'Recovery email has been sent, check your inbox',
+		RESET_PASSWORD_EMAIL_SENT:
+			'Recovery email has been sent, check your inbox',
 	},
 	settings: {
 		DEFAULT_NOTE_DURATION_REQUIRED: 'Default note duration is required',

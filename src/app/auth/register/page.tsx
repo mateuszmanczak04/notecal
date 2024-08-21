@@ -105,7 +105,11 @@ const RegisterPage = () => {
 								<FormItem className='mt-4 w-full'>
 									<FormLabel>Password</FormLabel>
 									<FormControl>
-										<Input placeholder='******' {...field} type='password' />
+										<Input
+											placeholder='******'
+											{...field}
+											type='password'
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -118,7 +122,11 @@ const RegisterPage = () => {
 								<FormItem className='mt-4 w-full'>
 									<FormLabel>Password</FormLabel>
 									<FormControl>
-										<Input placeholder='******' {...field} type='password' />
+										<Input
+											placeholder='******'
+											{...field}
+											type='password'
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -133,12 +141,16 @@ const RegisterPage = () => {
 							Already have an account? Log in
 						</Link>
 						{error && (
-							<ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>
+							<ErrorMessage className='mt-4 w-full'>
+								{error}
+							</ErrorMessage>
 						)}
 					</>
 				) : (
 					<>
-						<SuccessMessage className='mt-4 w-full'>{message}</SuccessMessage>
+						<SuccessMessage className='mt-4 w-full'>
+							{message}
+						</SuccessMessage>
 						<Button
 							variant='secondary'
 							size='lg'

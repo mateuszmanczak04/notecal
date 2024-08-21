@@ -72,7 +72,11 @@ const ResetPasswordPage = () => {
 							<FormItem>
 								<FormLabel>New password</FormLabel>
 								<FormControl>
-									<Input placeholder='******' type='password' {...field} />
+									<Input
+										placeholder='******'
+										type='password'
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -85,19 +89,29 @@ const ResetPasswordPage = () => {
 							<FormItem>
 								<FormLabel>Confirm new password</FormLabel>
 								<FormControl>
-									<Input placeholder='******' type='password' {...field} />
+									<Input
+										placeholder='******'
+										type='password'
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
 					/>
-					<Button type='submit' className='gap-2' disabled={isPending}>
+					<Button
+						type='submit'
+						className='gap-2'
+						disabled={isPending}>
 						Change password <Pencil />
 					</Button>
 					{data && (
 						<>
 							<SuccessMessage>{data.message}</SuccessMessage>
-							<Button asChild variant='secondary' className='gap-1'>
+							<Button
+								asChild
+								variant='secondary'
+								className='gap-1'>
 								<Link href='/auth/login'>
 									<ArrowLeft />
 									Go back to login page

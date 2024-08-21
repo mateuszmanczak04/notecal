@@ -25,8 +25,8 @@ const DeleteCoursePage = () => {
 		<div className='mx-auto max-w-[600px]'>
 			<h1 className='text-2xl font-semibold'>Delete Course</h1>
 			<p className='mt-2'>
-				Are you sure you want to delete this course with all it&apos;s tasks and
-				notes?
+				Are you sure you want to delete this course with all it&apos;s
+				tasks and notes?
 			</p>
 			<div className='mt-4 flex flex-col items-center gap-2 sm:flex-row'>
 				<GoBackButton

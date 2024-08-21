@@ -3,8 +3,8 @@ import queryClient from '@/lib/query-client';
 import { Task, TaskPriority } from '@prisma/client';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import createTask from '../_actions/create-task';
-import updateTask from '../_actions/update-task';
 import deleteTask from '../_actions/delete-task';
+import updateTask from '../_actions/update-task';
 
 type CreateTaskSchema = {
 	id?: string;

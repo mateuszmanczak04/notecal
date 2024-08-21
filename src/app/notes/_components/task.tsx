@@ -1,7 +1,6 @@
 'use client';
 
 import useTasks from '@/app/tasks/_hooks/use-tasks';
-import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { type Task } from '@prisma/client';
 import { FC } from 'react';
@@ -49,7 +48,11 @@ const Task: FC<NoteTaskProps> = ({
 					{title}
 				</p>
 				{description && (
-					<p className={cn('text-sm', completed && 'line-through opacity-50')}>
+					<p
+						className={cn(
+							'text-sm',
+							completed && 'line-through opacity-50',
+						)}>
 						{description}
 					</p>
 				)}

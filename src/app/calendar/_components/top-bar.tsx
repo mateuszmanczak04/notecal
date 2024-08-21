@@ -14,12 +14,14 @@ const TopBar: FC<TopBarProps> = ({}) => {
 
 	return (
 		<div className='mt-4 flex'>
-			<div className='h-calendar-header w-12 rounded-tl-xl border sm:w-20 dark:border-neutral-600'></div>
+			<div className='h-calendar-header w-12 rounded-tl-xl border dark:border-neutral-600 sm:w-20'></div>
 
 			{/* Mon, Tue, Wed, etc.: */}
 			<div
 				className='grid flex-1'
-				style={{ gridTemplateColumns: `repeat(${displayedDays}, 1fr)` }}>
+				style={{
+					gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
+				}}>
 				{days.map((day, index) => (
 					<DayHeading
 						key={day.toString()}

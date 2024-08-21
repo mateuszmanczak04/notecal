@@ -15,7 +15,7 @@ const DayHeading: FC<DayHeadingProps> = ({ date, isLast }) => {
 	return (
 		<div
 			className={cn(
-				'flex h-calendar-header items-center justify-center overflow-hidden text-nowrap border-b border-r border-t text-sm font-semibold text-neutral-500 sm:text-base dark:border-neutral-600 dark:text-neutral-400',
+				'flex h-calendar-header items-center justify-center overflow-hidden text-nowrap border-b border-r border-t text-sm font-semibold text-neutral-500 dark:border-neutral-600 dark:text-neutral-400 sm:text-base',
 				isLast && 'rounded-tr-xl',
 			)}>
 			{dayOfTheWeek} {dayOfTheMonth}

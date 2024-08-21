@@ -69,11 +69,14 @@ const ForgotPasswordPage = () => {
 				Send recovery email
 			</Button>
 			<small>
-				Please note that email will be sent only if you have confirmed your
-				email address previously
+				Please note that email will be sent only if you have confirmed
+				your email address previously
 			</small>
 			{timeToNextAttempt !== 0 && (
-				<p>Wait {timeToNextAttempt} seconds until you send the email again</p>
+				<p>
+					Wait {timeToNextAttempt} seconds until you send the email
+					again
+				</p>
 			)}
 			{isPending && <LoadingSpinner />}
 			{error && <ErrorMessage>{error.message}</ErrorMessage>}

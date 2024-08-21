@@ -24,7 +24,9 @@ const Title: FC<TitleProps> = ({ id, title, completed }) => {
 		updateTask({ id, title: newTitle });
 	};
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLParagraphElement>) => {
+	const handleKeyDown = (
+		event: React.KeyboardEvent<HTMLParagraphElement>,
+	) => {
 		if (!titleRef.current) return;
 
 		if (event.key === 'Enter') {
@@ -49,7 +51,10 @@ const Title: FC<TitleProps> = ({ id, title, completed }) => {
 		<p
 			ref={titleRef}
 			contentEditable={!completed}
-			className={cn('font-bold outline-none', completed && 'line-through')}
+			className={cn(
+				'font-bold outline-none',
+				completed && 'line-through',
+			)}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}
 			spellCheck={false}></p>

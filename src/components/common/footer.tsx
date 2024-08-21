@@ -19,7 +19,9 @@ const Footer = () => {
 					className='mt-0 block hover:underline'>
 					Author&apos;s Upwork
 				</Link>
-				<Link href='#' className='pointer-events-none block opacity-50 '>
+				<Link
+					href='#'
+					className='pointer-events-none block opacity-50 '>
 					Terms & conditions (soon)
 				</Link>
 				<Link href='#' className='pointer-events-none block opacity-50'>

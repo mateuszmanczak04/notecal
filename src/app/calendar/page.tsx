@@ -1,11 +1,11 @@
 'use client';
 
+import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
+import useNotes from '../notes/_hooks/use-notes';
 import Grid from './_components/grid';
 import Header from './_components/header';
 import Notes from './_components/notes';
-import ErrorMessage from '@/components/common/error-message';
-import useNotes from '../notes/_hooks/use-notes';
 import TopBar from './_components/top-bar';
 
 const CalendarPage = () => {

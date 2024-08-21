@@ -1,11 +1,11 @@
 'use client';
 
-import Task from '@/app/tasks/_components/task';
-import useTasks from '../_hooks/use-tasks';
-import { FC } from 'react';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import ErrorMessage from '@/components/common/error-message';
 import useCourses from '@/app/courses/_hooks/use-courses';
+import Task from '@/app/tasks/_components/task';
+import ErrorMessage from '@/components/common/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
+import { FC } from 'react';
+import useTasks from '../_hooks/use-tasks';
 
 interface TasksProps {}
 

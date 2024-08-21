@@ -1,9 +1,8 @@
-import { FC } from 'react';
 import useNotes from '@/app/notes/_hooks/use-notes';
-import NoteLink from './note-link';
 import { Skeleton } from '@/components/ui/skeleton';
-import Menu from './menu';
+import { FC } from 'react';
 import CreateFirstNote from './create-first-note';
+import NoteLink from './note-link';
 
 interface CourseProps {
 	name: string;
@@ -36,7 +35,9 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 						{filteredNotes?.length === 0 ? (
 							<CreateFirstNote courseId={id} />
 						) : (
-							filteredNotes?.map(note => <NoteLink key={note.id} note={note} />)
+							filteredNotes?.map(note => (
+								<NoteLink key={note.id} note={note} />
+							))
 						)}
 					</div>
 				)}

@@ -58,7 +58,11 @@ const ChangePasswordSetting = () => {
 							<FormItem>
 								<FormLabel>Old password</FormLabel>
 								<FormControl>
-									<Input placeholder='******' type='password' {...field} />
+									<Input
+										placeholder='******'
+										type='password'
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -71,7 +75,11 @@ const ChangePasswordSetting = () => {
 							<FormItem>
 								<FormLabel>New password</FormLabel>
 								<FormControl>
-									<Input placeholder='******' type='password' {...field} />
+									<Input
+										placeholder='******'
+										type='password'
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -84,7 +92,11 @@ const ChangePasswordSetting = () => {
 							<FormItem>
 								<FormLabel>Confirm new password</FormLabel>
 								<FormControl>
-									<Input placeholder='******' type='password' {...field} />
+									<Input
+										placeholder='******'
+										type='password'
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

@@ -62,7 +62,9 @@ const EditCoursePage = () => {
 
 			{/* Form: */}
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2'>
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className='space-y-2'>
 					{/* Color: */}
 					<FormField
 						control={form.control}
@@ -71,7 +73,10 @@ const EditCoursePage = () => {
 							<FormItem>
 								<FormLabel>New name</FormLabel>
 								<FormControl>
-									<Input placeholder='Computer Science' {...field} />
+									<Input
+										placeholder='Computer Science'
+										{...field}
+									/>
 								</FormControl>
 								<FormDescription />
 								<FormMessage />
@@ -109,16 +114,25 @@ const EditCoursePage = () => {
 												<div
 													className={cn(
 														'flex h-9 w-full flex-1 cursor-pointer items-center justify-center rounded-xl border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
-														field.value === color.hex &&
+														field.value ===
+															color.hex &&
 															'h-12 flex-[2] border-white/50',
 													)}
-													style={{ backgroundColor: color.hex }}
-													onClick={() => field.onChange(color.hex)}
+													style={{
+														backgroundColor:
+															color.hex,
+													}}
+													onClick={() =>
+														field.onChange(
+															color.hex,
+														)
+													}
 													key={color.hex}>
 													<span
 														className={cn(
 															'rounded-xl bg-neutral-900/50 px-1 leading-5 transition',
-															field.value === color.hex
+															field.value ===
+																color.hex
 																? 'opacity-1'
 																: 'opacity-0',
 														)}>

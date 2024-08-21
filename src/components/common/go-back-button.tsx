@@ -14,7 +14,10 @@ const GoBackButton = forwardRef<HTMLButtonElement, ButtonProps>(
 			<Button
 				ref={ref}
 				type='button'
-				className={cn(className, 'flex items-center justify-center gap-1')}
+				className={cn(
+					className,
+					'flex items-center justify-center gap-1',
+				)}
 				variant={variant}
 				size={size}
 				onClick={router.back}
