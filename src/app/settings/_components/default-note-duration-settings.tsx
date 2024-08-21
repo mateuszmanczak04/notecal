@@ -58,7 +58,7 @@ const DefaultNoteDurationSetting: FC<DefaultNoteDurationSettingProps> = ({
 	return (
 		<div>
 			<h2 className='mb-2 text-lg font-semibold'>
-				Amount of days in week view
+				Default new note duration
 			</h2>
 			<DropdownMenu
 				options={options}
