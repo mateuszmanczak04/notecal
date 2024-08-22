@@ -16,6 +16,7 @@ import CreateTaskSchema from '@/schemas/create-task-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeft } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import DatePicker from '../../../components/common/date-picker';
@@ -37,12 +38,14 @@ const CreateTaskPage = () => {
 	});
 	const router = useRouter();
 	const { add: addTask } = useTasks();
+	const [shouldBeDisabled, setShouldBeDisabled] = useState(false);
 
 	const onSubmit = (values: z.infer<typeof CreateTaskSchema>) => {
 		addTask({
 			...values,
 			courseId: values.courseId,
 		});
+		setShouldBeDisabled(true);
 		// TODO: sort tasks by settings
 
 		router.back();
@@ -146,7 +149,10 @@ const CreateTaskPage = () => {
 						</FormItem>
 					)}
 				/>
-				<Button type='submit' className='w-full'>
+				<Button
+					type='submit'
+					className='w-full'
+					disabled={shouldBeDisabled}>
 					Create
 				</Button>
 			</form>
