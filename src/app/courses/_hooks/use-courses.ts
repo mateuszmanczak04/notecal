@@ -55,7 +55,10 @@ const useCourses = () => {
 
 			await queryClient.setQueryData(
 				['courses'],
-				(oldCourses: Course[]) => [...oldCourses, newTempCourse],
+				(oldCourses: Course[]) =>
+					[...oldCourses, newTempCourse].toSorted((a, b) =>
+						a.name > b.name ? 1 : -1,
+					),
 			);
 
 			return previousCourses;
@@ -85,12 +88,14 @@ const useCourses = () => {
 			await queryClient.setQueryData(
 				['courses'],
 				(oldCourses: Course[]) => {
-					return oldCourses.map(course => {
-						if (course.id === values.id) {
-							return { ...course, ...values };
-						}
-						return course;
-					});
+					return oldCourses
+						.map(course => {
+							if (course.id === values.id) {
+								return { ...course, ...values };
+							}
+							return course;
+						})
+						.toSorted((a, b) => (a.name > b.name ? 1 : -1));
 				},
 			);
 

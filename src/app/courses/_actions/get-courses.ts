@@ -16,6 +16,9 @@ const getCourses = async () => {
 			where: {
 				userId: session?.user?.id,
 			},
+			orderBy: {
+				name: 'asc',
+			},
 		});
 
 		return { courses };
