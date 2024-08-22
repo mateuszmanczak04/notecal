@@ -19,8 +19,8 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 		<div className='flex border-b border-neutral-200 p-4'>
 			<div className='flex flex-1 flex-col'>
 				<p
-					className='font-bold underline underline-offset-4'
-					style={{ textDecorationColor: color }}>
+					className='w-fit rounded-xl px-2 py-1 font-medium text-white'
+					style={{ backgroundColor: color }}>
 					{name}
 				</p>
 				<p className='mt-1'>{teacher}</p>
