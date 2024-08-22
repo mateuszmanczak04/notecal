@@ -213,6 +213,7 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 
 	const handleDragEndTop = (event: React.DragEvent) => {
 		const { x, y } = getRelativePosition(event.clientX, event.clientY);
+		console.log({ x, y });
 		if (x === null || y === null) return; // TODO: display error message
 
 		const newStartTime = getDateFromPosition(x, y);
