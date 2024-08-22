@@ -66,9 +66,9 @@ const useTasks = () => {
 				['tasks'],
 				(oldTasks: Task[]) =>
 					[...oldTasks, newTempTask].toSorted((a, b) =>
-						a.createdAt > b.createdAt ? 1 : -1,
+						a.createdAt < b.createdAt ? 1 : -1,
 					),
-				// TODO: add sorting by user settings
+				// TODO: sort by user settings
 			);
 
 			return previousTasks;
@@ -85,11 +85,13 @@ const useTasks = () => {
 	// Updating
 	const { mutate: update } = useMutation({
 		mutationFn: async (values: UpdateTaskSchema) => {
+			console.log('mutation fn');
 			const { updatedTask, error } = await updateTask(values);
 			if (error) throw new Error(error);
 			return updatedTask;
 		},
 		onMutate: async (values: UpdateTaskSchema) => {
+			console.log('on mutate');
 			await queryClient.cancelQueries({ queryKey: ['tasks'] });
 			const previousTasks = queryClient.getQueryData(['tasks']);
 
@@ -101,7 +103,7 @@ const useTasks = () => {
 						}
 						return task;
 					})
-					.toSorted((a, b) => (a.createdAt > b.createdAt ? 1 : -1));
+					.toSorted((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
 				// TODO: sort by user settings
 			});
 
@@ -112,6 +114,7 @@ const useTasks = () => {
 			queryClient.setQueryData(['tasks'], context);
 		},
 		onSettled: async () => {
+			console.log('on settled');
 			return await queryClient.invalidateQueries({ queryKey: ['tasks'] });
 		},
 	});
