@@ -7,6 +7,7 @@ import sendResetPasswordEmail from './send-reset-password-email';
 
 const ForgotPasswordSchema = z
 	.string()
+	.trim()
 	.email()
 	.min(1, { message: en.auth.EMAIL_REQUIRED });
 

@@ -4,11 +4,8 @@ import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import RegisterSchema from '@/schemas/register-schema';
 import bcrypt from 'bcryptjs';
-import { isAfter } from 'date-fns';
 import { z } from 'zod';
-import sendConfirmationEmail, {
-	getVerficationTokenByEmail,
-} from './send-confirmation-email';
+import sendConfirmationEmail from './send-confirmation-email';
 
 const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const validatedFields = RegisterSchema.safeParse(values);
@@ -24,20 +21,10 @@ const register = async (values: z.infer<typeof RegisterSchema>) => {
 	}
 
 	try {
-		// Email taken:
 		const existingUser = await db.user.findUnique({ where: { email } });
 		if (existingUser) {
-			const verificationToken = await getVerficationTokenByEmail(email);
-
-			if (!verificationToken) {
-				return { error: en.SOMETHING_WENT_WRONG };
-			}
-
-			const hasExpired = isAfter(new Date(), verificationToken.expires);
-
-			if (!hasExpired) {
-				return { message: en.auth.CONFIRMATION_EMAIL_SENT };
-			}
+			// Email taken:
+			return { error: en.auth.EMAIL_TAKEN };
 		} else {
 			// Create user only if does not exist yet:
 			const hashedPassword = await bcrypt.hash(password, 10);
