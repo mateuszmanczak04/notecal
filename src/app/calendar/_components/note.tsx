@@ -211,21 +211,14 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		setDragStartTime(newStartTime);
 	};
 
-	const handleDragEndTop = (event: React.DragEvent) => {
-		const { x, y } = getRelativePosition(event.clientX, event.clientY);
-		console.log({ x, y });
-		if (x === null || y === null) return; // TODO: display error message
-
-		const newStartTime = getDateFromPosition(x, y);
-		if (!newStartTime) return;
-
-		if (newStartTime < note.endTime) {
-			updateNote({ id: note.id, startTime: newStartTime });
+	const handleDragEndTop = () => {
+		if (dragStartTime < note.endTime) {
+			updateNote({ id: note.id, startTime: dragStartTime });
 		} else {
 			updateNote({
 				id: note.id,
 				startTime: note.endTime,
-				endTime: newStartTime,
+				endTime: dragStartTime,
 			});
 		}
 
@@ -247,20 +240,14 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		setDragEndTime(newEndTime);
 	};
 
-	const handleDragEndBottom = (event: React.DragEvent) => {
-		const { x, y } = getRelativePosition(event.clientX, event.clientY);
-		if (x === null || y === null) return; // TODO: display error message
-
-		const newEndTime = getDateFromPosition(x, y);
-		if (!newEndTime) return;
-
-		if (newEndTime > note.startTime) {
-			updateNote({ id: note.id, endTime: newEndTime });
+	const handleDragEndBottom = () => {
+		if (dragEndTime > note.startTime) {
+			updateNote({ id: note.id, endTime: dragEndTime });
 		} else {
 			updateNote({
 				id: note.id,
 				endTime: note.startTime,
-				startTime: newEndTime,
+				startTime: dragEndTime,
 			});
 		}
 
