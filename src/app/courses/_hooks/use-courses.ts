@@ -28,6 +28,8 @@ const createTempCourse = (values: CreateCourseSchema): CourseWithLoading => ({
 	id: crypto.randomUUID(),
 	userId: '',
 	loading: true,
+	createdAt: new Date(),
+	updatedAt: new Date(),
 });
 
 const useCourses = () => {
