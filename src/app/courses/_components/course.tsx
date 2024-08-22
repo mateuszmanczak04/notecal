@@ -47,8 +47,10 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 			className='cursor-pointer rounded-xl bg-neutral-50 p-4 text-white'
 			style={{ background: color }}
 			onClick={handleClick}>
-			<p className='rounded-xl text-xl font-medium'>{name}</p>
-			<p className='mt-1 opacity-75'>{teacher}</p>
+			<p className='line-clamp-1 rounded-xl text-xl font-medium'>
+				{name}
+			</p>
+			<p className='mt-1 line-clamp-1 opacity-75'>{teacher}</p>
 		</div>
 	);
 };
