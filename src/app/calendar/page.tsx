@@ -2,6 +2,7 @@
 
 import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
+import useCourses from '../courses/_hooks/use-courses';
 import useNotes from '../notes/_hooks/use-notes';
 import Grid from './_components/grid';
 import Header from './_components/header';
@@ -10,8 +11,20 @@ import TopBar from './_components/top-bar';
 
 const CalendarPage = () => {
 	const { notes, error, isPending } = useNotes();
+	const { isPending: isCoursesPending } = useCourses();
 
-	if (isPending) return <LoadingSpinner />;
+	if (isPending || isCoursesPending)
+		return (
+			<div className='grid h-full w-full place-content-center'>
+				<div className='flex flex-col gap-4'>
+					<LoadingSpinner />
+					<p className='animate-pulse'>
+						Give us a second, we are loading your notes and courses
+						😅
+					</p>
+				</div>
+			</div>
+		);
 
 	if (error) {
 		return <ErrorMessage>{error.message}</ErrorMessage>;

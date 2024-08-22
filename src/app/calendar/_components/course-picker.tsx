@@ -3,7 +3,6 @@
 import useCourses from '@/app/courses/_hooks/use-courses';
 import useNotes from '@/app/notes/_hooks/use-notes';
 import useSettings from '@/app/settings/_hooks/use-settings';
-import LoadingSpinner from '@/components/common/loading-spinner';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import Link from 'next/link';
@@ -19,7 +18,7 @@ interface CoursePickerProps {
 }
 
 const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
-	const { courses, isPending } = useCourses(); // TODO: error handling
+	const { courses } = useCourses(); // TODO: error handling
 	const pickerRef = useRef<HTMLDivElement | null>(null);
 	const { settings } = useSettings();
 	const { containerRef } = useCalendarContext();
@@ -67,16 +66,6 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 			hidePicker();
 		}
 	});
-
-	if (isPending)
-		return (
-			<div
-				className='absolute rounded-xl bg-white p-4 shadow-xl dark:bg-neutral-700'
-				ref={pickerRef}
-				style={{ left: x, top: y }}>
-				<LoadingSpinner />
-			</div>
-		);
 
 	return (
 		<>
