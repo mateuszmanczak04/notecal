@@ -8,7 +8,7 @@ const NotePage = () => {
 	const router = useRouter();
 
 	useEffect(() => {
-		router.push('/calendar');
+		router.back();
 	}, [router]);
 
 	return null;

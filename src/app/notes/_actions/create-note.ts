@@ -6,6 +6,7 @@ import { en } from '@/lib/dictionary';
 import { z } from 'zod';
 
 const CreateNoteSchema = z.object({
+	id: z.string().optional(),
 	courseId: z.string().min(1, { message: en.courses.ID_REQUIRED }),
 	content: z.string().default(''),
 	startTime: z.date(),
@@ -19,7 +20,7 @@ const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
 		return { error: en.INVALID_DATA };
 	}
 
-	const { courseId, content, startTime, endTime } = validatedFields.data;
+	const { id, courseId, content, startTime, endTime } = validatedFields.data;
 
 	try {
 		const session = await auth();
@@ -38,6 +39,7 @@ const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
 
 		const newNote = await db.note.create({
 			data: {
+				id,
 				courseId,
 				startTime: properStartTime,
 				endTime: properEndTime,

@@ -52,7 +52,10 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 	const handleSelect = (courseId: string) => {
 		if (!settings) return;
 
+		const newNoteId = crypto.randomUUID();
+
 		addNewNote({
+			id: newNoteId,
 			content: 'Blank note',
 			startTime: time,
 			endTime: new Date(

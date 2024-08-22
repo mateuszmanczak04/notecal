@@ -7,6 +7,7 @@ import deleteNote from '../_actions/delete-note';
 import updateNote from '../_actions/update-note';
 
 type CreateNoteSchema = {
+	id: string;
 	content: string;
 	courseId: string;
 	startTime: Date;
@@ -27,9 +28,10 @@ type NoteWithLoading = Note & { loading?: boolean };
 // extended by "loading: true" field:
 const createTempNote = (values: CreateNoteSchema): NoteWithLoading => ({
 	...values,
-	id: crypto.randomUUID(),
 	userId: '',
 	loading: true,
+	createdAt: new Date(),
+	updatedAt: new Date(),
 });
 
 const useNotes = () => {
@@ -54,6 +56,8 @@ const useNotes = () => {
 			const previousNotes = queryClient.getQueryData(['notes']);
 
 			const newTempNote = createTempNote(values);
+
+			console.table(newTempNote);
 
 			await queryClient.setQueryData(['notes'], (oldNotes: Note[]) =>
 				[...oldNotes, newTempNote].toSorted((a, b) =>
