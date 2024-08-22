@@ -36,11 +36,16 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 		const containerWidth = containerRef.current.clientWidth;
 		const containerHeight = containerRef.current.clientHeight;
 
-		if (pickerWidth + x > containerWidth) {
-			setPickerX(containerWidth - pickerWidth);
+		if (pickerWidth / 2 + x > containerWidth) {
+			setPickerX(containerWidth - pickerWidth / 2);
+		} else if (pickerWidth / 2 > x) {
+			setPickerX(pickerWidth / 2);
 		}
-		if (pickerHeight + y > containerHeight) {
-			setPickerY(containerHeight - pickerHeight);
+
+		if (pickerHeight / 2 + y > containerHeight) {
+			setPickerY(containerHeight - pickerHeight / 2);
+		} else if (pickerHeight / 2 > y) {
+			setPickerY(pickerHeight / 2);
 		}
 	}, [containerRef, x, y]);
 
@@ -74,7 +79,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 
 			{/* Popup: */}
 			<div
-				className='absolute z-40 flex min-w-40 max-w-96 flex-col overflow-hidden rounded-xl bg-white shadow-xl dark:bg-neutral-700'
+				className='absolute z-40 flex min-w-40 max-w-96 -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-xl bg-white shadow-xl dark:bg-neutral-700'
 				ref={pickerRef}
 				style={{ left: pickerX, top: pickerY }}>
 				{!courses || courses.length === 0 ? (
