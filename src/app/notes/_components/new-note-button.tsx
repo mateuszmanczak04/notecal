@@ -20,6 +20,7 @@ const NewNoteButton = () => {
 		);
 
 		addNewNote({
+			id: crypto.randomUUID(),
 			courseId: course.id,
 			content: 'Empty note',
 			startTime,
