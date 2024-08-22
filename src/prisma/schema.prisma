@@ -88,14 +88,16 @@ model Authenticator {
 }
 
 model Course {
-  id      String @id @default(cuid())
-  name    String
-  teacher String
-  color   String
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  String
-  Task    Task[]
-  Note    Note[]
+  id        String   @id @default(cuid())
+  name      String
+  teacher   String
+  color     String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  Task      Task[]
+  Note      Note[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum TaskPriority {
@@ -157,4 +159,6 @@ model Note {
   course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   // blockIds  String[]
   content   String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
