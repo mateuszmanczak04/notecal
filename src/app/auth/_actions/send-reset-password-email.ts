@@ -105,7 +105,6 @@ const sendResetPasswordEmail = async (values: z.infer<typeof Schema>) => {
 
 		return { success: true };
 	} catch (error) {
-		console.log(error);
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
