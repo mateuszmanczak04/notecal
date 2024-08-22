@@ -77,7 +77,7 @@ const Navigation = () => {
 							{session.data.user.email}
 						</p>
 					</div>
-					<Cog className='h-4 w-4' />
+					<Cog className='h-4 w-4 shrink-0' />
 				</Link>
 
 				{/* Main menu */}
