@@ -65,8 +65,6 @@ const Notes = () => {
 	}, [notes]);
 
 	return (
-		// TODO: hard coded sizes and position - should be based
-		// on tailwind variables describing grid sizes
 		<div
 			onDragOver={e => e.preventDefault()}
 			ref={containerRef}
