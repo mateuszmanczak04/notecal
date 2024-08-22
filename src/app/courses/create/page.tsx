@@ -17,6 +17,7 @@ import CreateCourseSchema from '@/schemas/create-course-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import useCourses from '../_hooks/use-courses';
@@ -32,8 +33,10 @@ const CreateCoursePage = () => {
 	});
 	const router = useRouter();
 	const { add: addCourse } = useCourses();
+	const [shouldBeDisabled, setShouldBeDisabled] = useState(false);
 
 	const onSubmit = (values: z.infer<typeof CreateCourseSchema>) => {
+		setShouldBeDisabled(true);
 		addCourse(values);
 		router.push('/courses');
 	};
@@ -126,7 +129,10 @@ const CreateCoursePage = () => {
 						</FormItem>
 					)}
 				/>
-				<Button type='submit' className='w-full'>
+				<Button
+					type='submit'
+					className='w-full'
+					disabled={shouldBeDisabled}>
 					Create a Course
 				</Button>
 			</form>
