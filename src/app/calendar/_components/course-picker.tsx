@@ -74,31 +74,33 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 
 			{/* Popup: */}
 			<div
-				className='absolute z-40 flex w-64 min-w-40 max-w-96 flex-col overflow-hidden rounded-xl bg-white shadow-xl dark:bg-neutral-700'
+				className='absolute z-40 flex min-w-40 max-w-96 flex-col overflow-hidden rounded-xl bg-white shadow-xl dark:bg-neutral-700'
 				ref={pickerRef}
 				style={{ left: pickerX, top: pickerY }}>
 				{!courses || courses.length === 0 ? (
-					<div className='p-4'>
+					<div className='w-64 p-4'>
 						<p>You don&apos;t have any courses yet</p>
 						<Button asChild className='mt-2 w-full'>
 							<Link href='/courses/create'>Create one</Link>
 						</Button>
 					</div>
 				) : (
-					<>
+					<div>
 						<p className='w-full py-1 text-center text-sm '>
 							{format(time, 'yyyy/MM/dd hh:mm')}
 						</p>
-						{courses?.map(course => (
-							<button
-								key={course.id}
-								onClick={() => handleSelect(course.id)}
-								className='flex w-full items-center justify-center px-4 py-2 text-white transition hover:bg-neutral-100 dark:hover:bg-neutral-600'
-								style={{ color: course.color }}>
-								{course.name}
-							</button>
-						))}
-					</>
+						<div className='max-h-96 w-64 overflow-y-scroll'>
+							{courses?.map(course => (
+								<button
+									key={course.id}
+									onClick={() => handleSelect(course.id)}
+									className='flex w-full items-center justify-center px-4 py-2 text-white transition hover:bg-neutral-100 dark:hover:bg-neutral-600'
+									style={{ color: course.color }}>
+									{course.name}
+								</button>
+							))}
+						</div>
+					</div>
 				)}
 			</div>
 		</>
