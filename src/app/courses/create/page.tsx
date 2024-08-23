@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { cn, COLORS } from '@/lib/utils';
 import CreateCourseSchema from '@/schemas/create-course-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -133,6 +133,7 @@ const CreateCoursePage = () => {
 					type='submit'
 					className='w-full'
 					disabled={shouldBeDisabled}>
+					<Plus />
 					Create a Course
 				</Button>
 			</form>

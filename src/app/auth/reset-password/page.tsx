@@ -99,19 +99,14 @@ const ResetPasswordPage = () => {
 							</FormItem>
 						)}
 					/>
-					<Button
-						type='submit'
-						className='gap-2'
-						disabled={isPending}>
-						Change password <Pencil />
+					<Button type='submit' disabled={isPending}>
+						<Pencil />
+						Change password
 					</Button>
 					{data && (
 						<>
 							<SuccessMessage>{data.message}</SuccessMessage>
-							<Button
-								asChild
-								variant='secondary'
-								className='gap-1'>
+							<Button asChild variant='secondary'>
 								<Link href='/auth/login'>
 									<ArrowLeft />
 									Go back to login page

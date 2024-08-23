@@ -5,7 +5,7 @@ const notFound = () => {
 	return (
 		<div className='mx-auto text-center'>
 			<p>This page does not exist</p>
-			<Button asChild size='lg'>
+			<Button asChild>
 				<Link href='/'>Go Back Home</Link>
 			</Button>
 		</div>

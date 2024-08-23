@@ -24,7 +24,7 @@ const NotePage = () => {
 						<ArrowLeft />
 						Go back
 					</GoBackButton>
-					<Button asChild variant='secondary' className='gap-1'>
+					<Button asChild variant='secondary'>
 						<Link href={`/courses/edit?id=${course.id}`}>
 							<Pencil />
 							Edit

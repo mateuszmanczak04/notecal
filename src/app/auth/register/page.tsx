@@ -16,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import RegisterSchema from '@/schemas/register-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { LogIn } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -133,7 +134,7 @@ const RegisterPage = () => {
 							)}
 						/>
 						<Button type='submit' className='mt-8 w-full'>
-							Register
+							<LogIn /> Register
 						</Button>
 						<Link
 							href='/auth/login'

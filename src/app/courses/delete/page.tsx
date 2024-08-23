@@ -38,7 +38,7 @@ const DeleteCoursePage = () => {
 				<Button
 					onClick={handleDelete}
 					variant='destructive'
-					className='w-full flex-1 gap-1'>
+					className='w-full flex-1'>
 					<Trash2 />
 					Delete Permanently
 				</Button>

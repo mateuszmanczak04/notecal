@@ -2,6 +2,7 @@
 
 import ErrorMessage from '@/components/common/error-message';
 import { Button } from '@/components/ui/button';
+import { RotateCw } from 'lucide-react';
 import { FC } from 'react';
 
 interface ErrorProps {
@@ -13,7 +14,8 @@ const Error: FC<ErrorProps> = ({ error, reset }) => {
 	return (
 		<div className='mx-auto text-center'>
 			<ErrorMessage>{error.message}</ErrorMessage>
-			<Button onClick={reset} size='lg'>
+			<Button onClick={reset}>
+				<RotateCw />
 				Try Again
 			</Button>
 		</div>

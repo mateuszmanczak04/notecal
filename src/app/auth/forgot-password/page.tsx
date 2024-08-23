@@ -6,6 +6,7 @@ import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useMutation } from '@tanstack/react-query';
+import { Mail } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import forgotPassword from '../_actions/forgot-password';
@@ -66,6 +67,7 @@ const ForgotPasswordPage = () => {
 				/>
 			</div>
 			<Button disabled={isPending || timeToNextAttempt !== 0}>
+				<Mail />
 				Send recovery email
 			</Button>
 			<small>

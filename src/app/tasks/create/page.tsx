@@ -14,7 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import CreateTaskSchema from '@/schemas/create-task-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Plus } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -153,6 +153,7 @@ const CreateTaskPage = () => {
 					type='submit'
 					className='w-full'
 					disabled={shouldBeDisabled}>
+					<Plus />
 					Create
 				</Button>
 			</form>

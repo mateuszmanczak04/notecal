@@ -2,6 +2,7 @@
 
 import { useNoteContext } from '@/app/notes/_context/note-context';
 import { Button } from '@/components/ui/button';
+import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import useNotes from '../_hooks/use-notes';
@@ -41,6 +42,7 @@ const DeleteButton = () => {
 
 	return (
 		<Button variant='destructive' onClick={() => setIsDeleting(true)}>
+			<Trash2 />
 			Delete this note
 		</Button>
 	);

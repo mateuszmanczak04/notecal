@@ -103,7 +103,8 @@ const ChangePasswordSetting = () => {
 						)}
 					/>
 					<Button type='submit' className='gap-2'>
-						Change password <Pencil />
+						<Pencil />
+						Change password
 					</Button>
 					{data && <SuccessMessage>{data.message}</SuccessMessage>}
 					{error && <ErrorMessage>{error.message}</ErrorMessage>}

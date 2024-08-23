@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { cn, COLORS } from '@/lib/utils';
 import UpdateCourseSchema from '@/schemas/update-course-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { MoveLeft, Trash2 } from 'lucide-react';
+import { MoveLeft, Save, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -52,11 +52,8 @@ const EditCoursePage = () => {
 	return (
 		<div className='mx-auto flex max-w-[600px] flex-col gap-4'>
 			{/* Cancel button: */}
-			<Button
-				variant='secondary'
-				onClick={() => router.back()}
-				className='flex items-center gap-1'>
-				<MoveLeft className='h-5' />
+			<Button variant='secondary' onClick={() => router.back()}>
+				<MoveLeft />
 				Go back
 			</Button>
 
@@ -147,14 +144,15 @@ const EditCoursePage = () => {
 						)}
 					/>
 
-					<Button type='submit' className='w-full gap-1'>
+					<Button type='submit' className='w-full'>
+						<Save />
 						Save changes
 					</Button>
 				</form>
 			</Form>
 
 			{/* Delete button: */}
-			<Button asChild variant='destructive' className='gap-1'>
+			<Button asChild variant='destructive'>
 				<Link href={`/courses/delete?id=${id}`}>
 					<Trash2 />
 					Delete

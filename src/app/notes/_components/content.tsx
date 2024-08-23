@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { useMutation } from '@tanstack/react-query';
+import { Save } from 'lucide-react';
 import { useState } from 'react';
 
 const Content = () => {
@@ -32,6 +33,7 @@ const Content = () => {
 			<Button
 				onClick={() => updateContent()}
 				style={{ background: course?.color }}>
+				<Save />
 				Save content
 			</Button>
 		</div>

@@ -15,6 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import LoginSchema from '@/schemas/login-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { LogIn } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -86,6 +87,7 @@ const LoginPage = () => {
 					Forgot password?
 				</Link>
 				<Button type='submit' className='mt-8 w-full'>
+					<LogIn />
 					Login
 				</Button>
 				<Link

@@ -51,7 +51,7 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 			<Button
 				variant='secondary'
 				onClick={handleToggleMenu}
-				className='w-full gap-1 transition'>
+				className='w-full'>
 				<ArrowUpDown />
 				Order by
 			</Button>

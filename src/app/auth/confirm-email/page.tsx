@@ -4,7 +4,7 @@ import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
@@ -50,7 +50,8 @@ const ConfirmEmailPage = () => {
 			<p className='mt-2 text-xl'>
 				It is the last step to create your Notecal account
 			</p>
-			<Button className='mt-4' size='lg' onClick={handleClick}>
+			<Button className='mt-4' onClick={handleClick}>
+				<Mail />
 				Confirm your email
 			</Button>
 			<div className='mt-2 flex justify-center'>
@@ -60,11 +61,7 @@ const ConfirmEmailPage = () => {
 			{message && (
 				<div className='mt-4 space-y-4'>
 					<SuccessMessage>{message}</SuccessMessage>
-					<Button
-						asChild
-						variant='secondary'
-						size='lg'
-						className='ites-center flex gap-1'>
+					<Button asChild variant='secondary'>
 						<Link href='/auth/login'>
 							<ArrowLeft />
 							Or go there now

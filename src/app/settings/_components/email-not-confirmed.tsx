@@ -5,6 +5,7 @@ import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
+import { Mail } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { FC, useState, useTransition } from 'react';
 
@@ -42,7 +43,10 @@ const EmailNotConfirmed: FC<EmailNotConfirmedProps> = ({}) => {
 				Confirm your email to secure your account in case you lose your
 				password
 			</p>
-			<Button onClick={handleResendLink}>Resend confirmation link</Button>
+			<Button onClick={handleResendLink}>
+				<Mail />
+				Resend confirmation link
+			</Button>
 			{error && <ErrorMessage className='mt-2'>{error}</ErrorMessage>}
 			{message && (
 				<SuccessMessage className='mt-2'>{message}</SuccessMessage>

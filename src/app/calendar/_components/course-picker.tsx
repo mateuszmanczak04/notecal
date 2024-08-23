@@ -5,6 +5,7 @@ import useNotes from '@/app/notes/_hooks/use-notes';
 import useSettings from '@/app/settings/_hooks/use-settings';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
+import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { FC, useLayoutEffect, useRef, useState } from 'react';
 import { useEventListener, useOnClickOutside } from 'usehooks-ts';
@@ -89,7 +90,10 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 					<div className='w-64 p-4'>
 						<p>You don&apos;t have any courses yet</p>
 						<Button asChild className='mt-2 w-full'>
-							<Link href='/courses/create'>Create one</Link>
+							<Link href='/courses/create'>
+								<Plus />
+								Create one
+							</Link>
 						</Button>
 					</div>
 				) : (
