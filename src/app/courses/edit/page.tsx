@@ -108,15 +108,15 @@ const EditCoursePage = () => {
 							<FormItem>
 								<FormLabel>Accent color</FormLabel>
 								<FormControl>
-									<div className='flex h-12 items-center gap-2'>
+									<div className='grid grid-cols-3 gap-2 sm:grid-cols-4	md:grid-cols-7'>
 										{COLORS.map(color => {
 											return (
 												<div
 													className={cn(
-														'flex h-9 w-full flex-1 cursor-pointer items-center justify-center rounded-xl border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
+														'grid h-9 w-full cursor-pointer place-content-center rounded-xl border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
 														field.value ===
 															color.hex &&
-															'h-12 flex-[2] border-white/50',
+															'border-white/50',
 													)}
 													style={{
 														backgroundColor:
@@ -130,7 +130,7 @@ const EditCoursePage = () => {
 													key={color.hex}>
 													<span
 														className={cn(
-															'rounded-xl bg-neutral-900/50 px-1 leading-5 transition',
+															'rounded-xl bg-neutral-900/50 px-1 text-sm leading-5 transition',
 															field.value ===
 																color.hex
 																? 'opacity-1'
