@@ -14,8 +14,7 @@ import useSettings from './_hooks/use-settings';
 
 const SettingsPage = () => {
 	const { settings, isPending, error } = useSettings();
-	const { emailConfirmed, isPending: emailConfirmedIsPending } =
-		useEmailConfirmed();
+	const { emailConfirmed } = useEmailConfirmed();
 
 	if (isPending) return <LoadingSpinner />;
 
@@ -26,7 +25,6 @@ const SettingsPage = () => {
 	return (
 		<div className='mx-auto mb-32 mt-4 flex max-w-[480px] flex-col gap-8'>
 			<h1 className='text-3xl font-bold'>Settings</h1>
-			{emailConfirmedIsPending && <LoadingSpinner />}
 			{emailConfirmed === false && <EmailNotConfirmed />}
 			<ChangeEmailSetting />
 			<Separator />
