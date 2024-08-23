@@ -154,12 +154,12 @@ const EditCoursePage = () => {
 			</Form>
 
 			{/* Delete button: */}
-			<Link
-				href={`/courses/delete?id=${id}`}
-				className='flex h-9 shrink-0 items-center justify-center gap-1 rounded-xl bg-red-50 px-4 text-red-500 transition hover:bg-red-100'>
-				<Trash2 />
-				Delete
-			</Link>
+			<Button asChild variant='destructive' className='gap-1'>
+				<Link href={`/courses/delete?id=${id}`}>
+					<Trash2 />
+					Delete
+				</Link>
+			</Button>
 		</div>
 	);
 };
