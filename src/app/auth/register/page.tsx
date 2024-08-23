@@ -154,7 +154,6 @@ const RegisterPage = () => {
 						</SuccessMessage>
 						<Button
 							variant='secondary'
-							size='lg'
 							className='mt-2 w-full'
 							onClick={handleResendEmail}>
 							Didn&apos;t get an email? Click here
