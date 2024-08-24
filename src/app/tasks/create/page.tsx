@@ -120,6 +120,7 @@ const CreateTaskPage = () => {
 							<FormLabel>Course</FormLabel>
 							<FormControl>
 								<Course
+									className='w-full'
 									onSelect={field.onChange}
 									currentCourseId={field.value || null}
 								/>

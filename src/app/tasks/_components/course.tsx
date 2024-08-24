@@ -8,18 +8,21 @@ import {
 	DropdownMenuList,
 	DropdownMenuTrigger,
 } from '@/components/common/dropdown-menu';
+import { cn } from '@/lib/utils';
+import { ClassNameValue } from 'tailwind-merge';
 
 type Props = {
 	onSelect: (courseId: string | null) => void;
 	currentCourseId: string | null;
+	className?: ClassNameValue;
 };
 
-const Course = ({ onSelect, currentCourseId }: Props) => {
+const Course = ({ onSelect, currentCourseId, className }: Props) => {
 	const { courses } = useCourses();
 	const currentCourse = useCourse(currentCourseId);
 
 	return (
-		<DropdownMenu className='w-52'>
+		<DropdownMenu className={cn('w-52', className)}>
 			<DropdownMenuTrigger showChevron>
 				{currentCourse && (
 					<div
