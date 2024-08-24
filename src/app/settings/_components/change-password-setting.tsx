@@ -17,7 +17,6 @@ import { Input } from '@/components/ui/input';
 import ChangePasswordSchema from '@/schemas/change-password-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { Pencil } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -103,8 +102,7 @@ const ChangePasswordSetting = () => {
 						)}
 					/>
 					<Button type='submit' className='gap-2'>
-						<Pencil />
-						Change password
+						Save
 					</Button>
 					{data && <SuccessMessage>{data.message}</SuccessMessage>}
 					{error && <ErrorMessage>{error.message}</ErrorMessage>}

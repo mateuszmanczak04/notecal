@@ -17,7 +17,6 @@ import { Input } from '@/components/ui/input';
 import ChangeEmailSchema from '@/schemas/change-email-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { Pencil } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -99,8 +98,7 @@ const ChangeEmailSetting = () => {
 
 					{/* Button and results */}
 					<Button type='submit' className='gap-2'>
-						<Pencil />
-						Change email
+						Save
 					</Button>
 					{data && <SuccessMessage>{data.message}</SuccessMessage>}
 					{error && <ErrorMessage>{error.message}</ErrorMessage>}

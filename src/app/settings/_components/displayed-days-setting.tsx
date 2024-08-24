@@ -25,7 +25,7 @@ const DisplayedDaysSetting = ({ initialDisplayedDays }: Props) => {
 				Amount of days in week view
 			</h2>
 			<DropdownMenu>
-				<DropdownMenuTrigger>
+				<DropdownMenuTrigger showChevron>
 					{initialDisplayedDays}
 				</DropdownMenuTrigger>
 				<DropdownMenuList>

@@ -25,7 +25,7 @@ const DefaultNoteDurationSetting = ({ initialDefaultNoteDuration }: Props) => {
 				Default new note duration
 			</h2>
 			<DropdownMenu>
-				<DropdownMenuTrigger>
+				<DropdownMenuTrigger showChevron>
 					{initialDefaultNoteDuration} min
 				</DropdownMenuTrigger>
 				<DropdownMenuList>
