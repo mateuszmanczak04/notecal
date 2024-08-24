@@ -57,7 +57,6 @@ const Task = ({
 						<Course
 							currentCourseId={courseId}
 							onSelect={handleChangeCourse}
-							className='w-52'
 						/>
 
 						{/* Due date */}
