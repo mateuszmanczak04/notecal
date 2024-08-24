@@ -2,7 +2,16 @@
 
 import SortTasks from '@/app/tasks/_components/sort-tasks';
 import { cn } from '@/lib/utils';
-import { Calendar, Check, Cog, List, Menu, Plus, User, X } from 'lucide-react';
+import {
+	Calendar,
+	Check,
+	List,
+	Menu,
+	Plus,
+	Settings,
+	User,
+	X,
+} from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -77,7 +86,7 @@ const Navigation = () => {
 							{session.data.user.email}
 						</p>
 					</div>
-					<Cog className='h-4 w-4 shrink-0' />
+					<Settings className='h-5 w-5 shrink-0' />
 				</Link>
 
 				{/* Main menu */}
@@ -94,7 +103,7 @@ const Navigation = () => {
 									'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
-							<Calendar /> Calendar
+							<Calendar className='h-5 w-5' /> Calendar
 						</Link>
 						<Link
 							href='/tasks'
@@ -104,7 +113,7 @@ const Navigation = () => {
 									'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
-							<Check /> Tasks
+							<Check className='h-5 w-5' /> Tasks
 						</Link>
 						<Link
 							href='/courses'
@@ -114,9 +123,10 @@ const Navigation = () => {
 									'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
-							<List /> Courses
+							<List className='h-5 w-5' /> Courses
 						</Link>
 						<div className='mt-8 flex flex-col gap-2'>
+							{/* TODO: remove this and move functionality below tasks items */}
 							{pathname === '/tasks' && (
 								<>
 									<Button
