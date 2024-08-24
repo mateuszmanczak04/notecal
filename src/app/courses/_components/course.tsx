@@ -1,5 +1,6 @@
 import useNotes from '@/app/notes/_hooks/use-notes';
 import useSettings from '@/app/settings/_hooks/use-settings';
+import { ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 
@@ -44,13 +45,16 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 
 	return (
 		<div
-			className='cursor-pointer rounded-xl bg-neutral-50 p-4 text-white transition hover:opacity-90'
+			className='flex cursor-pointer items-center justify-between rounded-xl bg-neutral-50 p-4 text-white transition hover:opacity-90'
 			style={{ background: color }}
 			onClick={handleClick}>
-			<p className='line-clamp-1 rounded-xl text-xl font-medium'>
-				{name}
-			</p>
-			<p className='mt-1 line-clamp-1 opacity-75'>{teacher}</p>
+			<div>
+				<p className='line-clamp-1 rounded-xl text-xl font-medium'>
+					{name}
+				</p>
+				<p className='mt-1 line-clamp-1 opacity-75'>{teacher}</p>
+			</div>
+			<ChevronRight className='h-10 w-10 shrink-0' />
 		</div>
 	);
 };
