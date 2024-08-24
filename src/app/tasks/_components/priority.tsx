@@ -56,7 +56,8 @@ const Priority = ({ id, priority }: PriorityProps) => {
 	return (
 		<DropdownMenu className='w-52'>
 			<DropdownMenuTrigger>
-				{getPriorityTitle(priority)} <ChevronDown className='h-4 w-4' />
+				{getPriorityTitle(priority)}{' '}
+				<ChevronDown className='h-4 w-4 shrink-0' />
 			</DropdownMenuTrigger>
 			<DropdownMenuList>
 				{([null, 'A', 'B', 'C'] as (TaskPriority | null)[]).map(
