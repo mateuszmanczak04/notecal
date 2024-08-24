@@ -1,6 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import { ChevronDown } from 'lucide-react';
 import React, { createContext, useContext, useRef, useState } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
 import { useOnClickOutside } from 'usehooks-ts';
@@ -102,9 +103,11 @@ export const DropdownMenuList = ({
 export const DropdownMenuTrigger = ({
 	children,
 	className,
+	showChevron,
 }: {
 	children: React.ReactNode;
 	className?: ClassNameValue;
+	showChevron?: boolean;
 }) => {
 	const { isOpen, handleToggle } = useDropdownMenuContext();
 
@@ -116,7 +119,7 @@ export const DropdownMenuTrigger = ({
 				isOpen ? 'rounded-t-xl dark:border-neutral-500' : 'rounded-xl',
 				className,
 			)}>
-			{children}
+			{children} {showChevron && <ChevronDown className='h-5 w-5' />}
 		</Tag>
 	);
 };
