@@ -14,7 +14,7 @@ type PriorityProps = {
 	priority: TaskPriority | null;
 };
 
-const getPriorityTitle = (priority: 'A' | 'B' | 'C' | null) => {
+const getPriorityTitle = (priority: TaskPriority | null) => {
 	switch (priority) {
 		case 'A':
 			return (
@@ -58,15 +58,16 @@ const Priority = ({ id, priority }: PriorityProps) => {
 				{getPriorityTitle(priority)}
 			</DropdownMenuTrigger>
 			<DropdownMenuList>
-				<DropdownMenuItem onSelect={handleSelect} value='A'>
-					{getPriorityTitle('A')}
-				</DropdownMenuItem>
-				<DropdownMenuItem onSelect={handleSelect} value='B'>
-					{getPriorityTitle('B')}
-				</DropdownMenuItem>
-				<DropdownMenuItem onSelect={handleSelect} value='C'>
-					{getPriorityTitle('C')}
-				</DropdownMenuItem>
+				{([null, 'A', 'B', 'C'] as (TaskPriority | null)[]).map(
+					priority => (
+						<DropdownMenuItem
+							key={priority || 'none'}
+							onSelect={handleSelect}
+							value={priority}>
+							{getPriorityTitle(priority)}
+						</DropdownMenuItem>
+					),
+				)}
 			</DropdownMenuList>
 		</DropdownMenu>
 	);
