@@ -8,7 +8,7 @@ const Title = () => {
 	return (
 		<div>
 			<h1 className='mt-2 text-xl font-semibold'>
-				{course.name}{' '}
+				{course.name}
 				<span className='text-sm opacity-75'>
 					({currentNote.startTime.toDateString()})
 				</span>
