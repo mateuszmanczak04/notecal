@@ -14,7 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import CreateTaskSchema from '@/schemas/create-task-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -56,10 +56,6 @@ const CreateTaskPage = () => {
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
 				className='mx-auto mt-4 w-full max-w-[600px] space-y-4 sm:space-y-6 md:space-y-8'>
-				<GoBackButton variant='secondary'>
-					<ArrowLeft />
-					Go back
-				</GoBackButton>
 				<h2 className='text-3xl font-bold'>Create a new task</h2>
 
 				{/* Title: */}
@@ -149,13 +145,17 @@ const CreateTaskPage = () => {
 						</FormItem>
 					)}
 				/>
-				<Button
-					type='submit'
-					className='w-full'
-					disabled={shouldBeDisabled}>
-					<Plus />
-					Create
-				</Button>
+
+				<div className='grid gap-x-4 gap-y-2 sm:grid-cols-2'>
+					<GoBackButton variant='secondary'>Cancel</GoBackButton>
+					<Button
+						type='submit'
+						className='w-full'
+						disabled={shouldBeDisabled}>
+						<Plus />
+						Create
+					</Button>
+				</div>
 			</form>
 		</Form>
 	);
