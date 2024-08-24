@@ -1,6 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import { ChevronDown } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
 import { useOnClickOutside } from 'usehooks-ts';
@@ -72,7 +73,6 @@ const DropdownMenu = ({
 			)}
 			ref={menuRef}>
 			<Tag
-				text={currentOption.label || 'None'}
 				onClick={handleToggleMenu}
 				className={cn(
 					'h-full max-w-none rounded-none border border-l border-r border-t border-transparent font-medium',
@@ -80,8 +80,10 @@ const DropdownMenu = ({
 						? 'rounded-t-xl dark:border-neutral-500'
 						: 'rounded-xl',
 					currentOption.className,
-				)}
-			/>
+				)}>
+				<p className='truncate'>{currentOption.label || 'None'}</p>
+				<ChevronDown className='h-5 w-5' />
+			</Tag>
 			{isOpen && (
 				<div
 					className={cn(

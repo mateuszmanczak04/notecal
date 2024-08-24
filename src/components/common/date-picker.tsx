@@ -95,13 +95,13 @@ const DatePicker: FC<DatePickerProps> = ({
 			)}
 			ref={menuRef}>
 			<Tag
-				text={date ? format(date, 'yyyy-MM-dd - HH:mm') : 'No due date'}
 				onClick={handleToggleMenu}
 				className={cn(
 					'h-full w-full max-w-none',
 					isPending && 'opacity-50',
-				)}
-			/>
+				)}>
+				{date ? format(date, 'yyyy-MM-dd - HH:mm') : 'No due date'}
+			</Tag>
 			{isOpen && (
 				<div className='absolute left-1/2 top-0 flex h-full w-full -translate-x-1/2 items-center justify-center gap-2 rounded-xl border bg-neutral-100 font-mono dark:border-neutral-500 dark:bg-neutral-700'>
 					{/* Year, month, day: */}

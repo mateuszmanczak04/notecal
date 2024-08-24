@@ -35,9 +35,9 @@ const CreatePriority = ({ field }: Props) => {
 					} else {
 						field.onChange('C');
 					}
-				}}
-				text={'Low'}
-			/>
+				}}>
+				Low
+			</Tag>
 			<Tag
 				className={cn(
 					'h-9 bg-yellow-100 text-yellow-800 transition-all duration-500 hover:bg-yellow-200 dark:bg-yellow-700 dark:text-yellow-100',
@@ -52,9 +52,9 @@ const CreatePriority = ({ field }: Props) => {
 					} else {
 						field.onChange('B');
 					}
-				}}
-				text={'Medium'}
-			/>
+				}}>
+				Medium
+			</Tag>
 			<Tag
 				className={cn(
 					'h-9 bg-red-100 text-red-800 transition-all duration-500 hover:bg-red-200 dark:bg-red-800 dark:text-red-100',
@@ -69,9 +69,9 @@ const CreatePriority = ({ field }: Props) => {
 					} else {
 						field.onChange('A');
 					}
-				}}
-				text={'High'}
-			/>
+				}}>
+				High
+			</Tag>
 		</div>
 	);
 };
