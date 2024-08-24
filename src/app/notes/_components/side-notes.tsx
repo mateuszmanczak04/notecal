@@ -26,11 +26,12 @@ const SideNotes = () => {
 							index === 0 && 'rounded-t-xl border-t',
 							index === notes.length - 1 &&
 								'border-b-transparent',
+							note.id === params.id && 'bg-neutral-200',
 						)}>
 						<span className='shrink-0 text-sm'>
 							{format(note.startTime, 'yyyy-MM-dd')}
 						</span>
-						<span className='line-clamp-1 text-sm text-neutral-500'>
+						<span className='line-clamp-1 text-sm text-neutral-600'>
 							{note.content}
 						</span>
 					</Link>
