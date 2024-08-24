@@ -1,6 +1,7 @@
 'use client';
 
 import useCourse from '@/app/courses/_hooks/use-course';
+import GoBackButton from '@/components/common/go-back-button';
 import { Button } from '@/components/ui/button';
 import {
 	Form,
@@ -12,10 +13,11 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 import { cn, COLORS } from '@/lib/utils';
 import UpdateCourseSchema from '@/schemas/update-course-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { MoveLeft, Save, Trash2 } from 'lucide-react';
+import { Save, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -41,7 +43,7 @@ const EditCoursePage = () => {
 
 	const onSubmit = (values: z.infer<typeof UpdateCourseSchema>) => {
 		updateCourse(values);
-		router.push('/courses');
+		router.back();
 	};
 
 	if (!id || !course) {
@@ -51,12 +53,6 @@ const EditCoursePage = () => {
 
 	return (
 		<div className='mx-auto flex max-w-[600px] flex-col gap-4'>
-			{/* Cancel button: */}
-			<Button variant='secondary' onClick={() => router.back()}>
-				<MoveLeft />
-				Go back
-			</Button>
-
 			{/* Form: */}
 			<Form {...form}>
 				<form
@@ -144,18 +140,23 @@ const EditCoursePage = () => {
 						)}
 					/>
 
-					<Button type='submit' className='w-full'>
-						<Save />
-						Save changes
-					</Button>
+					<div className='grid gap-x-4 gap-y-2 pt-4 sm:grid-cols-2'>
+						<GoBackButton variant='secondary'>Cancel</GoBackButton>
+						<Button type='submit' className='w-full'>
+							<Save className='h-4 w-4' />
+							Save changes
+						</Button>
+					</div>
 				</form>
 			</Form>
+
+			<Separator className='my-8' />
 
 			{/* Delete button: */}
 			<Button asChild variant='destructive'>
 				<Link href={`/courses/delete?id=${id}`}>
-					<Trash2 />
-					Delete
+					<Trash2 className='h-4 w-4' />
+					Delete entire course
 				</Link>
 			</Button>
 		</div>
