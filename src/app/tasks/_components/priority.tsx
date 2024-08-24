@@ -7,6 +7,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/common/dropdown-menu';
 import { TaskPriority } from '@prisma/client';
+import { ChevronDown } from 'lucide-react';
 import useTasks from '../_hooks/use-tasks';
 
 type PriorityProps = {
@@ -55,7 +56,7 @@ const Priority = ({ id, priority }: PriorityProps) => {
 	return (
 		<DropdownMenu className='w-52'>
 			<DropdownMenuTrigger>
-				{getPriorityTitle(priority)}
+				{getPriorityTitle(priority)} <ChevronDown className='h-4 w-4' />
 			</DropdownMenuTrigger>
 			<DropdownMenuList>
 				{([null, 'A', 'B', 'C'] as (TaskPriority | null)[]).map(
