@@ -15,7 +15,6 @@ import { Input } from '@/components/ui/input';
 import { cn, COLORS } from '@/lib/utils';
 import CreateCourseSchema from '@/schemas/create-course-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -46,10 +45,6 @@ const CreateCoursePage = () => {
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
 				className='mx-auto mt-4 w-full max-w-[600px] space-y-4 sm:space-y-6 md:space-y-8'>
-				<GoBackButton variant='secondary'>
-					<ArrowLeft />
-					Go back
-				</GoBackButton>
 				<h2 className='text-3xl font-bold'>Create a new course</h2>
 				<FormField
 					control={form.control}
@@ -129,13 +124,12 @@ const CreateCoursePage = () => {
 						</FormItem>
 					)}
 				/>
-				<Button
-					type='submit'
-					className='w-full'
-					disabled={shouldBeDisabled}>
-					<Plus />
-					Create a Course
-				</Button>
+				<div className='grid gap-x-4 gap-y-2 sm:grid-cols-2'>
+					<GoBackButton variant='secondary'>Cancel</GoBackButton>
+					<Button type='submit' disabled={shouldBeDisabled}>
+						Create
+					</Button>
+				</div>
 			</form>
 		</Form>
 	);
