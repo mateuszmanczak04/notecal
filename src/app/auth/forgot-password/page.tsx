@@ -67,7 +67,7 @@ const ForgotPasswordPage = () => {
 				/>
 			</div>
 			<Button disabled={isPending || timeToNextAttempt !== 0}>
-				<Mail />
+				<Mail className='h-4 w-4' />
 				Send recovery email
 			</Button>
 			<small>
