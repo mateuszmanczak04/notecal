@@ -2,7 +2,7 @@
 
 import GoBackButton from '@/components/common/go-back-button';
 import { Button } from '@/components/ui/button';
-import { MoveLeft, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useCourses from '../_hooks/use-courses';
 
@@ -28,18 +28,14 @@ const DeleteCoursePage = () => {
 				Are you sure you want to delete this course with all it&apos;s
 				tasks and notes?
 			</p>
-			<div className='mt-4 flex flex-col items-center gap-2 sm:flex-row'>
-				<GoBackButton
-					variant='secondary'
-					className='w-full flex-1 gap-1 shadow-none'>
-					<MoveLeft />
-					Cancel
-				</GoBackButton>
+
+			<div className='grid gap-x-4 gap-y-2 pt-4 sm:grid-cols-2'>
+				<GoBackButton variant='secondary'>Cancel</GoBackButton>
 				<Button
 					onClick={handleDelete}
 					variant='destructive'
-					className='w-full flex-1'>
-					<Trash2 />
+					className='w-full'>
+					<Trash2 className='h-4 w-4' />
 					Delete Permanently
 				</Button>
 			</div>
