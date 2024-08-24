@@ -44,7 +44,7 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 
 	return (
 		<div
-			className='cursor-pointer rounded-xl bg-neutral-50 p-4 text-white'
+			className='cursor-pointer rounded-xl bg-neutral-50 p-4 text-white transition hover:opacity-90'
 			style={{ background: color }}
 			onClick={handleClick}>
 			<p className='line-clamp-1 rounded-xl text-xl font-medium'>
