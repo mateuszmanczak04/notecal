@@ -89,7 +89,10 @@ const DatePicker: FC<DatePickerProps> = ({
 
 	return (
 		<div
-			className={cn('relative h-9 text-sm sm:text-base', className)}
+			className={cn(
+				'relative h-9 text-sm font-medium sm:text-base',
+				className,
+			)}
 			ref={menuRef}>
 			<Tag
 				text={date ? format(date, 'yyyy-MM-dd - HH:mm') : 'No due date'}
