@@ -12,11 +12,16 @@ interface TitleProps {
 
 const Title: FC<TitleProps> = ({ id, title, completed }) => {
 	const titleRef = useRef<HTMLParagraphElement | null>(null);
-	const { update: updateTask } = useTasks();
+	const { update: updateTask, remove: removeTask } = useTasks();
 
 	const handleSubmit = () => {
 		if (!titleRef.current) return;
 		const newTitle = titleRef.current.innerText;
+
+		// Mechanic of this is that we remove the task when title is empty
+		if (newTitle.length === 0) {
+			removeTask(id);
+		}
 
 		// Don't want to update the same value:
 		if (newTitle.trim() === title) return;
