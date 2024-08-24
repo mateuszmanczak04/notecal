@@ -120,7 +120,7 @@ export const DropdownMenuTrigger = ({
 				className,
 			)}>
 			{children}
-			{showChevron && <ChevronDown className='h-5 w-5 shrink-0' />}
+			{showChevron && <ChevronDown className='h-4 w-4 shrink-0' />}
 		</Tag>
 	);
 };

@@ -6,7 +6,7 @@ const Logout = ({ variant }: { variant: ButtonProps['variant'] }) => {
 	return (
 		<form action={logout}>
 			<Button type='submit' variant={variant} className='w-full'>
-				<LogOut className='h-5 w-5' />
+				<LogOut className='h-4 w-4' />
 				Logout
 			</Button>
 		</form>

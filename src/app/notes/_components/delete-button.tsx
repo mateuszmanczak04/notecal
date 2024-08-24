@@ -42,7 +42,7 @@ const DeleteButton = () => {
 
 	return (
 		<Button variant='destructive' onClick={() => setIsDeleting(true)}>
-			<Trash2 />
+			<Trash2 className='h-4 w-4' />
 			Delete this note
 		</Button>
 	);

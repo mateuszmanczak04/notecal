@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input';
 import ResetPasswordSchema from '@/schemas/reset-password-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { ArrowLeft, Pencil } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -100,7 +100,6 @@ const ResetPasswordPage = () => {
 						)}
 					/>
 					<Button type='submit' disabled={isPending}>
-						<Pencil />
 						Change password
 					</Button>
 					{data && (
@@ -108,7 +107,7 @@ const ResetPasswordPage = () => {
 							<SuccessMessage>{data.message}</SuccessMessage>
 							<Button asChild variant='secondary'>
 								<Link href='/auth/login'>
-									<ArrowLeft />
+									<ArrowLeft className='h-4 w-4' />
 									Go back to login page
 								</Link>
 							</Button>

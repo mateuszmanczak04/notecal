@@ -86,7 +86,7 @@ const Navigation = () => {
 							{session.data.user.email}
 						</p>
 					</div>
-					<Settings className='h-5 w-5 shrink-0' />
+					<Settings className='h-6 w-6 shrink-0' />
 				</Link>
 
 				{/* Main menu */}
@@ -103,7 +103,7 @@ const Navigation = () => {
 									'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
-							<Calendar className='h-5 w-5' /> Calendar
+							<Calendar className='h-4 w-4' /> Calendar
 						</Link>
 						<Link
 							href='/tasks'
@@ -113,7 +113,7 @@ const Navigation = () => {
 									'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
-							<Check className='h-5 w-5' /> Tasks
+							<Check className='h-4 w-4' /> Tasks
 						</Link>
 						<Link
 							href='/courses'
@@ -123,7 +123,7 @@ const Navigation = () => {
 									'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
-							<List className='h-5 w-5' /> Courses
+							<List className='h-4 w-4' /> Courses
 						</Link>
 						<div className='mt-8 flex flex-col gap-2'>
 							{/* TODO: remove this and move functionality below tasks items */}

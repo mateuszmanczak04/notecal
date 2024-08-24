@@ -17,7 +17,7 @@ const Tasks = () => {
 				tasks.map(task => <Task key={task.id} task={task} />)}
 			<Button asChild style={{ background: course?.color }}>
 				<Link href={`/tasks/create?courseId=${course.id}`}>
-					<Plus /> Create a new task
+					<Plus className='h-4 w-4' /> Create a new task
 				</Link>
 			</Button>
 		</div>

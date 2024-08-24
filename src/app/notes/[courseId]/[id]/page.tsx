@@ -21,12 +21,12 @@ const NotePage = () => {
 			<div className='flex h-full flex-1 flex-col'>
 				<div className='flex gap-2'>
 					<GoBackButton variant='secondary' className='w-fit'>
-						<ArrowLeft />
+						<ArrowLeft className='h-4 w-4' />
 						Go back
 					</GoBackButton>
 					<Button asChild variant='secondary'>
 						<Link href={`/courses/edit?id=${course.id}`}>
-							<Pencil />
+							<Pencil className='h-4 w-4' />
 							Edit
 						</Link>
 					</Button>
