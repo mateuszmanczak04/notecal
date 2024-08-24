@@ -2,37 +2,57 @@
 
 import useCourse from '@/app/courses/_hooks/use-course';
 import useCourses from '@/app/courses/_hooks/use-courses';
-import DropdownMenu from '@/components/common/dropdown-menu';
-import { ClassNameValue } from 'tailwind-merge';
+import {
+	DropdownMenu,
+	DropdownMenuItem,
+	DropdownMenuList,
+	DropdownMenuTrigger,
+} from '@/components/common/dropdown-menu';
 
 type Props = {
 	onSelect: (courseId: string | null) => void;
 	currentCourseId: string | null;
-	className?: ClassNameValue;
 };
 
-const Course = ({ onSelect, currentCourseId, className }: Props) => {
+const Course = ({ onSelect, currentCourseId }: Props) => {
 	const { courses } = useCourses();
 	const currentCourse = useCourse(currentCourseId);
 
-	const dropdownMenuOptions =
-		courses?.map(course => ({
-			value: course.id,
-			label: course.name,
-		})) || [];
-
-	const currentOption = currentCourse
-		? { value: currentCourse?.id, label: currentCourse.name }
-		: { value: null, label: 'No course' };
-
 	return (
-		<DropdownMenu
-			showNullOption
-			options={dropdownMenuOptions}
-			currentOption={currentOption}
-			onChange={value => onSelect(value as string | null)}
-			className={className}
-		/>
+		<DropdownMenu className={'w-52'}>
+			<DropdownMenuTrigger>
+				{currentCourse && (
+					<div
+						className='h-3 w-3 shrink-0 rounded-full'
+						style={{ backgroundColor: currentCourse.color }}></div>
+				)}
+				<p className='truncate'>{currentCourse?.name || 'None'}</p>
+			</DropdownMenuTrigger>
+			<DropdownMenuList>
+				{/* Null option */}
+				<DropdownMenuItem
+					onSelect={onSelect}
+					key={'none' + Math.random()}
+					value={null}>
+					None
+				</DropdownMenuItem>
+
+				{/* Options */}
+				{courses &&
+					courses.map(course => (
+						<DropdownMenuItem
+							onSelect={onSelect}
+							key={course.id}
+							value={course.id}
+							className='flex items-center justify-center gap-2'>
+							<div
+								className='h-3 w-3 shrink-0 rounded-full'
+								style={{ backgroundColor: course.color }}></div>
+							<p className='truncate'>{course.name}</p>
+						</DropdownMenuItem>
+					))}
+			</DropdownMenuList>
+		</DropdownMenu>
 	);
 };
 
