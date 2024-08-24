@@ -43,8 +43,7 @@ const Course = ({ onSelect, currentCourseId }: Props) => {
 						<DropdownMenuItem
 							onSelect={onSelect}
 							key={course.id}
-							value={course.id}
-							className='flex items-center justify-center gap-2'>
+							value={course.id}>
 							<div
 								className='h-3 w-3 shrink-0 rounded-full'
 								style={{ backgroundColor: course.color }}></div>

@@ -58,22 +58,13 @@ const Priority = ({ id, priority }: PriorityProps) => {
 				{getPriorityTitle(priority)}
 			</DropdownMenuTrigger>
 			<DropdownMenuList>
-				<DropdownMenuItem
-					onSelect={handleSelect}
-					value='A'
-					className='flex items-center justify-center gap-2'>
+				<DropdownMenuItem onSelect={handleSelect} value='A'>
 					{getPriorityTitle('A')}
 				</DropdownMenuItem>
-				<DropdownMenuItem
-					onSelect={handleSelect}
-					value='B'
-					className='flex items-center justify-center gap-2'>
+				<DropdownMenuItem onSelect={handleSelect} value='B'>
 					{getPriorityTitle('B')}
 				</DropdownMenuItem>
-				<DropdownMenuItem
-					onSelect={handleSelect}
-					value='C'
-					className='flex items-center justify-center gap-2'>
+				<DropdownMenuItem onSelect={handleSelect} value='C'>
 					{getPriorityTitle('C')}
 				</DropdownMenuItem>
 			</DropdownMenuList>
