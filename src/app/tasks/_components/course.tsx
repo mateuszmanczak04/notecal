@@ -8,7 +8,6 @@ import {
 	DropdownMenuList,
 	DropdownMenuTrigger,
 } from '@/components/common/dropdown-menu';
-import { ChevronDown } from 'lucide-react';
 
 type Props = {
 	onSelect: (courseId: string | null) => void;
@@ -21,14 +20,13 @@ const Course = ({ onSelect, currentCourseId }: Props) => {
 
 	return (
 		<DropdownMenu className='w-52'>
-			<DropdownMenuTrigger>
+			<DropdownMenuTrigger showChevron>
 				{currentCourse && (
 					<div
 						className='h-3 w-3 shrink-0 rounded-full'
 						style={{ backgroundColor: currentCourse.color }}></div>
 				)}
 				<p className='truncate'>{currentCourse?.name || 'None'}</p>
-				<ChevronDown className='h-4 w-4 shrink-0' />
 			</DropdownMenuTrigger>
 			<DropdownMenuList>
 				{/* Null option */}
