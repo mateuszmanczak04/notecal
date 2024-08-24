@@ -117,16 +117,6 @@ const Navigation = () => {
 							<List /> Courses
 						</Link>
 						<div className='mt-8 flex flex-col gap-2'>
-							{pathname === '/courses' && (
-								<Button
-									asChild
-									className='flex w-full items-center justify-center gap-1 font-semibold'
-									onClick={handleClose}>
-									<Link href='/courses/create'>
-										<Plus /> Create a new course
-									</Link>
-								</Button>
-							)}
 							{pathname === '/tasks' && (
 								<>
 									<Button

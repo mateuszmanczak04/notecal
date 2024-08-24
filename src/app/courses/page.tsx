@@ -3,6 +3,8 @@
 import useCourses from '@/app/courses/_hooks/use-courses';
 import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
+import { Plus } from 'lucide-react';
+import Link from 'next/link';
 import Course from './_components/course';
 
 const CoursesPage = () => {
@@ -31,6 +33,12 @@ const CoursesPage = () => {
 					teacher={course.teacher}
 				/>
 			))}
+
+			<Link
+				href='/courses/create'
+				className='grid cursor-pointer place-content-center gap-2 rounded-xl bg-neutral-100 p-4 transition hover:bg-neutral-200'>
+				<Plus className='h-10 w-10' />
+			</Link>
 		</div>
 	);
 };
