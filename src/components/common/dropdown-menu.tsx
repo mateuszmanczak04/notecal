@@ -1,125 +1,145 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { ChevronDown } from 'lucide-react';
-import { useRef, useState } from 'react';
+import React, { createContext, createRef, useContext, useState } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
 import { useOnClickOutside } from 'usehooks-ts';
 import Tag from './tag';
 
-export type DropdownMenuValueType = string | number | null;
+const DropdownMenuContext = createContext(
+	{} as {
+		isOpen: boolean;
+		setIsOpen: (isOpen: boolean) => void;
+		handleToggle: () => void;
+		menuRef: React.MutableRefObject<HTMLDivElement | null>;
+	},
+);
 
-type Props = {
-	currentOption: {
-		value: DropdownMenuValueType;
-		label: string;
-		className?: ClassNameValue;
-	};
-	options: {
-		value: DropdownMenuValueType;
-		label: string;
-		className?: ClassNameValue;
-	}[];
-	onChange: (value: DropdownMenuValueType) => void;
-	className?: ClassNameValue;
-	height?: number;
-	emptyChoiceLabel?: string;
-	showNullOption?: boolean;
-};
+const menuRef = createRef<HTMLDivElement>();
 
-const DropdownMenu = ({
-	currentOption,
-	options,
-	onChange,
-	className,
-	height = 9,
-	emptyChoiceLabel,
-	showNullOption,
-}: Props) => {
+const DropdownMenuContextProvider = ({
+	children,
+}: {
+	children: React.ReactNode;
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const menuRef = useRef<HTMLDivElement | null>(null);
 
-	const handleCloseMenu = () => {
-		setIsOpen(false);
-	};
-
-	const handleOpenMenu = () => {
-		setIsOpen(true);
-	};
-
-	const handleToggleMenu = () => {
+	const handleToggle = () => {
 		if (isOpen) {
-			handleCloseMenu();
+			setIsOpen(false);
 		} else {
-			handleOpenMenu();
+			setIsOpen(true);
 		}
 	};
 
-	const handleSelect = (value: DropdownMenuValueType) => {
-		onChange(value);
-		handleCloseMenu();
+	return (
+		<DropdownMenuContext.Provider
+			value={{
+				isOpen,
+				setIsOpen,
+				handleToggle,
+				menuRef,
+			}}>
+			{children}
+		</DropdownMenuContext.Provider>
+	);
+};
+
+const useDropdownMenuContext = () => {
+	const context = useContext(DropdownMenuContext);
+	return context;
+};
+
+export const DropdownMenuItem = ({
+	value,
+	className,
+	children,
+	onSelect,
+}: {
+	value: any;
+	className?: ClassNameValue;
+	children: React.ReactNode;
+	onSelect: (value: any) => void;
+}) => {
+	const { setIsOpen } = useDropdownMenuContext();
+	const handleSelect = () => {
+		setIsOpen(false);
+		onSelect(value);
 	};
 
+	return (
+		<button
+			className={cn(
+				'h-9 cursor-pointer select-none truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500 sm:max-w-none',
+				className,
+			)}
+			onClick={handleSelect}>
+			{children}
+		</button>
+	);
+};
+
+export const DropdownMenuList = ({
+	children,
+	className,
+}: {
+	children: React.ReactNode;
+	className?: ClassNameValue;
+}) => {
+	const { isOpen, setIsOpen } = useDropdownMenuContext();
+
 	useOnClickOutside(menuRef, () => {
-		handleCloseMenu();
+		setIsOpen(false);
 	});
 
+	if (!isOpen) return null;
 	return (
 		<div
 			className={cn(
-				'relative text-sm sm:text-base',
+				'absolute left-0 top-9 z-20 flex w-full flex-col justify-center overflow-hidden rounded-b-xl border-b border-l border-r bg-white shadow-xl dark:border-neutral-500 dark:bg-neutral-600',
 				className,
-				`h-${height}`,
-			)}
-			ref={menuRef}>
-			<Tag
-				onClick={handleToggleMenu}
-				className={cn(
-					'h-full max-w-none rounded-none border border-l border-r border-t border-transparent font-medium',
-					isOpen
-						? 'rounded-t-xl dark:border-neutral-500'
-						: 'rounded-xl',
-					currentOption.className,
-				)}>
-				<p className='truncate'>{currentOption.label || 'None'}</p>
-				<ChevronDown className='h-5 w-5' />
-			</Tag>
-			{isOpen && (
-				<div
-					className={cn(
-						'absolute left-0 z-20 flex w-full flex-col justify-center overflow-hidden rounded-b-xl border-b border-l border-r bg-white shadow-xl dark:border-neutral-500 dark:bg-neutral-600',
-						`top-${height}`,
-					)}>
-					{showNullOption && (
-						<button
-							className={cn(
-								'w-full cursor-pointer select-none text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500',
-								`h-${height}`,
-							)}
-							onClick={() => {
-								handleSelect(null);
-							}}>
-							{emptyChoiceLabel || 'None'}
-						</button>
-					)}
-					{options?.map(option => (
-						<button
-							className={cn(
-								'cursor-pointer select-none truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500 sm:max-w-none',
-								`h-${height}`,
-								option.className,
-							)}
-							key={option.value}
-							onClick={() => {
-								handleSelect(option.value);
-							}}>
-							{option.label}
-						</button>
-					))}
-				</div>
-			)}
+			)}>
+			{children}
 		</div>
 	);
 };
 
-export default DropdownMenu;
+export const DropdownMenuTrigger = ({
+	children,
+	className,
+}: {
+	children: React.ReactNode;
+	className?: ClassNameValue;
+}) => {
+	const { isOpen, handleToggle } = useDropdownMenuContext();
+
+	return (
+		<Tag
+			onClick={handleToggle}
+			className={cn(
+				'h-full max-w-none rounded-none border border-l border-r border-t border-transparent font-medium',
+				isOpen ? 'rounded-t-xl dark:border-neutral-500' : 'rounded-xl',
+				className,
+			)}>
+			{children}
+		</Tag>
+	);
+};
+
+export const DropdownMenu = ({
+	className,
+	children,
+}: {
+	children: React.ReactNode;
+	className?: ClassNameValue;
+}) => {
+	return (
+		<DropdownMenuContextProvider>
+			<div
+				className={cn('relative h-9 text-sm sm:text-base', className)}
+				ref={menuRef}>
+				{children}
+			</div>
+		</DropdownMenuContextProvider>
+	);
+};
