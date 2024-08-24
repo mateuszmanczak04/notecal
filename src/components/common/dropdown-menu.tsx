@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { createContext, createRef, useContext, useState } from 'react';
+import React, { createContext, useContext, useRef, useState } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
 import { useOnClickOutside } from 'usehooks-ts';
 import Tag from './tag';
@@ -15,14 +15,13 @@ const DropdownMenuContext = createContext(
 	},
 );
 
-const menuRef = createRef<HTMLDivElement>();
-
 const DropdownMenuContextProvider = ({
 	children,
 }: {
 	children: React.ReactNode;
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
+	const menuRef = useRef<HTMLDivElement | null>(null);
 
 	const handleToggle = () => {
 		if (isOpen) {
@@ -86,11 +85,7 @@ export const DropdownMenuList = ({
 	children: React.ReactNode;
 	className?: ClassNameValue;
 }) => {
-	const { isOpen, setIsOpen } = useDropdownMenuContext();
-
-	useOnClickOutside(menuRef, () => {
-		setIsOpen(false);
-	});
+	const { isOpen } = useDropdownMenuContext();
 
 	if (!isOpen) return null;
 	return (
@@ -126,6 +121,28 @@ export const DropdownMenuTrigger = ({
 	);
 };
 
+const DropdownMenuWrapper = ({
+	children,
+	className,
+}: {
+	children: React.ReactNode;
+	className?: ClassNameValue;
+}) => {
+	const { setIsOpen, menuRef } = useDropdownMenuContext();
+
+	useOnClickOutside(menuRef, () => {
+		setIsOpen(false);
+	});
+
+	return (
+		<div
+			className={cn('relative h-9 text-sm sm:text-base', className)}
+			ref={menuRef}>
+			{children}
+		</div>
+	);
+};
+
 export const DropdownMenu = ({
 	className,
 	children,
@@ -135,11 +152,9 @@ export const DropdownMenu = ({
 }) => {
 	return (
 		<DropdownMenuContextProvider>
-			<div
-				className={cn('relative h-9 text-sm sm:text-base', className)}
-				ref={menuRef}>
+			<DropdownMenuWrapper className={className}>
 				{children}
-			</div>
+			</DropdownMenuWrapper>
 		</DropdownMenuContextProvider>
 	);
 };
