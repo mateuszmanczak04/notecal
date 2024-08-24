@@ -1,63 +1,51 @@
 'use client';
 
-import DropdownMenu from '@/components/common/dropdown-menu';
+import {
+	DropdownMenu,
+	DropdownMenuItem,
+	DropdownMenuList,
+	DropdownMenuTrigger,
+} from '@/components/common/dropdown-menu';
 import { TaskPriority } from '@prisma/client';
-import { FC } from 'react';
 import useTasks from '../_hooks/use-tasks';
 
-interface PriorityProps {
+type PriorityProps = {
 	id: string;
 	priority: TaskPriority | null;
-}
-
-const getPriorityName = (priority: TaskPriority | null) => {
-	if (priority === 'A') return 'High';
-	if (priority === 'B') return 'Medium';
-	if (priority === 'C') return 'Low';
-	return 'No priority';
 };
 
-const getPriorityClassName = (priority: TaskPriority | null) => {
-	if (priority === 'A')
-		return 'bg-red-500 text-black hover:bg-red-400 dark:bg-red-500 dark:text-black dark:hover:bg-red-400 dark:border-transparent';
-	if (priority === 'B')
-		return 'bg-yellow-400 text-black hover:bg-yellow-300 dark:bg-yellow-400 dark:text-black dark:hover:bg-yellow-300 dark:border-transparent';
-	if (priority === 'C')
-		return 'bg-green-500 text-black hover:bg-green-400 dark:bg-green-500 dark:text-black dark:hover:bg-green-400 dark:border-transparent';
-	return '';
+const getPriorityTitle = (priority: 'A' | 'B' | 'C' | null) => {
+	switch (priority) {
+		case 'A':
+			return (
+				<>
+					<div className='h-3 w-3 shrink-0 rounded-full bg-red-500'></div>
+					High
+				</>
+			);
+		case 'B':
+			return (
+				<>
+					<div className='h-3 w-3 shrink-0 rounded-full bg-yellow-500'></div>
+					Medium
+				</>
+			);
+		case 'C':
+			return (
+				<>
+					<div className='h-3 w-3 shrink-0 rounded-full bg-green-500'></div>
+					Low
+				</>
+			);
+		default:
+			return 'None';
+	}
 };
 
-const Priority: FC<PriorityProps> = ({ id, priority }) => {
+const Priority = ({ id, priority }: PriorityProps) => {
 	const { update: updateTask } = useTasks();
 
-	const options = [
-		{
-			value: 'C',
-			label: getPriorityName('C'),
-			className: getPriorityClassName('C'),
-		},
-		{
-			value: 'B',
-			label: getPriorityName('B'),
-			className: getPriorityClassName('B'),
-		},
-		{
-			value: 'A',
-			label: getPriorityName('A'),
-			className: getPriorityClassName('A'),
-		},
-	];
-
-	const currentOption = {
-		value: priority,
-		label: getPriorityName(priority),
-		className: getPriorityClassName(priority),
-	} || {
-		value: null,
-		label: getPriorityName(null),
-	};
-
-	const handleChange = (priority: any) => {
+	const handleSelect = (priority: any) => {
 		updateTask({
 			id,
 			priority,
@@ -65,14 +53,31 @@ const Priority: FC<PriorityProps> = ({ id, priority }) => {
 	};
 
 	return (
-		<DropdownMenu
-			showNullOption
-			height={9}
-			className='w-52'
-			currentOption={currentOption}
-			options={options}
-			onChange={handleChange}
-		/>
+		<DropdownMenu className='w-52'>
+			<DropdownMenuTrigger>
+				{getPriorityTitle(priority)}
+			</DropdownMenuTrigger>
+			<DropdownMenuList>
+				<DropdownMenuItem
+					onSelect={handleSelect}
+					value='A'
+					className='flex items-center justify-center gap-2'>
+					{getPriorityTitle('A')}
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onSelect={handleSelect}
+					value='B'
+					className='flex items-center justify-center gap-2'>
+					{getPriorityTitle('B')}
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onSelect={handleSelect}
+					value='C'
+					className='flex items-center justify-center gap-2'>
+					{getPriorityTitle('C')}
+				</DropdownMenuItem>
+			</DropdownMenuList>
+		</DropdownMenu>
 	);
 };
 
