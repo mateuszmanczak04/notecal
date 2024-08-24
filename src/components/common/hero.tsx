@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { UserPlus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -25,11 +24,8 @@ const Hero = () => {
 				course lesson or date? NoteCal has been made to decrease your
 				fatigue.
 			</p>
-			<Button className='mt-8 w-full sm:w-fit' asChild>
-				<Link href='/auth/register'>
-					<UserPlus />
-					Click Here to Join
-				</Link>
+			<Button className='mt-8 w-full sm:w-fit' asChild size='lg'>
+				<Link href='/auth/register'>Click Here to Join</Link>
 			</Button>
 		</div>
 	);
