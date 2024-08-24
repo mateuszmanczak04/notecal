@@ -70,7 +70,7 @@ export const DropdownMenuItem = ({
 	return (
 		<button
 			className={cn(
-				'h-9 cursor-pointer select-none truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500 sm:max-w-none',
+				'flex h-9 cursor-pointer select-none items-center justify-center gap-2 truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500 sm:max-w-none',
 				className,
 			)}
 			onClick={handleSelect}>
