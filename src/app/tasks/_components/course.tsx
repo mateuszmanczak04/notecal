@@ -19,7 +19,7 @@ const Course = ({ onSelect, currentCourseId }: Props) => {
 	const currentCourse = useCourse(currentCourseId);
 
 	return (
-		<DropdownMenu className={'w-52'}>
+		<DropdownMenu className='w-52'>
 			<DropdownMenuTrigger>
 				{currentCourse && (
 					<div
