@@ -119,7 +119,7 @@ export const DropdownMenuTrigger = ({
 				isOpen ? 'rounded-t-xl dark:border-neutral-500' : 'rounded-xl',
 				className,
 			)}>
-			{children}{' '}
+			{children}
 			{showChevron && <ChevronDown className='h-5 w-5 shrink-0' />}
 		</Tag>
 	);
