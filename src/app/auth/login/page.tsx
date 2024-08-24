@@ -87,7 +87,7 @@ const LoginPage = () => {
 					Forgot password?
 				</Link>
 				<Button type='submit' className='mt-8 w-full'>
-					<LogIn />
+					<LogIn className='h-4 w-4' />
 					Login
 				</Button>
 				<Link
