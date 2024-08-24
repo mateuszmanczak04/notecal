@@ -31,7 +31,10 @@ const NewNoteButton = () => {
 	};
 
 	return (
-		<Button style={{ background: course?.color }} onClick={onClick}>
+		<Button
+			style={{ background: course?.color }}
+			onClick={onClick}
+			className='w-full rounded-t-none'>
 			<Plus /> Create a new note
 		</Button>
 	);
