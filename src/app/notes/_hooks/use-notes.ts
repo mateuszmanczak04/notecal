@@ -45,7 +45,7 @@ const useNotes = () => {
 	});
 
 	// Inserting
-	const { mutate: add } = useMutation({
+	const { mutate: add, isPending: isNoteBeingCreated } = useMutation({
 		mutationFn: async (values: CreateNoteSchema) => {
 			const { newNote, error } = await createNote(values);
 			if (error) throw new Error(error);
@@ -140,7 +140,15 @@ const useNotes = () => {
 		},
 	});
 
-	return { notes: data, isPending, error, add, update, remove };
+	return {
+		notes: data,
+		isPending,
+		error,
+		add,
+		update,
+		remove,
+		isNoteBeingCreated,
+	};
 };
 
 export default useNotes;
