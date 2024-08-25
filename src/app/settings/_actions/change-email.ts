@@ -1,12 +1,12 @@
 'use server';
 
-import sendConfirmationEmail from '@/app/auth/_actions/send-confirmation-email';
 import { auth } from '@/auth';
 import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import ChangeEmailSchema from '@/schemas/change-email-schema';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
+import sendEmailChangeEmail from './send-change-email-email';
 
 const changeEmail = async (values: z.infer<typeof ChangeEmailSchema>) => {
 	const validatedFields = ChangeEmailSchema.safeParse(values);
@@ -62,7 +62,7 @@ const changeEmail = async (values: z.infer<typeof ChangeEmailSchema>) => {
 			data: { email, emailVerified: null },
 		});
 
-		await sendConfirmationEmail({ email });
+		await sendEmailChangeEmail({ email });
 
 		return { message: en.auth.EMAIL_UPDATED };
 	} catch (error) {

@@ -1,6 +1,6 @@
 'use server';
 
-import db from '@/lib/db';
+import { generateVerificationToken } from '@/app/auth/_actions/send-confirmation-email';
 import { en } from '@/lib/dictionary';
 import nodemailer from 'nodemailer';
 import { z } from 'zod';
@@ -14,41 +14,7 @@ const Schema = z.object({
 		.email(),
 });
 
-export const getVerificationTokenByEmail = async (email: string) => {
-	const verificationToken = await db.verificationToken.findFirst({
-		where: {
-			email,
-		},
-	});
-	return verificationToken;
-};
-
-export const generateVerificationToken = async (email: string) => {
-	const token = crypto.randomUUID();
-	const expires = new Date(new Date().getTime() + 3600 * 1000); // 1h
-
-	const existingToken = await getVerificationTokenByEmail(email);
-
-	if (existingToken) {
-		await db.verificationToken.delete({
-			where: {
-				id: existingToken.id,
-			},
-		});
-	}
-
-	const verificationToken = await db.verificationToken.create({
-		data: {
-			email,
-			token,
-			expires,
-		},
-	});
-
-	return verificationToken;
-};
-
-const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
+const sendEmailChangeEmail = async (values: z.infer<typeof Schema>) => {
 	const validatedFields = Schema.safeParse(values);
 
 	if (!validatedFields.success) {
@@ -68,7 +34,7 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
 
 		const email = validatedFields.data.email;
 		const token = await generateVerificationToken(email);
-		const url = `${process.env.APP_DOMAIN}/auth/confirm-email?token=${token.token}&newAccount=true`;
+		const url = `${process.env.APP_DOMAIN}/auth/confirm-email?token=${token.token}`;
 
 		const html = `
      <div
@@ -79,9 +45,9 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
           text-align: center;
           max-width: 400px;
         ">
-        <h1 style="font-size: 32px; margin: 0">Confirm account creation</h1>
+        <h1 style="font-size: 32px; margin: 0">Confirm your new email address</h1>
         <p style="font-size: 16px; margin: 0; margin-top: 8px">
-          Click the button bellow to confirm Your new account
+          Click the button bellow to confirm changes in your account
         </p>
         <a
           href="${url}"
@@ -98,7 +64,7 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
             border-radius: 6px;
             font-family: inherit;
           ">
-          Click
+          Confirm new email
         </a>
       </div>
     `;
@@ -116,4 +82,4 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
 	}
 };
 
-export default sendConfirmationEmail;
+export default sendEmailChangeEmail;

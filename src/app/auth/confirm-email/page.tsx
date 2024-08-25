@@ -17,6 +17,7 @@ const ConfirmEmailPage = () => {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const token = searchParams.get('token');
+	const newAccount = searchParams.get('newAccount') === 'true';
 
 	const handleClick = () => {
 		setError('');
@@ -48,7 +49,9 @@ const ConfirmEmailPage = () => {
 		<div className='mx-auto max-w-[480px] px-8'>
 			<h1 className='text-3xl font-bold'>Confirm Your email address</h1>
 			<p className='mt-2 text-xl'>
-				It is the last step to create your Notecal account
+				{newAccount
+					? 'It is the last step to create your Notecal account'
+					: 'It is the last step to update your account email'}
 			</p>
 			<Button className='mt-4' onClick={handleClick}>
 				<Mail />
