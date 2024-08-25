@@ -156,7 +156,6 @@ const useTasks = () => {
 				});
 			});
 			if (settings) {
-				console.log(settings.orderTasks);
 				await sort(settings.orderTasks);
 			}
 

@@ -138,7 +138,6 @@ export const ToastContextProvider = ({
 	>();
 
 	const hideToast = () => {
-		console.log('hide');
 		setIsOpen(false);
 	};
 
@@ -169,8 +168,6 @@ export const ToastContextProvider = ({
 			hideToast();
 		}, 3000);
 	};
-
-	console.log({ title, body, secondaryButtonContent, onSecondaryClick });
 
 	return (
 		<ToastContext.Provider value={{ openToast, hideToast }}>
