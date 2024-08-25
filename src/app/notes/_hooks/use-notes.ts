@@ -57,8 +57,6 @@ const useNotes = () => {
 
 			const newTempNote = createTempNote(values);
 
-			console.table(newTempNote);
-
 			await queryClient.setQueryData(['notes'], (oldNotes: Note[]) =>
 				[...oldNotes, newTempNote].toSorted((a, b) =>
 					a.startTime > b.startTime ? 1 : -1,
