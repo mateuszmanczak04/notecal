@@ -1,3 +1,4 @@
+import useSettings from '@/app/settings/_hooks/use-settings';
 import getTasks from '@/app/tasks/_actions/get-tasks';
 import queryClient from '@/lib/query-client';
 import { Task, TaskPriority } from '@prisma/client';
@@ -48,6 +49,60 @@ const useTasks = () => {
 			return tasks;
 		},
 	});
+	const { settings } = useSettings();
+
+	// Sort
+	const sort = async (criteria: string) => {
+		await queryClient.setQueryData(['tasks'], (tasks: Task[]) => {
+			switch (criteria) {
+				case 'createdAt':
+					return tasks.toSorted((a, b) =>
+						a.createdAt < b.createdAt ? 1 : -1,
+					);
+				case 'completed':
+					return tasks.toSorted((a, b) => {
+						if (a.completed && !b.completed) return 1;
+						return -1;
+					});
+				case 'dueDate':
+					return tasks.toSorted((a, b) => {
+						if (a.dueDate && b.dueDate) {
+							if (a.dueDate > b.dueDate) {
+								return 1;
+							} else {
+								return -1;
+							}
+						} else if (a.dueDate && !b.dueDate) {
+							return -1;
+						} else if (!a.dueDate && b.dueDate) {
+							return 1;
+						}
+						return -1;
+					});
+				case 'priority':
+					return tasks.toSorted((a, b) => {
+						if (a.priority && b.priority) {
+							if (a.priority > b.priority) {
+								return 1;
+							} else {
+								return -1;
+							}
+						} else if (a.priority && !b.priority) {
+							return -1;
+						} else if (!a.priority && b.priority) {
+							return 1;
+						}
+						return -1;
+					});
+				case 'title':
+					return tasks.toSorted((a, b) =>
+						a.title > b.title ? 1 : -1,
+					);
+				default:
+					return tasks;
+			}
+		});
+	};
 
 	// Inserting
 	const { mutate: add } = useMutation({
@@ -62,14 +117,13 @@ const useTasks = () => {
 
 			const newTempTask = createTempTask(values);
 
-			await queryClient.setQueryData(
-				['tasks'],
-				(oldTasks: Task[]) =>
-					[...oldTasks, newTempTask].toSorted((a, b) =>
-						a.createdAt < b.createdAt ? 1 : -1,
-					),
-				// TODO: sort by user settings
-			);
+			await queryClient.setQueryData(['tasks'], (oldTasks: Task[]) => [
+				...oldTasks,
+				newTempTask,
+			]);
+			if (settings) {
+				await sort(settings.orderTasks);
+			}
 
 			return previousTasks;
 		},
@@ -94,16 +148,17 @@ const useTasks = () => {
 			const previousTasks = queryClient.getQueryData(['tasks']);
 
 			await queryClient.setQueryData(['tasks'], (oldTasks: Task[]) => {
-				return oldTasks
-					.map(task => {
-						if (task.id === values.id) {
-							return { ...task, ...values };
-						}
-						return task;
-					})
-					.toSorted((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-				// TODO: sort by user settings
+				return oldTasks.map(task => {
+					if (task.id === values.id) {
+						return { ...task, ...values };
+					}
+					return task;
+				});
 			});
+			if (settings) {
+				console.log(settings.orderTasks);
+				await sort(settings.orderTasks);
+			}
 
 			return previousTasks;
 		},
@@ -147,7 +202,7 @@ const useTasks = () => {
 		},
 	});
 
-	return { tasks: data, isPending, error, add, update, remove };
+	return { tasks: data, isPending, error, add, update, remove, sort };
 };
 
 export default useTasks;

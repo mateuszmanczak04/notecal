@@ -5,11 +5,13 @@ import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
+import useTasks from '../_hooks/use-tasks';
 
 const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
 	const { update: updateSettings } = useSettings();
+	const { sort } = useTasks();
 
 	const handleCloseMenu = () => {
 		setIsOpen(false);
@@ -40,9 +42,9 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 				value === 'priority' ||
 				value === 'completed')
 		) {
+			sort(value);
 			updateSettings({ orderTasks: value });
 			closeNavigation();
-			// TODO: sort tasks
 		}
 	};
 
