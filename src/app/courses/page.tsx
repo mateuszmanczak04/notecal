@@ -36,7 +36,7 @@ const CoursesPage = () => {
 
 			<Link
 				href='/courses/create'
-				className='grid cursor-pointer place-content-center gap-2 rounded-xl bg-neutral-100 p-4 transition hover:bg-neutral-200'>
+				className='grid cursor-pointer place-content-center gap-2 rounded-xl bg-neutral-100 p-4 transition hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-600'>
 				<Plus className='h-10 w-10' />
 			</Link>
 		</div>
