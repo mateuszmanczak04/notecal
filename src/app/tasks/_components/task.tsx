@@ -21,15 +21,18 @@ const Task = ({
 	const course = useCourse(courseId);
 
 	const handleToggleTask = (newValue: boolean) => {
+		if (newValue === completed) return;
+
 		updateTask({ id, completed: newValue });
 	};
 
-	const handleChangeDueDate = (dueDate: Date | null) => {
+	const handleChangeDueDate = (newDueDate: Date | null) => {
+		if (newDueDate === dueDate) return;
+
 		updateTask({ id, dueDate });
 	};
 
 	const handleChangeCourse = (newCourseId: string | null) => {
-		// We don't want to update the identical value
 		if (course && newCourseId === course.id) return;
 
 		updateTask({ id, courseId: newCourseId });
