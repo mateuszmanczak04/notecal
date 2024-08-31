@@ -8,7 +8,7 @@ import { useIntersectionObserver } from 'usehooks-ts';
 import useTasks from '../_hooks/use-tasks';
 
 const CreateTask = () => {
-	const { add } = useTasks();
+	const { add, tasks } = useTasks();
 	const [title, setTitle] = useState('');
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -43,10 +43,14 @@ const CreateTask = () => {
 
 		window.addEventListener('keydown', listener);
 
+		if (tasks?.length === 0) {
+			handleFocusInput();
+		}
+
 		return () => {
 			window.removeEventListener('keydown', listener);
 		};
-	}, []);
+	}, [tasks?.length]);
 
 	return (
 		<form
