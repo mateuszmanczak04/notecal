@@ -3,6 +3,7 @@
 import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import useCourses from '../courses/_hooks/use-courses';
+import CreateTask from './_components/create-task';
 import Task from './_components/task';
 import useTasks from './_hooks/use-tasks';
 
@@ -34,6 +35,8 @@ const TasksPage = () => {
 					You don&apos;t have any tasks yet.
 				</p>
 			)}
+
+			<CreateTask />
 
 			{/* At least 1 task */}
 			{tasks &&

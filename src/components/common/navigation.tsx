@@ -2,16 +2,7 @@
 
 import SortTasks from '@/app/tasks/_components/sort-tasks';
 import { cn } from '@/lib/utils';
-import {
-	Calendar,
-	Check,
-	List,
-	Menu,
-	Plus,
-	Settings,
-	User,
-	X,
-} from 'lucide-react';
+import { Calendar, Check, List, Menu, Settings, User, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -129,15 +120,6 @@ const Navigation = () => {
 							{/* TODO: remove this and move functionality below tasks items */}
 							{pathname === '/tasks' && (
 								<>
-									<Button
-										asChild
-										className='flex w-full items-center justify-center gap-1 font-semibold'
-										onClick={handleClose}>
-										<Link href='/tasks/create'>
-											<Plus />
-											Create a new task
-										</Link>
-									</Button>
 									<SortTasks closeNavigation={handleClose} />
 								</>
 							)}
