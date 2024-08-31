@@ -14,3 +14,6 @@ export const COLORS = [
 	{ description: 'Pink', hex: '#db2777' },
 	{ description: 'Purple', hex: '#9333ea' },
 ];
+
+export const cmdOrCtrl = () =>
+	window.navigator.platform.match(/^Mac/) ? 'cmd' : 'ctrl';
