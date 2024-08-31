@@ -3,6 +3,7 @@
 import { auth } from '@/auth';
 import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
+import { getSortedTasks } from '@/lib/utils';
 
 const getTasks = async () => {
 	try {
@@ -26,35 +27,16 @@ const getTasks = async () => {
 			});
 		}
 
-		const orderByObject: { [key: string]: string } = {};
-
-		switch (userSettings?.orderTasks || 'createdAt') {
-			case 'title':
-				orderByObject.title = 'asc';
-				break;
-			case 'createdAt':
-				orderByObject.createdAt = 'desc';
-				break;
-			case 'dueDate':
-				orderByObject.dueDate = 'asc';
-				break;
-			case 'priority':
-				orderByObject.priority = 'asc';
-				break;
-			case 'completed':
-				orderByObject.completed = 'desc';
-				break;
-			default:
-				orderByObject.createdAt = 'desc';
-				break;
-		}
-
 		const tasks = await db.task.findMany({
 			where: { userId: session.user.id },
-			orderBy: orderByObject,
 		});
 
-		return { tasks };
+		return {
+			tasks: getSortedTasks(
+				tasks,
+				userSettings?.orderTasks || 'createdAt',
+			),
+		};
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
