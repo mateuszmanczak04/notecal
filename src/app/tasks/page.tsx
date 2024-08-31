@@ -29,14 +29,14 @@ const TasksPage = () => {
 		<div className='mx-auto max-w-[800px] space-y-8'>
 			{error && <ErrorMessage>{error.message}</ErrorMessage>}
 
+			<CreateTask />
+
 			{/* No tasks */}
 			{(!tasks || tasks.length === 0) && (
-				<p className='text-lg text-neutral-500'>
+				<p className='text-center text-lg text-neutral-500 sm:ml-8'>
 					You don&apos;t have any tasks yet.
 				</p>
 			)}
-
-			<CreateTask />
 
 			{/* At least 1 task */}
 			{tasks &&
