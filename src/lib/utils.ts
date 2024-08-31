@@ -27,11 +27,14 @@ export const getSortedTasks = (tasks: Task[], criteria: OrderTasksEnum) => {
 			);
 		case 'completed':
 			return tasks.toSorted((a, b) => {
+				if (a.completed && b.completed) return 0;
+				if (!a.completed && !b.completed) return 0;
 				if (a.completed && !b.completed) return -1;
 				return 1;
 			});
 		case 'dueDate':
 			return tasks.toSorted((a, b) => {
+				if (!a.dueDate && !b.dueDate) return 0;
 				if (a.dueDate && b.dueDate) {
 					if (a.dueDate > b.dueDate) {
 						return 1;
@@ -48,6 +51,7 @@ export const getSortedTasks = (tasks: Task[], criteria: OrderTasksEnum) => {
 			});
 		case 'priority':
 			return tasks.toSorted((a, b) => {
+				if (a.priority === b.priority) return 0;
 				if (a.priority && b.priority) {
 					if (a.priority > b.priority) {
 						return 1;
@@ -63,11 +67,12 @@ export const getSortedTasks = (tasks: Task[], criteria: OrderTasksEnum) => {
 				return -1;
 			});
 		case 'title':
-			return tasks.toSorted((a, b) =>
-				a.title.toLocaleLowerCase() > b.title.toLocaleLowerCase()
+			return tasks.toSorted((a, b) => {
+				if (a.title === b.title) return 0;
+				return a.title.toLocaleLowerCase() > b.title.toLocaleLowerCase()
 					? 1
-					: -1,
-			);
+					: -1;
+			});
 		default:
 			return tasks;
 	}
