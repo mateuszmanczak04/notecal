@@ -28,7 +28,7 @@ type Props = {
 	change: (params: ChangeParams) => void;
 };
 
-const TasksHistoryContext = createContext({} as Props);
+export const TasksHistoryContext = createContext({} as Props);
 
 const TasksHistoryContextProvider = ({
 	children,
