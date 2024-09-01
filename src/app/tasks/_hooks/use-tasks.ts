@@ -78,9 +78,9 @@ const useTasks = () => {
 			// Rollback previous state
 			queryClient.setQueryData(['tasks'], context);
 		},
-		// onSettled: async () => {
-		// 	return await queryClient.invalidateQueries({ queryKey: ['tasks'] });
-		// },
+		onSettled: async () => {
+			return await queryClient.invalidateQueries({ queryKey: ['tasks'] });
+		},
 	});
 
 	// Updating
@@ -112,9 +112,9 @@ const useTasks = () => {
 			// Rollback previous state
 			queryClient.setQueryData(['tasks'], context);
 		},
-		// onSettled: async () => {
-		// 	return await queryClient.invalidateQueries({ queryKey: ['tasks'] });
-		// },
+		onSettled: async () => {
+			return await queryClient.invalidateQueries({ queryKey: ['tasks'] });
+		},
 	});
 
 	// Deleting
