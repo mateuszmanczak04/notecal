@@ -1,6 +1,7 @@
 'use client';
 
 import { CalendarContextProvider } from '@/app/calendar/_context/calendar-context';
+import TasksHistoryContextProvider from '@/app/tasks/_context/tasks-history-context';
 import queryClient from '@/lib/query-client';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -28,12 +29,14 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
 		<SessionProvider>
 			<QueryClientProvider client={queryClient}>
 				<CalendarContextProvider>
-					<ReactQueryDevtools />
-					{children}
-					<ReactQueryDevtools
-						initialIsOpen={false}
-						position='bottom'
-					/>
+					<TasksHistoryContextProvider>
+						<ReactQueryDevtools />
+						{children}
+						<ReactQueryDevtools
+							initialIsOpen={false}
+							position='bottom'
+						/>
+					</TasksHistoryContextProvider>
 				</CalendarContextProvider>
 			</QueryClientProvider>
 		</SessionProvider>
