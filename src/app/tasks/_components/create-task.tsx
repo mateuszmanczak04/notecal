@@ -13,6 +13,7 @@ const CreateTask = () => {
 	const { makeUpdate } = useTasksHistory();
 	const [title, setTitle] = useState('');
 	const inputRef = useRef<HTMLInputElement | null>(null);
+	const { redo, undo } = useTasksHistory();
 
 	// Create a new task and reset input state
 	const handleSubmit = (e: React.FormEvent) => {
@@ -60,8 +61,18 @@ const CreateTask = () => {
 	// Detect keyboard shortcut
 	useEffect(() => {
 		const listener = (e: KeyboardEvent) => {
+			// Don't do anything if input is active
+			if (inputRef.current === document.activeElement) return;
+
 			if (e.metaKey && e.key.toLowerCase() === 'k') {
 				handleFocusInput();
+			} else if (e.metaKey && e.key.toLowerCase() === 'z') {
+				e.preventDefault();
+				if (e.shiftKey) {
+					redo();
+				} else {
+					undo();
+				}
 			}
 		};
 
@@ -74,7 +85,7 @@ const CreateTask = () => {
 		return () => {
 			window.removeEventListener('keydown', listener);
 		};
-	}, [tasks?.length]);
+	}, [tasks?.length, undo, redo]);
 
 	return (
 		<form

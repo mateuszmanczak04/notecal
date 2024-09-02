@@ -2,36 +2,14 @@
 
 import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
-import { useEffect } from 'react';
 import useCourses from '../courses/_hooks/use-courses';
 import CreateTask from './_components/create-task';
 import Task from './_components/task';
 import useTasks from './_hooks/use-tasks';
-import useTasksHistory from './_hooks/use-tasks-history';
 
 const TasksPage = () => {
 	const { tasks, isPending, error } = useTasks();
 	const { isPending: isPendingCourses } = useCourses();
-	const { redo, undo } = useTasksHistory();
-
-	// Listen for undo/redo keyboard shortcuts
-	useEffect(() => {
-		const listener = (e: KeyboardEvent) => {
-			if (e.metaKey && e.key.toLocaleLowerCase() === 'z') {
-				if (e.shiftKey) {
-					redo();
-				} else {
-					undo();
-				}
-			}
-		};
-
-		window.addEventListener('keydown', listener);
-
-		return () => {
-			window.removeEventListener('keydown', listener);
-		};
-	}, [undo, redo]);
 
 	if (isPending || isPendingCourses) {
 		return (
