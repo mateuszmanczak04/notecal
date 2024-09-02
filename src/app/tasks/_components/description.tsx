@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils';
 import React, { FC, useEffect, useRef } from 'react';
 import useTasks from '../_hooks/use-tasks';
+import useTasksHistory from '../_hooks/use-tasks-history';
 
 interface DescriptionProps {
 	id: string;
@@ -13,6 +14,7 @@ interface DescriptionProps {
 const Description: FC<DescriptionProps> = ({ id, description, completed }) => {
 	const descriptionRef = useRef<HTMLParagraphElement | null>(null);
 	const { update: updateTask } = useTasks();
+	const { makeUpdate } = useTasksHistory(); // Cmd + Z
 
 	const handleSubmit = () => {
 		if (!descriptionRef.current) return;
@@ -22,6 +24,13 @@ const Description: FC<DescriptionProps> = ({ id, description, completed }) => {
 		if (newDescription.trim() === description) return;
 
 		updateTask({ id, description: newDescription.trim() });
+		makeUpdate({
+			type: 'update',
+			property: 'description',
+			id,
+			oldValue: description,
+			newValue: newDescription.trim(),
+		});
 	};
 
 	const handleKeyDown = (
