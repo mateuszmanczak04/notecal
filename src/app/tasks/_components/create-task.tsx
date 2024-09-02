@@ -6,16 +6,22 @@ import { Command, Plus } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useIntersectionObserver } from 'usehooks-ts';
 import useTasks from '../_hooks/use-tasks';
+import useTasksHistory from '../_hooks/use-tasks-history';
 
 const CreateTask = () => {
 	const { add, tasks } = useTasks();
+	const { makeUpdate } = useTasksHistory();
 	const [title, setTitle] = useState('');
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	// Create a new task and reset input state
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
+		const taskId = crypto.randomUUID();
+
+		// Update task in state and database
 		add({
+			id: taskId,
 			title,
 			description: '',
 			courseId: null,
@@ -23,6 +29,19 @@ const CreateTask = () => {
 			priority: null,
 			completed: false,
 		});
+
+		// Push update to tasks history (Cmd + Z)
+		makeUpdate({
+			taskId,
+			type: 'create',
+			title,
+			description: '',
+			courseId: null,
+			dueDate: null,
+			priority: null,
+			completed: false,
+		});
+
 		setTitle('');
 	};
 
