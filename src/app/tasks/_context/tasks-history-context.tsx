@@ -44,7 +44,8 @@ type ChangeParams =
 	| CreateParams
 	| DeleteParams
 	| UpdateParams<'completed', boolean>
-	| UpdateParams<'title' | 'courseId' | 'description', string>
+	| UpdateParams<'title' | 'description', string>
+	| UpdateParams<'courseId', string | null>
 	| UpdateParams<'dueDate', Date | null>
 	| UpdateParams<'priority', TaskPriority | null>;
 
