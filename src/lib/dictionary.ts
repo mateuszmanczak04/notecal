@@ -16,6 +16,7 @@ export const en = {
 		ID_REQUIRED: 'Note id is required',
 	},
 	tasks: {
+		MIN_ID_LENGTH: 'Task id length must be greater than 6',
 		ID_REQUIRED: 'Task id is required',
 		NOT_FOUND: 'Task not found',
 		TITLE_REQUIRED: 'Title is required',

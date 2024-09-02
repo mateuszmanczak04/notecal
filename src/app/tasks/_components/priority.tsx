@@ -6,12 +6,12 @@ import {
 	DropdownMenuList,
 	DropdownMenuTrigger,
 } from '@/components/common/dropdown-menu';
-import { TaskPriority } from '@prisma/client';
+import { Task, TaskPriority } from '@prisma/client';
 import useTasks from '../_hooks/use-tasks';
+import useTasksHistory from '../_hooks/use-tasks-history';
 
-type PriorityProps = {
-	id: string;
-	priority: TaskPriority | null;
+type Props = {
+	task: Task;
 };
 
 const getPriorityTitle = (priority: TaskPriority | null) => {
@@ -42,20 +42,28 @@ const getPriorityTitle = (priority: TaskPriority | null) => {
 	}
 };
 
-const Priority = ({ id, priority }: PriorityProps) => {
+const Priority = ({ task }: Props) => {
 	const { update: updateTask } = useTasks();
+	const { makeUpdate } = useTasksHistory(); // Cmd + Z
 
-	const handleSelect = (priority: any) => {
+	const handleSelect = (newPriority: any) => {
 		updateTask({
-			id,
-			priority,
+			id: task.id,
+			priority: newPriority,
+		});
+		makeUpdate({
+			type: 'update',
+			id: task.id,
+			property: 'priority',
+			oldValue: task.priority,
+			newValue: newPriority,
 		});
 	};
 
 	return (
 		<DropdownMenu className='w-52'>
 			<DropdownMenuTrigger showChevron>
-				{getPriorityTitle(priority)}
+				{getPriorityTitle(task.priority)}
 			</DropdownMenuTrigger>
 			<DropdownMenuList>
 				{([null, 'A', 'B', 'C'] as (TaskPriority | null)[]).map(

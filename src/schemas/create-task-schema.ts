@@ -3,6 +3,7 @@ import { TaskPriority } from '@prisma/client';
 import { z } from 'zod';
 
 const CreateTaskSchema = z.object({
+	id: z.string().min(6, { message: en.tasks.MIN_ID_LENGTH }).optional(),
 	title: z.string().min(1, { message: en.tasks.TITLE_REQUIRED }).max(60, {
 		message: en.tasks.MAX_TITLE_LENGTH,
 	}),

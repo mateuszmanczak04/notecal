@@ -19,7 +19,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import DatePicker from '../../../components/common/date-picker';
-import Course from '../_components/course';
+import CreateCourse from '../_components/create-course';
 import CreatePriority from '../_components/create-priority';
 import useTasks from '../_hooks/use-tasks';
 
@@ -119,7 +119,7 @@ const CreateTaskPage = () => {
 						<FormItem>
 							<FormLabel>Course</FormLabel>
 							<FormControl>
-								<Course
+								<CreateCourse
 									className='w-full'
 									onSelect={field.onChange}
 									currentCourseId={field.value || null}

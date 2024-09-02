@@ -6,12 +6,14 @@ import { ArrowUpDown } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import useTasks from '../_hooks/use-tasks';
+import useTasksHistory from '../_hooks/use-tasks-history';
 
 const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
-	const { update: updateSettings } = useSettings();
+	const { update: updateSettings, settings } = useSettings();
 	const { sort } = useTasks();
+	const { makeUpdate } = useTasksHistory(); // Cmd + Z
 
 	const handleCloseMenu = () => {
 		setIsOpen(false);
@@ -33,17 +35,22 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 		handleCloseMenu();
 	});
 
-	const handleSort = (value: string) => {
+	const handleSort = (newCriteria: string) => {
 		if (
-			value &&
-			(value === 'title' ||
-				value === 'createdAt' ||
-				value === 'dueDate' ||
-				value === 'priority' ||
-				value === 'completed')
+			newCriteria &&
+			(newCriteria === 'title' ||
+				newCriteria === 'createdAt' ||
+				newCriteria === 'dueDate' ||
+				newCriteria === 'priority' ||
+				newCriteria === 'completed')
 		) {
-			sort(value);
-			updateSettings({ orderTasks: value });
+			sort(newCriteria);
+			makeUpdate({
+				type: 'sort',
+				old: settings?.orderTasks || 'createdAt',
+				new: newCriteria,
+			});
+			updateSettings({ orderTasks: newCriteria });
 			closeNavigation();
 		}
 	};
