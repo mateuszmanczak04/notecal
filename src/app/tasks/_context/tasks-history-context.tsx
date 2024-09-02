@@ -51,7 +51,7 @@ type ChangeParams =
 type Props = {
 	undo: () => void;
 	redo: () => void;
-	change: (params: ChangeParams) => void;
+	makeUpdate: (params: ChangeParams) => void;
 };
 
 export const TasksHistoryContext = createContext({} as Props);
@@ -151,8 +151,7 @@ const TasksHistoryContextProvider = ({
 	};
 
 	return (
-		<TasksHistoryContext.Provider
-			value={{ undo, redo, change: makeUpdate }}>
+		<TasksHistoryContext.Provider value={{ undo, redo, makeUpdate }}>
 			{children}
 		</TasksHistoryContext.Provider>
 	);
