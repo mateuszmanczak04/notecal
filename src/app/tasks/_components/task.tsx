@@ -1,6 +1,5 @@
 'use client';
 
-import useCourse from '@/app/courses/_hooks/use-course';
 import DatePicker from '@/components/common/date-picker';
 import { Checkbox } from '@/components/ui/checkbox';
 import { type Task } from '@prisma/client';
@@ -15,10 +14,8 @@ type Props = {
 };
 
 const Task = ({ task }: Props) => {
-	const { id, title, description, completed, courseId, dueDate, priority } =
-		task;
+	const { id, description, completed, dueDate, priority } = task;
 	const { update: updateTask } = useTasks();
-	const course = useCourse(courseId);
 
 	const handleToggleTask = (newValue: boolean) => {
 		if (newValue === completed) return;
@@ -30,12 +27,6 @@ const Task = ({ task }: Props) => {
 		if (newDueDate === dueDate) return;
 
 		updateTask({ id, dueDate });
-	};
-
-	const handleChangeCourse = (newCourseId: string | null) => {
-		if (course && newCourseId === course.id) return;
-
-		updateTask({ id, courseId: newCourseId });
 	};
 
 	return (
@@ -57,10 +48,7 @@ const Task = ({ task }: Props) => {
 				{!completed && (
 					<div className='mt-2 flex flex-wrap gap-2'>
 						{/* Course */}
-						<Course
-							currentCourseId={courseId}
-							onSelect={handleChangeCourse}
-						/>
+						<Course task={task} />
 
 						{/* Due date */}
 						<DatePicker

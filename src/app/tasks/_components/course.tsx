@@ -9,17 +9,34 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/common/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { Task } from '@prisma/client';
 import { ClassNameValue } from 'tailwind-merge';
+import useTasks from '../_hooks/use-tasks';
+import useTasksHistory from '../_hooks/use-tasks-history';
 
 type Props = {
-	onSelect: (courseId: string | null) => void;
-	currentCourseId: string | null;
 	className?: ClassNameValue;
+	task: Task;
 };
 
-const Course = ({ onSelect, currentCourseId, className }: Props) => {
+const Course = ({ className, task }: Props) => {
 	const { courses } = useCourses();
-	const currentCourse = useCourse(currentCourseId);
+	const currentCourse = useCourse(task.courseId);
+	const { makeUpdate } = useTasksHistory(); // Cmd + Z
+	const { update } = useTasks();
+
+	const handleSelect = (newCourseId: string | null) => {
+		if (task.courseId && newCourseId === task.courseId) return;
+
+		update({ id: task.id, courseId: newCourseId });
+		makeUpdate({
+			type: 'update',
+			property: 'courseId',
+			id: task.id,
+			oldValue: task.courseId,
+			newValue: newCourseId,
+		});
+	};
 
 	return (
 		<DropdownMenu className={cn('w-52', className)}>
@@ -34,7 +51,7 @@ const Course = ({ onSelect, currentCourseId, className }: Props) => {
 			<DropdownMenuList>
 				{/* Null option */}
 				<DropdownMenuItem
-					onSelect={onSelect}
+					onSelect={handleSelect}
 					key={'none' + Math.random()}
 					value={null}>
 					None
@@ -44,7 +61,7 @@ const Course = ({ onSelect, currentCourseId, className }: Props) => {
 				{courses &&
 					courses.map(course => (
 						<DropdownMenuItem
-							onSelect={onSelect}
+							onSelect={handleSelect}
 							key={course.id}
 							value={course.id}>
 							<div
