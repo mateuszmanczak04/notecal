@@ -13,18 +13,14 @@ type Props = {
 };
 
 const Task = ({ task }: Props) => {
-	const { id, description, completed, priority } = task;
+	const { id, completed, priority } = task;
 
 	return (
 		<div className='flex gap-4 border-b border-neutral-200 pb-4 sm:p-4'>
 			<Completed task={task} />
 			<div className='min-w-0'>
 				<Title task={task} />
-				<Description
-					id={id}
-					description={description}
-					completed={completed}
-				/>
+				<Description task={task} />
 				{!completed && (
 					<div className='mt-2 flex flex-wrap gap-2'>
 						{/* Course */}
