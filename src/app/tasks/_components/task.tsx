@@ -1,8 +1,7 @@
 'use client';
 
-import { Checkbox } from '@/components/ui/checkbox';
 import { type Task } from '@prisma/client';
-import useTasks from '../_hooks/use-tasks';
+import Completed from './completed';
 import Course from './course';
 import Description from './description';
 import DueDate from './due-date';
@@ -15,23 +14,10 @@ type Props = {
 
 const Task = ({ task }: Props) => {
 	const { id, description, completed, priority } = task;
-	const { update: updateTask } = useTasks();
-
-	const handleToggleTask = (newValue: boolean) => {
-		if (newValue === completed) return;
-
-		updateTask({ id, completed: newValue });
-	};
 
 	return (
 		<div className='flex gap-4 border-b border-neutral-200 pb-4 sm:p-4'>
-			<Checkbox
-				checked={completed}
-				onCheckedChange={handleToggleTask}
-				className='rounded-full'
-				aria-label='task completed checkbox'
-				title='task completed checkbox'
-			/>
+			<Completed task={task} />
 			<div className='min-w-0'>
 				<Title task={task} />
 				<Description
