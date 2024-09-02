@@ -66,6 +66,13 @@ const TasksHistoryContextProvider = ({
 	const [updates, setUpdates] = useState<ChangeParams[]>([]);
 	const { add, sort, update, remove } = useTasks();
 
+	// TODO: optimize this
+	// Right now user cannot undo task creation until the
+	// task has been fully created
+	// It's because it doesn't exist in database yet
+	// Option I: remove from local state immediately and add to queue
+	// to do in the database
+
 	const makeUpdate = (params: ChangeParams) => {
 		// If there are updates to redo and user makes another
 		// change, they are forgotten

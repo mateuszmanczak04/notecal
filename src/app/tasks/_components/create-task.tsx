@@ -40,11 +40,6 @@ const CreateTask = () => {
 			...newTask,
 		});
 
-		// TODO: optimize this
-		// Right now user cannot undo task creation until the
-		// task has been fully created
-		// It's because it doesn't exist in database yet
-
 		setTitle('');
 	};
 
