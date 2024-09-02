@@ -1,5 +1,3 @@
-'use client';
-
 import { type Task } from '@prisma/client';
 import Completed from './completed';
 import Course from './course';
@@ -13,7 +11,7 @@ type Props = {
 };
 
 const Task = ({ task }: Props) => {
-	const { id, completed, priority } = task;
+	const { completed } = task;
 
 	return (
 		<div className='flex gap-4 border-b border-neutral-200 pb-4 sm:p-4'>
@@ -23,14 +21,9 @@ const Task = ({ task }: Props) => {
 				<Description task={task} />
 				{!completed && (
 					<div className='mt-2 flex flex-wrap gap-2'>
-						{/* Course */}
 						<Course task={task} />
-
-						{/* Due date */}
 						<DueDate task={task} />
-
-						{/* Priority */}
-						<Priority id={id} priority={priority} />
+						<Priority task={task} />
 					</div>
 				)}
 			</div>
