@@ -80,10 +80,13 @@ const TasksHistoryContextProvider = ({
 
 	// Does a reversed action to the latest one
 	const undo = () => {
+		console.log('undo');
 		if (index === -1) return;
 
 		const latestUpdate = updates[index];
 		if (latestUpdate === undefined) return;
+
+		console.log({ index, latestUpdate });
 
 		setIndex(prev => prev - 1);
 

@@ -1,18 +1,20 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { FC, useEffect, useRef } from 'react';
+import { Task } from '@prisma/client';
+import React, { useEffect, useRef } from 'react';
 import useTasks from '../_hooks/use-tasks';
+import useTasksHistory from '../_hooks/use-tasks-history';
 
-interface TitleProps {
-	id: string;
-	title: string;
-	completed: boolean;
-}
+type Props = {
+	task: Task;
+};
 
-const Title: FC<TitleProps> = ({ id, title, completed }) => {
+const Title = ({ task }: Props) => {
+	const { id, title, completed } = task;
 	const titleRef = useRef<HTMLParagraphElement | null>(null);
 	const { update: updateTask, remove: removeTask } = useTasks();
+	const { makeUpdate } = useTasksHistory(); // Cmd + Z
 
 	const handleSubmit = () => {
 		if (!titleRef.current) return;
@@ -21,12 +23,30 @@ const Title: FC<TitleProps> = ({ id, title, completed }) => {
 		// Mechanic of this is that we remove the task when title is empty
 		if (newTitle.length === 0) {
 			removeTask(id);
+
+			makeUpdate({
+				type: 'delete',
+				completed: task.completed,
+				courseId: task.courseId,
+				description: task.description,
+				dueDate: task.dueDate,
+				priority: task.priority,
+				taskId: task.id,
+				title: task.title,
+			});
 		}
 
 		// Don't want to update the same value:
 		if (newTitle.trim() === title) return;
 
 		updateTask({ id, title: newTitle });
+		makeUpdate({
+			type: 'update',
+			taskId: task.id,
+			property: 'title',
+			oldValue: task.title,
+			newValue: newTitle,
+		});
 	};
 
 	const handleKeyDown = (

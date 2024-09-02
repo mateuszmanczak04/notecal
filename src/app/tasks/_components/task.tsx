@@ -14,9 +14,9 @@ type Props = {
 	task: Task;
 };
 
-const Task = ({
-	task: { id, title, description, completed, courseId, dueDate, priority },
-}: Props) => {
+const Task = ({ task }: Props) => {
+	const { id, title, description, completed, courseId, dueDate, priority } =
+		task;
 	const { update: updateTask } = useTasks();
 	const course = useCourse(courseId);
 
@@ -48,7 +48,7 @@ const Task = ({
 				title='task completed checkbox'
 			/>
 			<div className='min-w-0'>
-				<Title id={id} title={title} completed={completed} />
+				<Title task={task} />
 				<Description
 					id={id}
 					description={description}
