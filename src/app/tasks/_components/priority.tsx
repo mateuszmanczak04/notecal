@@ -8,6 +8,7 @@ import {
 } from '@/components/common/dropdown-menu';
 import { TaskPriority } from '@prisma/client';
 import useTasks from '../_hooks/use-tasks';
+import useTasksHistory from '../_hooks/use-tasks-history';
 
 type PriorityProps = {
 	id: string;
@@ -44,11 +45,19 @@ const getPriorityTitle = (priority: TaskPriority | null) => {
 
 const Priority = ({ id, priority }: PriorityProps) => {
 	const { update: updateTask } = useTasks();
+	const { makeUpdate } = useTasksHistory(); // Cmd + Z
 
-	const handleSelect = (priority: any) => {
+	const handleSelect = (newPriority: any) => {
 		updateTask({
 			id,
-			priority,
+			priority: newPriority,
+		});
+		makeUpdate({
+			type: 'update',
+			id,
+			property: 'priority',
+			oldValue: priority,
+			newValue: newPriority,
 		});
 	};
 
