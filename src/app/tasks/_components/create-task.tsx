@@ -19,9 +19,7 @@ const CreateTask = () => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		const taskId = crypto.randomUUID();
-
-		// Update task in state and database
-		add({
+		const newTask = {
 			id: taskId,
 			title,
 			description: '',
@@ -29,18 +27,17 @@ const CreateTask = () => {
 			dueDate: null,
 			priority: null,
 			completed: false,
+		};
+
+		// Update task in state and database
+		add({
+			...newTask,
 		});
 
 		// Push update to tasks history (Cmd + Z)
 		makeUpdate({
-			taskId,
 			type: 'create',
-			title,
-			description: '',
-			courseId: null,
-			dueDate: null,
-			priority: null,
-			completed: false,
+			...newTask,
 		});
 
 		// TODO: optimize this

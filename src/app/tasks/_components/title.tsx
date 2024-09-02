@@ -26,13 +26,7 @@ const Title = ({ task }: Props) => {
 
 			makeUpdate({
 				type: 'delete',
-				completed: task.completed,
-				courseId: task.courseId,
-				description: task.description,
-				dueDate: task.dueDate,
-				priority: task.priority,
-				taskId: task.id,
-				title: task.title,
+				...task,
 			});
 		}
 
@@ -42,7 +36,7 @@ const Title = ({ task }: Props) => {
 		updateTask({ id, title: newTitle });
 		makeUpdate({
 			type: 'update',
-			taskId: task.id,
+			id: task.id,
 			property: 'title',
 			oldValue: task.title,
 			newValue: newTitle,

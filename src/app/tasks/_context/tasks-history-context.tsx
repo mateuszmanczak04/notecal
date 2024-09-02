@@ -10,7 +10,7 @@ type SortParams = {
 
 type CreateParams = {
 	type: 'create';
-	taskId: string;
+	id: string;
 	dueDate: Date | null;
 	title: string;
 	description: string;
@@ -22,7 +22,7 @@ type CreateParams = {
 // We need all properties to restore task after "redo"
 type DeleteParams = {
 	type: 'delete';
-	taskId: string;
+	id: string;
 	dueDate: Date | null;
 	title: string;
 	description: string;
@@ -33,7 +33,7 @@ type DeleteParams = {
 
 type UpdateParams<T, V> = {
 	type: 'update';
-	taskId: string;
+	id: string;
 	property: T;
 	oldValue: V;
 	newValue: V;
@@ -80,19 +80,16 @@ const TasksHistoryContextProvider = ({
 
 	// Does a reversed action to the latest one
 	const undo = () => {
-		console.log('undo');
 		if (index === -1) return;
 
 		const latestUpdate = updates[index];
 		if (latestUpdate === undefined) return;
 
-		console.log({ index, latestUpdate });
-
 		setIndex(prev => prev - 1);
 
 		switch (latestUpdate.type) {
 			case 'create':
-				remove(latestUpdate.taskId);
+				remove(latestUpdate.id);
 				return;
 			case 'delete':
 				add({
@@ -102,12 +99,13 @@ const TasksHistoryContextProvider = ({
 					priority: latestUpdate.priority,
 					title: latestUpdate.title,
 					completed: latestUpdate.completed,
-					id: latestUpdate.taskId,
+					id: latestUpdate.id,
 				});
+
 				return;
 			case 'update':
 				update({
-					id: latestUpdate.taskId,
+					id: latestUpdate.id,
 					[latestUpdate.property]: latestUpdate.oldValue,
 				});
 				return;
@@ -137,15 +135,15 @@ const TasksHistoryContextProvider = ({
 					priority: updateToRestore.priority,
 					title: updateToRestore.title,
 					completed: updateToRestore.completed,
-					id: updateToRestore.taskId,
+					id: updateToRestore.id,
 				});
 				return;
 			case 'delete':
-				remove(updateToRestore.taskId);
+				remove(updateToRestore.id);
 				return;
 			case 'update':
 				update({
-					id: updateToRestore.taskId,
+					id: updateToRestore.id,
 					[updateToRestore.property]: updateToRestore.newValue,
 				});
 				return;
