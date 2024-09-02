@@ -1,11 +1,11 @@
 'use client';
 
-import DatePicker from '@/components/common/date-picker';
 import { Checkbox } from '@/components/ui/checkbox';
 import { type Task } from '@prisma/client';
 import useTasks from '../_hooks/use-tasks';
 import Course from './course';
 import Description from './description';
+import DueDate from './due-date';
 import Priority from './priority';
 import Title from './title';
 
@@ -14,19 +14,13 @@ type Props = {
 };
 
 const Task = ({ task }: Props) => {
-	const { id, description, completed, dueDate, priority } = task;
+	const { id, description, completed, priority } = task;
 	const { update: updateTask } = useTasks();
 
 	const handleToggleTask = (newValue: boolean) => {
 		if (newValue === completed) return;
 
 		updateTask({ id, completed: newValue });
-	};
-
-	const handleChangeDueDate = (newDueDate: Date | null) => {
-		if (newDueDate === dueDate) return;
-
-		updateTask({ id, dueDate });
 	};
 
 	return (
@@ -51,11 +45,7 @@ const Task = ({ task }: Props) => {
 						<Course task={task} />
 
 						{/* Due date */}
-						<DatePicker
-							date={dueDate}
-							onSelect={handleChangeDueDate}
-							className='h-9 w-56'
-						/>
+						<DueDate task={task} />
 
 						{/* Priority */}
 						<Priority id={id} priority={priority} />
