@@ -62,7 +62,7 @@ const TasksHistoryContextProvider = ({
 	children: React.ReactNode;
 }) => {
 	// Index always points a the lastest finished update
-	const [index, setIndex] = useState(0);
+	const [index, setIndex] = useState(-1);
 	const [updates, setUpdates] = useState<ChangeParams[]>([]);
 	const { add, sort, update, remove } = useTasks();
 
@@ -72,7 +72,7 @@ const TasksHistoryContextProvider = ({
 		if (index === updates.length - 1) {
 			setUpdates(prev => [...prev, params]);
 		} else {
-			setUpdates(prev => [...prev.slice(0, index), params]);
+			setUpdates(prev => [...prev.slice(0, index + 1), params]);
 		}
 
 		setIndex(prev => prev + 1);
@@ -80,7 +80,11 @@ const TasksHistoryContextProvider = ({
 
 	// Does a reversed action to the latest one
 	const undo = () => {
+		if (index === -1) return;
+
 		const latestUpdate = updates[index];
+		if (latestUpdate === undefined) return;
+
 		setIndex(prev => prev - 1);
 
 		switch (latestUpdate.type) {
