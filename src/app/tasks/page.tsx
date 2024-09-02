@@ -18,15 +18,11 @@ const TasksPage = () => {
 	useEffect(() => {
 		const listener = (e: KeyboardEvent) => {
 			if (e.metaKey && e.key.toLocaleLowerCase() === 'z') {
-				// Undo
-				undo();
-			} else if (
-				e.metaKey &&
-				e.shiftKey &&
-				e.key.toLocaleLowerCase() === 'z'
-			) {
-				// Redo
-				redo();
+				if (e.shiftKey) {
+					redo();
+				} else {
+					undo();
+				}
 			}
 		};
 
