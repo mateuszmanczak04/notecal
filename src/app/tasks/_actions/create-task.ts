@@ -13,7 +13,7 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 		return { error: en.INVALID_DATA };
 	}
 
-	const { courseId, title, completed, description, dueDate, priority } =
+	const { id, courseId, title, completed, description, dueDate, priority } =
 		validatedFields.data;
 
 	try {
@@ -39,6 +39,7 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 
 		const newTask = await db.task.create({
 			data: {
+				id,
 				userId: session.user.id,
 				courseId: courseId || null,
 				title,
