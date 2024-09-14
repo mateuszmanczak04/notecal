@@ -49,6 +49,7 @@ export default async function RootLayout({
 		session.user.id,
 	);
 
+	// TODO: entire app crashes if error occurrs
 	if (error) {
 		throw new Error(error);
 	}
