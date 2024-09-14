@@ -2,13 +2,36 @@
 
 import Navigation from '@/components/common/navigation';
 import Providers from '@/components/common/providers';
-import React from 'react';
+import queryClient from '@/lib/query-client';
+import { Course, Note, Settings, Task } from '@prisma/client';
+import React, { useEffect } from 'react';
 
 type MainLayoutProps = {
 	children: React.ReactNode;
+	notes: Note[];
+	courses: Course[];
+	tasks: Task[];
+	settings: Settings;
 };
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+const MainLayout = ({
+	children,
+	notes,
+	courses,
+	tasks,
+	settings,
+}: MainLayoutProps) => {
+	useEffect(() => {
+		const setup = async () => {
+			await queryClient.setQueryData(['courses'], courses);
+			await queryClient.setQueryData(['notes'], notes);
+			await queryClient.setQueryData(['tasks'], tasks);
+			await queryClient.setQueryData(['settings'], settings);
+		};
+
+		setup();
+	}, [courses, notes, tasks, settings]);
+
 	return (
 		<Providers>
 			<div className='flex h-screen overflow-y-hidden p-4 pl-12 xl:pl-4'>

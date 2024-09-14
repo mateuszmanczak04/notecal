@@ -1,6 +1,7 @@
 import '@/app/globals.css';
 import { auth } from '@/auth';
 import UnauthenticatedProviders from '@/components/common/unauthenticated-providers';
+import { getInitialAppData } from '@/lib/get-initial-app-data';
 import { cn } from '@/lib/utils';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -44,6 +45,14 @@ export default async function RootLayout({
 		);
 	}
 
+	const { courses, error, notes, tasks, settings } = await getInitialAppData(
+		session.user.id,
+	);
+
+	if (error) {
+		throw new Error(error);
+	}
+
 	return (
 		<html lang='en'>
 			<body
@@ -51,7 +60,13 @@ export default async function RootLayout({
 					inter.className,
 					'bg-neutral-100 fill-neutral-800 text-neutral-800 dark:bg-neutral-900 dark:fill-neutral-100 dark:text-neutral-100',
 				)}>
-				<MainLayout>{children}</MainLayout>
+				<MainLayout
+					courses={courses!}
+					notes={notes!}
+					tasks={tasks!}
+					settings={settings!}>
+					{children}
+				</MainLayout>
 				<p className='fixed inset-x-0 bottom-0 z-50 bg-black text-center text-white'>
 					This app is still in development stage
 				</p>
