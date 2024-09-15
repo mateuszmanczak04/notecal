@@ -85,7 +85,11 @@ const NotePage = () => {
 					<Tasks course={currentCourse} tasks={thisCourseTasks} />
 				)}
 				<Teacher teacher={currentCourse.teacher} />
-				<ChangeCourse note={currentNote} courses={courses} />
+				<ChangeCourse
+					currentCourse={currentCourse}
+					note={currentNote}
+					courses={courses}
+				/>
 				<DeleteButton note={currentNote} />
 			</div>
 		</div>
