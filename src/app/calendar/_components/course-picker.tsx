@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { FC, useLayoutEffect, useRef, useState } from 'react';
+import { uid } from 'uid';
 import { useEventListener, useOnClickOutside } from 'usehooks-ts';
 import { useCalendarContext } from '../_context/calendar-context';
 
@@ -53,7 +54,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 	const handleSelect = (courseId: string) => {
 		if (!settings) return;
 
-		const newNoteId = crypto.randomUUID();
+		const newNoteId = uid();
 
 		addNewNote({
 			id: newNoteId,

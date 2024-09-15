@@ -3,6 +3,7 @@ import useSettings from '@/app/settings/_hooks/use-settings';
 import { ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
+import { uid } from 'uid';
 
 interface CourseProps {
 	name: string;
@@ -31,7 +32,7 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 			const endTime = new Date(
 				startTime.getTime() + settings.defaultNoteDuration * 60 * 1000,
 			);
-			const newNoteId = crypto.randomUUID();
+			const newNoteId = uid();
 			addNewNote({
 				id: newNoteId,
 				courseId: id,

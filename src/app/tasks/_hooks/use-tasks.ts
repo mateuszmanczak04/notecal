@@ -4,6 +4,7 @@ import queryClient from '@/lib/query-client';
 import { getSortedTasks } from '@/lib/utils';
 import { OrderTasksEnum, Task, TaskPriority } from '@prisma/client';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { uid } from 'uid';
 import createTask from '../_actions/create-task';
 import deleteTask from '../_actions/delete-task';
 import updateTask from '../_actions/update-task';
@@ -34,7 +35,7 @@ type UpdateTaskSchema = {
 // extended by "loading: true" field:
 const createTempTask = (values: CreateTaskSchema): TaskWithLoading => ({
 	...values,
-	id: crypto.randomUUID(),
+	id: uid(),
 	userId: '',
 	loading: true,
 	createdAt: new Date(),

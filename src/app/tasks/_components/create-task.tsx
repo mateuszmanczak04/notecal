@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Command, Plus } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
+import { uid } from 'uid';
 import { useIntersectionObserver } from 'usehooks-ts';
 import useTasks from '../_hooks/use-tasks';
 import useTasksHistory from '../_hooks/use-tasks-history';
@@ -18,7 +19,7 @@ const CreateTask = () => {
 	// Create a new task and reset input state
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		const taskId = crypto.randomUUID();
+		const taskId = uid();
 		const newTask = {
 			id: taskId,
 			title,

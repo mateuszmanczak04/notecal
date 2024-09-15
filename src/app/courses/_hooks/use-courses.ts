@@ -2,6 +2,7 @@ import getCourses from '@/app/courses/_actions/get-courses';
 import queryClient from '@/lib/query-client';
 import { Course } from '@prisma/client';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { uid } from 'uid';
 import createCourse from '../_actions/create-course';
 import deleteCourse from '../_actions/delete-course';
 import updateCourse from '../_actions/update-course';
@@ -25,7 +26,7 @@ type UpdateCourseSchema = {
 // extended by "loading: true" field:
 const createTempCourse = (values: CreateCourseSchema): CourseWithLoading => ({
 	...values,
-	id: crypto.randomUUID(),
+	id: uid(),
 	userId: '',
 	loading: true,
 	createdAt: new Date(),

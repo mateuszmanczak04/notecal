@@ -4,6 +4,7 @@ import useSettings from '@/app/settings/_hooks/use-settings';
 import { Button } from '@/components/ui/button';
 import { Course } from '@prisma/client';
 import { Plus } from 'lucide-react';
+import { uid } from 'uid';
 import useNotes from '../_hooks/use-notes';
 
 type Props = {
@@ -23,7 +24,7 @@ const NewNoteButton = ({ course }: Props) => {
 		);
 
 		addNewNote({
-			id: crypto.randomUUID(),
+			id: uid(),
 			courseId: course.id,
 			content: 'Empty note',
 			startTime,
