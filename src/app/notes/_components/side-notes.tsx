@@ -19,7 +19,7 @@ const SideNotes = ({ course, notes }: Props) => {
 		<div>
 			<p className='text-xl font-semibold'>Notes:</p>
 
-			<div className='grid'>
+			<div className='mt-2 grid'>
 				{notes?.map((note, index) => (
 					<Link
 						prefetch
