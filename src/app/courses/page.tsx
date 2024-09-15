@@ -10,36 +10,42 @@ import Course from './_components/course';
 const CoursesPage = () => {
 	const { courses, error, isPending } = useCourses();
 
-	if (isPending) return <LoadingSpinner />;
-
-	if (error) return <ErrorMessage>{error.message}</ErrorMessage>;
-
-	if (!courses || courses.length === 0) {
-		return (
-			<p className='text-lg text-neutral-500'>
-				You don&apos;t have any courses yet.
-			</p>
-		);
-	}
-
 	return (
-		<div className='grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
-			{courses.map(course => (
-				<Course
-					color={course.color}
-					key={course.id}
-					id={course.id}
-					name={course.name}
-					teacher={course.teacher}
-				/>
-			))}
+		<div>
+			{error && <ErrorMessage>{error.message}</ErrorMessage>}
 
-			<Link
-				prefetch
-				href='/courses/create'
-				className='grid cursor-pointer place-content-center gap-2 rounded-xl bg-neutral-100 p-4 transition hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-600'>
-				<Plus className='h-10 w-10' />
-			</Link>
+			{isPending && (
+				<div className='grid place-content-center'>
+					<LoadingSpinner />
+				</div>
+			)}
+
+			{(!courses || courses.length === 0) && !isPending && (
+				<p className='text-center text-lg text-neutral-500 sm:ml-8'>
+					You don&apos;t have any courses yet.
+				</p>
+			)}
+
+			{!isPending && (
+				<div className='grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
+					{courses?.map(course => (
+						<Course
+							color={course.color}
+							key={course.id}
+							id={course.id}
+							name={course.name}
+							teacher={course.teacher}
+						/>
+					))}
+
+					<Link
+						prefetch
+						href='/courses/create'
+						className='grid cursor-pointer place-content-center gap-2 rounded-xl bg-neutral-100 p-4 transition hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-600'>
+						<Plus className='h-10 w-10' />
+					</Link>
+				</div>
+			)}
 		</div>
 	);
 };
