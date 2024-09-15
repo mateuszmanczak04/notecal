@@ -26,7 +26,7 @@ const ChangeCourse = ({ courses, currentCourse, note }: Props) => {
 		<div>
 			<DropdownMenu>
 				<DropdownMenuTrigger showChevron>
-					{currentCourse.name}
+					<p className='truncate'>{currentCourse.name}</p>
 				</DropdownMenuTrigger>
 				<DropdownMenuList>
 					{courses.map(course => (
