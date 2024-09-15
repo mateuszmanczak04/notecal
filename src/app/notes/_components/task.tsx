@@ -3,15 +3,14 @@
 import useTasks from '@/app/tasks/_hooks/use-tasks';
 import { cn } from '@/lib/utils';
 import { type Task } from '@prisma/client';
-import { FC } from 'react';
 
-interface NoteTaskProps {
+type Props = {
 	task: Task;
-}
+};
 
-const Task: FC<NoteTaskProps> = ({
+const Task = ({
 	task: { id, title, completed, courseId, dueDate, priority, description },
-}) => {
+}: Props) => {
 	const { update } = useTasks();
 
 	const toggleCompleted = () => {

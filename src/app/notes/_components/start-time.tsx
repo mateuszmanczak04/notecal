@@ -1,26 +1,29 @@
 'use client';
 
-import { useNoteContext } from '@/app/notes/_context/note-context';
 import DatePicker from '@/components/common/date-picker';
+import { Note } from '@prisma/client';
 import useNotes from '../_hooks/use-notes';
 
-const StartTime = () => {
-	const { currentNote } = useNoteContext();
+type Props = {
+	note: Note;
+};
+
+const StartTime = ({ note }: Props) => {
 	const { update: updateNote } = useNotes();
 
 	const onChange = (newStartTime: Date | null) => {
 		if (!newStartTime) return;
 
 		// TODO: display a message telling you can't set it like that
-		if (newStartTime > currentNote.endTime) return;
+		if (newStartTime > note.endTime) return;
 
-		updateNote({ id: currentNote.id, startTime: newStartTime });
+		updateNote({ id: note.id, startTime: newStartTime });
 	};
 
 	return (
 		<DatePicker
 			className='w-56'
-			date={currentNote.startTime}
+			date={note.startTime}
 			onSelect={newDate => onChange(newDate)}
 		/>
 	);

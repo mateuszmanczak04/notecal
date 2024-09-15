@@ -1,13 +1,16 @@
 'use client';
 
-import { useNoteContext } from '@/app/notes/_context/note-context';
 import useSettings from '@/app/settings/_hooks/use-settings';
 import { Button } from '@/components/ui/button';
+import { Course } from '@prisma/client';
 import { Plus } from 'lucide-react';
 import useNotes from '../_hooks/use-notes';
 
-const NewNoteButton = () => {
-	const { course } = useNoteContext();
+type Props = {
+	course: Course;
+};
+
+const NewNoteButton = ({ course }: Props) => {
 	const { settings } = useSettings();
 	const { add: addNewNote } = useNotes();
 

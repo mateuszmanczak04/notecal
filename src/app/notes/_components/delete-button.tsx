@@ -1,20 +1,23 @@
 'use client';
 
-import { useNoteContext } from '@/app/notes/_context/note-context';
 import { Button } from '@/components/ui/button';
+import { Note } from '@prisma/client';
 import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import useNotes from '../_hooks/use-notes';
 
-const DeleteButton = () => {
-	const { currentNote } = useNoteContext();
+type Props = {
+	note: Note;
+};
+
+const DeleteButton = ({ note }: Props) => {
 	const router = useRouter();
 	const [isDeleting, setIsDeleting] = useState(false);
 	const { remove: removeNote } = useNotes();
 
 	const confirmDeletion = () => {
-		removeNote(currentNote.id);
+		removeNote(note.id);
 		router.back();
 	};
 

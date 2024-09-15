@@ -1,17 +1,14 @@
-'use client';
+type Props = {
+	title: string;
+	time: string;
+};
 
-import { useNoteContext } from '@/app/notes/_context/note-context';
-
-const Title = () => {
-	const { course, currentNote } = useNoteContext();
-
+const Title = ({ title, time }: Props) => {
 	return (
 		<div>
 			<h1 className='mt-2 text-xl font-semibold'>
-				{course.name}
-				<span className='text-sm opacity-75'>
-					({currentNote.startTime.toDateString()})
-				</span>
+				{title}
+				<span className='ml-2 text-sm opacity-75'>({time})</span>
 			</h1>
 		</div>
 	);

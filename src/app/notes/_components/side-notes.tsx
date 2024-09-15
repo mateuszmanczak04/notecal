@@ -2,18 +2,23 @@
 
 import NewNoteButton from '@/app/notes/_components/new-note-button';
 import { cn } from '@/lib/utils';
+import { Course, Note } from '@prisma/client';
 import { format } from 'date-fns';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useNoteContext } from '../_context/note-context';
 
-const SideNotes = () => {
-	const params = useParams();
-	const { course, notes } = useNoteContext();
+type Props = {
+	course: Course;
+	notes: Note[];
+};
+
+const SideNotes = ({ course, notes }: Props) => {
+	const { id } = useParams();
 
 	return (
 		<div>
 			<p className='text-xl font-semibold'>Notes:</p>
+
 			<div className='grid'>
 				{notes?.map((note, index) => (
 					<Link
@@ -27,7 +32,7 @@ const SideNotes = () => {
 							index === 0 && 'rounded-t-xl border-t',
 							index === notes.length - 1 &&
 								'border-b-transparent',
-							note.id === params.id &&
+							note.id === id &&
 								'bg-neutral-200 dark:bg-neutral-600',
 						)}>
 						<span className='shrink-0 text-sm'>
@@ -39,7 +44,7 @@ const SideNotes = () => {
 					</Link>
 				))}
 			</div>
-			<NewNoteButton />
+			<NewNoteButton course={course} />
 		</div>
 	);
 };

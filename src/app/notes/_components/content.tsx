@@ -1,21 +1,25 @@
 'use client';
 
-import updateNote from '@/app/notes/_actions/update-note';
-import { useNoteContext } from '@/app/notes/_context/note-context';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
+import { Course, Note } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
 import { Save } from 'lucide-react';
 import { useState } from 'react';
+import useNotes from '../_hooks/use-notes';
 
-const Content = () => {
-	const { currentNote, course } = useNoteContext();
+type Props = {
+	note: Note;
+	course: Course;
+};
 
-	const [content, setContent] = useState(currentNote.content);
+const Content = ({ note, course }: Props) => {
+	const { update } = useNotes();
+	const [content, setContent] = useState(note.content);
 
 	const { mutate: updateContent, isPending } = useMutation({
-		mutationFn: async () => updateNote({ id: currentNote.id, content }),
+		mutationFn: async () => update({ id: note.id, content }),
 	});
 
 	return (
