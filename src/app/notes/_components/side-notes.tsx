@@ -24,7 +24,7 @@ const SideNotes = ({ course, notes }: Props) => {
 					<Link
 						prefetch
 						key={note.id}
-						href={`/notes/${course?.id}/${note.id}`}
+						href={`/notes/${note.id}`}
 						aria-label={`link to note with date ${format(note.startTime, 'yyyy-MM-dd')}`}
 						title={`link to note with date ${format(note.startTime, 'yyyy-MM-dd')}`}
 						className={cn(
