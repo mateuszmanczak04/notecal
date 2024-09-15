@@ -16,6 +16,7 @@ import { ArrowLeft, Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import Course from '../../_components/course';
 import SideNotes from '../../_components/side-notes';
 import useNotes from '../../_hooks/use-notes';
 
@@ -84,6 +85,7 @@ const NotePage = () => {
 					<Tasks course={currentCourse} tasks={thisCourseTasks} />
 				)}
 				<Teacher teacher={currentCourse.teacher} />
+				<Course />
 				<DeleteButton note={currentNote} />
 			</div>
 		</div>
