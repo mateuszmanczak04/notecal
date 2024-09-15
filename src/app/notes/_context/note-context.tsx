@@ -2,10 +2,9 @@
 
 import useCourses from '@/app/courses/_hooks/use-courses';
 import useNotes from '@/app/notes/_hooks/use-notes';
-import useTasks from '@/app/tasks/_hooks/use-tasks';
 import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
-import { Course, Note, Task } from '@prisma/client';
+import { Course, Note } from '@prisma/client';
 import { useParams, useRouter } from 'next/navigation';
 import { ReactNode, createContext, useContext } from 'react';
 
@@ -13,7 +12,6 @@ interface NoteContextProps {
 	currentNote: Note;
 	course: Course;
 	notes: Note[];
-	tasks: Task[];
 }
 
 const NoteContext = createContext({} as NoteContextProps);
@@ -28,9 +26,8 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 		isPending: coursesIsPending,
 		error: coursesError,
 	} = useCourses();
-	const { tasks, isPending: tasksIsPending, error: tasksError } = useTasks();
 
-	if (notesIsPending || coursesIsPending || tasksIsPending) {
+	if (notesIsPending || coursesIsPending) {
 		return <LoadingSpinner />;
 	}
 
@@ -42,10 +39,6 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 		return <ErrorMessage>{coursesError.message}</ErrorMessage>;
 	}
 
-	if (tasksError) {
-		return <ErrorMessage>{tasksError.message}</ErrorMessage>;
-	}
-
 	const currentCourse = courses?.find(course => course.id === courseId);
 	if (!currentCourse) {
 		router.push('/courses');
@@ -53,7 +46,6 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 	}
 
 	const thisCourseNotes = notes?.filter(note => note.courseId === courseId);
-	const thisCourseTasks = tasks?.filter(task => task.courseId === courseId);
 
 	const currentNote = thisCourseNotes?.filter(note => note.id === id)[0];
 	if (!currentNote) {
@@ -67,7 +59,6 @@ export const NoteContextProvider = ({ children }: { children: ReactNode }) => {
 				currentNote,
 				course: currentCourse,
 				notes: thisCourseNotes || [],
-				tasks: thisCourseTasks || [],
 			}}>
 			{children}
 		</NoteContext.Provider>
