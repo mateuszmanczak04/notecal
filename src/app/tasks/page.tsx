@@ -11,32 +11,25 @@ const TasksPage = () => {
 	const { tasks, isPending, error } = useTasks();
 	const { isPending: isPendingCourses } = useCourses();
 
-	if (isPending || isPendingCourses) {
-		return (
-			<div className='grid h-full w-full place-content-center '>
-				<div className='flex flex-col gap-4'>
-					<LoadingSpinner />
-					<p className='animate-pulse'>
-						Give us a second, we are loading your notes and courses
-						😅
-					</p>
-				</div>
-			</div>
-		);
-	}
-
 	return (
 		<div className='mx-auto max-w-[800px] space-y-8'>
 			{error && <ErrorMessage>{error.message}</ErrorMessage>}
 
 			<CreateTask />
 
-			{/* No tasks */}
-			{(!tasks || tasks.length === 0) && (
-				<p className='text-center text-lg text-neutral-500 sm:ml-8'>
-					You don&apos;t have any tasks yet.
-				</p>
+			{(isPending || isPendingCourses) && (
+				<div className='grid place-content-center'>
+					<LoadingSpinner />
+				</div>
 			)}
+
+			{/* No tasks */}
+			{(!tasks || tasks.length === 0) &&
+				!(isPending || isPendingCourses) && (
+					<p className='text-center text-lg text-neutral-500 sm:ml-8'>
+						You don&apos;t have any tasks yet.
+					</p>
+				)}
 
 			{/* At least 1 task */}
 			{tasks &&
