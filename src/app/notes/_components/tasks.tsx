@@ -20,7 +20,9 @@ const Tasks = () => {
 	return (
 		<div className='flex flex-col gap-2'>
 			<p className='text-xl font-semibold'>Tasks:</p>
-			{error && <ErrorMessage>{error.message}</ErrorMessage>}
+			{error && (
+				<ErrorMessage className='my-2'>{error.message}</ErrorMessage>
+			)}
 			{isPending && (
 				<div className='my-2 grid place-content-center'>
 					<LoadingSpinner />
