@@ -154,7 +154,7 @@ const EditCoursePage = () => {
 
 			{/* Delete button: */}
 			<Button asChild variant='destructive'>
-				<Link href={`/courses/delete?id=${id}`}>
+				<Link prefetch href={`/courses/delete?id=${id}`}>
 					<Trash2 className='h-4 w-4' />
 					Delete entire course
 				</Link>

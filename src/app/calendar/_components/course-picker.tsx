@@ -90,7 +90,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 					<div className='w-64 p-4'>
 						<p>You don&apos;t have any courses yet</p>
 						<Button asChild className='mt-2 w-full'>
-							<Link href='/courses/create'>
+							<Link href='/courses/create' prefetch>
 								<Plus />
 								Create one
 							</Link>

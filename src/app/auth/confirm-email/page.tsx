@@ -65,7 +65,7 @@ const ConfirmEmailPage = () => {
 				<div className='mt-4 space-y-4'>
 					<SuccessMessage>{message}</SuccessMessage>
 					<Button asChild variant='secondary'>
-						<Link href='/auth/login'>
+						<Link prefetch href='/auth/login'>
 							<ArrowLeft />
 							Or go there now
 						</Link>

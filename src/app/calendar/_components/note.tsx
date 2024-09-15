@@ -273,6 +273,7 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 			{noteDays?.length > 0 &&
 				noteDays.map((day, index) => (
 					<Link
+						prefetch
 						draggable
 						onDragStart={handleDragStart}
 						onDrag={handleDrag}

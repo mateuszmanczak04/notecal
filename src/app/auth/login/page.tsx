@@ -82,6 +82,7 @@ const LoginPage = () => {
 					)}
 				/>
 				<Link
+					prefetch
 					href={`/auth/forgot-password${form.getValues('email') && `?email=${form.getValues('email')}`}`}
 					className='text-neutral mr-auto mt-2 text-sm hover:underline'>
 					Forgot password?
@@ -91,6 +92,7 @@ const LoginPage = () => {
 					Login
 				</Button>
 				<Link
+					prefetch
 					href='/auth/register'
 					className='mt-4 block text-center text-sm text-neutral-500 dark:text-neutral-400'>
 					Don&apos;t have an account yet? Register now

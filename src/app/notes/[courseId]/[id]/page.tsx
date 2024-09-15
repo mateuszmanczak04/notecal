@@ -25,7 +25,7 @@ const NotePage = () => {
 						Go back
 					</GoBackButton>
 					<Button asChild variant='secondary'>
-						<Link href={`/courses/edit?id=${course.id}`}>
+						<Link prefetch href={`/courses/edit?id=${course.id}`}>
 							<Pencil className='h-4 w-4' />
 							Edit
 						</Link>

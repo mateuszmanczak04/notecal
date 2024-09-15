@@ -25,7 +25,9 @@ const Hero = () => {
 				fatigue.
 			</p>
 			<Button className='mt-8 w-full sm:w-fit' asChild size='lg'>
-				<Link href='/auth/register'>Click Here to Join</Link>
+				<Link prefetch href='/auth/register'>
+					Click Here to Join
+				</Link>
 			</Button>
 		</div>
 	);

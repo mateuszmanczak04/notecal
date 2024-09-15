@@ -58,6 +58,7 @@ const Navigation = () => {
 
 				{/* Account and settings */}
 				<Link
+					prefetch
 					href='/settings'
 					onClick={handleClose}
 					className='flex items-center justify-between gap-3 rounded-xl bg-white px-4 py-2 dark:bg-neutral-700'>
@@ -87,6 +88,7 @@ const Navigation = () => {
 					</p>
 					<div className='mt-2'>
 						<Link
+							prefetch
 							href='/calendar'
 							className={cn(
 								'flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
@@ -97,6 +99,7 @@ const Navigation = () => {
 							<Calendar className='h-4 w-4' /> Calendar
 						</Link>
 						<Link
+							prefetch
 							href='/tasks'
 							className={cn(
 								'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
@@ -107,6 +110,7 @@ const Navigation = () => {
 							<Check className='h-4 w-4' /> Tasks
 						</Link>
 						<Link
+							prefetch
 							href='/courses'
 							className={cn(
 								'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',

@@ -17,6 +17,7 @@ const SideNotes = () => {
 			<div className='grid'>
 				{notes?.map((note, index) => (
 					<Link
+						prefetch
 						key={note.id}
 						href={`/notes/${course?.id}/${note.id}`}
 						aria-label={`link to note with date ${format(note.startTime, 'yyyy-MM-dd')}`}
