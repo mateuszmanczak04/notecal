@@ -24,7 +24,7 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 		const courseNotes = notes.filter(n => n.courseId === id);
 
 		if (courseNotes.length > 0) {
-			router.push(`/notes/${id}/${courseNotes.at(-1)?.id}`);
+			router.push(`/notes/${courseNotes.at(-1)?.id}`);
 		} else {
 			// Create first course note
 			const startTime = new Date();

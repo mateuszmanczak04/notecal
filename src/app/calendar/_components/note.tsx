@@ -281,7 +281,7 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 						ref={el => (noteRef.current![index] = el)}
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
-						href={`/notes/${note.courseId}/${note.id}`}
+						href={`/notes/${note.id}`}
 						className={cn(
 							'absolute z-20 min-h-4 min-w-8 select-none overflow-hidden rounded-xl border-2 border-white bg-primary-500 text-white transition dark:border-neutral-800',
 							note.loading && 'pointer-events-none opacity-50',

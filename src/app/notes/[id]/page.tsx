@@ -16,26 +16,32 @@ import { ArrowLeft, Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import SideNotes from '../../_components/side-notes';
-import useNotes from '../../_hooks/use-notes';
+import ChangeCourse from '../_components/change-course';
+import SideNotes from '../_components/side-notes';
+import useNote from '../_hooks/use-note';
+import useNotes from '../_hooks/use-notes';
 
 const NotePage = () => {
 	const { notes, isPending: isNotesPending, error: notesError } = useNotes();
 	const { tasks, isPending: isTasksPending, error: tasksError } = useTasks();
-	const { isPending: isCoursesPending } = useCourses();
-	const { courseId, id } = useParams();
+	const { courses, isPending: isCoursesPending } = useCourses();
+	const { id } = useParams();
 	const router = useRouter();
 
 	// Filter only notes and tasks relevant to this course
-	const currentCourse = useCourse(courseId as string);
-	const thisCourseNotes = notes?.filter(note => note.courseId === courseId);
-	const currentNote = thisCourseNotes?.filter(note => note.id === id)[0];
-	const thisCourseTasks = tasks?.filter(task => task.courseId === courseId);
+	const currentNote = useNote(id as string); // TODO: type error handling
+	const currentCourse = useCourse(currentNote?.courseId || null);
+	const thisCourseNotes = notes?.filter(
+		note => note.courseId === currentCourse?.id,
+	);
+	const thisCourseTasks = tasks?.filter(
+		task => task.courseId === currentCourse?.id,
+	);
 
 	useEffect(() => {
 		if (isNotesPending || isTasksPending || isCoursesPending) return;
 
-		if (!currentNote || !currentCourse) {
+		if (notes && courses && (!currentNote || !currentCourse)) {
 			router.push('/courses');
 			return;
 		}
@@ -46,10 +52,12 @@ const NotePage = () => {
 		isNotesPending,
 		isTasksPending,
 		isCoursesPending,
+		notes,
+		courses,
 	]);
 
 	// TODO: show loading skeletons instead of this
-	if (isCoursesPending || !currentCourse || !currentNote)
+	if (isCoursesPending || !courses || !currentCourse || !currentNote)
 		return <LoadingSpinner />;
 
 	return (
@@ -84,6 +92,11 @@ const NotePage = () => {
 					<Tasks course={currentCourse} tasks={thisCourseTasks} />
 				)}
 				<Teacher teacher={currentCourse.teacher} />
+				<ChangeCourse
+					currentCourse={currentCourse}
+					note={currentNote}
+					courses={courses}
+				/>
 				<DeleteButton note={currentNote} />
 			</div>
 		</div>
