@@ -24,7 +24,8 @@ const ChangeCourse = ({ courses, currentCourse, note }: Props) => {
 
 	return (
 		<div>
-			<DropdownMenu>
+			<p className='text-xl font-semibold'>Course:</p>
+			<DropdownMenu className='mt-2'>
 				<DropdownMenuTrigger showChevron>
 					<p className='truncate'>{currentCourse.name}</p>
 				</DropdownMenuTrigger>
