@@ -16,14 +16,14 @@ import { ArrowLeft, Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import Course from '../../_components/course';
+import ChangeCourse from '../../_components/change-course';
 import SideNotes from '../../_components/side-notes';
 import useNotes from '../../_hooks/use-notes';
 
 const NotePage = () => {
 	const { notes, isPending: isNotesPending, error: notesError } = useNotes();
 	const { tasks, isPending: isTasksPending, error: tasksError } = useTasks();
-	const { isPending: isCoursesPending } = useCourses();
+	const { courses, isPending: isCoursesPending } = useCourses();
 	const { courseId, id } = useParams();
 	const router = useRouter();
 
@@ -50,7 +50,7 @@ const NotePage = () => {
 	]);
 
 	// TODO: show loading skeletons instead of this
-	if (isCoursesPending || !currentCourse || !currentNote)
+	if (isCoursesPending || !courses || !currentCourse || !currentNote)
 		return <LoadingSpinner />;
 
 	return (
@@ -85,7 +85,7 @@ const NotePage = () => {
 					<Tasks course={currentCourse} tasks={thisCourseTasks} />
 				)}
 				<Teacher teacher={currentCourse.teacher} />
-				<Course />
+				<ChangeCourse note={currentNote} courses={courses} />
 				<DeleteButton note={currentNote} />
 			</div>
 		</div>
