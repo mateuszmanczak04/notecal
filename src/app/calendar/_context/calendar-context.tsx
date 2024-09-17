@@ -26,6 +26,8 @@ interface CalendarContextProps {
 	rowHeight: number;
 	zoomIn: () => void;
 	zoomOut: () => void;
+	scrollTop: number;
+	setScrollTop: (newValue: number) => void;
 }
 
 const CalendarContext = createContext({} as CalendarContextProps);
@@ -38,6 +40,9 @@ export const CalendarContextProvider = ({
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const { settings, update: updateSettings } = useSettings();
+
+	// Keeping the same calendar scroll y level after switching routes
+	const [scrollTop, setScrollTop] = useState(0);
 
 	if (!settings) return null; // TOOD: handle this
 
@@ -151,6 +156,8 @@ export const CalendarContextProvider = ({
 				getRelativePosition,
 				getDateFromPosition,
 				displayedDays: settings.displayedDays,
+				scrollTop,
+				setScrollTop,
 			}}>
 			{children}
 		</CalendarContext.Provider>
