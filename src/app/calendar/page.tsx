@@ -1,16 +1,31 @@
 'use client';
 
 import ErrorMessage from '@/components/common/error-message';
+import { useEffect, useRef } from 'react';
 import useCourses from '../courses/_hooks/use-courses';
 import useNotes from '../notes/_hooks/use-notes';
 import Grid from './_components/grid';
 import Header from './_components/header';
 import Notes from './_components/notes';
 import TopBar from './_components/top-bar';
+import { useCalendarContext } from './_context/calendar-context';
 
 const CalendarPage = () => {
 	const { error: notesError } = useNotes();
 	const { error: coursesError } = useCourses();
+
+	// Used to keep the same calendar scroll y level even after
+	// switching routes
+	const { scrollTop, setScrollTop } = useCalendarContext();
+	const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+
+	const handleScroll = () => {
+		setScrollTop(scrollContainerRef.current!.scrollTop);
+	};
+
+	useEffect(() => {
+		scrollContainerRef.current!.scrollTop = scrollTop;
+	}, [scrollTop]);
 
 	return (
 		<div className='flex h-full flex-col'>
@@ -31,7 +46,10 @@ const CalendarPage = () => {
 
 			<TopBar />
 
-			<div className='relative overflow-y-scroll overscroll-none outline-none scrollbar-hide'>
+			<div
+				className='relative overflow-y-scroll overscroll-none scroll-auto outline-none scrollbar-hide'
+				onScroll={handleScroll}
+				ref={scrollContainerRef}>
 				{/* Just grid: */}
 				<Grid />
 
