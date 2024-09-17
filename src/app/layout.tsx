@@ -7,6 +7,8 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import MainLayout from '../components/common/main-layout';
+import { Suspense } from 'react';
+import Loading from './loading';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -51,7 +53,9 @@ export default async function RootLayout({
 					inter.className,
 					'bg-neutral-100 fill-neutral-800 text-neutral-800 dark:bg-neutral-900 dark:fill-neutral-100 dark:text-neutral-100',
 				)}>
-				<MainLayout>{children}</MainLayout>
+				<MainLayout>
+					<Suspense fallback={<Loading />}>{children}</Suspense>
+				</MainLayout>
 				<p className='fixed inset-x-0 bottom-0 z-50 bg-black text-center text-white'>
 					This app is still in development stage
 				</p>
