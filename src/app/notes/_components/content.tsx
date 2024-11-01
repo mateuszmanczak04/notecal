@@ -1,12 +1,15 @@
 'use client';
 
-import { Course, Note } from '@prisma/client';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
-import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import {
+	InitialConfigType,
+	LexicalComposer,
+} from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
-import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import { Course, Note } from '@prisma/client';
 import ToolbarPlugin from '../_editor/ToolbarPlugin';
 
 type Props = {
@@ -14,17 +17,45 @@ type Props = {
 	course: Course;
 };
 
-const theme = {
-	// TOD
-};
-
-const editorConfig = {
+const editorConfig: InitialConfigType = {
 	namespace: 'Notecal note content',
 	nodes: [],
 	onError(error: Error) {
 		throw error;
 	},
-	theme,
+	theme: {
+		code: '',
+		heading: {
+			h1: 'text-2xl font-bold',
+			h2: 'text-xl font-bold',
+			h3: 'text-lg font-bold',
+		},
+		image: '',
+		link: 'text-blue-500',
+		list: {
+			listitem: '',
+			nested: {
+				listitem: '',
+			},
+			ol: '',
+			ul: '',
+		},
+		ltr: 'text-left',
+		paragraph: '',
+		placeholder: '',
+		quote: '',
+		rtl: 'text-right',
+		text: {
+			bold: 'font-bold',
+			code: '',
+			hashtag: '',
+			italic: 'italic',
+			overflowed: '',
+			strikethrough: 'line-through',
+			underline: 'underline',
+			underlineStrikethrough: '',
+		},
+	},
 };
 
 const Content = ({ note, course }: Props) => {
