@@ -89,7 +89,7 @@ export default function ToolbarPlugin() {
 	return (
 		<div className='flex items-center gap-4' ref={toolbarRef}>
 			{/* Undo & Redo */}
-			<div className='grid grid-cols-2'>
+			<div className='grid grid-cols-2 gap-1'>
 				<Toggle
 					disabled={!canUndo}
 					value='undo'
@@ -109,9 +109,10 @@ export default function ToolbarPlugin() {
 			</div>
 
 			{/* Font type */}
-			<div className='grid grid-cols-4'>
+			<div className='grid grid-cols-4 gap-1'>
 				<Toggle
 					pressed={isBold}
+					className={isBold ? 'bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
 					}}>
@@ -119,6 +120,7 @@ export default function ToolbarPlugin() {
 				</Toggle>
 				<Toggle
 					pressed={isItalic}
+					className={isItalic ? 'bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
 					}}>
@@ -126,6 +128,7 @@ export default function ToolbarPlugin() {
 				</Toggle>
 				<Toggle
 					pressed={isUnderline}
+					className={isUnderline ? 'bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(
 							FORMAT_TEXT_COMMAND,
@@ -136,6 +139,7 @@ export default function ToolbarPlugin() {
 				</Toggle>
 				<Toggle
 					pressed={isStrikethrough}
+					className={isStrikethrough ? 'bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(
 							FORMAT_TEXT_COMMAND,
@@ -147,7 +151,7 @@ export default function ToolbarPlugin() {
 			</div>
 
 			{/* Text align */}
-			<div className='grid grid-cols-4'>
+			<div className='grid grid-cols-4 gap-1'>
 				<Toggle
 					pressed={alignment === 'left'}
 					onPressedChange={() => {
