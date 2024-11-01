@@ -7,7 +7,7 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
-import ToolbarPlugin from '../_plugins/ToolbarPlugin';
+import ToolbarPlugin from '../_editor/ToolbarPlugin';
 
 type Props = {
 	note: Note;
