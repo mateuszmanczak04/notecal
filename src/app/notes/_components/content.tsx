@@ -58,7 +58,7 @@ const Content = ({ note, course }: Props) => {
 		<div className='mt-4 rounded-xl bg-neutral-700 p-4'>
 			<LexicalComposer initialConfig={editorConfig}>
 				<ToolbarPlugin />
-				<div className='relative leading-loose'>
+				<div className='relative mt-4 leading-loose'>
 					<RichTextPlugin
 						contentEditable={
 							<ContentEditable className='relative resize-none outline-none' />

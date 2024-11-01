@@ -12,6 +12,18 @@ import {
 	SELECTION_CHANGE_COMMAND,
 	UNDO_COMMAND,
 } from 'lexical';
+import {
+	AlignCenter,
+	AlignJustify,
+	AlignLeft,
+	AlignRight,
+	Bold,
+	ChevronLeft,
+	ChevronRight,
+	Italic,
+	Strikethrough,
+	Underline,
+} from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const LowPriority = 1;
@@ -75,9 +87,7 @@ export default function ToolbarPlugin() {
 	}, [editor, $updateToolbar]);
 
 	return (
-		<div
-			className='flex items-center gap-4 bg-white text-neutral-800'
-			ref={toolbarRef}>
+		<div className='flex items-center gap-4' ref={toolbarRef}>
 			{/* Undo & Redo */}
 			<div className='grid grid-cols-2'>
 				<Toggle
@@ -86,7 +96,7 @@ export default function ToolbarPlugin() {
 					onPressedChange={() => {
 						editor.dispatchCommand(UNDO_COMMAND, undefined);
 					}}>
-					Undo
+					<ChevronLeft className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					disabled={!canRedo}
@@ -94,7 +104,7 @@ export default function ToolbarPlugin() {
 					onPressedChange={() => {
 						editor.dispatchCommand(REDO_COMMAND, undefined);
 					}}>
-					Redo
+					<ChevronRight className='h-5 w-5' />
 				</Toggle>
 			</div>
 
@@ -105,14 +115,14 @@ export default function ToolbarPlugin() {
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
 					}}>
-					Bold
+					<Bold className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					pressed={isItalic}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
 					}}>
-					Italic
+					<Italic className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					pressed={isUnderline}
@@ -122,7 +132,7 @@ export default function ToolbarPlugin() {
 							'underline',
 						);
 					}}>
-					Underline
+					<Underline className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					pressed={isStrikethrough}
@@ -132,7 +142,7 @@ export default function ToolbarPlugin() {
 							'strikethrough',
 						);
 					}}>
-					Strikethrough
+					<Strikethrough className='h-5 w-5' />
 				</Toggle>
 			</div>
 
@@ -143,7 +153,7 @@ export default function ToolbarPlugin() {
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
 					}}>
-					Left align
+					<AlignLeft className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					pressed={alignment === 'center'}
@@ -153,14 +163,14 @@ export default function ToolbarPlugin() {
 							'center',
 						);
 					}}>
-					Center align
+					<AlignCenter className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					pressed={alignment === 'right'}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
 					}}>
-					Right align
+					<AlignRight className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					pressed={alignment === 'justify'}
@@ -170,7 +180,7 @@ export default function ToolbarPlugin() {
 							'justify',
 						);
 					}}>
-					Justify align
+					<AlignJustify className='h-5 w-5' />
 				</Toggle>
 			</div>
 		</div>
