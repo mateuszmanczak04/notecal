@@ -39,7 +39,7 @@ const SideNotes = ({ course, notes }: Props) => {
 							{format(note.startTime, 'yyyy-MM-dd')}
 						</span>
 						<span className='line-clamp-1 text-sm text-neutral-600 dark:text-neutral-300'>
-							{note.content}
+							{note.content.slice(0, 50)}
 						</span>
 					</Link>
 				))}

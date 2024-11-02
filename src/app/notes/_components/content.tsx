@@ -51,7 +51,7 @@ const Content = ({ note, course }: Props) => {
 	};
 
 	return (
-		<div className='mt-4 rounded-xl bg-neutral-700 p-4'>
+		<div className='mt-4 flex flex-1 flex-col rounded-xl bg-neutral-700 p-4'>
 			<LexicalComposer initialConfig={editorConfig}>
 				<ToolbarPlugin />
 				<div className='relative mt-4 leading-loose'>
@@ -74,9 +74,12 @@ const Content = ({ note, course }: Props) => {
 					onChange={value => setContent(value)}
 				/>
 			</LexicalComposer>
-			<Button onClick={handleSave} style={{ background: course?.color }}>
+			<Button
+				onClick={handleSave}
+				style={{ background: course?.color }}
+				className='mt-auto w-full'>
 				<Save />
-				Save content
+				Save
 			</Button>
 		</div>
 	);

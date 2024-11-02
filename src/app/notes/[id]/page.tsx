@@ -84,7 +84,7 @@ const NotePage = () => {
 				<Time note={currentNote} />
 				<Content note={currentNote} course={currentCourse} />
 			</div>
-			<div className='flex h-full w-48 shrink-0 flex-col gap-8 overflow-y-scroll scrollbar-hide'>
+			<div className='flex w-48 shrink-0 flex-col gap-8'>
 				{thisCourseNotes && (
 					<SideNotes course={currentCourse} notes={thisCourseNotes} />
 				)}
