@@ -53,7 +53,7 @@ const editorConfig: InitialConfigType = {
 			overflowed: '',
 			strikethrough: 'line-through',
 			underline: 'underline',
-			underlineStrikethrough: '',
+			underlineStrikethrough: '[text-decoration:underline_line-through]',
 		},
 	},
 };
