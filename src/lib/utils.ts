@@ -20,24 +20,24 @@ export const cmdOrCtrl = () =>
 	window.navigator.platform.match(/^Mac/) ? 'cmd' : 'ctrl';
 
 export const getSortedTasks = (tasks: Task[], criteria: OrderTasksEnum) => {
-	const initiallySortedTasks = tasks.toSorted((a, b) =>
-		a.createdAt < b.createdAt ? 1 : -1,
-	);
+	const result = [...tasks];
+
+	result.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
 
 	switch (criteria) {
 		case 'createdAt':
-			return initiallySortedTasks.toSorted((a, b) =>
-				a.createdAt < b.createdAt ? 1 : -1,
-			);
+			result.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+			break;
 		case 'completed':
-			return initiallySortedTasks.toSorted((a, b) => {
+			result.sort((a, b) => {
 				if (a.completed && b.completed) return 0;
 				if (!a.completed && !b.completed) return 0;
 				if (a.completed && !b.completed) return -1;
 				return 1;
 			});
+			break;
 		case 'dueDate':
-			return initiallySortedTasks.toSorted((a, b) => {
+			result.sort((a, b) => {
 				if (!a.dueDate && !b.dueDate) return 0;
 				if (a.dueDate && b.dueDate) {
 					if (a.dueDate > b.dueDate) {
@@ -53,8 +53,9 @@ export const getSortedTasks = (tasks: Task[], criteria: OrderTasksEnum) => {
 
 				return -1;
 			});
+			break;
 		case 'priority':
-			return initiallySortedTasks.toSorted((a, b) => {
+			result.sort((a, b) => {
 				if (a.priority === b.priority) return 0;
 				if (a.priority && b.priority) {
 					if (a.priority > b.priority) {
@@ -70,14 +71,15 @@ export const getSortedTasks = (tasks: Task[], criteria: OrderTasksEnum) => {
 
 				return -1;
 			});
+			break;
 		case 'title':
-			return initiallySortedTasks.toSorted((a, b) => {
+			result.sort((a, b) => {
 				if (a.title === b.title) return 0;
 				return a.title.toLocaleLowerCase() > b.title.toLocaleLowerCase()
 					? 1
 					: -1;
 			});
-		default:
-			return initiallySortedTasks;
+			break;
 	}
+	return result;
 };
