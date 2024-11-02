@@ -51,10 +51,10 @@ const Content = ({ note, course }: Props) => {
 	};
 
 	return (
-		<div className='mt-4 flex flex-1 flex-col rounded-xl bg-neutral-700 p-4'>
+		<div className='flex flex-1 flex-col rounded-xl bg-neutral-700 p-4'>
 			<LexicalComposer initialConfig={editorConfig}>
 				<ToolbarPlugin />
-				<div className='relative mt-4 leading-loose'>
+				<div className='relative mb-4 mt-4 leading-loose'>
 					<RichTextPlugin
 						contentEditable={
 							<ContentEditable className='relative resize-none outline-none' />

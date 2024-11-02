@@ -10,10 +10,10 @@ type Props = {
 
 const Time = ({ note }: Props) => {
 	return (
-		<div className='mt-2 flex items-center gap-2'>
+		<>
 			<StartTime note={note} />
 			<EndTime note={note} />
-		</div>
+		</>
 	);
 };
 

@@ -61,30 +61,11 @@ const NotePage = () => {
 		return <LoadingSpinner />;
 
 	return (
-		<div className='mx-auto flex h-full min-h-80 max-w-[1200px] gap-4'>
+		<div className='mx-auto flex h-full min-h-80 max-w-[1200px] flex-col gap-4 md:flex-row'>
 			<div className='flex h-full flex-1 flex-col'>
-				<div className='flex gap-2'>
-					<GoBackButton variant='secondary' className='w-fit'>
-						<ArrowLeft className='h-4 w-4' />
-						Go back
-					</GoBackButton>
-					<Button asChild variant='secondary'>
-						<Link
-							prefetch
-							href={`/courses/edit?id=${currentCourse.id}`}>
-							<Pencil className='h-4 w-4' />
-							Edit
-						</Link>
-					</Button>
-				</div>
-				{/* <Title
-					time={currentNote.startTime.toDateString()}
-					title={currentNote.content.slice(0, 20)}
-				/> */}
-				<Time note={currentNote} />
 				<Content note={currentNote} course={currentCourse} />
 			</div>
-			<div className='flex w-48 shrink-0 flex-col gap-8'>
+			<div className='flex w-full shrink-0 flex-col gap-8 md:w-56'>
 				{thisCourseNotes && (
 					<SideNotes course={currentCourse} notes={thisCourseNotes} />
 				)}
@@ -97,6 +78,16 @@ const NotePage = () => {
 					note={currentNote}
 					courses={courses}
 				/>
+
+				<Button asChild variant='secondary'>
+					<Link
+						prefetch
+						href={`/courses/edit?id=${currentCourse.id}`}>
+						<Pencil className='h-4 w-4' />
+						Edit course
+					</Link>
+				</Button>
+				<Time note={currentNote} />
 				<DeleteButton note={currentNote} />
 			</div>
 		</div>
