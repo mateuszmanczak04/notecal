@@ -77,10 +77,10 @@ const NotePage = () => {
 						</Link>
 					</Button>
 				</div>
-				<Title
+				{/* <Title
 					time={currentNote.startTime.toDateString()}
 					title={currentNote.content.slice(0, 20)}
-				/>
+				/> */}
 				<Time note={currentNote} />
 				<Content note={currentNote} course={currentCourse} />
 			</div>

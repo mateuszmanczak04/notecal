@@ -28,7 +28,7 @@ const SideNotes = ({ course, notes }: Props) => {
 						aria-label={`link to note with date ${format(note.startTime, 'yyyy-MM-dd')}`}
 						title={`link to note with date ${format(note.startTime, 'yyyy-MM-dd')}`}
 						className={cn(
-							'flex h-9 items-center gap-2 border-b border-l border-r px-3 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700',
+							'flex h-9 items-center justify-center gap-2 border-b border-l border-r px-3 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700',
 							index === 0 && 'rounded-t-xl border-t',
 							index === notes.length - 1 &&
 								'border-b-transparent',
@@ -37,9 +37,6 @@ const SideNotes = ({ course, notes }: Props) => {
 						)}>
 						<span className='shrink-0 text-sm'>
 							{format(note.startTime, 'yyyy-MM-dd')}
-						</span>
-						<span className='line-clamp-1 text-sm text-neutral-600 dark:text-neutral-300'>
-							{note.content.slice(0, 50)}
 						</span>
 					</Link>
 				))}
