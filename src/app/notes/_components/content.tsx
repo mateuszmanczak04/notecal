@@ -37,9 +37,6 @@ const editorConfig: InitialConfigType = {
 	},
 };
 
-// TODO - Other kind of nodes like h1, h2, h3, lists etc.
-// TODO - Saving data and loading it from db
-
 const Content = ({ note, course }: Props) => {
 	// const { update } = useNotes();
 	// const [content, setContent] = useState(note.content);
