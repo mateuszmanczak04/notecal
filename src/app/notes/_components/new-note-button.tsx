@@ -26,7 +26,7 @@ const NewNoteButton = ({ course }: Props) => {
 		addNewNote({
 			id: uid(),
 			courseId: course.id,
-			content: 'Empty note',
+			content: '',
 			startTime,
 			endTime,
 		});

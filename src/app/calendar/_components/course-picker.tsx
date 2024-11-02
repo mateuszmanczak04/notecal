@@ -58,7 +58,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 
 		addNewNote({
 			id: newNoteId,
-			content: 'Blank note',
+			content: '',
 			startTime: time,
 			endTime: new Date(
 				time.getTime() + settings.defaultNoteDuration * 60 * 1000,

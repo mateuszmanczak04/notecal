@@ -36,7 +36,7 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 			addNewNote({
 				id: newNoteId,
 				courseId: id,
-				content: 'Empty note',
+				content: '',
 				startTime,
 				endTime,
 			});
