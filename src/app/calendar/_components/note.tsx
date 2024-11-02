@@ -312,9 +312,7 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 						)}
 
 						{/* Title: */}
-						{!isDragging && (
-							<p className='m-4'>{note.content.slice(0, 20)}</p>
-						)}
+						{!isDragging && <p className='m-4'>{course?.name}</p>}
 
 						{/* Bottom edge to drag: */}
 						{index === noteDays.length - 1 && (
@@ -348,7 +346,7 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 							),
 							backgroundColor: course?.color,
 						}}>
-						<p className='m-4'>{note.content.slice(0, 20)}</p>
+						<p className='m-4'>{course?.name}</p>
 					</div>
 				))}
 		</>
