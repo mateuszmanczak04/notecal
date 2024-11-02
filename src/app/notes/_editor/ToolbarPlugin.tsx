@@ -118,9 +118,9 @@ export default function ToolbarPlugin() {
 	useEffect(() => {}, []);
 
 	return (
-		<div className='flex items-center gap-4'>
+		<div className='flex flex-wrap items-center justify-center gap-2 rounded-md bg-neutral-800 p-2'>
 			{/* Undo & Redo */}
-			<div className='grid grid-cols-2 gap-1'>
+			<div className='grid grid-cols-2 gap-1 rounded-md bg-neutral-700'>
 				<Toggle
 					disabled={disableMap.undo}
 					onPressedChange={() => {
@@ -138,7 +138,7 @@ export default function ToolbarPlugin() {
 			</div>
 
 			{/* Headings */}
-			<div className='grid grid-cols-2 gap-1'>
+			<div className='grid grid-cols-2 gap-1 rounded-md bg-neutral-700'>
 				<Toggle onClick={() => updateHeading('h1')}>
 					<Heading1 className='h-5 w-5' />
 				</Toggle>
@@ -148,7 +148,7 @@ export default function ToolbarPlugin() {
 			</div>
 
 			{/* Bold, Italic, Underline */}
-			<div className='grid grid-cols-3 gap-1'>
+			<div className='grid grid-cols-3 gap-1 rounded-md bg-neutral-700'>
 				<Toggle
 					pressed={selectionMap.bold}
 					className={selectionMap.bold ? 'bg-neutral-600' : ''}
@@ -179,7 +179,7 @@ export default function ToolbarPlugin() {
 			</div>
 
 			{/* Text align */}
-			<div className='grid grid-cols-4 gap-1'>
+			<div className='grid grid-cols-4 gap-1 rounded-md bg-neutral-700'>
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
