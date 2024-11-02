@@ -118,9 +118,9 @@ export default function ToolbarPlugin() {
 	useEffect(() => {}, []);
 
 	return (
-		<div className='flex flex-wrap items-center justify-center gap-2 rounded-md bg-neutral-800 p-2'>
+		<div className='flex flex-wrap items-center justify-center gap-2 rounded-md bg-white p-2 dark:bg-neutral-800'>
 			{/* Undo & Redo */}
-			<div className='grid grid-cols-2 gap-1 rounded-md bg-neutral-700'>
+			<div className='grid grid-cols-2 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
 				<Toggle
 					disabled={disableMap.undo}
 					onPressedChange={() => {
@@ -138,7 +138,7 @@ export default function ToolbarPlugin() {
 			</div>
 
 			{/* Headings */}
-			<div className='grid grid-cols-2 gap-1 rounded-md bg-neutral-700'>
+			<div className='grid grid-cols-2 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
 				<Toggle onClick={() => updateHeading('h1')}>
 					<Heading1 className='h-5 w-5' />
 				</Toggle>
@@ -148,10 +148,14 @@ export default function ToolbarPlugin() {
 			</div>
 
 			{/* Bold, Italic, Underline */}
-			<div className='grid grid-cols-3 gap-1 rounded-md bg-neutral-700'>
+			<div className='grid grid-cols-3 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
 				<Toggle
 					pressed={selectionMap.bold}
-					className={selectionMap.bold ? 'bg-neutral-600' : ''}
+					className={
+						selectionMap.bold
+							? 'bg-neutral-300 dark:bg-neutral-600'
+							: ''
+					}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
 					}}>
@@ -159,7 +163,11 @@ export default function ToolbarPlugin() {
 				</Toggle>
 				<Toggle
 					pressed={selectionMap.italic}
-					className={selectionMap.italic ? 'bg-neutral-600' : ''}
+					className={
+						selectionMap.italic
+							? 'bg-neutral-300 dark:bg-neutral-600'
+							: ''
+					}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
 					}}>
@@ -167,7 +175,11 @@ export default function ToolbarPlugin() {
 				</Toggle>
 				<Toggle
 					pressed={selectionMap.underline}
-					className={selectionMap.underline ? 'bg-neutral-600' : ''}
+					className={
+						selectionMap.underline
+							? 'bg-neutral-300 dark:bg-neutral-600'
+							: ''
+					}
 					onPressedChange={() => {
 						editor.dispatchCommand(
 							FORMAT_TEXT_COMMAND,
@@ -179,7 +191,7 @@ export default function ToolbarPlugin() {
 			</div>
 
 			{/* Text align */}
-			<div className='grid grid-cols-4 gap-1 rounded-md bg-neutral-700'>
+			<div className='grid grid-cols-4 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');

@@ -51,7 +51,7 @@ const Content = ({ note, course }: Props) => {
 	};
 
 	return (
-		<div className='flex flex-1 flex-col rounded-xl bg-neutral-700 p-4'>
+		<div className='flex flex-1 flex-col rounded-xl bg-neutral-100 p-4 dark:bg-neutral-700'>
 			<LexicalComposer initialConfig={editorConfig}>
 				<ToolbarPlugin />
 				<div className='relative mb-4 mt-4 leading-loose'>
