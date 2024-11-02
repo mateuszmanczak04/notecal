@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import {
 	InitialConfigType,
@@ -11,7 +12,11 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { HeadingNode } from '@lexical/rich-text';
 import { Course, Note } from '@prisma/client';
+import { Save } from 'lucide-react';
+import { useState } from 'react';
+import SavePlugin from '../_editor/SavePlugin';
 import ToolbarPlugin from '../_editor/ToolbarPlugin';
+import useNotes from '../_hooks/use-notes';
 
 type Props = {
 	note: Note;
@@ -19,7 +24,7 @@ type Props = {
 };
 
 const editorConfig: InitialConfigType = {
-	namespace: 'Notecal note content',
+	namespace: 'Note content',
 	nodes: [HeadingNode],
 	onError(error: Error) {
 		throw error;
@@ -38,31 +43,12 @@ const editorConfig: InitialConfigType = {
 };
 
 const Content = ({ note, course }: Props) => {
-	// const { update } = useNotes();
-	// const [content, setContent] = useState(note.content);
-	// const { mutate: updateContent, isPending } = useMutation({
-	// 	mutationFn: async () => update({ id: note.id, content }),
-	// });
-	// return (
-	// 	<div
-	// 		className={cn(
-	// 			'mt-4 flex flex-1 flex-col justify-between gap-4 rounded-xl',
-	// 			isPending && 'pointer-events-none  opacity-75',
-	// 		)}>
-	// 		<Textarea
-	// 			className='flex-1 resize-none border-2 border-neutral-200 bg-neutral-100 shadow-none focus-visible:border-primary-500 focus-visible:ring-0 dark:border-neutral-600 dark:bg-neutral-700'
-	// 			aria-label='note content'
-	// 			title='note content'
-	// 			value={content}
-	// 			onChange={e => setContent(e.target.value)}></Textarea>
-	// 		<Button
-	// 			onClick={() => updateContent()}
-	// 			style={{ background: course?.color }}>
-	// 			<Save />
-	// 			Save content
-	// 		</Button>
-	// 	</div>
-	// );
+	const { update } = useNotes();
+	const [content, setContent] = useState(note.content);
+
+	const handleSave = () => {
+		update({ id: note.id, content });
+	};
 
 	return (
 		<div className='mt-4 rounded-xl bg-neutral-700 p-4'>
@@ -83,7 +69,15 @@ const Content = ({ note, course }: Props) => {
 				</div>
 				<HistoryPlugin />
 				<AutoFocusPlugin />
+				<SavePlugin
+					value={note.content}
+					onChange={value => setContent(value)}
+				/>
 			</LexicalComposer>
+			<Button onClick={handleSave} style={{ background: course?.color }}>
+				<Save />
+				Save content
+			</Button>
 		</div>
 	);
 };
