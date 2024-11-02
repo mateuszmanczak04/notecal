@@ -24,36 +24,14 @@ const editorConfig: InitialConfigType = {
 		throw error;
 	},
 	theme: {
-		code: '',
 		heading: {
 			h1: 'text-2xl font-bold',
 			h2: 'text-xl font-bold',
-			h3: 'text-lg font-bold',
 		},
-		image: '',
-		link: 'text-blue-500',
-		list: {
-			listitem: '',
-			nested: {
-				listitem: '',
-			},
-			ol: '',
-			ul: '',
-		},
-		ltr: 'text-left',
-		paragraph: '',
-		placeholder: '',
-		quote: '',
-		rtl: 'text-right',
 		text: {
 			bold: 'font-bold',
-			code: '',
-			hashtag: '',
 			italic: 'italic',
-			overflowed: '',
-			strikethrough: 'line-through',
 			underline: 'underline',
-			underlineStrikethrough: '[text-decoration:underline_line-through]',
 		},
 	},
 };

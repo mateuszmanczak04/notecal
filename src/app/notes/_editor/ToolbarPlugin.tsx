@@ -1,5 +1,7 @@
 import { Toggle } from '@/components/ui/toggle';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { $createHeadingNode, HeadingTagType } from '@lexical/rich-text';
+import { $wrapNodes } from '@lexical/selection';
 import { mergeRegister } from '@lexical/utils';
 import {
 	$getSelection,
@@ -20,6 +22,8 @@ import {
 	Bold,
 	ChevronLeft,
 	ChevronRight,
+	Heading1,
+	Heading2,
 	Italic,
 	Strikethrough,
 	Underline,
@@ -30,27 +34,53 @@ const LowPriority = 1;
 
 export default function ToolbarPlugin() {
 	const [editor] = useLexicalComposerContext();
-	const toolbarRef = useRef(null);
-	const [canUndo, setCanUndo] = useState(false);
-	const [canRedo, setCanRedo] = useState(false);
-	const [isBold, setIsBold] = useState(false);
-	const [isItalic, setIsItalic] = useState(false);
-	const [isUnderline, setIsUnderline] = useState(false);
-	const [isStrikethrough, setIsStrikethrough] = useState(false);
-	const [alignment, setAlignment] = useState<
-		'left' | 'right' | 'center' | 'justify'
-	>('left');
 
+	/** Indicates which properties are disabled, e.g.:
+	 * {
+	 * 	undo: true,
+	 * 	redo: false,
+	 * }
+	 */
+	const [disableMap, setDisableMap] = useState<{
+		[id: string]: boolean;
+	}>({
+		undo: true,
+		redo: true,
+	});
+
+	/** Indicates which properties are related to the current selection, e.g.:
+	 * {
+	 * 	bold: true,
+	 * 	italic: true,
+	 * 	underline: false,
+	 * }
+	 */
+	const [selectionMap, setSelectionMap] = useState<{
+		[id: string]: boolean;
+	}>({});
+
+	/** Update toolbar state on every rerender */
 	const $updateToolbar = useCallback(() => {
 		const selection = $getSelection();
 		if ($isRangeSelection(selection)) {
-			// Update text format
-			setIsBold(selection.hasFormat('bold'));
-			setIsItalic(selection.hasFormat('italic'));
-			setIsUnderline(selection.hasFormat('underline'));
-			setIsStrikethrough(selection.hasFormat('strikethrough'));
+			const newSelectionMap = {
+				bold: selection.hasFormat('bold'),
+				italic: selection.hasFormat('italic'),
+				underline: selection.hasFormat('underline'),
+			};
+			setSelectionMap(newSelectionMap);
 		}
 	}, []);
+
+	const updateHeading = (heading: HeadingTagType) => {
+		editor.update(() => {
+			const selection = $getSelection();
+
+			if ($isRangeSelection(selection)) {
+				$wrapNodes(selection, () => $createHeadingNode(heading));
+			}
+		});
+	};
 
 	useEffect(() => {
 		return mergeRegister(
@@ -70,7 +100,7 @@ export default function ToolbarPlugin() {
 			editor.registerCommand(
 				CAN_UNDO_COMMAND,
 				payload => {
-					setCanUndo(payload);
+					setDisableMap(prev => ({ ...prev, undo: !payload }));
 					return false;
 				},
 				LowPriority,
@@ -78,7 +108,7 @@ export default function ToolbarPlugin() {
 			editor.registerCommand(
 				CAN_REDO_COMMAND,
 				payload => {
-					setCanRedo(payload);
+					setDisableMap(prev => ({ ...prev, redo: !payload }));
 					return false;
 				},
 				LowPriority,
@@ -86,21 +116,21 @@ export default function ToolbarPlugin() {
 		);
 	}, [editor, $updateToolbar]);
 
+	useEffect(() => {}, []);
+
 	return (
-		<div className='flex items-center gap-4' ref={toolbarRef}>
+		<div className='flex items-center gap-4'>
 			{/* Undo & Redo */}
 			<div className='grid grid-cols-2 gap-1'>
 				<Toggle
-					disabled={!canUndo}
-					value='undo'
+					disabled={disableMap.undo}
 					onPressedChange={() => {
 						editor.dispatchCommand(UNDO_COMMAND, undefined);
 					}}>
 					<ChevronLeft className='h-5 w-5' />
 				</Toggle>
 				<Toggle
-					disabled={!canRedo}
-					value='undo'
+					disabled={disableMap.redo}
 					onPressedChange={() => {
 						editor.dispatchCommand(REDO_COMMAND, undefined);
 					}}>
@@ -108,27 +138,37 @@ export default function ToolbarPlugin() {
 				</Toggle>
 			</div>
 
-			{/* Font type */}
-			<div className='grid grid-cols-4 gap-1'>
+			{/* Headings */}
+			<div className='grid grid-cols-2 gap-1'>
+				<Toggle onClick={() => updateHeading('h1')}>
+					<Heading1 className='h-5 w-5' />
+				</Toggle>
+				<Toggle onClick={() => updateHeading('h2')}>
+					<Heading2 className='h-5 w-5' />
+				</Toggle>
+			</div>
+
+			{/* Bold, Italic, Underline */}
+			<div className='grid grid-cols-3 gap-1'>
 				<Toggle
-					pressed={isBold}
-					className={isBold ? 'bg-neutral-600' : ''}
+					pressed={selectionMap.bold}
+					className={selectionMap.bold ? 'bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
 					}}>
 					<Bold className='h-5 w-5' />
 				</Toggle>
 				<Toggle
-					pressed={isItalic}
-					className={isItalic ? 'bg-neutral-600' : ''}
+					pressed={selectionMap.italic}
+					className={selectionMap.italic ? 'bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
 					}}>
 					<Italic className='h-5 w-5' />
 				</Toggle>
 				<Toggle
-					pressed={isUnderline}
-					className={isUnderline ? 'bg-neutral-600' : ''}
+					pressed={selectionMap.underline}
+					className={selectionMap.underline ? 'bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(
 							FORMAT_TEXT_COMMAND,
@@ -137,31 +177,18 @@ export default function ToolbarPlugin() {
 					}}>
 					<Underline className='h-5 w-5' />
 				</Toggle>
-				<Toggle
-					pressed={isStrikethrough}
-					className={isStrikethrough ? 'bg-neutral-600' : ''}
-					onPressedChange={() => {
-						editor.dispatchCommand(
-							FORMAT_TEXT_COMMAND,
-							'strikethrough',
-						);
-					}}>
-					<Strikethrough className='h-5 w-5' />
-				</Toggle>
 			</div>
 
 			{/* Text align */}
 			<div className='grid grid-cols-4 gap-1'>
 				<Toggle
-					pressed={alignment === 'left'}
-					onPressedChange={() => {
+					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
 					}}>
 					<AlignLeft className='h-5 w-5' />
 				</Toggle>
 				<Toggle
-					pressed={alignment === 'center'}
-					onPressedChange={() => {
+					onClick={() => {
 						editor.dispatchCommand(
 							FORMAT_ELEMENT_COMMAND,
 							'center',
@@ -170,15 +197,13 @@ export default function ToolbarPlugin() {
 					<AlignCenter className='h-5 w-5' />
 				</Toggle>
 				<Toggle
-					pressed={alignment === 'right'}
-					onPressedChange={() => {
+					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
 					}}>
 					<AlignRight className='h-5 w-5' />
 				</Toggle>
 				<Toggle
-					pressed={alignment === 'justify'}
-					onPressedChange={() => {
+					onClick={() => {
 						editor.dispatchCommand(
 							FORMAT_ELEMENT_COMMAND,
 							'justify',
