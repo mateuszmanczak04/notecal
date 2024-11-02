@@ -9,6 +9,7 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import { HeadingNode } from '@lexical/rich-text';
 import { Course, Note } from '@prisma/client';
 import ToolbarPlugin from '../_editor/ToolbarPlugin';
 
@@ -19,7 +20,7 @@ type Props = {
 
 const editorConfig: InitialConfigType = {
 	namespace: 'Notecal note content',
-	nodes: [],
+	nodes: [HeadingNode],
 	onError(error: Error) {
 		throw error;
 	},
