@@ -11,6 +11,8 @@ const TasksPage = () => {
 	const { tasks, isPending, error } = useTasks();
 	const { isPending: isPendingCourses } = useCourses();
 
+	console.log({ isPending, isPendingCourses, tasks, error });
+
 	return (
 		<div className='mx-auto max-w-[800px] space-y-8'>
 			{error && <ErrorMessage>{error.message}</ErrorMessage>}

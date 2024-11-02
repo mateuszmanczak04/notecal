@@ -38,6 +38,7 @@ const getTasks = async () => {
 			),
 		};
 	} catch (error) {
+		console.log({ error });
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };
