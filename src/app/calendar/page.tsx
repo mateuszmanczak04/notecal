@@ -9,6 +9,14 @@ import Header from './_components/header';
 import Notes from './_components/notes';
 import TopBar from './_components/top-bar';
 import { useCalendarContext } from './_context/calendar-context';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Calendar',
+	robots: {
+		index: false,
+	},
+};
 
 const CalendarPage = () => {
 	const { error: notesError } = useNotes();
