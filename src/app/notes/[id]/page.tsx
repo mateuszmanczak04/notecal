@@ -20,6 +20,14 @@ import ChangeCourse from '../_components/change-course';
 import SideNotes from '../_components/side-notes';
 import useNote from '../_hooks/use-note';
 import useNotes from '../_hooks/use-notes';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Note',
+	robots: {
+		index: false,
+	},
+};
 
 const NotePage = () => {
 	const { notes, isPending: isNotesPending, error: notesError } = useNotes();
