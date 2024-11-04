@@ -16,10 +16,15 @@ import { Input } from '@/components/ui/input';
 import LoginSchema from '@/schemas/login-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LogIn } from 'lucide-react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+
+export const metadata: Metadata = {
+	title: 'Login to your account!',
+};
 
 const LoginPage = () => {
 	const [isPending, startTransition] = useTransition();
