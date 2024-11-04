@@ -105,6 +105,8 @@ export const CalendarContextProvider = ({
 		const minutes = Math.round((totalMinutes % 60) / 15) * 15;
 		time.setHours(hours);
 		time.setMinutes(minutes);
+		time.setSeconds(0);
+		time.setMilliseconds(0);
 
 		return time;
 	};
