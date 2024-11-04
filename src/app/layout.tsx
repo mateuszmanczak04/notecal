@@ -4,19 +4,12 @@ import UnauthenticatedProviders from '@/components/common/unauthenticated-provid
 import { cn } from '@/lib/utils';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import MainLayout from '../components/common/main-layout';
 import { Suspense } from 'react';
+import MainLayout from '../components/common/main-layout';
 import Loading from './loading';
 
 const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = {
-	title: 'NoteCal - Organize Your Notes',
-	description:
-		'A productivity app which was made to keep your school notes organised based on lesson.',
-};
 
 export default async function RootLayout({
 	children,

@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 	},
 };
 
-const AuthErrorPage = () => {
+const page = () => {
 	return <ErrorMessage>Auth error occurred</ErrorMessage>;
 };
 
-export default AuthErrorPage;
+export default page;

@@ -1,6 +1,6 @@
 import LoadingSpinner from '@/components/common/loading-spinner';
 
-const Loading = async () => {
+const Loading = () => {
 	return (
 		<div className='grid h-full w-full place-content-center'>
 			<div className='flex flex-col gap-4'>

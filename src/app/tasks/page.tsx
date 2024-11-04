@@ -1,12 +1,5 @@
-'use client';
-
-import ErrorMessage from '@/components/common/error-message';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import useCourses from '../courses/_hooks/use-courses';
-import CreateTask from './_components/create-task';
-import Task from './_components/task';
-import useTasks from './_hooks/use-tasks';
 import { Metadata } from 'next';
+import TasksPage from './_components/tasks-page';
 
 export const metadata: Metadata = {
 	title: 'Tasks',
@@ -15,36 +8,6 @@ export const metadata: Metadata = {
 	},
 };
 
-const TasksPage = () => {
-	const { tasks, isPending, error } = useTasks();
-	const { isPending: isPendingCourses } = useCourses();
+const page = () => <TasksPage />;
 
-	return (
-		<div className='mx-auto max-w-[800px] space-y-8'>
-			{error && <ErrorMessage>{error.message}</ErrorMessage>}
-
-			<CreateTask />
-
-			{(isPending || isPendingCourses) && (
-				<div className='grid place-content-center'>
-					<LoadingSpinner />
-				</div>
-			)}
-
-			{/* No tasks */}
-			{(!tasks || tasks.length === 0) &&
-				!(isPending || isPendingCourses) && (
-					<p className='text-center text-lg text-neutral-500 sm:ml-8'>
-						You don&apos;t have any tasks yet.
-					</p>
-				)}
-
-			{/* At least 1 task */}
-			{tasks &&
-				tasks.length > 0 &&
-				tasks.map(task => <Task key={task.id} task={task} />)}
-		</div>
-	);
-};
-
-export default TasksPage;
+export default page;
