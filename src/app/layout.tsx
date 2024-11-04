@@ -36,9 +36,6 @@ export default async function RootLayout({
 					<UnauthenticatedProviders>
 						<div className='pt-16'>{children}</div>
 					</UnauthenticatedProviders>
-					<p className='fixed inset-x-0 bottom-0 z-50 bg-black text-center text-white'>
-						This app is still in development stage
-					</p>
 					<Analytics />
 					<SpeedInsights />
 				</body>
@@ -56,9 +53,6 @@ export default async function RootLayout({
 				<MainLayout>
 					<Suspense fallback={<Loading />}>{children}</Suspense>
 				</MainLayout>
-				<p className='fixed inset-x-0 bottom-0 z-50 bg-black text-center text-white'>
-					This app is still in development stage
-				</p>
 				<Analytics />
 				<SpeedInsights />
 			</body>
