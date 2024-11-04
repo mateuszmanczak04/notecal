@@ -10,6 +10,16 @@ import { Mail } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import forgotPassword from '../_actions/forgot-password';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Forgot your password?',
+	description:
+		'Provide your e-mail address to get your password recovery message',
+	robots: {
+		index: false,
+	},
+};
 
 const ForgotPasswordPage = () => {
 	const searchParams = useSearchParams();
