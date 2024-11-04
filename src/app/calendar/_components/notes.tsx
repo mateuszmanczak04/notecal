@@ -35,7 +35,7 @@ const Notes = () => {
 		setSelectedTime(time);
 	};
 
-	// TODO: move this to "notes" state:
+	/** Calculates a left offset when there are multiple notes overlapping */
 	const leftOffsets = useMemo(() => {
 		if (!notes || notes.length === 0) return [];
 
