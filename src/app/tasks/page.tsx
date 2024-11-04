@@ -6,6 +6,14 @@ import useCourses from '../courses/_hooks/use-courses';
 import CreateTask from './_components/create-task';
 import Task from './_components/task';
 import useTasks from './_hooks/use-tasks';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Tasks',
+	robots: {
+		index: false,
+	},
+};
 
 const TasksPage = () => {
 	const { tasks, isPending, error } = useTasks();
