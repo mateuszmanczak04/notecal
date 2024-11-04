@@ -6,6 +6,14 @@ import LoadingSpinner from '@/components/common/loading-spinner';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import Course from './_components/course';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Courses',
+	robots: {
+		index: false,
+	},
+};
 
 const CoursesPage = () => {
 	const { courses, error, isPending } = useCourses();
