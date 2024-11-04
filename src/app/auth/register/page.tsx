@@ -22,6 +22,11 @@ import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import sendConfirmationEmail from '../_actions/send-confirmation-email';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Join us today!',
+};
 
 const RegisterPage = () => {
 	const [isPending, startTransition] = useTransition();
