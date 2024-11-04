@@ -11,6 +11,14 @@ import DefaultNoteDurationSetting from './_components/default-note-duration-sett
 import DisplayedDaysSetting from './_components/displayed-days-setting';
 import EmailNotConfirmed from './_components/email-not-confirmed';
 import useSettings from './_hooks/use-settings';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Settings',
+	robots: {
+		index: false,
+	},
+};
 
 const SettingsPage = () => {
 	const { settings, isPending, error } = useSettings();
