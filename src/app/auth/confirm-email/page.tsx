@@ -9,6 +9,14 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import confirmEmail from '../_actions/confirm-email';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Confirm your e-mail address',
+	robots: {
+		index: false,
+	},
+};
 
 const ConfirmEmailPage = () => {
 	const [isPending, startTransition] = useTransition();
