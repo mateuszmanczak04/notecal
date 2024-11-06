@@ -2,14 +2,7 @@
 
 import useSettings from '@/app/settings/_hooks/use-settings';
 import { addDays } from 'date-fns';
-import {
-	MutableRefObject,
-	ReactNode,
-	createContext,
-	useContext,
-	useRef,
-	useState,
-} from 'react';
+import { MutableRefObject, ReactNode, createContext, useContext, useRef, useState } from 'react';
 
 interface CalendarContextProps {
 	currentFirstDay: Date;
@@ -17,10 +10,7 @@ interface CalendarContextProps {
 	goDayBackward: () => void;
 	getDayAfter: (days: number) => Date;
 	containerRef: MutableRefObject<HTMLDivElement | null>;
-	getRelativePosition: (
-		x: number,
-		y: number,
-	) => { x: number | null; y: number | null };
+	getRelativePosition: (x: number, y: number) => { x: number | null; y: number | null };
 	getDateFromPosition: (x: number, y: number) => Date | null;
 	displayedDays: number;
 	rowHeight: number;
@@ -32,11 +22,7 @@ interface CalendarContextProps {
 
 const CalendarContext = createContext({} as CalendarContextProps);
 
-export const CalendarContextProvider = ({
-	children,
-}: {
-	children: ReactNode;
-}) => {
+export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const { settings, update: updateSettings } = useSettings();
@@ -64,23 +50,12 @@ export const CalendarContextProvider = ({
 	const getRelativePosition = (x: number, y: number) => {
 		if (!containerRef.current) return { x: null, y: null };
 
-		const {
-			x: containerLeft,
-			y: containerTop,
-			width,
-			height,
-		} = containerRef.current.getBoundingClientRect();
+		const { x: containerLeft, y: containerTop, width, height } = containerRef.current.getBoundingClientRect();
 
 		const relativeX = x - containerLeft;
 		const relativeY = y - containerTop;
 
-		if (
-			relativeX < 0 ||
-			relativeY < 0 ||
-			relativeX > width ||
-			relativeY > height
-		)
-			return { x: null, y: null };
+		if (relativeX < 0 || relativeY < 0 || relativeX > width || relativeY > height) return { x: null, y: null };
 
 		return { x: relativeX, y: relativeY };
 	};
@@ -160,7 +135,8 @@ export const CalendarContextProvider = ({
 				displayedDays: settings.displayedDays,
 				scrollTop,
 				setScrollTop,
-			}}>
+			}}
+		>
 			{children}
 		</CalendarContext.Provider>
 	);
@@ -169,9 +145,7 @@ export const CalendarContextProvider = ({
 export const useCalendarContext = () => {
 	const context = useContext(CalendarContext);
 	if (!context) {
-		throw new Error(
-			'useCalendarContext must be wrapped within CalendarContextProvider!',
-		);
+		throw new Error('useCalendarContext must be wrapped within CalendarContextProvider!');
 	}
 	return context;
 };

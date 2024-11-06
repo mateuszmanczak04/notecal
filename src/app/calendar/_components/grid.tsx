@@ -21,12 +21,10 @@ const Grid = () => {
 				className='grid flex-1'
 				style={{
 					gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
-				}}>
+				}}
+			>
 				{new Array(displayedDays).fill(0).map((_, index) => (
-					<DayColumn
-						key={index}
-						isLast={index === displayedDays - 1}
-					/>
+					<DayColumn key={index} isLast={index === displayedDays - 1} />
 				))}
 			</div>
 		</div>

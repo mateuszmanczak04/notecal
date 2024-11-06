@@ -67,10 +67,7 @@ const useTasks = () => {
 			const newTempTask = createTempTask(values);
 
 			await queryClient.setQueryData(['tasks'], (oldTasks: Task[]) =>
-				getSortedTasks(
-					[...oldTasks, newTempTask],
-					settings?.orderTasks || 'createdAt',
-				),
+				getSortedTasks([...oldTasks, newTempTask], settings?.orderTasks || 'createdAt'),
 			);
 
 			return previousTasks;
@@ -150,9 +147,7 @@ const useTasks = () => {
 	});
 
 	const sort = async (criteria: OrderTasksEnum) => {
-		await queryClient.setQueryData(['tasks'], (oldTasks: Task[]) =>
-			getSortedTasks(oldTasks, criteria),
-		);
+		await queryClient.setQueryData(['tasks'], (oldTasks: Task[]) => getSortedTasks(oldTasks, criteria));
 	};
 
 	return { tasks: data, isPending, error, add, update, remove, sort };

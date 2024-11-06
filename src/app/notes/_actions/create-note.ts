@@ -30,12 +30,8 @@ const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
 		}
 
 		// Set seconds and milliseconds to 0:
-		const properStartTime = new Date(
-			new Date(startTime.setSeconds(0)).setMilliseconds(0),
-		);
-		const properEndTime = new Date(
-			new Date(endTime.setSeconds(0)).setMilliseconds(0),
-		);
+		const properStartTime = new Date(new Date(startTime.setSeconds(0)).setMilliseconds(0));
+		const properEndTime = new Date(new Date(endTime.setSeconds(0)).setMilliseconds(0));
 
 		const newNote = await db.note.create({
 			data: {

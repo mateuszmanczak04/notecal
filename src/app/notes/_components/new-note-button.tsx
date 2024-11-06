@@ -19,9 +19,7 @@ const NewNoteButton = ({ course }: Props) => {
 		if (!settings) return;
 
 		const startTime = new Date();
-		const endTime = new Date(
-			startTime.getTime() + settings.defaultNoteDuration * 60 * 1000,
-		);
+		const endTime = new Date(startTime.getTime() + settings.defaultNoteDuration * 60 * 1000);
 
 		addNewNote({
 			id: uid(),
@@ -35,10 +33,7 @@ const NewNoteButton = ({ course }: Props) => {
 	};
 
 	return (
-		<Button
-			style={{ background: course?.color }}
-			onClick={onClick}
-			className='w-full rounded-t-none'>
+		<Button style={{ background: course?.color }} onClick={onClick} className='w-full rounded-t-none'>
 			<Plus className='h-4 w-4' /> Create a new note
 		</Button>
 	);

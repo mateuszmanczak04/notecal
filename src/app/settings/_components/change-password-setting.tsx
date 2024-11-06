@@ -5,14 +5,7 @@ import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import ChangePasswordSchema from '@/schemas/change-password-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -47,9 +40,7 @@ const ChangePasswordSetting = () => {
 		<div className='flex flex-col gap-2'>
 			<h2 className='text-lg font-semibold'>Change password</h2>
 			<Form {...form}>
-				<form
-					onSubmit={form.handleSubmit(onSubmit)}
-					className='flex flex-col gap-4'>
+				<form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-4'>
 					<FormField
 						control={form.control}
 						name='oldPassword'
@@ -57,11 +48,7 @@ const ChangePasswordSetting = () => {
 							<FormItem>
 								<FormLabel>Old password</FormLabel>
 								<FormControl>
-									<Input
-										placeholder='******'
-										type='password'
-										{...field}
-									/>
+									<Input placeholder='******' type='password' {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -74,11 +61,7 @@ const ChangePasswordSetting = () => {
 							<FormItem>
 								<FormLabel>New password</FormLabel>
 								<FormControl>
-									<Input
-										placeholder='******'
-										type='password'
-										{...field}
-									/>
+									<Input placeholder='******' type='password' {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -91,11 +74,7 @@ const ChangePasswordSetting = () => {
 							<FormItem>
 								<FormLabel>Confirm new password</FormLabel>
 								<FormControl>
-									<Input
-										placeholder='******'
-										type='password'
-										{...field}
-									/>
+									<Input placeholder='******' type='password' {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

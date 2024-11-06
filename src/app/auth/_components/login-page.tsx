@@ -4,14 +4,7 @@ import login from '@/app/auth/_actions/login';
 import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import { Button } from '@/components/ui/button';
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import LoginSchema from '@/schemas/login-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -46,7 +39,8 @@ const LoginPage = () => {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='mx-auto flex max-w-[400px] flex-col items-center px-8'>
+				className='mx-auto flex max-w-[400px] flex-col items-center px-8'
+			>
 				<p className='text-3xl font-bold'>Login to your account</p>
 				<FormField
 					control={form.control}
@@ -55,10 +49,7 @@ const LoginPage = () => {
 						<FormItem className='mt-4 w-full'>
 							<FormLabel>Email</FormLabel>
 							<FormControl>
-								<Input
-									placeholder='john.doe@example.com'
-									{...field}
-								/>
+								<Input placeholder='john.doe@example.com' {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -71,11 +62,7 @@ const LoginPage = () => {
 						<FormItem className='mt-4 w-full'>
 							<FormLabel>Password</FormLabel>
 							<FormControl>
-								<Input
-									placeholder='******'
-									{...field}
-									type='password'
-								/>
+								<Input placeholder='******' {...field} type='password' />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -84,7 +71,8 @@ const LoginPage = () => {
 				<Link
 					prefetch
 					href={`/auth/forgot-password${form.getValues('email') && `?email=${form.getValues('email')}`}`}
-					className='text-neutral mr-auto mt-2 text-sm hover:underline'>
+					className='text-neutral mr-auto mt-2 text-sm hover:underline'
+				>
 					Forgot password?
 				</Link>
 				<Button type='submit' className='mt-8 w-full'>
@@ -94,15 +82,12 @@ const LoginPage = () => {
 				<Link
 					prefetch
 					href='/auth/register'
-					className='mt-4 block text-center text-sm text-neutral-500 dark:text-neutral-400'>
+					className='mt-4 block text-center text-sm text-neutral-500 dark:text-neutral-400'
+				>
 					Don&apos;t have an account yet? Register now
 				</Link>
-				<div className='flex w-full justify-center'>
-					{isPending && <LoadingSpinner className='mt-2' />}
-				</div>
-				{error && (
-					<ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>
-				)}
+				<div className='flex w-full justify-center'>{isPending && <LoadingSpinner className='mt-2' />}</div>
+				{error && <ErrorMessage className='mt-4 w-full'>{error}</ErrorMessage>}
 			</form>
 		</Form>
 	);

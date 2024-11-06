@@ -4,8 +4,7 @@ import Hero from '../components/common/hero';
 
 export const metadata: Metadata = {
 	title: 'NoteCal - Organize Your Notes',
-	description:
-		'A productivity app which was made to keep your school notes organised based on lesson.',
+	description: 'A productivity app which was made to keep your school notes organised based on lesson.',
 };
 
 const page = () => {

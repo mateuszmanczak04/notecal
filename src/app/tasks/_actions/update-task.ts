@@ -13,10 +13,7 @@ const UpdateTaskSchema = z.object({
 	title: z.string().optional(),
 	description: z.string().optional(),
 	dueDate: z.coerce.date().optional().nullable(),
-	priority: z
-		.enum([TaskPriority.A, TaskPriority.B, TaskPriority.C])
-		.optional()
-		.nullable(),
+	priority: z.enum([TaskPriority.A, TaskPriority.B, TaskPriority.C]).optional().nullable(),
 });
 
 const updateTask = async (values: z.infer<typeof UpdateTaskSchema>) => {

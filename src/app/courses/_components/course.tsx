@@ -29,9 +29,7 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 		} else {
 			// Create first course note
 			const startTime = new Date();
-			const endTime = new Date(
-				startTime.getTime() + settings.defaultNoteDuration * 60 * 1000,
-			);
+			const endTime = new Date(startTime.getTime() + settings.defaultNoteDuration * 60 * 1000);
 			const newNoteId = uid();
 			addNewNote({
 				id: newNoteId,
@@ -48,11 +46,10 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 		<div
 			className='flex cursor-pointer items-center justify-between rounded-xl bg-neutral-50 p-4 text-white transition hover:opacity-90'
 			style={{ background: color }}
-			onClick={handleClick}>
+			onClick={handleClick}
+		>
 			<div>
-				<p className='line-clamp-1 rounded-xl text-xl font-medium'>
-					{name}
-				</p>
+				<p className='line-clamp-1 rounded-xl text-xl font-medium'>{name}</p>
 				<p className='mt-1 line-clamp-1 opacity-75'>{teacher}</p>
 			</div>
 			<ChevronRight className='h-10 w-10 shrink-0' />

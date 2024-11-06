@@ -2,10 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
-import {
-	InitialConfigType,
-	LexicalComposer,
-} from '@lexical/react/LexicalComposer';
+import { InitialConfigType, LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
@@ -56,9 +53,7 @@ const Content = ({ note, course }: Props) => {
 				<ToolbarPlugin />
 				<div className='relative mb-4 mt-4 leading-loose'>
 					<RichTextPlugin
-						contentEditable={
-							<ContentEditable className='relative resize-none outline-none' />
-						}
+						contentEditable={<ContentEditable className='relative resize-none outline-none' />}
 						placeholder={
 							<p className='pointer-events-none absolute left-0 top-0 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
 								Enter some text...
@@ -69,15 +64,9 @@ const Content = ({ note, course }: Props) => {
 				</div>
 				<HistoryPlugin />
 				<AutoFocusPlugin />
-				<SavePlugin
-					value={note.content}
-					onChange={value => setContent(value)}
-				/>
+				<SavePlugin value={note.content} onChange={value => setContent(value)} />
 			</LexicalComposer>
-			<Button
-				onClick={handleSave}
-				style={{ background: course?.color }}
-				className='mt-auto w-full'>
+			<Button onClick={handleSave} style={{ background: course?.color }} className='mt-auto w-full'>
 				<Save />
 				Save
 			</Button>

@@ -13,9 +13,7 @@ import forgotPassword from '../_actions/forgot-password';
 
 const ForgotPasswordPage = () => {
 	const searchParams = useSearchParams();
-	const [email, setEmail] = useState<string>(
-		(searchParams.get('email') as string) || '',
-	);
+	const [email, setEmail] = useState<string>((searchParams.get('email') as string) || '');
 	const [timeToNextAttempt, setTimeToNextAttempt] = useState(0);
 
 	const startCounter = () => {
@@ -52,9 +50,7 @@ const ForgotPasswordPage = () => {
 	};
 
 	return (
-		<form
-			className='mx-auto flex max-w-[400px] flex-col gap-4 px-8'
-			onSubmit={handleSubmit}>
+		<form className='mx-auto flex max-w-[400px] flex-col gap-4 px-8' onSubmit={handleSubmit}>
 			<div>
 				<label htmlFor='reset-password-input`'>
 					<span className='font-medium'>Reset your password</span>
@@ -70,16 +66,8 @@ const ForgotPasswordPage = () => {
 				<Mail className='h-4 w-4' />
 				Send recovery email
 			</Button>
-			<small>
-				Please note that email will be sent only if you have confirmed
-				your email address previously
-			</small>
-			{timeToNextAttempt !== 0 && (
-				<p>
-					Wait {timeToNextAttempt} seconds until you send the email
-					again
-				</p>
-			)}
+			<small>Please note that email will be sent only if you have confirmed your email address previously</small>
+			{timeToNextAttempt !== 0 && <p>Wait {timeToNextAttempt} seconds until you send the email again</p>}
 			{isPending && <LoadingSpinner />}
 			{error && <ErrorMessage>{error.message}</ErrorMessage>}
 			{data?.message && <SuccessMessage>{data.message}</SuccessMessage>}

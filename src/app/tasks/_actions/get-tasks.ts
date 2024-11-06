@@ -32,10 +32,7 @@ const getTasks = async () => {
 		});
 
 		return {
-			tasks: getSortedTasks(
-				tasks,
-				userSettings?.orderTasks || 'createdAt',
-			),
+			tasks: getSortedTasks(tasks, userSettings?.orderTasks || 'createdAt'),
 		};
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };

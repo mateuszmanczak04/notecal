@@ -6,12 +6,7 @@ import nodemailer from 'nodemailer';
 import { z } from 'zod';
 
 const Schema = z.object({
-	email: z
-		.string()
-		.trim()
-		.email()
-		.min(1, { message: en.auth.EMAIL_REQUIRED })
-		.email(),
+	email: z.string().trim().email().min(1, { message: en.auth.EMAIL_REQUIRED }).email(),
 });
 
 const sendEmailChangeEmail = async (values: z.infer<typeof Schema>) => {

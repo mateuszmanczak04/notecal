@@ -60,9 +60,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 			id: newNoteId,
 			content: '',
 			startTime: time,
-			endTime: new Date(
-				time.getTime() + settings.defaultNoteDuration * 60 * 1000,
-			),
+			endTime: new Date(time.getTime() + settings.defaultNoteDuration * 60 * 1000),
 			courseId,
 		});
 
@@ -89,7 +87,8 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 			<div
 				className='absolute z-40 flex min-w-40 max-w-96 -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-xl bg-white shadow-xl dark:bg-neutral-700'
 				ref={pickerRef}
-				style={{ left: pickerX, top: pickerY }}>
+				style={{ left: pickerX, top: pickerY }}
+			>
 				{!courses || courses.length === 0 ? (
 					<div className='w-64 p-4'>
 						<p>You don&apos;t have any courses yet</p>
@@ -102,16 +101,15 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 					</div>
 				) : (
 					<div>
-						<p className='w-full py-1 text-center text-sm '>
-							{format(time, 'yyyy/MM/dd hh:mm')}
-						</p>
+						<p className='w-full py-1 text-center text-sm '>{format(time, 'yyyy/MM/dd hh:mm')}</p>
 						<div className='max-h-96 w-64 overflow-y-scroll'>
 							{courses?.map(course => (
 								<button
 									key={course.id}
 									onClick={() => handleSelect(course.id)}
 									className='flex w-full items-center justify-center px-4 py-2 text-white transition hover:bg-neutral-100 dark:hover:bg-neutral-600'
-									style={{ color: course.color }}>
+									style={{ color: course.color }}
+								>
 									{course.name}
 								</button>
 							))}

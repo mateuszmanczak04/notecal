@@ -50,10 +50,7 @@ export const {
 				if (!user || !user.password) return null;
 
 				// compare passwords:
-				const passwordsMatch = await bcrypt.compare(
-					password,
-					user.password,
-				);
+				const passwordsMatch = await bcrypt.compare(password, user.password);
 				if (!passwordsMatch) return null;
 
 				return user;

@@ -125,14 +125,16 @@ export default function ToolbarPlugin() {
 					disabled={disableMap.undo}
 					onPressedChange={() => {
 						editor.dispatchCommand(UNDO_COMMAND, undefined);
-					}}>
+					}}
+				>
 					<ChevronLeft className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					disabled={disableMap.redo}
 					onPressedChange={() => {
 						editor.dispatchCommand(REDO_COMMAND, undefined);
-					}}>
+					}}
+				>
 					<ChevronRight className='h-5 w-5' />
 				</Toggle>
 			</div>
@@ -151,41 +153,29 @@ export default function ToolbarPlugin() {
 			<div className='grid grid-cols-3 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
 				<Toggle
 					pressed={selectionMap.bold}
-					className={
-						selectionMap.bold
-							? 'bg-neutral-300 dark:bg-neutral-600'
-							: ''
-					}
+					className={selectionMap.bold ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
-					}}>
+					}}
+				>
 					<Bold className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					pressed={selectionMap.italic}
-					className={
-						selectionMap.italic
-							? 'bg-neutral-300 dark:bg-neutral-600'
-							: ''
-					}
+					className={selectionMap.italic ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
-					}}>
+					}}
+				>
 					<Italic className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					pressed={selectionMap.underline}
-					className={
-						selectionMap.underline
-							? 'bg-neutral-300 dark:bg-neutral-600'
-							: ''
-					}
+					className={selectionMap.underline ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
 					onPressedChange={() => {
-						editor.dispatchCommand(
-							FORMAT_TEXT_COMMAND,
-							'underline',
-						);
-					}}>
+						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
+					}}
+				>
 					<Underline className='h-5 w-5' />
 				</Toggle>
 			</div>
@@ -195,31 +185,29 @@ export default function ToolbarPlugin() {
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
-					}}>
+					}}
+				>
 					<AlignLeft className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => {
-						editor.dispatchCommand(
-							FORMAT_ELEMENT_COMMAND,
-							'center',
-						);
-					}}>
+						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'center');
+					}}
+				>
 					<AlignCenter className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
-					}}>
+					}}
+				>
 					<AlignRight className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => {
-						editor.dispatchCommand(
-							FORMAT_ELEMENT_COMMAND,
-							'justify',
-						);
-					}}>
+						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify');
+					}}
+				>
 					<AlignJustify className='h-5 w-5' />
 				</Toggle>
 			</div>

@@ -3,15 +3,7 @@
 import useCourse from '@/app/courses/_hooks/use-course';
 import GoBackButton from '@/components/common/go-back-button';
 import { Button } from '@/components/ui/button';
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { cn, COLORS } from '@/lib/utils';
@@ -55,9 +47,7 @@ const EditCoursePage = () => {
 		<div className='mx-auto flex max-w-[600px] flex-col gap-4'>
 			{/* Form: */}
 			<Form {...form}>
-				<form
-					onSubmit={form.handleSubmit(onSubmit)}
-					className='space-y-2'>
+				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2'>
 					{/* Color: */}
 					<FormField
 						control={form.control}
@@ -66,10 +56,7 @@ const EditCoursePage = () => {
 							<FormItem>
 								<FormLabel>New name</FormLabel>
 								<FormControl>
-									<Input
-										placeholder='Computer Science'
-										{...field}
-									/>
+									<Input placeholder='Computer Science' {...field} />
 								</FormControl>
 								<FormDescription />
 								<FormMessage />
@@ -107,28 +94,20 @@ const EditCoursePage = () => {
 												<div
 													className={cn(
 														'grid h-9 w-full cursor-pointer place-content-center rounded-xl border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
-														field.value ===
-															color.hex &&
-															'border-white/50',
+														field.value === color.hex && 'border-white/50',
 													)}
 													style={{
-														backgroundColor:
-															color.hex,
+														backgroundColor: color.hex,
 													}}
-													onClick={() =>
-														field.onChange(
-															color.hex,
-														)
-													}
-													key={color.hex}>
+													onClick={() => field.onChange(color.hex)}
+													key={color.hex}
+												>
 													<span
 														className={cn(
 															'rounded-xl bg-neutral-900/50 px-1 text-sm leading-5 transition',
-															field.value ===
-																color.hex
-																? 'opacity-1'
-																: 'opacity-0',
-														)}>
+															field.value === color.hex ? 'opacity-1' : 'opacity-0',
+														)}
+													>
 														{color.description}
 													</span>
 												</div>

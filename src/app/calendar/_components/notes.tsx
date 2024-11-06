@@ -8,12 +8,7 @@ import Note from './note';
 
 const Notes = () => {
 	const { notes } = useNotes();
-	const {
-		containerRef,
-		getRelativePosition,
-		getDateFromPosition,
-		rowHeight,
-	} = useCalendarContext();
+	const { containerRef, getRelativePosition, getDateFromPosition, rowHeight } = useCalendarContext();
 
 	const [popupX, setPopupX] = useState(0);
 	const [popupY, setPopupY] = useState(0);
@@ -51,10 +46,7 @@ const Notes = () => {
 				}
 
 				for (let k = results[j]; k >= 3; k--) {
-					if (
-						notes[j - k].endTime <= notes[i].startTime ||
-						notes[j - k].startTime > notes[i].startTime
-					) {
+					if (notes[j - k].endTime <= notes[i].startTime || notes[j - k].startTime > notes[i].startTime) {
 						results[i] = 0;
 					}
 				}
@@ -70,21 +62,11 @@ const Notes = () => {
 			ref={containerRef}
 			className='absolute left-12 top-0 w-[calc(100%-48px)] cursor-crosshair overflow-hidden sm:left-20 sm:w-[calc(100%-80px)]'
 			onClick={handleClick}
-			style={{ height: rowHeight * 24 + 'px' }}>
-			{notes?.map((note, index) => (
-				<Note
-					key={note.id}
-					note={note}
-					leftOffset={leftOffsets[index]}
-				/>
-			))}
+			style={{ height: rowHeight * 24 + 'px' }}
+		>
+			{notes?.map((note, index) => <Note key={note.id} note={note} leftOffset={leftOffsets[index]} />)}
 			{selectedTime && (
-				<CoursePicker
-					time={selectedTime}
-					x={popupX}
-					y={popupY}
-					hidePicker={() => setSelectedTime(null)}
-				/>
+				<CoursePicker time={selectedTime} x={popupX} y={popupY} hidePicker={() => setSelectedTime(null)} />
 			)}
 		</div>
 	);

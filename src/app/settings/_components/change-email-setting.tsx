@@ -5,14 +5,7 @@ import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import ChangeEmailSchema from '@/schemas/change-email-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -51,13 +44,9 @@ const ChangeEmailSetting = () => {
 		<div className='flex flex-col gap-2'>
 			<h2 className='text-lg font-semibold'>Change your email address</h2>
 			<p className='opacity-75'>({session.data?.user?.email})</p>
-			<p className='opacity-75'>
-				You will have to log in again afterwards
-			</p>
+			<p className='opacity-75'>You will have to log in again afterwards</p>
 			<Form {...form}>
-				<form
-					onSubmit={form.handleSubmit(onSubmit)}
-					className='flex flex-col gap-4'>
+				<form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-4'>
 					{/* Email field */}
 					<FormField
 						control={form.control}
@@ -66,11 +55,7 @@ const ChangeEmailSetting = () => {
 							<FormItem>
 								<FormLabel>New email</FormLabel>
 								<FormControl>
-									<Input
-										placeholder='example@abc.com'
-										type='email'
-										{...field}
-									/>
+									<Input placeholder='example@abc.com' type='email' {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -85,11 +70,7 @@ const ChangeEmailSetting = () => {
 							<FormItem>
 								<FormLabel>Your password</FormLabel>
 								<FormControl>
-									<Input
-										placeholder='******'
-										type='password'
-										{...field}
-									/>
+									<Input placeholder='******' type='password' {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

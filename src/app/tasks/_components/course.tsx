@@ -44,29 +44,25 @@ const Course = ({ className, task }: Props) => {
 				{currentCourse && (
 					<div
 						className='h-3 w-3 shrink-0 rounded-full'
-						style={{ backgroundColor: currentCourse.color }}></div>
+						style={{ backgroundColor: currentCourse.color }}
+					></div>
 				)}
 				<p className='truncate'>{currentCourse?.name || 'None'}</p>
 			</DropdownMenuTrigger>
 			<DropdownMenuList>
 				{/* Null option */}
-				<DropdownMenuItem
-					onSelect={handleSelect}
-					key={'none' + Math.random()}
-					value={null}>
+				<DropdownMenuItem onSelect={handleSelect} key={'none' + Math.random()} value={null}>
 					None
 				</DropdownMenuItem>
 
 				{/* Options */}
 				{courses &&
 					courses.map(course => (
-						<DropdownMenuItem
-							onSelect={handleSelect}
-							key={course.id}
-							value={course.id}>
+						<DropdownMenuItem onSelect={handleSelect} key={course.id} value={course.id}>
 							<div
 								className='h-3 w-3 shrink-0 rounded-full'
-								style={{ backgroundColor: course.color }}></div>
+								style={{ backgroundColor: course.color }}
+							></div>
 							<p className='truncate'>{course.name}</p>
 						</DropdownMenuItem>
 					))}

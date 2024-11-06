@@ -13,8 +13,7 @@ const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 		return { error: en.INVALID_DATA };
 	}
 
-	const { id, courseId, title, completed, description, dueDate, priority } =
-		validatedFields.data;
+	const { id, courseId, title, completed, description, dueDate, priority } = validatedFields.data;
 
 	try {
 		const session = await auth();

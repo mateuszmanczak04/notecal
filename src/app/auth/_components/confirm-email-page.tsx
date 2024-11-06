@@ -35,9 +35,7 @@ const ConfirmEmailPage = () => {
 				return;
 			}
 			if (res.success) {
-				setMessage(
-					'Email confirmed successfully, you will be redirected to login page within 5 seconds',
-				);
+				setMessage('Email confirmed successfully, you will be redirected to login page within 5 seconds');
 				setTimeout(() => {
 					router.push('/auth/login');
 				}, 5000);
@@ -57,9 +55,7 @@ const ConfirmEmailPage = () => {
 				<Mail />
 				Confirm your email
 			</Button>
-			<div className='mt-2 flex justify-center'>
-				{isPending && <LoadingSpinner />}
-			</div>
+			<div className='mt-2 flex justify-center'>{isPending && <LoadingSpinner />}</div>
 			{error && <ErrorMessage className='mt-4'>{error}</ErrorMessage>}
 			{message && (
 				<div className='mt-4 space-y-4'>

@@ -8,7 +8,8 @@ const LoadingSpinner = ({ className }: { className?: string }) => {
 				className,
 			)}
 			role='status'
-			aria-label='loading spinner'></div>
+			aria-label='loading spinner'
+		></div>
 	);
 };
 

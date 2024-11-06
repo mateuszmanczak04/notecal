@@ -33,23 +33,16 @@ const CalendarPage = () => {
 			<Header />
 
 			{/* Errors */}
-			{notesError && (
-				<ErrorMessage className='mt-4'>
-					{notesError.message}
-				</ErrorMessage>
-			)}
-			{coursesError && (
-				<ErrorMessage className='mt-4'>
-					{coursesError.message}
-				</ErrorMessage>
-			)}
+			{notesError && <ErrorMessage className='mt-4'>{notesError.message}</ErrorMessage>}
+			{coursesError && <ErrorMessage className='mt-4'>{coursesError.message}</ErrorMessage>}
 
 			<TopBar />
 
 			<div
 				className='relative overflow-y-scroll overscroll-none scroll-auto outline-none scrollbar-hide'
 				onScroll={handleScroll}
-				ref={scrollContainerRef}>
+				ref={scrollContainerRef}
+			>
 				{/* Just grid: */}
 				<Grid />
 

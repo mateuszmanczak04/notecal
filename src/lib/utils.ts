@@ -16,8 +16,7 @@ export const COLORS = [
 	{ description: 'Purple', hex: '#9333ea' },
 ];
 
-export const cmdOrCtrl = () =>
-	window.navigator.platform.match(/^Mac/) ? 'cmd' : 'ctrl';
+export const cmdOrCtrl = () => (window.navigator.platform.match(/^Mac/) ? 'cmd' : 'ctrl');
 
 export const getSortedTasks = (tasks: Task[], criteria: OrderTasksEnum) => {
 	const result = [...tasks];
@@ -75,9 +74,7 @@ export const getSortedTasks = (tasks: Task[], criteria: OrderTasksEnum) => {
 		case 'title':
 			result.sort((a, b) => {
 				if (a.title === b.title) return 0;
-				return a.title.toLocaleLowerCase() > b.title.toLocaleLowerCase()
-					? 1
-					: -1;
+				return a.title.toLocaleLowerCase() > b.title.toLocaleLowerCase() ? 1 : -1;
 			});
 			break;
 	}

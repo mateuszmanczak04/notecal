@@ -56,12 +56,8 @@ const useCourses = () => {
 
 			const newTempCourse = createTempCourse(values);
 
-			await queryClient.setQueryData(
-				['courses'],
-				(oldCourses: Course[]) =>
-					[...oldCourses, newTempCourse].toSorted((a, b) =>
-						a.name > b.name ? 1 : -1,
-					),
+			await queryClient.setQueryData(['courses'], (oldCourses: Course[]) =>
+				[...oldCourses, newTempCourse].toSorted((a, b) => (a.name > b.name ? 1 : -1)),
 			);
 
 			return previousCourses;
@@ -88,19 +84,16 @@ const useCourses = () => {
 			await queryClient.cancelQueries({ queryKey: ['courses'] });
 			const previousCourses = queryClient.getQueryData(['courses']);
 
-			await queryClient.setQueryData(
-				['courses'],
-				(oldCourses: Course[]) => {
-					return oldCourses
-						.map(course => {
-							if (course.id === values.id) {
-								return { ...course, ...values };
-							}
-							return course;
-						})
-						.toSorted((a, b) => (a.name > b.name ? 1 : -1));
-				},
-			);
+			await queryClient.setQueryData(['courses'], (oldCourses: Course[]) => {
+				return oldCourses
+					.map(course => {
+						if (course.id === values.id) {
+							return { ...course, ...values };
+						}
+						return course;
+					})
+					.toSorted((a, b) => (a.name > b.name ? 1 : -1));
+			});
 
 			return previousCourses;
 		},
@@ -127,17 +120,14 @@ const useCourses = () => {
 			await queryClient.cancelQueries({ queryKey: ['courses'] });
 			const previousCourses = queryClient.getQueryData(['courses']);
 
-			await queryClient.setQueryData(
-				['courses'],
-				(oldCourses: Course[]) => {
-					return oldCourses.filter(course => {
-						if (course.id === id) {
-							return null;
-						}
-						return course;
-					});
-				},
-			);
+			await queryClient.setQueryData(['courses'], (oldCourses: Course[]) => {
+				return oldCourses.filter(course => {
+					if (course.id === id) {
+						return null;
+					}
+					return course;
+				});
+			});
 
 			return previousCourses;
 		},

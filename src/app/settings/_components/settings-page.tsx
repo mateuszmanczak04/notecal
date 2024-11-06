@@ -30,13 +30,9 @@ const SettingsPage = () => {
 			<Separator />
 			<ChangePasswordSetting />
 			<Separator />
-			<DisplayedDaysSetting
-				initialDisplayedDays={settings.displayedDays}
-			/>
+			<DisplayedDaysSetting initialDisplayedDays={settings.displayedDays} />
 			<Separator />
-			<DefaultNoteDurationSetting
-				initialDefaultNoteDuration={settings.defaultNoteDuration}
-			/>
+			<DefaultNoteDurationSetting initialDefaultNoteDuration={settings.defaultNoteDuration} />
 			<Separator />
 			<Logout variant='secondary' />
 		</div>

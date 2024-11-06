@@ -2,15 +2,7 @@
 
 import GoBackButton from '@/components/common/go-back-button';
 import { Button } from '@/components/ui/button';
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { cn, COLORS } from '@/lib/utils';
 import CreateCourseSchema from '@/schemas/create-course-schema';
@@ -44,7 +36,8 @@ const CreateCoursePage = () => {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='mx-auto mt-4 w-full max-w-[600px] space-y-4 sm:space-y-6 md:space-y-8'>
+				className='mx-auto mt-4 w-full max-w-[600px] space-y-4 sm:space-y-6 md:space-y-8'
+			>
 				<h2 className='text-3xl font-bold'>Create a new course</h2>
 				<FormField
 					control={form.control}
@@ -55,10 +48,7 @@ const CreateCoursePage = () => {
 								Name <span className='text-red-500'>*</span>
 							</FormLabel>
 							<FormControl>
-								<Input
-									placeholder='Computer Science'
-									{...field}
-								/>
+								<Input placeholder='Computer Science' {...field} />
 							</FormControl>
 							<FormDescription />
 							<FormMessage />
@@ -96,24 +86,20 @@ const CreateCoursePage = () => {
 											<div
 												className={cn(
 													'grid h-9 w-full cursor-pointer place-content-center rounded-xl border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
-													field.value === color.hex &&
-														'border-white/50',
+													field.value === color.hex && 'border-white/50',
 												)}
 												style={{
 													backgroundColor: color.hex,
 												}}
-												onClick={() =>
-													field.onChange(color.hex)
-												}
-												key={color.hex}>
+												onClick={() => field.onChange(color.hex)}
+												key={color.hex}
+											>
 												<span
 													className={cn(
 														'rounded-xl bg-neutral-900/50 px-1 text-sm leading-5 transition',
-														field.value ===
-															color.hex
-															? 'opacity-1'
-															: 'opacity-0',
-													)}>
+														field.value === color.hex ? 'opacity-1' : 'opacity-0',
+													)}
+												>
 													{color.description}
 												</span>
 											</div>

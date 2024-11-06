@@ -39,18 +39,13 @@ const EmailNotConfirmed: FC<EmailNotConfirmedProps> = ({}) => {
 	return (
 		<div className='space-y-4 rounded-xl border-2 border-red-500 bg-neutral-100 p-4 dark:bg-neutral-700 dark:text-white'>
 			<p>Your email ({email}) is not confirmed</p>
-			<p className=' opacity-75'>
-				Confirm your email to secure your account in case you lose your
-				password
-			</p>
+			<p className=' opacity-75'>Confirm your email to secure your account in case you lose your password</p>
 			<Button onClick={handleResendLink}>
 				<Mail />
 				Resend confirmation link
 			</Button>
 			{error && <ErrorMessage className='mt-2'>{error}</ErrorMessage>}
-			{message && (
-				<SuccessMessage className='mt-2'>{message}</SuccessMessage>
-			)}
+			{message && <SuccessMessage className='mt-2'>{message}</SuccessMessage>}
 			{isPending && <LoadingSpinner className='mt-2' />}
 		</div>
 	);

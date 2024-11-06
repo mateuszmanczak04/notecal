@@ -62,20 +62,13 @@ const Priority = ({ task }: Props) => {
 
 	return (
 		<DropdownMenu className='w-52'>
-			<DropdownMenuTrigger showChevron>
-				{getPriorityTitle(task.priority)}
-			</DropdownMenuTrigger>
+			<DropdownMenuTrigger showChevron>{getPriorityTitle(task.priority)}</DropdownMenuTrigger>
 			<DropdownMenuList>
-				{([null, 'A', 'B', 'C'] as (TaskPriority | null)[]).map(
-					priority => (
-						<DropdownMenuItem
-							key={priority || 'none'}
-							onSelect={handleSelect}
-							value={priority}>
-							{getPriorityTitle(priority)}
-						</DropdownMenuItem>
-					),
-				)}
+				{([null, 'A', 'B', 'C'] as (TaskPriority | null)[]).map(priority => (
+					<DropdownMenuItem key={priority || 'none'} onSelect={handleSelect} value={priority}>
+						{getPriorityTitle(priority)}
+					</DropdownMenuItem>
+				))}
 			</DropdownMenuList>
 		</DropdownMenu>
 	);

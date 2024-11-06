@@ -16,8 +16,7 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
 	useEffect(() => {
 		if (
 			localStorage.getItem('color-theme') === 'dark' ||
-			(!('color-theme' in localStorage) &&
-				window.matchMedia('(prefers-color-scheme: dark)').matches)
+			(!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
 		) {
 			document.documentElement.classList.add('dark');
 		} else {
@@ -32,10 +31,7 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
 					<TasksHistoryContextProvider>
 						<ReactQueryDevtools />
 						{children}
-						<ReactQueryDevtools
-							initialIsOpen={false}
-							position='bottom'
-						/>
+						<ReactQueryDevtools initialIsOpen={false} position='bottom' />
 					</TasksHistoryContextProvider>
 				</CalendarContextProvider>
 			</QueryClientProvider>

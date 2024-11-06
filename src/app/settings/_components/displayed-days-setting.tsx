@@ -21,19 +21,12 @@ const DisplayedDaysSetting = ({ initialDisplayedDays }: Props) => {
 
 	return (
 		<div>
-			<h2 className='mb-2 text-lg font-semibold'>
-				Amount of days in week view
-			</h2>
+			<h2 className='mb-2 text-lg font-semibold'>Amount of days in week view</h2>
 			<DropdownMenu>
-				<DropdownMenuTrigger showChevron>
-					{initialDisplayedDays}
-				</DropdownMenuTrigger>
+				<DropdownMenuTrigger showChevron>{initialDisplayedDays}</DropdownMenuTrigger>
 				<DropdownMenuList>
 					{[1, 2, 3, 4, 5, 6, 7].map(amount => (
-						<DropdownMenuItem
-							onSelect={handleSelect}
-							key={amount}
-							value={amount}>
+						<DropdownMenuItem onSelect={handleSelect} key={amount} value={amount}>
 							{amount}
 						</DropdownMenuItem>
 					))}

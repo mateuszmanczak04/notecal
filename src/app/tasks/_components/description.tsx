@@ -32,9 +32,7 @@ const Description = ({ task }: Props) => {
 		});
 	};
 
-	const handleKeyDown = (
-		event: React.KeyboardEvent<HTMLParagraphElement>,
-	) => {
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLParagraphElement>) => {
 		if (!descriptionRef.current) return;
 
 		if (event.key === 'Enter') {
@@ -59,13 +57,11 @@ const Description = ({ task }: Props) => {
 		<p
 			ref={descriptionRef}
 			contentEditable={!task.completed}
-			className={cn(
-				'mt-1 text-neutral-500 outline-none dark:text-neutral-400',
-				task.completed && 'line-through',
-			)}
+			className={cn('mt-1 text-neutral-500 outline-none dark:text-neutral-400', task.completed && 'line-through')}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}
-			spellCheck={false}></p>
+			spellCheck={false}
+		></p>
 	);
 };
 

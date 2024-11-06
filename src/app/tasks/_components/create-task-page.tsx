@@ -2,15 +2,7 @@
 
 import GoBackButton from '@/components/common/go-back-button';
 import { Button } from '@/components/ui/button';
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import CreateTaskSchema from '@/schemas/create-task-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -54,7 +46,8 @@ const CreateTaskPage = () => {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='mx-auto mt-4 w-full max-w-[600px] space-y-4 sm:space-y-6 md:space-y-8'>
+				className='mx-auto mt-4 w-full max-w-[600px] space-y-4 sm:space-y-6 md:space-y-8'
+			>
 				<h2 className='text-3xl font-bold'>Create a new task</h2>
 
 				{/* Title: */}
@@ -67,10 +60,7 @@ const CreateTaskPage = () => {
 								Title <span className='text-red-500'>*</span>
 							</FormLabel>
 							<FormControl>
-								<Input
-									placeholder='Do some computer graphics homework'
-									{...field}
-								/>
+								<Input placeholder='Do some computer graphics homework' {...field} />
 							</FormControl>
 							<FormDescription />
 							<FormMessage />
@@ -86,10 +76,7 @@ const CreateTaskPage = () => {
 						<FormItem>
 							<FormLabel>Description</FormLabel>
 							<FormControl>
-								<Input
-									placeholder='Lorem ipsum something else idk'
-									{...field}
-								/>
+								<Input placeholder='Lorem ipsum something else idk' {...field} />
 							</FormControl>
 							<FormDescription />
 							<FormMessage />
@@ -137,10 +124,7 @@ const CreateTaskPage = () => {
 						<FormItem>
 							<FormLabel>Due date</FormLabel>
 							<FormControl>
-								<DatePicker
-									date={field.value}
-									onSelect={field.onChange}
-								/>
+								<DatePicker date={field.value} onSelect={field.onChange} />
 							</FormControl>
 						</FormItem>
 					)}
@@ -148,10 +132,7 @@ const CreateTaskPage = () => {
 
 				<div className='grid gap-x-4 gap-y-2 sm:grid-cols-2'>
 					<GoBackButton variant='secondary'>Cancel</GoBackButton>
-					<Button
-						type='submit'
-						className='w-full'
-						disabled={shouldBeDisabled}>
+					<Button type='submit' className='w-full' disabled={shouldBeDisabled}>
 						Create
 					</Button>
 				</div>

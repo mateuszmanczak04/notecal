@@ -57,10 +57,7 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 
 	return (
 		<div className='relative flex-1' ref={menuRef}>
-			<Button
-				variant='secondary'
-				onClick={handleToggleMenu}
-				className='w-full'>
+			<Button variant='secondary' onClick={handleToggleMenu} className='w-full'>
 				<ArrowUpDown />
 				Order by
 			</Button>
@@ -71,7 +68,8 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 						onClick={() => {
 							handleSort('title');
 							handleCloseMenu();
-						}}>
+						}}
+					>
 						Title
 					</div>
 					<div
@@ -79,7 +77,8 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 						onClick={() => {
 							handleSort('createdAt');
 							handleCloseMenu();
-						}}>
+						}}
+					>
 						Newest first
 					</div>
 					<div
@@ -87,7 +86,8 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 						onClick={() => {
 							handleSort('dueDate');
 							handleCloseMenu();
-						}}>
+						}}
+					>
 						Due date
 					</div>
 					<div
@@ -95,7 +95,8 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 						onClick={() => {
 							handleSort('priority');
 							handleCloseMenu();
-						}}>
+						}}
+					>
 						Priority
 					</div>
 					<div
@@ -103,7 +104,8 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 						onClick={() => {
 							handleSort('completed');
 							handleCloseMenu();
-						}}>
+						}}
+					>
 						Completed first
 					</div>
 				</div>

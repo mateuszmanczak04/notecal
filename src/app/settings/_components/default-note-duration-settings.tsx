@@ -21,19 +21,12 @@ const DefaultNoteDurationSetting = ({ initialDefaultNoteDuration }: Props) => {
 
 	return (
 		<div>
-			<h2 className='mb-2 text-lg font-semibold'>
-				Default new note duration
-			</h2>
+			<h2 className='mb-2 text-lg font-semibold'>Default new note duration</h2>
 			<DropdownMenu>
-				<DropdownMenuTrigger showChevron>
-					{initialDefaultNoteDuration} min
-				</DropdownMenuTrigger>
+				<DropdownMenuTrigger showChevron>{initialDefaultNoteDuration} min</DropdownMenuTrigger>
 				<DropdownMenuList>
 					{[15, 30, 45, 60, 90, 120, 180].map(minutes => (
-						<DropdownMenuItem
-							onSelect={handleSelect}
-							key={minutes}
-							value={minutes}>
+						<DropdownMenuItem onSelect={handleSelect} key={minutes} value={minutes}>
 							{minutes} min
 						</DropdownMenuItem>
 					))}

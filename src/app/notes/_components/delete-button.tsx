@@ -29,14 +29,16 @@ const DeleteButton = ({ note }: Props) => {
 					variant='destructive'
 					onClick={confirmDeletion}
 					className='w-full'
-					aria-label='yes, delete this note'>
+					aria-label='yes, delete this note'
+				>
 					Yes
 				</Button>
 				<Button
 					variant='secondary'
 					className='w-full'
 					onClick={() => setIsDeleting(false)}
-					aria-label='no, do not delete this note'>
+					aria-label='no, do not delete this note'
+				>
 					No, cancel
 				</Button>
 			</div>

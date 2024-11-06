@@ -5,9 +5,7 @@ const useTasksHistory = () => {
 	const context = useContext(TasksHistoryContext);
 
 	if (!context) {
-		throw new Error(
-			'useTasksHistory must be used within TasksHistoryContextProvider',
-		);
+		throw new Error('useTasksHistory must be used within TasksHistoryContextProvider');
 	}
 
 	return context;

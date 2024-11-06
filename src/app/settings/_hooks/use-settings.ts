@@ -37,12 +37,9 @@ const useSettings = () => {
 			await queryClient.cancelQueries({ queryKey: ['settings'] });
 			const previousSettings = queryClient.getQueryData(['settings']);
 
-			await queryClient.setQueryData(
-				['settings'],
-				(oldSettings: Settings) => {
-					return { ...oldSettings, ...values };
-				},
-			);
+			await queryClient.setQueryData(['settings'], (oldSettings: Settings) => {
+				return { ...oldSettings, ...values };
+			});
 
 			return previousSettings;
 		},

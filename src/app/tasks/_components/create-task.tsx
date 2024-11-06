@@ -85,7 +85,8 @@ const CreateTask = () => {
 			ref={intersectorRef}
 			className='z-20 space-y-4 rounded-2xl bg-white p-4 shadow-[0_0_32px_-20px_rgba(0,0,0,0.3)] dark:bg-neutral-700 sm:sticky sm:top-0 sm:p-8'
 			onSubmit={handleSubmit}
-			onClick={handleFocusInput}>
+			onClick={handleFocusInput}
+		>
 			<h2 className='text-xl font-bold sm:text-2xl'>
 				Create a new task <br className='sm:hidden' />
 				<span className='text-base'>
@@ -101,10 +102,7 @@ const CreateTask = () => {
 					onChange={e => setTitle(e.target.value)}
 					ref={inputRef}
 				/>
-				<Button
-					className='h-11 sm:rounded-l-none sm:text-base'
-					type='submit'
-					disabled={title.length === 0}>
+				<Button className='h-11 sm:rounded-l-none sm:text-base' type='submit' disabled={title.length === 0}>
 					<Plus className='h-5 w-5' />
 					Add to the list
 				</Button>
@@ -112,10 +110,7 @@ const CreateTask = () => {
 
 			{/* Should appear only on mobile when form is not visible */}
 			{!isIntersecting && (
-				<Button
-					type='button'
-					size='icon'
-					className='fixed bottom-8 right-8 z-20 h-12 w-12 rounded-full'>
+				<Button type='button' size='icon' className='fixed bottom-8 right-8 z-20 h-12 w-12 rounded-full'>
 					<Plus />
 				</Button>
 			)}

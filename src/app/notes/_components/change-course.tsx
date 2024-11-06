@@ -31,10 +31,7 @@ const ChangeCourse = ({ courses, currentCourse, note }: Props) => {
 				</DropdownMenuTrigger>
 				<DropdownMenuList>
 					{courses.map(course => (
-						<DropdownMenuItem
-							key={course.id}
-							value={course.id}
-							onSelect={handleSelect}>
+						<DropdownMenuItem key={course.id} value={course.id} onSelect={handleSelect}>
 							{course.name}
 						</DropdownMenuItem>
 					))}

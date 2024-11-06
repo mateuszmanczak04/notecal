@@ -4,14 +4,7 @@ import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import ResetPasswordSchema from '@/schemas/reset-password-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -62,9 +55,7 @@ const ResetPasswordPage = () => {
 		<div className='mx-auto flex max-w-[480px] flex-col gap-2 px-8'>
 			<h2 className='text-lg font-semibold'>Reset your password</h2>
 			<Form {...form}>
-				<form
-					onSubmit={form.handleSubmit(onSubmit)}
-					className='flex flex-col gap-4'>
+				<form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-4'>
 					<FormField
 						control={form.control}
 						name='password'
@@ -72,11 +63,7 @@ const ResetPasswordPage = () => {
 							<FormItem>
 								<FormLabel>New password</FormLabel>
 								<FormControl>
-									<Input
-										placeholder='******'
-										type='password'
-										{...field}
-									/>
+									<Input placeholder='******' type='password' {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -89,11 +76,7 @@ const ResetPasswordPage = () => {
 							<FormItem>
 								<FormLabel>Confirm new password</FormLabel>
 								<FormControl>
-									<Input
-										placeholder='******'
-										type='password'
-										{...field}
-									/>
+									<Input placeholder='******' type='password' {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

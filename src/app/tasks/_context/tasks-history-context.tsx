@@ -57,11 +57,7 @@ type Props = {
 
 export const TasksHistoryContext = createContext({} as Props);
 
-const TasksHistoryContextProvider = ({
-	children,
-}: {
-	children: React.ReactNode;
-}) => {
+const TasksHistoryContextProvider = ({ children }: { children: React.ReactNode }) => {
 	// Index always points a the lastest finished update
 	const [index, setIndex] = useState(-1);
 	const [updates, setUpdates] = useState<ChangeParams[]>([]);
@@ -163,11 +159,7 @@ const TasksHistoryContextProvider = ({
 		}
 	};
 
-	return (
-		<TasksHistoryContext.Provider value={{ undo, redo, makeUpdate }}>
-			{children}
-		</TasksHistoryContext.Provider>
-	);
+	return <TasksHistoryContext.Provider value={{ undo, redo, makeUpdate }}>{children}</TasksHistoryContext.Provider>;
 };
 
 export default TasksHistoryContextProvider;

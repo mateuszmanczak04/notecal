@@ -8,9 +8,7 @@ type Props = {
 	task: Task;
 };
 
-const Task = ({
-	task: { id, title, completed, courseId, dueDate, priority, description },
-}: Props) => {
+const Task = ({ task: { id, title, completed, courseId, dueDate, priority, description } }: Props) => {
 	const { update } = useTasks();
 
 	const toggleCompleted = () => {
@@ -37,24 +35,11 @@ const Task = ({
 			className={cn(
 				'flex cursor-pointer select-none gap-3 rounded-xl bg-neutral-100 p-2 shadow-none dark:bg-neutral-700',
 			)}
-			onClick={toggleCompleted}>
+			onClick={toggleCompleted}
+		>
 			<div>
-				<p
-					className={cn(
-						'font-semibold',
-						completed && 'line-through opacity-50',
-					)}>
-					{title}
-				</p>
-				{description && (
-					<p
-						className={cn(
-							'text-sm',
-							completed && 'line-through opacity-50',
-						)}>
-						{description}
-					</p>
-				)}
+				<p className={cn('font-semibold', completed && 'line-through opacity-50')}>{title}</p>
+				{description && <p className={cn('text-sm', completed && 'line-through opacity-50')}>{description}</p>}
 				{dueDate && !completed && (
 					<p className='mt-1 rounded-xl bg-neutral-200 px-2 py-1 text-sm dark:bg-neutral-600'>
 						{dueDate.toDateString()}

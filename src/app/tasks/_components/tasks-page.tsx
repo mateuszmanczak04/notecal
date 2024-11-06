@@ -24,17 +24,12 @@ const TasksPage = () => {
 			)}
 
 			{/* No tasks */}
-			{(!tasks || tasks.length === 0) &&
-				!(isPending || isPendingCourses) && (
-					<p className='text-center text-lg text-neutral-500 sm:ml-8'>
-						You don&apos;t have any tasks yet.
-					</p>
-				)}
+			{(!tasks || tasks.length === 0) && !(isPending || isPendingCourses) && (
+				<p className='text-center text-lg text-neutral-500 sm:ml-8'>You don&apos;t have any tasks yet.</p>
+			)}
 
 			{/* At least 1 task */}
-			{tasks &&
-				tasks.length > 0 &&
-				tasks.map(task => <Task key={task.id} task={task} />)}
+			{tasks && tasks.length > 0 && tasks.map(task => <Task key={task.id} task={task} />)}
 		</div>
 	);
 };

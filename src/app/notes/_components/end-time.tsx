@@ -20,13 +20,7 @@ const EndTime = ({ note }: Props) => {
 		updateNote({ id: note.id, endTime: newEndTime });
 	};
 
-	return (
-		<DatePicker
-			className='w-56'
-			date={note.endTime}
-			onSelect={newDate => onChange(newDate)}
-		/>
-	);
+	return <DatePicker className='w-56' date={note.endTime} onSelect={newDate => onChange(newDate)} />;
 };
 
 export default EndTime;

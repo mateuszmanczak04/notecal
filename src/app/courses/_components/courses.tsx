@@ -29,9 +29,7 @@ const Courses = () => {
 			)}
 
 			{(!courses || courses.length === 0) && !isPending && (
-				<p className='text-center text-lg text-neutral-500 sm:ml-8'>
-					You don&apos;t have any courses yet.
-				</p>
+				<p className='text-center text-lg text-neutral-500 sm:ml-8'>You don&apos;t have any courses yet.</p>
 			)}
 
 			{!isPending && (
@@ -49,7 +47,8 @@ const Courses = () => {
 					<Link
 						prefetch
 						href='/courses/create'
-						className='grid cursor-pointer place-content-center gap-2 rounded-xl bg-neutral-100 p-4 transition hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-600'>
+						className='grid cursor-pointer place-content-center gap-2 rounded-xl bg-neutral-100 p-4 transition hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-600'
+					>
 						<Plus className='h-10 w-10' />
 					</Link>
 				</div>

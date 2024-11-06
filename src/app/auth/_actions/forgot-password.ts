@@ -5,11 +5,7 @@ import { en } from '@/lib/dictionary';
 import { z } from 'zod';
 import sendResetPasswordEmail from './send-reset-password-email';
 
-const ForgotPasswordSchema = z
-	.string()
-	.trim()
-	.email()
-	.min(1, { message: en.auth.EMAIL_REQUIRED });
+const ForgotPasswordSchema = z.string().trim().email().min(1, { message: en.auth.EMAIL_REQUIRED });
 
 const forgotPassword = async (values: z.infer<typeof ForgotPasswordSchema>) => {
 	const validatedFields = ForgotPasswordSchema.safeParse(values);
@@ -24,8 +20,7 @@ const forgotPassword = async (values: z.infer<typeof ForgotPasswordSchema>) => {
 		// Check if user exists and has email verified,
 		// if not, fake that action resolved successfully
 		const user = await db.user.findUnique({ where: { email } });
-		if (!user || !user.emailVerified)
-			return { message: en.auth.RESET_PASSWORD_EMAIL_SENT };
+		if (!user || !user.emailVerified) return { message: en.auth.RESET_PASSWORD_EMAIL_SENT };
 
 		// Send email and return potential errors
 		const res = await sendResetPasswordEmail(email);

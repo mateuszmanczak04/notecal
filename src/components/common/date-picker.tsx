@@ -13,31 +13,16 @@ interface DatePickerProps {
 	className?: string;
 }
 
-const DatePicker: FC<DatePickerProps> = ({
-	isPending,
-	onSelect,
-	date,
-	className,
-}) => {
+const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date, className }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
 
 	// Inputs
-	const [year, setYear] = useState<string>(
-		date ? date.getFullYear().toString() : '',
-	);
-	const [month, setMonth] = useState<string>(
-		date ? (date.getMonth() + 1).toString().padStart(2, '00') : '',
-	);
-	const [day, setDay] = useState<string>(
-		date ? date.getDate().toString().padStart(2, '00') : '',
-	);
-	const [hour, setHour] = useState<string>(
-		date ? date.getHours().toString().padStart(2, '00') : '',
-	);
-	const [minute, setMinute] = useState<string>(
-		date ? date.getMinutes().toString().padStart(2, '00') : '',
-	);
+	const [year, setYear] = useState<string>(date ? date.getFullYear().toString() : '');
+	const [month, setMonth] = useState<string>(date ? (date.getMonth() + 1).toString().padStart(2, '00') : '');
+	const [day, setDay] = useState<string>(date ? date.getDate().toString().padStart(2, '00') : '');
+	const [hour, setHour] = useState<string>(date ? date.getHours().toString().padStart(2, '00') : '');
+	const [minute, setMinute] = useState<string>(date ? date.getMinutes().toString().padStart(2, '00') : '');
 
 	const handleCloseMenu = () => {
 		setIsOpen(false);
@@ -79,27 +64,15 @@ const DatePicker: FC<DatePickerProps> = ({
 
 	useEffect(() => {
 		setYear(date ? date.getFullYear().toString() : '');
-		setMonth(
-			date ? (date.getMonth() + 1).toString().padStart(2, '00') : '',
-		);
+		setMonth(date ? (date.getMonth() + 1).toString().padStart(2, '00') : '');
 		setDay(date ? date.getDate().toString().padStart(2, '00') : '');
 		setHour(date ? date.getHours().toString().padStart(2, '00') : '');
 		setMinute(date ? date.getMinutes().toString().padStart(2, '00') : '');
 	}, [date]);
 
 	return (
-		<div
-			className={cn(
-				'relative h-9 text-sm font-medium sm:text-base',
-				className,
-			)}
-			ref={menuRef}>
-			<Tag
-				onClick={handleToggleMenu}
-				className={cn(
-					'h-full w-full max-w-none',
-					isPending && 'opacity-50',
-				)}>
+		<div className={cn('relative h-9 text-sm font-medium sm:text-base', className)} ref={menuRef}>
+			<Tag onClick={handleToggleMenu} className={cn('h-full w-full max-w-none', isPending && 'opacity-50')}>
 				{date ? format(date, 'yyyy-MM-dd - HH:mm') : 'No due date'}
 			</Tag>
 			{isOpen && (
@@ -116,9 +89,7 @@ const DatePicker: FC<DatePickerProps> = ({
 						/>
 						/
 						<input
-							placeholder={(new Date().getMonth() + 1)
-								.toString()
-								.padStart(2, '00')}
+							placeholder={(new Date().getMonth() + 1).toString().padStart(2, '00')}
 							type='text'
 							value={month}
 							onChange={e => setMonth(e.target.value)}
@@ -126,10 +97,7 @@ const DatePicker: FC<DatePickerProps> = ({
 						/>
 						/
 						<input
-							placeholder={new Date()
-								.getDate()
-								.toString()
-								.padStart(2, '00')}
+							placeholder={new Date().getDate().toString().padStart(2, '00')}
 							type='text'
 							value={day}
 							onChange={e => setDay(e.target.value)}
@@ -140,10 +108,7 @@ const DatePicker: FC<DatePickerProps> = ({
 					{/* Hour, minute: */}
 					<div className='flex overflow-hidden rounded-xl'>
 						<input
-							placeholder={new Date()
-								.getHours()
-								.toString()
-								.padStart(2, '00')}
+							placeholder={new Date().getHours().toString().padStart(2, '00')}
 							type='text'
 							value={hour}
 							onChange={e => setHour(e.target.value)}
@@ -151,10 +116,7 @@ const DatePicker: FC<DatePickerProps> = ({
 						/>
 						:
 						<input
-							placeholder={new Date()
-								.getMinutes()
-								.toString()
-								.padStart(2, '00')}
+							placeholder={new Date().getMinutes().toString().padStart(2, '00')}
 							type='text'
 							value={minute}
 							onChange={e => setMinute(e.target.value)}

@@ -26,13 +26,7 @@ const DueDate = ({ task }: Props) => {
 		});
 	};
 
-	return (
-		<DatePicker
-			date={task.dueDate}
-			onSelect={handleChangeDueDate}
-			className='h-9 w-56'
-		/>
-	);
+	return <DatePicker date={task.dueDate} onSelect={handleChangeDueDate} className='h-9 w-56' />;
 };
 
 export default DueDate;
