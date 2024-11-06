@@ -267,8 +267,6 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 
 	return (
 		<>
-			{/* TODO: show loading indicator somewhere */}
-
 			{/* Primary notes: */}
 			{noteDays?.length > 0 &&
 				noteDays.map((day, index) => (
@@ -284,7 +282,6 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 						href={`/notes/${note.id}`}
 						className={cn(
 							'absolute z-20 min-h-4 min-w-8 select-none overflow-hidden rounded-xl border-2 border-white bg-primary-500 text-white transition dark:border-neutral-800',
-							note.loading && 'pointer-events-none opacity-50',
 							isDragging && 'opacity-50',
 						)}
 						style={{

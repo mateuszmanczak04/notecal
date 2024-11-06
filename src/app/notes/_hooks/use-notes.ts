@@ -5,6 +5,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import createNote from '../_actions/create-note';
 import deleteNote from '../_actions/delete-note';
 import updateNote from '../_actions/update-note';
+import { useAsyncFunctionQueue } from './use-async-function-queue';
 
 type CreateNoteSchema = {
 	id: string;
@@ -35,21 +36,26 @@ const createTempNote = (values: CreateNoteSchema): NoteWithLoading => ({
 });
 
 const useNotes = () => {
+	/** Queue with all pending requests. Needed to keep the order */
+	const { enqueue, empty: queueEmpty } = useAsyncFunctionQueue();
+
 	const { data, isPending, error } = useQuery({
 		queryKey: ['notes'],
 		queryFn: async () => {
 			const { notes, error } = await getNotes();
 			if (error) throw new Error(error);
-			return notes;
+			return notes as NoteWithLoading[];
 		},
 	});
 
 	// Inserting
 	const { mutate: add, isPending: isNoteBeingCreated } = useMutation({
 		mutationFn: async (values: CreateNoteSchema) => {
-			const { newNote, error } = await createNote(values);
-			if (error) throw new Error(error);
-			return newNote;
+			/** We want to add each request to the queue to avoid situation where user wants to edit a note which has not been created yet */
+			enqueue(async () => {
+				const { error: createNoteError } = await createNote(values);
+				if (createNoteError) throw new Error(createNoteError);
+			});
 		},
 		onMutate: async (values: CreateNoteSchema) => {
 			await queryClient.cancelQueries({ queryKey: ['notes'] });
@@ -70,16 +76,21 @@ const useNotes = () => {
 			queryClient.setQueryData(['notes'], context);
 		},
 		onSettled: async () => {
-			return await queryClient.invalidateQueries({ queryKey: ['notes'] });
+			if (queueEmpty) {
+				return await queryClient.invalidateQueries({
+					queryKey: ['notes'],
+				});
+			}
 		},
 	});
 
 	// Updating
 	const { mutate: update } = useMutation({
 		mutationFn: async (values: UpdateNoteSchema) => {
-			const { updatedNote, error } = await updateNote(values);
-			if (error) throw new Error(error);
-			return updatedNote;
+			enqueue(async () => {
+				const { error: updateNoteError } = await updateNote(values);
+				if (updateNoteError) throw new Error(updateNoteError);
+			});
 		},
 		onMutate: async (values: UpdateNoteSchema) => {
 			await queryClient.cancelQueries({ queryKey: ['notes'] });
@@ -103,7 +114,11 @@ const useNotes = () => {
 			queryClient.setQueryData(['notes'], context);
 		},
 		onSettled: async () => {
-			return await queryClient.invalidateQueries({ queryKey: ['notes'] });
+			if (queueEmpty) {
+				return await queryClient.invalidateQueries({
+					queryKey: ['notes'],
+				});
+			}
 		},
 	});
 

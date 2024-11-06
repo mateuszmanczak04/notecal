@@ -66,7 +66,10 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 			courseId,
 		});
 
-		hidePicker();
+		/** Needed this timeout to move hidePicker at the end of the call stack. Otherwise it would be hidden before note was created */
+		setTimeout(() => {
+			hidePicker();
+		}, 0);
 	};
 
 	useOnClickOutside(pickerRef, hidePicker);
