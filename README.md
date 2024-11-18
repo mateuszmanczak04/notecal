@@ -1,5 +1,7 @@
 This is a web application which was made to help students organize their university notes.
 
+Please use `pnpm` instead of `npm`
+
 ## Getting started
 
 ### Installation
