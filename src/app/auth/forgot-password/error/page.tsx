@@ -11,6 +11,9 @@ const page = () => {
 			<Button asChild className='mt-4 w-full'>
 				<Link href='/auth/forgot-password'>Try again now</Link>
 			</Button>
+			<Link href='/auth/login' className='mt-4 block underline opacity-75'>
+				Go to the login page
+			</Link>
 		</main>
 	);
 };
