@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import db from '@/lib/db';
 import bcryptjs from 'bcryptjs';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import login from '../_actions/login';
 import sendConfirmationEmail from '../_actions/send-confirmation-email';
@@ -73,6 +74,10 @@ const page = async (props: Props) => {
 				Don&apos;t hesitate and join Notecal community today. Simplify your university notes organization and
 				improve productivity!
 			</p>
+
+			<Link href='/auth/login' className='mt-4 block px-4 underline opacity-75'>
+				Already have an account? Log in instead!
+			</Link>
 
 			<form
 				className='mt-4 rounded-xl border border-neutral-200 p-4 dark:border-transparent dark:bg-neutral-800'
