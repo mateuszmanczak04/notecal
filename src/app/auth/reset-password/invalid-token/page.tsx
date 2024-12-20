@@ -4,8 +4,8 @@ import Link from 'next/link';
 const page = () => {
 	return (
 		<main className='mx-auto max-w-lg px-8'>
-			<h1 className='text-3xl font-bold'>Your token is stale</h1>
-			<p className='mt-2 opacity-75'>The token from your URL is invalid, has expired or was already used.</p>
+			<h1 className='text-3xl font-bold'>Invalid token</h1>
+			<p className='mt-2 opacity-75'>The token from your URL is invalid, has expired or has already been used.</p>
 			<Button asChild className='mt-4 w-full'>
 				<Link href='/auth/forgot-password'>Generate a new one</Link>
 			</Button>
