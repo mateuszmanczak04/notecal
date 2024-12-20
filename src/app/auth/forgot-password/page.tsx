@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 	},
 };
 
-const page = async () => {
+const page = () => {
 	/**
 	 * An action invoked after form submission. It sends the recovery email to the user.
 	 */
