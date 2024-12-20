@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import db from '@/lib/db';
 import { Mail } from 'lucide-react';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import FormLoadingSpinner from '../../../components/common/form-loading-spinner';
 import sendResetPasswordEmail from '../_actions/send-reset-password-email';
@@ -50,6 +51,10 @@ const page = async () => {
 				Don&apos;t worry! We are her to help you recover your account access. Simply enter your e-mail address
 				here and we will send you further instructions!
 			</p>
+
+			<Link href='/auth/login' className='mt-4 block px-4 underline opacity-75'>
+				Go back to the login page if it was a missclick
+			</Link>
 
 			<form
 				className='mt-4 rounded-xl border border-neutral-200 p-4 dark:border-transparent dark:bg-neutral-800'
