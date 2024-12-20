@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import db from '@/lib/db';
 import brcyptjs from 'bcryptjs';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import login from '../_actions/login';
 
 export const metadata: Metadata = {
@@ -24,8 +24,7 @@ const page = async (props: Props) => {
 	const token = searchParams?.token as string | undefined;
 
 	if (!email || !token) {
-		// TODO: display an error
-		return notFound();
+		redirect('/auth/reset-password/invalid-url');
 	}
 
 	/**
@@ -38,14 +37,17 @@ const page = async (props: Props) => {
 		// Validate the password
 		if (!password || password.length === 0) return;
 
-		// Check if reset token exists in the database
 		const resetToken = await db.resetPasswordToken.findFirst({
 			where: { token },
 		});
 
+		// If token doesn't exist in db, show error message to user
 		if (!resetToken) {
-			// TODO: display an error about the stale token
-			notFound();
+			redirect('/auth/reset-password/invalid-token');
+		}
+
+		if (resetToken.email !== email) {
+			redirect('/auth/reset-password/forbidden');
 		}
 
 		// Check if user with current email exists
@@ -53,8 +55,7 @@ const page = async (props: Props) => {
 			where: { email: resetToken.email },
 		});
 		if (!user) {
-			// TODO: display an error
-			notFound();
+			redirect('/auth/reset-password/forbidden');
 		}
 
 		// Update user's password
@@ -64,12 +65,12 @@ const page = async (props: Props) => {
 			data: { password: hashedPassword },
 		});
 
-		// Delete the token
+		// Delete token
 		await db.resetPasswordToken.deleteMany({
 			where: { email: resetToken.email },
 		});
 
-		// Automatically login user in
+		// Automatically log user in
 		await login({ email, password });
 	};
 

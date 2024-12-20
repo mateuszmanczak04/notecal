@@ -8,6 +8,9 @@ export const authRoutes: string[] = [
 	'/auth/forgot-password/message-sent',
 	'/auth/forgot-password/error',
 	'/auth/reset-password',
+	'/auth/reset-password/invalid-token',
+	'/auth/reset-password/invalid-url',
+	'/auth/reset-password/forbidden',
 ];
 
 export const apiAuthPrefix: string = '/api/auth';
