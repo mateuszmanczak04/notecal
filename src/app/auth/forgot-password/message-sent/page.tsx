@@ -27,6 +27,9 @@ const page = async (props: Props) => {
 			<Button asChild className='mt-4 w-full' variant='secondary'>
 				<Link href='/auth/forgot-password'>Try again</Link>
 			</Button>
+			<Link href='/auth/login' className='mt-4 block underline opacity-75'>
+				Go to the login page
+			</Link>
 		</main>
 	);
 };
