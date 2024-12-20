@@ -5,7 +5,7 @@ import { z } from 'zod';
 
 const Schema = z.string().min(1, { message: en.auth.EMAIL_REQUIRED }).email();
 
-export const getResetTokenByEmail = async (email: string) => {
+const getResetTokenByEmail = async (email: string) => {
 	const resetToken = await db.resetPasswordToken.findFirst({
 		where: {
 			email,

@@ -1,3 +1,4 @@
+import FormLoadingSpinner from '@/components/common/form-loading-spinner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import db from '@/lib/db';
@@ -5,8 +6,7 @@ import { Mail } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import FormLoadingSpinner from '../../../components/common/form-loading-spinner';
-import sendResetPasswordEmail from '../_actions/send-reset-password-email';
+import sendResetPasswordEmail from './utils/send-reset-password-email';
 
 export const metadata: Metadata = {
 	title: 'Forgot your password?',
