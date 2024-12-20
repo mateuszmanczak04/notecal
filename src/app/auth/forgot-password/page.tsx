@@ -62,7 +62,7 @@ const page = () => {
 				<label htmlFor='email' className='ml-2 block font-medium'>
 					Email
 				</label>
-				<Input id='email' name='email' className='mt-1' required placeholder='example@abc.com' />
+				<Input id='email' type='email' name='email' className='mt-1' required placeholder='example@abc.com' />
 
 				<Button type='submit' className='mt-4 w-full'>
 					<Mail className='h-4 w-4' />
