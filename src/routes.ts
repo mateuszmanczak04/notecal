@@ -1,4 +1,8 @@
-export const publicRoutes: string[] = ['/auth/confirm-email'];
+export const publicRoutes: string[] = [
+	'/auth/confirm-email',
+	'/auth/confirm-email/invalid-token',
+	'/auth/confirm-email/success',
+];
 
 export const authRoutes: string[] = [
 	'/',
