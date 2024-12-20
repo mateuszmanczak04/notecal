@@ -4,7 +4,8 @@ import { Input } from '@/components/ui/input';
 import db from '@/lib/db';
 import brcyptjs from 'bcryptjs';
 import { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
+import login from '../_actions/login';
 
 export const metadata: Metadata = {
 	title: 'Reset your password',
@@ -68,8 +69,8 @@ const page = async (props: Props) => {
 			where: { email: resetToken.email },
 		});
 
-		// TODO: login user automatically
-		redirect('/auth/login');
+		// Automatically login user in
+		await login({ email, password });
 	};
 
 	return (
