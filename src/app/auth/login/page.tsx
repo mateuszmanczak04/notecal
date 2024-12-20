@@ -19,7 +19,7 @@ const page = async (props: Props) => {
 	const error = searchParams?.error;
 
 	/**
-	 * Creates a new account if there are no issues.
+	 * Logs in to the user's account if credentials are valid.
 	 */
 	const formAction = async (formData: FormData) => {
 		'use server';
