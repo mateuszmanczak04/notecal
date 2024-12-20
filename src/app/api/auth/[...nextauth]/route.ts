@@ -1,3 +1,4 @@
-export { /* @next-codemod-error `GET` export is re-exported. Check if this component uses `params` or `searchParams`*/
-GET, /* @next-codemod-error `POST` export is re-exported. Check if this component uses `params` or `searchParams`*/
-POST } from '@/auth';
+import { GET as getHandler, POST as postHandler } from '@/auth';
+
+export const GET = getHandler;
+export const POST = postHandler;
