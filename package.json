@@ -3,7 +3,6 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"preinstall": "node -e \"if (!process.env.npm_execpath.includes('pnpm')) { console.error('ERROR: Please use pnpm instead of npm or yarn.'); process.exit(1); }\"",
 		"dev": "next dev --turbo",
 		"build": "next build",
 		"start": "next start",
@@ -63,10 +62,5 @@
 	},
 	"prisma": {
 		"schema": "src/prisma/schema.prisma"
-	},
-	"engines": {
-		"node": ">=18",
-		"pnpm": ">=8"
-	},
-	"engineStrict": true
+	}
 }
