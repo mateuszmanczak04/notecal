@@ -245,85 +245,84 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 	// Days displayed on top when dragging
 	const dragDays = getDaysBetween(actualDragStartTime, actualDragEndTime);
 
-	return (
-		<>
-			{/* Primary notes: */}
-			{noteDays?.length > 0 &&
-				noteDays.map((day, index) => (
-					<Link
-						prefetch
-						draggable
-						onDragStart={handleDragStart}
-						onDrag={handleDrag}
-						onDragEnd={handleDragEnd}
-						ref={el => (noteRef.current![index] = el)}
-						onDragOver={e => e.preventDefault()}
-						key={day.toString()}
-						href={`/notes/${note.id}`}
-						className={cn(
-							'absolute z-20 min-h-4 min-w-8 select-none overflow-hidden rounded-xl border-2 border-white bg-primary-500 text-white transition dark:border-neutral-800',
-							isDragging && 'opacity-50',
-						)}
-						style={{
-							top: getTopOffset(day, note.startTime),
-							left: getLeftOffset(day),
-							width: getWidth(),
-							height: getHeight(day, note.startTime, note.endTime),
-							// If course was not found, the color will be undefined so
-							// the note should have "bg-primary-500" color as in className above
-							backgroundColor: course?.color,
-						}}
-					>
-						{/* Top edge to drag: */}
-						{index === 0 && (
-							<div
-								draggable
-								onDragStart={handleDragStartTop}
-								onDragEnd={handleDragEndTop}
-								onDrag={handleDragTop}
-								ref={topEdgeRef}
-								className='absolute inset-x-0 top-0 h-2 cursor-ns-resize opacity-0'
-							></div>
-						)}
+	return (<>
+        {/* Primary notes: */}
+        {noteDays?.length > 0 &&
+            noteDays.map((day, index) => (
+                <Link
+                    prefetch
+                    draggable
+                    onDragStart={handleDragStart}
+                    onDrag={handleDrag}
+                    onDragEnd={handleDragEnd}
+                    ref={el => {
+                        (noteRef.current![index] = el);
+                    }}
+                    onDragOver={e => e.preventDefault()}
+                    key={day.toString()}
+                    href={`/notes/${note.id}`}
+                    className={cn(
+                        'absolute z-20 min-h-4 min-w-8 select-none overflow-hidden rounded-xl border-2 border-white bg-primary-500 text-white transition dark:border-neutral-800',
+                        isDragging && 'opacity-50',
+                    )}
+                    style={{
+                        top: getTopOffset(day, note.startTime),
+                        left: getLeftOffset(day),
+                        width: getWidth(),
+                        height: getHeight(day, note.startTime, note.endTime),
+                        // If course was not found, the color will be undefined so
+                        // the note should have "bg-primary-500" color as in className above
+                        backgroundColor: course?.color,
+                    }}
+                >
+                    {/* Top edge to drag: */}
+                    {index === 0 && (
+                        <div
+                            draggable
+                            onDragStart={handleDragStartTop}
+                            onDragEnd={handleDragEndTop}
+                            onDrag={handleDragTop}
+                            ref={topEdgeRef}
+                            className='absolute inset-x-0 top-0 h-2 cursor-ns-resize opacity-0'
+                        ></div>
+                    )}
 
-						{/* Title: */}
-						{!isDragging && <p className='m-4'>{course?.name}</p>}
+                    {/* Title: */}
+                    {!isDragging && <p className='m-4'>{course?.name}</p>}
 
-						{/* Bottom edge to drag: */}
-						{index === noteDays.length - 1 && (
-							<div
-								draggable
-								onDragStart={handleDragStartBottom}
-								onDragEnd={handleDragEndBottom}
-								onDrag={handleDragBottom}
-								ref={bottomEdgeRef}
-								className='absolute inset-x-0 bottom-0 h-2 cursor-ns-resize opacity-0'
-							></div>
-						)}
-					</Link>
-				))}
-
-			{/* Drag notes, visible only if user is currently dragging edge: */}
-			{isDragging &&
-				dragDays?.length > 0 &&
-				dragDays.map(day => (
-					<div
-						onDragOver={e => e.preventDefault()}
-						key={day.toString()}
-						className='pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl border-2 border-white bg-primary-500 text-white transition dark:border-neutral-800'
-						style={{
-							top: getTopOffset(day, actualDragStartTime),
-							left: getLeftOffset(day),
-							width: getWidth(),
-							height: getHeight(day, actualDragStartTime, actualDragEndTime),
-							backgroundColor: course?.color,
-						}}
-					>
-						<p className='m-4'>{course?.name}</p>
-					</div>
-				))}
-		</>
-	);
+                    {/* Bottom edge to drag: */}
+                    {index === noteDays.length - 1 && (
+                        <div
+                            draggable
+                            onDragStart={handleDragStartBottom}
+                            onDragEnd={handleDragEndBottom}
+                            onDrag={handleDragBottom}
+                            ref={bottomEdgeRef}
+                            className='absolute inset-x-0 bottom-0 h-2 cursor-ns-resize opacity-0'
+                        ></div>
+                    )}
+                </Link>
+            ))}
+        {/* Drag notes, visible only if user is currently dragging edge: */}
+        {isDragging &&
+            dragDays?.length > 0 &&
+            dragDays.map(day => (
+                <div
+                    onDragOver={e => e.preventDefault()}
+                    key={day.toString()}
+                    className='pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl border-2 border-white bg-primary-500 text-white transition dark:border-neutral-800'
+                    style={{
+                        top: getTopOffset(day, actualDragStartTime),
+                        left: getLeftOffset(day),
+                        width: getWidth(),
+                        height: getHeight(day, actualDragStartTime, actualDragEndTime),
+                        backgroundColor: course?.color,
+                    }}
+                >
+                    <p className='m-4'>{course?.name}</p>
+                </div>
+            ))}
+    </>);
 };
 
 export default Note;
