@@ -59,7 +59,7 @@ const sendResetPasswordEmail = async (values: z.infer<typeof Schema>) => {
 
 		const email = validatedFields.data;
 		const token = await generateResetToken(email);
-		const url = `${process.env.APP_DOMAIN}/auth/reset-password?token=${token.token}`;
+		const url = `${process.env.APP_DOMAIN}/auth/reset-password?token=${token.token}&email=${email}`;
 
 		const html = `
      <div
