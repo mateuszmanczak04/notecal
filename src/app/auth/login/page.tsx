@@ -31,6 +31,8 @@ const page = async (props: Props) => {
 
 		// Automatically log new user in
 		const { error } = await login({ email, password });
+
+		// Show error if credentials are invalid or there was a server error
 		redirect(`/auth/login?error=${error}`);
 	};
 
