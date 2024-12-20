@@ -60,6 +60,10 @@ const page = async (props: Props) => {
 				</label>
 				<Input id='password' type='password' name='password' className='mt-1' required placeholder='******' />
 
+				<Link href='/auth/forgot-password' className='mt-4 block px-2 text-sm underline opacity-75'>
+					Forgot your password?
+				</Link>
+
 				<Button type='submit' className='mt-6 w-full'>
 					<FormLoadingSpinner className='h-5 w-5' />
 					Log in
