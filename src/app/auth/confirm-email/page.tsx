@@ -1,3 +1,4 @@
+import FormLoadingSpinner from '@/components/common/form-loading-spinner';
 import { Button } from '@/components/ui/button';
 import db from '@/lib/db';
 import { isAfter } from 'date-fns';
@@ -75,10 +76,13 @@ const page = async (props: Props) => {
 				Confirming your e-mail address will help you recover access to your account if you lose your password.
 			</p>
 
-			<Button type='submit' className='mt-4 w-full' onClick={formAction}>
-				<Mail className='h-4 w-4' />
-				Confirm
-			</Button>
+			<form action={formAction} className='mt-4 '>
+				<Button type='submit' className='w-full'>
+					<FormLoadingSpinner className='h-5 w-5' />
+					<Mail className='h-5 w-5' />
+					Confirm
+				</Button>
+			</form>
 
 			<p className='mt-4 px-2 opacity-75'>
 				<small>We will not send you any marketing spam.</small>

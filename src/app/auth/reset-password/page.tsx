@@ -91,12 +91,9 @@ const page = async (props: Props) => {
 				<Input id='password' name='password' type='password' className='mt-1' required placeholder='*******' />
 
 				<Button type='submit' className='mt-4 w-full'>
+					<FormLoadingSpinner className='h-5 w-5' />
 					Update my password
 				</Button>
-
-				<div className='mt-4 grid place-content-center'>
-					<FormLoadingSpinner />
-				</div>
 			</form>
 		</main>
 	);

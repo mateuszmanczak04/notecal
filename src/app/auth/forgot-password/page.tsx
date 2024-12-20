@@ -65,13 +65,10 @@ const page = () => {
 				<Input id='email' type='email' name='email' className='mt-1' required placeholder='example@abc.com' />
 
 				<Button type='submit' className='mt-4 w-full'>
-					<Mail className='h-4 w-4' />
+					<FormLoadingSpinner className='h-5 w-5' />
+					<Mail className='h-5 w-5' />
 					Send recovery message
 				</Button>
-
-				<div className='mt-4 grid place-content-center'>
-					<FormLoadingSpinner />
-				</div>
 			</form>
 
 			<p className='mt-4 px-4 opacity-75'>
