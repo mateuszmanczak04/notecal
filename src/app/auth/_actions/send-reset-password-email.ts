@@ -1,5 +1,3 @@
-'use server';
-
 import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import nodemailer from 'nodemailer';

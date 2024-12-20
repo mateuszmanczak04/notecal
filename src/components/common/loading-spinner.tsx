@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
+import { ClassNameValue } from 'tailwind-merge';
 
-const LoadingSpinner = ({ className }: { className?: string }) => {
+const LoadingSpinner = ({ className }: { className?: ClassNameValue }) => {
 	return (
 		<div
 			className={cn(
@@ -8,8 +9,7 @@ const LoadingSpinner = ({ className }: { className?: string }) => {
 				className,
 			)}
 			role='status'
-			aria-label='loading spinner'
-		></div>
+			aria-label='loading spinner'></div>
 	);
 };
 
