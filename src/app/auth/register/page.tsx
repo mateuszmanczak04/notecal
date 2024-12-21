@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import register from './register';
+import register from '../_actions/register';
 
 export const metadata: Metadata = {
 	title: 'Join us today and improve your productivity!',

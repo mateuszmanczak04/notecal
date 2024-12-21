@@ -1,4 +1,4 @@
-'server only';
+'server-only';
 import { cookies } from 'next/headers';
 import { verifyToken } from './jwt';
 

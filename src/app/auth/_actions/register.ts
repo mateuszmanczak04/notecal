@@ -5,7 +5,7 @@ import db from '@/lib/db';
 import { generateToken } from '@/lib/jwt';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import sendConfirmationEmail from '../_actions/send-confirmation-email';
+import sendConfirmationEmail from './send-confirmation-email';
 
 /**
  * Creates a new account if there are no issues.

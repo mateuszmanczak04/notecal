@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import login from './login';
+import login from '../_actions/login';
 
 export const metadata: Metadata = {
 	title: 'Login to your account!',
