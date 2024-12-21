@@ -9,7 +9,6 @@ export default async (request: NextRequest) => {
 	const url = request.nextUrl;
 
 	// Check if user is logged in
-	// TODO: maybe handle it more securely than just checking if cookie exists
 	const isLoggedIn = await checkAuthenticated();
 
 	// Check path conditions
