@@ -1,7 +1,5 @@
 'use server';
 
-import { auth } from '@/auth';
-import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import { z } from 'zod';
 
@@ -23,22 +21,24 @@ const updateNote = async (values: z.infer<typeof UpdateNoteSchema>) => {
 	const data = validatedFields.data;
 
 	try {
-		const session = await auth();
+		// const session = await auth();
 
-		if (!session?.user?.id) {
-			return { error: en.auth.UNAUTHENTICATED };
-		}
+		// if (!session?.user?.id) {
+		// 	return { error: en.auth.UNAUTHENTICATED };
+		// }
 
-		const updatedNote = await db.note.update({
-			where: { id: data.id, userId: session.user.id },
-			data: {
-				...data,
-				startTime: data.startTime || undefined,
-				endTime: data.endTime || undefined,
-			},
-		});
+		// const updatedNote = await db.note.update({
+		// 	where: { id: data.id, userId: session.user.id },
+		// 	data: {
+		// 		...data,
+		// 		startTime: data.startTime || undefined,
+		// 		endTime: data.endTime || undefined,
+		// 	},
+		// });
 
-		return { updatedNote };
+		// return { updatedNote };
+
+		return { updatedNote: null };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

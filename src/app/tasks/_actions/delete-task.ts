@@ -1,7 +1,5 @@
 'use server';
 
-import { auth } from '@/auth';
-import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import { z } from 'zod';
 
@@ -19,21 +17,21 @@ const deleteTask = async (values: z.infer<typeof DeleteTaskSchema>) => {
 	const id = validatedFields.data.id;
 
 	try {
-		const session = await auth();
+		// const session = await auth();
 
-		if (!session?.user?.id) {
-			return { error: en.auth.UNAUTHENTICATED };
-		}
+		// if (!session?.user?.id) {
+		// 	return { error: en.auth.UNAUTHENTICATED };
+		// }
 
-		const task = await db.task.findUnique({
-			where: { id, userId: session.user.id },
-		});
+		// const task = await db.task.findUnique({
+		// 	where: { id, userId: session.user.id },
+		// });
 
-		if (!task) {
-			return { error: en.tasks.NOT_FOUND };
-		}
+		// if (!task) {
+		// 	return { error: en.tasks.NOT_FOUND };
+		// }
 
-		await db.task.delete({ where: { id } });
+		// await db.task.delete({ where: { id } });
 
 		return { deleted: true };
 	} catch (error) {

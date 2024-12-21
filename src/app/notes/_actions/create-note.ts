@@ -1,7 +1,5 @@
 'use server';
 
-import { auth } from '@/auth';
-import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import { z } from 'zod';
 
@@ -23,28 +21,30 @@ const createNote = async (values: z.infer<typeof CreateNoteSchema>) => {
 	const { id, courseId, content, startTime, endTime } = validatedFields.data;
 
 	try {
-		const session = await auth();
+		// const session = await auth();
 
-		if (!session?.user?.id) {
-			return { error: en.auth.UNAUTHENTICATED };
-		}
+		// if (!session?.user?.id) {
+		// 	return { error: en.auth.UNAUTHENTICATED };
+		// }
 
-		// Set seconds and milliseconds to 0:
-		const properStartTime = new Date(new Date(startTime.setSeconds(0)).setMilliseconds(0));
-		const properEndTime = new Date(new Date(endTime.setSeconds(0)).setMilliseconds(0));
+		// // Set seconds and milliseconds to 0:
+		// const properStartTime = new Date(new Date(startTime.setSeconds(0)).setMilliseconds(0));
+		// const properEndTime = new Date(new Date(endTime.setSeconds(0)).setMilliseconds(0));
 
-		const newNote = await db.note.create({
-			data: {
-				id,
-				courseId,
-				startTime: properStartTime,
-				endTime: properEndTime,
-				userId: session.user.id,
-				content,
-			},
-		});
+		// const newNote = await db.note.create({
+		// 	data: {
+		// 		id,
+		// 		courseId,
+		// 		startTime: properStartTime,
+		// 		endTime: properEndTime,
+		// 		userId: session.user.id,
+		// 		content,
+		// 	},
+		// });
 
-		return { newNote };
+		// return { newNote };
+
+		return { newNote: null };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

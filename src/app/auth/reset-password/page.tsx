@@ -5,7 +5,7 @@ import db from '@/lib/db';
 import brcyptjs from 'bcryptjs';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import login from '../_actions/login';
+import login from '../login/login';
 
 export const metadata: Metadata = {
 	title: 'Reset your password',

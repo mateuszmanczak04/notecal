@@ -3,8 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import login from '../_actions/login';
+import login from './login';
 
 export const metadata: Metadata = {
 	title: 'Login to your account!',
@@ -17,24 +16,6 @@ type Props = {
 const page = async (props: Props) => {
 	const searchParams = await props.searchParams;
 	const error = searchParams?.error;
-
-	/**
-	 * Logs in to the user's account if credentials are valid.
-	 */
-	const formAction = async (formData: FormData) => {
-		'use server';
-		const email = formData.get('email')?.toString().trim();
-		const password = formData.get('password')?.toString();
-
-		// Validate email and password
-		if (!email || email.length === 0 || !password || password.length === 0) return;
-
-		// Automatically log new user in
-		const { error } = await login({ email, password });
-
-		// Show error if credentials are invalid or there was a server error
-		redirect(`/auth/login?error=${error}`);
-	};
 
 	return (
 		<main className='mx-auto  max-w-lg px-4'>
@@ -49,7 +30,7 @@ const page = async (props: Props) => {
 
 			<form
 				className='mt-4 rounded-xl border border-neutral-200 p-4 dark:border-transparent dark:bg-neutral-800'
-				action={formAction}>
+				action={login}>
 				<label htmlFor='email' className='ml-2 block font-medium'>
 					Email
 				</label>

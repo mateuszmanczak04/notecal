@@ -1,7 +1,5 @@
 'use server';
 
-import { auth } from '@/auth';
-import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import { TaskPriority } from '@prisma/client';
 import { z } from 'zod';
@@ -26,20 +24,22 @@ const updateTask = async (values: z.infer<typeof UpdateTaskSchema>) => {
 	const data = validatedFields.data;
 
 	try {
-		const session = await auth();
+		// const session = await auth();
 
-		if (!session?.user?.id) {
-			return {
-				error: en.auth.UNAUTHENTICATED,
-			};
-		}
+		// if (!session?.user?.id) {
+		// 	return {
+		// 		error: en.auth.UNAUTHENTICATED,
+		// 	};
+		// }
 
-		const updatedTask = await db.task.update({
-			where: { id: data.id, userId: session.user.id },
-			data,
-		});
+		// const updatedTask = await db.task.update({
+		// 	where: { id: data.id, userId: session.user.id },
+		// 	data,
+		// });
 
-		return { updatedTask };
+		// return { updatedTask };
+
+		return { updatedTask: null };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

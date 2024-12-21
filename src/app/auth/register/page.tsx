@@ -1,13 +1,9 @@
 import FormLoadingSpinner from '@/components/common/form-loading-spinner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import db from '@/lib/db';
-import bcryptjs from 'bcryptjs';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import login from '../_actions/login';
-import sendConfirmationEmail from '../_actions/send-confirmation-email';
+import register from './register';
 
 export const metadata: Metadata = {
 	title: 'Join us today and improve your productivity!',
@@ -20,52 +16,6 @@ type Props = {
 const page = async (props: Props) => {
 	const searchParams = await props.searchParams;
 	const error = searchParams?.error;
-
-	/**
-	 * Creates a new account if there are no issues.
-	 */
-	const formAction = async (formData: FormData) => {
-		'use server';
-		const email = formData.get('email')?.toString().trim();
-		const password = formData.get('password')?.toString();
-
-		// Validate email and password
-		if (!email || email.length === 0 || !password || password.length === 0) return;
-
-		if (password.length < 6) {
-			redirect('/auth/register?error=Password must be at least 6 characters long.');
-		}
-
-		const existingUser = await db.user.findUnique({ where: { email } });
-
-		// Email taken
-		if (existingUser) {
-			redirect('/auth/register?error=This email is already taken.');
-		}
-
-		const hashedPassword = await bcryptjs.hash(password, 10);
-
-		// Create user
-		const user = await db.user.create({
-			data: {
-				email,
-				password: hashedPassword,
-			},
-		});
-
-		// Create user's settings
-		await db.settings.create({
-			data: {
-				userId: user.id,
-				language: 'en',
-			},
-		});
-
-		sendConfirmationEmail({ email });
-
-		// Automatically log new user in
-		await login({ email, password });
-	};
 
 	return (
 		<main className='mx-auto  max-w-lg px-4'>
@@ -81,7 +31,7 @@ const page = async (props: Props) => {
 
 			<form
 				className='mt-4 rounded-xl border border-neutral-200 p-4 dark:border-transparent dark:bg-neutral-800'
-				action={formAction}>
+				action={register}>
 				<label htmlFor='email' className='ml-2 block font-medium'>
 					Email
 				</label>

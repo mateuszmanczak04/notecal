@@ -1,7 +1,5 @@
 'use server';
 
-import { auth } from '@/auth';
-import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import { z } from 'zod';
 
@@ -17,15 +15,15 @@ const deleteNote = async (values: z.infer<typeof DeleteNoteSchema>) => {
 	}
 
 	try {
-		const session = await auth();
+		// const session = await auth();
 
-		if (!session?.user?.id) {
-			return { error: en.auth.UNAUTHENTICATED };
-		}
+		// if (!session?.user?.id) {
+		// 	return { error: en.auth.UNAUTHENTICATED };
+		// }
 
-		await db.note.delete({
-			where: { id: validatedFields.data.id, userId: session.user.id },
-		});
+		// await db.note.delete({
+		// 	where: { id: validatedFields.data.id, userId: session.user.id },
+		// });
 
 		return { deleted: true };
 	} catch (error) {
