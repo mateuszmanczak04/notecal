@@ -4,6 +4,7 @@ import { NextRequest } from 'next/server';
 export default (request: NextRequest) => {
 	const url = request.nextUrl;
 
+	// TODO: maybe handle it more securely than just checking if cookie exists
 	const isLoggedIn = request.cookies.has('authToken');
 
 	const isApiAuthRoute = url.pathname.startsWith(apiAuthPrefix);
