@@ -6,15 +6,14 @@ import LoadingSpinner from '@/components/common/loading-spinner';
 import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
 import { Mail } from 'lucide-react';
-import { useSession } from 'next-auth/react';
 import { FC, useState, useTransition } from 'react';
 
 interface EmailNotConfirmedProps {}
 
 const EmailNotConfirmed: FC<EmailNotConfirmedProps> = ({}) => {
-	const session = useSession();
+	const session = null; // TODO
+	const email = ''; // TODO
 	const [isPending, startTransition] = useTransition();
-	const email = session?.data?.user?.email;
 	const [error, setError] = useState('');
 	const [message, setMessage] = useState('');
 

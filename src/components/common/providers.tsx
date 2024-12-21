@@ -5,7 +5,6 @@ import TasksHistoryContextProvider from '@/app/tasks/_context/tasks-history-cont
 import queryClient from '@/lib/query-client';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { SessionProvider } from 'next-auth/react';
 import { FC, ReactNode, useEffect } from 'react';
 
 interface ProvidersProps {
@@ -25,17 +24,17 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
 	}, []);
 
 	return (
-		<SessionProvider>
-			<QueryClientProvider client={queryClient}>
-				<CalendarContextProvider>
-					<TasksHistoryContextProvider>
-						<ReactQueryDevtools />
-						{children}
-						<ReactQueryDevtools initialIsOpen={false} position='bottom' />
-					</TasksHistoryContextProvider>
-				</CalendarContextProvider>
-			</QueryClientProvider>
-		</SessionProvider>
+		// <SessionProvider>
+		<QueryClientProvider client={queryClient}>
+			<CalendarContextProvider>
+				<TasksHistoryContextProvider>
+					<ReactQueryDevtools />
+					{children}
+					<ReactQueryDevtools initialIsOpen={false} position='bottom' />
+				</TasksHistoryContextProvider>
+			</CalendarContextProvider>
+		</QueryClientProvider>
+		// </SessionProvider>
 	);
 };
 

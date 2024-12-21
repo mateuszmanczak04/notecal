@@ -10,13 +10,12 @@ import { Input } from '@/components/ui/input';
 import ChangeEmailSchema from '@/schemas/change-email-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import changeEmail from '../_actions/change-email';
 
 const ChangeEmailSetting = () => {
-	const session = useSession();
+	const session = null; // TODO
 	const { mutate, error, isPending, data } = useMutation({
 		mutationFn: async (values: z.infer<typeof ChangeEmailSchema>) => {
 			const { error, message } = await changeEmail(values);
@@ -40,10 +39,12 @@ const ChangeEmailSetting = () => {
 		mutate(values);
 	};
 
+	if (!session) return null; // TODO
+
 	return (
 		<div className='flex flex-col gap-2'>
 			<h2 className='text-lg font-semibold'>Change your email address</h2>
-			<p className='opacity-75'>({session.data?.user?.email})</p>
+			{/* <p className='opacity-75'>({session.data?.user?.email})</p> */}
 			<p className='opacity-75'>You will have to log in again afterwards</p>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-4'>
