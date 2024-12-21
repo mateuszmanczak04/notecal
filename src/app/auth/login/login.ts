@@ -30,7 +30,7 @@ const login = async (formData: FormData) => {
 	}
 
 	// Generate JWT
-	const token = generateToken({ id: user.id });
+	const token = await generateToken({ id: user.id });
 
 	const cookieStore = await cookies();
 	cookieStore.set('authToken', token, {

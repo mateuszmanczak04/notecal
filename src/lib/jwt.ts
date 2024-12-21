@@ -1,13 +1,17 @@
-import jwt from 'jsonwebtoken';
+'use server';
+import { jwtVerify, SignJWT } from 'jose';
 
-const SECRET = process.env.AUTH_SECRET;
+const SECRET = new TextEncoder().encode(process.env.AUTH_SECRET);
 
-export const generateToken = (data: any) => {
-	if (!SECRET) throw new Error('process.env.AUTH_SECRET is missing');
-	return jwt.sign(data, SECRET, { expiresIn: '24h' });
+if (!process.env.AUTH_SECRET) {
+	throw new Error('process.env.AUTH_SECRET is missing');
+}
+
+export const generateToken = async (payload: any) => {
+	return await new SignJWT(payload).setProtectedHeader({ alg: 'HS256' }).setExpirationTime('24h').sign(SECRET);
 };
 
-export const verifyToken = (token: any) => {
-	if (!SECRET) throw new Error('process.env.AUTH_SECRET is missing');
-	return jwt.verify(token, SECRET);
+export const verifyToken = async (token: string) => {
+	const { payload } = await jwtVerify(token, SECRET);
+	return payload;
 };

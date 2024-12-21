@@ -16,14 +16,11 @@ export const useAsyncFunctionQueue = () => {
 
 	useEffect(() => {
 		const processQueue = async () => {
-			console.log(queue);
 			if (isProcessing) return;
 
 			setIsProcessing(true);
 
 			const [head, ...newQueue] = queue;
-
-			console.log({ head, newQueue });
 
 			try {
 				await head();

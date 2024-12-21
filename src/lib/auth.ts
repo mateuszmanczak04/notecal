@@ -1,8 +1,38 @@
 'server only';
 import { cookies } from 'next/headers';
+import { verifyToken } from './jwt';
 
-export const checkAuthenticated = async () => {
+/**
+ * Run this function on the server to check if user is authenticated. It's based on cookies and JWT.
+ */
+export const getAuthStatus = async (): Promise<{
+	authenticated: boolean;
+	user: { id: string } | null;
+}> => {
 	const cookieStore = await cookies();
-	// TODO: check if token is valid etc.
-	return cookieStore.has('authToken');
+
+	const authToken = cookieStore.get('authToken')?.value;
+
+	if (!authToken) {
+		return {
+			authenticated: false,
+			user: null,
+		};
+	}
+
+	try {
+		const decoded = await verifyToken(authToken);
+
+		return {
+			authenticated: true,
+			user: {
+				id: decoded.id as string,
+			},
+		};
+	} catch (err) {
+		return {
+			authenticated: false,
+			user: null,
+		};
+	}
 };

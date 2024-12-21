@@ -47,7 +47,7 @@ const register = async (formData: FormData) => {
 	});
 
 	// Generate JWT
-	const token = generateToken({ id: user.id });
+	const token = await generateToken({ id: user.id });
 
 	// Send confirmation email
 	sendConfirmationEmail({ email });
