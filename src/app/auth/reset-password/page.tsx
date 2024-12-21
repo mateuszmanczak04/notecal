@@ -71,7 +71,10 @@ const page = async (props: Props) => {
 		});
 
 		// Automatically log user in
-		await login({ email, password });
+		const fd = new FormData();
+		fd.set('email', email);
+		fd.set('password', password);
+		await login(fd);
 	};
 
 	return (
