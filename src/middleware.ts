@@ -1,33 +1,33 @@
-// import { DEFAULT_LOGIN_REDIRECT, apiAuthPrefix, authRoutes, publicRoutes } from '@/routes';
+import { DEFAULT_LOGIN_REDIRECT, apiAuthPrefix, authRoutes, publicRoutes } from '@/routes';
+import { NextRequest } from 'next/server';
 
-// export default auth(req => {
-// 	const { nextUrl } = req;
-// 	const isLoggedIn = !!req.auth;
+export default (request: NextRequest) => {
+	const url = request.nextUrl;
 
-// 	const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-// 	const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-// 	const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+	const isLoggedIn = request.cookies.has('authToken');
 
-// 	if (isApiAuthRoute) {
-// 		return;
-// 	}
+	const isApiAuthRoute = url.pathname.startsWith(apiAuthPrefix);
+	const isPublicRoute = publicRoutes.includes(url.pathname);
+	const isAuthRoute = authRoutes.includes(url.pathname);
 
-// 	if (isAuthRoute) {
-// 		if (isLoggedIn) {
-// 			return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-// 		}
-// 		return;
-// 	}
+	if (isApiAuthRoute) {
+		return;
+	}
 
-// 	if (!isLoggedIn && !isPublicRoute) {
-// 		return Response.redirect(new URL('/auth/login', nextUrl));
-// 	}
+	if (isAuthRoute) {
+		if (isLoggedIn) {
+			return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, url));
+		}
+		return;
+	}
 
-// 	return;
-// });
+	if (!isLoggedIn && !isPublicRoute) {
+		return Response.redirect(new URL('/auth/login', url));
+	}
 
-// export const config = {
-// 	matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
-// };
+	return;
+};
 
-export default () => {};
+export const config = {
+	matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+};
