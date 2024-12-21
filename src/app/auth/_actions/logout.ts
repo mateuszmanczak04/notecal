@@ -1,8 +1,12 @@
 'use server';
 
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+
 const logout = async () => {
-	// await signOut({ redirectTo: '/' });
-	// TODO
+	const cookieStore = await cookies();
+	cookieStore.delete('authToken');
+	redirect('/');
 };
 
 export default logout;

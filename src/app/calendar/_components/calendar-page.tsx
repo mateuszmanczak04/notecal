@@ -41,8 +41,7 @@ const CalendarPage = () => {
 			<div
 				className='relative overflow-y-scroll overscroll-none scroll-auto outline-none scrollbar-hide'
 				onScroll={handleScroll}
-				ref={scrollContainerRef}
-			>
+				ref={scrollContainerRef}>
 				{/* Just grid: */}
 				<Grid />
 

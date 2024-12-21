@@ -1,15 +1,16 @@
 import { DEFAULT_LOGIN_REDIRECT, apiAuthPrefix, authRoutes, publicRoutes } from '@/routes';
 import { NextRequest } from 'next/server';
+import { checkAuthenticated } from './lib/auth';
 
 /**
  * Checks if user is authenticated and redirect them to proper url if he wants to visit forbidden page.
  */
-export default (request: NextRequest) => {
+export default async (request: NextRequest) => {
 	const url = request.nextUrl;
 
 	// Check if user is logged in
 	// TODO: maybe handle it more securely than just checking if cookie exists
-	const isLoggedIn = request.cookies.has('authToken');
+	const isLoggedIn = await checkAuthenticated();
 
 	// Check path conditions
 	const isApiAuthRoute = url.pathname.startsWith(apiAuthPrefix);
