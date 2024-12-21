@@ -1,5 +1,7 @@
 'use server';
 
+import { getAuthStatus } from '@/lib/auth';
+import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import UpdateCourseSchema from '@/schemas/update-course-schema';
 import { z } from 'zod';
@@ -12,20 +14,18 @@ const updateCourse = async (values: z.infer<typeof UpdateCourseSchema>) => {
 	}
 
 	try {
-		// const session = await auth();
+		const { authenticated, user } = await getAuthStatus();
 
-		// if (!session?.user?.id) {
-		// 	return { error: en.auth.UNAUTHENTICATED };
-		// }
+		if (!authenticated) {
+			return { error: en.auth.UNAUTHENTICATED };
+		}
 
-		// const updatedCourse = await db.course.update({
-		// 	where: { id: validatedFields.data.id, userId: session?.user?.id },
-		// 	data: validatedFields.data,
-		// });
+		const updatedCourse = await db.course.update({
+			where: { id: validatedFields.data.id, userId: user.id },
+			data: validatedFields.data,
+		});
 
-		// return { updatedCourse };
-
-		return { updatedCourse: null };
+		return { updatedCourse };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

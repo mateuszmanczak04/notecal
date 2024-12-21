@@ -1,5 +1,7 @@
 'use server';
 
+import { getAuthStatus } from '@/lib/auth';
+import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import CreateCourseSchema from '@/schemas/create-course-schema';
 import { z } from 'zod';
@@ -21,23 +23,22 @@ const createCourse = async (values: z.infer<typeof CreateCourseSchema>) => {
 	}
 
 	try {
-		// const session = await auth();
-		return { newCourse: null };
+		const { authenticated, user } = await getAuthStatus();
 
-		// if (!session?.user?.id) {
-		// 	return { error: en.auth.UNAUTHENTICATED };
-		// }
+		if (!authenticated) {
+			return { error: en.auth.UNAUTHENTICATED };
+		}
 
-		// const newCourse = await db.course.create({
-		// 	data: {
-		// 		userId: session.user.id,
-		// 		name,
-		// 		teacher,
-		// 		color,
-		// 	},
-		// });
+		const newCourse = await db.course.create({
+			data: {
+				userId: user.id,
+				name,
+				teacher,
+				color,
+			},
+		});
 
-		// return { newCourse };
+		return { newCourse };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
