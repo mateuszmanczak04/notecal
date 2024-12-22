@@ -34,7 +34,7 @@ const ChangeEmailSetting = () => {
 
 				{/* Submit button */}
 				<Button type='submit' className='gap-2'>
-					Save
+					Save changes
 				</Button>
 
 				{/* Form results */}
