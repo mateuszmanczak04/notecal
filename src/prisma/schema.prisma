@@ -8,16 +8,25 @@ generator client {
 }
 
 model User {
+  // Identity
   id            String    @id @default(cuid())
   email         String    @unique
   emailVerified DateTime?
   password      String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  courses       Course[]
-  Task          Task[]
-  Settings      Settings?
-  Note          Note[]
+
+  // Settings
+  defaultNoteDuration Int            @default(60) // in minutes
+  displayedDays       Int            @default(5)
+  zoomLevel           Int            @default(3)
+  language            LanguageEnum   @default(en)
+  orderTasks          OrderTasksEnum @default(createdAt)
+
+  // Others
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  courses   Course[]
+  Task      Task[]
+  Note      Note[]
 }
 
 model VerificationToken {
@@ -77,18 +86,6 @@ enum OrderTasksEnum {
 
 enum LanguageEnum {
   en
-}
-
-model Settings {
-  user                User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId              String         @id
-  language            LanguageEnum   @default(en)
-  orderTasks          OrderTasksEnum @default(createdAt)
-  createdAt           DateTime       @default(now())
-  updatedAt           DateTime       @updatedAt
-  defaultNoteDuration Int            @default(60) // in minutes
-  displayedDays       Int            @default(5)
-  zoomLevel           Int            @default(3)
 }
 
 model Note {
