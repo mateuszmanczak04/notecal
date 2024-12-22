@@ -4,7 +4,13 @@ import db from '@/lib/db';
 import { isAfter } from 'date-fns';
 import { redirect } from 'next/navigation';
 
-const confirmEmail = async (token: string) => {
+const confirmEmail = async (formData: FormData) => {
+	const token = formData.get('token')?.toString();
+
+	if (!token) {
+		redirect('/auth/confirm-email/invalid-token');
+	}
+
 	const verificationToken = await db.verificationToken.findFirst({
 		where: {
 			token,

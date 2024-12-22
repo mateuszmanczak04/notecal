@@ -34,7 +34,8 @@ const page = async (props: Props) => {
 				Confirming your e-mail address will help you recover access to your account if you lose your password.
 			</p>
 
-			<form action={() => confirmEmail(token)} className='mt-4 '>
+			<form action={confirmEmail} className='mt-4 '>
+				<input type='hidden' name='token' value={token} />
 				<Button type='submit' className='w-full'>
 					<FormLoadingSpinner className='h-5 w-5' />
 					<Mail className='h-5 w-5' />
