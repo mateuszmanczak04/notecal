@@ -21,6 +21,7 @@ const UpdateSettings = ({
 }: Props) => {
 	const [state, formAction] = useActionState(updateSettings, { message: '' });
 
+	// Required to make inputs controlled and avoid stale value to appear
 	const [displayedDays, setDisplayedDays] = useState(initialDisplayedDays.toString());
 	const [defaultNoteDuration, setDefaultNoteDuration] = useState(initialDefaultNoteDuration.toString());
 	const [language, setLanguage] = useState(initialLanguage);
