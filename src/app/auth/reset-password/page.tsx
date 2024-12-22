@@ -16,6 +16,9 @@ type Props = {
 	searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
+/**
+ *  This page is entirely server component with optional error from search params because I wanted to use "metadata" without splitting this component into 2 files.
+ */
 const page = async (props: Props) => {
 	const searchParams = await props.searchParams;
 	const email = searchParams?.email as string | undefined;
