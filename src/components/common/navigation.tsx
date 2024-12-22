@@ -8,9 +8,12 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 
-const Navigation = () => {
+type Props = {
+	email: string;
+};
+
+const Navigation = ({ email }: Props) => {
 	const pathname = usePathname();
-	const session = null; // TODO
 
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -21,10 +24,6 @@ const Navigation = () => {
 	const handleClose = () => {
 		setIsOpen(false);
 	};
-
-	// It should never happen because this navigation is not shown
-	// for unauthenticated users
-	if (!session /* || !session?.data?.user */) return;
 
 	return (
 		<>
@@ -70,10 +69,7 @@ const Navigation = () => {
 						/> */}
 					<User className='h-8 w-8 shrink-0 rounded-full bg-neutral-100 p-1 dark:bg-neutral-800' />
 					<div className='overflow-hidden'>
-						<p className='truncate text-sm font-medium'>
-							{/* session.data.user.email?.split('@')[0] */}example
-						</p>
-						<p className='truncate text-sm opacity-50'>{/* session.data.user.email */}example@abc.com</p>
+						<p className='truncate text-sm font-medium'>{email}</p>
 					</div>
 					<Settings className='h-6 w-6 shrink-0' />
 				</Link>
