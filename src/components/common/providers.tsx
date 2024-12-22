@@ -3,13 +3,13 @@
 import queryClient from '@/lib/query-client';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { FC, ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 
-interface ProvidersProps {
+interface Props {
 	children: ReactNode;
 }
 
-const Providers: FC<ProvidersProps> = ({ children }) => {
+const Providers = ({ children }: Props) => {
 	useEffect(() => {
 		if (
 			localStorage.getItem('color-theme') === 'dark' ||
