@@ -3,17 +3,16 @@
 import { getAuthStatus } from '@/lib/auth';
 import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
-import CreateCourseSchema from '@/schemas/create-course-schema';
-import { z } from 'zod';
+import { redirect } from 'next/navigation';
 
-const createCourse = async (values: z.infer<typeof CreateCourseSchema>) => {
-	const validatedFields = CreateCourseSchema.safeParse(values);
+const createCourse = async (_prevState: any, formData: FormData) => {
+	const name = formData.get('name')?.toString();
+	const teacher = formData.get('teacher')?.toString();
+	const color = formData.get('color')?.toString();
 
-	if (!validatedFields.success) {
+	if (!name || !teacher || !color) {
 		return { error: en.INVALID_DATA };
 	}
-
-	const { name, teacher, color } = validatedFields.data;
 
 	const colorRegex = /^#[0-9A-F]{6}$/i;
 	const isValidColor = colorRegex.test(color);
@@ -29,7 +28,7 @@ const createCourse = async (values: z.infer<typeof CreateCourseSchema>) => {
 			return { error: en.auth.UNAUTHENTICATED };
 		}
 
-		const newCourse = await db.course.create({
+		await db.course.create({
 			data: {
 				userId: user.id,
 				name,
@@ -37,11 +36,11 @@ const createCourse = async (values: z.infer<typeof CreateCourseSchema>) => {
 				color,
 			},
 		});
-
-		return { newCourse };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
+
+	redirect('/courses');
 };
 
 export default createCourse;
