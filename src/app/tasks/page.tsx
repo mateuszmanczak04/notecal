@@ -2,8 +2,11 @@ import LoadingSpinner from '@/components/common/loading-spinner';
 import { getAuthStatus } from '@/lib/auth';
 import db from '@/lib/db';
 import { Metadata } from 'next';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 import CreateTask from './_components/create-task';
+import SortTasks from './_components/sort-tasks';
 import Tasks from './_components/tasks';
 
 export const metadata: Metadata = {
@@ -14,21 +17,29 @@ export const metadata: Metadata = {
 };
 
 const page = async () => {
-	const { user } = (await getAuthStatus()) as { user: { id: string } };
+	const { user: authUser } = (await getAuthStatus()) as { user: { id: string } };
+
+	const user = await db.user.findUnique({ where: { id: authUser.id } });
+
+	if (!user) {
+		// Should not occur in normal conditions
+		(await cookies()).delete('authToken');
+		redirect('/auth/login');
+	}
 
 	const tasksPromise = db.task.findMany({
 		where: {
-			userId: user.id,
+			userId: authUser.id,
 		},
 		orderBy: {
-			createdAt: 'desc',
+			[user.orderTasks]: 'desc',
 		},
 	});
 
 	return (
 		<main className='mx-auto max-w-[800px] space-y-8'>
 			<CreateTask />
-			{/* <SortTasks /> */}
+			<SortTasks />
 
 			<Suspense
 				fallback={
