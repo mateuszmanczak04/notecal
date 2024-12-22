@@ -2,7 +2,7 @@ import logout from '@/app/auth/_actions/logout';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import db from '@/lib/db';
-import { verifyToken } from '@/lib/jwt';
+import { JWT_AUTH, verifyToken } from '@/lib/jwt';
 import { LogOut } from 'lucide-react';
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
@@ -10,6 +10,7 @@ import { redirect } from 'next/navigation';
 import ChangeEmailSetting from './_components/change-email-setting';
 import ChangePasswordSetting from './_components/change-password-setting';
 import EmailNotConfirmed from './_components/email-not-confirmed';
+import UpdateSettings from './_components/update-settings';
 
 export const metadata: Metadata = {
 	title: 'Settings',
@@ -22,12 +23,8 @@ const page = async () => {
 	const cookieStore = await cookies();
 	const authToken = cookieStore.get('authToken')?.value || '';
 
-	const decoded = await verifyToken(authToken);
-
-	if (!decoded) {
-		cookieStore.delete('authToken');
-		redirect('/auth/login');
-	}
+	// We can securely assume that it will always return "authenticated=true" as our middleware doesn't allow unauthenticated users to see this page.
+	const decoded = (await verifyToken(authToken)) as JWT_AUTH;
 
 	const user = await db.user.findUnique({
 		where: {
@@ -35,21 +32,28 @@ const page = async () => {
 		},
 	});
 
+	// Should not occur in normal conditions
+	if (!user) {
+		cookieStore.delete('authToken');
+		redirect('/auth/login');
+	}
+
 	return (
 		<div className='mx-auto mb-32 mt-4 flex max-w-[480px] flex-col gap-8'>
 			<h1 className='text-3xl font-bold'>Settings</h1>
 			{user?.emailVerified && <EmailNotConfirmed />}
+
+			{/* Change email */}
 			<ChangeEmailSetting />
 			<Separator />
 
+			{/* Change password */}
 			<ChangePasswordSetting />
 			<Separator />
 
-			{/* <DisplayedDaysSetting initialDisplayedDays={settings.displayedDays} /> */}
+			{/* General settings */}
+			<UpdateSettings />
 			<Separator />
-
-			{/* <DefaultNoteDurationSetting initialDefaultNoteDuration={settings.defaultNoteDuration} /> */}
-			{/* <Separator /> */}
 
 			{/* Logout button */}
 			<Button variant='secondary' onClick={logout} className='w-full'>

@@ -1,66 +1,40 @@
 'use server';
 
+import { getAuthStatus } from '@/lib/auth';
+import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
-import { z } from 'zod';
 
-const UpdateSettingsSchema = z.object({
-	theme: z.enum(['light', 'dark']).optional(),
-	orderTasks: z.enum(['title', 'createdAt', 'dueDate', 'priority', 'completed']).optional(),
-	language: z.enum(['en']).optional(),
-	displayedDays: z.coerce
-		.number({
-			required_error: en.settings.DISPLAYED_DAYS_REQUIRED,
-		})
-		.optional(),
-	defaultNoteDuration: z.coerce
-		.number({
-			required_error: en.settings.DEFAULT_NOTE_DURATION_REQUIRED,
-		})
-		.optional(),
-	zoomLevel: z.number().int().gte(1).lte(5).optional(),
-});
+const updateSettings = async (_prevState: any, formData: FormData) => {
+	// Text types
+	const orderTasks = formData.get('orderTasks')?.toString() || undefined;
+	const language = formData.get('language')?.toString() || undefined;
 
-const updateSettings = async (values: z.infer<typeof UpdateSettingsSchema>) => {
-	const validatedFields = UpdateSettingsSchema.safeParse(values);
-
-	if (!validatedFields.success) {
-		return { error: en.INVALID_DATA };
-	}
+	// Number types, if they come as equal to zero, they become undefined
+	const displayedDays = parseInt(formData.get('displayedDays')?.toString() || '') || undefined;
+	const defaultNoteDuration = parseInt(formData.get('defaultNoteDuration')?.toString() || '') || undefined;
+	const zoomLevel = parseInt(formData.get('zoomLevel')?.toString() || '') || undefined;
 
 	try {
-		// const session = await auth();
+		const { authenticated, user: authUser } = await getAuthStatus();
 
-		// if (!session?.user?.id) {
-		// 	return { error: en.auth.UNAUTHENTICATED };
-		// }
+		if (!authenticated) {
+			return { error: en.auth.UNAUTHENTICATED };
+		}
 
-		// const setting = await db.settings.findUnique({
-		// 	where: { userId: session.user.id },
-		// });
+		await db.user.update({
+			where: {
+				id: authUser.id,
+			},
+			data: {
+				orderTasks,
+				language,
+				displayedDays,
+				defaultNoteDuration,
+				zoomLevel,
+			},
+		});
 
-		// let updatedSettings;
-
-		// if (!setting) {
-		// 	updatedSettings = await db.settings.create({
-		// 		data: {
-		// 			userId: session.user.id,
-		// 			...validatedFields.data,
-		// 		},
-		// 	});
-		// } else {
-		// 	updatedSettings = await db.settings.update({
-		// 		where: {
-		// 			userId: session.user.id,
-		// 		},
-		// 		data: {
-		// 			...validatedFields.data,
-		// 		},
-		// 	});
-		// }
-
-		// return { updatedSettings };
-
-		return { updatedSettings: null };
+		return { message: 'Settings updated successfully' };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
