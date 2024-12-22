@@ -1,6 +1,5 @@
 'use client';
 
-import useSettings from '@/app/settings/_hooks/use-settings';
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
 import { useRef, useState } from 'react';
@@ -8,10 +7,9 @@ import { useOnClickOutside } from 'usehooks-ts';
 import useTasks from '../_hooks/use-tasks';
 import useTasksHistory from '../_hooks/use-tasks-history';
 
-const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
+const SortTasks = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement | null>(null);
-	const { update: updateSettings, settings } = useSettings();
 	const { sort } = useTasks();
 	const { makeUpdate } = useTasksHistory(); // Cmd + Z
 
@@ -68,8 +66,7 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 						onClick={() => {
 							handleSort('title');
 							handleCloseMenu();
-						}}
-					>
+						}}>
 						Title
 					</div>
 					<div
@@ -77,8 +74,7 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 						onClick={() => {
 							handleSort('createdAt');
 							handleCloseMenu();
-						}}
-					>
+						}}>
 						Newest first
 					</div>
 					<div
@@ -86,8 +82,7 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 						onClick={() => {
 							handleSort('dueDate');
 							handleCloseMenu();
-						}}
-					>
+						}}>
 						Due date
 					</div>
 					<div
@@ -95,8 +90,7 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 						onClick={() => {
 							handleSort('priority');
 							handleCloseMenu();
-						}}
-					>
+						}}>
 						Priority
 					</div>
 					<div
@@ -104,8 +98,7 @@ const SortTasks = ({ closeNavigation }: { closeNavigation: () => void }) => {
 						onClick={() => {
 							handleSort('completed');
 							handleCloseMenu();
-						}}
-					>
+						}}>
 						Completed first
 					</div>
 				</div>

@@ -1,6 +1,5 @@
 'use client';
 
-import SortTasks from '@/app/tasks/_components/sort-tasks';
 import { cn } from '@/lib/utils';
 import { Calendar, Check, List, Menu, Settings, User, X } from 'lucide-react';
 import Link from 'next/link';
@@ -108,14 +107,6 @@ const Navigation = ({ email }: Props) => {
 							onClick={handleClose}>
 							<List className='h-4 w-4' /> Courses
 						</Link>
-						<div className='mt-8 flex flex-col gap-2'>
-							{/* TODO: remove this and move functionality below tasks items */}
-							{pathname === '/tasks' && (
-								<>
-									<SortTasks closeNavigation={handleClose} />
-								</>
-							)}
-						</div>
 					</div>
 				</div>
 			</div>

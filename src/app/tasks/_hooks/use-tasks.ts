@@ -1,8 +1,7 @@
-import useSettings from '@/app/settings/_hooks/use-settings';
 import getTasks from '@/app/tasks/_actions/get-tasks';
 import queryClient from '@/lib/query-client';
 import { getSortedTasks } from '@/lib/utils';
-import { OrderTasksEnum, Task, TaskPriority } from '@prisma/client';
+import { Task, TaskPriority } from '@prisma/client';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { uid } from 'uid';
 import createTask from '../_actions/create-task';
@@ -51,7 +50,7 @@ const useTasks = () => {
 			return tasks;
 		},
 	});
-	const { settings } = useSettings();
+	const settings = {};
 
 	// Inserting
 	const { mutate: add } = useMutation({

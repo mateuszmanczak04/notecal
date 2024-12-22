@@ -1,5 +1,4 @@
 import useNotes from '@/app/notes/_hooks/use-notes';
-import useSettings from '@/app/settings/_hooks/use-settings';
 import { ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
@@ -15,7 +14,7 @@ interface CourseProps {
 const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 	const { notes, isPending } = useNotes();
 	const filteredNotes = notes?.filter(note => note.courseId === id);
-	const { settings } = useSettings();
+	const settings = {};
 	const { add: addNewNote } = useNotes();
 	const router = useRouter();
 
@@ -46,8 +45,7 @@ const Course: FC<CourseProps> = ({ name, teacher, id, color }) => {
 		<div
 			className='flex cursor-pointer items-center justify-between rounded-xl bg-neutral-50 p-4 text-white transition hover:opacity-90'
 			style={{ background: color }}
-			onClick={handleClick}
-		>
+			onClick={handleClick}>
 			<div>
 				<p className='line-clamp-1 rounded-xl text-xl font-medium'>{name}</p>
 				<p className='mt-1 line-clamp-1 opacity-75'>{teacher}</p>

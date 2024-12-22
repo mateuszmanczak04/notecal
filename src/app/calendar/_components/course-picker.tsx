@@ -2,7 +2,6 @@
 
 import useCourses from '@/app/courses/_hooks/use-courses';
 import useNotes from '@/app/notes/_hooks/use-notes';
-import useSettings from '@/app/settings/_hooks/use-settings';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { Plus } from 'lucide-react';
@@ -22,7 +21,7 @@ interface CoursePickerProps {
 const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 	const { courses } = useCourses(); // TODO: error handling
 	const pickerRef = useRef<HTMLDivElement | null>(null);
-	const { settings } = useSettings();
+	const settings = {};
 	const { containerRef } = useCalendarContext();
 	const [pickerX, setPickerX] = useState(x);
 	const [pickerY, setPickerY] = useState(y);
@@ -87,8 +86,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 			<div
 				className='absolute z-40 flex min-w-40 max-w-96 -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-xl bg-white shadow-xl dark:bg-neutral-700'
 				ref={pickerRef}
-				style={{ left: pickerX, top: pickerY }}
-			>
+				style={{ left: pickerX, top: pickerY }}>
 				{!courses || courses.length === 0 ? (
 					<div className='w-64 p-4'>
 						<p>You don&apos;t have any courses yet</p>
@@ -108,8 +106,7 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 									key={course.id}
 									onClick={() => handleSelect(course.id)}
 									className='flex w-full items-center justify-center px-4 py-2 text-white transition hover:bg-neutral-100 dark:hover:bg-neutral-600'
-									style={{ color: course.color }}
-								>
+									style={{ color: course.color }}>
 									{course.name}
 								</button>
 							))}

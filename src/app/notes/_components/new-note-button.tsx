@@ -1,6 +1,5 @@
 'use client';
 
-import useSettings from '@/app/settings/_hooks/use-settings';
 import { Button } from '@/components/ui/button';
 import { Course } from '@prisma/client';
 import { Plus } from 'lucide-react';
@@ -12,7 +11,7 @@ type Props = {
 };
 
 const NewNoteButton = ({ course }: Props) => {
-	const { settings } = useSettings();
+	const settings = {};
 	const { add: addNewNote } = useNotes();
 
 	const onClick = () => {

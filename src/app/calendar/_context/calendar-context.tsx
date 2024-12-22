@@ -1,6 +1,5 @@
 'use client';
 
-import useSettings from '@/app/settings/_hooks/use-settings';
 import { addDays } from 'date-fns';
 import { MutableRefObject, ReactNode, createContext, useContext, useRef, useState } from 'react';
 
@@ -25,7 +24,8 @@ const CalendarContext = createContext({} as CalendarContextProps);
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const { settings, update: updateSettings } = useSettings();
+	const settings = null;
+	const updateSettings = () => {};
 
 	// Keeping the same calendar scroll y level after switching routes
 	const [scrollTop, setScrollTop] = useState(0);
@@ -135,8 +135,7 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 				displayedDays: settings.displayedDays,
 				scrollTop,
 				setScrollTop,
-			}}
-		>
+			}}>
 			{children}
 		</CalendarContext.Provider>
 	);
