@@ -3,11 +3,6 @@
 import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 import nodemailer from 'nodemailer';
-import { z } from 'zod';
-
-const Schema = z.object({
-	email: z.string().trim().email().min(1, { message: en.auth.EMAIL_REQUIRED }).email(),
-});
 
 export const getVerificationTokenByEmail = async (email: string) => {
 	const verificationToken = await db.verificationToken.findFirst({
@@ -43,11 +38,9 @@ export const generateVerificationToken = async (email: string) => {
 	return verificationToken;
 };
 
-const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
-	const validatedFields = Schema.safeParse(values);
-
-	if (!validatedFields.success) {
-		return { error: en.INVALID_DATA };
+const sendConfirmationEmail = async (email: string) => {
+	if (!email) {
+		return { error: en.auth.EMAIL_REQUIRED };
 	}
 
 	try {
@@ -61,7 +54,6 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
 			},
 		});
 
-		const email = validatedFields.data.email;
 		const token = await generateVerificationToken(email);
 		const url = `${process.env.APP_DOMAIN}/auth/confirm-email?token=${token.token}`;
 
@@ -74,9 +66,9 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
           text-align: center;
           max-width: 400px;
         ">
-        <h1 style="font-size: 32px; margin: 0">Confirm account creation</h1>
+        <h1 style="font-size: 32px; margin: 0">Confirm your account's e-mal address</h1>
         <p style="font-size: 16px; margin: 0; margin-top: 8px">
-          Click the button bellow to confirm Your new account
+          Click the button bellow to go forward
         </p>
         <a
           href="${url}"
@@ -93,7 +85,7 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
             border-radius: 6px;
             font-family: inherit;
           ">
-          Click
+          Confirm my e-mail
         </a>
       </div>
     `;

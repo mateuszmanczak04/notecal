@@ -1,68 +1,69 @@
 'use server';
 
+import sendConfirmationEmail from '@/app/auth/_actions/send-confirmation-email';
+import { getAuthStatus } from '@/lib/auth';
+import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
-import ChangeEmailSchema from '@/schemas/change-email-schema';
-import { z } from 'zod';
+import bcryptjs from 'bcryptjs';
 
-const changeEmail = async (values: z.infer<typeof ChangeEmailSchema>) => {
-	const validatedFields = ChangeEmailSchema.safeParse(values);
+const changeEmail = async (_prevState: any, formData: FormData) => {
+	const email = formData.get('email')?.toString(); // New email
+	const password = formData.get('password')?.toString(); // Current password
 
-	if (!validatedFields.success) {
+	if (!email || !password) {
 		return { error: en.INVALID_DATA };
 	}
 
-	const { password, email } = validatedFields.data;
-
 	try {
-		// const session = await auth();
+		const { authenticated, user: authUser } = await getAuthStatus();
 
-		// if (!session?.user?.id) {
-		// 	return { error: en.auth.UNAUTHENTICATED };
-		// }
+		// Only authenticated users can change their email
+		if (!authenticated) {
+			return { error: en.auth.UNAUTHENTICATED };
+		}
 
-		// // Check if user exists
-		// const user = await db.user.findUnique({
-		// 	where: { id: session.user.id },
-		// 	select: { password: true, email: true },
-		// });
-		// if (!user) {
-		// 	return { error: en.auth.USER_DOES_NOT_EXIST };
-		// }
+		// Check if user exists, should not occur in normal conditions
+		const user = await db.user.findUnique({
+			where: { id: authUser.id },
+			select: { password: true, email: true },
+		});
+		if (!user) {
+			return { error: en.auth.USER_DOES_NOT_EXIST };
+		}
 
-		// // Check if email is not the same
-		// if (user.email === email) {
-		// 	return { error: en.auth.EMAIL_IS_IDENTICAL };
-		// }
+		// Check if new email is the same
+		if (user.email === email) {
+			return { error: en.auth.EMAIL_IS_IDENTICAL };
+		}
 
-		// // Check if password is correct
-		// const passwordsMatch = await bcrypt.compare(password, user.password);
-		// if (!passwordsMatch) {
-		// 	return { error: en.auth.WRONG_PASSWORD };
-		// }
+		// Check if password is correct
+		const passwordsMatch = await bcryptjs.compare(password, user.password);
+		if (!passwordsMatch) {
+			return { error: en.auth.WRONG_PASSWORD };
+		}
 
-		// // Check if email is not taken
-		// const userWithEmail = await db.user.findUnique({ where: { email } });
-		// if (userWithEmail) {
-		// 	return { error: en.auth.EMAIL_TAKEN };
-		// }
+		// Check if email is not taken
+		const userWithEmail = await db.user.findUnique({ where: { email } });
+		if (userWithEmail) {
+			return { error: en.auth.EMAIL_TAKEN };
+		}
 
-		// // Delete old tokens
-		// await db.verificationToken.deleteMany({ where: { email: user.email } });
-		// await db.resetPasswordToken.deleteMany({
-		// 	where: { email: user.email },
-		// });
+		// Delete tokens associated with old email
+		await db.verificationToken.deleteMany({ where: { email: user.email } });
+		await db.resetPasswordToken.deleteMany({
+			where: { email: user.email },
+		});
 
-		// // Update email & reset their email confirmed
-		// await db.user.update({
-		// 	where: { id: session.user.id },
-		// 	data: { email, emailVerified: null },
-		// });
+		// Update email & reset their email confirmed
+		await db.user.update({
+			where: { id: authUser.id },
+			data: { email, emailVerified: null },
+		});
 
-		// await sendEmailChangeEmail({ email });
+		// Users must verify their new email
+		sendConfirmationEmail(email);
 
-		// return { message: en.auth.EMAIL_UPDATED };
-
-		return { message: 'TODO' };
+		return { message: en.auth.EMAIL_UPDATED };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

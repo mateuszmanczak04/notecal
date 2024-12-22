@@ -1,92 +1,49 @@
 'use client';
 
-import logout from '@/app/auth/_actions/logout';
 import ErrorMessage from '@/components/common/error-message';
-import LoadingSpinner from '@/components/common/loading-spinner';
+import FormLoadingSpinner from '@/components/common/form-loading-spinner';
 import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import ChangeEmailSchema from '@/schemas/change-email-schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { useActionState } from 'react';
 import changeEmail from '../_actions/change-email';
 
 const ChangeEmailSetting = () => {
-	const session = null; // TODO
-	const { mutate, error, isPending, data } = useMutation({
-		mutationFn: async (values: z.infer<typeof ChangeEmailSchema>) => {
-			const { error, message } = await changeEmail(values);
-			if (error) {
-				throw new Error(error);
-			}
-			await logout();
-			return { message };
-		},
-	});
-
-	const form = useForm<z.infer<typeof ChangeEmailSchema>>({
-		resolver: zodResolver(ChangeEmailSchema),
-		defaultValues: {
-			password: '',
-			email: '',
-		},
-	});
-
-	const onSubmit = (values: z.infer<typeof ChangeEmailSchema>) => {
-		mutate(values);
-	};
-
-	if (!session) return null; // TODO
+	const [state, formAction] = useActionState(changeEmail, { message: '' });
 
 	return (
 		<div className='flex flex-col gap-2'>
-			<h2 className='text-lg font-semibold'>Change your email address</h2>
-			{/* <p className='opacity-75'>({session.data?.user?.email})</p> */}
+			<h2 className='text-lg font-semibold'>Change your e-mail address</h2>
 			<p className='opacity-75'>You will have to log in again afterwards</p>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-4'>
-					{/* Email field */}
-					<FormField
-						control={form.control}
-						name='email'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>New email</FormLabel>
-								<FormControl>
-									<Input placeholder='example@abc.com' type='email' {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
 
-					{/* Password field */}
-					<FormField
-						control={form.control}
-						name='password'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Your password</FormLabel>
-								<FormControl>
-									<Input placeholder='******' type='password' {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+			<form action={formAction} className='mt-2 flex flex-col gap-4'>
+				{/* Email field */}
+				<div>
+					<label htmlFor='change-email-email' className='mb-1 block px-2 font-medium'>
+						New e-mail
+					</label>
+					<Input placeholder='******' type='email' name='email' id='change-email-email' />
+				</div>
 
-					{/* Button and results */}
-					<Button type='submit' className='gap-2'>
-						Save
-					</Button>
-					{data && <SuccessMessage>{data.message}</SuccessMessage>}
-					{error && <ErrorMessage>{error.message}</ErrorMessage>}
-					{isPending && <LoadingSpinner />}
-				</form>
-			</Form>
+				{/* Password field */}
+				<div>
+					<label htmlFor='change-email-password' className='mb-1 block px-2 font-medium'>
+						Your password
+					</label>
+					<Input placeholder='******' type='password' name='password' id='change-email-password' />
+				</div>
+
+				{/* Submit button */}
+				<Button type='submit' className='gap-2'>
+					Save
+				</Button>
+
+				{/* Form results */}
+				{state.message && <SuccessMessage>{state.message}</SuccessMessage>}
+				{state.error && <ErrorMessage>{state.error}</ErrorMessage>}
+
+				<FormLoadingSpinner />
+			</form>
 		</div>
 	);
 };

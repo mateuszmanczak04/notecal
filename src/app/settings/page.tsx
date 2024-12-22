@@ -1,11 +1,13 @@
 import logout from '@/app/auth/_actions/logout';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import db from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { LogOut } from 'lucide-react';
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import ChangeEmailSetting from './_components/change-email-setting';
 import EmailNotConfirmed from './_components/email-not-confirmed';
 
 export const metadata: Metadata = {
@@ -36,15 +38,14 @@ const page = async () => {
 		<div className='mx-auto mb-32 mt-4 flex max-w-[480px] flex-col gap-8'>
 			<h1 className='text-3xl font-bold'>Settings</h1>
 			{user?.emailVerified && <EmailNotConfirmed />}
-			{user?.emailVerified?.toString()}
-			{/* <ChangeEmailSetting />
+			<ChangeEmailSetting />
 			<Separator />
-			<ChangePasswordSetting />
+			{/* <ChangePasswordSetting /> */}
 			<Separator />
-			<DisplayedDaysSetting initialDisplayedDays={settings.displayedDays} />
+			{/* <DisplayedDaysSetting initialDisplayedDays={settings.displayedDays} /> */}
 			<Separator />
-			<DefaultNoteDurationSetting initialDefaultNoteDuration={settings.defaultNoteDuration} />
-			<Separator /> */}
+			{/* <DefaultNoteDurationSetting initialDefaultNoteDuration={settings.defaultNoteDuration} /> */}
+			{/* <Separator /> */}
 
 			{/* Logout button */}
 			<Button variant='secondary' onClick={logout} className='w-full'>
