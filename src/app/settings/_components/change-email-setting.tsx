@@ -12,7 +12,7 @@ const ChangeEmailSetting = () => {
 	const [state, formAction] = useActionState(changeEmail, { message: '' });
 
 	return (
-		<div className='flex flex-col gap-2'>
+		<section className='flex flex-col gap-2'>
 			<h2 className='text-lg font-semibold'>Change your e-mail address</h2>
 
 			<form action={formAction} className='mt-2 flex flex-col gap-4'>
@@ -43,7 +43,7 @@ const ChangeEmailSetting = () => {
 
 				<FormLoadingSpinner />
 			</form>
-		</div>
+		</section>
 	);
 };
 

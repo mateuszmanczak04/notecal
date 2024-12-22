@@ -27,7 +27,7 @@ const UpdateSettings = ({
 	const [language, setLanguage] = useState(initialLanguage);
 
 	return (
-		<div className='flex flex-col gap-2'>
+		<section className='flex flex-col gap-2'>
 			<h2 className='text-lg font-semibold'>Update your settings</h2>
 
 			<form action={formAction} className='mt-2 flex flex-col gap-4'>
@@ -87,7 +87,7 @@ const UpdateSettings = ({
 
 				<FormLoadingSpinner />
 			</form>
-		</div>
+		</section>
 	);
 };
 
