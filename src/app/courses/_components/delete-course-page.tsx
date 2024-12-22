@@ -4,13 +4,13 @@ import GoBackButton from '@/components/common/go-back-button';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import useCourses from '../_hooks/use-courses';
 
 const DeleteCoursePage = () => {
 	const searchParams = useSearchParams();
 	const id = searchParams.get('id');
 	const router = useRouter();
-	const { remove: removeCourse } = useCourses();
+
+	const removeCourse = (values: any) => {};
 
 	if (!id) {
 		router.push('/courses');

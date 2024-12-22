@@ -5,12 +5,10 @@
 const NotePage = () => {
 	// const { notes, isPending: isNotesPending, error: notesError } = useNotes();
 	// const { tasks, isPending: isTasksPending, error: tasksError } = useTasks();
-	// const { courses, isPending: isCoursesPending } = useCourses();
 	// const { id } = useParams();
 	// const router = useRouter();
 	// // Filter only notes and tasks relevant to this course
 	// const currentNote = useNote(id as string); // TODO: type error handling
-	// const currentCourse = useCourse(currentNote?.courseId || null);
 	// const thisCourseNotes = notes?.filter(note => note.courseId === currentCourse?.id);
 	// const thisCourseTasks = tasks?.filter(task => task.courseId === currentCourse?.id);
 	// useEffect(() => {

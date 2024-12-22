@@ -2,7 +2,6 @@
 
 import ErrorMessage from '@/components/common/error-message';
 import { useEffect, useRef } from 'react';
-import useCourses from '../../courses/_hooks/use-courses';
 import useNotes from '../../notes/_hooks/use-notes';
 import { useCalendarContext } from '../_context/calendar-context';
 import Grid from './grid';
@@ -12,7 +11,7 @@ import TopBar from './top-bar';
 
 const CalendarPage = () => {
 	const { error: notesError } = useNotes();
-	const { error: coursesError } = useCourses();
+	const coursesError = { message: '' };
 
 	// Used to keep the same calendar scroll y level even after
 	// switching routes

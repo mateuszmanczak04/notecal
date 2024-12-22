@@ -1,8 +1,8 @@
 'use client';
 
-import useCourses from '@/app/courses/_hooks/use-courses';
 import useNotes from '@/app/notes/_hooks/use-notes';
 import { Button } from '@/components/ui/button';
+import { Course } from '@prisma/client';
 import { format } from 'date-fns';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
@@ -19,7 +19,7 @@ interface CoursePickerProps {
 }
 
 const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
-	const { courses } = useCourses(); // TODO: error handling
+	const courses = [] as Course[];
 	const pickerRef = useRef<HTMLDivElement | null>(null);
 	const settings = {};
 	const { containerRef } = useCalendarContext();

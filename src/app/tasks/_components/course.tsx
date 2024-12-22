@@ -9,8 +9,6 @@ type Props = {
 };
 
 const Course = ({ className, task }: Props) => {
-	// const { courses } = useCourses();
-	// const currentCourse = useCourse(task.courseId);
 	// const { makeUpdate } = useTasksHistory(); // Cmd + Z
 	// const { update } = useTasks();
 	// const handleSelect = (newCourseId: string | null) => {

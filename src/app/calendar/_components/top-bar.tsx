@@ -1,6 +1,5 @@
 'use client';
 
-import useCourses from '@/app/courses/_hooks/use-courses';
 import useNotes from '@/app/notes/_hooks/use-notes';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import { FC } from 'react';
@@ -12,7 +11,7 @@ interface TopBarProps {}
 const TopBar: FC<TopBarProps> = ({}) => {
 	const { getDayAfter, displayedDays } = useCalendarContext();
 	const { isPending: isNotesPending } = useNotes();
-	const { isPending: isCoursesPending } = useCourses();
+	const isCoursesPending = false;
 	const days = new Array(displayedDays).fill(0).map((_, index) => getDayAfter(index));
 
 	return (
@@ -26,8 +25,7 @@ const TopBar: FC<TopBarProps> = ({}) => {
 				className='grid flex-1'
 				style={{
 					gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
-				}}
-			>
+				}}>
 				{days.map((day, index) => (
 					<DayHeading key={day.toString()} date={day} isLast={index === displayedDays - 1} />
 				))}

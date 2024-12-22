@@ -11,7 +11,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import useCourses from '../_hooks/use-courses';
 
 const CreateCoursePage = () => {
 	const form = useForm<z.infer<typeof CreateCourseSchema>>({
@@ -23,7 +22,7 @@ const CreateCoursePage = () => {
 		},
 	});
 	const router = useRouter();
-	const { add: addCourse } = useCourses();
+	const addCourse = (values: any) => {};
 	const [shouldBeDisabled, setShouldBeDisabled] = useState(false);
 
 	const onSubmit = (values: z.infer<typeof CreateCourseSchema>) => {
@@ -36,8 +35,7 @@ const CreateCoursePage = () => {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='mx-auto mt-4 w-full max-w-[600px] space-y-4 sm:space-y-6 md:space-y-8'
-			>
+				className='mx-auto mt-4 w-full max-w-[600px] space-y-4 sm:space-y-6 md:space-y-8'>
 				<h2 className='text-3xl font-bold'>Create a new course</h2>
 				<FormField
 					control={form.control}
@@ -92,14 +90,12 @@ const CreateCoursePage = () => {
 													backgroundColor: color.hex,
 												}}
 												onClick={() => field.onChange(color.hex)}
-												key={color.hex}
-											>
+												key={color.hex}>
 												<span
 													className={cn(
 														'rounded-xl bg-neutral-900/50 px-1 text-sm leading-5 transition',
 														field.value === color.hex ? 'opacity-1' : 'opacity-0',
-													)}
-												>
+													)}>
 													{color.description}
 												</span>
 											</div>

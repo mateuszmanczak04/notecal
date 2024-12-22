@@ -1,8 +1,8 @@
 'use client';
 
-import useCourses from '@/app/courses/_hooks/use-courses';
 import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
+import { Course as T_Course } from '@prisma/client';
 import { Plus } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -16,7 +16,9 @@ export const metadata: Metadata = {
 };
 
 const Courses = () => {
-	const { courses, error, isPending } = useCourses();
+	const courses = [] as T_Course[];
+	const isPending = false;
+	const error = { message: '' };
 
 	return (
 		<div>
@@ -47,8 +49,7 @@ const Courses = () => {
 					<Link
 						prefetch
 						href='/courses/create'
-						className='grid cursor-pointer place-content-center gap-2 rounded-xl bg-neutral-100 p-4 transition hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-600'
-					>
+						className='grid cursor-pointer place-content-center gap-2 rounded-xl bg-neutral-100 p-4 transition hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-600'>
 						<Plus className='h-10 w-10' />
 					</Link>
 				</div>

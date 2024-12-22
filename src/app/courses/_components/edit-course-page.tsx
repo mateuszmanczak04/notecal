@@ -1,6 +1,5 @@
 'use client';
 
-import useCourse from '@/app/courses/_hooks/use-course';
 import GoBackButton from '@/components/common/go-back-button';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -9,19 +8,19 @@ import { Separator } from '@/components/ui/separator';
 import { cn, COLORS } from '@/lib/utils';
 import UpdateCourseSchema from '@/schemas/update-course-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Course } from '@prisma/client';
 import { Save, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import useCourses from '../_hooks/use-courses';
 
 const EditCoursePage = () => {
 	const searchParams = useSearchParams();
 	const id = searchParams.get('id');
 	const router = useRouter();
-	const course = useCourse(id);
-	const { update: updateCourse } = useCourses();
+	const course = {} as Course;
+	const updateCourse = (values: any) => {};
 
 	const form = useForm<z.infer<typeof UpdateCourseSchema>>({
 		resolver: zodResolver(UpdateCourseSchema),
@@ -100,14 +99,12 @@ const EditCoursePage = () => {
 														backgroundColor: color.hex,
 													}}
 													onClick={() => field.onChange(color.hex)}
-													key={color.hex}
-												>
+													key={color.hex}>
 													<span
 														className={cn(
 															'rounded-xl bg-neutral-900/50 px-1 text-sm leading-5 transition',
 															field.value === color.hex ? 'opacity-1' : 'opacity-0',
-														)}
-													>
+														)}>
 														{color.description}
 													</span>
 												</div>
