@@ -56,7 +56,7 @@ const sendRecoveryEmail = async (formData: FormData) => {
 	// Check if user exists and has email verified,
 	// if not, fake that action resolved successfully
 	if (!user || !user.emailVerified) {
-		redirect(`/auth/forgot-password/message-sent?email=${email}`);
+		redirect('/auth/forgot-password?message=Email sent successfully, please check your inbox.');
 	}
 
 	// Setup nodemailer
@@ -117,10 +117,12 @@ const sendRecoveryEmail = async (formData: FormData) => {
 			html,
 		});
 	} catch {
-		redirect('/auth/forgot-password/error');
+		redirect(
+			'/auth/forgot-password?error=There was an error when sending a recovery message, please try again later.',
+		);
 	}
 
-	redirect(`/auth/forgot-password/message-sent?email=${email}`);
+	redirect('/auth/forgot-password?message=Email sent successfully, please check your inbox.');
 };
 
 export default sendRecoveryEmail;
