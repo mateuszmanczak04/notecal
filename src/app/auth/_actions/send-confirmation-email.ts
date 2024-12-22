@@ -63,7 +63,7 @@ const sendConfirmationEmail = async (values: z.infer<typeof Schema>) => {
 
 		const email = validatedFields.data.email;
 		const token = await generateVerificationToken(email);
-		const url = `${process.env.APP_DOMAIN}/auth/confirm-email?token=${token.token}&newAccount=true`;
+		const url = `${process.env.APP_DOMAIN}/auth/confirm-email?token=${token.token}`;
 
 		const html = `
      <div

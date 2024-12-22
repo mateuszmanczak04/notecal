@@ -8,7 +8,7 @@ const confirmEmail = async (formData: FormData) => {
 	const token = formData.get('token')?.toString();
 
 	if (!token) {
-		redirect('/auth/confirm-email/invalid-token');
+		redirect('/auth/confirm-email?error=Invalid token');
 	}
 
 	const verificationToken = await db.verificationToken.findFirst({
@@ -18,13 +18,13 @@ const confirmEmail = async (formData: FormData) => {
 	});
 
 	if (!verificationToken) {
-		redirect('/auth/confirm-email/invalid-token');
+		redirect('/auth/confirm-email?error=Invalid token');
 	}
 
 	const hasExpired = isAfter(new Date(), verificationToken.expires);
 
 	if (hasExpired) {
-		redirect('/auth/confirm-email/invalid-token');
+		redirect('/auth/confirm-email?error=Your token has expired');
 	}
 
 	await db.verificationToken.delete({
@@ -38,7 +38,7 @@ const confirmEmail = async (formData: FormData) => {
 	});
 
 	if (!user) {
-		redirect('/auth/confirm-email/invalid-token');
+		redirect('/auth/confirm-email?error=Invalid token');
 	}
 
 	await db.user.update({
@@ -46,7 +46,7 @@ const confirmEmail = async (formData: FormData) => {
 		data: { emailVerified: new Date() },
 	});
 
-	redirect(`/auth/confirm-email/success?email=${verificationToken.email}`);
+	redirect('/auth/confirm-email?message=E-mail address confirmed successully, you can now close this page');
 };
 
 export default confirmEmail;
