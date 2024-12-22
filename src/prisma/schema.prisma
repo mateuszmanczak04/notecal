@@ -7,18 +7,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-enum OrderTasksEnum {
-  title
-  dueDate
-  priority
-  completed
-  createdAt
-}
-
-enum LanguageEnum {
-  en
-}
-
 model User {
   // Identity
   id            String    @id @default(cuid())
@@ -27,11 +15,11 @@ model User {
   password      String
 
   // Settings
-  defaultNoteDuration Int            @default(60) // in minutes
-  displayedDays       Int            @default(5)
-  zoomLevel           Int            @default(3)
-  language            LanguageEnum   @default(en)
-  orderTasks          OrderTasksEnum @default(createdAt)
+  defaultNoteDuration Int    @default(60) // in minutes
+  displayedDays       Int    @default(5)
+  zoomLevel           Int    @default(3)
+  language            String @default("en")
+  orderTasks          String @default("createdAt")
 
   // Others
   createdAt DateTime @default(now())
