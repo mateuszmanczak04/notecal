@@ -2,7 +2,7 @@ import FormLoadingSpinner from '@/components/common/form-loading-spinner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import resetPassword from '../_actions/reset-password';
 
 export const metadata: Metadata = {
@@ -25,7 +25,16 @@ const page = async (props: Props) => {
 	const token = searchParams?.token as string | undefined;
 
 	if (!email || !token) {
-		redirect('/auth/reset-password/invalid-url');
+		// Invalid url page
+		return (
+			<main className='mx-auto max-w-lg px-8'>
+				<h1 className='text-3xl font-bold'>Invalid URL</h1>
+				<p className='mt-2 opacity-75'>Please ensure that you are using correct link.</p>
+				<Link href='/auth/login' className='mt-4 block underline opacity-75'>
+					Go to the login page
+				</Link>
+			</main>
+		);
 	}
 
 	return (

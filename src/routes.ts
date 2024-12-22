@@ -7,7 +7,6 @@ export const authRoutes: string[] = [
 	'/auth/forgot-password',
 	'/auth/reset-password',
 	'/auth/reset-password/invalid-token',
-	'/auth/reset-password/invalid-url',
 	'/auth/reset-password/forbidden',
 ];
 
