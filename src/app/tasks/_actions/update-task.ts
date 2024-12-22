@@ -28,12 +28,12 @@ const updateTask = async (data: Schema) => {
 			};
 		}
 
-		const updatedTask = await db.task.update({
+		const task = await db.task.update({
 			where: { id: data.id, userId: user.id },
 			data,
 		});
 
-		return { updatedTask };
+		return { task };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
