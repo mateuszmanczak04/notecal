@@ -1,6 +1,7 @@
 'use client';
 
 import ErrorMessage from '@/components/common/error-message';
+import FormLoadingSpinner from '@/components/common/form-loading-spinner';
 import GoBackButton from '@/components/common/go-back-button';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -61,7 +62,10 @@ const CreateCourseForm = () => {
 			{/* Buttons */}
 			<div className='grid gap-x-4 gap-y-2 sm:grid-cols-2'>
 				<GoBackButton variant='secondary'>Cancel</GoBackButton>
-				<Button type='submit'>Create</Button>
+				<Button type='submit'>
+					<FormLoadingSpinner />
+					Create
+				</Button>
 			</div>
 
 			{/* Optional result */}
