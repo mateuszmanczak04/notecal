@@ -1,10 +1,9 @@
 import FormLoadingSpinner from '@/components/common/form-loading-spinner';
 import { Button } from '@/components/ui/button';
-import db from '@/lib/db';
-import { isAfter } from 'date-fns';
 import { Mail } from 'lucide-react';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
+import confirmEmail from '../_actions/confirm-email';
 
 export const metadata: Metadata = {
 	title: 'Confirm your e-mail address',
@@ -28,47 +27,6 @@ const page = async (props: Props) => {
 		redirect('/auth/confirm-email/invalid-token');
 	}
 
-	const formAction = async () => {
-		'use server';
-
-		const verificationToken = await db.verificationToken.findFirst({
-			where: {
-				token,
-			},
-		});
-
-		if (!verificationToken) {
-			redirect('/auth/confirm-email/invalid-token');
-		}
-
-		const hasExpired = isAfter(new Date(), verificationToken.expires);
-
-		if (hasExpired) {
-			redirect('/auth/confirm-email/invalid-token');
-		}
-
-		await db.verificationToken.delete({
-			where: {
-				id: verificationToken.id,
-			},
-		});
-
-		const user = await db.user.findUnique({
-			where: { email: verificationToken.email },
-		});
-
-		if (!user) {
-			redirect('/auth/confirm-email/invalid-token');
-		}
-
-		await db.user.update({
-			where: { id: user.id },
-			data: { emailVerified: new Date() },
-		});
-
-		redirect(`/auth/confirm-email/success?email=${verificationToken.email}`);
-	};
-
 	return (
 		<main className='mx-auto  max-w-lg px-6'>
 			<h1 className='px-2 text-3xl font-bold'>Confirm your e-mail address</h1>
@@ -76,7 +34,7 @@ const page = async (props: Props) => {
 				Confirming your e-mail address will help you recover access to your account if you lose your password.
 			</p>
 
-			<form action={formAction} className='mt-4 '>
+			<form action={() => confirmEmail(token)} className='mt-4 '>
 				<Button type='submit' className='w-full'>
 					<FormLoadingSpinner className='h-5 w-5' />
 					<Mail className='h-5 w-5' />
