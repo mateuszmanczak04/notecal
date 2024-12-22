@@ -1,6 +1,5 @@
 'use client';
 
-import useTasks from '@/app/tasks/_hooks/use-tasks';
 import { cn } from '@/lib/utils';
 import { type Task } from '@prisma/client';
 
@@ -9,7 +8,7 @@ type Props = {
 };
 
 const Task = ({ task: { id, title, completed, courseId, dueDate, priority, description } }: Props) => {
-	const { update } = useTasks();
+	const update = () => {};
 
 	const toggleCompleted = () => {
 		update({ id, completed: !completed });
@@ -35,8 +34,7 @@ const Task = ({ task: { id, title, completed, courseId, dueDate, priority, descr
 			className={cn(
 				'flex cursor-pointer select-none gap-3 rounded-xl bg-neutral-100 p-2 shadow-none dark:bg-neutral-700',
 			)}
-			onClick={toggleCompleted}
-		>
+			onClick={toggleCompleted}>
 			<div>
 				<p className={cn('font-semibold', completed && 'line-through opacity-50')}>{title}</p>
 				{description && <p className={cn('text-sm', completed && 'line-through opacity-50')}>{description}</p>}
