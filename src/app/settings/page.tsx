@@ -52,7 +52,11 @@ const page = async () => {
 			<Separator />
 
 			{/* General settings */}
-			<UpdateSettings />
+			<UpdateSettings
+				displayedDays={user.displayedDays}
+				defaultNoteDuration={user.defaultNoteDuration}
+				language={user.language}
+			/>
 			<Separator />
 
 			{/* Logout button */}

@@ -8,7 +8,13 @@ import { Input } from '@/components/ui/input';
 import { useActionState } from 'react';
 import updateSettings from '../_actions/update-settings';
 
-const UpdateSettings = () => {
+type Props = {
+	displayedDays: number;
+	defaultNoteDuration: number;
+	language: string;
+};
+
+const UpdateSettings = ({ displayedDays, defaultNoteDuration, language }: Props) => {
 	const [state, formAction] = useActionState(updateSettings, { message: '' });
 
 	return (
@@ -21,7 +27,13 @@ const UpdateSettings = () => {
 					<label htmlFor='update-displayed-days' className='mb-1 block px-2 font-medium'>
 						Displayed days
 					</label>
-					<Input placeholder='7' type='text' name='displayedDays' id='update-displayed-days' />
+					<Input
+						placeholder='7'
+						type='text'
+						name='displayedDays'
+						id='update-displayed-days'
+						defaultValue={displayedDays}
+					/>
 				</div>
 
 				{/* Default note duration */}
@@ -29,7 +41,13 @@ const UpdateSettings = () => {
 					<label htmlFor='update-default-note-duration' className='mb-1 block px-2 font-medium'>
 						Default note duration
 					</label>
-					<Input placeholder='60' type='text' name='defaultNoteDuration' id='update-default-note-duration' />
+					<Input
+						placeholder='60'
+						type='text'
+						name='defaultNoteDuration'
+						id='update-default-note-duration'
+						defaultValue={defaultNoteDuration}
+					/>
 				</div>
 
 				{/* Language */}
@@ -37,7 +55,7 @@ const UpdateSettings = () => {
 					<label htmlFor='update-language' className='mb-1 block px-2 font-medium'>
 						Language
 					</label>
-					<Input placeholder='en' type='text' name='language' id='update-language' />
+					<Input placeholder='en' type='text' name='language' id='update-language' defaultValue={language} />
 				</div>
 
 				{/* Submit button */}
