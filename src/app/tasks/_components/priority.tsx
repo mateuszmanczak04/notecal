@@ -1,6 +1,15 @@
 'use client';
 
+import {
+	DropdownMenu,
+	DropdownMenuItem,
+	DropdownMenuList,
+	DropdownMenuTrigger,
+} from '@/components/common/dropdown-menu';
+import { cn } from '@/lib/utils';
 import { Task, TaskPriority } from '@prisma/client';
+import { useTransition } from 'react';
+import updateTask from '../_actions/update-task';
 
 type Props = {
 	task: Task;
@@ -35,33 +44,28 @@ const getPriorityTitle = (priority: TaskPriority | null) => {
 };
 
 const Priority = ({ task }: Props) => {
-	// const { update: updateTask } = useTasks();
-	// const { makeUpdate } = useTasksHistory(); // Cmd + Z
-	// const handleSelect = (newPriority: any) => {
-	// 	updateTask({
-	// 		id: task.id,
-	// 		priority: newPriority,
-	// 	});
-	// 	makeUpdate({
-	// 		type: 'update',
-	// 		id: task.id,
-	// 		property: 'priority',
-	// 		oldValue: task.priority,
-	// 		newValue: newPriority,
-	// 	});
-	// };
-	// return (
-	// 	<DropdownMenu className='w-52'>
-	// 		<DropdownMenuTrigger showChevron>{getPriorityTitle(task.priority)}</DropdownMenuTrigger>
-	// 		<DropdownMenuList>
-	// 			{([null, 'A', 'B', 'C'] as (TaskPriority | null)[]).map(priority => (
-	// 				<DropdownMenuItem key={priority || 'none'} onSelect={handleSelect} value={priority}>
-	// 					{getPriorityTitle(priority)}
-	// 				</DropdownMenuItem>
-	// 			))}
-	// 		</DropdownMenuList>
-	// 	</DropdownMenu>
-	// );
+	const [isPending, startTransition] = useTransition();
+
+	const handleSelect = (newPriority: any) => {
+		startTransition(async () => {
+			await updateTask({
+				id: task.id,
+				priority: newPriority,
+			});
+		});
+	};
+	return (
+		<DropdownMenu className={cn('w-52', isPending && 'opacity-50')}>
+			<DropdownMenuTrigger showChevron>{getPriorityTitle(task.priority)}</DropdownMenuTrigger>
+			<DropdownMenuList>
+				{([null, 'A', 'B', 'C'] as (TaskPriority | null)[]).map(priority => (
+					<DropdownMenuItem key={priority || 'none'} onSelect={handleSelect} value={priority}>
+						{getPriorityTitle(priority)}
+					</DropdownMenuItem>
+				))}
+			</DropdownMenuList>
+		</DropdownMenu>
+	);
 };
 
 export default Priority;
