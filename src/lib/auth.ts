@@ -23,19 +23,19 @@ export const getAuthStatus = async (): Promise<
 		};
 	}
 
-	try {
-		const decoded = await verifyToken(authToken);
+	const decoded = await verifyToken(authToken);
 
-		return {
-			authenticated: true,
-			user: {
-				id: decoded.id as string,
-			},
-		};
-	} catch (err) {
+	if (!decoded) {
 		return {
 			authenticated: false,
 			user: null,
 		};
 	}
+
+	return {
+		authenticated: true,
+		user: {
+			id: decoded.id,
+		},
+	};
 };
