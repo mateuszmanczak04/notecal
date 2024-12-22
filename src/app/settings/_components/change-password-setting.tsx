@@ -21,7 +21,7 @@ const ChangePasswordSetting = () => {
 					<label htmlFor='change-password-old' className='mb-1 block px-2 font-medium'>
 						Old password
 					</label>
-					<Input placeholder='******' type='password' name='oldPassword' id='change-password-old' />
+					<Input placeholder='******' type='password' name='oldPassword' id='change-password-old' required />
 				</div>
 
 				{/* New password field */}
@@ -29,7 +29,7 @@ const ChangePasswordSetting = () => {
 					<label htmlFor='change-password-new' className='mb-1 block px-2 font-medium'>
 						New password
 					</label>
-					<Input placeholder='******' type='password' name='newPassword' id='change-password-new' />
+					<Input placeholder='******' type='password' name='newPassword' id='change-password-new' required />
 				</div>
 
 				{/* Submit button */}

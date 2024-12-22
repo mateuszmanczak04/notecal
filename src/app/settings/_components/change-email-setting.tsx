@@ -21,7 +21,7 @@ const ChangeEmailSetting = () => {
 					<label htmlFor='change-email-email' className='mb-1 block px-2 font-medium'>
 						New e-mail
 					</label>
-					<Input placeholder='******' type='email' name='email' id='change-email-email' />
+					<Input placeholder='******' type='email' name='email' id='change-email-email' required />
 				</div>
 
 				{/* Password field */}
@@ -29,7 +29,7 @@ const ChangeEmailSetting = () => {
 					<label htmlFor='change-email-password' className='mb-1 block px-2 font-medium'>
 						Your password
 					</label>
-					<Input placeholder='******' type='password' name='password' id='change-email-password' />
+					<Input placeholder='******' type='password' name='password' id='change-email-password' required />
 				</div>
 
 				{/* Submit button */}
