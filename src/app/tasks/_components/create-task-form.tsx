@@ -8,7 +8,7 @@ import { useActionState, useEffect, useRef } from 'react';
 import { useIntersectionObserver } from 'usehooks-ts';
 import createTask from '../_actions/create-task';
 
-const CreateTask = () => {
+const CreateTaskForm = () => {
 	const [_, formAction] = useActionState(createTask, null);
 
 	const inputRef = useRef<HTMLInputElement | null>(null);
@@ -78,4 +78,4 @@ const CreateTask = () => {
 	);
 };
 
-export default CreateTask;
+export default CreateTaskForm;

@@ -19,6 +19,7 @@ const DueDate = ({ task }: Props) => {
 			await updateTask({ id: task.id, dueDate: newDueDate });
 		});
 	};
+
 	return (
 		<DatePicker
 			date={task.dueDate}

@@ -1,9 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { Course } from '@prisma/client';
-import { Plus } from 'lucide-react';
-import Link from 'next/link';
 import Task from './task';
 
 type Props = {
@@ -17,11 +14,11 @@ const Tasks = ({ tasks, course }: Props) => {
 			<p className='text-xl font-semibold'>Tasks:</p>
 
 			{tasks?.map(task => <Task key={task.id} task={task} />)}
-			<Button asChild style={{ background: course?.color }}>
+			{/* <Button asChild style={{ background: course?.color }}>
 				<Link prefetch href={`/tasks/create?courseId=${course.id}`}>
 					<Plus className='h-4 w-4' /> Create a new task
 				</Link>
-			</Button>
+			</Button> */}
 		</div>
 	);
 };

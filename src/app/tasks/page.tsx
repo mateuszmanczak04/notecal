@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
-import CreateTask from './_components/create-task';
+import CreateTaskForm from './_components/create-task-form';
 import SortTasks from './_components/sort-tasks';
 import Tasks from './_components/tasks';
 
@@ -38,7 +38,7 @@ const page = async () => {
 
 	return (
 		<main className='mx-auto max-w-[800px] space-y-8'>
-			<CreateTask />
+			<CreateTaskForm />
 			<SortTasks />
 
 			<Suspense
