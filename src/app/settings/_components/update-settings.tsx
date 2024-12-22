@@ -5,7 +5,7 @@ import FormLoadingSpinner from '@/components/common/form-loading-spinner';
 import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
 import updateSettings from '../_actions/update-settings';
 
 type Props = {
@@ -14,8 +14,16 @@ type Props = {
 	language: string;
 };
 
-const UpdateSettings = ({ displayedDays, defaultNoteDuration, language }: Props) => {
+const UpdateSettings = ({
+	displayedDays: initialDisplayedDays,
+	defaultNoteDuration: initialDefaultNoteDuration,
+	language: initialLanguage,
+}: Props) => {
 	const [state, formAction] = useActionState(updateSettings, { message: '' });
+
+	const [displayedDays, setDisplayedDays] = useState(initialDisplayedDays.toString());
+	const [defaultNoteDuration, setDefaultNoteDuration] = useState(initialDefaultNoteDuration.toString());
+	const [language, setLanguage] = useState(initialLanguage);
 
 	return (
 		<div className='flex flex-col gap-2'>
@@ -32,7 +40,8 @@ const UpdateSettings = ({ displayedDays, defaultNoteDuration, language }: Props)
 						type='text'
 						name='displayedDays'
 						id='update-displayed-days'
-						defaultValue={displayedDays}
+						value={displayedDays}
+						onChange={e => setDisplayedDays(e.target.value)}
 					/>
 				</div>
 
@@ -46,7 +55,8 @@ const UpdateSettings = ({ displayedDays, defaultNoteDuration, language }: Props)
 						type='text'
 						name='defaultNoteDuration'
 						id='update-default-note-duration'
-						defaultValue={defaultNoteDuration}
+						value={defaultNoteDuration}
+						onChange={e => setDefaultNoteDuration(e.target.value)}
 					/>
 				</div>
 
@@ -55,7 +65,14 @@ const UpdateSettings = ({ displayedDays, defaultNoteDuration, language }: Props)
 					<label htmlFor='update-language' className='mb-1 block px-2 font-medium'>
 						Language
 					</label>
-					<Input placeholder='en' type='text' name='language' id='update-language' defaultValue={language} />
+					<Input
+						placeholder='en'
+						type='text'
+						name='language'
+						id='update-language'
+						value={language}
+						onChange={e => setLanguage(e.target.value)}
+					/>
 				</div>
 
 				{/* Submit button */}
