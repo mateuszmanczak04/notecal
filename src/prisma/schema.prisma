@@ -7,6 +7,18 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum OrderTasksEnum {
+  title
+  dueDate
+  priority
+  completed
+  createdAt
+}
+
+enum LanguageEnum {
+  en
+}
+
 model User {
   // Identity
   id            String    @id @default(cuid())
@@ -74,18 +86,6 @@ model Task {
   course      Course?       @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId    String?
   createdAt   DateTime      @default(now())
-}
-
-enum OrderTasksEnum {
-  title
-  dueDate
-  priority
-  completed
-  createdAt
-}
-
-enum LanguageEnum {
-  en
 }
 
 model Note {
