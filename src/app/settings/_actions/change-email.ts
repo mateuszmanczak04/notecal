@@ -2,9 +2,9 @@
 
 import sendConfirmationEmail from '@/app/auth/_actions/send-confirmation-email';
 import { getAuthStatus } from '@/lib/auth';
+import { comparePasswords } from '@/lib/bcrypt';
 import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
-import bcryptjs from 'bcryptjs';
 
 const changeEmail = async (_prevState: any, formData: FormData) => {
 	const email = formData.get('email')?.toString(); // New email
@@ -37,7 +37,7 @@ const changeEmail = async (_prevState: any, formData: FormData) => {
 		}
 
 		// Check if password is correct
-		const passwordsMatch = await bcryptjs.compare(password, user.password);
+		const passwordsMatch = await comparePasswords(password, user.password);
 		if (!passwordsMatch) {
 			return { error: en.auth.WRONG_PASSWORD };
 		}
