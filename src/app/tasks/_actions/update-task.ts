@@ -3,6 +3,7 @@
 import { getAuthStatus } from '@/lib/auth';
 import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
+import { revalidatePath } from 'next/cache';
 
 type Schema = {
 	id: string;
@@ -32,6 +33,8 @@ const updateTask = async (data: Schema) => {
 			where: { id: data.id, userId: user.id },
 			data,
 		});
+
+		revalidatePath('/tasks');
 
 		return { task };
 	} catch (error) {

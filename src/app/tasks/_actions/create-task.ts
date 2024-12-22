@@ -3,6 +3,7 @@
 import { getAuthStatus } from '@/lib/auth';
 import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
+import { revalidatePath } from 'next/cache';
 
 const createTask = async (_prevState: any, formData: FormData) => {
 	const title = formData.get('title')?.toString();
@@ -26,6 +27,8 @@ const createTask = async (_prevState: any, formData: FormData) => {
 				title,
 			},
 		});
+
+		revalidatePath('/tasks');
 
 		return { task };
 	} catch (error) {
