@@ -6,7 +6,7 @@ import { comparePasswords } from '@/lib/bcrypt';
 import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 
-const changeEmail = async (_prevState: any, formData: FormData) => {
+const changeEmail = async (_prevState: any, formData: FormData): Promise<{ message?: string; error?: string }> => {
 	const email = formData.get('email')?.toString(); // New email
 	const password = formData.get('password')?.toString(); // Current password
 
