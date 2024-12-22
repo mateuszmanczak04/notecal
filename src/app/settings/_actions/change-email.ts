@@ -7,7 +7,7 @@ import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
 
 const changeEmail = async (_prevState: any, formData: FormData): Promise<{ message?: string; error?: string }> => {
-	const email = formData.get('email')?.toString(); // New email
+	const email = formData.get('email')?.toString().trim(); // New email
 	const password = formData.get('password')?.toString(); // Current password
 
 	if (!email || !password) {
