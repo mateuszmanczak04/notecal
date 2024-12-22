@@ -11,7 +11,7 @@ type Schema = {
 	completed?: boolean;
 	title?: string;
 	description?: string;
-	dueDate?: Date;
+	dueDate?: Date | null;
 	priority?: 'A' | 'B' | 'C';
 };
 
