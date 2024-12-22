@@ -1,9 +1,11 @@
 'use client';
 
-import Logout from '@/app/auth/_components/logout';
+import logout from '@/app/auth/_actions/logout';
 import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { LogOut } from 'lucide-react';
 import useEmailConfirmed from '../../auth/_hooks/use-email-confirmed';
 import useSettings from '../_hooks/use-settings';
 import ChangeEmailSetting from './change-email-setting';
@@ -34,7 +36,12 @@ const SettingsPage = () => {
 			<Separator />
 			<DefaultNoteDurationSetting initialDefaultNoteDuration={settings.defaultNoteDuration} />
 			<Separator />
-			<Logout variant='secondary' />
+
+			{/* Logout button */}
+			<Button variant='secondary' onClick={logout} className='w-full'>
+				<LogOut className='h-4 w-4' />
+				Logout
+			</Button>
 		</div>
 	);
 };
