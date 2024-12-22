@@ -64,8 +64,8 @@ enum TaskPriority {
 
 model Task {
   id          String        @id @default(cuid())
-  title       String
-  description String
+  title       String        @default("")
+  description String        @default("")
   completed   Boolean       @default(false)
   dueDate     DateTime?
   priority    TaskPriority?
