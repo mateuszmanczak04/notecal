@@ -38,19 +38,11 @@ const register = async (formData: FormData) => {
 		},
 	});
 
-	// Create user's settings
-	await db.settings.create({
-		data: {
-			userId: user.id,
-			language: 'en',
-		},
-	});
-
 	// Generate JWT
 	const token = await generateToken({ id: user.id });
 
 	// Send confirmation email
-	sendConfirmationEmail({ email });
+	sendConfirmationEmail(email);
 
 	// Automatically log new user in
 	const cookieStore = await cookies();
