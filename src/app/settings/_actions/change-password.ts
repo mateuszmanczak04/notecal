@@ -1,50 +1,48 @@
 'use server';
 
+import { getAuthStatus } from '@/lib/auth';
+import { comparePasswords, hashPassword } from '@/lib/bcrypt';
+import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
-import ChangePasswordSchema from '@/schemas/change-password-schema';
-import { z } from 'zod';
 
-const changePassword = async (values: z.infer<typeof ChangePasswordSchema>) => {
-	const validatedFields = ChangePasswordSchema.safeParse(values);
+const changePassword = async (_prevState: any, formData: FormData): Promise<{ message?: string; error?: string }> => {
+	const oldPassword = formData.get('oldPassword')?.toString(); // New email
+	const newPassword = formData.get('newPassword')?.toString(); // Current password
 
-	if (!validatedFields.success) {
+	if (!oldPassword || !newPassword) {
 		return { error: en.INVALID_DATA };
 	}
-
-	const { oldPassword, newPassword } = validatedFields.data;
-
 	try {
-		// const session = await auth();
+		const { authenticated, user: authUser } = await getAuthStatus();
 
-		// if (!session?.user?.id) {
-		// 	return { error: en.auth.UNAUTHENTICATED };
-		// }
+		if (!authenticated) {
+			return { error: en.auth.UNAUTHENTICATED };
+		}
 
-		// const user = await db.user.findUnique({
-		// 	where: { id: session.user.id },
-		// 	select: { password: true },
-		// });
+		const user = await db.user.findUnique({
+			where: { id: authUser.id },
+			select: { password: true },
+		});
 
-		// if (!user || !user.password) {
-		// 	return { error: en.auth.USER_DOES_NOT_EXIST };
-		// }
+		// It should not occur in normal conditions
+		if (!user || !user.password) {
+			return { error: en.auth.USER_DOES_NOT_EXIST };
+		}
 
-		// const passwordsMatch = await bcrypt.compare(oldPassword, user.password);
+		// Check if the old password is correct
+		const passwordsMatch = await comparePasswords(oldPassword, user.password);
+		if (!passwordsMatch) {
+			return { error: en.auth.WRONG_PASSWORD };
+		}
 
-		// if (!passwordsMatch) {
-		// 	return { error: en.auth.WRONG_PASSWORD };
-		// }
+		const hashedPassword = await hashPassword(newPassword);
 
-		// const hashedPassword = await bcrypt.hash(newPassword, 10);
+		await db.user.update({
+			where: { id: authUser.id },
+			data: { password: hashedPassword },
+		});
 
-		// await db.user.update({
-		// 	where: { id: session.user.id },
-		// 	data: { password: hashedPassword },
-		// });
-
-		// return { message: en.auth.PASSWORD_UPDATED };
-
-		return { message: 'TODO' };
+		return { message: en.auth.PASSWORD_UPDATED };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

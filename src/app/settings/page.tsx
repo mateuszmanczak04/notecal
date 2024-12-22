@@ -8,6 +8,7 @@ import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import ChangeEmailSetting from './_components/change-email-setting';
+import ChangePasswordSetting from './_components/change-password-setting';
 import EmailNotConfirmed from './_components/email-not-confirmed';
 
 export const metadata: Metadata = {
@@ -40,10 +41,13 @@ const page = async () => {
 			{user?.emailVerified && <EmailNotConfirmed />}
 			<ChangeEmailSetting />
 			<Separator />
-			{/* <ChangePasswordSetting /> */}
+
+			<ChangePasswordSetting />
 			<Separator />
+
 			{/* <DisplayedDaysSetting initialDisplayedDays={settings.displayedDays} /> */}
 			<Separator />
+
 			{/* <DefaultNoteDurationSetting initialDefaultNoteDuration={settings.defaultNoteDuration} /> */}
 			{/* <Separator /> */}
 
