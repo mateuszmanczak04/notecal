@@ -14,7 +14,6 @@ const ChangeEmailSetting = () => {
 	return (
 		<div className='flex flex-col gap-2'>
 			<h2 className='text-lg font-semibold'>Change your e-mail address</h2>
-			<p className='opacity-75'>You will have to log in again afterwards</p>
 
 			<form action={formAction} className='mt-2 flex flex-col gap-4'>
 				{/* Email field */}
