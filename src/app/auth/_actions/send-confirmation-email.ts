@@ -38,7 +38,7 @@ export const generateVerificationToken = async (email: string) => {
 	return verificationToken;
 };
 
-const sendConfirmationEmail = async (email: string) => {
+const sendConfirmationEmail = async (email: string): Promise<{ error?: string; message?: string }> => {
 	if (!email) {
 		return { error: en.auth.EMAIL_REQUIRED };
 	}
@@ -97,10 +97,23 @@ const sendConfirmationEmail = async (email: string) => {
 			html,
 		});
 
-		return { success: true };
+		return { message: 'Confirmation message was successfully sent to your inbox' };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
+};
+
+/**
+ * The same function as sendConfirmationEmail but can be fires in <form>.
+ */
+export const sendConfirmationEmailForm = async (_prevState: any, formData: FormData) => {
+	const email = formData.get('email')?.toString();
+
+	if (!email) {
+		return { error: en.INVALID_DATA };
+	}
+
+	return await sendConfirmationEmail(email);
 };
 
 export default sendConfirmationEmail;

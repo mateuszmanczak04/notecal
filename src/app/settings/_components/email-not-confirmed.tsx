@@ -1,50 +1,43 @@
 'use client';
 
-import sendConfirmationEmail from '@/app/auth/_actions/send-confirmation-email';
+import { sendConfirmationEmailForm } from '@/app/auth/_actions/send-confirmation-email';
 import ErrorMessage from '@/components/common/error-message';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import SuccessMessage from '@/components/common/success-message';
 import { Button } from '@/components/ui/button';
 import { Mail } from 'lucide-react';
-import { FC, useState, useTransition } from 'react';
+import { useActionState } from 'react';
 
-interface EmailNotConfirmedProps {}
+type Props = {
+	emailConfirmed: boolean;
+	email: string;
+};
 
-const EmailNotConfirmed: FC<EmailNotConfirmedProps> = ({}) => {
-	const session = null; // TODO
-	const email = ''; // TODO
-	const [isPending, startTransition] = useTransition();
-	const [error, setError] = useState('');
-	const [message, setMessage] = useState('');
+const EmailNotConfirmed = ({ emailConfirmed, email }: Props) => {
+	const [state, formAction, isPending] = useActionState(sendConfirmationEmailForm, { error: '' });
 
-	if (!email) return null;
-
-	const handleResendLink = () => {
-		setError('');
-		setMessage('');
-
-		startTransition(async () => {
-			const res = await sendConfirmationEmail({ email });
-			if (res.error) {
-				setError(res.error);
-				return;
-			}
-			if (res.success) {
-				setMessage('Email sent successfully, check your inbox now');
-			}
-		});
-	};
+	// Don't want to show this component when user has email verified
+	if (emailConfirmed) return;
 
 	return (
-		<div className='space-y-4 rounded-xl border-2 border-red-500 bg-neutral-100 p-4 dark:bg-neutral-700 dark:text-white'>
-			<p>Your email ({email}) is not confirmed</p>
+		<div className='space-y-4 rounded-xl border-2 border-error-500 p-4 dark:text-white'>
+			<p>
+				Your email <strong>{email}</strong> is not confirmed
+			</p>
 			<p className=' opacity-75'>Confirm your email to secure your account in case you lose your password</p>
-			<Button onClick={handleResendLink}>
-				<Mail />
-				Resend confirmation link
-			</Button>
-			{error && <ErrorMessage className='mt-2'>{error}</ErrorMessage>}
-			{message && <SuccessMessage className='mt-2'>{message}</SuccessMessage>}
+
+			{/* Main form */}
+			<form action={formAction}>
+				<input type='hidden' name='email' value={email} />
+				<Button type='submit'>
+					<Mail />
+					Resend confirmation link
+				</Button>
+			</form>
+
+			{/* Result */}
+			{state.error && <ErrorMessage className='mt-2'>{state.error}</ErrorMessage>}
+			{state.message && <SuccessMessage className='mt-2'>{state.message}</SuccessMessage>}
 			{isPending && <LoadingSpinner className='mt-2' />}
 		</div>
 	);
