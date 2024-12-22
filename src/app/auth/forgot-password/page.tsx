@@ -1,12 +1,10 @@
 import FormLoadingSpinner from '@/components/common/form-loading-spinner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import db from '@/lib/db';
 import { Mail } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import sendResetPasswordEmail from './utils/send-reset-password-email';
+import sendRecoveryEmail from '../_actions/send-recovery-email';
 
 export const metadata: Metadata = {
 	title: 'Forgot your password?',
@@ -16,34 +14,6 @@ export const metadata: Metadata = {
 };
 
 const page = () => {
-	/**
-	 * An action invoked after form submission. It sends the recovery email to the user.
-	 */
-	const formAction = async (formData: FormData) => {
-		'use server';
-		// Validate the email
-		const email = formData.get('email')?.toString().trim();
-		if (!email || email.length === 0) return;
-
-		// Check if user exists and has email verified,
-		// if not, fake that action resolved successfully
-		const user = await db.user.findUnique({ where: { email } });
-
-		if (!user || !user.emailVerified) {
-			redirect(`/auth/forgot-password/message-sent?email=${email}`);
-		}
-
-		// Send email
-		const res = await sendResetPasswordEmail(email);
-
-		// Show potential errors
-		if (res.error) {
-			redirect(`/auth/forgot-password/error`);
-		}
-
-		redirect(`/auth/forgot-password/message-sent?email=${email}`);
-	};
-
 	return (
 		<main className='mx-auto  max-w-lg px-4'>
 			<h1 className='px-4 text-3xl font-bold'>Reset Your Password</h1>
@@ -58,7 +28,7 @@ const page = () => {
 
 			<form
 				className='mt-4 rounded-xl border border-neutral-200 p-4 dark:border-transparent dark:bg-neutral-800'
-				action={formAction}>
+				action={sendRecoveryEmail}>
 				<label htmlFor='email' className='ml-2 block font-medium'>
 					Email
 				</label>

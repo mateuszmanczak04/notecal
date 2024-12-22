@@ -1,12 +1,10 @@
-'server-only';
-
 import db from '@/lib/db';
-import { en } from '@/lib/dictionary';
+import { redirect } from 'next/navigation';
 import nodemailer from 'nodemailer';
-import { z } from 'zod';
 
-const Schema = z.string().min(1, { message: en.auth.EMAIL_REQUIRED }).email();
-
+/**
+ * Simple query to the database to find a ResetPasswordToken by an email.
+ */
 const getResetTokenByEmail = async (email: string) => {
 	const resetToken = await db.resetPasswordToken.findFirst({
 		where: {
@@ -16,6 +14,9 @@ const getResetTokenByEmail = async (email: string) => {
 	return resetToken;
 };
 
+/**
+ * If there is a token associated with this email, it becomes deleted and replaced with new one. If not, simply return the token.
+ */
 const generateResetToken = async (email: string) => {
 	const token = crypto.randomUUID();
 	const expires = new Date(new Date().getTime() + 3600 * 1000); // 1h
@@ -41,29 +42,40 @@ const generateResetToken = async (email: string) => {
 	return resetToken;
 };
 
-const sendResetPasswordEmail = async (values: z.infer<typeof Schema>) => {
-	const validatedFields = Schema.safeParse(values);
+/**
+ * An action invoked after form submission. It sends the recovery email to the user.
+ */
+const sendRecoveryEmail = async (formData: FormData) => {
+	'use server';
+	// Validate the email
+	const email = formData.get('email')?.toString().trim();
+	if (!email || email.length === 0) return;
 
-	if (!validatedFields.success) {
-		return { error: en.INVALID_DATA };
+	const user = await db.user.findUnique({ where: { email } });
+
+	// Check if user exists and has email verified,
+	// if not, fake that action resolved successfully
+	if (!user || !user.emailVerified) {
+		redirect(`/auth/forgot-password/message-sent?email=${email}`);
 	}
 
-	try {
-		const transporter = nodemailer.createTransport({
-			host: process.env.EMAIL_HOST,
-			port: 587,
-			secure: false,
-			auth: {
-				user: process.env.EMAIL_USER,
-				pass: process.env.EMAIL_PASSWORD,
-			},
-		});
+	// Setup nodemailer
+	const transporter = nodemailer.createTransport({
+		host: process.env.EMAIL_HOST,
+		port: 587,
+		secure: false,
+		auth: {
+			user: process.env.EMAIL_USER,
+			pass: process.env.EMAIL_PASSWORD,
+		},
+	});
 
-		const email = validatedFields.data;
-		const token = await generateResetToken(email);
-		const url = `${process.env.APP_DOMAIN}/auth/reset-password?token=${token.token}&email=${email}`;
+	// Generate the reset token
+	const token = await generateResetToken(email);
+	const url = `${process.env.APP_DOMAIN}/auth/reset-password?token=${token.token}&email=${email}`;
 
-		const html = `
+	// Email template
+	const html = `
      <div
         style="
           font-family: sans-serif;
@@ -96,17 +108,19 @@ const sendResetPasswordEmail = async (values: z.infer<typeof Schema>) => {
       </div>
     `;
 
-		await transporter.sendMail({
+	// Send email and display error message if something goes wrong
+	try {
+		transporter.sendMail({
 			from: 'Notecal <noreply@notecal.app>',
 			to: email,
 			subject: 'Reset your password',
 			html,
 		});
-
-		return { success: true };
-	} catch (error) {
-		return { error: en.SOMETHING_WENT_WRONG };
+	} catch {
+		redirect('/auth/forgot-password/error');
 	}
+
+	redirect(`/auth/forgot-password/message-sent?email=${email}`);
 };
 
-export default sendResetPasswordEmail;
+export default sendRecoveryEmail;
