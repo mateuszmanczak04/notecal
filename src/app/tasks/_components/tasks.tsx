@@ -2,6 +2,7 @@
 
 import { Task as T_Task } from '@prisma/client';
 import { use } from 'react';
+import Task from './task';
 
 type Props = {
 	tasksPromise: Promise<T_Task[]>;
@@ -17,8 +18,7 @@ const Tasks = ({ tasksPromise }: Props) => {
 	return (
 		<div>
 			{tasks.map(task => (
-				<p key={task.id}>{task.title}</p>
-				// <Task key={task.id} task={task} />
+				<Task key={task.id} task={task} />
 			))}
 		</div>
 	);

@@ -1,39 +1,26 @@
 'use server';
 
+import { getAuthStatus } from '@/lib/auth';
+import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
-import { z } from 'zod';
 
-const DeleteTaskSchema = z.object({
-	id: z.string().min(1, { message: en.tasks.ID_REQUIRED }),
-});
-
-const deleteTask = async (values: z.infer<typeof DeleteTaskSchema>) => {
-	const validatedFields = DeleteTaskSchema.safeParse(values);
-
-	if (!validatedFields.success) {
-		return { error: en.INVALID_DATA };
+const deleteTask = async (id: string) => {
+	if (!id) {
+		return { error: 'Task id is required' };
 	}
 
-	const id = validatedFields.data.id;
-
 	try {
-		// const session = await auth();
+		const { authenticated, user } = await getAuthStatus();
 
-		// if (!session?.user?.id) {
-		// 	return { error: en.auth.UNAUTHENTICATED };
-		// }
+		if (!authenticated) {
+			return { error: en.auth.UNAUTHENTICATED };
+		}
 
-		// const task = await db.task.findUnique({
-		// 	where: { id, userId: session.user.id },
-		// });
+		// We don't check if tasks exists and just fake it has been deleted. Thanks to that we don't give any information to mallicious users.
 
-		// if (!task) {
-		// 	return { error: en.tasks.NOT_FOUND };
-		// }
+		await db.task.delete({ where: { id, userId: user.id } });
 
-		// await db.task.delete({ where: { id } });
-
-		return { deleted: true };
+		return { success: true };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

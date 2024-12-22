@@ -1,45 +1,39 @@
 'use server';
 
+import { getAuthStatus } from '@/lib/auth';
+import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
-import { TaskPriority } from '@prisma/client';
-import { z } from 'zod';
 
-const UpdateTaskSchema = z.object({
-	id: z.string().min(1, { message: en.tasks.ID_REQUIRED }),
-	courseId: z.string().optional().nullable(),
-	completed: z.boolean().optional(),
-	title: z.string().optional(),
-	description: z.string().optional(),
-	dueDate: z.coerce.date().optional().nullable(),
-	priority: z.enum([TaskPriority.A, TaskPriority.B, TaskPriority.C]).optional().nullable(),
-});
+type Schema = {
+	id: string;
+	courseId?: string;
+	completed?: boolean;
+	title?: string;
+	description?: string;
+	dueDate?: Date;
+	priority?: 'A' | 'B' | 'C';
+};
 
-const updateTask = async (values: z.infer<typeof UpdateTaskSchema>) => {
-	const validatedFields = UpdateTaskSchema.safeParse(values);
-
-	if (!validatedFields.success) {
-		return { error: en.INVALID_DATA };
+const updateTask = async (data: Schema) => {
+	if (!data.id) {
+		return { error: 'Task id is required' };
 	}
 
-	const data = validatedFields.data;
-
 	try {
-		// const session = await auth();
+		const { authenticated, user } = await getAuthStatus();
 
-		// if (!session?.user?.id) {
-		// 	return {
-		// 		error: en.auth.UNAUTHENTICATED,
-		// 	};
-		// }
+		if (!authenticated) {
+			return {
+				error: en.auth.UNAUTHENTICATED,
+			};
+		}
 
-		// const updatedTask = await db.task.update({
-		// 	where: { id: data.id, userId: session.user.id },
-		// 	data,
-		// });
+		const updatedTask = await db.task.update({
+			where: { id: data.id, userId: user.id },
+			data,
+		});
 
-		// return { updatedTask };
-
-		return { updatedTask: null };
+		return { updatedTask };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
