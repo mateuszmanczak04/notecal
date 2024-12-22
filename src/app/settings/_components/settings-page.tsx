@@ -6,7 +6,6 @@ import LoadingSpinner from '@/components/common/loading-spinner';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { LogOut } from 'lucide-react';
-import useEmailConfirmed from '../../auth/_hooks/use-email-confirmed';
 import useSettings from '../_hooks/use-settings';
 import ChangeEmailSetting from './change-email-setting';
 import ChangePasswordSetting from './change-password-setting';
@@ -16,7 +15,7 @@ import EmailNotConfirmed from './email-not-confirmed';
 
 const SettingsPage = () => {
 	const { settings, isPending, error } = useSettings();
-	const { emailConfirmed } = useEmailConfirmed();
+	const emailConfirmed = true as boolean; // TODO: fetch this
 
 	if (isPending) return <LoadingSpinner />;
 
