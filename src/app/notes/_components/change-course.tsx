@@ -2,7 +2,10 @@
 
 import { useAppContext } from '@/app/_components/app-context';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
+import { cn } from '@/utils/cn';
 import { Course, Note } from '@prisma/client';
+import { useTransition } from 'react';
+import updateNote from '../_actions/update-note';
 
 type Props = {
 	currentCourse: Course;
@@ -11,17 +14,18 @@ type Props = {
 
 const ChangeCourse = ({ currentCourse, note }: Props) => {
 	const { courses } = useAppContext();
-
-	const update = (value: any) => {};
+	const [isPending, startTransition] = useTransition();
 
 	const handleSelect = (newCourseId: string) => {
-		update({ courseId: newCourseId, id: note.id });
+		startTransition(async () => {
+			updateNote({ id: note.id, courseId: newCourseId });
+		});
 	};
 
 	return (
-		<div>
+		<article>
 			<p className='text-xl font-semibold'>Course:</p>
-			<DropdownMenu className='mt-2'>
+			<DropdownMenu className={cn('mt-2', isPending && 'opacity-50')}>
 				<DropdownMenuTrigger showChevron>
 					<p className='truncate'>{currentCourse.name}</p>
 				</DropdownMenuTrigger>
@@ -33,7 +37,7 @@ const ChangeCourse = ({ currentCourse, note }: Props) => {
 					))}
 				</DropdownMenuList>
 			</DropdownMenu>
-		</div>
+		</article>
 	);
 };
 
