@@ -3,9 +3,10 @@
 import { useAppContext } from '@/app/_components/app-context';
 import createNote from '@/app/notes/_actions/create-note';
 import LoadingSpinner from '@/components/loading-spinner';
+import { Note } from '@prisma/client';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 
 type Props = {
 	name: string;
@@ -30,7 +31,7 @@ export const CourseFallback = () => {
  */
 const Course = ({ name, teacher, id, color }: Props) => {
 	const { notes: allNotes } = useAppContext();
-	const notes = allNotes.filter(note => note.courseId === id);
+	const [notes, setNotes] = useState<Note[]>(allNotes.filter(note => note.courseId === id));
 
 	const [isPending, startTransition] = useTransition();
 
@@ -40,14 +41,18 @@ const Course = ({ name, teacher, id, color }: Props) => {
 			startTransition(async () => {
 				const res = await createNote({ courseId: id });
 				// TODO: handle error
-				if ('note' in res) notes.push(res.note);
+				if ('note' in res) {
+					setNotes([res.note]);
+				}
 			});
 		}
-	}, [id, notes]);
+	}, [id, notes.length]);
+
+	if (isPending) return <CourseFallback />;
 
 	return (
 		<Link
-			href={`/notes/${notes[0].id}`}
+			href={`/notes/${notes[0]?.id}`}
 			className='flex cursor-pointer items-center justify-between rounded-xl bg-neutral-50 p-4 text-white transition hover:opacity-90'
 			style={{ background: color }}>
 			<div>
