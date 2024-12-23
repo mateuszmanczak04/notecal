@@ -1,9 +1,7 @@
-import { getCourses } from '@/utils/cached-queries';
 import { Plus } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Suspense } from 'react';
-import Course, { CourseFallback } from './_components/course';
+import Courses from './_components/courses';
 
 export const metadata: Metadata = {
 	title: 'Notecal | Courses',
@@ -12,26 +10,11 @@ export const metadata: Metadata = {
 	},
 };
 
-/**
- * Fetches all user's courses and displays them as a grid.
- */
-const page = async () => {
-	console.log('START');
-	const courses = await getCourses();
-	console.log('END');
-
-	if (!courses) {
-		return <p className='text-center text-lg text-neutral-500 sm:ml-8'>You don&apos;t have any courses yet.</p>;
-	}
-
+const page = () => {
 	return (
 		<main className='grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
 			{/* List of courses */}
-			{courses?.map(course => (
-				<Suspense key={course.id} fallback={<CourseFallback />}>
-					<Course color={course.color} id={course.id} name={course.name} teacher={course.teacher} />
-				</Suspense>
-			))}
+			<Courses />
 
 			{/* New course button link */}
 			<Link

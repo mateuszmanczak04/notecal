@@ -1,9 +1,11 @@
+'use client';
+
+import { useAppContext } from '@/app/_components/app-context';
 import createNote from '@/app/notes/_actions/create-note';
-import ErrorMessage from '@/components/error-message';
 import LoadingSpinner from '@/components/loading-spinner';
-import db from '@/utils/db';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect, useTransition } from 'react';
 
 type Props = {
 	name: string;
@@ -26,26 +28,22 @@ export const CourseFallback = () => {
 /**
  * A link navigating to the latest note from it's course. If there are not notes it will automatically create one before rendering.
  */
-const Course = async ({ name, teacher, id, color }: Props) => {
-	let notes = await db.note.findMany({
-		where: {
-			courseId: id,
-		},
-		orderBy: {
-			createdAt: 'desc',
-		},
-	});
+const Course = ({ name, teacher, id, color }: Props) => {
+	const { notes: allNotes } = useAppContext();
+	const notes = allNotes.filter(note => note.courseId === id);
 
-	// Create a first note if it doesn't exist
-	if (notes.length === 0) {
-		const res = await createNote({ courseId: id });
+	const [isPending, startTransition] = useTransition();
 
-		if ('error' in res) {
-			return <ErrorMessage>{res.error}</ErrorMessage>;
+	useEffect(() => {
+		if (notes.length === 0) {
+			// Create a first note if it doesn't exist
+			startTransition(async () => {
+				const res = await createNote({ courseId: id });
+				// TODO: handle error
+				if ('note' in res) notes.push(res.note);
+			});
 		}
-
-		notes.push(res.note);
-	}
+	}, [id, notes]);
 
 	return (
 		<Link
