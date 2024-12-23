@@ -4,20 +4,17 @@ import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 import { redirect } from 'next/navigation';
-import { z } from 'zod';
 
-const DeleteCourseSchema = z.object({
-	id: z.string().min(1, { message: en.courses.ID_REQUIRED }),
-});
+type T_Input = {
+	id: string;
+};
 
-const deleteCourse = async (values: z.infer<typeof DeleteCourseSchema>) => {
-	const validatedFields = DeleteCourseSchema.safeParse(values);
+type T_Result = Promise<{ error: string } | undefined>;
 
-	if (!validatedFields.success) {
-		return { error: en.INVALID_DATA };
+const deleteCourse = async ({ id }: T_Input): T_Result => {
+	if (!id) {
+		return { error: 'ID is required' };
 	}
-
-	const id = validatedFields.data.id;
 
 	try {
 		const { authenticated, user } = await getAuthStatus();
