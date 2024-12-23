@@ -1,6 +1,5 @@
 import '@/app/globals.css';
 import MainLayout from '@/components/common/main-layout';
-import UnauthenticatedProviders from '@/components/common/unauthenticated-providers';
 import { getAuthStatus } from '@/lib/auth';
 import db from '@/lib/db';
 import { cn } from '@/lib/utils';
@@ -27,9 +26,7 @@ export default async function RootLayout({
 						inter.className,
 						'bg-white fill-neutral-800 text-neutral-800 dark:bg-neutral-900 dark:fill-neutral-100 dark:text-neutral-100',
 					)}>
-					<UnauthenticatedProviders>
-						<div className='pt-16'>{children}</div>
-					</UnauthenticatedProviders>
+					<div className='pt-16'>{children}</div>
 					<Analytics />
 					<SpeedInsights />
 				</body>
