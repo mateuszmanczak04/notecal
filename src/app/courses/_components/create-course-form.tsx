@@ -5,7 +5,8 @@ import ErrorMessage from '@/components/error-message';
 import FormLoadingSpinner from '@/components/form-loading-spinner';
 import GoBackButton from '@/components/go-back-button';
 import { Input } from '@/components/input';
-import { cn, COLORS } from '@/utils/cn';
+import { cn } from '@/utils/cn';
+import { COLORS } from '@/utils/colors';
 import { useActionState, useState } from 'react';
 import createCourse from '../_actions/create-course';
 
