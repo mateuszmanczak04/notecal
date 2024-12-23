@@ -88,3 +88,10 @@ export const getCourseById = cache(async (id: string) => {
 	const courses = await getCourses();
 	return courses.find(course => course.id === id);
 });
+
+export const preload = () => {
+	getUser();
+	getCourses();
+	getTasks();
+	getNotes();
+};
