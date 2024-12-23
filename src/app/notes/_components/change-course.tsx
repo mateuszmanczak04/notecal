@@ -21,7 +21,7 @@ const ChangeCourse = ({ currentCourse, note }: Props) => {
 
 	const handleSelect = (newCourseId: string) => {
 		startTransition(async () => {
-			updateNote({ id: note.id, courseId: newCourseId });
+			await updateNote({ id: note.id, courseId: newCourseId });
 		});
 	};
 

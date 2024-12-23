@@ -49,7 +49,7 @@ const Content = ({ note, course }: Props) => {
 
 	const handleSave = () => {
 		startTransition(async () => {
-			updateNote({ id: note.id, content });
+			await updateNote({ id: note.id, content });
 		});
 	};
 
