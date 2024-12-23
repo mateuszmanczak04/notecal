@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/button';
+import { cn } from '@/utils/cn';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { InitialConfigType, LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -10,7 +11,8 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { HeadingNode } from '@lexical/rich-text';
 import { Course, Note } from '@prisma/client';
 import { Save } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
+import updateNote from '../_actions/update-note';
 import SavePlugin from '../_editor/SavePlugin';
 import ToolbarPlugin from '../_editor/ToolbarPlugin';
 
@@ -38,16 +40,25 @@ const editorConfig: InitialConfigType = {
 	},
 };
 
+/**
+ * A part of /note/[id] page where user enters the text content. It works like a WYSIWYG editor.
+ */
 const Content = ({ note, course }: Props) => {
-	const update = (values: any) => {};
+	const [isPending, startTransition] = useTransition();
 	const [content, setContent] = useState(note.content);
 
 	const handleSave = () => {
-		update({ id: note.id, content });
+		startTransition(async () => {
+			updateNote({ id: note.id, content });
+		});
 	};
 
 	return (
-		<div className='flex flex-1 flex-col rounded-xl bg-neutral-100 p-4 dark:bg-neutral-700'>
+		<div
+			className={cn(
+				'flex flex-1 flex-col rounded-xl bg-neutral-100 p-4 dark:bg-neutral-700',
+				isPending && 'opacity-50',
+			)}>
 			<LexicalComposer initialConfig={editorConfig}>
 				<ToolbarPlugin />
 				<div className='relative mb-4 mt-4 leading-loose'>
