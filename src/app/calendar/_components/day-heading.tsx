@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/utils/utils';
+import { cn } from '@/utils/cn';
 import { FC } from 'react';
 
 interface DayHeadingProps {

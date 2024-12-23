@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/utils/utils';
+import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
 import { useEffect, useRef, useTransition } from 'react';
 import deleteTask from '../_actions/delete-task';

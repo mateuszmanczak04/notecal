@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/utils/utils';
+import { cn } from '@/utils/cn';
 import { useCalendarContext } from '../_context/calendar-context';
 
 const HourRow = ({ hour }: { hour: number }) => {

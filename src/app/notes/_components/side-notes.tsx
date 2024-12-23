@@ -1,5 +1,5 @@
 import NewNoteButton from '@/app/notes/_components/new-note-button';
-import { cn } from '@/utils/utils';
+import { cn } from '@/utils/cn';
 import { Course, Note } from '@prisma/client';
 import { format } from 'date-fns';
 import Link from 'next/link';

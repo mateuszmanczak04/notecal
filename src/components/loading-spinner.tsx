@@ -1,4 +1,4 @@
-import { cn } from '@/utils/utils';
+import { cn } from '@/utils/cn';
 import { LoaderCircle } from 'lucide-react';
 import { ClassNameValue } from 'tailwind-merge';
 

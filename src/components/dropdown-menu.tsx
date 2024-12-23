@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/utils/utils';
+import { cn } from '@/utils/cn';
 import { ChevronDown } from 'lucide-react';
 import React, { createContext, useContext, useRef, useState } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
