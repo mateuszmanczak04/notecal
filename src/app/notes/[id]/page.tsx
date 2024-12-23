@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ChangeCourse from '../_components/change-course';
 import Content from '../_components/content';
-import DeleteButton from '../_components/delete-button';
+import DeleteNoteButton from '../_components/delete-note-button';
 import SideNotes from '../_components/side-notes';
 import Tasks from '../_components/tasks';
 import Teacher from '../_components/teacher';
@@ -99,7 +99,7 @@ const page = async ({ params }: Props) => {
 				<Time note={note} />
 
 				{/* Delete note button */}
-				<DeleteButton note={note} />
+				<DeleteNoteButton id={note.id} />
 			</div>
 		</div>
 	);

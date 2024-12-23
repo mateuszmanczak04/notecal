@@ -1,23 +1,30 @@
 'use client';
 
+import LoadingSpinner from '@/components/common/loading-spinner';
 import { Button } from '@/components/ui/button';
-import { Note } from '@prisma/client';
 import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
+import deleteNote from '../_actions/delete-note';
 
 type Props = {
-	note: Note;
+	id: string;
 };
 
-const DeleteButton = ({ note }: Props) => {
+/**
+ * After first click it shows a confirmation message if user is sure to delete it.
+ */
+const DeleteNoteButton = ({ id }: Props) => {
+	const [isPending, startTransition] = useTransition();
+
 	const router = useRouter();
 	const [isDeleting, setIsDeleting] = useState(false);
-	const removeNote = (value: any) => {};
 
 	const confirmDeletion = () => {
-		removeNote(note.id);
-		router.back();
+		startTransition(async () => {
+			await deleteNote({ id });
+			router.back();
+		});
 	};
 
 	if (isDeleting) {
@@ -29,6 +36,7 @@ const DeleteButton = ({ note }: Props) => {
 					onClick={confirmDeletion}
 					className='w-full'
 					aria-label='yes, delete this note'>
+					{isPending && <LoadingSpinner />}
 					Yes
 				</Button>
 				<Button
@@ -50,4 +58,4 @@ const DeleteButton = ({ note }: Props) => {
 	);
 };
 
-export default DeleteButton;
+export default DeleteNoteButton;
