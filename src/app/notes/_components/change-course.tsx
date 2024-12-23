@@ -12,6 +12,9 @@ type Props = {
 	note: Note;
 };
 
+/**
+ * A dropdown menu used to choose a new course for the note.
+ */
 const ChangeCourse = ({ currentCourse, note }: Props) => {
 	const { courses } = useAppContext();
 	const [isPending, startTransition] = useTransition();
