@@ -1,44 +1,43 @@
 'use server';
 
+import { getAuthStatus } from '@/lib/auth';
+import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
-import { z } from 'zod';
+import { Note } from '@prisma/client';
 
-const UpdateNoteSchema = z.object({
-	id: z.string().min(1, en.notes.ID_REQUIRED),
-	startTime: z.coerce.date().optional(),
-	endTime: z.coerce.date().optional(),
-	content: z.string().optional(),
-	courseId: z.string().optional(),
-});
+type T_Input = {
+	id: string;
+	startTime?: Date;
+	endTime?: Date;
+	content?: string;
+	courseId?: string;
+};
 
-const updateNote = async (values: z.infer<typeof UpdateNoteSchema>) => {
-	const validatedFields = UpdateNoteSchema.safeParse(values);
+type T_Result = Promise<{ error: string } | { note: Note }>;
 
-	if (!validatedFields.success) {
-		return { error: en.INVALID_DATA };
+const updateNote = async ({ id, startTime, endTime, content, courseId }: T_Input): T_Result => {
+	if (!id) {
+		return { error: 'ID is required' };
 	}
 
-	const data = validatedFields.data;
-
 	try {
-		// const session = await auth();
+		const { authenticated, user } = await getAuthStatus();
 
-		// if (!session?.user?.id) {
-		// 	return { error: en.auth.UNAUTHENTICATED };
-		// }
+		if (!authenticated) {
+			return { error: en.auth.UNAUTHENTICATED };
+		}
 
-		// const updatedNote = await db.note.update({
-		// 	where: { id: data.id, userId: session.user.id },
-		// 	data: {
-		// 		...data,
-		// 		startTime: data.startTime || undefined,
-		// 		endTime: data.endTime || undefined,
-		// 	},
-		// });
+		const note = await db.note.update({
+			where: { id, userId: user.id },
+			data: {
+				startTime,
+				endTime,
+				content,
+				courseId,
+			},
+		});
 
-		// return { updatedNote };
-
-		return { updatedNote: null };
+		return { note };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

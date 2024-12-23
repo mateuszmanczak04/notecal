@@ -1,31 +1,30 @@
 'use server';
 
+import { getAuthStatus } from '@/lib/auth';
+import db from '@/lib/db';
 import { en } from '@/lib/dictionary';
-import { z } from 'zod';
 
-const DeleteNoteSchema = z.object({
-	id: z.string().min(1, { message: en.notes.ID_REQUIRED }),
-});
+type T_Input = { id: string };
 
-const deleteNote = async (values: z.infer<typeof DeleteNoteSchema>) => {
-	const validatedFields = DeleteNoteSchema.safeParse(values);
+type T_Result = Promise<{ error: string } | { success: true }>;
 
-	if (!validatedFields.success) {
-		return { error: en.INVALID_DATA };
+const deleteNote = async ({ id }: T_Input): T_Result => {
+	if (!id) {
+		return { error: 'ID is required' };
 	}
 
 	try {
-		// const session = await auth();
+		const { authenticated, user } = await getAuthStatus();
 
-		// if (!session?.user?.id) {
-		// 	return { error: en.auth.UNAUTHENTICATED };
-		// }
+		if (!authenticated) {
+			return { error: en.auth.UNAUTHENTICATED };
+		}
 
-		// await db.note.delete({
-		// 	where: { id: validatedFields.data.id, userId: session.user.id },
-		// });
+		await db.note.delete({
+			where: { id, userId: user.id },
+		});
 
-		return { deleted: true };
+		return { success: true };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
