@@ -1,10 +1,10 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/button';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const Hero = () => {
 	return (
-		<div className='fles-1 mx-auto min-h-screen w-[640px] max-w-[calc(100%-32px)] items-center pt-16 text-center md:w-[720px]'>
+		<section className='fles-1 mx-auto min-h-screen w-[640px] max-w-[calc(100%-32px)] items-center pt-16 text-center md:w-[720px]'>
 			<div className='flex items-center justify-center gap-2'>
 				<Image src='/logo.svg' alt='notecal logo' width='22' height='31' />
 				<p className='text-xl font-semibold sm:text-2xl md:text-3xl'>NoteCal</p>
@@ -21,7 +21,7 @@ const Hero = () => {
 					Click Here to Join
 				</Link>
 			</Button>
-		</div>
+		</section>
 	);
 };
 

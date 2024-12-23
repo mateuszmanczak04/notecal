@@ -1,11 +1,6 @@
 'use client';
 
-import {
-	DropdownMenu,
-	DropdownMenuItem,
-	DropdownMenuList,
-	DropdownMenuTrigger,
-} from '@/components/common/dropdown-menu';
+import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
 import { Course, Note } from '@prisma/client';
 
 type Props = {

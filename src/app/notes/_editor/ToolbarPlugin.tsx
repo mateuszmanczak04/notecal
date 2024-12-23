@@ -1,4 +1,4 @@
-import { Toggle } from '@/components/ui/toggle';
+import { Toggle } from '@/components/toggle';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $createHeadingNode, HeadingTagType } from '@lexical/rich-text';
 import { $wrapNodes } from '@lexical/selection';
@@ -26,10 +26,9 @@ import {
 	Heading1,
 	Heading2,
 	Italic,
-	Strikethrough,
 	Underline,
 } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function ToolbarPlugin() {
 	const [editor] = useLexicalComposerContext();
@@ -125,16 +124,14 @@ export default function ToolbarPlugin() {
 					disabled={disableMap.undo}
 					onPressedChange={() => {
 						editor.dispatchCommand(UNDO_COMMAND, undefined);
-					}}
-				>
+					}}>
 					<ChevronLeft className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					disabled={disableMap.redo}
 					onPressedChange={() => {
 						editor.dispatchCommand(REDO_COMMAND, undefined);
-					}}
-				>
+					}}>
 					<ChevronRight className='h-5 w-5' />
 				</Toggle>
 			</div>
@@ -156,8 +153,7 @@ export default function ToolbarPlugin() {
 					className={selectionMap.bold ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
-					}}
-				>
+					}}>
 					<Bold className='h-5 w-5' />
 				</Toggle>
 				<Toggle
@@ -165,8 +161,7 @@ export default function ToolbarPlugin() {
 					className={selectionMap.italic ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
-					}}
-				>
+					}}>
 					<Italic className='h-5 w-5' />
 				</Toggle>
 				<Toggle
@@ -174,8 +169,7 @@ export default function ToolbarPlugin() {
 					className={selectionMap.underline ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
-					}}
-				>
+					}}>
 					<Underline className='h-5 w-5' />
 				</Toggle>
 			</div>
@@ -185,29 +179,25 @@ export default function ToolbarPlugin() {
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
-					}}
-				>
+					}}>
 					<AlignLeft className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'center');
-					}}
-				>
+					}}>
 					<AlignCenter className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
-					}}
-				>
+					}}>
 					<AlignRight className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify');
-					}}
-				>
+					}}>
 					<AlignJustify className='h-5 w-5' />
 				</Toggle>
 			</div>

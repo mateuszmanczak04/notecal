@@ -1,11 +1,6 @@
 'use client';
 
-import {
-	DropdownMenu,
-	DropdownMenuItem,
-	DropdownMenuList,
-	DropdownMenuTrigger,
-} from '@/components/common/dropdown-menu';
+import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { Task, TaskPriority } from '@prisma/client';
 import { useTransition } from 'react';

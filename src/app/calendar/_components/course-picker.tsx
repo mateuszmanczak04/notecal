@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/button';
 import { Course } from '@prisma/client';
 import { format } from 'date-fns';
 import { Plus } from 'lucide-react';
@@ -55,13 +55,13 @@ const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 
 		const newNoteId = uid();
 
-		addNewNote({
-			id: newNoteId,
-			content: '',
-			startTime: time,
-			endTime: new Date(time.getTime() + settings.defaultNoteDuration * 60 * 1000),
-			courseId,
-		});
+		// addNewNote({
+		// 	id: newNoteId,
+		// 	content: '',
+		// 	startTime: time,
+		// 	endTime: new Date(time.getTime() + settings.defaultNoteDuration * 60 * 1000),
+		// 	courseId,
+		// });
 
 		/** Needed this timeout to move hidePicker at the end of the call stack. Otherwise it would be hidden before note was created */
 		setTimeout(() => {

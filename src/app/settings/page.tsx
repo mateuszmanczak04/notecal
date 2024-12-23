@@ -1,6 +1,5 @@
 import logout from '@/app/auth/_actions/logout';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/button';
 import db from '@/lib/db';
 import { JWT_AUTH, verifyToken } from '@/lib/jwt';
 import { LogOut } from 'lucide-react';
@@ -45,11 +44,9 @@ const page = async () => {
 
 			{/* Change email */}
 			<ChangeEmailSetting />
-			<Separator />
 
 			{/* Change password */}
 			<ChangePasswordSetting />
-			<Separator />
 
 			{/* General settings */}
 			<UpdateSettings
@@ -57,7 +54,6 @@ const page = async () => {
 				defaultNoteDuration={user.defaultNoteDuration}
 				language={user.language}
 			/>
-			<Separator />
 
 			{/* Logout button */}
 			<Button variant='secondary' onClick={logout} className='w-full'>

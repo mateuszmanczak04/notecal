@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, type ButtonProps } from '@/components/ui/button';
+import { Button, type ButtonProps } from '@/components/button';
 import { useRouter } from 'next/navigation';
 import { forwardRef } from 'react';
 

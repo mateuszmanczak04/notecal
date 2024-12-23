@@ -1,10 +1,10 @@
 'use client';
 
 import { sendConfirmationEmailForm } from '@/app/auth/_actions/send-confirmation-email';
-import ErrorMessage from '@/components/common/error-message';
-import LoadingSpinner from '@/components/common/loading-spinner';
-import SuccessMessage from '@/components/common/success-message';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/button';
+import ErrorMessage from '@/components/error-message';
+import LoadingSpinner from '@/components/loading-spinner';
+import SuccessMessage from '@/components/success-message';
 import { Mail } from 'lucide-react';
 import { useActionState } from 'react';
 

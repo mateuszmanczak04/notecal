@@ -1,10 +1,10 @@
 'use client';
 
-import ErrorMessage from '@/components/common/error-message';
-import FormLoadingSpinner from '@/components/common/form-loading-spinner';
-import GoBackButton from '@/components/common/go-back-button';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/components/button';
+import ErrorMessage from '@/components/error-message';
+import FormLoadingSpinner from '@/components/form-loading-spinner';
+import GoBackButton from '@/components/go-back-button';
+import { Input } from '@/components/input';
 import { cn, COLORS } from '@/lib/utils';
 import { useActionState, useState } from 'react';
 import createCourse from '../_actions/create-course';

@@ -1,6 +1,6 @@
 import createNote from '@/app/notes/_actions/create-note';
-import ErrorMessage from '@/components/common/error-message';
-import LoadingSpinner from '@/components/common/loading-spinner';
+import ErrorMessage from '@/components/error-message';
+import LoadingSpinner from '@/components/loading-spinner';
 import db from '@/lib/db';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';

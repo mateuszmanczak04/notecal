@@ -1,6 +1,6 @@
 'use client';
 
-import ErrorMessage from '@/components/common/error-message';
+import ErrorMessage from '@/components/error-message';
 import { useEffect, useRef } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import Grid from './grid';

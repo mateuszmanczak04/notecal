@@ -1,5 +1,5 @@
+import MainLayout from '@/app/_components/main-layout';
 import '@/app/globals.css';
-import MainLayout from '@/components/common/main-layout';
 import { getAuthStatus } from '@/lib/auth';
 import { cn } from '@/lib/utils';
 import { Analytics } from '@vercel/analytics/react';

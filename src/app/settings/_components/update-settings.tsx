@@ -1,10 +1,10 @@
 'use client';
 
-import ErrorMessage from '@/components/common/error-message';
-import FormLoadingSpinner from '@/components/common/form-loading-spinner';
-import SuccessMessage from '@/components/common/success-message';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/components/button';
+import ErrorMessage from '@/components/error-message';
+import FormLoadingSpinner from '@/components/form-loading-spinner';
+import { Input } from '@/components/input';
+import SuccessMessage from '@/components/success-message';
 import { useActionState, useState } from 'react';
 import updateSettings from '../_actions/update-settings';
 

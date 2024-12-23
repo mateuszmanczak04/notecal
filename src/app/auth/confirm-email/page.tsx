@@ -1,5 +1,5 @@
-import FormLoadingSpinner from '@/components/common/form-loading-spinner';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/button';
+import FormLoadingSpinner from '@/components/form-loading-spinner';
 import { Mail } from 'lucide-react';
 import { Metadata } from 'next';
 import confirmEmail from '../_actions/confirm-email';

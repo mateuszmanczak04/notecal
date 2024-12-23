@@ -1,7 +1,7 @@
 'use client';
 
-import GoBackButton from '@/components/common/go-back-button';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/button';
+import GoBackButton from '@/components/go-back-button';
 import { Trash2 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 

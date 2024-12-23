@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/button';
 import { getAuthStatus } from '@/lib/auth';
 import db from '@/lib/db';
 import { Pencil } from 'lucide-react';

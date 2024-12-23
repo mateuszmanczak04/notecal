@@ -2,6 +2,9 @@ import { cn } from '@/lib/utils';
 import { LoaderCircle } from 'lucide-react';
 import { ClassNameValue } from 'tailwind-merge';
 
+/**
+ * Simple spinning ring.
+ */
 const LoadingSpinner = ({ className }: { className?: ClassNameValue }) => {
 	return (
 		<LoaderCircle

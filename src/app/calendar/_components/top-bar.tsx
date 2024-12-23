@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingSpinner from '@/components/common/loading-spinner';
+import LoadingSpinner from '@/components/loading-spinner';
 import { FC } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import DayHeading from './day-heading';

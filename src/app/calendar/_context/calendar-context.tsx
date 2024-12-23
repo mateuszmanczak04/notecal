@@ -68,7 +68,7 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 		const { width, height } = containerRef.current.getBoundingClientRect();
 
 		// Get day (YYYY-MM-DD):
-		const columnWidth = width / settings.displayedDays;
+		const columnWidth = width / 7; // TODO
 		const dayIndex = Math.floor(x / columnWidth);
 		const time = addDays(currentFirstDay, dayIndex);
 
@@ -87,36 +87,37 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	};
 
 	const getRowHeight = () => {
-		switch (settings.zoomLevel) {
-			case 1:
-				return 40;
-			case 2:
-				return 60;
-			case 3:
-				return 80;
-			case 4:
-				return 120;
-			case 5:
-				return 160;
-			default:
-				return 80;
-		}
+		return 80;
+		// switch (settings.zoomLevel) {
+		// 	case 1:
+		// 		return 40;
+		// 	case 2:
+		// 		return 60;
+		// 	case 3:
+		// 		return 80;
+		// 	case 4:
+		// 		return 120;
+		// 	case 5:
+		// 		return 160;
+		// 	default:
+		// 		return 80;
+		// }
 	};
 
 	const zoomIn = () => {
-		if (settings.zoomLevel !== 5) {
-			updateSettings({
-				zoomLevel: (settings.zoomLevel + 1) as 1 | 2 | 3 | 4 | 5,
-			});
-		}
+		// if (settings.zoomLevel !== 5) {
+		// 	updateSettings({
+		// 		zoomLevel: (settings.zoomLevel + 1) as 1 | 2 | 3 | 4 | 5,
+		// 	});
+		// }
 	};
 
 	const zoomOut = () => {
-		if (settings.zoomLevel !== 1) {
-			updateSettings({
-				zoomLevel: (settings.zoomLevel - 1) as 1 | 2 | 3 | 4 | 5,
-			});
-		}
+		// if (settings.zoomLevel !== 1) {
+		// 	updateSettings({
+		// 		zoomLevel: (settings.zoomLevel - 1) as 1 | 2 | 3 | 4 | 5,
+		// 	});
+		// }
 	};
 
 	return (
@@ -132,7 +133,7 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 				getDayAfter,
 				getRelativePosition,
 				getDateFromPosition,
-				displayedDays: settings.displayedDays,
+				displayedDays: 7, // TODO,
 				scrollTop,
 				setScrollTop,
 			}}>

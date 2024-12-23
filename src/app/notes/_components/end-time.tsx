@@ -1,6 +1,6 @@
 'use client';
 
-import DatePicker from '@/components/common/date-picker';
+import DatePicker from '@/components/date-picker';
 import { Note } from '@prisma/client';
 
 type Props = {

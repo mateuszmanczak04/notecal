@@ -1,4 +1,4 @@
-import LoadingSpinner from '@/components/common/loading-spinner';
+import LoadingSpinner from '@/components/loading-spinner';
 import { getAuthStatus } from '@/lib/auth';
 import db from '@/lib/db';
 import { Metadata } from 'next';

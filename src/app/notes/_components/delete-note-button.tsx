@@ -1,7 +1,7 @@
 'use client';
 
-import LoadingSpinner from '@/components/common/loading-spinner';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/button';
+import LoadingSpinner from '@/components/loading-spinner';
 import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';

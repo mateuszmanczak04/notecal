@@ -1,7 +1,7 @@
 'use client';
 
-import ErrorMessage from '@/components/common/error-message';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/button';
+import ErrorMessage from '@/components/error-message';
 import { RotateCw } from 'lucide-react';
 import { FC } from 'react';
 

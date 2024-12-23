@@ -1,6 +1,6 @@
 'use client';
 
-import DatePicker from '@/components/common/date-picker';
+import DatePicker from '@/components/date-picker';
 import { cn } from '@/lib/utils';
 import { Task } from '@prisma/client';
 import { useTransition } from 'react';

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import Footer from '../components/common/footer';
-import Hero from '../components/common/hero';
+import Footer from './_components/footer';
+import Hero from './_components/hero';
 
 export const metadata: Metadata = {
 	title: 'NoteCal - Organize Your Notes',
@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 
 const page = () => {
 	return (
-		<div className='flex flex-col'>
+		<main className='flex flex-col'>
 			<Hero />
 			<Footer />
-		</div>
+		</main>
 	);
 };
 

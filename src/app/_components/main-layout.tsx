@@ -1,5 +1,5 @@
+import Navigation from '@/app/_components/navigation';
 import logout from '@/app/auth/_actions/logout';
-import Navigation from '@/components/common/navigation';
 import { getAuthStatus } from '@/lib/auth';
 import db from '@/lib/db';
 import React from 'react';
