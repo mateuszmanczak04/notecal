@@ -1,16 +1,22 @@
 'use server';
 
-import UpdateCourseSchema from '@/schemas/update-course-schema';
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
-import { z } from 'zod';
+import { Course } from '@prisma/client';
 
-const updateCourse = async (values: z.infer<typeof UpdateCourseSchema>) => {
-	const validatedFields = UpdateCourseSchema.safeParse(values);
+type T_Input = {
+	id: string;
+	name?: string;
+	teacher?: string;
+	color?: string;
+};
 
-	if (!validatedFields.success) {
-		return { error: en.INVALID_DATA };
+type T_Result = Promise<{ error: string } | { course: Course }>;
+
+const updateCourse = async ({ id, name, teacher, color }: T_Input): T_Result => {
+	if (!id) {
+		return { error: 'ID is required' };
 	}
 
 	try {
@@ -20,12 +26,16 @@ const updateCourse = async (values: z.infer<typeof UpdateCourseSchema>) => {
 			return { error: en.auth.UNAUTHENTICATED };
 		}
 
-		const updatedCourse = await db.course.update({
-			where: { id: validatedFields.data.id, userId: user.id },
-			data: validatedFields.data,
+		const course = await db.course.update({
+			where: { id, userId: user.id },
+			data: {
+				name,
+				teacher,
+				color,
+			},
 		});
 
-		return { updatedCourse };
+		return { course };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
