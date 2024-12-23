@@ -1,5 +1,4 @@
-import { getAuthStatus } from '@/utils/auth';
-import db from '@/utils/db';
+import { getCourses } from '@/utils/cached-queries';
 import { Plus } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -17,16 +16,7 @@ export const metadata: Metadata = {
  * Fetches all user's courses and displays them as a grid.
  */
 const page = async () => {
-	const { user } = (await getAuthStatus()) as { user: { id: string } };
-
-	const courses = await db.course.findMany({
-		where: {
-			userId: user.id,
-		},
-		orderBy: {
-			name: 'asc',
-		},
-	});
+	const courses = await getCourses();
 
 	if (!courses) {
 		return <p className='text-center text-lg text-neutral-500 sm:ml-8'>You don&apos;t have any courses yet.</p>;
