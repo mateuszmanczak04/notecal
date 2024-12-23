@@ -21,11 +21,13 @@ export const metadata: Metadata = {
 };
 
 type Props = {
-	params?: { [key: string]: string | undefined };
+	params?: Promise<{ [key: string]: string | undefined }>;
 };
 
 const page = async ({ params }: Props) => {
-	const id = params?.id;
+	console.log('LOADING');
+
+	const id = (await params)?.id;
 
 	if (!id) notFound();
 
@@ -67,6 +69,8 @@ const page = async ({ params }: Props) => {
 			courseId: course.id,
 		},
 	});
+
+	console.log('LOADED');
 
 	return (
 		<div className='mx-auto flex h-full min-h-80 max-w-[1200px] flex-col gap-4 md:flex-row'>
