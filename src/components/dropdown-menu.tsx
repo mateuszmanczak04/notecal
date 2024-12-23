@@ -2,7 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import { ChevronDown } from 'lucide-react';
-import React, { createContext, useContext, useRef, useState } from 'react';
+import React, { createContext, RefObject, useContext, useRef, useState } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
 import { useOnClickOutside } from 'usehooks-ts';
 import Tag from './tag';
@@ -66,7 +66,7 @@ export const DropdownMenuItem = ({
 	return (
 		<button
 			className={cn(
-				'flex h-9 cursor-pointer select-none items-center justify-center gap-2 truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500 sm:max-w-none',
+				'flex h-9 cursor-pointer select-none items-center justify-center gap-2 truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 sm:max-w-none dark:hover:bg-neutral-500',
 				className,
 			)}
 			onClick={handleSelect}>
@@ -124,7 +124,7 @@ export const DropdownMenuTrigger = ({
 const DropdownMenuWrapper = ({ children, className }: { children: React.ReactNode; className?: ClassNameValue }) => {
 	const { setIsOpen, menuRef } = useDropdownMenuContext();
 
-	useOnClickOutside(menuRef, () => {
+	useOnClickOutside(menuRef as RefObject<HTMLDivElement>, () => {
 		setIsOpen(false);
 	});
 

@@ -11,7 +11,7 @@ const Task = ({ task: { id, title, completed, courseId, dueDate, priority, descr
 	const update = () => {};
 
 	const toggleCompleted = () => {
-		update({ id, completed: !completed });
+		// update({ id, completed: !completed });
 	};
 
 	// TODO: add functionalities below

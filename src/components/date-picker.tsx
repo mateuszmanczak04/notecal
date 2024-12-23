@@ -2,7 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import { format, isValid } from 'date-fns';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, RefObject, useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import Tag from './tag';
 
@@ -57,7 +57,7 @@ const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date, className 
 		onSelect(newDate);
 	};
 
-	useOnClickOutside(menuRef, () => {
+	useOnClickOutside(menuRef as RefObject<HTMLDivElement>, () => {
 		handleSubmit();
 		handleCloseMenu();
 	});
