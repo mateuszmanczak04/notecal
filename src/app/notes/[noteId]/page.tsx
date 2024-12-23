@@ -1,5 +1,5 @@
 import { Button } from '@/components/button';
-import { getCourseById, getCourses, getNoteById, getNotesByCourseId, getTasksByCourseId } from '@/utils/cached-queries';
+import { getCourseById, getNoteById } from '@/utils/cached-queries';
 import { Pencil } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -24,22 +24,14 @@ type Props = {
 };
 
 const page = async ({ params }: Props) => {
-	// We can assume that use is authenticated because of the middleware
-
 	const noteId = (await params)?.noteId;
 	if (!noteId) notFound();
 
 	const note = await getNoteById(noteId);
 	if (!note) notFound();
 
-	const courses = await getCourses();
 	const course = await getCourseById(note.courseId);
-
-	// Should not occur in normal conditions
 	if (!course) notFound();
-
-	const courseNotes = await getNotesByCourseId(course.id);
-	const courseTasks = await getTasksByCourseId(course.id);
 
 	return (
 		<div className='mx-auto flex h-full min-h-80 max-w-[1200px] flex-col gap-4 md:flex-row'>
@@ -49,16 +41,16 @@ const page = async ({ params }: Props) => {
 
 			<div className='flex w-full shrink-0 flex-col gap-8 md:w-56'>
 				{/* List of other notes for this course */}
-				{courseNotes && <SideNotes currentNodeId={noteId} course={course} notes={courseNotes} />}
+				<SideNotes currentNoteId={noteId} course={course} />
 
 				{/* Tasks related to this course */}
-				{courseTasks && <Tasks course={course} tasks={courseTasks} />}
+				<Tasks course={course} />
 
 				{/* Teacher */}
 				<Teacher teacher={course.teacher} />
 
 				{/* Change the course for this note */}
-				<ChangeCourse currentCourse={course} note={note} courses={courses} />
+				<ChangeCourse currentCourse={course} note={note} />
 
 				{/* Link to edit course */}
 				<Button asChild variant='secondary'>

@@ -16,7 +16,9 @@ export const metadata: Metadata = {
  * Fetches all user's courses and displays them as a grid.
  */
 const page = async () => {
+	console.log('START');
 	const courses = await getCourses();
+	console.log('END');
 
 	if (!courses) {
 		return <p className='text-center text-lg text-neutral-500 sm:ml-8'>You don&apos;t have any courses yet.</p>;

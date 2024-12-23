@@ -1,15 +1,17 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
 import { Course, Note } from '@prisma/client';
 
 type Props = {
-	courses: Course[];
 	currentCourse: Course;
 	note: Note;
 };
 
-const ChangeCourse = ({ courses, currentCourse, note }: Props) => {
+const ChangeCourse = ({ currentCourse, note }: Props) => {
+	const { courses } = useAppContext();
+
 	const update = (value: any) => {};
 
 	const handleSelect = (newCourseId: string) => {
