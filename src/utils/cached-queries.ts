@@ -1,3 +1,5 @@
+'server-only';
+
 /**
  * A set of database queries which are memoized at the request (wrapped with React.cache).
  */
