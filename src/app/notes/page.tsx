@@ -1,17 +1,10 @@
-'use client';
+import { redirect } from 'next/navigation';
 
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-
-// This page is useless
-const NotePage = () => {
-	const router = useRouter();
-
-	useEffect(() => {
-		router.back();
-	}, [router]);
-
-	return null;
+/**
+ * This page doesn't show any useful things so we only redirect user to /courses page.
+ */
+const page = () => {
+	redirect('/courses');
 };
 
-export default NotePage;
+export default page;
