@@ -16,7 +16,11 @@ const Tasks = ({ course }: Props) => {
 		<div className='flex flex-col gap-2'>
 			<p className='text-xl font-semibold'>Tasks:</p>
 
+			{tasks.length === 0 && <p>There are no tasks related to this course</p>}
+
 			{tasks?.map(task => <Task key={task.id} task={task} />)}
+
+			{/* TODO: Handy new task form here without redirection to the /tasks/create page */}
 			{/* <Button asChild style={{ background: course?.color }}>
 				<Link prefetch href={`/tasks/create?courseId=${course.id}`}>
 					<Plus className='h-4 w-4' /> Create a new task

@@ -7,6 +7,7 @@ type Props = {
 	task: Task;
 };
 
+// TODO: fix
 const Task = ({ task: { id, title, completed, courseId, dueDate, priority, description } }: Props) => {
 	const update = () => {};
 
