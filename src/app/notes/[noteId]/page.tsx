@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ChangeCourse from '../_components/change-course';
 import Content from '../_components/content';
+import CourseName from '../_components/course-name';
 import DeleteNoteButton from '../_components/delete-note-button';
 import EndTime from '../_components/end-time';
 import SideNotes from '../_components/side-notes';
@@ -41,6 +42,9 @@ const page = async ({ params }: Props) => {
 			</div>
 
 			<div className='flex w-full shrink-0 flex-col gap-8 md:w-56'>
+				{/* Name of the course */}
+				<CourseName name={course.name} />
+
 				{/* List of other notes for this course */}
 				<SideNotes currentNoteId={noteId} course={course} />
 
