@@ -1,5 +1,5 @@
 import { Button } from '@/components/button';
-import { getCourses, getNoteById, getNotesByCourseId, getTasksByCourseId } from '@/utils/cached-queries';
+import { getCourseById, getCourses, getNoteById, getNotesByCourseId, getTasksByCourseId } from '@/utils/cached-queries';
 import { Pencil } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -33,7 +33,7 @@ const page = async ({ params }: Props) => {
 	if (!note) notFound();
 
 	const courses = await getCourses();
-	const course = courses.find(course => course.id === note.courseId);
+	const course = await getCourseById(note.courseId);
 
 	// Should not occur in normal conditions
 	if (!course) notFound();

@@ -1,10 +1,8 @@
 import LoadingSpinner from '@/components/loading-spinner';
-import { getAuthStatus } from '@/utils/auth';
-import db from '@/utils/db';
+import { getTasks, getUser } from '@/utils/cached-queries';
 import { Metadata } from 'next';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
+import logout from '../auth/_actions/logout';
 import CreateTaskForm from './_components/create-task-form';
 import SortTasks from './_components/sort-tasks';
 import Tasks from './_components/tasks';
@@ -17,24 +15,12 @@ export const metadata: Metadata = {
 };
 
 const page = async () => {
-	const { user: authUser } = (await getAuthStatus()) as { user: { id: string } };
+	const user = await getUser();
 
-	const user = await db.user.findUnique({ where: { id: authUser.id } });
+	// Should not occur in normal conditions
+	if (!user) return logout();
 
-	if (!user) {
-		// Should not occur in normal conditions
-		(await cookies()).delete('authToken');
-		redirect('/auth/login');
-	}
-
-	const tasksPromise = db.task.findMany({
-		where: {
-			userId: authUser.id,
-		},
-		orderBy: {
-			[user.orderTasks]: 'desc',
-		},
-	});
+	const tasks = await getTasks();
 
 	return (
 		<main className='mx-auto max-w-[800px] space-y-8'>
@@ -47,7 +33,7 @@ const page = async () => {
 						<LoadingSpinner />
 					</div>
 				}>
-				<Tasks tasksPromise={tasksPromise} />
+				<Tasks tasks={tasks} />
 			</Suspense>
 		</main>
 	);

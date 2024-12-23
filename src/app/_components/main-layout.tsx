@@ -1,7 +1,6 @@
 import Navigation from '@/app/_components/navigation';
 import logout from '@/app/auth/_actions/logout';
-import { getAuthStatus } from '@/utils/auth';
-import db from '@/utils/db';
+import { getUser } from '@/utils/cached-queries';
 import React from 'react';
 
 type MainLayoutProps = {
@@ -9,12 +8,7 @@ type MainLayoutProps = {
 };
 
 const MainLayout = async ({ children }: MainLayoutProps) => {
-	// We assume user can't see this layout not being authenticated
-	const { user: authUser } = (await getAuthStatus()) as { user: { id: string } };
-
-	const user = await db.user.findUnique({
-		where: { id: authUser.id },
-	});
+	const user = await getUser();
 
 	if (!user) return logout();
 

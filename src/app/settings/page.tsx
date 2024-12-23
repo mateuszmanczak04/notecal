@@ -1,11 +1,8 @@
 import logout from '@/app/auth/_actions/logout';
 import { Button } from '@/components/button';
-import db from '@/utils/db';
-import { JWT_AUTH, verifyToken } from '@/utils/jwt';
+import { getUser } from '@/utils/cached-queries';
 import { LogOut } from 'lucide-react';
 import { Metadata } from 'next';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import ChangeEmailSetting from './_components/change-email-setting';
 import ChangePasswordSetting from './_components/change-password-setting';
 import EmailNotConfirmed from './_components/email-not-confirmed';
@@ -19,23 +16,10 @@ export const metadata: Metadata = {
 };
 
 const page = async () => {
-	const cookieStore = await cookies();
-	const authToken = cookieStore.get('authToken')?.value || '';
-
-	// We can securely assume that it will always return "authenticated=true" as our middleware doesn't allow unauthenticated users to see this page.
-	const decoded = (await verifyToken(authToken)) as JWT_AUTH;
-
-	const user = await db.user.findUnique({
-		where: {
-			id: decoded.id,
-		},
-	});
+	const user = await getUser();
 
 	// Should not occur in normal conditions
-	if (!user) {
-		cookieStore.delete('authToken');
-		redirect('/auth/login');
-	}
+	if (!user) return logout();
 
 	return (
 		<main className='mx-auto mb-32 mt-4 flex max-w-[480px] flex-col gap-8'>
