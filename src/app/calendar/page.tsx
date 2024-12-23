@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import CalendarPage from './_components/calendar-page';
 
 export const metadata: Metadata = {
 	title: 'Calendar view',
@@ -8,6 +7,8 @@ export const metadata: Metadata = {
 	},
 };
 
-const page = () => <CalendarPage />;
+// const page = () => <CalendarPage />;
+
+const page = () => <p>TODO</p>;
 
 export default page;
