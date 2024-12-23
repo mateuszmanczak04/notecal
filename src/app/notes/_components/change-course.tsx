@@ -7,7 +7,6 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/common/dropdown-menu';
 import { Course, Note } from '@prisma/client';
-import useNotes from '../_hooks/use-notes';
 
 type Props = {
 	courses: Course[];
@@ -16,7 +15,7 @@ type Props = {
 };
 
 const ChangeCourse = ({ courses, currentCourse, note }: Props) => {
-	const { update } = useNotes();
+	const update = (value: any) => {};
 
 	const handleSelect = (newCourseId: string) => {
 		update({ courseId: newCourseId, id: note.id });

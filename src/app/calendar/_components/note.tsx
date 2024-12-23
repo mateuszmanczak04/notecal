@@ -1,6 +1,5 @@
 'use client';
 
-import useNotes from '@/app/notes/_hooks/use-notes';
 import { cn } from '@/lib/utils';
 import { Course, type Note } from '@prisma/client';
 import { addDays, addMilliseconds, differenceInCalendarDays, startOfDay } from 'date-fns';
@@ -16,7 +15,7 @@ interface NoteProps {
 const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 	const { currentFirstDay, displayedDays, getRelativePosition, getDateFromPosition } = useCalendarContext();
 	const course = {} as Course;
-	const { update: updateNote } = useNotes();
+	const updateNote = (input: any) => {};
 
 	const noteRef = useRef<(HTMLAnchorElement | null)[]>([]);
 	const initialDragDate = useRef<Date | null>(null);

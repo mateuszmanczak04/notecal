@@ -13,7 +13,6 @@ import { Save } from 'lucide-react';
 import { useState } from 'react';
 import SavePlugin from '../_editor/SavePlugin';
 import ToolbarPlugin from '../_editor/ToolbarPlugin';
-import useNotes from '../_hooks/use-notes';
 
 type Props = {
 	note: Note;
@@ -40,7 +39,7 @@ const editorConfig: InitialConfigType = {
 };
 
 const Content = ({ note, course }: Props) => {
-	const { update } = useNotes();
+	const update = (values: any) => {};
 	const [content, setContent] = useState(note.content);
 
 	const handleSave = () => {

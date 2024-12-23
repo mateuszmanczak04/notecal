@@ -1,12 +1,11 @@
 'use client';
 
-import useNotes from '@/app/notes/_hooks/use-notes';
 import { Button } from '@/components/ui/button';
 import { Course } from '@prisma/client';
 import { format } from 'date-fns';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
-import { FC, useLayoutEffect, useRef, useState } from 'react';
+import { FC, RefObject, useLayoutEffect, useRef, useState } from 'react';
 import { uid } from 'uid';
 import { useEventListener, useOnClickOutside } from 'usehooks-ts';
 import { useCalendarContext } from '../_context/calendar-context';
@@ -20,12 +19,13 @@ interface CoursePickerProps {
 
 const CoursePicker: FC<CoursePickerProps> = ({ hidePicker, time, x, y }) => {
 	const courses = [] as Course[];
-	const pickerRef = useRef<HTMLDivElement | null>(null);
+	const pickerRef = useRef<HTMLDivElement | null>(null) as RefObject<HTMLDivElement>;
 	const settings = {};
 	const { containerRef } = useCalendarContext();
 	const [pickerX, setPickerX] = useState(x);
 	const [pickerY, setPickerY] = useState(y);
-	const { add: addNewNote } = useNotes();
+
+	const addNewNote = (input: any) => {};
 
 	// Detect if popup shouldn't display beyond the right or bottom
 	// edge of the container

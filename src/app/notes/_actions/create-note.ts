@@ -12,6 +12,9 @@ type T_Input = {
 
 type T_Result = Promise<{ error: string } | { note: Note }>;
 
+/**
+ * Creates a new note in the database related to passed courseId.
+ */
 const createNote = async ({ courseId }: T_Input): T_Result => {
 	if (!courseId) {
 		return { error: 'Course ID is required' };

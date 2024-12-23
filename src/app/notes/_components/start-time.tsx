@@ -2,14 +2,13 @@
 
 import DatePicker from '@/components/common/date-picker';
 import { Note } from '@prisma/client';
-import useNotes from '../_hooks/use-notes';
 
 type Props = {
 	note: Note;
 };
 
 const StartTime = ({ note }: Props) => {
-	const { update: updateNote } = useNotes();
+	const updateNote = (input: any) => {};
 
 	const onChange = (newStartTime: Date | null) => {
 		if (!newStartTime) return;

@@ -1,6 +1,5 @@
 'use client';
 
-import useNotes from '@/app/notes/_hooks/use-notes';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import { FC } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
@@ -10,7 +9,7 @@ interface TopBarProps {}
 
 const TopBar: FC<TopBarProps> = ({}) => {
 	const { getDayAfter, displayedDays } = useCalendarContext();
-	const { isPending: isNotesPending } = useNotes();
+	const isNotesPending = false;
 	const isCoursesPending = false;
 	const days = new Array(displayedDays).fill(0).map((_, index) => getDayAfter(index));
 

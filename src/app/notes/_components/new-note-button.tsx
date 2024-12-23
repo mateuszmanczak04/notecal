@@ -1,38 +1,28 @@
 'use client';
 
+import LoadingSpinner from '@/components/common/loading-spinner';
 import { Button } from '@/components/ui/button';
-import { Course } from '@prisma/client';
 import { Plus } from 'lucide-react';
-import { uid } from 'uid';
-import useNotes from '../_hooks/use-notes';
+import { useTransition } from 'react';
+import createNote from '../_actions/create-note';
 
 type Props = {
-	course: Course;
+	courseId: string;
+	color: string;
 };
 
-const NewNoteButton = ({ course }: Props) => {
-	const settings = {};
-	const { add: addNewNote } = useNotes();
+const NewNoteButton = ({ courseId, color }: Props) => {
+	const [isPending, startTransition] = useTransition();
 
 	const onClick = () => {
-		if (!settings) return;
-
-		const startTime = new Date();
-		const endTime = new Date(startTime.getTime() + settings.defaultNoteDuration * 60 * 1000);
-
-		addNewNote({
-			id: uid(),
-			courseId: course.id,
-			content: '',
-			startTime,
-			endTime,
+		startTransition(async () => {
+			await createNote({ courseId });
 		});
-
-		// TODO: don't allow user to route to new note until final creation
 	};
 
 	return (
-		<Button style={{ background: course?.color }} onClick={onClick} className='w-full rounded-t-none'>
+		<Button style={{ backgroundColor: color }} onClick={onClick} className='w-full rounded-t-none'>
+			{isPending && <LoadingSpinner />}
 			<Plus className='h-4 w-4' /> Create a new note
 		</Button>
 	);

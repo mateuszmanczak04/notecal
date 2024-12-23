@@ -1,13 +1,12 @@
 'use client';
 
-import useNotes from '@/app/notes/_hooks/use-notes';
 import { MouseEvent, useMemo, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import CoursePicker from './course-picker';
 import Note from './note';
 
 const Notes = () => {
-	const { notes } = useNotes();
+	const notes = [] as Note[];
 	const { containerRef, getRelativePosition, getDateFromPosition, rowHeight } = useCalendarContext();
 
 	const [popupX, setPopupX] = useState(0);
@@ -62,8 +61,7 @@ const Notes = () => {
 			ref={containerRef}
 			className='absolute left-12 top-0 w-[calc(100%-48px)] cursor-crosshair overflow-hidden sm:left-20 sm:w-[calc(100%-80px)]'
 			onClick={handleClick}
-			style={{ height: rowHeight * 24 + 'px' }}
-		>
+			style={{ height: rowHeight * 24 + 'px' }}>
 			{notes?.map((note, index) => <Note key={note.id} note={note} leftOffset={leftOffsets[index]} />)}
 			{selectedTime && (
 				<CoursePicker time={selectedTime} x={popupX} y={popupY} hidePicker={() => setSelectedTime(null)} />
