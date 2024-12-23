@@ -3,7 +3,8 @@ import db from '@/lib/db';
 import { Plus } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import Course from './_components/course';
+import { Suspense } from 'react';
+import Course, { CourseFallback } from './_components/course';
 
 export const metadata: Metadata = {
 	title: 'Notecal | Courses',
@@ -35,13 +36,9 @@ const page = async () => {
 		<main className='grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
 			{/* List of courses */}
 			{courses?.map(course => (
-				<Course
-					color={course.color}
-					key={course.id}
-					id={course.id}
-					name={course.name}
-					teacher={course.teacher}
-				/>
+				<Suspense key={course.id} fallback={<CourseFallback />}>
+					<Course color={course.color} id={course.id} name={course.name} teacher={course.teacher} />
+				</Suspense>
 			))}
 
 			{/* New course button link */}

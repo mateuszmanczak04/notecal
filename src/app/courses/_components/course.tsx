@@ -1,5 +1,6 @@
 import createNote from '@/app/notes/_actions/create-note';
 import ErrorMessage from '@/components/common/error-message';
+import LoadingSpinner from '@/components/common/loading-spinner';
 import db from '@/lib/db';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
@@ -11,6 +12,20 @@ type Props = {
 	color: string;
 };
 
+/**
+ * A grid tile with loading spinner.
+ */
+export const CourseFallback = () => {
+	return (
+		<div className='pointer-events-none grid place-content-center rounded-xl bg-neutral-50 p-4 dark:bg-neutral-700 dark:text-white'>
+			<LoadingSpinner />
+		</div>
+	);
+};
+
+/**
+ * A link navigating to the latest note from it's course. If there are not notes it will automatically create one before rendering.
+ */
 const Course = async ({ name, teacher, id, color }: Props) => {
 	let notes = await db.note.findMany({
 		where: {
