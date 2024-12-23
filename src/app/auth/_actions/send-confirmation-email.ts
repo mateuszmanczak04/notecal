@@ -1,7 +1,7 @@
 'use server';
 
-import db from '@/lib/db';
-import { en } from '@/lib/dictionary';
+import db from '@/utils/db';
+import { en } from '@/utils/dictionary';
 import nodemailer from 'nodemailer';
 
 export const getVerificationTokenByEmail = async (email: string) => {

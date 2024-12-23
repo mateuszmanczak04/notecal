@@ -1,9 +1,9 @@
 'use server';
 
-import { getAuthStatus } from '@/lib/auth';
-import db from '@/lib/db';
-import { en } from '@/lib/dictionary';
 import UpdateCourseSchema from '@/schemas/update-course-schema';
+import { getAuthStatus } from '@/utils/auth';
+import db from '@/utils/db';
+import { en } from '@/utils/dictionary';
 import { z } from 'zod';
 
 const updateCourse = async (values: z.infer<typeof UpdateCourseSchema>) => {

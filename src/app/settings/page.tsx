@@ -1,7 +1,7 @@
 import logout from '@/app/auth/_actions/logout';
 import { Button } from '@/components/button';
-import db from '@/lib/db';
-import { JWT_AUTH, verifyToken } from '@/lib/jwt';
+import db from '@/utils/db';
+import { JWT_AUTH, verifyToken } from '@/utils/jwt';
 import { LogOut } from 'lucide-react';
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';

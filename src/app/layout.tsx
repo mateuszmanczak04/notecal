@@ -1,7 +1,7 @@
 import MainLayout from '@/app/_components/main-layout';
 import '@/app/globals.css';
-import { getAuthStatus } from '@/lib/auth';
-import { cn } from '@/lib/utils';
+import { getAuthStatus } from '@/utils/auth';
+import { cn } from '@/utils/utils';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Inter } from 'next/font/google';

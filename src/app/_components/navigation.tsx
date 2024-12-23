@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/utils';
 import { Calendar, Check, List, Menu, Settings, User, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

@@ -1,4 +1,4 @@
-import { en } from '@/lib/dictionary';
+import { en } from '@/utils/dictionary';
 import { z } from 'zod';
 
 const UpdateDisplayedDaysSchema = z.object({

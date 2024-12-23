@@ -1,4 +1,4 @@
-import db from '@/lib/db';
+import db from '@/utils/db';
 import { redirect } from 'next/navigation';
 import nodemailer from 'nodemailer';
 

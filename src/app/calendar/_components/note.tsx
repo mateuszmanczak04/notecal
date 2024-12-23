@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/utils';
 import { Course, type Note } from '@prisma/client';
 import { addDays, addMilliseconds, differenceInCalendarDays, startOfDay } from 'date-fns';
 import Link from 'next/link';

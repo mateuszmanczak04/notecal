@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/utils';
 import { FC } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 
@@ -13,8 +13,7 @@ const Row = ({ isLast }: { isLast: boolean }) => {
 				'flex items-center justify-center border-b border-r font-semibold text-neutral-500 transition-[height] dark:border-neutral-600',
 				isLast && 'rounded-br-xl',
 			)}
-			style={{ height: rowHeight + 'px' }}
-		></div>
+			style={{ height: rowHeight + 'px' }}></div>
 	);
 };
 

@@ -1,9 +1,9 @@
 'use server';
 
-import { comparePasswords } from '@/lib/bcrypt';
-import db from '@/lib/db';
-import { en } from '@/lib/dictionary';
-import { generateToken } from '@/lib/jwt';
+import { comparePasswords } from '@/utils/bcrypt';
+import db from '@/utils/db';
+import { en } from '@/utils/dictionary';
+import { generateToken } from '@/utils/jwt';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 

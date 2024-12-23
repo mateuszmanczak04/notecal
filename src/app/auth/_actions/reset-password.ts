@@ -1,7 +1,7 @@
 'use server';
 
-import db from '@/lib/db';
-import { generateToken } from '@/lib/jwt';
+import db from '@/utils/db';
+import { generateToken } from '@/utils/jwt';
 import bcryptjs from 'bcryptjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';

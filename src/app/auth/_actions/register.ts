@@ -1,8 +1,8 @@
 'use server';
 
-import { hashPassword } from '@/lib/bcrypt';
-import db from '@/lib/db';
-import { generateToken } from '@/lib/jwt';
+import { hashPassword } from '@/utils/bcrypt';
+import db from '@/utils/db';
+import { generateToken } from '@/utils/jwt';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import sendConfirmationEmail from './send-confirmation-email';

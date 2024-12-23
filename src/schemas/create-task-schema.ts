@@ -1,4 +1,4 @@
-import { en } from '@/lib/dictionary';
+import { en } from '@/utils/dictionary';
 import { TaskPriority } from '@prisma/client';
 import { z } from 'zod';
 

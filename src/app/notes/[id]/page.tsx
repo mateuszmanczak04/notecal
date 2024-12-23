@@ -1,6 +1,6 @@
 import { Button } from '@/components/button';
-import { getAuthStatus } from '@/lib/auth';
-import db from '@/lib/db';
+import { getAuthStatus } from '@/utils/auth';
+import db from '@/utils/db';
 import { Pencil } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';

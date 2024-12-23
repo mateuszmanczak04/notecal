@@ -1,10 +1,10 @@
 'use server';
 
 import sendConfirmationEmail from '@/app/auth/_actions/send-confirmation-email';
-import { getAuthStatus } from '@/lib/auth';
-import { comparePasswords } from '@/lib/bcrypt';
-import db from '@/lib/db';
-import { en } from '@/lib/dictionary';
+import { getAuthStatus } from '@/utils/auth';
+import { comparePasswords } from '@/utils/bcrypt';
+import db from '@/utils/db';
+import { en } from '@/utils/dictionary';
 
 const changeEmail = async (_prevState: any, formData: FormData): Promise<{ message?: string; error?: string }> => {
 	const email = formData.get('email')?.toString().trim(); // New email

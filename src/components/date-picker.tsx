@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/utils';
 import { format, isValid } from 'date-fns';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';

@@ -1,7 +1,7 @@
 'use client';
 
 import { Checkbox } from '@/components/checkbox';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/utils';
 import { Task } from '@prisma/client';
 import { useTransition } from 'react';
 import updateTask from '../_actions/update-task';

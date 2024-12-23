@@ -1,5 +1,5 @@
-import { getAuthStatus } from '@/lib/auth';
-import db from '@/lib/db';
+import { getAuthStatus } from '@/utils/auth';
+import db from '@/utils/db';
 import { Plus } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';

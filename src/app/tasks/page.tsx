@@ -1,6 +1,6 @@
 import LoadingSpinner from '@/components/loading-spinner';
-import { getAuthStatus } from '@/lib/auth';
-import db from '@/lib/db';
+import { getAuthStatus } from '@/utils/auth';
+import db from '@/utils/db';
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';

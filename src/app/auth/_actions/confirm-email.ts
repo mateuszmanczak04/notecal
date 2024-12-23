@@ -1,6 +1,6 @@
 'use server';
 
-import db from '@/lib/db';
+import db from '@/utils/db';
 import { isAfter } from 'date-fns';
 import { redirect } from 'next/navigation';
 

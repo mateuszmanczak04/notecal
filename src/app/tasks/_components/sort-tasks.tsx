@@ -2,7 +2,7 @@
 
 import updateSettings from '@/app/settings/_actions/update-settings';
 import { Button } from '@/components/button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/utils';
 import { ArrowUpDown } from 'lucide-react';
 import { RefObject, useRef, useState, useTransition } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';

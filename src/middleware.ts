@@ -1,6 +1,6 @@
 import { DEFAULT_LOGIN_REDIRECT, apiAuthPrefix, authRoutes, publicRoutes } from '@/routes';
 import { NextRequest } from 'next/server';
-import { getAuthStatus } from './lib/auth';
+import { getAuthStatus } from './utils/auth';
 
 /**
  * Checks if user is authenticated and redirect them to proper url if he wants to visit forbidden page.

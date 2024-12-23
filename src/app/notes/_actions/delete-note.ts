@@ -1,8 +1,8 @@
 'use server';
 
-import { getAuthStatus } from '@/lib/auth';
-import db from '@/lib/db';
-import { en } from '@/lib/dictionary';
+import { getAuthStatus } from '@/utils/auth';
+import db from '@/utils/db';
+import { en } from '@/utils/dictionary';
 
 type T_Input = { id: string };
 

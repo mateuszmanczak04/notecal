@@ -1,7 +1,7 @@
 import Navigation from '@/app/_components/navigation';
 import logout from '@/app/auth/_actions/logout';
-import { getAuthStatus } from '@/lib/auth';
-import db from '@/lib/db';
+import { getAuthStatus } from '@/utils/auth';
+import db from '@/utils/db';
 import React from 'react';
 
 type MainLayoutProps = {

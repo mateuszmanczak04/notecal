@@ -1,9 +1,9 @@
 'use server';
 
-import { getAuthStatus } from '@/lib/auth';
-import { comparePasswords, hashPassword } from '@/lib/bcrypt';
-import db from '@/lib/db';
-import { en } from '@/lib/dictionary';
+import { getAuthStatus } from '@/utils/auth';
+import { comparePasswords, hashPassword } from '@/utils/bcrypt';
+import db from '@/utils/db';
+import { en } from '@/utils/dictionary';
 
 const changePassword = async (_prevState: any, formData: FormData): Promise<{ message?: string; error?: string }> => {
 	const oldPassword = formData.get('oldPassword')?.toString(); // New email
