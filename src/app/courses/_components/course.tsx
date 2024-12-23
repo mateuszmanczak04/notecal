@@ -1,4 +1,5 @@
 import createNote from '@/app/notes/_actions/create-note';
+import ErrorMessage from '@/components/common/error-message';
 import db from '@/lib/db';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
@@ -22,17 +23,13 @@ const Course = async ({ name, teacher, id, color }: Props) => {
 
 	// Create a first note if it doesn't exist
 	if (notes.length === 0) {
-		await createNote({ courseId: id, content: '', endTime: new Date(), startTime: new Date() });
+		const res = await createNote({ courseId: id });
 
-		// Refresh notes
-		let notes = await db.note.findMany({
-			where: {
-				courseId: id,
-			},
-			orderBy: {
-				createdAt: 'desc',
-			},
-		});
+		if ('error' in res) {
+			return <ErrorMessage>{res.error}</ErrorMessage>;
+		}
+
+		notes.push(res.note);
 	}
 
 	return (
