@@ -7,10 +7,11 @@ import { notFound } from 'next/navigation';
 import ChangeCourse from '../_components/change-course';
 import Content from '../_components/content';
 import DeleteNoteButton from '../_components/delete-note-button';
+import EndTime from '../_components/end-time';
 import SideNotes from '../_components/side-notes';
+import StartTime from '../_components/start-time';
 import Tasks from '../_components/tasks';
 import Teacher from '../_components/teacher';
-import Time from '../_components/time';
 
 export const metadata: Metadata = {
 	title: 'Note',
@@ -61,7 +62,8 @@ const page = async ({ params }: Props) => {
 				</Button>
 
 				{/* Current note time */}
-				<Time note={note} />
+				<StartTime note={note} />
+				<EndTime note={note} />
 
 				{/* Delete note button */}
 				<DeleteNoteButton id={note.id} />
