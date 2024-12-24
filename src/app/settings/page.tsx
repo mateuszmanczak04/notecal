@@ -1,6 +1,6 @@
 import logout from '@/app/auth/_actions/logout';
 import { Button } from '@/components/button';
-import { getUser } from '@/utils/cached-queries';
+import { getUser } from '@/utils/get-user';
 import { LogOut } from 'lucide-react';
 import { Metadata } from 'next';
 import ChangeEmailSetting from './_components/change-email-setting';

@@ -1,7 +1,10 @@
 import Navigation from '@/app/_components/navigation';
 import logout from '@/app/auth/_actions/logout';
-import { getCourses, getNotes, getTasks, getUser } from '@/utils/cached-queries';
+import { getUser } from '@/utils/get-user';
 import React from 'react';
+import getCourses from '../courses/_actions/get-courses';
+import getNotes from '../notes/_actions/get-notes';
+import { getTasks } from '../tasks/_actions/get-tasks';
 import AppContextProvider from './app-context';
 
 type Props = {

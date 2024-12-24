@@ -4,25 +4,25 @@ import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { cache } from 'react';
 
-const getNotes = cache(async () => {
+const getCourses = cache(async () => {
 	const { authenticated, user } = await getAuthStatus();
 
 	if (!authenticated) return [];
 
 	try {
-		const notes = await db.note.findMany({
+		const courses = await db.course.findMany({
 			where: {
 				userId: user.id,
 			},
 			orderBy: {
-				startTime: 'desc',
+				name: 'asc',
 			},
 		});
 
-		return notes;
+		return courses;
 	} catch {
 		return [];
 	}
 });
 
-export default getNotes;
+export default getCourses;
