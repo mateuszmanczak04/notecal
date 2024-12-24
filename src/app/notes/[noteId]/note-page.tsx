@@ -37,12 +37,12 @@ const NotePage = () => {
 	}
 
 	return (
-		<div className='mx-auto flex h-full min-h-80 max-w-[1200px] flex-col gap-4 md:flex-row'>
-			<div className='flex h-full flex-1 flex-col'>
+		<main className='mx-auto flex h-full min-h-80 max-w-[1200px] flex-col gap-4 md:flex-row'>
+			<article className='flex h-full flex-1 flex-col'>
 				<Content note={currentNote} course={currentCourse} />
-			</div>
+			</article>
 
-			<div className='flex w-full shrink-0 flex-col gap-8 md:w-56'>
+			<aside className='flex h-full w-full shrink-0 flex-col gap-8 overflow-y-scroll scrollbar-hide md:w-56'>
 				{/* Name of the course */}
 				<CourseName name={currentCourse.name} />
 
@@ -76,8 +76,8 @@ const NotePage = () => {
 
 				{/* Delete note button */}
 				<DeleteNoteButton id={currentNote.id} />
-			</div>
-		</div>
+			</aside>
+		</main>
 	);
 };
 
