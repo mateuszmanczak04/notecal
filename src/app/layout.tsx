@@ -4,9 +4,14 @@ import { getAuthStatus } from '@/utils/auth';
 import { cn } from '@/utils/cn';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Viewport } from 'next';
 import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
+
+export const viewport: Viewport = {
+	userScalable: false,
+};
 
 export default async function RootLayout({
 	children,
