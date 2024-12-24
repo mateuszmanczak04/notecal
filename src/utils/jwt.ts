@@ -1,5 +1,5 @@
 'use server';
-import { jwtVerify, SignJWT } from 'jose';
+import { errors, jwtVerify, SignJWT } from 'jose';
 
 export type JWT_AUTH = {
 	id: string;
@@ -14,16 +14,26 @@ if (!process.env.AUTH_SECRET) {
 export const generateToken = async (payload: JWT_AUTH): Promise<string> => {
 	return await new SignJWT(payload)
 		.setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-		.setExpirationTime('24h')
+		.setExpirationTime('24h') // Token is valid for 24 hours
 		.sign(SECRET);
 };
 
 export const verifyToken = async (token: string): Promise<JWT_AUTH | null> => {
-	const { payload } = await jwtVerify(token, SECRET);
+	try {
+		const { payload } = await jwtVerify(token, SECRET);
 
-	if (typeof payload !== 'object' || !payload || typeof payload.id !== 'string') {
+		if (typeof payload !== 'object' || !payload || typeof payload.id !== 'string') {
+			return null; // Invalid payload structure
+		}
+
+		return payload as JWT_AUTH;
+	} catch (error) {
+		if (error instanceof errors.JWTExpired) {
+			return null;
+		}
+		if (error instanceof errors.JWTInvalid) {
+			return null;
+		}
 		return null;
 	}
-
-	return payload as JWT_AUTH;
 };
