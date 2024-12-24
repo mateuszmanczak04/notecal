@@ -4,11 +4,11 @@ import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 
-type T_Input = { id: string };
+export type T_DeleteNoteInput = { id: string };
 
-type T_Result = Promise<{ error: string } | { success: true }>;
+export type T_DeleteNoteResult = Promise<{ error: string } | { success: true }>;
 
-const deleteNote = async ({ id }: T_Input): T_Result => {
+const deleteNote = async ({ id }: T_DeleteNoteInput): T_DeleteNoteResult => {
 	if (!id) {
 		return { error: 'ID is required' };
 	}

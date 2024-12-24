@@ -53,7 +53,7 @@ const NotePage = () => {
 					currentCourse={currentCourse}
 				/>
 
-				{/* Tasks related to this course */}
+				{/* Tasks related to this course TODO */}
 				<Tasks tasks={currentCourseTasks} course={currentCourse} />
 
 				{/* Teacher */}
@@ -70,11 +70,11 @@ const NotePage = () => {
 					</Link>
 				</Button>
 
-				{/* Current note time */}
+				{/* Current note time TODO */}
 				<StartTime note={currentNote} />
 				<EndTime note={currentNote} />
 
-				{/* Delete note button */}
+				{/* Delete note button TODO */}
 				<DeleteNoteButton id={currentNote.id} />
 			</div>
 		</div>

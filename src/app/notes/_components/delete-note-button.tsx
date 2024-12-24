@@ -1,11 +1,11 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import { Button } from '@/components/button';
 import LoadingSpinner from '@/components/loading-spinner';
 import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
-import deleteNote from '../_actions/delete-note';
 
 type Props = {
 	id: string;
@@ -15,6 +15,7 @@ type Props = {
  * After first click it shows a confirmation message if user is sure to delete it.
  */
 const DeleteNoteButton = ({ id }: Props) => {
+	const { deleteNote } = useAppContext();
 	const [isPending, startTransition] = useTransition();
 
 	const router = useRouter();

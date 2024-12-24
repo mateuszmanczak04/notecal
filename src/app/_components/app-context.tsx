@@ -3,6 +3,7 @@
 import { Course, Note, Task } from '@prisma/client';
 import { createContext, ReactNode, useContext, useState } from 'react';
 import createNoteServer, { T_CreateNoteInput } from '../notes/_actions/create-note';
+import deleteNoteServer, { T_DeleteNoteInput } from '../notes/_actions/delete-note';
 import getNotes from '../notes/_actions/get-notes';
 import updateNoteServer, { T_UpdateNoteInput } from '../notes/_actions/update-note';
 
@@ -12,6 +13,7 @@ type AppContextProps = {
 	notes: Note[];
 	createNote: (values: T_CreateNoteInput) => Promise<void>;
 	updateNote: (values: T_UpdateNoteInput) => Promise<void>;
+	deleteNote: (values: T_DeleteNoteInput) => Promise<void>;
 };
 
 const AppContext = createContext({} as AppContextProps);
@@ -47,14 +49,20 @@ const AppContextProvider = ({ initialTasks, initialCourses, initialNotes, childr
 		await refetchNotes();
 	};
 
-	/** Updates a new note in db and refetches notes to be fresh. */
+	/** Updates a note in db and refetches notes to be fresh. */
 	const updateNote = async (values: T_UpdateNoteInput) => {
 		await updateNoteServer(values);
 		await refetchNotes();
 	};
 
+	/** Deletes a note in db and refetches notes to be fresh. */
+	const deleteNote = async (values: T_DeleteNoteInput) => {
+		await deleteNoteServer(values);
+		await refetchNotes();
+	};
+
 	return (
-		<AppContext value={{ tasks: initialTasks, courses: initialCourses, notes, createNote, updateNote }}>
+		<AppContext value={{ tasks: initialTasks, courses: initialCourses, notes, createNote, updateNote, deleteNote }}>
 			{children}
 		</AppContext>
 	);
