@@ -70,7 +70,7 @@ const NotePage = () => {
 					</Link>
 				</Button>
 
-				{/* Current note time TODO */}
+				{/* Current note time  */}
 				<StartTime note={currentNote} />
 				<EndTime note={currentNote} />
 
