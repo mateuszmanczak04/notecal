@@ -4,7 +4,7 @@ import { getUser } from '@/utils/get-user';
 import React from 'react';
 import getCourses from '../courses/_actions/get-courses';
 import getNotes from '../notes/_actions/get-notes';
-import { getTasks } from '../tasks/_actions/get-tasks';
+import getTasks from '../tasks/_actions/get-tasks';
 import AppContextProvider from './app-context';
 
 type Props = {
@@ -16,7 +16,7 @@ const MainLayout = async ({ children }: Props) => {
 
 	if (!user) return logout();
 
-	const tasks = await getTasks();
+	const tasks = await getTasks({});
 	const courses = await getCourses();
 	const notes = await getNotes();
 

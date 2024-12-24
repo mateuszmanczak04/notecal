@@ -10,6 +10,10 @@ import createNoteServer, { T_CreateNoteInput } from '../notes/_actions/create-no
 import deleteNoteServer, { T_DeleteNoteInput } from '../notes/_actions/delete-note';
 import getNotes from '../notes/_actions/get-notes';
 import updateNoteServer, { T_UpdateNoteInput } from '../notes/_actions/update-note';
+import createTaskServer, { T_CreateTaskInput } from '../tasks/_actions/create-task';
+import deleteTaskServer, { T_DeleteTaskInput } from '../tasks/_actions/delete-task';
+import getTasks from '../tasks/_actions/get-tasks';
+import updateTaskServer, { T_UpdateTaskInput } from '../tasks/_actions/update-task';
 
 type AppContextProps = {
 	tasks: Task[];
@@ -21,6 +25,10 @@ type AppContextProps = {
 	createCourse: (values: T_CreateCourseInput) => Promise<void>;
 	updateCourse: (values: T_UpdateCourseInput) => Promise<void>;
 	deleteCourse: (values: T_DeleteCourseInput) => Promise<void>;
+	createTask: (values: T_CreateTaskInput) => Promise<void>;
+	updateTask: (values: T_UpdateTaskInput) => Promise<void>;
+	deleteTask: (values: T_DeleteTaskInput) => Promise<void>;
+	sortTasks: () => Promise<void>;
 };
 
 const AppContext = createContext({} as AppContextProps);
@@ -44,6 +52,7 @@ type AppContextProviderProps = {
 const AppContextProvider = ({ initialTasks, initialCourses, initialNotes, children }: AppContextProviderProps) => {
 	const [notes, setNotes] = useState<Note[]>(initialNotes);
 	const [courses, setCourses] = useState<Course[]>(initialCourses);
+	const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
 	/** Fetches notes from backend and replaces current notes with fresh ones. */
 	const refetchNotes = async () => {
@@ -93,10 +102,38 @@ const AppContextProvider = ({ initialTasks, initialCourses, initialNotes, childr
 		await refetchCourses();
 	};
 
+	/** Fetches courses from backend and replaces current courses with fresh ones. */
+	const refetchTasks = async (orderBy?: string) => {
+		const freshTasks = await getTasks({ orderBy });
+		setTasks(freshTasks);
+	};
+
+	/** Creates a new Task in db and refetches Tasks to be fresh. */
+	const createTask = async (values: T_CreateTaskInput) => {
+		await createTaskServer(values);
+		await refetchTasks();
+	};
+
+	/** Updates a Task in db and refetches Tasks to be fresh. */
+	const updateTask = async (values: T_UpdateTaskInput) => {
+		await updateTaskServer(values);
+		await refetchTasks();
+	};
+
+	/** Deletes a Task in db and refetches Tasks to be fresh. */
+	const deleteTask = async (values: T_DeleteTaskInput) => {
+		await deleteTaskServer(values);
+		await refetchTasks();
+	};
+
+	/** Will be fired after updating user's settings so it can simply refetch them. */
+	const sortTasks = async () => {
+		await refetchTasks();
+	};
+
 	return (
 		<AppContext
 			value={{
-				tasks: initialTasks,
 				courses,
 				createCourse,
 				updateCourse,
@@ -105,6 +142,11 @@ const AppContextProvider = ({ initialTasks, initialCourses, initialNotes, childr
 				createNote,
 				updateNote,
 				deleteNote,
+				tasks,
+				createTask,
+				updateTask,
+				deleteTask,
+				sortTasks,
 			}}>
 			{children}
 		</AppContext>

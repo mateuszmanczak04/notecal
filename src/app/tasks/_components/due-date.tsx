@@ -1,10 +1,10 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import DatePicker from '@/components/date-picker';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
 import { useTransition } from 'react';
-import updateTask from '../_actions/update-task';
 
 type Props = {
 	task: Task;
@@ -12,6 +12,7 @@ type Props = {
 
 const DueDate = ({ task }: Props) => {
 	const [isPending, startTransition] = useTransition();
+	const { updateTask } = useAppContext();
 
 	const handleChangeDueDate = (newDueDate: Date | null) => {
 		if (newDueDate === task.dueDate) return;

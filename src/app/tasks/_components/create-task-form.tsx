@@ -1,15 +1,16 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import { Button } from '@/components/button';
 import FormLoadingSpinner from '@/components/form-loading-spinner';
 import { Input } from '@/components/input';
 import { Command, Plus } from 'lucide-react';
-import { useActionState, useEffect, useRef } from 'react';
+import { FormEvent, useEffect, useRef, useTransition } from 'react';
 import { useIntersectionObserver } from 'usehooks-ts';
-import createTask from '../_actions/create-task';
 
 const CreateTaskForm = () => {
-	const [_, formAction] = useActionState(createTask, null);
+	const { createTask } = useAppContext();
+	const [isPending, startTransition] = useTransition();
 
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -37,10 +38,20 @@ const CreateTaskForm = () => {
 		};
 	}, []);
 
+	const handleSubmit = (e: FormEvent) => {
+		e.preventDefault();
+		startTransition(async () => {
+			const formData = new FormData(e.target as HTMLFormElement);
+			const title = formData.get('title')!.toString();
+			await createTask({ title });
+			(e.target as HTMLFormElement).reset();
+		});
+	};
+
 	return (
 		<aside
 			ref={intersectorRef}
-			className='z-20 space-y-4 rounded-2xl bg-white p-4 shadow-[0_0_32px_-20px_rgba(0,0,0,0.3)] dark:bg-neutral-700 sm:sticky sm:top-0 sm:p-8'
+			className='z-20 space-y-4 rounded-2xl bg-white p-4 shadow-[0_0_32px_-20px_rgba(0,0,0,0.3)] sm:sticky sm:top-0 sm:p-8 dark:bg-neutral-700'
 			onClick={handleFocusInput}>
 			{/* Heading */}
 			<h2 className='text-xl font-bold sm:text-2xl'>
@@ -51,7 +62,7 @@ const CreateTaskForm = () => {
 			</h2>
 
 			{/* Main form */}
-			<form action={formAction} className='flex flex-col gap-4 sm:flex-row sm:gap-0'>
+			<form onSubmit={handleSubmit} className='flex flex-col gap-4 sm:flex-row sm:gap-0'>
 				<Input
 					id='create-task-title'
 					placeholder='Do the math homework'

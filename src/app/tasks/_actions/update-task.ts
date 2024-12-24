@@ -3,9 +3,10 @@
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
+import { Task } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
-type Schema = {
+export type T_UpdateTaskInput = {
 	id: string;
 	courseId?: string;
 	completed?: boolean;
@@ -15,7 +16,9 @@ type Schema = {
 	priority?: 'A' | 'B' | 'C';
 };
 
-const updateTask = async (data: Schema) => {
+export type T_UpdateTaskResult = Promise<{ error: string } | { task: Task }>;
+
+const updateTask = async (data: T_UpdateTaskInput): T_UpdateTaskResult => {
 	if (!data.id) {
 		return { error: 'Task id is required' };
 	}

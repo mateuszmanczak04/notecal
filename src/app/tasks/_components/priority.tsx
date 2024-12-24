@@ -1,10 +1,10 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
 import { cn } from '@/utils/cn';
 import { Task, TaskPriority } from '@prisma/client';
 import { useTransition } from 'react';
-import updateTask from '../_actions/update-task';
 
 type Props = {
 	task: Task;
@@ -40,6 +40,7 @@ const getPriorityTitle = (priority: TaskPriority | null) => {
 
 const Priority = ({ task }: Props) => {
 	const [isPending, startTransition] = useTransition();
+	const { updateTask } = useAppContext();
 
 	const handleSelect = (newPriority: any) => {
 		startTransition(async () => {

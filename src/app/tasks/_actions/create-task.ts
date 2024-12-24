@@ -3,11 +3,15 @@
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
-import { revalidatePath } from 'next/cache';
+import { Task } from '@prisma/client';
 
-const createTask = async (_prevState: any, formData: FormData) => {
-	const title = formData.get('title')?.toString();
+export type T_CreateTaskInput = {
+	title: string;
+};
 
+export type T_CreateTaskResult = Promise<{ error: string } | { task: Task }>;
+
+const createTask = async ({ title }: T_CreateTaskInput): T_CreateTaskResult => {
 	if (!title) {
 		return { error: 'Task title is required' };
 	}
@@ -27,8 +31,6 @@ const createTask = async (_prevState: any, formData: FormData) => {
 				title,
 			},
 		});
-
-		revalidatePath('/tasks');
 
 		return { task };
 	} catch (error) {

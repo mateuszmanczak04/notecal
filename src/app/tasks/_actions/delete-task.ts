@@ -5,7 +5,13 @@ import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 import { revalidatePath } from 'next/cache';
 
-const deleteTask = async (id: string) => {
+export type T_DeleteTaskInput = {
+	id: string;
+};
+
+export type T_DeleteTaskResult = Promise<{ error: string } | { success: true }>;
+
+const deleteTask = async ({ id }: T_DeleteTaskInput): T_DeleteTaskResult => {
 	if (!id) {
 		return { error: 'Task id is required' };
 	}

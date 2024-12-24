@@ -1,17 +1,18 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import updateSettings from '@/app/settings/_actions/update-settings';
 import { Button } from '@/components/button';
 import { cn } from '@/utils/cn';
 import { ArrowUpDown } from 'lucide-react';
 import { RefObject, useRef, useState, useTransition } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
-import sortTasks from '../_actions/sort-tasks';
 
 const SortTasks = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null) as RefObject<HTMLDivElement>;
 	const [isPending, startTransition] = useTransition();
+	const { sortTasks } = useAppContext();
 
 	const handleCloseMenu = () => {
 		setIsOpen(false);
@@ -45,7 +46,7 @@ const SortTasks = () => {
 				const fd = new FormData();
 				fd.set('orderTasks', newCriteria);
 				await updateSettings(null, fd);
-				sortTasks();
+				await sortTasks();
 			});
 		}
 	};

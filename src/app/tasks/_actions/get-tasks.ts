@@ -4,7 +4,11 @@ import db from '@/utils/db';
 import { getUser } from '@/utils/get-user';
 import { cache } from 'react';
 
-export const getTasks = cache(async () => {
+export type T_GetTasksInput = {
+	orderBy?: string;
+};
+
+const getTasks = cache(async ({ orderBy }: T_GetTasksInput) => {
 	const user = await getUser();
 
 	if (!user) return [];
@@ -12,9 +16,11 @@ export const getTasks = cache(async () => {
 	const tasks = await db.task.findMany({
 		where: { userId: user.id },
 		orderBy: {
-			[user.orderTasks]: 'asc',
+			[orderBy || user.orderTasks]: 'asc',
 		},
 	});
 
 	return tasks;
 });
+
+export default getTasks;

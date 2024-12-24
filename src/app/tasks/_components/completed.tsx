@@ -1,16 +1,17 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import { Checkbox } from '@/components/checkbox';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
 import { useTransition } from 'react';
-import updateTask from '../_actions/update-task';
 
 type Props = {
 	task: Task;
 };
 
 const Completed = ({ task }: Props) => {
+	const { updateTask } = useAppContext();
 	const [isPending, startTransition] = useTransition();
 
 	const handleToggleTask = (newCompleted: boolean) => {

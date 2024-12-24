@@ -1,10 +1,9 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
 import { useEffect, useRef, useTransition } from 'react';
-import deleteTask from '../_actions/delete-task';
-import updateTask from '../_actions/update-task';
 
 type Props = {
 	task: Task;
@@ -14,6 +13,7 @@ const Title = ({ task }: Props) => {
 	const { id, title, completed } = task;
 	const titleRef = useRef<HTMLParagraphElement | null>(null);
 	const [isPending, startTransition] = useTransition();
+	const { updateTask, deleteTask } = useAppContext();
 
 	const handleSubmit = () => {
 		if (!titleRef.current) return;
@@ -23,7 +23,7 @@ const Title = ({ task }: Props) => {
 		// We remove the task if title is empty
 		if (newTitle.trim().length === 0) {
 			startTransition(async () => {
-				await deleteTask(id);
+				await deleteTask({ id });
 			});
 		}
 

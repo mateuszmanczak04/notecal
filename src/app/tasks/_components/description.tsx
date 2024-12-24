@@ -1,9 +1,9 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
 import { useEffect, useRef, useTransition } from 'react';
-import updateTask from '../_actions/update-task';
 
 type Props = {
 	task: Task;
@@ -13,6 +13,7 @@ const Description = ({ task }: Props) => {
 	const { id, description, completed } = task;
 	const descriptionRef = useRef<HTMLParagraphElement | null>(null);
 	const [isPending, startTransition] = useTransition();
+	const { updateTask } = useAppContext();
 
 	const handleSubmit = () => {
 		if (!descriptionRef.current) return;
