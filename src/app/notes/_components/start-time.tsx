@@ -15,8 +15,6 @@ const StartTime = ({ note }: Props) => {
 	const [isPending, startTransition] = useTransition();
 
 	const onChange = (newStartTime: Date | null) => {
-		console.log({ newStartTime });
-
 		if (!newStartTime) return;
 
 		// TODO: display a message telling you can't set it like that
