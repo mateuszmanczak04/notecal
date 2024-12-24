@@ -1,21 +1,18 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
 import NewNoteButton from '@/app/notes/_components/new-note-button';
 import { cn } from '@/utils/cn';
-import { Course } from '@prisma/client';
+import { Course, Note } from '@prisma/client';
 import { format } from 'date-fns';
 import Link from 'next/link';
 
 type Props = {
 	course: Course;
 	currentNoteId: string;
+	notes: Note[];
 };
 
-const SideNotes = ({ course, currentNoteId: currentNodeId }: Props) => {
-	const { notes: allNotes } = useAppContext();
-	const notes = allNotes.filter(note => note.courseId === course.id);
-
+const SideNotes = ({ course, currentNoteId: currentNodeId, notes }: Props) => {
 	return (
 		<div>
 			<p className='text-xl font-semibold'>Notes:</p>

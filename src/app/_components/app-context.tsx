@@ -11,6 +11,9 @@ type AppContextProps = {
 
 const AppContext = createContext({ tasks: [], courses: [], notes: [] } as AppContextProps);
 
+/**
+ * A hook used to get tasks, courses and notes. It is initiated from initial fetch in root layout.
+ */
 export const useAppContext = () => {
 	const context = useContext(AppContext);
 	if (!context) throw new Error('useAppContext must be wrapperd with AppContextProvider');

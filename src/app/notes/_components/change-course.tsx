@@ -16,7 +16,7 @@ type Props = {
  * A dropdown menu used to choose a new course for the note.
  */
 const ChangeCourse = ({ currentCourse, note }: Props) => {
-	const { courses } = useAppContext();
+	const { courses: allCourses } = useAppContext();
 	const [isPending, startTransition] = useTransition();
 
 	const handleSelect = (newCourseId: string) => {
@@ -33,7 +33,7 @@ const ChangeCourse = ({ currentCourse, note }: Props) => {
 					<p className='truncate'>{currentCourse.name}</p>
 				</DropdownMenuTrigger>
 				<DropdownMenuList>
-					{courses.map(course => (
+					{allCourses.map(course => (
 						<DropdownMenuItem key={course.id} value={course.id} onSelect={handleSelect}>
 							{course.name}
 						</DropdownMenuItem>

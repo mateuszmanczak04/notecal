@@ -1,17 +1,14 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
-import { Course } from '@prisma/client';
+import { Course, Task as T_Task } from '@prisma/client';
 import Task from './task';
 
 type Props = {
 	course: Course;
+	tasks: T_Task[];
 };
 
-const Tasks = ({ course }: Props) => {
-	const { tasks: allTasks } = useAppContext();
-	const tasks = allTasks.filter(task => task.courseId === course.id);
-
+const Tasks = ({ course, tasks }: Props) => {
 	return (
 		<div className='flex flex-col gap-2'>
 			<p className='text-xl font-semibold'>Tasks:</p>

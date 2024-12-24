@@ -21,6 +21,7 @@ type Props = {
 	course: Course;
 };
 
+/** A confix for lexical library (WYSIWYG text editor). */
 const editorConfig: InitialConfigType = {
 	namespace: 'Note content',
 	nodes: [HeadingNode],
