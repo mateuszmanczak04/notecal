@@ -4,12 +4,14 @@ import { Course, Note, Task } from '@prisma/client';
 import { createContext, ReactNode, useContext, useState } from 'react';
 import createNoteServer, { T_CreateNoteInput } from '../notes/_actions/create-note';
 import getNotes from '../notes/_actions/get-notes';
+import updateNoteServer, { T_UpdateNoteInput } from '../notes/_actions/update-note';
 
 type AppContextProps = {
 	tasks: Task[];
 	courses: Course[];
 	notes: Note[];
 	createNote: (values: T_CreateNoteInput) => Promise<void>;
+	updateNote: (values: T_UpdateNoteInput) => Promise<void>;
 };
 
 const AppContext = createContext({} as AppContextProps);
@@ -41,12 +43,20 @@ const AppContextProvider = ({ initialTasks, initialCourses, initialNotes, childr
 
 	/** Creates a new note in db and refetches notes to be fresh. */
 	const createNote = async (values: T_CreateNoteInput) => {
-		const res = await createNoteServer(values);
+		await createNoteServer(values);
+		await refetchNotes();
+	};
+
+	/** Updates a new note in db and refetches notes to be fresh. */
+	const updateNote = async (values: T_UpdateNoteInput) => {
+		await updateNoteServer(values);
 		await refetchNotes();
 	};
 
 	return (
-		<AppContext value={{ tasks: initialTasks, courses: initialCourses, notes, createNote }}> {children}</AppContext>
+		<AppContext value={{ tasks: initialTasks, courses: initialCourses, notes, createNote, updateNote }}>
+			{children}
+		</AppContext>
 	);
 };
 

@@ -5,7 +5,7 @@ import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 import { Note } from '@prisma/client';
 
-type T_Input = {
+export type T_UpdateNoteInput = {
 	id: string;
 	startTime?: Date;
 	endTime?: Date;
@@ -13,9 +13,9 @@ type T_Input = {
 	courseId?: string;
 };
 
-type T_Result = Promise<{ error: string } | { note: Note }>;
+export type T_UpdateNoteResult = Promise<{ error: string } | { note: Note }>;
 
-const updateNote = async ({ id, startTime, endTime, content, courseId }: T_Input): T_Result => {
+const updateNote = async ({ id, startTime, endTime, content, courseId }: T_UpdateNoteInput): T_UpdateNoteResult => {
 	if (!id) {
 		return { error: 'ID is required' };
 	}

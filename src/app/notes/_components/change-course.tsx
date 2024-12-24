@@ -5,7 +5,6 @@ import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger }
 import { cn } from '@/utils/cn';
 import { Course, Note } from '@prisma/client';
 import { useTransition } from 'react';
-import updateNote from '../_actions/update-note';
 
 type Props = {
 	currentCourse: Course;
@@ -16,7 +15,7 @@ type Props = {
  * A dropdown menu used to choose a new course for the note.
  */
 const ChangeCourse = ({ currentCourse, note }: Props) => {
-	const { courses: allCourses } = useAppContext();
+	const { courses: allCourses, updateNote } = useAppContext();
 	const [isPending, startTransition] = useTransition();
 
 	const handleSelect = (newCourseId: string) => {
