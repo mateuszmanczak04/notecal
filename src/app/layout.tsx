@@ -1,7 +1,6 @@
 import MainLayout from '@/app/_components/main-layout';
 import '@/app/globals.css';
 import { getAuthStatus } from '@/utils/auth';
-import { preload } from '@/utils/cached-queries';
 import { cn } from '@/utils/cn';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -15,8 +14,6 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const { authenticated } = await getAuthStatus();
-
-	preload();
 
 	return (
 		<html lang='en'>
