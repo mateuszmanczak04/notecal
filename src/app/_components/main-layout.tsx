@@ -18,7 +18,7 @@ const MainLayout = async ({ children }: Props) => {
 	const notes = await getNotes();
 
 	return (
-		<AppContextProvider tasks={tasks} courses={courses} notes={notes}>
+		<AppContextProvider initialTasks={tasks} initialCourses={courses} initialNotes={notes}>
 			<div className='flex h-screen overflow-y-hidden p-4 pl-12 xl:pl-4'>
 				<Navigation email={user.email} />
 				<div className='h-full flex-1 overflow-y-scroll rounded-xl bg-white p-4 scrollbar-hide dark:bg-neutral-800'>

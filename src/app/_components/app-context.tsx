@@ -1,15 +1,18 @@
 'use client';
 
 import { Course, Note, Task } from '@prisma/client';
-import { createContext, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
+import createNoteServer, { T_CreateNoteInput } from '../notes/_actions/create-note';
+import getNotes from '../notes/_actions/get-notes';
 
 type AppContextProps = {
 	tasks: Task[];
 	courses: Course[];
 	notes: Note[];
+	createNote: (values: T_CreateNoteInput) => Promise<void>;
 };
 
-const AppContext = createContext({ tasks: [], courses: [], notes: [] } as AppContextProps);
+const AppContext = createContext({} as AppContextProps);
 
 /**
  * A hook used to get tasks, courses and notes. It is initiated from initial fetch in root layout.
@@ -21,14 +24,30 @@ export const useAppContext = () => {
 };
 
 type AppContextProviderProps = {
-	tasks: Task[];
-	courses: Course[];
-	notes: Note[];
+	initialTasks: Task[];
+	initialCourses: Course[];
+	initialNotes: Note[];
 	children: ReactNode;
 };
 
-const AppContextProvider = ({ tasks, courses, notes, children }: AppContextProviderProps) => {
-	return <AppContext value={{ tasks, courses, notes }}> {children}</AppContext>;
+const AppContextProvider = ({ initialTasks, initialCourses, initialNotes, children }: AppContextProviderProps) => {
+	const [notes, setNotes] = useState<Note[]>(initialNotes);
+
+	/** Fetches notes from backend and replaces current notes with fresh ones. */
+	const refetchNotes = async () => {
+		const freshNotes = await getNotes();
+		setNotes(freshNotes);
+	};
+
+	/** Creates a new note in db and refetches notes to be fresh. */
+	const createNote = async (values: T_CreateNoteInput) => {
+		const res = await createNoteServer(values);
+		await refetchNotes();
+	};
+
+	return (
+		<AppContext value={{ tasks: initialTasks, courses: initialCourses, notes, createNote }}> {children}</AppContext>
+	);
 };
 
 export default AppContextProvider;

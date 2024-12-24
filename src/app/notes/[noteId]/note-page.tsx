@@ -2,11 +2,9 @@
 
 import { useAppContext } from '@/app/_components/app-context';
 import { Button } from '@/components/button';
-import { Course, Note, Task } from '@prisma/client';
 import { Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
 import ChangeCourse from '../_components/change-course';
 import Content from '../_components/content';
 import CourseName from '../_components/course-name';
@@ -23,16 +21,10 @@ const NotePage = () => {
 
 	const { notes, courses, tasks } = useAppContext();
 
-	const [currentNote, setCurrentNote] = useState<Note | undefined>(notes.find(note => note.id === noteId));
-	const [currentCourse, setCurrentCourse] = useState<Course | undefined>(
-		courses.find(course => course.id === currentNote?.courseId),
-	);
-	const [currentCourseTasks, setCurrentCourseTasks] = useState<Task[]>(
-		tasks.filter(task => task.courseId === currentCourse?.id),
-	);
-	const [currentCourseNotes, setCurrentCourseNotes] = useState<Note[]>(
-		notes.filter(note => note.courseId === currentCourse?.id),
-	);
+	const currentNote = notes.find(note => note.id === noteId);
+	const currentCourse = courses.find(course => course.id === currentNote?.courseId);
+	const currentCourseTasks = tasks.filter(task => task.courseId === currentCourse?.id);
+	const currentCourseNotes = notes.filter(note => note.courseId === currentCourse?.id);
 
 	if (!currentNote) {
 		// TODO: show nice looking error
@@ -55,7 +47,11 @@ const NotePage = () => {
 				<CourseName name={currentCourse.name} />
 
 				{/* List of other notes for this course */}
-				<SideNotes notes={currentCourseNotes} currentNoteId={noteId} course={currentCourse} />
+				<SideNotes
+					currentCourseNotes={currentCourseNotes}
+					currentNoteId={noteId}
+					currentCourse={currentCourse}
+				/>
 
 				{/* Tasks related to this course */}
 				<Tasks tasks={currentCourseTasks} course={currentCourse} />

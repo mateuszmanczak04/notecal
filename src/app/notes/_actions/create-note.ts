@@ -6,16 +6,16 @@ import { en } from '@/utils/dictionary';
 import { Note } from '@prisma/client';
 import { addMinutes } from 'date-fns';
 
-type T_Input = {
+export type T_CreateNoteInput = {
 	courseId: string;
 };
 
-type T_Result = Promise<{ error: string } | { note: Note }>;
+export type T_CreateNoteResult = Promise<{ error: string } | { note: Note }>;
 
 /**
  * Creates a new note in the database related to passed courseId.
  */
-const createNote = async ({ courseId }: T_Input): T_Result => {
+const createNote = async ({ courseId }: T_CreateNoteInput): T_CreateNoteResult => {
 	if (!courseId) {
 		return { error: 'Course ID is required' };
 	}
