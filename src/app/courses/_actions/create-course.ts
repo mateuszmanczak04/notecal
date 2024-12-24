@@ -3,13 +3,17 @@
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
-import { redirect } from 'next/navigation';
+import { Course } from '@prisma/client';
 
-const createCourse = async (_prevState: any, formData: FormData) => {
-	const name = formData.get('name')?.toString();
-	const teacher = formData.get('teacher')?.toString();
-	const color = formData.get('color')?.toString();
+export type T_CreateCourseInput = {
+	name: string;
+	teacher: string;
+	color: string;
+};
 
+export type T_CreateCourseResult = Promise<{ error: string } | { course: Course }>;
+
+const createCourse = async ({ name, teacher, color }: T_CreateCourseInput) => {
 	if (!name || !teacher || !color) {
 		return { error: en.INVALID_DATA };
 	}
@@ -28,7 +32,7 @@ const createCourse = async (_prevState: any, formData: FormData) => {
 			return { error: en.auth.UNAUTHENTICATED };
 		}
 
-		await db.course.create({
+		const course = await db.course.create({
 			data: {
 				userId: user.id,
 				name,
@@ -36,11 +40,11 @@ const createCourse = async (_prevState: any, formData: FormData) => {
 				color,
 			},
 		});
+
+		return { course };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
-
-	redirect('/courses');
 };
 
 export default createCourse;

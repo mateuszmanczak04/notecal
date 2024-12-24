@@ -5,13 +5,13 @@ import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 import { redirect } from 'next/navigation';
 
-type T_Input = {
+export type T_DeleteCourseInput = {
 	id: string;
 };
 
-type T_Result = Promise<{ error: string } | undefined>;
+export type T_DeleteCourseResult = Promise<{ error: string } | { success: true }>;
 
-const deleteCourse = async ({ id }: T_Input): T_Result => {
+const deleteCourse = async ({ id }: T_DeleteCourseInput): T_DeleteCourseResult => {
 	if (!id) {
 		return { error: 'ID is required' };
 	}
@@ -22,6 +22,7 @@ const deleteCourse = async ({ id }: T_Input): T_Result => {
 			return { error: en.auth.UNAUTHENTICATED };
 		}
 		await db.course.delete({ where: { id, userId: user.id } });
+		return { success: true };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}

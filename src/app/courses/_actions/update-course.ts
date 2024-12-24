@@ -5,16 +5,16 @@ import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 import { Course } from '@prisma/client';
 
-type T_Input = {
+export type T_UpdateCourseInput = {
 	id: string;
 	name?: string;
 	teacher?: string;
 	color?: string;
 };
 
-type T_Result = Promise<{ error: string } | { course: Course }>;
+export type T_UpdateCourseResult = Promise<{ error: string } | { course: Course }>;
 
-const updateCourse = async ({ id, name, teacher, color }: T_Input): T_Result => {
+const updateCourse = async ({ id, name, teacher, color }: T_UpdateCourseInput): T_UpdateCourseResult => {
 	if (!id) {
 		return { error: 'ID is required' };
 	}

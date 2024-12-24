@@ -1,22 +1,36 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import { Button } from '@/components/button';
-import ErrorMessage from '@/components/error-message';
 import FormLoadingSpinner from '@/components/form-loading-spinner';
 import GoBackButton from '@/components/go-back-button';
 import { Input } from '@/components/input';
 import { cn } from '@/utils/cn';
 import { COLORS } from '@/utils/colors';
-import { useActionState, useState } from 'react';
-import createCourse from '../_actions/create-course';
+import { useRouter } from 'next/navigation';
+import { FormEvent, useState, useTransition } from 'react';
 
 const CreateCourseForm = () => {
-	const [state, formAction] = useActionState(createCourse, null);
+	const router = useRouter();
+	const [isPending, startTransition] = useTransition();
+	const { createCourse } = useAppContext();
+
+	const handleSubmit = (e: FormEvent) => {
+		e.preventDefault();
+		startTransition(async () => {
+			const formData = new FormData(e.target as HTMLFormElement);
+			const name = formData.get('name')!.toString();
+			const teacher = formData.get('teacher')!.toString();
+			const color = formData.get('color')!.toString();
+			await createCourse({ name, teacher, color });
+			router.push('/courses');
+		});
+	};
 
 	const [selectedColor, setSelectedColor] = useState<string>(COLORS[0].hex);
 
 	return (
-		<form action={formAction} className='mt-4 space-y-4 sm:space-y-6 md:space-y-8'>
+		<form onSubmit={handleSubmit} className='mt-4 space-y-4 sm:space-y-6 md:space-y-8'>
 			{/* Name field */}
 			<div>
 				<label htmlFor='name' className='mb-1 block px-2 after:text-red-500 after:content-["_*"]'>
@@ -68,9 +82,6 @@ const CreateCourseForm = () => {
 					Create
 				</Button>
 			</div>
-
-			{/* Optional result */}
-			{state?.error && <ErrorMessage>{state.error}</ErrorMessage>}
 		</form>
 	);
 };
