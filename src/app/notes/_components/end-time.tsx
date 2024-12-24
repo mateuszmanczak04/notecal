@@ -1,16 +1,17 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import DatePicker from '@/components/date-picker';
 import { cn } from '@/utils/cn';
 import { Note } from '@prisma/client';
 import { useTransition } from 'react';
-import updateNote from '../_actions/update-note';
 
 type Props = {
 	note: Note;
 };
 
 const EndTime = ({ note }: Props) => {
+	const { updateNote } = useAppContext();
 	const [isPending, startTransition] = useTransition();
 
 	const onChange = (newEndTime: Date | null) => {
@@ -30,7 +31,7 @@ const EndTime = ({ note }: Props) => {
 			<DatePicker
 				className={cn('mt-2 w-56', isPending && 'opacity-50')}
 				date={note.endTime}
-				onSelect={newDate => onChange(newDate)}
+				onSelect={onChange}
 			/>
 		</article>
 	);

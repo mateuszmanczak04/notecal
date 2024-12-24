@@ -74,7 +74,7 @@ const NotePage = () => {
 				<StartTime note={currentNote} />
 				<EndTime note={currentNote} />
 
-				{/* Delete note button TODO */}
+				{/* Delete note button */}
 				<DeleteNoteButton id={currentNote.id} />
 			</div>
 		</div>
