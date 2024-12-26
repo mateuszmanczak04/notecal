@@ -1,41 +1,26 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import { Button } from '@/components/button';
-import ErrorMessage from '@/components/error-message';
 import { Input } from '@/components/input';
-import SuccessMessage from '@/components/success-message';
 import { cn } from '@/utils/cn';
 import { FormEvent, useState, useTransition } from 'react';
-import updateSettings from '../_actions/update-settings';
 
-type Props = {
-	displayedDays: number;
-	defaultNoteDuration: number;
-	language: string;
-};
-
-const UpdateSettings = ({
-	displayedDays: initialDisplayedDays,
-	defaultNoteDuration: initialDefaultNoteDuration,
-	language: initialLanguage,
-}: Props) => {
+const UpdateSettings = () => {
 	const [isPending, startTransition] = useTransition();
-	const [error, setError] = useState<string>('');
-	const [message, setMessage] = useState<string>('');
+	// const [error, setError] = useState<string>('');
+	// const [message, setMessage] = useState<string>('');
+	const { settings, updateSettings } = useAppContext();
 
-	const [displayedDays, setDisplayedDays] = useState(initialDisplayedDays);
-	const [defaultNoteDuration, setDefaultNoteDuration] = useState(initialDefaultNoteDuration);
-	const [language, setLanguage] = useState(initialLanguage);
+	const [displayedDays, setDisplayedDays] = useState(settings.displayedDays);
+	const [defaultNoteDuration, setDefaultNoteDuration] = useState(settings.defaultNoteDuration);
+	const [language, setLanguage] = useState(settings.language);
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		startTransition(async () => {
-			const res = await updateSettings({ displayedDays, defaultNoteDuration, language });
-			if ('error' in res) {
-				setError(res.error);
-			} else {
-				setMessage(res.message);
-			}
+			await updateSettings({ displayedDays, defaultNoteDuration, language });
+			// TODO: handle errors
 		});
 	};
 
@@ -95,8 +80,8 @@ const UpdateSettings = ({
 				</Button>
 
 				{/* Form results */}
-				{message && <SuccessMessage>{message}</SuccessMessage>}
-				{error && <ErrorMessage>{error}</ErrorMessage>}
+				{/* {message && <SuccessMessage>{message}</SuccessMessage>}
+				{error && <ErrorMessage>{error}</ErrorMessage>} */}
 			</form>
 		</section>
 	);

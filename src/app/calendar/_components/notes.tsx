@@ -62,6 +62,8 @@ const Notes = () => {
 		return results.map(r => (r > 2 ? 2 : r));
 	}, [notes]);
 
+	console.table(notes);
+
 	return (
 		<div
 			onDragOver={e => e.preventDefault()}

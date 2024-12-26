@@ -24,11 +24,7 @@ const SettingsPage = () => {
 			<ChangePasswordSetting />
 
 			{/* General settings */}
-			<UpdateSettings
-				displayedDays={settings.displayedDays}
-				defaultNoteDuration={settings.defaultNoteDuration}
-				language={settings.language}
-			/>
+			<UpdateSettings />
 
 			{/* Logout button */}
 			<Button variant='secondary' onClick={logout} className='w-full'>
