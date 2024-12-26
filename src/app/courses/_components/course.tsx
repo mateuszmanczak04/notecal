@@ -1,12 +1,10 @@
 'use client';
 
 import { useAppContext } from '@/app/_components/app-context';
-import createNote from '@/app/notes/_actions/create-note';
 import LoadingSpinner from '@/components/loading-spinner';
-import { Note } from '@prisma/client';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useState, useTransition } from 'react';
+import { useEffect, useRef, useTransition } from 'react';
 
 type Props = {
 	name: string;
@@ -30,29 +28,26 @@ export const CourseFallback = () => {
  * A link navigating to the latest note from it's course. If there are not notes it will automatically create one before rendering.
  */
 const Course = ({ name, teacher, id, color }: Props) => {
-	const { notes: allNotes } = useAppContext();
-	const [notes, setNotes] = useState<Note[]>(allNotes.filter(note => note.courseId === id));
-
 	const [isPending, startTransition] = useTransition();
+	const { notes, createNote } = useAppContext();
+	const thisCourseNotes = notes.filter(note => note.courseId === id);
+	const hasCreatedNote = useRef(false);
 
+	// Create a first note if it doesn't exist
 	useEffect(() => {
-		if (notes.length === 0) {
-			// Create a first note if it doesn't exist
+		if (thisCourseNotes.length === 0 && !hasCreatedNote.current) {
+			hasCreatedNote.current = true;
 			startTransition(async () => {
-				const res = await createNote({ courseId: id });
-				// TODO: handle error
-				if ('note' in res) {
-					setNotes([res.note]);
-				}
+				await createNote({ courseId: id });
 			});
 		}
-	}, [id, notes.length]);
+	}, [id, thisCourseNotes.length, createNote]);
 
 	if (isPending) return <CourseFallback />;
 
 	return (
 		<Link
-			href={`/notes/${notes[0]?.id}`}
+			href={`/notes/${thisCourseNotes[0]?.id}`}
 			className='flex cursor-pointer items-center justify-between rounded-xl bg-neutral-50 p-4 text-white transition hover:opacity-90'
 			style={{ background: color }}>
 			<div>
