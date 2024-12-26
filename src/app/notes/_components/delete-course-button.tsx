@@ -14,8 +14,8 @@ type Props = {
 /**
  * After first click it shows a confirmation message if user is sure to delete it.
  */
-const DeleteNoteButton = ({ id }: Props) => {
-	const { deleteNote } = useAppContext();
+const DeleteCourseButton = ({ id }: Props) => {
+	const { deleteCourse } = useAppContext();
 	const [isPending, startTransition] = useTransition();
 
 	const router = useRouter();
@@ -23,7 +23,7 @@ const DeleteNoteButton = ({ id }: Props) => {
 
 	const confirmDeletion = () => {
 		startTransition(async () => {
-			await deleteNote({ id });
+			await deleteCourse({ id });
 			router.back();
 		});
 	};
@@ -53,15 +53,15 @@ const DeleteNoteButton = ({ id }: Props) => {
 
 	return (
 		<article>
-			<h2 className='text-2xl font-semibold'>Delete Note</h2>
-			<p className=''>Delete this specific note permanently</p>
+			<h2 className='text-2xl font-semibold'>Delete Course</h2>
+			<p className=''>Delete entire course with all related notes and tasks permanently</p>
 
 			<Button variant='destructive' className='mt-2 w-full' onClick={() => setIsDeleting(true)}>
 				<Trash2 className='h-4 w-4' />
-				Delete this note
+				Delete this course
 			</Button>
 		</article>
 	);
 };
 
-export default DeleteNoteButton;
+export default DeleteCourseButton;

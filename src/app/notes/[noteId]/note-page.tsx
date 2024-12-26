@@ -8,6 +8,7 @@ import { useParams } from 'next/navigation';
 import ChangeCourse from '../_components/change-course';
 import Content from '../_components/content';
 import CourseName from '../_components/course-name';
+import DeleteCourseButton from '../_components/delete-course-button';
 import DeleteNoteButton from '../_components/delete-note-button';
 import EndTime from '../_components/end-time';
 import SideNotes from '../_components/side-notes';
@@ -76,6 +77,9 @@ const NotePage = () => {
 
 				{/* Delete note button */}
 				<DeleteNoteButton id={currentNote.id} />
+
+				{/* Delete entire course button */}
+				<DeleteCourseButton id={currentCourse.id} />
 			</aside>
 		</main>
 	);

@@ -129,7 +129,7 @@ const AppContextProvider = ({
 	/** Deletes a course in db and refetches courses to be fresh. */
 	const deleteCourse = async (values: T_DeleteCourseInput) => {
 		await deleteCourseServer(values);
-		await refetchCourses();
+		await Promise.all([refetchCourses(), refetchTasks(), refetchNotes()]);
 	};
 
 	/** Fetches courses from backend and replaces current courses with fresh ones. */
