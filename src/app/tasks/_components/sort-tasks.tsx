@@ -1,7 +1,6 @@
 'use client';
 
 import { useAppContext } from '@/app/_components/app-context';
-import updateSettings from '@/app/settings/_actions/update-settings';
 import { Button } from '@/components/button';
 import { cn } from '@/utils/cn';
 import { ArrowUpDown } from 'lucide-react';
@@ -12,7 +11,7 @@ const SortTasks = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null) as RefObject<HTMLDivElement>;
 	const [isPending, startTransition] = useTransition();
-	const { sortTasks } = useAppContext();
+	const { updateSettings } = useAppContext();
 
 	const handleCloseMenu = () => {
 		setIsOpen(false);
@@ -43,10 +42,7 @@ const SortTasks = () => {
 				newCriteria === 'completed')
 		) {
 			startTransition(async () => {
-				const fd = new FormData();
-				fd.set('orderTasks', newCriteria);
-				await updateSettings(null, fd);
-				await sortTasks();
+				await updateSettings({ orderTasks: newCriteria });
 			});
 		}
 	};
