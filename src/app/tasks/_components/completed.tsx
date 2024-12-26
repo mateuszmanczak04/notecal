@@ -27,7 +27,7 @@ const Completed = ({ task, forPage = 'tasks' }: Props) => {
 		<Checkbox
 			checked={task.completed}
 			onCheckedChange={handleToggleTask}
-			className={cn('rounded-full', isPending && 'opacity-50')}
+			className={cn('rounded-full', isPending && 'opacity-50', forPage === 'notes' && 'size-5')}
 			aria-label='task completed checkbox'
 			title='task completed checkbox'
 		/>

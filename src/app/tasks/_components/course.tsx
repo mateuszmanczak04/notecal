@@ -24,18 +24,22 @@ const Course = ({ task, forPage = 'tasks' }: Props) => {
 	};
 
 	return (
-		<DropdownMenu className={cn('w-52', isPending && 'opacity-50')}>
+		<DropdownMenu className={cn('w-52', forPage === 'notes' && 'w-full', isPending && 'opacity-50')}>
 			<DropdownMenuTrigger showChevron>
 				{currentCourse && (
 					<div
 						className='h-3 w-3 shrink-0 rounded-full'
 						style={{ backgroundColor: currentCourse.color }}></div>
 				)}
-				<p className='truncate'>{currentCourse?.name || 'None'}</p>
+				<p className={cn('truncate', forPage === 'notes' && 'text-sm')}>{currentCourse?.name || 'None'}</p>
 			</DropdownMenuTrigger>
 			<DropdownMenuList>
 				{/* Null option */}
-				<DropdownMenuItem onSelect={handleSelect} key={'none' + Math.random()} value={null}>
+				<DropdownMenuItem
+					onSelect={handleSelect}
+					key={'none' + Math.random()}
+					value={null}
+					className={cn(forPage === 'notes' && 'text-sm')}>
 					None
 				</DropdownMenuItem>
 				{/* Options */}
@@ -45,7 +49,7 @@ const Course = ({ task, forPage = 'tasks' }: Props) => {
 							<div
 								className='h-3 w-3 shrink-0 rounded-full'
 								style={{ backgroundColor: course.color }}></div>
-							<p className='truncate'>{course.name}</p>
+							<p className={cn('truncate', forPage === 'notes' && 'text-sm')}>{course.name}</p>
 						</DropdownMenuItem>
 					))}
 			</DropdownMenuList>

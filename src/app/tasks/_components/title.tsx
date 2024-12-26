@@ -62,12 +62,8 @@ const Title = ({ task, forPage = 'tasks' }: Props) => {
 	return (
 		<p
 			ref={titleRef}
-			contentEditable={!completed}
-			className={cn(
-				'font-bold outline-none transition-colors',
-				completed && 'line-through',
-				isPending && 'opacity-50',
-			)}
+			contentEditable
+			className={cn('font-bold outline-none transition-colors', isPending && 'opacity-50')}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}
 			spellCheck={false}></p>

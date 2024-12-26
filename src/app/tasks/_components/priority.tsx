@@ -52,11 +52,17 @@ const Priority = ({ task, forPage = 'tasks' }: Props) => {
 		});
 	};
 	return (
-		<DropdownMenu className={cn('w-52', isPending && 'opacity-50')}>
-			<DropdownMenuTrigger showChevron>{getPriorityTitle(task.priority)}</DropdownMenuTrigger>
+		<DropdownMenu className={cn('w-52', forPage === 'notes' && 'w-full', isPending && 'opacity-50')}>
+			<DropdownMenuTrigger showChevron className={cn(forPage === 'notes' && 'text-sm')}>
+				{getPriorityTitle(task.priority)}
+			</DropdownMenuTrigger>
 			<DropdownMenuList>
 				{([null, 'A', 'B', 'C'] as (TaskPriority | null)[]).map(priority => (
-					<DropdownMenuItem key={priority || 'none'} onSelect={handleSelect} value={priority}>
+					<DropdownMenuItem
+						key={priority || 'none'}
+						onSelect={handleSelect}
+						value={priority}
+						className={cn(forPage === 'notes' && 'text-sm')}>
 						{getPriorityTitle(priority)}
 					</DropdownMenuItem>
 				))}

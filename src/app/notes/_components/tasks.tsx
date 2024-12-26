@@ -1,7 +1,7 @@
 'use client';
 
+import Task from '@/app/tasks/_components/task';
 import { Course, Task as T_Task } from '@prisma/client';
-import Task from './task';
 
 type Props = {
 	course: Course;
@@ -10,12 +10,12 @@ type Props = {
 
 const Tasks = ({ course, tasks }: Props) => {
 	return (
-		<div className='flex flex-col gap-2'>
+		<div className='space-y-2'>
 			<p className='text-xl font-semibold'>Tasks:</p>
 
 			{tasks.length === 0 && <p>There are no tasks related to this course</p>}
 
-			{tasks?.map(task => <Task key={task.id} task={task} />)}
+			{tasks?.map(task => <Task forPage='notes' key={task.id} task={task} />)}
 
 			{/* TODO: Handy new task form here without redirection to the /tasks/create page */}
 			{/* <Button asChild style={{ background: course?.color }}>

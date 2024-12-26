@@ -42,7 +42,7 @@ const NotePage = () => {
 				<Content note={currentNote} course={currentCourse} />
 			</article>
 
-			<aside className='flex h-full w-full shrink-0 flex-col gap-8 overflow-y-scroll scrollbar-hide md:w-56'>
+			<aside className='flex h-full w-full shrink-0 flex-col gap-8 overflow-x-clip overflow-y-scroll scrollbar-hide md:w-56'>
 				{/* Name of the course */}
 				<CourseName name={currentCourse.name} />
 

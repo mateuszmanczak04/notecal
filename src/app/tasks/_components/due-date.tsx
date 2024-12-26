@@ -26,7 +26,7 @@ const DueDate = ({ task, forPage = 'tasks' }: Props) => {
 		<DatePicker
 			date={task.dueDate}
 			onSelect={handleChangeDueDate}
-			className={cn('h-9 w-56', isPending && 'opacity-50')}
+			className={cn('h-9 w-56', forPage === 'notes' && 'w-full text-sm sm:text-sm', isPending && 'opacity-50')}
 		/>
 	);
 };
