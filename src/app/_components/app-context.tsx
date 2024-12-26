@@ -10,6 +10,8 @@ import createNoteServer, { T_CreateNoteInput } from '../notes/_actions/create-no
 import deleteNoteServer, { T_DeleteNoteInput } from '../notes/_actions/delete-note';
 import getNotes from '../notes/_actions/get-notes';
 import updateNoteServer, { T_UpdateNoteInput } from '../notes/_actions/update-note';
+import getSettings from '../settings/_actions/get-settings';
+import { T_UpdateSettingsInput } from '../settings/_actions/update-settings';
 import createTaskServer, { T_CreateTaskInput } from '../tasks/_actions/create-task';
 import deleteTaskServer, { T_DeleteTaskInput } from '../tasks/_actions/delete-task';
 import getTasks from '../tasks/_actions/get-tasks';
@@ -45,6 +47,7 @@ type AppContextProps = {
 	updateTask: (values: T_UpdateTaskInput) => Promise<void>;
 	deleteTask: (values: T_DeleteTaskInput) => Promise<void>;
 	sortTasks: () => Promise<void>;
+	updateSettings: (values: T_UpdateSettingsInput) => Promise<void>;
 };
 
 const AppContext = createContext({} as AppContextProps);
@@ -158,6 +161,17 @@ const AppContextProvider = ({
 		await refetchTasks();
 	};
 
+	const refetchSettings = async () => {
+		const freshSettings = await getSettings();
+		if ('error' in freshSettings) return; // TODO: handle this error
+		setSettings(freshSettings);
+	};
+
+	const updateSettings = async (values: T_UpdateSettingsInput) => {
+		await updateSettings(values);
+		await refetchSettings();
+	};
+
 	return (
 		<AppContext
 			value={{
@@ -175,6 +189,7 @@ const AppContextProvider = ({
 				deleteTask,
 				sortTasks,
 				settings,
+				updateSettings,
 				user,
 			}}>
 			{children}
