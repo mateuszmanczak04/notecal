@@ -34,7 +34,7 @@ const Description = ({ task, forPage = 'tasks' }: Props) => {
 	 */
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLParagraphElement>) => {
 		if (!descriptionRef.current) return;
-		if (event.key === 'Enter') {
+		if (event.key === 'Enter' && !event.shiftKey) {
 			event.preventDefault();
 			descriptionRef.current.blur(); // It automatically triggers handleSubmit()
 			return;
