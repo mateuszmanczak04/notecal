@@ -8,7 +8,7 @@ import { revalidatePath } from 'next/cache';
 
 export type T_UpdateTaskInput = {
 	id: string;
-	courseId?: string;
+	courseId?: string | null;
 	completed?: boolean;
 	title?: string;
 	description?: string;

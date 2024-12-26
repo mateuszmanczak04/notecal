@@ -1,5 +1,6 @@
 import { type Task } from '@prisma/client';
 import Completed from './completed';
+import Course from './course';
 import Description from './description';
 import DueDate from './due-date';
 import Priority from './priority';
@@ -19,7 +20,7 @@ const Task = ({ task }: Props) => {
 
 				<div className='mt-2 flex flex-wrap gap-2'>
 					{/* TODO: first fix courses */}
-					{/* <Course task={task} /> */}
+					<Course task={task} />
 					<DueDate task={task} />
 					<Priority task={task} />
 				</div>
