@@ -11,7 +11,7 @@ import { useIntersectionObserver } from 'usehooks-ts';
 type Props = {
 	/** Specify use case for this component. It can be user either big one in /tasks page or as a small task in /notes/[id] page. */
 	forPage?: 'tasks' | 'notes';
-	courseId: string;
+	courseId?: string;
 };
 
 const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
