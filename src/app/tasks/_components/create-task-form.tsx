@@ -56,7 +56,12 @@ const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
 
 	if (forPage === 'notes') {
 		return (
-			<form onSubmit={handleSubmit} className='grid gap-2 rounded-xl bg-neutral-700 p-2'>
+			<form
+				onSubmit={handleSubmit}
+				className={cn(
+					'grid gap-2 rounded-xl bg-neutral-700 p-2',
+					isPending && 'pointer-events-none opacity-50',
+				)}>
 				<Input
 					id='create-task-title'
 					placeholder='New task title'
@@ -65,7 +70,7 @@ const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
 					name='title'
 					required
 				/>
-				<Button className='rounded-xl text-sm' type='submit'>
+				<Button className='rounded-xl text-sm' type='submit' disabled={isPending}>
 					<Plus className='h-5 w-5' />
 					Create a new task
 				</Button>
@@ -90,7 +95,12 @@ const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
 			</h2>
 
 			{/* Main form */}
-			<form onSubmit={handleSubmit} className='flex flex-col gap-4 sm:flex-row sm:gap-0'>
+			<form
+				onSubmit={handleSubmit}
+				className={cn(
+					'flex flex-col gap-4 sm:flex-row sm:gap-0',
+					isPending && 'pointer-events-none opacity-50',
+				)}>
 				<Input
 					id='create-task-title'
 					placeholder='Do the math homework'
@@ -100,7 +110,7 @@ const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
 					required
 					ref={inputRef}
 				/>
-				<Button className='h-11 sm:rounded-l-none sm:text-base' type='submit'>
+				<Button className='h-11 sm:rounded-l-none sm:text-base' type='submit' disabled={isPending}>
 					<Plus className='h-5 w-5' />
 					Add to the list
 				</Button>
