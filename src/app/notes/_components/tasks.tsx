@@ -1,5 +1,6 @@
 'use client';
 
+import CreateTaskForm from '@/app/tasks/_components/create-task-form';
 import Task from '@/app/tasks/_components/task';
 import { Course, Task as T_Task } from '@prisma/client';
 
@@ -17,12 +18,7 @@ const Tasks = ({ course, tasks }: Props) => {
 
 			{tasks?.map(task => <Task forPage='notes' key={task.id} task={task} />)}
 
-			{/* TODO: Handy new task form here without redirection to the /tasks/create page */}
-			{/* <Button asChild style={{ background: course?.color }}>
-				<Link prefetch href={`/tasks/create?courseId=${course.id}`}>
-					<Plus className='h-4 w-4' /> Create a new task
-				</Link>
-			</Button> */}
+			<CreateTaskForm courseId={course.id} forPage='notes' />
 		</div>
 	);
 };

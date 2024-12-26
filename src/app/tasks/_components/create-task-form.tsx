@@ -2,13 +2,19 @@
 
 import { useAppContext } from '@/app/_components/app-context';
 import { Button } from '@/components/button';
-import FormLoadingSpinner from '@/components/form-loading-spinner';
 import { Input } from '@/components/input';
+import { cn } from '@/utils/cn';
 import { Command, Plus } from 'lucide-react';
 import { FormEvent, useEffect, useRef, useTransition } from 'react';
 import { useIntersectionObserver } from 'usehooks-ts';
 
-const CreateTaskForm = () => {
+type Props = {
+	/** Specify use case for this component. It can be user either big one in /tasks page or as a small task in /notes/[id] page. */
+	forPage?: 'tasks' | 'notes';
+	courseId: string;
+};
+
+const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
 	const { createTask } = useAppContext();
 	const [isPending, startTransition] = useTransition();
 
@@ -43,15 +49,37 @@ const CreateTaskForm = () => {
 		startTransition(async () => {
 			const formData = new FormData(e.target as HTMLFormElement);
 			const title = formData.get('title')!.toString();
-			await createTask({ title });
+			await createTask({ title, courseId });
 			(e.target as HTMLFormElement).reset();
 		});
 	};
 
+	if (forPage === 'notes') {
+		return (
+			<form onSubmit={handleSubmit} className='grid gap-2 rounded-xl bg-neutral-700 p-2'>
+				<Input
+					id='create-task-title'
+					placeholder='New task title'
+					className=' text-sm '
+					aria-label='New task title'
+					name='title'
+					required
+				/>
+				<Button className='rounded-xl text-sm' type='submit'>
+					<Plus className='h-5 w-5' />
+					Create a new task
+				</Button>
+			</form>
+		);
+	}
+
 	return (
 		<aside
 			ref={intersectorRef}
-			className='z-20 space-y-4 rounded-2xl bg-white p-4 shadow-[0_0_32px_-20px_rgba(0,0,0,0.3)] sm:sticky sm:top-0 sm:p-8 dark:bg-neutral-700'
+			className={cn(
+				'z-20 space-y-4 rounded-2xl bg-white p-4 shadow-[0_0_32px_-20px_rgba(0,0,0,0.3)] sm:sticky sm:top-0 sm:p-8 dark:bg-neutral-700',
+				isPending && 'opacity-50',
+			)}
 			onClick={handleFocusInput}>
 			{/* Heading */}
 			<h2 className='text-xl font-bold sm:text-2xl'>
@@ -73,7 +101,6 @@ const CreateTaskForm = () => {
 					ref={inputRef}
 				/>
 				<Button className='h-11 sm:rounded-l-none sm:text-base' type='submit'>
-					<FormLoadingSpinner />
 					<Plus className='h-5 w-5' />
 					Add to the list
 				</Button>

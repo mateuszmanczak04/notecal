@@ -7,11 +7,12 @@ import { Task } from '@prisma/client';
 
 export type T_CreateTaskInput = {
 	title: string;
+	courseId?: string;
 };
 
 export type T_CreateTaskResult = Promise<{ error: string } | { task: Task }>;
 
-const createTask = async ({ title }: T_CreateTaskInput): T_CreateTaskResult => {
+const createTask = async ({ title, courseId }: T_CreateTaskInput): T_CreateTaskResult => {
 	if (!title) {
 		return { error: 'Task title is required' };
 	}
@@ -29,6 +30,7 @@ const createTask = async ({ title }: T_CreateTaskInput): T_CreateTaskResult => {
 			data: {
 				userId: user.id,
 				title,
+				courseId,
 			},
 		});
 
