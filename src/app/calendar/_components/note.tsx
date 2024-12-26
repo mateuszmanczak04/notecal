@@ -1,23 +1,31 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import { cn } from '@/utils/cn';
-import { Course, type Note } from '@prisma/client';
+import { type Note } from '@prisma/client';
 import { addDays, addMilliseconds, differenceInCalendarDays, startOfDay } from 'date-fns';
 import Link from 'next/link';
-import { FC, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 
-interface NoteProps {
+type Props = {
 	note: Note & { loading?: boolean };
 	leftOffset: number;
-}
+};
 
-const Note: FC<NoteProps> = ({ note, leftOffset }) => {
-	const { currentFirstDay, displayedDays, getRelativePosition, getDateFromPosition } = useCalendarContext();
-	const course = {} as Course;
-	const updateNote = (input: any) => {};
+const Note = ({ note, leftOffset }: Props) => {
+	const { settings, updateNote, courses } = useAppContext();
+	const { currentFirstDay, getRelativePosition, getDateFromPosition } = useCalendarContext();
 
-	const noteRef = useRef<(HTMLAnchorElement | null)[]>([]);
+	// Maybe filtering all courses for each note is not the fastest
+	// way to do it but let's assume that most of users don't have
+	// more than 10-20 coursers. Then we shouldn't care that much about
+	// the performance.
+	// Also we can assume that course exists because there shouldn't
+	// be any note without a corresponding course.
+	const course = courses.find(c => c.id === note.courseId)!;
+
+	const noteRef = useRef<HTMLAnchorElement[]>([]);
 	const initialDragDate = useRef<Date | null>(null);
 
 	const topEdgeRef = useRef<HTMLDivElement | null>(null);
@@ -33,8 +41,10 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		setDragEndTime(note.endTime);
 	}, [note.startTime, note.endTime]);
 
-	// Returns days which are included in note's duration,
-	// All of them are set to 00:00:
+	/**
+	 * Returns days which are included in note's duration,
+	 * all of them are set to 00:00.
+	 */
 	const getDaysBetween = (startTime: Date, endTime: Date) => {
 		const durationInDays = differenceInCalendarDays(endTime, startTime) + 1;
 		const result = new Array(durationInDays)
@@ -57,17 +67,27 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		return result;
 	};
 
-	// Get positions and sizes of each day block:
-
+	/**
+	 * Returns an offset from the grid left edge in pixels.
+	 * It's based on note's date.
+	 */
 	const getLeftOffset = (date: Date) => {
 		const daysFromFirstDay = differenceInCalendarDays(date, currentFirstDay);
-		return `calc(${daysFromFirstDay * (100 / displayedDays) + '%'} + ${leftOffset * 16 + 'px'}`;
+		return `calc(${daysFromFirstDay * (100 / settings.displayedDays) + '%'} + ${leftOffset * 16 + 'px'}`;
 	};
 
+	/**
+	 * Returns a width of the note block in pixels. Simply divided
+	 * 1 / settings.displayedDays with some improvements.
+	 */
 	const getWidth = () => {
-		return `calc(${100 / displayedDays}% - ${32 + 'px'})`;
+		return `calc(${100 / settings.displayedDays}% - ${32 + 'px'})`;
 	};
 
+	/**
+	 * Returns an offset from the grid top edge in pixels.
+	 * It's based on the note's hour and minute.
+	 */
 	const getTopOffset = (date: Date, startTime: Date) => {
 		// Check if it is not the first day of multi-day note:
 		if (startOfDay(startTime).getTime() !== date.getTime()) {
@@ -82,6 +102,11 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		return ratio * 100 + '%';
 	};
 
+	/**
+	 * Returns a height of the note block.
+	 * Remember that one Note can contain multiple blocks if it
+	 * spreads into many days.
+	 */
 	const getHeight = (date: Date, startTime: Date, endTime: Date) => {
 		// Note starts and ends the same day:
 		if (startOfDay(startTime).getTime() === startOfDay(endTime).getTime()) {
@@ -128,7 +153,10 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		return '100%';
 	};
 
-	// Dragging entire note
+	/**
+	 * Handles situations when user drags entire note by it's center.
+	 * Here user starts dragging.
+	 */
 	const handleDragStart = (event: React.DragEvent) => {
 		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
 
@@ -142,6 +170,10 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		setIsDragging(true);
 	};
 
+	/**
+	 * Handles situations when user drags entire note by it's center.
+	 * Here user is in the middle of the dragging.
+	 */
 	const handleDrag = (event: React.DragEvent) => {
 		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
 
@@ -162,6 +194,10 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		setDragEndTime(newEndTime);
 	};
 
+	/**
+	 * Handles situations when user drags entire note by it's center.
+	 * Here user releases the cursor.
+	 */
 	const handleDragEnd = (event: React.DragEvent) => {
 		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
 
@@ -174,14 +210,21 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		setIsDragging(false);
 	};
 
-	// Dragging top edge
+	/**
+	 * Handles situations when user drags note's top edge (startTime).
+	 * Here user starts pressing the mouse.
+	 */
 	const handleDragStartTop = () => {
 		setIsDragging(true);
 	};
 
+	/**
+	 * Handles situations when user drags note's top edge (startTime).
+	 * Here user is in the middle of the action.
+	 */
 	const handleDragTop = (event: React.DragEvent) => {
 		const { x, y } = getRelativePosition(event.clientX, event.clientY);
-		if (x === null || y === null) return; // TODO: display error message
+		if (x === null || y === null) return;
 
 		const newStartTime = getDateFromPosition(x, y);
 		if (!newStartTime) return;
@@ -189,6 +232,10 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		setDragStartTime(newStartTime);
 	};
 
+	/**
+	 * Handles situations when user drags note's top edge (startTime).
+	 * Here user is releasing their mouse
+	 */
 	const handleDragEndTop = () => {
 		if (dragStartTime < note.endTime) {
 			updateNote({ id: note.id, startTime: dragStartTime });
@@ -203,14 +250,21 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		setIsDragging(false);
 	};
 
-	// Dragging bottom edge
+	/**
+	 * Handles situations when user drags note's bottom edge (endTime).
+	 * Here user starts pressing the mouse.
+	 */
 	const handleDragStartBottom = () => {
 		setIsDragging(true);
 	};
 
+	/**
+	 * Handles situations when user drags note's bottom edge (endTime).
+	 * Here user is in the middle of the action.
+	 */
 	const handleDragBottom = (event: React.DragEvent) => {
 		const { x, y } = getRelativePosition(event.clientX, event.clientY);
-		if (x === null || y === null) return; // TODO: display error message
+		if (x === null || y === null) return;
 
 		const newEndTime = getDateFromPosition(x, y);
 		if (!newEndTime) return;
@@ -218,6 +272,10 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		setDragEndTime(newEndTime);
 	};
 
+	/**
+	 * Handles situations when user drags note's bottom edge (endTime).
+	 * Here user is releasing their mouse
+	 */
 	const handleDragEndBottom = () => {
 		if (dragEndTime > note.startTime) {
 			updateNote({ id: note.id, endTime: dragEndTime });
@@ -232,15 +290,21 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 		setIsDragging(false);
 	};
 
+	/**
+	 * Dates that are included into a single note.
+	 */
 	const noteDays = getDaysBetween(note.startTime, note.endTime);
 
-	// Used to swap them if start is greater than end
+	// Swap note.startTime and note.endTime if endTime > startTime
 	const [actualDragStartTime, actualDragEndTime] = [
 		dragStartTime < dragEndTime ? dragStartTime : dragEndTime,
 		dragStartTime < dragEndTime ? dragEndTime : dragStartTime,
 	];
 
-	// Days displayed on top when dragging
+	/**
+	 * Days displayed on top when dragging. The same as "noteDays"
+	 * but used when user is dragging the note or it's edge.
+	 */
 	const dragDays = getDaysBetween(actualDragStartTime, actualDragEndTime);
 
 	return (
@@ -249,13 +313,12 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 			{noteDays?.length > 0 &&
 				noteDays.map((day, index) => (
 					<Link
-						prefetch
 						draggable
 						onDragStart={handleDragStart}
 						onDrag={handleDrag}
 						onDragEnd={handleDragEnd}
 						ref={el => {
-							noteRef.current![index] = el;
+							noteRef.current[index] = el as HTMLAnchorElement;
 						}}
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
@@ -271,7 +334,7 @@ const Note: FC<NoteProps> = ({ note, leftOffset }) => {
 							height: getHeight(day, note.startTime, note.endTime),
 							// If course was not found, the color will be undefined so
 							// the note should have "bg-primary-500" color as in className above
-							backgroundColor: course?.color,
+							backgroundColor: course.color,
 						}}>
 						{/* Top edge to drag: */}
 						{index === 0 && (
