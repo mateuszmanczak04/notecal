@@ -46,6 +46,7 @@ type AppContextProps = {
 	createTask: (values: T_CreateTaskInput) => Promise<void>;
 	updateTask: (values: T_UpdateTaskInput) => Promise<void>;
 	deleteTask: (values: T_DeleteTaskInput) => Promise<void>;
+	sortTasks: () => Promise<void>;
 	updateSettings: (values: T_UpdateSettingsInput) => Promise<void>;
 };
 
@@ -155,6 +156,10 @@ const AppContextProvider = ({
 		await refetchTasks();
 	};
 
+	const sortTasks = async () => {
+		await refetchTasks();
+	};
+
 	const refetchSettings = async () => {
 		const freshSettings = await getSettings();
 		if ('error' in freshSettings) return; // TODO: handle this error
@@ -181,6 +186,7 @@ const AppContextProvider = ({
 				createTask,
 				updateTask,
 				deleteTask,
+				sortTasks,
 				settings,
 				updateSettings,
 				user,

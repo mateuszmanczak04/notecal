@@ -11,7 +11,7 @@ const SortTasks = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null) as RefObject<HTMLDivElement>;
 	const [isPending, startTransition] = useTransition();
-	const { updateSettings } = useAppContext();
+	const { updateSettings, sortTasks } = useAppContext();
 
 	const handleCloseMenu = () => {
 		setIsOpen(false);
@@ -43,6 +43,7 @@ const SortTasks = () => {
 		) {
 			startTransition(async () => {
 				await updateSettings({ orderTasks: newCriteria });
+				await sortTasks();
 			});
 		}
 	};
