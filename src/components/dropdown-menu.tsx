@@ -12,13 +12,13 @@ const DropdownMenuContext = createContext(
 		isOpen: boolean;
 		setIsOpen: (isOpen: boolean) => void;
 		handleToggle: () => void;
-		menuRef: React.MutableRefObject<HTMLDivElement | null>;
+		menuRef: RefObject<HTMLDivElement>;
 	},
 );
 
 const DropdownMenuContextProvider = ({ children }: { children: React.ReactNode }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const menuRef = useRef<HTMLDivElement | null>(null);
+	const menuRef = useRef<HTMLDivElement>(null!);
 
 	const handleToggle = () => {
 		if (isOpen) {
@@ -124,7 +124,7 @@ export const DropdownMenuTrigger = ({
 const DropdownMenuWrapper = ({ children, className }: { children: React.ReactNode; className?: ClassNameValue }) => {
 	const { setIsOpen, menuRef } = useDropdownMenuContext();
 
-	useOnClickOutside(menuRef as RefObject<HTMLDivElement>, () => {
+	useOnClickOutside(menuRef, () => {
 		setIsOpen(false);
 	});
 

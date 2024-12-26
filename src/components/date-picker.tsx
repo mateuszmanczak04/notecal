@@ -2,7 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import { format, isValid } from 'date-fns';
-import { FC, RefObject, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import Tag from './tag';
 
@@ -15,7 +15,7 @@ interface DatePickerProps {
 
 const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date, className }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const menuRef = useRef<HTMLDivElement | null>(null);
+	const menuRef = useRef<HTMLDivElement>(null!);
 
 	// Inputs
 	const [year, setYear] = useState<string>(date ? date.getFullYear().toString() : '');
@@ -57,7 +57,7 @@ const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date, className 
 		onSelect(newDate);
 	};
 
-	useOnClickOutside(menuRef as RefObject<HTMLDivElement>, () => {
+	useOnClickOutside(menuRef, () => {
 		handleSubmit();
 		handleCloseMenu();
 	});

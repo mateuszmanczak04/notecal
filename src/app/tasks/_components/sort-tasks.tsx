@@ -4,12 +4,12 @@ import { useAppContext } from '@/app/_components/app-context';
 import { Button } from '@/components/button';
 import { cn } from '@/utils/cn';
 import { ArrowUpDown } from 'lucide-react';
-import { RefObject, useRef, useState, useTransition } from 'react';
+import { useRef, useState, useTransition } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
 const SortTasks = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const menuRef = useRef<HTMLDivElement>(null) as RefObject<HTMLDivElement>;
+	const menuRef = useRef<HTMLDivElement>(null!);
 	const [isPending, startTransition] = useTransition();
 	const { updateSettings, sortTasks } = useAppContext();
 
