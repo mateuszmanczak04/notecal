@@ -15,10 +15,19 @@ import deleteTaskServer, { T_DeleteTaskInput } from '../tasks/_actions/delete-ta
 import getTasks from '../tasks/_actions/get-tasks';
 import updateTaskServer, { T_UpdateTaskInput } from '../tasks/_actions/update-task';
 
+type Settings = {
+	displayedDays: number;
+	zoomLevel: number;
+	defaultNoteDuration: number;
+	language: string;
+	orderTasks: string;
+};
+
 type AppContextProps = {
 	tasks: Task[];
 	courses: Course[];
 	notes: Note[];
+	settings: Settings;
 	createNote: (values: T_CreateNoteInput) => Promise<void>;
 	updateNote: (values: T_UpdateNoteInput) => Promise<void>;
 	deleteNote: (values: T_DeleteNoteInput) => Promise<void>;
@@ -46,13 +55,21 @@ type AppContextProviderProps = {
 	initialTasks: Task[];
 	initialCourses: Course[];
 	initialNotes: Note[];
+	initialSettings: Settings;
 	children: ReactNode;
 };
 
-const AppContextProvider = ({ initialTasks, initialCourses, initialNotes, children }: AppContextProviderProps) => {
+const AppContextProvider = ({
+	initialTasks,
+	initialCourses,
+	initialNotes,
+	initialSettings,
+	children,
+}: AppContextProviderProps) => {
 	const [notes, setNotes] = useState<Note[]>(initialNotes);
 	const [courses, setCourses] = useState<Course[]>(initialCourses);
 	const [tasks, setTasks] = useState<Task[]>(initialTasks);
+	const [settings, setSettings] = useState<Settings>(initialSettings);
 
 	/** Fetches notes from backend and replaces current notes with fresh ones. */
 	const refetchNotes = async () => {
@@ -147,6 +164,7 @@ const AppContextProvider = ({ initialTasks, initialCourses, initialNotes, childr
 				updateTask,
 				deleteTask,
 				sortTasks,
+				settings,
 			}}>
 			{children}
 		</AppContext>
