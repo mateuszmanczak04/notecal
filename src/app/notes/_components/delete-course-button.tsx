@@ -24,7 +24,7 @@ const DeleteCourseButton = ({ id }: Props) => {
 	const confirmDeletion = () => {
 		startTransition(async () => {
 			await deleteCourse({ id });
-			router.back();
+			router.push('/courses');
 		});
 	};
 
