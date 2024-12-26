@@ -25,7 +25,7 @@ const Task = ({ task, forPage = 'tasks' }: Props) => {
 				<Title task={task} forPage={forPage} />
 				<Description task={task} forPage={forPage} />
 
-				<div className='mt-4 flex flex-wrap gap-4 '>
+				<div className='flex flex-wrap gap-4 '>
 					<Course task={task} forPage={forPage} />
 					<DueDate task={task} forPage={forPage} />
 					<Priority task={task} forPage={forPage} />

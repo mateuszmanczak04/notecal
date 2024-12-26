@@ -57,9 +57,11 @@ const Description = ({ task, forPage = 'tasks' }: Props) => {
 			ref={descriptionRef}
 			contentEditable={!completed}
 			className={cn(
-				'mt-1 text-neutral-500 outline-none dark:text-neutral-400',
+				' mt-1 text-neutral-500 outline-none dark:text-neutral-400',
 				completed && 'line-through',
-				isPending && 'opacity-50',
+				description.trim().length === 0 && 'mb-0 h-4 focus:mb-4 focus:h-auto',
+				description.trim().length > 0 && 'mb-4',
+				isPending && 'mb-4 h-auto opacity-50',
 			)}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}
