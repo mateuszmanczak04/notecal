@@ -17,7 +17,7 @@ type Props = {
 };
 
 const CoursePicker = ({ hidePicker, time, x, y }: Props) => {
-	const { courses, settings, createNote } = useAppContext();
+	const { courses, createNote } = useAppContext();
 	/** A reference to the popup div */
 	const pickerRef = useRef<HTMLDivElement>(null!);
 	const { containerRef } = useCalendarContext();
@@ -51,7 +51,7 @@ const CoursePicker = ({ hidePicker, time, x, y }: Props) => {
 
 	const handleSelect = (courseId: string) => {
 		startTransition(async () => {
-			await createNote({ courseId });
+			await createNote({ courseId, startTime: time });
 			hidePicker();
 		});
 
