@@ -11,7 +11,7 @@ import deleteNoteServer, { T_DeleteNoteInput } from '../notes/_actions/delete-no
 import getNotes from '../notes/_actions/get-notes';
 import updateNoteServer, { T_UpdateNoteInput } from '../notes/_actions/update-note';
 import getSettings from '../settings/_actions/get-settings';
-import { T_UpdateSettingsInput } from '../settings/_actions/update-settings';
+import updateSettingsServer, { T_UpdateSettingsInput } from '../settings/_actions/update-settings';
 import createTaskServer, { T_CreateTaskInput } from '../tasks/_actions/create-task';
 import deleteTaskServer, { T_DeleteTaskInput } from '../tasks/_actions/delete-task';
 import getTasks from '../tasks/_actions/get-tasks';
@@ -162,7 +162,7 @@ const AppContextProvider = ({
 	};
 
 	const updateSettings = async (values: T_UpdateSettingsInput) => {
-		await updateSettings(values);
+		await updateSettingsServer(values);
 		await refetchSettings();
 	};
 
