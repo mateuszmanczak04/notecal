@@ -15,14 +15,17 @@ const Notes = () => {
 	// When there is selected time, we should display the course picker:
 	const [selectedTime, setSelectedTime] = useState<Date | null>(null);
 
+	/**
+	 * Detect click on the grid and show popup to create a new note in that time.
+	 */
 	const handleClick = (event: MouseEvent) => {
 		if (!containerRef.current) return;
 
-		// Handle clicks on existing events:
+		// Don't react when user clicks on existing notes
 		if (event.target !== containerRef.current) return;
 
 		const { x, y } = getRelativePosition(event.clientX, event.clientY);
-		if (x === null || y === null) return; // TODO: show some kind of message
+		if (x === null || y === null) return;
 		setPopupX(x);
 		setPopupY(y);
 
@@ -30,7 +33,10 @@ const Notes = () => {
 		setSelectedTime(time);
 	};
 
-	/** Calculates a left offset when there are multiple notes overlapping */
+	/**
+	 * Calculates a left offset when there are multiple notes overlapping.
+	 * First note is aligned to the left, second one a little to the right, third one even more to the right.
+	 */
 	const leftOffsets = useMemo(() => {
 		if (!notes || notes.length === 0) return [];
 
