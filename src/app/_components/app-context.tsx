@@ -23,11 +23,18 @@ type Settings = {
 	orderTasks: string;
 };
 
+type User = {
+	id: string;
+	emailVerified: boolean;
+	email: string;
+};
+
 type AppContextProps = {
 	tasks: Task[];
 	courses: Course[];
 	notes: Note[];
 	settings: Settings;
+	user: User;
 	createNote: (values: T_CreateNoteInput) => Promise<void>;
 	updateNote: (values: T_UpdateNoteInput) => Promise<void>;
 	deleteNote: (values: T_DeleteNoteInput) => Promise<void>;
@@ -56,6 +63,7 @@ type AppContextProviderProps = {
 	initialCourses: Course[];
 	initialNotes: Note[];
 	initialSettings: Settings;
+	initialUser: User;
 	children: ReactNode;
 };
 
@@ -64,12 +72,14 @@ const AppContextProvider = ({
 	initialCourses,
 	initialNotes,
 	initialSettings,
+	initialUser,
 	children,
 }: AppContextProviderProps) => {
 	const [notes, setNotes] = useState<Note[]>(initialNotes);
 	const [courses, setCourses] = useState<Course[]>(initialCourses);
 	const [tasks, setTasks] = useState<Task[]>(initialTasks);
 	const [settings, setSettings] = useState<Settings>(initialSettings);
+	const [user, setUser] = useState<User>(initialUser);
 
 	/** Fetches notes from backend and replaces current notes with fresh ones. */
 	const refetchNotes = async () => {
@@ -165,6 +175,7 @@ const AppContextProvider = ({
 				deleteTask,
 				sortTasks,
 				settings,
+				user,
 			}}>
 			{children}
 		</AppContext>
