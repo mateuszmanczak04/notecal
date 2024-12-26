@@ -8,21 +8,27 @@ import Title from './title';
 
 type Props = {
 	task: Task;
+	/** Specify use case for this component. It can be user either big one in /tasks page or as a small task in /notes/[id] page. */
+	forPage?: 'tasks' | 'notes';
 };
 
-const Task = ({ task }: Props) => {
-	return (
-		<div className='flex gap-4 border-b border-neutral-200 pb-4 sm:p-4'>
-			<Completed task={task} />
-			<div className='min-w-0'>
-				<Title task={task} />
-				<Description task={task} />
+const Task = ({ task, forPage = 'tasks' }: Props) => {
+	if (forPage === 'notes') {
+		// TODO: this variant
+		return;
+	}
 
-				<div className='mt-2 flex flex-wrap gap-2'>
-					{/* TODO: first fix courses */}
-					<Course task={task} />
-					<DueDate task={task} />
-					<Priority task={task} />
+	return (
+		<div className='flex gap-4 rounded-xl p-4 '>
+			<Completed task={task} forPage={forPage} />
+			<div className='min-w-0'>
+				<Title task={task} forPage={forPage} />
+				<Description task={task} forPage={forPage} />
+
+				<div className='mt-4 flex flex-wrap gap-4 '>
+					<Course task={task} forPage={forPage} />
+					<DueDate task={task} forPage={forPage} />
+					<Priority task={task} forPage={forPage} />
 				</div>
 			</div>
 		</div>

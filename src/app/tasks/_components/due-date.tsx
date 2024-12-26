@@ -8,9 +8,10 @@ import { useTransition } from 'react';
 
 type Props = {
 	task: Task;
+	forPage?: 'tasks' | 'notes';
 };
 
-const DueDate = ({ task }: Props) => {
+const DueDate = ({ task, forPage = 'tasks' }: Props) => {
 	const [isPending, startTransition] = useTransition();
 	const { updateTask } = useAppContext();
 

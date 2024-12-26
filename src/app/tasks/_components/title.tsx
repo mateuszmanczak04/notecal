@@ -7,9 +7,10 @@ import { useEffect, useRef, useTransition } from 'react';
 
 type Props = {
 	task: Task;
+	forPage?: 'tasks' | 'notes';
 };
 
-const Title = ({ task }: Props) => {
+const Title = ({ task, forPage = 'tasks' }: Props) => {
 	const { id, title, completed } = task;
 	const titleRef = useRef<HTMLParagraphElement | null>(null);
 	const [isPending, startTransition] = useTransition();

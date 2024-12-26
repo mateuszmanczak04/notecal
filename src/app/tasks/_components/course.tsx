@@ -8,9 +8,10 @@ import { useTransition } from 'react';
 
 type Props = {
 	task: Task;
+	forPage?: 'tasks' | 'notes';
 };
 
-const Course = ({ task }: Props) => {
+const Course = ({ task, forPage = 'tasks' }: Props) => {
 	const [isPending, startTransition] = useTransition();
 	const { courses, updateTask } = useAppContext();
 	const currentCourse = courses.find(course => course.id === task.courseId);
