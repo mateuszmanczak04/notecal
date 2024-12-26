@@ -25,7 +25,7 @@ const Description = ({ task, forPage = 'tasks' }: Props) => {
 		if (newDescription.trim() === description) return;
 
 		startTransition(async () => {
-			await updateTask({ id, description: newDescription });
+			await updateTask({ id, description: newDescription.trim() });
 		});
 	};
 
