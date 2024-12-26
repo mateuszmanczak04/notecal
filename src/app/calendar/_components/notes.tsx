@@ -1,12 +1,13 @@
 'use client';
 
+import { useAppContext } from '@/app/_components/app-context';
 import { MouseEvent, useMemo, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import CoursePicker from './course-picker';
 import Note from './note';
 
 const Notes = () => {
-	const notes = [] as Note[];
+	const { notes } = useAppContext();
 	const { containerRef, getRelativePosition, getDateFromPosition, rowHeight } = useCalendarContext();
 
 	const [popupX, setPopupX] = useState(0);

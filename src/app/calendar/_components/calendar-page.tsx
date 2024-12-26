@@ -1,6 +1,5 @@
 'use client';
 
-import ErrorMessage from '@/components/error-message';
 import { useEffect, useRef } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import Grid from './grid';
@@ -9,11 +8,7 @@ import Notes from './notes';
 import TopBar from './top-bar';
 
 const CalendarPage = () => {
-	const notesError = { message: '' };
-	const coursesError = { message: '' };
-
-	// Used to keep the same calendar scroll y level even after
-	// switching routes
+	// Used to keep the same calendar scroll y level even after switching routes
 	const { scrollTop, setScrollTop } = useCalendarContext();
 	const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -27,13 +22,10 @@ const CalendarPage = () => {
 
 	return (
 		<div className='flex h-full flex-col'>
-			{/* Year and month: */}
+			{/* Year and month, back, forward, zoom in/out */}
 			<Header />
 
-			{/* Errors */}
-			{notesError && <ErrorMessage className='mt-4'>{notesError.message}</ErrorMessage>}
-			{coursesError && <ErrorMessage className='mt-4'>{coursesError.message}</ErrorMessage>}
-
+			{/* Dates */}
 			<TopBar />
 
 			<div

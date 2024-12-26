@@ -1,11 +1,11 @@
 'use client';
 
-import { useCalendarContext } from '../_context/calendar-context';
+import { useAppContext } from '@/app/_components/app-context';
 import DayColumn from './day-column';
 import HourRow from './hour-row';
 
 const Grid = () => {
-	const { displayedDays } = useCalendarContext();
+	const { settings } = useAppContext();
 
 	return (
 		<div className='flex'>
@@ -20,11 +20,10 @@ const Grid = () => {
 			<div
 				className='grid flex-1'
 				style={{
-					gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
-				}}
-			>
-				{new Array(displayedDays).fill(0).map((_, index) => (
-					<DayColumn key={index} isLast={index === displayedDays - 1} />
+					gridTemplateColumns: `repeat(${settings.displayedDays}, 1fr)`,
+				}}>
+				{new Array(settings.displayedDays).fill(0).map((_, index) => (
+					<DayColumn key={index} isLast={index === settings.displayedDays - 1} />
 				))}
 			</div>
 		</div>
