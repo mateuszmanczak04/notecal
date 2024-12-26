@@ -62,8 +62,6 @@ const Notes = () => {
 		return results.map(r => (r > 2 ? 2 : r));
 	}, [notes]);
 
-	console.table(notes);
-
 	return (
 		<div
 			onDragOver={e => e.preventDefault()}
@@ -71,7 +69,10 @@ const Notes = () => {
 			className='absolute left-12 top-0 w-[calc(100%-48px)] cursor-crosshair overflow-hidden sm:left-20 sm:w-[calc(100%-80px)]'
 			onClick={handleClick}
 			style={{ height: rowHeight * 24 + 'px' }}>
+			{/* Notes */}
 			{notes?.map((note, index) => <Note key={note.id} note={note} leftOffset={leftOffsets[index]} />)}
+
+			{/* A popup to create a new note */}
 			{selectedTime && (
 				<CoursePicker time={selectedTime} x={popupX} y={popupY} hidePicker={() => setSelectedTime(null)} />
 			)}

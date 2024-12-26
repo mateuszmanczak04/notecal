@@ -73,7 +73,7 @@ const Note = ({ note, leftOffset }: Props) => {
 	 */
 	const getLeftOffset = (date: Date) => {
 		const daysFromFirstDay = differenceInCalendarDays(date, currentFirstDay);
-		return `calc(${daysFromFirstDay * (100 / settings.displayedDays) + '%'} + ${leftOffset * 16 + 'px'}`;
+		return `calc(${daysFromFirstDay * (100 / settings.displayedDays) + '%'} + ${leftOffset * 16 + 'px'})`;
 	};
 
 	/**
