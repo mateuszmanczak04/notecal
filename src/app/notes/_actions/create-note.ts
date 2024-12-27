@@ -5,7 +5,7 @@ import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 import { Note } from '@prisma/client';
 import { addMinutes } from 'date-fns';
-import { toZonedTime } from 'date-fns-tz';
+import { fromZonedTime } from 'date-fns-tz';
 
 export type T_CreateNoteInput = {
 	courseId: string;
@@ -42,7 +42,7 @@ const createNote = async ({ courseId, startTime }: T_CreateNoteInput): T_CreateN
 			return { error: 'User does not exist' };
 		}
 
-		const actualStartTime = toZonedTime(startTime || new Date(), 'Europe/Warsaw');
+		const actualStartTime = startTime ? fromZonedTime(startTime, 'Europe/Warsaw') : new Date();
 		actualStartTime.setSeconds(0, 0); // Set seconds and milliseconds to 0
 		const endTime = addMinutes(actualStartTime, user.defaultNoteDuration);
 

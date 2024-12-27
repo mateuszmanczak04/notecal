@@ -2,6 +2,7 @@
 
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
+import { toZonedTime } from 'date-fns-tz';
 import { cache } from 'react';
 
 const getNotes = cache(async () => {
@@ -19,7 +20,11 @@ const getNotes = cache(async () => {
 			},
 		});
 
-		return notes;
+		return notes.map(note => ({
+			...note,
+			startTime: toZonedTime(note.startTime, 'Europe/Warsaw'),
+			endTime: toZonedTime(note.endTime, 'Europe/Warsaw'),
+		}));
 	} catch {
 		return [];
 	}
