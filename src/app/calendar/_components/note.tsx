@@ -1,8 +1,11 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
+import { useCourses } from '@/app/_hooks/use-courses';
+import { useUser } from '@/app/_hooks/use-user';
+import updateNote from '@/app/notes/_actions/update-note';
 import { cn } from '@/utils/cn';
 import { type Note } from '@prisma/client';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addDays, addMilliseconds, differenceInCalendarDays, startOfDay } from 'date-fns';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -11,20 +14,20 @@ import { useCalendarContext } from '../_context/calendar-context';
 type Props = {
 	note: Note & { loading?: boolean };
 	leftOffset: number;
-	updateOptimisticNote: ({ id, startTime, endTime }: { id: string; startTime: Date; endTime: Date }) => void;
 };
 
-const Note = ({ note, leftOffset, updateOptimisticNote }: Props) => {
-	const { settings, updateNote, courses } = useAppContext();
-	const { currentFirstDay, getRelativePosition, getDateFromPosition } = useCalendarContext();
+const Note = ({ note, leftOffset }: Props) => {
+	const queryClient = useQueryClient();
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateNote,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['notes'] });
+		},
+	});
+	const { data: courses } = useCourses();
+	const { data: user } = useUser();
 
-	// Maybe filtering all courses for each note is not the fastest
-	// way to do it but let's assume that most of users don't have
-	// more than 10-20 coursers. Then we shouldn't care that much about
-	// the performance.
-	// Also we can assume that course exists because there shouldn't
-	// be any note without a corresponding course.
-	const course = courses.find(c => c.id === note.courseId)!;
+	const { currentFirstDay, getRelativePosition, getDateFromPosition } = useCalendarContext();
 
 	const noteRef = useRef<HTMLAnchorElement[]>([]);
 	const initialDragDate = useRef<Date | null>(null);
@@ -41,6 +44,17 @@ const Note = ({ note, leftOffset, updateOptimisticNote }: Props) => {
 		setDragStartTime(note.startTime);
 		setDragEndTime(note.endTime);
 	}, [note.startTime, note.endTime]);
+
+	// Should not occur in normal app conditions
+	if (!courses || !user) return;
+
+	// Maybe filtering all courses for each note is not the fastest
+	// way to do it but let's assume that most of users don't have
+	// more than 10-20 coursers. Then we shouldn't care that much about
+	// the performance.
+	// Also we can assume that course exists because there shouldn't
+	// be any note without a corresponding course.
+	const course = courses.find(c => c.id === note.courseId);
 
 	/**
 	 * Returns days which are included in note's duration,
@@ -74,7 +88,7 @@ const Note = ({ note, leftOffset, updateOptimisticNote }: Props) => {
 	 */
 	const getLeftOffset = (date: Date) => {
 		const daysFromFirstDay = differenceInCalendarDays(date, currentFirstDay);
-		return `calc(${daysFromFirstDay * (100 / settings.displayedDays) + '%'} + ${leftOffset * 16 + 'px'})`;
+		return `calc(${daysFromFirstDay * (100 / user.displayedDays) + '%'} + ${leftOffset * 16 + 'px'})`;
 	};
 
 	/**
@@ -82,7 +96,7 @@ const Note = ({ note, leftOffset, updateOptimisticNote }: Props) => {
 	 * 1 / settings.displayedDays with some improvements.
 	 */
 	const getWidth = () => {
-		return `calc(${100 / settings.displayedDays}% - ${32 + 'px'})`;
+		return `calc(${100 / user.displayedDays}% - ${32 + 'px'})`;
 	};
 
 	/**
@@ -202,15 +216,7 @@ const Note = ({ note, leftOffset, updateOptimisticNote }: Props) => {
 	const handleDragEnd = (event: React.DragEvent) => {
 		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
 
-		// Optimistic update in local state
-		updateOptimisticNote({
-			id: note.id,
-			startTime: dragStartTime,
-			endTime: dragEndTime,
-		});
-
-		// Update in global app context
-		updateNote({
+		mutate({
 			id: note.id,
 			startTime: dragStartTime,
 			endTime: dragEndTime,
@@ -247,22 +253,9 @@ const Note = ({ note, leftOffset, updateOptimisticNote }: Props) => {
 	 */
 	const handleDragEndTop = () => {
 		if (dragStartTime < note.endTime) {
-			updateOptimisticNote({
-				id: note.id,
-				startTime: dragStartTime,
-				endTime: note.endTime,
-			});
-			updateNote({ id: note.id, startTime: dragStartTime });
+			mutate({ id: note.id, startTime: dragStartTime });
 		} else {
-			// Local update
-			updateOptimisticNote({
-				id: note.id,
-				startTime: note.endTime,
-				endTime: dragStartTime,
-			});
-
-			// Global update
-			updateNote({
+			mutate({
 				id: note.id,
 				startTime: note.endTime,
 				endTime: dragStartTime,
@@ -300,22 +293,9 @@ const Note = ({ note, leftOffset, updateOptimisticNote }: Props) => {
 	 */
 	const handleDragEndBottom = () => {
 		if (dragEndTime > note.startTime) {
-			updateOptimisticNote({
-				id: note.id,
-				startTime: note.startTime,
-				endTime: dragEndTime,
-			});
-			updateNote({ id: note.id, endTime: dragEndTime });
+			mutate({ id: note.id, endTime: dragEndTime });
 		} else {
-			// Local update
-			updateOptimisticNote({
-				id: note.id,
-				startTime: note.startTime,
-				endTime: dragEndTime,
-			});
-
-			// Global update
-			updateNote({
+			mutate({
 				id: note.id,
 				endTime: note.startTime,
 				startTime: dragEndTime,
@@ -369,7 +349,7 @@ const Note = ({ note, leftOffset, updateOptimisticNote }: Props) => {
 							height: getHeight(day, note.startTime, note.endTime),
 							// If course was not found, the color will be undefined so
 							// the note should have "bg-primary-500" color as in className above
-							backgroundColor: course.color,
+							backgroundColor: course?.color || '',
 						}}>
 						{/* Top edge to drag: */}
 						{index === 0 && (

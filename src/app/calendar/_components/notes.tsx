@@ -1,16 +1,14 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
-import { MouseEvent, useMemo, useOptimistic, useState, useTransition } from 'react';
+import { useNotes } from '@/app/_hooks/use-notes';
+import { MouseEvent, useMemo, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import CoursePicker from './course-picker';
 import Note from './note';
 
 const Notes = () => {
-	const { notes } = useAppContext();
+	const { data: notes } = useNotes();
 	const { containerRef, getRelativePosition, getDateFromPosition, rowHeight } = useCalendarContext();
-	const [optimisticnotes, setOptimisticNotes] = useOptimistic(notes);
-	const [isPending, startTransition] = useTransition();
 
 	const [popupX, setPopupX] = useState(0);
 	const [popupY, setPopupY] = useState(0);
@@ -64,17 +62,6 @@ const Notes = () => {
 		return results.map(r => (r > 2 ? 2 : r));
 	}, [notes]);
 
-	/**
-	 * Handles optimistic updates in local state.
-	 */
-	const updateOptimisticNote = ({ id, startTime, endTime }: { id: string; startTime: Date; endTime: Date }) => {
-		startTransition(() => {
-			setOptimisticNotes(prev => {
-				return prev.map(note => (note.id === id ? { ...note, startTime, endTime } : note));
-			});
-		});
-	};
-
 	return (
 		<div
 			onDragOver={e => e.preventDefault()}
@@ -83,14 +70,7 @@ const Notes = () => {
 			onClick={handleClick}
 			style={{ height: rowHeight * 24 + 'px' }}>
 			{/* Notes */}
-			{optimisticnotes?.map((note, index) => (
-				<Note
-					updateOptimisticNote={updateOptimisticNote}
-					key={note.id}
-					note={note}
-					leftOffset={leftOffsets[index]}
-				/>
-			))}
+			{notes?.map((note, index) => <Note key={note.id} note={note} leftOffset={leftOffsets[index]} />)}
 
 			{/* A popup to create a new note */}
 			{selectedTime && (

@@ -1,16 +1,20 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
+import { useUser } from '@/app/_hooks/use-user';
 import LoadingSpinner from '@/components/loading-spinner';
 import { useCalendarContext } from '../_context/calendar-context';
 import DayHeading from './day-heading';
 
 const TopBar = () => {
 	const { getDayAfter } = useCalendarContext();
-	const { settings } = useAppContext();
+	const { data: user } = useUser();
+
+	// Should not occur in normal app conditions
+	if (!user) return;
+
 	const isNotesPending = false;
 	const isCoursesPending = false;
-	const days = new Array(settings.displayedDays).fill(0).map((_, index) => getDayAfter(index));
+	const days = new Array(user.displayedDays).fill(0).map((_, index) => getDayAfter(index));
 
 	return (
 		<div className='mt-4 flex'>
@@ -22,10 +26,10 @@ const TopBar = () => {
 			<div
 				className='grid flex-1'
 				style={{
-					gridTemplateColumns: `repeat(${settings.displayedDays}, 1fr)`,
+					gridTemplateColumns: `repeat(${user.displayedDays}, 1fr)`,
 				}}>
 				{days.map((day, index) => (
-					<DayHeading key={day.toString()} date={day} isLast={index === settings.displayedDays - 1} />
+					<DayHeading key={day.toString()} date={day} isLast={index === user.displayedDays - 1} />
 				))}
 			</div>
 		</div>

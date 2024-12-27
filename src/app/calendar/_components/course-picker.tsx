@@ -1,11 +1,14 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
+import { useCourses } from '@/app/_hooks/use-courses';
+import createNote from '@/app/notes/_actions/create-note';
 import { Button } from '@/components/button';
+import { cn } from '@/utils/cn';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
-import { useLayoutEffect, useRef, useState, useTransition } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useEventListener, useOnClickOutside } from 'usehooks-ts';
 import { useCalendarContext } from '../_context/calendar-context';
 
@@ -17,13 +20,20 @@ type Props = {
 };
 
 const CoursePicker = ({ hidePicker, time, x, y }: Props) => {
-	const { courses, createNote } = useAppContext();
+	const queryClient = useQueryClient();
+	const { data: courses } = useCourses();
+	const { mutate, isPending } = useMutation({
+		mutationFn: createNote,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['notes'] });
+		},
+	});
+
 	/** A reference to the popup div */
 	const pickerRef = useRef<HTMLDivElement>(null!);
 	const { containerRef } = useCalendarContext();
 	const [pickerX, setPickerX] = useState(x);
 	const [pickerY, setPickerY] = useState(y);
-	const [isPending, startTransition] = useTransition();
 
 	// Detect if popup shouldn't display beyond the right or bottom
 	// edge of the container, useLayoutEffect lets us perform calculations
@@ -50,10 +60,8 @@ const CoursePicker = ({ hidePicker, time, x, y }: Props) => {
 	}, [containerRef, x, y]);
 
 	const handleSelect = (courseId: string) => {
-		startTransition(async () => {
-			await createNote({ courseId, startTime: time });
-			hidePicker();
-		});
+		mutate({ courseId, startTime: time });
+		hidePicker();
 
 		// TODO: restore with optimistic updates
 		// Needed this timeout to move hidePicker at the end of the
@@ -122,10 +130,13 @@ const CoursePicker = ({ hidePicker, time, x, y }: Props) => {
 
 			{/* Popup: */}
 			<div
-				className='absolute z-40 flex min-w-40 max-w-96 -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-xl bg-white shadow-xl dark:bg-neutral-700'
+				className={cn(
+					'absolute z-40 flex min-w-40 max-w-96 -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-xl bg-white shadow-xl dark:bg-neutral-700',
+					isPending && 'pointer-events-none opacity-50',
+				)}
 				ref={pickerRef}
 				style={{ left: pickerX, top: pickerY }}>
-				{courses.length === 0 ? <ZeroCoursesContent /> : <SomeCoursesContent />}
+				{courses && courses.length > 0 ? <SomeCoursesContent /> : <ZeroCoursesContent />}
 			</div>
 		</>
 	);

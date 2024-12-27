@@ -1,10 +1,12 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
+import { useUser } from '@/app/_hooks/use-user';
+import updateSettings from '@/app/settings/_actions/update-settings';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addDays } from 'date-fns';
 import { ReactNode, RefObject, createContext, useContext, useRef, useState } from 'react';
 
-interface CalendarContextProps {
+type CalendarContextProps = {
 	currentFirstDay: Date;
 	goDayForward: () => void;
 	goDayBackward: () => void;
@@ -17,19 +19,27 @@ interface CalendarContextProps {
 	zoomOut: () => void;
 	scrollTop: number;
 	setScrollTop: (newValue: number) => void;
-}
+};
 
 const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const { updateSettings, settings } = useAppContext();
+
+	const queryClient = useQueryClient();
+	const { data: user } = useUser();
+	const { mutate } = useMutation({
+		mutationFn: updateSettings,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['user'] });
+		},
+	});
 
 	// Needed to keep the same calendar scroll y level after switching routes
 	const [scrollTop, setScrollTop] = useState(0);
 
-	if (!settings) return null; // TOOD: handle this
+	if (!user) return null; // TOOD: handle this
 
 	/**
 	 * Returns a date object which is X days after "currentFirstDay"
@@ -81,7 +91,7 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 		const { width, height } = containerRef.current.getBoundingClientRect();
 
 		// Get day (YYYY-MM-DD):
-		const columnWidth = width / 7; // TODO
+		const columnWidth = width / user.displayedDays; // TODO
 		const dayIndex = Math.floor(x / columnWidth);
 		const time = addDays(currentFirstDay, dayIndex);
 
@@ -103,7 +113,7 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	 * Returns height of the calendar hour row in pixels. It's based on user's setting "zoomLevel".
 	 */
 	const getRowHeight = () => {
-		switch (settings.zoomLevel) {
+		switch (user.zoomLevel) {
 			case 1:
 				return 40;
 			case 2:
@@ -124,9 +134,9 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	 * Maximum possible value is 5.
 	 */
 	const zoomIn = () => {
-		if (settings.zoomLevel !== 5) {
-			updateSettings({
-				zoomLevel: (settings.zoomLevel + 1) as 1 | 2 | 3 | 4 | 5,
+		if (user.zoomLevel !== 5) {
+			mutate({
+				zoomLevel: (user.zoomLevel + 1) as 1 | 2 | 3 | 4 | 5,
 			});
 		}
 	};
@@ -136,9 +146,9 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	 * Minimum possible value is 1.
 	 */
 	const zoomOut = () => {
-		if (settings.zoomLevel > 1) {
-			updateSettings({
-				zoomLevel: (settings.zoomLevel - 1) as 1 | 2 | 3 | 4 | 5,
+		if (user.zoomLevel > 1) {
+			mutate({
+				zoomLevel: (user.zoomLevel - 1) as 1 | 2 | 3 | 4 | 5,
 			});
 		}
 	};
