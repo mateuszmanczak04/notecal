@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppContext } from '@/app/_components/app-context';
-import { MouseEvent, startTransition, useMemo, useOptimistic, useState, useTransition } from 'react';
+import { MouseEvent, useMemo, useOptimistic, useState, useTransition } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import CoursePicker from './course-picker';
 import Note from './note';
@@ -10,7 +10,7 @@ const Notes = () => {
 	const { notes } = useAppContext();
 	const { containerRef, getRelativePosition, getDateFromPosition, rowHeight } = useCalendarContext();
 	const [optimisticnotes, setOptimisticNotes] = useOptimistic(notes);
-	const [isPending, startTrasition] = useTransition();
+	const [isPending, startTransition] = useTransition();
 
 	const [popupX, setPopupX] = useState(0);
 	const [popupY, setPopupY] = useState(0);
