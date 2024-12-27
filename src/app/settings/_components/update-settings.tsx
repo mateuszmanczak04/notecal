@@ -1,27 +1,39 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
 import { Button } from '@/components/button';
+import ErrorMessage from '@/components/error-message';
 import { Input } from '@/components/input';
 import { cn } from '@/utils/cn';
-import { FormEvent, useState, useTransition } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { FormEvent, useState } from 'react';
+import getUser from '../_actions/get-user';
+import updateSettings from '../_actions/update-settings';
 
+/**
+ * A place to update most of user's settings not related to authentication.
+ */
 const UpdateSettings = () => {
-	const [isPending, startTransition] = useTransition();
-	// const [error, setError] = useState<string>('');
-	// const [message, setMessage] = useState<string>('');
-	const { settings, updateSettings } = useAppContext();
+	const queryClient = useQueryClient();
+	const { data: user } = useQuery({
+		queryKey: ['user'],
+		queryFn: getUser,
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+	});
+	const { mutate, isPending, error } = useMutation({
+		mutationFn: updateSettings,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['user'] });
+		},
+	});
 
-	const [displayedDays, setDisplayedDays] = useState(settings.displayedDays);
-	const [defaultNoteDuration, setDefaultNoteDuration] = useState(settings.defaultNoteDuration);
-	const [language, setLanguage] = useState(settings.language);
+	const [displayedDays, setDisplayedDays] = useState(user?.displayedDays);
+	const [defaultNoteDuration, setDefaultNoteDuration] = useState(user?.defaultNoteDuration);
+	const [language, setLanguage] = useState(user?.language);
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		startTransition(async () => {
-			await updateSettings({ displayedDays, defaultNoteDuration, language });
-			// TODO: handle errors
-		});
+		mutate({ displayedDays, defaultNoteDuration, language });
 	};
 
 	return (
@@ -80,8 +92,7 @@ const UpdateSettings = () => {
 				</Button>
 
 				{/* Form results */}
-				{/* {message && <SuccessMessage>{message}</SuccessMessage>}
-				{error && <ErrorMessage>{error}</ErrorMessage>} */}
+				{error && <ErrorMessage>{error.message}</ErrorMessage>}
 			</form>
 		</section>
 	);

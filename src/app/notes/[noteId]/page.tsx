@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import NotePage from './note-page';
 
 export const metadata: Metadata = {
 	title: 'Notecal | Note',
@@ -9,6 +8,7 @@ export const metadata: Metadata = {
 };
 
 // Had to extract it to a separate file to use metadata API.
-const page = () => <NotePage />;
+// const page = () => <NotePage />;
+const page = () => <p>TODO</p>;
 
 export default page;

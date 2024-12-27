@@ -1,24 +1,24 @@
 'use server';
 
+import getUser from '@/app/settings/_actions/get-user';
 import db from '@/utils/db';
-import { getUser } from '@/utils/get-user';
 import { cache } from 'react';
 
 const getTasks = cache(async () => {
-	const user = await getUser();
+	try {
+		const user = await getUser();
 
-	if (!user) return [];
+		const tasks = await db.task.findMany({
+			where: { userId: user.id },
+			orderBy: {
+				[user.orderTasks]: 'asc',
+			},
+		});
 
-	const orderBy = user.orderTasks;
-
-	const tasks = await db.task.findMany({
-		where: { userId: user.id },
-		orderBy: {
-			[orderBy || user.orderTasks]: 'asc',
-		},
-	});
-
-	return tasks;
+		return tasks;
+	} catch {
+		return [];
+	}
 });
 
 export default getTasks;

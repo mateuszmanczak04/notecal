@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import SettingsPage from './_components/settings-page';
 
 export const metadata: Metadata = {
-	title: 'Settings',
+	title: 'Notecal | Settings',
 	robots: {
 		index: false,
 	},
