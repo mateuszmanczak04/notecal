@@ -4,14 +4,12 @@ import db from '@/utils/db';
 import { getUser } from '@/utils/get-user';
 import { cache } from 'react';
 
-export type T_GetTasksInput = {
-	orderBy?: string;
-};
-
-const getTasks = cache(async ({ orderBy }: T_GetTasksInput) => {
+const getTasks = cache(async () => {
 	const user = await getUser();
 
 	if (!user) return [];
+
+	const orderBy = user.orderTasks;
 
 	const tasks = await db.task.findMany({
 		where: { userId: user.id },

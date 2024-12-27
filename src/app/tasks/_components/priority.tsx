@@ -1,10 +1,10 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
 import { cn } from '@/utils/cn';
 import { Task, TaskPriority } from '@prisma/client';
-import { useTransition } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import updateTask from '../_actions/update-task';
 
 type Props = {
 	task: Task;
@@ -40,19 +40,19 @@ const getPriorityTitle = (priority: TaskPriority | null) => {
 };
 
 const Priority = ({ task, forPage = 'tasks' }: Props) => {
-	const [isPending, startTransition] = useTransition();
-	const { updateTask } = useAppContext();
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateTask,
+	});
 
 	const handleSelect = (newPriority: any) => {
-		startTransition(async () => {
-			await updateTask({
-				id: task.id,
-				priority: newPriority,
-			});
+		mutate({
+			id: task.id,
+			priority: newPriority,
 		});
 	};
 	return (
-		<DropdownMenu className={cn('w-52', forPage === 'notes' && 'w-full', isPending && 'opacity-50')}>
+		<DropdownMenu
+			className={cn('w-52', forPage === 'notes' && 'w-full', isPending && 'pointer-events-none opacity-50')}>
 			<DropdownMenuTrigger showChevron className={cn(forPage === 'notes' && 'text-sm')}>
 				{getPriorityTitle(task.priority)}
 			</DropdownMenuTrigger>

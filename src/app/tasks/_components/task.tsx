@@ -18,8 +18,8 @@ const Task = ({ task, forPage = 'tasks' }: Props) => {
 		<div className={cn('flex gap-4 p-4', forPage === 'notes' && 'gap-2  p-2')}>
 			<Completed task={task} forPage={forPage} />
 			<div className='min-w-0 flex-1'>
-				<Title task={task} forPage={forPage} />
-				<Description task={task} forPage={forPage} />
+				<Title task={task} />
+				<Description task={task} />
 
 				<div
 					className={cn(

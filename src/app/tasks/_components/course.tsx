@@ -1,10 +1,11 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
+import getCourses from '@/app/courses/_actions/get-courses';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
-import { useTransition } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import updateTask from '../_actions/update-task';
 
 type Props = {
 	task: Task;
@@ -12,19 +13,25 @@ type Props = {
 };
 
 const Course = ({ task, forPage = 'tasks' }: Props) => {
-	const [isPending, startTransition] = useTransition();
-	const { courses, updateTask } = useAppContext();
-	const currentCourse = courses.find(course => course.id === task.courseId);
+	const { data: courses } = useQuery({
+		queryKey: ['courses'],
+		queryFn: getCourses,
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+	});
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateTask,
+	});
+	const currentCourse = courses?.find(course => course.id === task.courseId);
 
 	const handleSelect = (newCourseId: string | null) => {
 		if (task.courseId && newCourseId === task.courseId) return;
-		startTransition(async () => {
-			await updateTask({ id: task.id, courseId: newCourseId });
-		});
+		mutate({ id: task.id, courseId: newCourseId });
 	};
 
 	return (
-		<DropdownMenu className={cn('w-52', forPage === 'notes' && 'w-full', isPending && 'opacity-50')}>
+		<DropdownMenu
+			className={cn('w-52', forPage === 'notes' && 'w-full', isPending && 'pointer-events-none opacity-50')}>
 			<DropdownMenuTrigger showChevron>
 				{currentCourse && (
 					<div

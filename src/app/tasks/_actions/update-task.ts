@@ -4,7 +4,6 @@ import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 import { Task } from '@prisma/client';
-import { revalidatePath } from 'next/cache';
 
 export type T_UpdateTaskInput = {
 	id: string;
@@ -32,12 +31,17 @@ const updateTask = async (data: T_UpdateTaskInput): T_UpdateTaskResult => {
 			};
 		}
 
+		// Delete task if it's title's length becomes equal zero
+		if (data.title?.trim() === '') {
+			await db.task.delete({
+				where: { id: data.id, userId: user.id },
+			});
+		}
+
 		const task = await db.task.update({
 			where: { id: data.id, userId: user.id },
 			data,
 		});
-
-		revalidatePath('/tasks');
 
 		return { task };
 	} catch (error) {

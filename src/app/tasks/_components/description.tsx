@@ -1,32 +1,27 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
-import { useEffect, useRef, useTransition } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
+import updateTask from '../_actions/update-task';
 
 type Props = {
 	task: Task;
-	forPage?: 'tasks' | 'notes';
 };
 
-const Description = ({ task, forPage = 'tasks' }: Props) => {
-	const { id, description, completed } = task;
-	const descriptionRef = useRef<HTMLParagraphElement | null>(null);
-	const [isPending, startTransition] = useTransition();
-	const { updateTask } = useAppContext();
+const Description = ({ task }: Props) => {
+	const { id, description } = task;
+	const descriptionRef = useRef<HTMLParagraphElement>(null!);
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateTask,
+	});
 
 	const handleSubmit = () => {
-		if (!descriptionRef.current) return;
-
 		const newDescription = descriptionRef.current.innerText;
-
 		// Don't want to update the same value:
 		if (newDescription.trim() === description) return;
-
-		startTransition(async () => {
-			await updateTask({ id, description: newDescription.trim() });
-		});
+		mutate({ id, title: newDescription.trim() });
 	};
 
 	/**
@@ -60,7 +55,7 @@ const Description = ({ task, forPage = 'tasks' }: Props) => {
 				' mt-1 text-neutral-500 outline-none dark:text-neutral-400',
 				description.trim().length === 0 && 'mb-0 h-4 focus:mb-2 focus:h-auto',
 				description.trim().length > 0 && 'mb-2',
-				isPending && 'mb-2 h-auto opacity-50',
+				isPending && 'pointer-events-none mb-2 h-auto opacity-50',
 			)}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}

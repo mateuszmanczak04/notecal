@@ -134,7 +134,7 @@ const AppContextProvider = ({
 
 	/** Fetches courses from backend and replaces current courses with fresh ones. */
 	const refetchTasks = async (orderBy?: string) => {
-		const freshTasks = await getTasks({ orderBy });
+		const freshTasks = await getTasks();
 		setTasks(freshTasks);
 	};
 

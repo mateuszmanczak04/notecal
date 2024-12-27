@@ -40,7 +40,7 @@ const MainLayout = async ({ children }: Props) => {
 		}),
 		queryClient.prefetchQuery({
 			queryKey: ['tasks'],
-			queryFn: () => getTasks({}),
+			queryFn: getTasks,
 		}),
 	]);
 

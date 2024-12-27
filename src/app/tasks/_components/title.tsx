@@ -1,39 +1,27 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
-import { useEffect, useRef, useTransition } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
+import updateTask from '../_actions/update-task';
 
 type Props = {
 	task: Task;
-	forPage?: 'tasks' | 'notes';
 };
 
-const Title = ({ task, forPage = 'tasks' }: Props) => {
-	const { id, title, completed } = task;
-	const titleRef = useRef<HTMLParagraphElement | null>(null);
-	const [isPending, startTransition] = useTransition();
-	const { updateTask, deleteTask } = useAppContext();
+const Title = ({ task }: Props) => {
+	const { id, title } = task;
+	const titleRef = useRef<HTMLParagraphElement>(null!);
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateTask,
+	});
 
 	const handleSubmit = () => {
-		if (!titleRef.current) return;
-
 		const newTitle = titleRef.current.innerText;
-
-		// We remove the task if title is empty
-		if (newTitle.trim().length === 0) {
-			startTransition(async () => {
-				await deleteTask({ id });
-			});
-		}
-
 		// Don't want to update the same value:
 		if (newTitle.trim() === title) return;
-
-		startTransition(async () => {
-			await updateTask({ id, title: newTitle });
-		});
+		mutate({ id, title: newTitle.trim() });
 	};
 
 	/**
@@ -63,7 +51,7 @@ const Title = ({ task, forPage = 'tasks' }: Props) => {
 		<p
 			ref={titleRef}
 			contentEditable
-			className={cn('font-bold outline-none transition-colors', isPending && 'opacity-50')}
+			className={cn('font-bold outline-none transition-colors', isPending && 'pointer-events-none opacity-50')}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}
 			spellCheck={false}></p>
