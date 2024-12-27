@@ -4,6 +4,7 @@ import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 import { Note } from '@prisma/client';
+import { toZonedTime } from 'date-fns-tz';
 
 export type T_UpdateNoteInput = {
 	id: string;
@@ -30,8 +31,8 @@ const updateNote = async ({ id, startTime, endTime, content, courseId }: T_Updat
 		const note = await db.note.update({
 			where: { id, userId: user.id },
 			data: {
-				startTime,
-				endTime,
+				startTime: startTime && toZonedTime(startTime, 'Europe/Warsaw'),
+				endTime: endTime && toZonedTime(endTime, 'Europe/Warsaw'),
 				content,
 				courseId,
 			},
