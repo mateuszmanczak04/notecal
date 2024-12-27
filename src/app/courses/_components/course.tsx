@@ -1,12 +1,13 @@
 'use client';
 
+import createNote from '@/app/notes/_actions/create-note';
 import getNotes from '@/app/notes/_actions/get-notes';
 import LoadingSpinner from '@/components/loading-spinner';
 import { Course as T_Course } from '@prisma/client';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { useTransition } from 'react';
+import { useEffect, useRef } from 'react';
 
 type Props = {
 	course: T_Course;
@@ -15,10 +16,18 @@ type Props = {
 /**
  * A grid tile with loading spinner.
  */
-export const CourseFallback = () => {
+const CourseLoadingFallback = () => {
 	return (
 		<div className='pointer-events-none grid place-content-center rounded-xl bg-neutral-50 p-4 dark:bg-neutral-700 dark:text-white'>
 			<LoadingSpinner />
+		</div>
+	);
+};
+
+const CourseErrorFallback = () => {
+	return (
+		<div className='pointer-events-none grid place-content-center rounded-xl bg-error-50 p-4 dark:bg-error-700 dark:text-white'>
+			There was an error when loading a course
 		</div>
 	);
 };
@@ -27,28 +36,29 @@ export const CourseFallback = () => {
  * A link navigating to the latest note from it's course. If there are not notes it will automatically create one before rendering.
  */
 const Course = ({ course }: Props) => {
-	const [isPending, startTransition] = useTransition();
-	// const { notes, createNote } = useAppContext();
 	const { data: notes } = useQuery({
 		queryKey: ['notes'],
 		queryFn: getNotes,
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,
 	});
+	const { error, isPending, mutate } = useMutation({
+		mutationFn: createNote,
+	});
 	const thisCourseNotes = notes?.filter(note => note.courseId === course.id) || [];
-	// const hasCreatedNote = useRef(false);
+	const hasCreatedNote = useRef(false);
 
-	// Create a first note if it doesn't exist
-	// useEffect(() => {
-	// 	if (thisCourseNotes.length === 0 && !hasCreatedNote.current) {
-	// 		hasCreatedNote.current = true;
-	// 		startTransition(async () => {
-	// 			await createNote({ courseId: course.id });
-	// 		});
-	// 	}
-	// }, [course.id, thisCourseNotes.length, createNote]);
+	// Create a first note if it doesn't exist yet
+	useEffect(() => {
+		if (thisCourseNotes.length === 0 && !hasCreatedNote.current) {
+			hasCreatedNote.current = true;
+			mutate({ courseId: course.id });
+		}
+	}, [course.id, thisCourseNotes.length, mutate]);
 
-	if (isPending) return <CourseFallback />;
+	if (error) return <CourseErrorFallback />;
+
+	if (isPending) return <CourseLoadingFallback />;
 
 	return (
 		<Link
