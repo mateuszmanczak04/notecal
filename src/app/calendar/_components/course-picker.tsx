@@ -4,6 +4,7 @@ import { useCourses } from '@/app/_hooks/use-courses';
 import createNote from '@/app/notes/_actions/create-note';
 import { Button } from '@/components/button';
 import { cn } from '@/utils/cn';
+import { toUTC } from '@/utils/timezone';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { Plus } from 'lucide-react';
@@ -60,7 +61,7 @@ const CoursePicker = ({ hidePicker, time, x, y }: Props) => {
 	}, [containerRef, x, y]);
 
 	const handleSelect = (courseId: string) => {
-		mutate({ courseId, startTime: time });
+		mutate({ courseId, startTime: toUTC(time) });
 		hidePicker();
 
 		// TODO: restore with optimistic updates
