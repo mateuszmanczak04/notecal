@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import CreateCourseForm from '../_components/create-course-form';
 
 export const metadata: Metadata = {
-	title: 'Create a course',
+	title: 'Notecal | Create a course',
 	robots: {
 		index: false,
 	},
