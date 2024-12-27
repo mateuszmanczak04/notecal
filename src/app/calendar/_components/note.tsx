@@ -18,8 +18,16 @@ type Props = {
 
 const Note = ({ note, leftOffset }: Props) => {
 	const queryClient = useQueryClient();
-	const { mutate, isPending } = useMutation({
+	const { mutate } = useMutation({
 		mutationFn: updateNote,
+		onMutate: () => {
+			queryClient.setQueryData(['notes'], (oldData: Note[]) => {
+				const updatedNotes = oldData.map(n =>
+					n.id === note.id ? { ...n, startTime: dragStartTime, endTime: dragEndTime } : n,
+				);
+				return updatedNotes;
+			});
+		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
