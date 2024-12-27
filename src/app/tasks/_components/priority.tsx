@@ -3,7 +3,7 @@
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
 import { cn } from '@/utils/cn';
 import { Task, TaskPriority } from '@prisma/client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import updateTask from '../_actions/update-task';
 
 type Props = {
@@ -40,8 +40,12 @@ const getPriorityTitle = (priority: TaskPriority | null) => {
 };
 
 const Priority = ({ task, forPage = 'tasks' }: Props) => {
+	const queryClient = useQueryClient();
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateTask,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['tasks'] });
+		},
 	});
 
 	const handleSelect = (newPriority: any) => {

@@ -3,7 +3,7 @@
 import { Checkbox } from '@/components/checkbox';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import updateTask from '../_actions/update-task';
 
 type Props = {
@@ -12,8 +12,12 @@ type Props = {
 };
 
 const Completed = ({ task, forPage = 'tasks' }: Props) => {
-	const { mutate, isPending, error } = useMutation({
+	const queryClient = useQueryClient();
+	const { mutate, isPending } = useMutation({
 		mutationFn: updateTask,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['tasks'] });
+		},
 	});
 
 	const handleToggleTask = (newCompleted: boolean) => {

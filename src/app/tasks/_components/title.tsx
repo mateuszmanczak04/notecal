@@ -2,7 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import updateTask from '../_actions/update-task';
 
@@ -13,8 +13,12 @@ type Props = {
 const Title = ({ task }: Props) => {
 	const { id, title } = task;
 	const titleRef = useRef<HTMLParagraphElement>(null!);
+	const queryClient = useQueryClient();
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateTask,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['tasks'] });
+		},
 	});
 
 	const handleSubmit = () => {

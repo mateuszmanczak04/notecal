@@ -3,7 +3,7 @@
 import DatePicker from '@/components/date-picker';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import updateTask from '../_actions/update-task';
 
 type Props = {
@@ -12,7 +12,13 @@ type Props = {
 };
 
 const DueDate = ({ task, forPage = 'tasks' }: Props) => {
-	const { mutate, isPending } = useMutation({ mutationFn: updateTask });
+	const queryClient = useQueryClient();
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateTask,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['tasks'] });
+		},
+	});
 
 	const handleChangeDueDate = (newDueDate: Date | null) => {
 		if (newDueDate === task.dueDate) return;

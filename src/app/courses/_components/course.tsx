@@ -4,7 +4,7 @@ import createNote from '@/app/notes/_actions/create-note';
 import getNotes from '@/app/notes/_actions/get-notes';
 import LoadingSpinner from '@/components/loading-spinner';
 import { Course as T_Course } from '@prisma/client';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
@@ -36,6 +36,7 @@ const CourseErrorFallback = () => {
  * A link navigating to the latest note from it's course. If there are not notes it will automatically create one before rendering.
  */
 const Course = ({ course }: Props) => {
+	const queryClient = useQueryClient();
 	const { data: notes } = useQuery({
 		queryKey: ['notes'],
 		queryFn: getNotes,
@@ -44,6 +45,9 @@ const Course = ({ course }: Props) => {
 	});
 	const { error, isPending, mutate } = useMutation({
 		mutationFn: createNote,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['notes'] });
+		},
 	});
 	const thisCourseNotes = notes?.filter(note => note.courseId === course.id) || [];
 	const hasCreatedNote = useRef(false);

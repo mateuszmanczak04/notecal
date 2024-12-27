@@ -6,14 +6,18 @@ import GoBackButton from '@/components/go-back-button';
 import { Input } from '@/components/input';
 import { cn } from '@/utils/cn';
 import { COLORS } from '@/utils/colors';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import createCourse from '../_actions/create-course';
 
 const CreateCourseForm = () => {
+	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
 		mutationFn: createCourse,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['courses'] });
+		},
 	});
 	const router = useRouter();
 

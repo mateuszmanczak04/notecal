@@ -3,7 +3,7 @@
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { cn } from '@/utils/cn';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Command, Plus } from 'lucide-react';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useIntersectionObserver } from 'usehooks-ts';
@@ -16,8 +16,12 @@ type Props = {
 };
 
 const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
+	const queryClient = useQueryClient();
 	const { mutate, isPending } = useMutation({
 		mutationFn: createTask,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['tasks'] });
+		},
 	});
 	const [title, setTitle] = useState('');
 	const inputRef = useRef<HTMLInputElement>(null!);
