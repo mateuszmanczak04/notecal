@@ -1,12 +1,12 @@
 'use client';
 
+import { useUser } from '@/app/_hooks/use-user';
 import { Button } from '@/components/button';
 import ErrorMessage from '@/components/error-message';
 import { Input } from '@/components/input';
 import { cn } from '@/utils/cn';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
-import getUser from '../_actions/get-user';
 import updateSettings from '../_actions/update-settings';
 
 /**
@@ -14,12 +14,7 @@ import updateSettings from '../_actions/update-settings';
  */
 const UpdateSettings = () => {
 	const queryClient = useQueryClient();
-	const { data: user } = useQuery({
-		queryKey: ['user'],
-		queryFn: getUser,
-		refetchOnMount: false,
-		refetchOnWindowFocus: false,
-	});
+	const { data: user } = useUser();
 	const { mutate, isPending, error } = useMutation({
 		mutationFn: updateSettings,
 		onSuccess: () => {

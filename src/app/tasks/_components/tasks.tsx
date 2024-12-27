@@ -1,25 +1,15 @@
 'use client';
 
+import { useTasks } from '@/app/_hooks/use-tasks';
 import ErrorMessage from '@/components/error-message';
 import LoadingSpinner from '@/components/loading-spinner';
-import { useQuery } from '@tanstack/react-query';
-import getTasks from '../_actions/get-tasks';
 import Task from './task';
 
 /**
  * List of all user's tasks.
  */
 const Tasks = () => {
-	const {
-		data: tasks,
-		error,
-		isPending,
-	} = useQuery({
-		queryKey: ['tasks'],
-		queryFn: getTasks,
-		refetchOnMount: false,
-		refetchOnWindowFocus: false,
-	});
+	const { data: tasks, error, isPending } = useTasks();
 
 	if (isPending) return <LoadingSpinner />;
 

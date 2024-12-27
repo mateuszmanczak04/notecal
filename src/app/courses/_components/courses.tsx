@@ -1,16 +1,10 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import getCourses from '../_actions/get-courses';
+import { useCourses } from '@/app/_hooks/use-courses';
 import Course from './course';
 
 const Courses = () => {
-	const { data: courses } = useQuery({
-		queryKey: ['courses'],
-		queryFn: getCourses,
-		refetchOnMount: false,
-		refetchOnWindowFocus: false,
-	});
+	const { data: courses } = useCourses();
 
 	return courses && courses.map(course => <Course course={course} key={course.id} />);
 };

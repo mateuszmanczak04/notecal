@@ -1,10 +1,10 @@
 'use client';
 
-import getCourses from '@/app/courses/_actions/get-courses';
+import { useCourses } from '@/app/_hooks/use-courses';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import updateTask from '../_actions/update-task';
 
 type Props = {
@@ -14,12 +14,7 @@ type Props = {
 
 const Course = ({ task, forPage = 'tasks' }: Props) => {
 	const queryClient = useQueryClient();
-	const { data: courses } = useQuery({
-		queryKey: ['courses'],
-		queryFn: getCourses,
-		refetchOnMount: false,
-		refetchOnWindowFocus: false,
-	});
+	const { data: courses } = useCourses();
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateTask,
 		onSuccess: () => {

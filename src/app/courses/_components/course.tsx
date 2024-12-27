@@ -1,10 +1,10 @@
 'use client';
 
+import { useNotes } from '@/app/_hooks/use-notes';
 import createNote from '@/app/notes/_actions/create-note';
-import getNotes from '@/app/notes/_actions/get-notes';
 import LoadingSpinner from '@/components/loading-spinner';
 import { Course as T_Course } from '@prisma/client';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
@@ -37,12 +37,7 @@ const CourseErrorFallback = () => {
  */
 const Course = ({ course }: Props) => {
 	const queryClient = useQueryClient();
-	const { data: notes } = useQuery({
-		queryKey: ['notes'],
-		queryFn: getNotes,
-		refetchOnMount: false,
-		refetchOnWindowFocus: false,
-	});
+	const { data: notes } = useNotes();
 	const { error, isPending, mutate } = useMutation({
 		mutationFn: createNote,
 		onSuccess: () => {
