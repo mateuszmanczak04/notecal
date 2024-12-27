@@ -11,9 +11,10 @@ import { useCalendarContext } from '../_context/calendar-context';
 type Props = {
 	note: Note & { loading?: boolean };
 	leftOffset: number;
+	updateOptimisticNote: ({ id, startTime, endTime }: { id: string; startTime: Date; endTime: Date }) => void;
 };
 
-const Note = ({ note, leftOffset }: Props) => {
+const Note = ({ note, leftOffset, updateOptimisticNote }: Props) => {
 	const { settings, updateNote, courses } = useAppContext();
 	const { currentFirstDay, getRelativePosition, getDateFromPosition } = useCalendarContext();
 
@@ -201,6 +202,14 @@ const Note = ({ note, leftOffset }: Props) => {
 	const handleDragEnd = (event: React.DragEvent) => {
 		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
 
+		// Optimistic update in local state
+		updateOptimisticNote({
+			id: note.id,
+			startTime: dragStartTime,
+			endTime: dragEndTime,
+		});
+
+		// Update in global app context
 		updateNote({
 			id: note.id,
 			startTime: dragStartTime,
@@ -238,8 +247,21 @@ const Note = ({ note, leftOffset }: Props) => {
 	 */
 	const handleDragEndTop = () => {
 		if (dragStartTime < note.endTime) {
+			updateOptimisticNote({
+				id: note.id,
+				startTime: dragStartTime,
+				endTime: note.endTime,
+			});
 			updateNote({ id: note.id, startTime: dragStartTime });
 		} else {
+			// Local update
+			updateOptimisticNote({
+				id: note.id,
+				startTime: note.endTime,
+				endTime: dragStartTime,
+			});
+
+			// Global update
 			updateNote({
 				id: note.id,
 				startTime: note.endTime,
@@ -278,8 +300,21 @@ const Note = ({ note, leftOffset }: Props) => {
 	 */
 	const handleDragEndBottom = () => {
 		if (dragEndTime > note.startTime) {
+			updateOptimisticNote({
+				id: note.id,
+				startTime: note.startTime,
+				endTime: dragEndTime,
+			});
 			updateNote({ id: note.id, endTime: dragEndTime });
 		} else {
+			// Local update
+			updateOptimisticNote({
+				id: note.id,
+				startTime: note.startTime,
+				endTime: dragEndTime,
+			});
+
+			// Global update
 			updateNote({
 				id: note.id,
 				endTime: note.startTime,
