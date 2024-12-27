@@ -1,33 +1,31 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
 import { Button } from '@/components/button';
 import FormLoadingSpinner from '@/components/form-loading-spinner';
 import GoBackButton from '@/components/go-back-button';
 import { Input } from '@/components/input';
 import { cn } from '@/utils/cn';
 import { COLORS } from '@/utils/colors';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useState, useTransition } from 'react';
+import { FormEvent, useState } from 'react';
+import createCourse from '../_actions/create-course';
 
 const CreateCourseForm = () => {
+	const { mutate } = useMutation({
+		mutationFn: createCourse,
+	});
 	const router = useRouter();
-	const [isPending, startTransition] = useTransition();
-	const { createCourse } = useAppContext();
+
+	const [name, setName] = useState('');
+	const [teacher, setTeacher] = useState('');
+	const [selectedColor, setSelectedColor] = useState<string>(COLORS[0].hex);
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		startTransition(async () => {
-			const formData = new FormData(e.target as HTMLFormElement);
-			const name = formData.get('name')!.toString();
-			const teacher = formData.get('teacher')!.toString();
-			const color = formData.get('color')!.toString();
-			await createCourse({ name, teacher, color });
-			router.push('/courses');
-		});
+		mutate({ name, teacher, color: selectedColor });
+		router.push('/courses');
 	};
-
-	const [selectedColor, setSelectedColor] = useState<string>(COLORS[0].hex);
 
 	return (
 		<form onSubmit={handleSubmit} className='mt-4 space-y-4 sm:space-y-6 md:space-y-8'>
@@ -36,7 +34,14 @@ const CreateCourseForm = () => {
 				<label htmlFor='name' className='mb-1 block px-2 after:text-red-500 after:content-["_*"]'>
 					Name
 				</label>
-				<Input placeholder='Computer Science' name='name' id='name' required />
+				<Input
+					placeholder='Computer Science'
+					name='name'
+					id='name'
+					value={name}
+					onChange={e => setName(e.target.value)}
+					required
+				/>
 			</div>
 
 			{/* Teacher field */}
@@ -44,7 +49,14 @@ const CreateCourseForm = () => {
 				<label htmlFor='teacher' className='mb-1 block px-2 after:text-red-500 after:content-["_*"]'>
 					Teacher
 				</label>
-				<Input placeholder='Computer Science' name='teacher' id='teacher' required />
+				<Input
+					placeholder='Computer Science'
+					name='teacher'
+					id='teacher'
+					value={teacher}
+					onChange={e => setTeacher(e.target.value)}
+					required
+				/>
 			</div>
 
 			{/* Color field */}
