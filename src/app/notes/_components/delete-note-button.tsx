@@ -1,11 +1,12 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
 import { Button } from '@/components/button';
-import LoadingSpinner from '@/components/loading-spinner';
+import { cn } from '@/utils/cn';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
+import deleteNote from '../_actions/delete-note';
 
 type Props = {
 	id: string;
@@ -15,17 +16,20 @@ type Props = {
  * After first click it shows a confirmation message if user is sure to delete it.
  */
 const DeleteNoteButton = ({ id }: Props) => {
-	const { deleteNote } = useAppContext();
-	const [isPending, startTransition] = useTransition();
+	const queryClient = useQueryClient();
+	const { mutate, isPending } = useMutation({
+		mutationFn: deleteNote,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['notes'] });
+		},
+	});
 
 	const router = useRouter();
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const confirmDeletion = () => {
-		startTransition(async () => {
-			await deleteNote({ id });
-			router.back();
-		});
+		mutate({ id });
+		router.back();
 	};
 
 	if (isDeleting) {
@@ -35,9 +39,9 @@ const DeleteNoteButton = ({ id }: Props) => {
 				<Button
 					variant='destructive'
 					onClick={confirmDeletion}
-					className='w-full'
-					aria-label='yes, delete this note'>
-					{isPending && <LoadingSpinner />}
+					className={cn('w-full', isPending && 'pointer-events-none opacity-50')}
+					aria-label='yes, delete this note'
+					disabled={isPending}>
 					Yes
 				</Button>
 				<Button

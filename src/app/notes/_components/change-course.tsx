@@ -1,10 +1,11 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
+import { useCourses } from '@/app/_hooks/use-courses';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
 import { cn } from '@/utils/cn';
 import { Course, Note } from '@prisma/client';
-import { useTransition } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import updateNote from '../_actions/update-note';
 
 type Props = {
 	currentCourse: Course;
@@ -15,24 +16,28 @@ type Props = {
  * A dropdown menu used to choose a new course for the note.
  */
 const ChangeCourse = ({ currentCourse, note }: Props) => {
-	const { courses: allCourses, updateNote } = useAppContext();
-	const [isPending, startTransition] = useTransition();
+	const queryClient = useQueryClient();
+	const { data: courses } = useCourses();
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateNote,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['notes'] });
+		},
+	});
 
 	const handleSelect = (newCourseId: string) => {
-		startTransition(async () => {
-			await updateNote({ id: note.id, courseId: newCourseId });
-		});
+		mutate({ id: note.id, courseId: newCourseId });
 	};
 
 	return (
 		<article>
 			<p className='text-xl font-semibold'>Course:</p>
-			<DropdownMenu className={cn('mt-2', isPending && 'opacity-50')}>
+			<DropdownMenu className={cn('mt-2', isPending && 'pointer-events-none opacity-50')}>
 				<DropdownMenuTrigger showChevron>
 					<p className='truncate'>{currentCourse.name}</p>
 				</DropdownMenuTrigger>
 				<DropdownMenuList>
-					{allCourses.map(course => (
+					{courses?.map(course => (
 						<DropdownMenuItem key={course.id} value={course.id} onSelect={handleSelect}>
 							{course.name}
 						</DropdownMenuItem>

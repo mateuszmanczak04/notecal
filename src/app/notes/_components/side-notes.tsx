@@ -1,14 +1,13 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
 import { Button } from '@/components/button';
-import LoadingSpinner from '@/components/loading-spinner';
 import { cn } from '@/utils/cn';
 import { Course, Note } from '@prisma/client';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
-import { useTransition } from 'react';
+import createNote from '../_actions/create-note';
 
 type Props = {
 	currentCourse: Course;
@@ -17,17 +16,20 @@ type Props = {
 };
 
 const SideNotes = ({ currentCourse, currentNoteId, currentCourseNotes }: Props) => {
-	const { createNote } = useAppContext();
-	const [isPending, startTransition] = useTransition();
+	const queryClient = useQueryClient();
+	const { mutate, isPending } = useMutation({
+		mutationFn: createNote,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['notes'] });
+		},
+	});
 
-	const onClick = () => {
-		startTransition(async () => {
-			await createNote({ courseId: currentCourse.id });
-		});
+	const handleNewNote = () => {
+		mutate({ courseId: currentCourse.id });
 	};
 
 	return (
-		<div>
+		<article>
 			<p className='text-xl font-semibold'>Notes:</p>
 
 			<div className='mt-2 grid'>
@@ -53,12 +55,12 @@ const SideNotes = ({ currentCourse, currentNoteId, currentCourseNotes }: Props) 
 			{/* New note button */}
 			<Button
 				style={{ backgroundColor: currentCourse.color }}
-				onClick={onClick}
-				className='w-full rounded-t-none'>
-				{isPending && <LoadingSpinner />}
+				onClick={handleNewNote}
+				className={cn('w-full rounded-t-none', isPending && 'pointer-events-none opacity-50')}
+				disabled={isPending}>
 				<Plus className='h-4 w-4' /> Create a new note
 			</Button>
-		</div>
+		</article>
 	);
 };
 

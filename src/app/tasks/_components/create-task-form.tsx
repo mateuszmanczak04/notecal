@@ -52,7 +52,7 @@ const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		mutate({ title, courseId });
-		(e.target as HTMLFormElement).reset();
+		setTitle('');
 	};
 
 	if (forPage === 'notes') {

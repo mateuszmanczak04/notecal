@@ -11,7 +11,7 @@ type Props = {
 
 const Tasks = ({ course, tasks }: Props) => {
 	return (
-		<div className='space-y-2'>
+		<article className='space-y-2'>
 			<p className='text-xl font-semibold'>Tasks:</p>
 
 			{tasks.length === 0 && <p>There are no tasks related to this course</p>}
@@ -19,7 +19,7 @@ const Tasks = ({ course, tasks }: Props) => {
 			{tasks?.map(task => <Task forPage='notes' key={task.id} task={task} />)}
 
 			<CreateTaskForm courseId={course.id} forPage='notes' />
-		</div>
+		</article>
 	);
 };
 

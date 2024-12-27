@@ -1,10 +1,10 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
-import { Button } from '@/components/button';
-import { Pencil } from 'lucide-react';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useCourses } from '@/app/_hooks/use-courses';
+import { useNotes } from '@/app/_hooks/use-notes';
+import { useTasks } from '@/app/_hooks/use-tasks';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import ChangeCourse from '../_components/change-course';
 import Content from '../_components/content';
 import CourseName from '../_components/course-name';
@@ -19,23 +19,38 @@ import Teacher from '../_components/teacher';
 const NotePage = () => {
 	const params = useParams<{ noteId: string }>();
 	const noteId = params.noteId;
+	const router = useRouter();
 
-	const { notes, courses, tasks } = useAppContext();
+	const { data: notes } = useNotes();
+	const { data: courses } = useCourses();
+	const { data: tasks } = useTasks();
+
+	// Should not occur in normal conditions as we prefetch
+	// all this data on first load
+	useEffect(() => {
+		if (!notes || !courses || !tasks) return;
+
+		const currentNote = notes.find(note => note.id === noteId);
+		if (!currentNote) {
+			router.replace('/courses');
+			return;
+		}
+
+		const currentCourse = courses.find(course => course.id === currentNote?.courseId);
+		if (!currentCourse) {
+			router.push('/courses');
+			return;
+		}
+	}, [notes, courses, tasks, noteId, router]);
+
+	if (!notes || !courses || !tasks) return;
 
 	const currentNote = notes.find(note => note.id === noteId);
 	const currentCourse = courses.find(course => course.id === currentNote?.courseId);
 	const currentCourseTasks = tasks.filter(task => task.courseId === currentCourse?.id);
 	const currentCourseNotes = notes.filter(note => note.courseId === currentCourse?.id);
 
-	if (!currentNote) {
-		// TODO: show nice looking error
-		return <p>Note not found</p>;
-	}
-
-	// Should not occur in normal conditions as every note should have a corresponding course
-	if (!currentCourse) {
-		return <p>Course not found</p>;
-	}
+	if (!currentNote || !currentCourse) return;
 
 	return (
 		<main className='mx-auto flex h-full min-h-80 max-w-[1200px] flex-col gap-4 md:flex-row'>
@@ -64,12 +79,13 @@ const NotePage = () => {
 				<ChangeCourse currentCourse={currentCourse} note={currentNote} />
 
 				{/* Link to edit course */}
-				<Button asChild variant='secondary'>
+				{/* TODO: move it here to be inline */}
+				{/* <Button asChild variant='secondary'>
 					<Link prefetch href={`/courses/edit?id=${currentCourse.id}`}>
 						<Pencil className='h-4 w-4' />
 						Edit course
 					</Link>
-				</Button>
+				</Button> */}
 
 				{/* Current note time  */}
 				<StartTime note={currentNote} />

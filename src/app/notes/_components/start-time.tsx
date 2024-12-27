@@ -1,18 +1,23 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
 import DatePicker from '@/components/date-picker';
 import { cn } from '@/utils/cn';
 import { Note } from '@prisma/client';
-import { useTransition } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import updateNote from '../_actions/update-note';
 
 type Props = {
 	note: Note;
 };
 
 const StartTime = ({ note }: Props) => {
-	const { updateNote } = useAppContext();
-	const [isPending, startTransition] = useTransition();
+	const queryClient = useQueryClient();
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateNote,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['notes'] });
+		},
+	});
 
 	const onChange = (newStartTime: Date | null) => {
 		if (!newStartTime) return;
@@ -20,16 +25,14 @@ const StartTime = ({ note }: Props) => {
 		// TODO: display a message telling you can't set it like that
 		if (newStartTime > note.endTime) return;
 
-		startTransition(async () => {
-			await updateNote({ id: note.id, startTime: newStartTime });
-		});
+		mutate({ id: note.id, startTime: newStartTime });
 	};
 
 	return (
 		<article>
 			<p className='text-xl font-semibold'>Start time:</p>
 			<DatePicker
-				className={cn('mt-2 w-56', isPending && 'opacity-50')}
+				className={cn('mt-2 w-56', isPending && 'pointer-events-none opacity-50')}
 				date={note.startTime}
 				onSelect={onChange}
 			/>

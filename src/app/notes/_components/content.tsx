@@ -10,8 +10,9 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { HeadingNode } from '@lexical/rich-text';
 import { Course, Note } from '@prisma/client';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Save } from 'lucide-react';
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import updateNote from '../_actions/update-note';
 import SavePlugin from '../_editor/SavePlugin';
 import ToolbarPlugin from '../_editor/ToolbarPlugin';
@@ -45,20 +46,24 @@ const editorConfig: InitialConfigType = {
  * A part of /note/[id] page where user enters the text content. It works like a WYSIWYG editor.
  */
 const Content = ({ note, course }: Props) => {
-	const [isPending, startTransition] = useTransition();
 	const [content, setContent] = useState(note.content);
+	const queryClient = useQueryClient();
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateNote,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['notes'] });
+		},
+	});
 
 	const handleSave = () => {
-		startTransition(async () => {
-			await updateNote({ id: note.id, content });
-		});
+		mutate({ id: note.id, content });
 	};
 
 	return (
-		<div
+		<article
 			className={cn(
 				'flex flex-1 flex-col rounded-xl bg-neutral-100 p-4 dark:bg-neutral-700',
-				isPending && 'opacity-50',
+				isPending && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer initialConfig={editorConfig}>
 				<ToolbarPlugin />
@@ -81,7 +86,7 @@ const Content = ({ note, course }: Props) => {
 				<Save />
 				Save
 			</Button>
-		</div>
+		</article>
 	);
 };
 
