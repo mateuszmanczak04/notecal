@@ -1,17 +1,23 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
+import updateSettings from '@/app/settings/_actions/update-settings';
 import { Button } from '@/components/button';
 import { cn } from '@/utils/cn';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ArrowUpDown } from 'lucide-react';
-import { useRef, useState, useTransition } from 'react';
+import { useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
 const SortTasks = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null!);
-	const [isPending, startTransition] = useTransition();
-	const { updateSettings, sortTasks } = useAppContext();
+	const queryClient = useQueryClient();
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateSettings,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['tasks'] });
+		},
+	});
 
 	const handleCloseMenu = () => {
 		setIsOpen(false);
@@ -41,10 +47,7 @@ const SortTasks = () => {
 				newCriteria === 'priority' ||
 				newCriteria === 'completed')
 		) {
-			startTransition(async () => {
-				await updateSettings({ orderTasks: newCriteria });
-				await sortTasks();
-			});
+			mutate({ orderTasks: newCriteria });
 		}
 	};
 	return (

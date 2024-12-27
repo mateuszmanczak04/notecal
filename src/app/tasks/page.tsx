@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import CreateTaskForm from './_components/create-task-form';
+import SortTasks from './_components/sort-tasks';
 import Tasks from './_components/tasks';
 
 export const metadata: Metadata = {
@@ -13,7 +14,7 @@ const page = () => {
 	return (
 		<main className='mx-auto max-w-3xl space-y-8'>
 			<CreateTaskForm />
-			{/* <SortTasks /> */}
+			<SortTasks />
 			<Tasks />
 		</main>
 	);
