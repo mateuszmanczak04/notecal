@@ -1,4 +1,3 @@
-import Navigation from '@/app/_components/navigation';
 import logout from '@/app/auth/_actions/logout';
 import { getAuthStatus } from '@/utils/auth';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
@@ -8,6 +7,7 @@ import getCourses from '../courses/_actions/get-courses';
 import getNotes from '../notes/_actions/get-notes';
 import getUser from '../settings/_actions/get-user';
 import getTasks from '../tasks/_actions/get-tasks';
+import Navigation from './navigation';
 
 type Props = {
 	children: ReactNode;
@@ -49,7 +49,7 @@ const MainLayout = async ({ children }: Props) => {
 		<HydrationBoundary state={dehydrate(queryClient)}>
 			<CalendarContextProvider>
 				<div className='flex h-screen overflow-y-hidden p-4 pl-12 xl:pl-4'>
-					<Navigation email={'TODO@TODO.TODO'} />
+					<Navigation />
 					<div className='h-full flex-1 overflow-y-scroll rounded-xl bg-white p-4 scrollbar-hide dark:bg-neutral-800'>
 						{children}
 					</div>

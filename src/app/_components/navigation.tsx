@@ -6,14 +6,11 @@ import { Calendar, Check, List, Menu, Settings, User, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { useUser } from '../_hooks/use-user';
 
-type Props = {
-	email: string;
-};
-
-const Navigation = ({ email }: Props) => {
+const Navigation = () => {
 	const pathname = usePathname();
-
+	const { data: user } = useUser();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleOpen = () => {
@@ -30,7 +27,7 @@ const Navigation = ({ email }: Props) => {
 			<Button
 				variant='secondary'
 				className={cn(
-					'transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none dark:bg-neutral-900 dark:text-neutral-100 xl:hidden',
+					'transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none xl:hidden dark:bg-neutral-900 dark:text-neutral-100',
 					isOpen && '-translate-x-32',
 				)}
 				aria-label='open menu button'
@@ -40,13 +37,13 @@ const Navigation = ({ email }: Props) => {
 			</Button>
 			<div
 				className={cn(
-					'fixed left-0 top-0 z-40 mr-4 flex h-full w-screen shrink-0 translate-x-0 flex-col gap-8 rounded-xl bg-neutral-100 p-8 pl-20 shadow-lg transition dark:bg-neutral-800 sm:w-96 xl:static xl:max-w-80 xl:p-4 xl:shadow-none',
+					'fixed left-0 top-0 z-40 mr-4 flex h-full w-screen shrink-0 translate-x-0 flex-col gap-8 rounded-xl bg-neutral-100 p-8 pl-20 shadow-lg transition sm:w-96 xl:static xl:max-w-80 xl:p-4 xl:shadow-none dark:bg-neutral-800',
 					!isOpen && '-translate-x-full xl:translate-x-0',
 				)}>
 				{/* Close button */}
 				<Button
 					variant='secondary'
-					className='transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none bg-neutral-200 dark:bg-neutral-900 dark:text-neutral-100 xl:hidden'
+					className='transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none bg-neutral-200 xl:hidden dark:bg-neutral-900 dark:text-neutral-100'
 					onClick={handleClose}
 					aria-label='close menu button'
 					title='close menu button'>
@@ -68,7 +65,7 @@ const Navigation = ({ email }: Props) => {
 						/> */}
 					<User className='h-8 w-8 shrink-0 rounded-full bg-neutral-100 p-1 dark:bg-neutral-800' />
 					<div className='overflow-hidden'>
-						<p className='truncate text-sm font-medium'>{email}</p>
+						<p className='truncate text-sm font-medium'>{user?.email}</p>
 					</div>
 					<Settings className='h-6 w-6 shrink-0' />
 				</Link>
