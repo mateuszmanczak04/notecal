@@ -1,37 +1,52 @@
 import Navigation from '@/app/_components/navigation';
 import logout from '@/app/auth/_actions/logout';
 import { getUser } from '@/utils/get-user';
-import React from 'react';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import { ReactNode } from 'react';
 import { CalendarContextProvider } from '../calendar/_context/calendar-context';
 import getCourses from '../courses/_actions/get-courses';
 import getNotes from '../notes/_actions/get-notes';
 import getSettings from '../settings/_actions/get-settings';
 import getTasks from '../tasks/_actions/get-tasks';
-import AppContextProvider from './app-context';
 
 type Props = {
-	children: React.ReactNode;
+	children: ReactNode;
 };
 
+/**
+ * This layout is shown only to authenticated users.
+ * Unauthenticated users get just a static landing page instead
+ * for better loading time.
+ */
 const MainLayout = async ({ children }: Props) => {
-	const user = await getUser();
+	const queryClient = new QueryClient();
 
+	// Check if user is authenticated, if not logout them
+	const user = await getUser();
 	if (!user) return logout();
 
-	const tasks = await getTasks({});
-	const courses = await getCourses();
-	const notes = await getNotes();
-	const settings = await getSettings();
-
-	if ('error' in settings) return <p>Could not load user settings, please refresh</p>;
+	// Prefetch all needed data for quicker access in client components
+	await Promise.all([
+		queryClient.prefetchQuery({
+			queryKey: ['settings'],
+			queryFn: getSettings,
+		}),
+		queryClient.prefetchQuery({
+			queryKey: ['courses'],
+			queryFn: getCourses,
+		}),
+		queryClient.prefetchQuery({
+			queryKey: ['notes'],
+			queryFn: getNotes,
+		}),
+		queryClient.prefetchQuery({
+			queryKey: ['tasks'],
+			queryFn: () => getTasks({}),
+		}),
+	]);
 
 	return (
-		<AppContextProvider
-			initialTasks={tasks}
-			initialCourses={courses}
-			initialNotes={notes}
-			initialSettings={settings}
-			initialUser={{ id: user.id, email: user.email, emailVerified: !!user.emailVerified }}>
+		<HydrationBoundary state={dehydrate(queryClient)}>
 			<CalendarContextProvider>
 				<div className='flex h-screen overflow-y-hidden p-4 pl-12 xl:pl-4'>
 					<Navigation email={user.email} />
@@ -40,7 +55,7 @@ const MainLayout = async ({ children }: Props) => {
 					</div>
 				</div>
 			</CalendarContextProvider>
-		</AppContextProvider>
+		</HydrationBoundary>
 	);
 };
 
