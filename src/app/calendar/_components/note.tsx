@@ -4,6 +4,7 @@ import { useCourses } from '@/app/_hooks/use-courses';
 import { useUser } from '@/app/_hooks/use-user';
 import updateNote from '@/app/notes/_actions/update-note';
 import { cn } from '@/utils/cn';
+import { toUTC } from '@/utils/timezone';
 import { type Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addDays, addMilliseconds, differenceInCalendarDays, startOfDay } from 'date-fns';
@@ -23,7 +24,7 @@ const Note = ({ note, leftOffset }: Props) => {
 		onMutate: () => {
 			queryClient.setQueryData(['notes'], (oldData: Note[]) => {
 				const updatedNotes = oldData.map(n =>
-					n.id === note.id ? { ...n, startTime: dragStartTime, endTime: dragEndTime } : n,
+					n.id === note.id ? { ...n, startTime: toUTC(dragStartTime), endTime: toUTC(dragEndTime) } : n,
 				);
 				return updatedNotes;
 			});
@@ -226,8 +227,8 @@ const Note = ({ note, leftOffset }: Props) => {
 
 		mutate({
 			id: note.id,
-			startTime: dragStartTime,
-			endTime: dragEndTime,
+			startTime: toUTC(dragStartTime),
+			endTime: toUTC(dragEndTime),
 		});
 
 		setIsDragging(false);
@@ -261,12 +262,12 @@ const Note = ({ note, leftOffset }: Props) => {
 	 */
 	const handleDragEndTop = () => {
 		if (dragStartTime < note.endTime) {
-			mutate({ id: note.id, startTime: dragStartTime });
+			mutate({ id: note.id, startTime: toUTC(dragStartTime) });
 		} else {
 			mutate({
 				id: note.id,
-				startTime: note.endTime,
-				endTime: dragStartTime,
+				startTime: toUTC(note.endTime),
+				endTime: toUTC(dragStartTime),
 			});
 		}
 
@@ -301,12 +302,12 @@ const Note = ({ note, leftOffset }: Props) => {
 	 */
 	const handleDragEndBottom = () => {
 		if (dragEndTime > note.startTime) {
-			mutate({ id: note.id, endTime: dragEndTime });
+			mutate({ id: note.id, endTime: toUTC(dragEndTime) });
 		} else {
 			mutate({
 				id: note.id,
-				endTime: note.startTime,
-				startTime: dragEndTime,
+				endTime: toUTC(note.startTime),
+				startTime: toUTC(dragEndTime),
 			});
 		}
 
