@@ -1,21 +1,18 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
-import { Suspense } from 'react';
-import Course, { CourseFallback } from './course';
+import { useQuery } from '@tanstack/react-query';
+import getCourses from '../_actions/get-courses';
+import Course from './course';
 
 const Courses = () => {
-	const { courses } = useAppContext();
+	const { data: courses } = useQuery({
+		queryKey: ['courses'],
+		queryFn: getCourses,
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+	});
 
-	return (
-		<>
-			{courses?.map(course => (
-				<Suspense key={course.id} fallback={<CourseFallback />}>
-					<Course color={course.color} id={course.id} name={course.name} teacher={course.teacher} />
-				</Suspense>
-			))}
-		</>
-	);
+	return courses && courses.map(course => <Course course={course} key={course.id} />);
 };
 
 export default Courses;
