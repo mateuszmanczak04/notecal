@@ -91,7 +91,7 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 		const { width, height } = containerRef.current.getBoundingClientRect();
 
 		// Get day (YYYY-MM-DD):
-		const columnWidth = width / user.displayedDays; // TODO
+		const columnWidth = width / user.displayedDays;
 		const dayIndex = Math.floor(x / columnWidth);
 		const time = addDays(currentFirstDay, dayIndex);
 
