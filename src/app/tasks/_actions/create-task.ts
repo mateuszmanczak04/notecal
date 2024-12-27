@@ -36,6 +36,7 @@ const createTask = async ({ title, courseId }: T_CreateTaskInput): T_CreateTaskR
 
 		return { task };
 	} catch (error) {
+		console.log({ error });
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };

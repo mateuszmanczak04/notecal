@@ -1,12 +1,13 @@
 'use client';
 
-import { useAppContext } from '@/app/_components/app-context';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { cn } from '@/utils/cn';
+import { useMutation } from '@tanstack/react-query';
 import { Command, Plus } from 'lucide-react';
-import { FormEvent, useEffect, useRef, useTransition } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useIntersectionObserver } from 'usehooks-ts';
+import createTask from '../_actions/create-task';
 
 type Props = {
 	/** Specify use case for this component. It can be user either big one in /tasks page or as a small task in /notes/[id] page. */
@@ -15,16 +16,16 @@ type Props = {
 };
 
 const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
-	const { createTask } = useAppContext();
-	const [isPending, startTransition] = useTransition();
-
-	const inputRef = useRef<HTMLInputElement | null>(null);
+	const { mutate, isPending } = useMutation({
+		mutationFn: createTask,
+	});
+	const [title, setTitle] = useState('');
+	const inputRef = useRef<HTMLInputElement>(null!);
+	const { isIntersecting, ref: intersectorRef } = useIntersectionObserver();
 
 	const handleFocusInput = () => {
-		if (!inputRef.current) return;
 		inputRef.current.focus();
 	};
-	const { isIntersecting, ref: intersectorRef } = useIntersectionObserver();
 
 	// Detect keyboard shortcut
 	useEffect(() => {
@@ -46,12 +47,8 @@ const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		startTransition(async () => {
-			const formData = new FormData(e.target as HTMLFormElement);
-			const title = formData.get('title')!.toString();
-			await createTask({ title, courseId });
-			(e.target as HTMLFormElement).reset();
-		});
+		mutate({ title, courseId });
+		(e.target as HTMLFormElement).reset();
 	};
 
 	if (forPage === 'notes') {
@@ -68,6 +65,8 @@ const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
 					className=' text-sm '
 					aria-label='New task title'
 					name='title'
+					value={title}
+					onChange={e => setTitle(e.target.value)}
 					required
 				/>
 				<Button className='rounded-xl text-sm' type='submit' disabled={isPending}>
@@ -108,6 +107,8 @@ const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
 					aria-label='New task title'
 					name='title'
 					required
+					value={title}
+					onChange={e => setTitle(e.target.value)}
 					ref={inputRef}
 				/>
 				<Button className='h-11 sm:rounded-l-none sm:text-base' type='submit' disabled={isPending}>
