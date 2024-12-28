@@ -34,10 +34,8 @@ const SideNotes = ({ currentCourse, currentNoteId, currentCourseNotes }: Props) 
 	};
 
 	return (
-		<article>
-			<p className='text-xl font-semibold'>Notes:</p>
-
-			<div className='mt-2 grid'>
+		<article className='grid'>
+			<>
 				{/* List of all notes from this course */}
 				{currentCourseNotes?.map((note, index) => (
 					<Link
@@ -55,7 +53,7 @@ const SideNotes = ({ currentCourse, currentNoteId, currentCourseNotes }: Props) 
 						<span className='shrink-0 text-sm'>{format(note.startTime, 'yyyy-MM-dd')}</span>
 					</Link>
 				))}
-			</div>
+			</>
 
 			{/* New note button */}
 			<Button

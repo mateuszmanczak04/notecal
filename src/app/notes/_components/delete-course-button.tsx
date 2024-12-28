@@ -44,21 +44,21 @@ const DeleteCourseButton = ({ id }: Props) => {
 
 	if (isDeleting) {
 		return (
-			<div className='flex flex-col gap-2'>
+			<div>
 				<p>Are you sure?</p>
 				<Button
 					variant='destructive'
 					onClick={confirmDeletion}
-					className={cn('w-full', isPending && 'pointer-events-none opacity-50')}
-					aria-label='yes, delete this note'
+					className={cn('mt-4 w-full', isPending && 'pointer-events-none opacity-50')}
+					aria-label='Yes, delete entire course'
 					disabled={isPending}>
 					Yes
 				</Button>
 				<Button
 					variant='secondary'
-					className='w-full'
+					className='mt-4 w-full'
 					onClick={() => setIsDeleting(false)}
-					aria-label='no, do not delete this note'>
+					aria-label='No, do not delete entire course'>
 					No, cancel
 				</Button>
 			</div>
@@ -68,9 +68,9 @@ const DeleteCourseButton = ({ id }: Props) => {
 	return (
 		<article>
 			<h2 className='text-2xl font-semibold'>Delete Course</h2>
-			<p className=''>Delete entire course with all related notes and tasks permanently</p>
+			<p className='mt-2'>Delete entire course with all related notes and tasks permanently</p>
 
-			<Button variant='destructive' className='mt-2 w-full' onClick={() => setIsDeleting(true)}>
+			<Button variant='destructive' className='mt-4 w-full' onClick={() => setIsDeleting(true)}>
 				<Trash2 className='h-4 w-4' />
 				Delete this course
 			</Button>

@@ -11,11 +11,7 @@ type Props = {
 
 const Tasks = ({ course, tasks }: Props) => {
 	return (
-		<article className='space-y-2'>
-			<p className='text-xl font-semibold'>Tasks:</p>
-
-			{tasks.length === 0 && <p>There are no tasks related to this course</p>}
-
+		<article className='space-y-4'>
 			{tasks?.map(task => <Task forPage='notes' key={task.id} task={task} />)}
 
 			<CreateTaskForm courseId={course.id} forPage='notes' />

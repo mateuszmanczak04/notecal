@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import NotePage from './note-page';
+import NotePage from '../_components/note-page';
 
 export const metadata: Metadata = {
 	title: 'Notecal | Note',

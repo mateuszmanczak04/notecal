@@ -9,6 +9,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import deleteNote from '../_actions/delete-note';
 
+// TODO: move this functionality into top content toolbar
+
 type Props = {
 	id: string;
 };
@@ -39,21 +41,21 @@ const DeleteNoteButton = ({ id }: Props) => {
 
 	if (isDeleting) {
 		return (
-			<div className='flex flex-col gap-2'>
+			<div>
 				<p>Are you sure?</p>
 				<Button
 					variant='destructive'
 					onClick={confirmDeletion}
-					className={cn('w-full', isPending && 'pointer-events-none opacity-50')}
-					aria-label='yes, delete this note'
+					className={cn('mt-4 w-full', isPending && 'pointer-events-none opacity-50')}
+					aria-label='Yes, delete this note'
 					disabled={isPending}>
 					Yes
 				</Button>
 				<Button
 					variant='secondary'
-					className='w-full'
+					className='mt-4 w-full'
 					onClick={() => setIsDeleting(false)}
-					aria-label='no, do not delete this note'>
+					aria-label='No, do not delete this note'>
 					No, cancel
 				</Button>
 			</div>
@@ -62,9 +64,7 @@ const DeleteNoteButton = ({ id }: Props) => {
 
 	return (
 		<article>
-			<h2 className='text-2xl font-semibold'>Delete Note</h2>
-			<p className=''>Delete this specific note permanently</p>
-
+			<p className='text-xl font-semibold'>Delete this note</p>
 			<Button variant='destructive' className='mt-2 w-full' onClick={() => setIsDeleting(true)}>
 				<Trash2 className='h-4 w-4' />
 				Delete this note

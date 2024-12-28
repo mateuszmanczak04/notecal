@@ -39,7 +39,7 @@ const ChangeCourse = ({ currentCourse, note }: Props) => {
 
 	return (
 		<article>
-			<p className='text-xl font-semibold'>Course:</p>
+			<p className='text-xl font-semibold'>Note&apos;s course</p>
 			<DropdownMenu className={cn('mt-2', isPending && 'pointer-events-none opacity-50')}>
 				<DropdownMenuTrigger showChevron>
 					<p className='truncate'>{currentCourse.name}</p>

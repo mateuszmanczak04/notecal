@@ -35,7 +35,7 @@ const StartTime = ({ note }: Props) => {
 
 	return (
 		<article>
-			<p className='text-xl font-semibold'>Start time:</p>
+			<p className='text-xl font-semibold'>Note&apos;s start time</p>
 			<DatePicker
 				className={cn('mt-2 w-56', isPending && 'pointer-events-none opacity-50')}
 				date={note.startTime}
