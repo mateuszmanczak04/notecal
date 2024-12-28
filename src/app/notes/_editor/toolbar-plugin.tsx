@@ -79,15 +79,18 @@ export default function ToolbarPlugin({ onSave, onDelete }: Props) {
 		}
 	}, []);
 
-	const updateHeading = (heading: HeadingTagType) => {
-		editor.update(() => {
-			const selection = $getSelection();
+	const updateHeading = useCallback(
+		(heading: HeadingTagType) => {
+			editor.update(() => {
+				const selection = $getSelection();
 
-			if ($isRangeSelection(selection)) {
-				$wrapNodes(selection, () => $createHeadingNode(heading));
-			}
-		});
-	};
+				if ($isRangeSelection(selection)) {
+					$wrapNodes(selection, () => $createHeadingNode(heading));
+				}
+			});
+		},
+		[editor],
+	);
 
 	useEffect(() => {
 		return mergeRegister(
