@@ -2,6 +2,7 @@
 
 import { useCourses } from '@/app/_hooks/use-courses';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
+import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -18,9 +19,16 @@ type Props = {
 const ChangeCourse = ({ currentCourse, note }: Props) => {
 	const queryClient = useQueryClient();
 	const { data: courses } = useCourses();
+	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateNote,
-		onSuccess: () => {
+		onMutate: () => {
+			// TODO: optimistic update
+		},
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
