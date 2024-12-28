@@ -68,12 +68,12 @@ const Content = ({ note, course }: Props) => {
 	return (
 		<article
 			className={cn(
-				'flex flex-1 flex-col rounded-xl bg-neutral-100 p-4 dark:bg-neutral-700',
+				'flex h-full flex-1 flex-col rounded-xl bg-neutral-100 p-4 dark:bg-neutral-700',
 				isPending && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer initialConfig={editorConfig}>
 				<ToolbarPlugin onSave={handleSave} />
-				<div className='relative mt-4 flex-1 leading-loose'>
+				<div className='relative mt-4 flex-1 overflow-y-scroll scroll-auto  leading-loose'>
 					<RichTextPlugin
 						contentEditable={<ContentEditable className='relative h-full resize-none outline-none' />}
 						placeholder={
