@@ -207,7 +207,7 @@ export default function ToolbarPlugin({ onSave }: Props) {
 					<AlignJustify className='h-5 w-5' />
 				</Toggle>
 			</div>
-			<Button variant='default' className='rounded-md'>
+			<Button variant='default' className='rounded-md' onClick={onSave}>
 				<Check className='size-5' /> Save
 			</Button>
 		</div>
