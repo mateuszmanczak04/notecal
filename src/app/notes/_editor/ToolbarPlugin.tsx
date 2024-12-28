@@ -1,3 +1,4 @@
+import { Button } from '@/components/button';
 import { Toggle } from '@/components/toggle';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $createHeadingNode, HeadingTagType } from '@lexical/rich-text';
@@ -21,6 +22,7 @@ import {
 	AlignLeft,
 	AlignRight,
 	Bold,
+	Check,
 	ChevronLeft,
 	ChevronRight,
 	Heading1,
@@ -30,7 +32,11 @@ import {
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 
-export default function ToolbarPlugin() {
+type Props = {
+	onSave: () => void;
+};
+
+export default function ToolbarPlugin({ onSave }: Props) {
 	const [editor] = useLexicalComposerContext();
 
 	/** Indicates which properties are disabled, e.g.:
@@ -201,6 +207,9 @@ export default function ToolbarPlugin() {
 					<AlignJustify className='h-5 w-5' />
 				</Toggle>
 			</div>
+			<Button variant='default' className='rounded-md'>
+				<Check className='size-5' /> Save
+			</Button>
 		</div>
 	);
 }

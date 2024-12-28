@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/button';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
@@ -12,7 +11,6 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { HeadingNode } from '@lexical/rich-text';
 import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Save } from 'lucide-react';
 import { useState } from 'react';
 import updateNote from '../_actions/update-note';
 import SavePlugin from '../_editor/SavePlugin';
@@ -74,7 +72,7 @@ const Content = ({ note, course }: Props) => {
 				isPending && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer initialConfig={editorConfig}>
-				<ToolbarPlugin />
+				<ToolbarPlugin onSave={handleSave} />
 				<div className='relative mb-4 mt-4 leading-loose'>
 					<RichTextPlugin
 						contentEditable={<ContentEditable className='relative resize-none outline-none' />}
@@ -90,10 +88,6 @@ const Content = ({ note, course }: Props) => {
 				<AutoFocusPlugin />
 				<SavePlugin value={note.content} onChange={value => setContent(value)} />
 			</LexicalComposer>
-			<Button onClick={handleSave} style={{ background: course?.color }} className='mt-auto w-full'>
-				<Save />
-				Save
-			</Button>
 		</article>
 	);
 };
