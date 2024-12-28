@@ -1,6 +1,7 @@
 'use client';
 
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
+import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { Task, TaskPriority } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -41,9 +42,13 @@ const getPriorityTitle = (priority: TaskPriority | null) => {
 
 const Priority = ({ task, forPage = 'tasks' }: Props) => {
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateTask,
-		onSuccess: () => {
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
 			queryClient.invalidateQueries({ queryKey: ['tasks'] });
 		},
 	});
