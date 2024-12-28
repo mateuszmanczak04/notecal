@@ -7,6 +7,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import ChangeCourse from '../_components/change-course';
 import Content from '../_components/content';
+import CourseColor from '../_components/course-color';
 import CourseName from '../_components/course-name';
 import DeleteCourseButton from '../_components/delete-course-button';
 import DeleteNoteButton from '../_components/delete-note-button';
@@ -62,6 +63,9 @@ const NotePage = () => {
 				{/* Name of the course */}
 				<CourseName name={currentCourse.name} />
 
+				{/* Color for the course */}
+				<CourseColor course={currentCourse} />
+
 				{/* List of other notes for this course */}
 				<SideNotes
 					currentCourseNotes={currentCourseNotes}
@@ -77,15 +81,6 @@ const NotePage = () => {
 
 				{/* Change the course for this note */}
 				<ChangeCourse currentCourse={currentCourse} note={currentNote} />
-
-				{/* Link to edit course */}
-				{/* TODO: move it here to be inline */}
-				{/* <Button asChild variant='secondary'>
-					<Link prefetch href={`/courses/edit?id=${currentCourse.id}`}>
-						<Pencil className='h-4 w-4' />
-						Edit course
-					</Link>
-				</Button> */}
 
 				{/* Current note time  */}
 				<StartTime note={currentNote} />
