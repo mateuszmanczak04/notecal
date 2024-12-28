@@ -12,6 +12,7 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import deleteNote from '../_actions/delete-note';
 import updateNote from '../_actions/update-note';
 import { editorConfig } from '../_editor/editor-config';
 import SavePlugin from '../_editor/save-plugin';
@@ -28,8 +29,20 @@ const Content = ({ note }: Props) => {
 	const [content, setContent] = useState(note.content);
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
-	const { mutate, isPending } = useMutation({
+	const { mutate: mutateUpdate, isPending: isPendingUpdate } = useMutation({
 		mutationFn: updateNote,
+		onMutate: () => {
+			// TODO: optimistic update
+		},
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
+			queryClient.invalidateQueries({ queryKey: ['notes'] });
+		},
+	});
+	const { mutate: mutateDelete, isPending: isPendingDelete } = useMutation({
+		mutationFn: deleteNote,
 		onMutate: () => {
 			// TODO: optimistic update
 		},
@@ -42,17 +55,21 @@ const Content = ({ note }: Props) => {
 	});
 
 	const handleSave = () => {
-		mutate({ id: note.id, content });
+		mutateUpdate({ id: note.id, content });
+	};
+
+	const handleDelete = () => {
+		mutateDelete({ id: note.id });
 	};
 
 	return (
 		<article
 			className={cn(
 				'flex h-full flex-1 flex-col rounded-xl bg-neutral-100 p-4 dark:bg-neutral-700',
-				isPending && 'pointer-events-none opacity-50',
+				(isPendingUpdate || isPendingDelete) && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer initialConfig={editorConfig}>
-				<ToolbarPlugin onSave={handleSave} />
+				<ToolbarPlugin onDelete={handleDelete} onSave={handleSave} />
 				<div className='relative mt-4 flex-1 overflow-y-scroll scroll-auto  leading-loose'>
 					<RichTextPlugin
 						contentEditable={<ContentEditable className='relative h-full resize-none outline-none' />}

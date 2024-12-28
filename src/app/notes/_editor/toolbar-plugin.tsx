@@ -29,15 +29,17 @@ import {
 	Heading1,
 	Heading2,
 	Italic,
+	Trash,
 	Underline,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 
 type Props = {
 	onSave: () => void;
+	onDelete: () => void;
 };
 
-export default function ToolbarPlugin({ onSave }: Props) {
+export default function ToolbarPlugin({ onSave, onDelete }: Props) {
 	const [editor] = useLexicalComposerContext();
 
 	/** Indicates which properties are disabled, e.g.:
@@ -147,7 +149,7 @@ export default function ToolbarPlugin({ onSave }: Props) {
 		return () => {
 			unregisterH1Command();
 		};
-	}, [editor, onSave]);
+	}, [editor, onSave, updateHeading]);
 
 	return (
 		<div className='flex flex-wrap items-center justify-center gap-2 rounded-md bg-white p-2 dark:bg-neutral-800'>
@@ -241,6 +243,9 @@ export default function ToolbarPlugin({ onSave }: Props) {
 			</div>
 			<Button variant='default' className='rounded-md' onClick={onSave}>
 				<Check className='size-5' /> Save
+			</Button>
+			<Button variant='destructive' className='rounded-md' onClick={onDelete}>
+				<Trash className='size-5' /> Delete
 			</Button>
 		</div>
 	);

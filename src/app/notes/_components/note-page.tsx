@@ -11,7 +11,6 @@ import CourseColor from './course-color';
 import CourseName from './course-name';
 import CourseTeacher from './course-teacher';
 import DeleteCourseButton from './delete-course-button';
-import DeleteNoteButton from './delete-note-button';
 import EndTime from './end-time';
 import SideNotes from './side-notes';
 import StartTime from './start-time';
@@ -88,7 +87,6 @@ const NotePage = () => {
 					<ChangeCourse currentCourse={currentCourse} note={currentNote} />
 					<StartTime note={currentNote} />
 					<EndTime note={currentNote} />
-					<DeleteNoteButton id={currentNote.id} />
 				</fieldset>
 
 				{/* Danger zone */}
