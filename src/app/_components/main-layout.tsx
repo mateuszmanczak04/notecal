@@ -1,4 +1,5 @@
 import logout from '@/app/auth/_actions/logout';
+import { Toaster } from '@/components/toast/toaster';
 import { getAuthStatus } from '@/utils/auth';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { ReactNode } from 'react';
@@ -54,6 +55,7 @@ const MainLayout = async ({ children }: Props) => {
 						{children}
 					</div>
 				</div>
+				<Toaster />
 			</CalendarContextProvider>
 		</HydrationBoundary>
 	);
