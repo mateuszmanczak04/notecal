@@ -2,21 +2,23 @@
 
 import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $getRoot, $insertNodes } from 'lexical';
-import { useEffect, useState } from 'react';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
+import { $getRoot, $insertNodes, KEY_MODIFIER_COMMAND } from 'lexical';
+import { useEffect, useState } from 'react';
 
 type Props = {
 	value: string;
 	onChange: (value: string) => void;
+	onSave: () => void;
 };
 
 /** A plugin for persisting content in the database */
-const SavePlugin = ({ value, onChange }: Props) => {
+const SavePlugin = ({ value, onChange, onSave }: Props) => {
 	const [isFirstRender, setIsFirstRender] = useState(true);
 	const [editor] = useLexicalComposerContext();
 
 	useEffect(() => {
+		// Initialize editor content if `value` exists and it's the first render
 		if (!value || !isFirstRender) return;
 
 		setIsFirstRender(false);
@@ -32,6 +34,24 @@ const SavePlugin = ({ value, onChange }: Props) => {
 			}
 		});
 	}, [value, isFirstRender, editor]);
+
+	useEffect(() => {
+		// Register the Cmd + S (or Ctrl + S) command
+		const unregisterCommand = editor.registerCommand(
+			KEY_MODIFIER_COMMAND,
+			event => {
+				if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+					event.preventDefault(); // Prevent default browser save behvaior
+					onSave();
+					return true;
+				}
+				return false;
+			},
+			1, // Command priority
+		);
+
+		return () => unregisterCommand();
+	}, [editor, onSave]);
 
 	return (
 		<OnChangePlugin

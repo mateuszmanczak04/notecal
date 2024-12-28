@@ -85,7 +85,7 @@ const Content = ({ note }: Props) => {
 				</div>
 				<HistoryPlugin />
 				<AutoFocusPlugin />
-				<SavePlugin value={note.content} onChange={value => setContent(value)} />
+				<SavePlugin value={note.content} onChange={value => setContent(value)} onSave={handleSave} />
 			</LexicalComposer>
 		</article>
 	);
