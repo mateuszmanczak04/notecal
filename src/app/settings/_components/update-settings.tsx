@@ -4,6 +4,7 @@ import { useUser } from '@/app/_hooks/use-user';
 import { Button } from '@/components/button';
 import ErrorMessage from '@/components/error-message';
 import { Input } from '@/components/input';
+import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
@@ -15,9 +16,13 @@ import updateSettings from '../_actions/update-settings';
 const UpdateSettings = () => {
 	const queryClient = useQueryClient();
 	const { data: user } = useUser();
+	const { toast } = useToast();
 	const { mutate, isPending, error } = useMutation({
 		mutationFn: updateSettings,
-		onSuccess: () => {
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
 			queryClient.invalidateQueries({ queryKey: ['user'] });
 		},
 	});
