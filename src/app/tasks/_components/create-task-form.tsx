@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
+import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Command, Plus } from 'lucide-react';
@@ -17,9 +18,13 @@ type Props = {
 
 const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: createTask,
-		onSuccess: () => {
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
 			queryClient.invalidateQueries({ queryKey: ['tasks'] });
 		},
 	});
