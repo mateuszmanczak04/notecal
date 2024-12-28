@@ -2,6 +2,7 @@
 
 import updateSettings from '@/app/settings/_actions/update-settings';
 import { Button } from '@/components/button';
+import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ArrowUpDown } from 'lucide-react';
@@ -11,10 +12,15 @@ import { useOnClickOutside } from 'usehooks-ts';
 const SortTasks = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null!);
+	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateSettings,
-		onSuccess: () => {
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
+			queryClient.invalidateQueries({ queryKey: ['user'] });
 			queryClient.invalidateQueries({ queryKey: ['tasks'] });
 		},
 	});
