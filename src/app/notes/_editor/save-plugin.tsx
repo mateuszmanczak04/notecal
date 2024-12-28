@@ -3,7 +3,7 @@
 import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { $getRoot, $insertNodes, KEY_MODIFIER_COMMAND } from 'lexical';
+import { $getRoot, $insertNodes, COMMAND_PRIORITY_LOW, KEY_MODIFIER_COMMAND } from 'lexical';
 import { useEffect, useState } from 'react';
 
 type Props = {
@@ -47,7 +47,7 @@ const SavePlugin = ({ value, onChange, onSave }: Props) => {
 				}
 				return false;
 			},
-			1, // Command priority
+			COMMAND_PRIORITY_LOW,
 		);
 
 		return () => unregisterCommand();

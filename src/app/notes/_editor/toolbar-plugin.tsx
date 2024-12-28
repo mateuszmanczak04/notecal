@@ -12,6 +12,7 @@ import {
 	COMMAND_PRIORITY_LOW,
 	FORMAT_ELEMENT_COMMAND,
 	FORMAT_TEXT_COMMAND,
+	KEY_MODIFIER_COMMAND,
 	REDO_COMMAND,
 	SELECTION_CHANGE_COMMAND,
 	UNDO_COMMAND,
@@ -120,7 +121,33 @@ export default function ToolbarPlugin({ onSave }: Props) {
 		);
 	}, [editor, $updateToolbar]);
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		// Register keyboard shortcuts for headings
+		const unregisterH1Command = editor.registerCommand(
+			KEY_MODIFIER_COMMAND,
+			event => {
+				if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
+					switch (event.key) {
+						case 'h':
+							event.preventDefault();
+							updateHeading('h1');
+							break;
+						case 'j':
+							event.preventDefault();
+							updateHeading('h2');
+							break;
+					}
+					return true;
+				}
+				return false;
+			},
+			COMMAND_PRIORITY_LOW,
+		);
+
+		return () => {
+			unregisterH1Command();
+		};
+	}, [editor, onSave]);
 
 	return (
 		<div className='flex flex-wrap items-center justify-center gap-2 rounded-md bg-white p-2 dark:bg-neutral-800'>

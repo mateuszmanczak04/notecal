@@ -3,41 +3,22 @@
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
-import { InitialConfigType, LexicalComposer } from '@lexical/react/LexicalComposer';
+import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
-import { HeadingNode } from '@lexical/rich-text';
+
 import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import updateNote from '../_actions/update-note';
+import { editorConfig } from '../_editor/editor-config';
 import SavePlugin from '../_editor/save-plugin';
 import ToolbarPlugin from '../_editor/toolbar-plugin';
 
 type Props = {
 	note: Note;
-};
-
-/** A config for lexical library (WYSIWYG text editor). */
-const editorConfig: InitialConfigType = {
-	namespace: 'Note content',
-	nodes: [HeadingNode],
-	onError(error: Error) {
-		throw error;
-	},
-	theme: {
-		heading: {
-			h1: 'text-2xl font-bold',
-			h2: 'text-xl font-bold',
-		},
-		text: {
-			bold: 'font-bold',
-			italic: 'italic',
-			underline: 'underline',
-		},
-	},
 };
 
 /**
