@@ -1,6 +1,7 @@
 'use client';
 
 import DatePicker from '@/components/date-picker';
+import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -12,9 +13,13 @@ type Props = {
 
 const EndTime = ({ note }: Props) => {
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateNote,
-		onSuccess: () => {
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
