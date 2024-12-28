@@ -73,9 +73,9 @@ const Content = ({ note, course }: Props) => {
 			)}>
 			<LexicalComposer initialConfig={editorConfig}>
 				<ToolbarPlugin onSave={handleSave} />
-				<div className='relative mb-4 mt-4 leading-loose'>
+				<div className='relative mt-4 flex-1 leading-loose'>
 					<RichTextPlugin
-						contentEditable={<ContentEditable className='relative resize-none outline-none' />}
+						contentEditable={<ContentEditable className='relative h-full resize-none outline-none' />}
 						placeholder={
 							<p className='pointer-events-none absolute left-0 top-0 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
 								Enter some text...
