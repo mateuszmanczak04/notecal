@@ -1,6 +1,7 @@
 'use client';
 
 import { Checkbox } from '@/components/checkbox';
+import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -13,9 +14,13 @@ type Props = {
 
 const Completed = ({ task, forPage = 'tasks' }: Props) => {
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateTask,
-		onSuccess: () => {
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
 			queryClient.invalidateQueries({ queryKey: ['tasks'] });
 		},
 	});
