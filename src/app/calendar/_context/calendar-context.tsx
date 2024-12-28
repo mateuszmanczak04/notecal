@@ -2,6 +2,7 @@
 
 import { useUser } from '@/app/_hooks/use-user';
 import updateSettings from '@/app/settings/_actions/update-settings';
+import { useToast } from '@/components/toast/use-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addDays } from 'date-fns';
 import { ReactNode, RefObject, createContext, useContext, useRef, useState } from 'react';
@@ -26,12 +27,18 @@ const CalendarContext = createContext({} as CalendarContextProps);
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement | null>(null);
-
+	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { data: user } = useUser();
 	const { mutate } = useMutation({
 		mutationFn: updateSettings,
-		onSuccess: () => {
+		onMutate: () => {
+			// TODO: optimistic update
+		},
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
 			queryClient.invalidateQueries({ queryKey: ['user'] });
 		},
 	});
