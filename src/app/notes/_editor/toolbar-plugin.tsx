@@ -157,24 +157,26 @@ export default function ToolbarPlugin({ onSave }: Props) {
 					disabled={disableMap.undo}
 					onPressedChange={() => {
 						editor.dispatchCommand(UNDO_COMMAND, undefined);
-					}}>
+					}}
+					title='Ctrl + Z'>
 					<ChevronLeft className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					disabled={disableMap.redo}
 					onPressedChange={() => {
 						editor.dispatchCommand(REDO_COMMAND, undefined);
-					}}>
+					}}
+					title='Ctrl + Shift + Z'>
 					<ChevronRight className='h-5 w-5' />
 				</Toggle>
 			</div>
 
 			{/* Headings */}
 			<div className='grid grid-cols-2 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
-				<Toggle onClick={() => updateHeading('h1')}>
+				<Toggle onClick={() => updateHeading('h1')} title='Ctrl + Shift + H'>
 					<Heading1 className='h-5 w-5' />
 				</Toggle>
-				<Toggle onClick={() => updateHeading('h2')}>
+				<Toggle onClick={() => updateHeading('h2')} title='Ctrl + Shift + J'>
 					<Heading2 className='h-5 w-5' />
 				</Toggle>
 			</div>
@@ -186,7 +188,8 @@ export default function ToolbarPlugin({ onSave }: Props) {
 					className={selectionMap.bold ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
-					}}>
+					}}
+					title='Ctrl + B'>
 					<Bold className='h-5 w-5' />
 				</Toggle>
 				<Toggle
@@ -194,7 +197,8 @@ export default function ToolbarPlugin({ onSave }: Props) {
 					className={selectionMap.italic ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
-					}}>
+					}}
+					title='Ctrl + I'>
 					<Italic className='h-5 w-5' />
 				</Toggle>
 				<Toggle
@@ -202,7 +206,8 @@ export default function ToolbarPlugin({ onSave }: Props) {
 					className={selectionMap.underline ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
-					}}>
+					}}
+					title='Ctrl + U'>
 					<Underline className='h-5 w-5' />
 				</Toggle>
 			</div>
