@@ -2,6 +2,7 @@
 
 import deleteCourse from '@/app/courses/_actions/delete-course';
 import { Button } from '@/components/button';
+import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';
@@ -17,9 +18,16 @@ type Props = {
  */
 const DeleteCourseButton = ({ id }: Props) => {
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: deleteCourse,
-		onSuccess: () => {
+		onMutate: () => {
+			// TODO: optimistic update
+		},
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 			queryClient.invalidateQueries({ queryKey: ['courses'] });
 			queryClient.invalidateQueries({ queryKey: ['tasks'] });
