@@ -25,6 +25,11 @@ const updateCourse = async ({ id, name, teacher, color }: T_UpdateCourseInput): 
 		if (!authenticated) {
 			return { error: en.auth.UNAUTHENTICATED };
 		}
+		console.log(name && name.trim().length);
+
+		if (name && name.trim().length === 0) {
+			return { error: 'Course name cannot be empty' };
+		}
 
 		const course = await db.course.update({
 			where: { id, userId: user.id },
