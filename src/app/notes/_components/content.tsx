@@ -9,7 +9,7 @@ import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { HeadingNode } from '@lexical/rich-text';
-import { Course, Note } from '@prisma/client';
+import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import updateNote from '../_actions/update-note';
@@ -18,7 +18,6 @@ import ToolbarPlugin from '../_editor/ToolbarPlugin';
 
 type Props = {
 	note: Note;
-	course: Course;
 };
 
 /** A config for lexical library (WYSIWYG text editor). */
@@ -44,7 +43,7 @@ const editorConfig: InitialConfigType = {
 /**
  * A part of /note/[id] page where user enters the text content. It works like a WYSIWYG editor.
  */
-const Content = ({ note, course }: Props) => {
+const Content = ({ note }: Props) => {
 	const [content, setContent] = useState(note.content);
 	const queryClient = useQueryClient();
 	const { toast } = useToast();

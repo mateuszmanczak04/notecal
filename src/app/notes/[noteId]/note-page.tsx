@@ -55,7 +55,7 @@ const NotePage = () => {
 	return (
 		<main className='mx-auto flex h-full min-h-80 max-w-[1200px] flex-col gap-4 md:flex-row'>
 			<article className='flex h-full flex-1 flex-col'>
-				<Content note={currentNote} course={currentCourse} />
+				<Content note={currentNote} />
 			</article>
 
 			<aside className='flex h-full w-full shrink-0 flex-col gap-8 overflow-x-clip overflow-y-scroll scrollbar-hide md:w-56'>
