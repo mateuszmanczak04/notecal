@@ -3,6 +3,7 @@
 import { useNotes } from '@/app/_hooks/use-notes';
 import createNote from '@/app/notes/_actions/create-note';
 import LoadingSpinner from '@/components/loading-spinner';
+import { useToast } from '@/components/toast/use-toast';
 import { Course as T_Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChevronRight } from 'lucide-react';
@@ -38,9 +39,16 @@ const CourseErrorFallback = () => {
 const Course = ({ course }: Props) => {
 	const queryClient = useQueryClient();
 	const { data: notes } = useNotes();
+	const { toast } = useToast();
 	const { error, isPending, mutate } = useMutation({
 		mutationFn: createNote,
-		onSuccess: () => {
+		onMutate: () => {
+			// TODO: optimistic update
+		},
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
