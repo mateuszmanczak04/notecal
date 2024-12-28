@@ -13,8 +13,8 @@ import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import updateNote from '../_actions/update-note';
-import SavePlugin from '../_editor/SavePlugin';
-import ToolbarPlugin from '../_editor/ToolbarPlugin';
+import SavePlugin from '../_editor/save-plugin';
+import ToolbarPlugin from '../_editor/toolbar-plugin';
 
 type Props = {
 	note: Note;
