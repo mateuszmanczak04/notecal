@@ -4,6 +4,7 @@ import { Button } from '@/components/button';
 import FormLoadingSpinner from '@/components/form-loading-spinner';
 import GoBackButton from '@/components/go-back-button';
 import { Input } from '@/components/input';
+import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { COLORS } from '@/utils/colors';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -13,9 +14,16 @@ import createCourse from '../_actions/create-course';
 
 const CreateCourseForm = () => {
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
 	const { mutate } = useMutation({
 		mutationFn: createCourse,
-		onSuccess: () => {
+		onMutate: () => {
+			// TODO: optimistic update
+		},
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
 			queryClient.invalidateQueries({ queryKey: ['courses'] });
 		},
 	});
