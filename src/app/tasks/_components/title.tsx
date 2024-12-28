@@ -1,5 +1,6 @@
 'use client';
 
+import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -14,9 +15,13 @@ const Title = ({ task }: Props) => {
 	const { id, title } = task;
 	const titleRef = useRef<HTMLParagraphElement>(null!);
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateTask,
-		onSuccess: () => {
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
 			queryClient.invalidateQueries({ queryKey: ['tasks'] });
 		},
 	});
