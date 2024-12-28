@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/button';
+import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { InitialConfigType, LexicalComposer } from '@lexical/react/LexicalComposer';
@@ -48,9 +49,16 @@ const editorConfig: InitialConfigType = {
 const Content = ({ note, course }: Props) => {
 	const [content, setContent] = useState(note.content);
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateNote,
-		onSuccess: () => {
+		onMutate: () => {
+			// TODO: optimistic update
+		},
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
