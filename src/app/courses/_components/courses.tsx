@@ -1,6 +1,6 @@
 'use client';
 
-import { useCourses } from '@/app/_hooks/use-courses';
+import { useCourses } from '@/hooks/use-courses';
 import Course from './course';
 
 const Courses = () => {

@@ -1,10 +1,10 @@
 'use client';
 
-import { useUser } from '@/app/_hooks/use-user';
 import logout from '@/app/auth/_actions/logout';
 import { Button } from '@/components/button';
 import ErrorMessage from '@/components/error-message';
 import LoadingSpinner from '@/components/loading-spinner';
+import { useUser } from '@/hooks/use-user';
 import { LogOut } from 'lucide-react';
 import ChangeEmailSetting from './change-email-setting';
 import ChangePasswordSetting from './change-password-setting';

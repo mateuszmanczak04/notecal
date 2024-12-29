@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser } from '@/app/_hooks/use-user';
+import { useUser } from '@/hooks/use-user';
 import DayColumn from './day-column';
 import HourRow from './hour-row';
 

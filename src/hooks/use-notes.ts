@@ -1,6 +1,6 @@
+import getNotes from '@/app/notes/_actions/get-notes';
 import { fromUTC } from '@/utils/timezone';
 import { useQuery } from '@tanstack/react-query';
-import getNotes from '../notes/_actions/get-notes';
 
 export const useNotes = () => {
 	const { data, ...rest } = useQuery({

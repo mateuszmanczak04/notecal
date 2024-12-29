@@ -1,6 +1,6 @@
 'use client';
 
-import { useNotes } from '@/app/_hooks/use-notes';
+import { useNotes } from '@/hooks/use-notes';
 import { MouseEvent, useMemo, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import CoursePicker from './course-picker';

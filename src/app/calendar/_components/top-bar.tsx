@@ -1,7 +1,7 @@
 'use client';
 
-import { useUser } from '@/app/_hooks/use-user';
 import LoadingSpinner from '@/components/loading-spinner';
+import { useUser } from '@/hooks/use-user';
 import { useCalendarContext } from '../_context/calendar-context';
 import DayHeading from './day-heading';
 

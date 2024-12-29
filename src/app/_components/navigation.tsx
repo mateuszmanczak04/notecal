@@ -1,12 +1,12 @@
 'use client';
 
 import { Button } from '@/components/button';
+import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
 import { Calendar, Check, List, Menu, Settings, User, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { useUser } from '../_hooks/use-user';
 
 const Navigation = () => {
 	const pathname = usePathname();

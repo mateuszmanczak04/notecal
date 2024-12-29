@@ -1,8 +1,8 @@
 'use client';
 
-import { useCourses } from '@/app/_hooks/use-courses';
-import { useNotes } from '@/app/_hooks/use-notes';
-import { useTasks } from '@/app/_hooks/use-tasks';
+import { useCourses } from '@/hooks/use-courses';
+import { useNotes } from '@/hooks/use-notes';
+import { useTasks } from '@/hooks/use-tasks';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import ChangeCourse from './change-course';

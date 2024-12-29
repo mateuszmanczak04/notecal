@@ -1,8 +1,8 @@
 'use client';
 
-import { useTasks } from '@/app/_hooks/use-tasks';
 import ErrorMessage from '@/components/error-message';
 import LoadingSpinner from '@/components/loading-spinner';
+import { useTasks } from '@/hooks/use-tasks';
 import Task from './task';
 
 /**

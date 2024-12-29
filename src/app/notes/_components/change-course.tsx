@@ -1,8 +1,8 @@
 'use client';
 
-import { useCourses } from '@/app/_hooks/use-courses';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
 import { useToast } from '@/components/toast/use-toast';
+import { useCourses } from '@/hooks/use-courses';
 import { cn } from '@/utils/cn';
 import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

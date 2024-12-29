@@ -1,10 +1,10 @@
 'use client';
 
-import { useUser } from '@/app/_hooks/use-user';
 import { Button } from '@/components/button';
 import ErrorMessage from '@/components/error-message';
 import { Input } from '@/components/input';
 import { useToast } from '@/components/toast/use-toast';
+import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';

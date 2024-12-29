@@ -1,9 +1,9 @@
 'use client';
 
-import { useNotes } from '@/app/_hooks/use-notes';
 import createNote from '@/app/notes/_actions/create-note';
 import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
+import { useNotes } from '@/hooks/use-notes';
 import { Course as T_Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChevronRight } from 'lucide-react';

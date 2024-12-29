@@ -1,8 +1,8 @@
 'use client';
 
-import { useUser } from '@/app/_hooks/use-user';
 import updateSettings from '@/app/settings/_actions/update-settings';
 import { useToast } from '@/components/toast/use-toast';
+import { useUser } from '@/hooks/use-user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addDays } from 'date-fns';
 import { ReactNode, RefObject, createContext, useContext, useRef, useState } from 'react';

@@ -1,9 +1,9 @@
 'use client';
 
-import { useCourses } from '@/app/_hooks/use-courses';
-import { useUser } from '@/app/_hooks/use-user';
 import updateNote from '@/app/notes/_actions/update-note';
 import { useToast } from '@/components/toast/use-toast';
+import { useCourses } from '@/hooks/use-courses';
+import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
 import { toUTC } from '@/utils/timezone';
 import { type Note } from '@prisma/client';
