@@ -4,6 +4,7 @@ import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
+import { Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Command, Plus } from 'lucide-react';
 import { FormEvent, useEffect, useRef, useState } from 'react';
@@ -13,10 +14,10 @@ import createTask from '../_actions/create-task';
 type Props = {
 	/** Specify use case for this component. It can be user either big one in /tasks page or as a small task in /notes/[id] page. */
 	forPage?: 'tasks' | 'notes';
-	courseId?: string;
+	course?: Course;
 };
 
-const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
+const CreateTaskForm = ({ forPage = 'tasks', course }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
@@ -56,7 +57,7 @@ const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		mutate({ title, courseId });
+		mutate({ title, courseId: course?.id });
 		setTitle('');
 	};
 
@@ -73,7 +74,11 @@ const CreateTaskForm = ({ forPage = 'tasks', courseId }: Props) => {
 					onChange={e => setTitle(e.target.value)}
 					required
 				/>
-				<Button className='rounded-xl text-sm' type='submit' disabled={isPending}>
+				<Button
+					className='rounded-xl text-sm'
+					type='submit'
+					disabled={isPending}
+					style={{ backgroundColor: course?.color || '' }}>
 					<Plus className='h-5 w-5' />
 					Create a new task
 				</Button>

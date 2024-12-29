@@ -14,7 +14,7 @@ const Tasks = ({ course, tasks }: Props) => {
 		<article className='space-y-4'>
 			{tasks?.map(task => <Task forPage='notes' key={task.id} task={task} />)}
 
-			<CreateTaskForm courseId={course.id} forPage='notes' />
+			<CreateTaskForm course={course} forPage='notes' />
 		</article>
 	);
 };
