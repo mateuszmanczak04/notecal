@@ -30,7 +30,7 @@ const Description = ({ task }: Props) => {
 		const newDescription = descriptionRef.current.innerText;
 		// Don't want to update the same value:
 		if (newDescription.trim() === description) return;
-		mutate({ id, title: newDescription.trim() });
+		mutate({ id, description: newDescription.trim() });
 	};
 
 	/**
