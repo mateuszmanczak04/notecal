@@ -4,7 +4,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { $createHeadingNode, HeadingTagType } from '@lexical/rich-text';
 import { $wrapNodes } from '@lexical/selection';
 import { mergeRegister } from '@lexical/utils';
-import { Course } from '@prisma/client';
+import { Course, Note } from '@prisma/client';
 import {
 	$getSelection,
 	$isRangeSelection,
@@ -30,18 +30,18 @@ import {
 	Heading1,
 	Heading2,
 	Italic,
-	Trash,
 	Underline,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
+import DeleteNoteButton from '../_components/confirm-delete-note';
 
 type Props = {
 	onSave: () => void;
-	onDelete: () => void;
+	note: Note;
 	course: Course;
 };
 
-export default function ToolbarPlugin({ onSave, onDelete, course }: Props) {
+export default function ToolbarPlugin({ onSave, note, course }: Props) {
 	const [editor] = useLexicalComposerContext();
 
 	/** Indicates which properties are disabled, e.g.:
@@ -253,9 +253,7 @@ export default function ToolbarPlugin({ onSave, onDelete, course }: Props) {
 				style={{ backgroundColor: course?.color || '' }}>
 				<Check className='size-5' /> Save
 			</Button>
-			<Button variant='destructive' className='rounded-md' onClick={onDelete}>
-				<Trash className='size-5' /> Delete
-			</Button>
+			<DeleteNoteButton note={note} />
 		</div>
 	);
 }
