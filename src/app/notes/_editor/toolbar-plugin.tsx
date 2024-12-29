@@ -4,6 +4,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { $createHeadingNode, HeadingTagType } from '@lexical/rich-text';
 import { $wrapNodes } from '@lexical/selection';
 import { mergeRegister } from '@lexical/utils';
+import { Course } from '@prisma/client';
 import {
 	$getSelection,
 	$isRangeSelection,
@@ -37,9 +38,10 @@ import { useCallback, useEffect, useState } from 'react';
 type Props = {
 	onSave: () => void;
 	onDelete: () => void;
+	course: Course;
 };
 
-export default function ToolbarPlugin({ onSave, onDelete }: Props) {
+export default function ToolbarPlugin({ onSave, onDelete, course }: Props) {
 	const [editor] = useLexicalComposerContext();
 
 	/** Indicates which properties are disabled, e.g.:
@@ -244,7 +246,11 @@ export default function ToolbarPlugin({ onSave, onDelete }: Props) {
 					<AlignJustify className='h-5 w-5' />
 				</Toggle>
 			</div>
-			<Button variant='default' className='rounded-md' onClick={onSave}>
+			<Button
+				variant='default'
+				className='rounded-md'
+				onClick={onSave}
+				style={{ backgroundColor: course?.color || '' }}>
 				<Check className='size-5' /> Save
 			</Button>
 			<Button variant='destructive' className='rounded-md' onClick={onDelete}>
