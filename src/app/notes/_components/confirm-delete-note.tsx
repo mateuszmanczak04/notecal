@@ -3,6 +3,7 @@
 import { Button } from '@/components/button';
 import {
 	Dialog,
+	DialogClose,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
@@ -53,14 +54,17 @@ const DeleteNoteButton = ({ note }: Props) => {
 					<DialogDescription>
 						All the content of this note will be permanently erased, you cannot restore it later.
 					</DialogDescription>
-					<Button
-						variant='destructive'
-						className={cn(isPending && 'pointer-events-none opacity-50')}
-						disabled={isPending}
-						onClick={handleDelete}>
-						<Trash className='size-5' /> Yes, delete
-					</Button>
 				</DialogHeader>
+				<Button
+					variant='destructive'
+					className={cn(isPending && 'pointer-events-none opacity-50')}
+					disabled={isPending}
+					onClick={handleDelete}>
+					<Trash className='size-5' /> Yes, delete
+				</Button>
+				<DialogClose asChild>
+					<Button variant='secondary'>No, cancel</Button>
+				</DialogClose>
 			</DialogContent>
 		</Dialog>
 	);
