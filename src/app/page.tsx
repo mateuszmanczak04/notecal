@@ -3,8 +3,9 @@ import Footer from './_components/footer';
 import Hero from './_components/hero';
 
 export const metadata: Metadata = {
-	title: 'NoteCal - Organize Your Notes',
-	description: 'A productivity app which was made to keep your school notes organised based on lesson.',
+	title: 'NoteCal - The Ultimate Student Note and Task Organizer',
+	description:
+		'Organize your study life with NoteCal. Create courses, write lecture notes, manage tasks, and stay productive. Featuring a WYSIWYG editor, customizable calendar views, and secure authentication. Boost your learning efficiency today!',
 };
 
 const page = () => {
