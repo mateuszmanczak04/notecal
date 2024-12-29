@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /auth/reset-password
+Disallow: /calendar
+Disallow: /courses
+Disallow: /courses/create
+Disallow: /tasks
+Disallow: /settings
+Disallow: /notes
+Disallow: /notes/[id]
+
+Sitemap: https://notecal.app/sitemap.xml
