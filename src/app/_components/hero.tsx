@@ -1,24 +1,24 @@
 import { Button } from '@/components/button';
-import Image from 'next/image';
+import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
 const Hero = () => {
 	return (
-		<section className='fles-1 mx-auto min-h-screen w-[640px] max-w-[calc(100%-32px)] items-center pt-16 text-center md:w-[720px]'>
-			<div className='flex items-center justify-center gap-2'>
-				<Image src='/logo.svg' alt='notecal logo' width='22' height='31' />
-				<p className='text-xl font-semibold sm:text-2xl md:text-3xl'>NoteCal</p>
-			</div>
-			<h1 className='mt-2 text-5xl font-bold tracking-tighter sm:text-7xl md:text-8xl'>
-				Let Your University Notes Be Organised
+		<section className='fles-1 mx-auto min-h-screen items-center px-4 pt-16 text-center'>
+			<h1 className='max-w-[12ch] text-6xl font-black tracking-tight sm:text-7xl md:text-8xl'>
+				Welcome to
+				<span className='bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-[1.25em] text-transparent'>
+					{' '}
+					NoteCal
+				</span>
 			</h1>
-			<p className='mt-4 sm:mt-6 sm:text-lg md:mt-8 md:text-xl'>
-				Are you tired of grouping your university notes by a specific course lesson or date? NoteCal has been
-				made to decrease your fatigue.
+			<p className='mx-auto mt-4 max-w-[34ch] leading-relaxed sm:text-lg md:text-xl'>
+				The ultimate tool to organize your notes, tasks, and study life. Say goodbye to unorganized university
+				assets!
 			</p>
-			<Button className='mt-8 w-full sm:w-fit' asChild size='lg'>
+			<Button className='mt-4 sm:mt-6 md:mt-8' asChild size='lg'>
 				<Link prefetch href='/auth/register'>
-					Click Here to Join
+					Try it yourself, it&apos;s free! <ChevronRight />
 				</Link>
 			</Button>
 		</section>
