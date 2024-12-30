@@ -66,7 +66,7 @@ const NotePage = () => {
 					{/* <SectionHeading text='Course related' /> */}
 					<CourseName course={currentCourse} />
 					<CourseColor course={currentCourse} />
-					<CourseTeacher teacher={currentCourse.teacher} />
+					<CourseTeacher course={currentCourse} />
 				</fieldset>
 
 				{/* List of other notes from this course */}

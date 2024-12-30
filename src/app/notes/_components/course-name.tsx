@@ -63,7 +63,7 @@ const CourseName = ({ course }: Props) => {
 		<h2
 			ref={nameRef}
 			contentEditable
-			className={cn('text-4xl font-bold outline-none ', isPending && 'pointer-events-none opacity-50')}
+			className={cn('text-4xl font-bold outline-none transition', isPending && 'pointer-events-none opacity-50')}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}
 			spellCheck={false}></h2>
