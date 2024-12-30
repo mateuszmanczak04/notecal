@@ -20,6 +20,7 @@ const CalendarPage = () => {
 		scrollContainerRef.current!.scrollTop = scrollTop;
 	}, [scrollTop]);
 
+	// Handle zooming in/out with keyboard
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.metaKey && (event.key === '=' || event.key === '-')) {
