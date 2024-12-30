@@ -15,6 +15,7 @@ import EndTime from './end-time';
 import SideNotes from './side-notes';
 import StartTime from './start-time';
 import Tasks from './tasks';
+import UsefulLinks from './useful-links';
 
 const NotePage = () => {
 	const params = useParams<{ noteId: string }>();
@@ -66,6 +67,11 @@ const NotePage = () => {
 					<CourseName course={currentCourse} />
 					<CourseColor course={currentCourse} />
 					<CourseTeacher teacher={currentCourse.teacher} />
+				</fieldset>
+
+				<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
+					<legend className='px-2'>Useful links</legend>
+					<UsefulLinks course={currentCourse} />
 				</fieldset>
 
 				{/* List of other notes from this course */}
