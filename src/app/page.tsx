@@ -4,6 +4,7 @@ import Features from './_components/features';
 import Footer from './_components/footer';
 import Hero from './_components/hero';
 import HowItWorks from './_components/how-it-works';
+import Pricing from './_components/pricing';
 
 export const metadata: Metadata = {
 	title: 'NoteCal - The Ultimate Student Note and Task Organizer',
@@ -17,6 +18,7 @@ const page = () => {
 			<Hero />
 			<Features />
 			<HowItWorks />
+			<Pricing />
 			<CTA />
 			<Footer />
 		</main>
