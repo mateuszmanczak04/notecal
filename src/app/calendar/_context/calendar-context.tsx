@@ -1,5 +1,6 @@
 'use client';
 
+import { LimitedUser } from '@/app/settings/_actions/get-user';
 import updateSettings from '@/app/settings/_actions/update-settings';
 import { useToast } from '@/components/toast/use-toast';
 import { useUser } from '@/hooks/use-user';
@@ -26,14 +27,23 @@ const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
 	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
-	const containerRef = useRef<HTMLDivElement | null>(null);
+	const containerRef = useRef<HTMLDivElement>(null!);
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { data: user } = useUser();
 	const { mutate } = useMutation({
 		mutationFn: updateSettings,
-		onMutate: () => {
-			// TODO: optimistic update
+		onMutate: data => {
+			// Update settings optimistically
+			queryClient.setQueryData(['user'], (prev: LimitedUser) => {
+				return {
+					...prev,
+					zoomLevel: data.zoomLevel || prev.zoomLevel,
+					displayedDays: data.displayedDays || prev.displayedDays,
+					defaultNoteDuration: data.defaultNoteDuration || prev.defaultNoteDuration,
+					language: data.language || prev.language,
+				};
+			});
 		},
 		onSettled: data => {
 			if (data && 'error' in data) {
