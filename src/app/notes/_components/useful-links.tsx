@@ -8,7 +8,7 @@ import { cn } from '@/utils/cn';
 import { addHttpsIfMissing, removeProtocol } from '@/utils/links';
 import { Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 
 type Props = {
@@ -41,14 +41,30 @@ const UsefulLinks = ({ course }: Props) => {
 		mutate({ id: course.id, usefulLinks: JSON.stringify(newLinks) });
 	};
 
+	const handleDelete = (link: string) => {
+		const newLinks = usefulLinks.filter(l => l !== link);
+		setUsefulLinks(newLinks);
+		mutate({ id: course.id, usefulLinks: JSON.stringify(newLinks) });
+	};
+
 	return (
-		<article className={cn(isPending && 'pointer-events-none opacity-50')}>
-			<div className='grid gap-y-2 overflow-x-clip'>
+		<article className={cn('w-full', isPending && 'pointer-events-none opacity-50')}>
+			<div className='grid gap-y-2'>
 				{usefulLinks.map(link => (
-					<a target='_blank' href={addHttpsIfMissing(link)} key={link} className='truncate underline'>
-						{removeProtocol(link)}
-						{/* TODO: delete functionality */}
-					</a>
+					<div
+						key={link}
+						className='group flex w-full cursor-pointer items-center justify-between rounded-md px-2 py-1 dark:bg-neutral-700'>
+						<a
+							target='_blank'
+							href={addHttpsIfMissing(link)}
+							className='block min-w-0 max-w-52 flex-1 truncate hover:underline'>
+							{removeProtocol(link)}
+						</a>
+
+						<button onClick={() => handleDelete(link)}>
+							<X className='size-5' />
+						</button>
+					</div>
 				))}
 			</div>
 
