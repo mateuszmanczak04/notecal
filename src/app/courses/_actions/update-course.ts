@@ -10,11 +10,12 @@ export type T_UpdateCourseInput = {
 	name?: string;
 	teacher?: string;
 	color?: string;
+	usefulLinks?: string;
 };
 
 export type T_UpdateCourseResult = Promise<{ error: string } | { course: Course }>;
 
-const updateCourse = async ({ id, name, teacher, color }: T_UpdateCourseInput): T_UpdateCourseResult => {
+const updateCourse = async ({ id, name, teacher, color, usefulLinks }: T_UpdateCourseInput): T_UpdateCourseResult => {
 	if (!id) {
 		return { error: 'ID is required' };
 	}
@@ -25,7 +26,6 @@ const updateCourse = async ({ id, name, teacher, color }: T_UpdateCourseInput): 
 		if (!authenticated) {
 			return { error: en.auth.UNAUTHENTICATED };
 		}
-		console.log(name && name.trim().length);
 
 		if (name && name.trim().length === 0) {
 			return { error: 'Course name cannot be empty' };
@@ -37,11 +37,13 @@ const updateCourse = async ({ id, name, teacher, color }: T_UpdateCourseInput): 
 				name,
 				teacher,
 				color,
+				usefulLinks,
 			},
 		});
 
 		return { course };
 	} catch (error) {
+		console.log({ error });
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };

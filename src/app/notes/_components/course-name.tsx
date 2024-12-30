@@ -18,7 +18,6 @@ const CourseName = ({ course }: Props) => {
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateCourse,
 		onSettled: data => {
-			console.log(data);
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
 			}

@@ -69,17 +69,18 @@ const NotePage = () => {
 					<CourseTeacher teacher={currentCourse.teacher} />
 				</fieldset>
 
-				<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
-					<legend className='px-2'>Useful links</legend>
-					<UsefulLinks course={currentCourse} />
-				</fieldset>
-
 				{/* List of other notes from this course */}
 				<SideNotes
 					currentCourseNotes={currentCourseNotes}
 					currentNoteId={noteId}
 					currentCourse={currentCourse}
 				/>
+
+				{/* Useful links */}
+				<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
+					<legend className='px-2'>Useful links</legend>
+					<UsefulLinks course={currentCourse} />
+				</fieldset>
 
 				{/* Tasks */}
 				<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
