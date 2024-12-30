@@ -6,7 +6,7 @@ import { cn } from '@/utils/cn';
 import { Calendar, Check, List, Menu, Settings, User, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Navigation = () => {
 	const pathname = usePathname();
@@ -20,6 +20,19 @@ const Navigation = () => {
 	const handleClose = () => {
 		setIsOpen(false);
 	};
+
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if ((event.metaKey || event.ctrlKey) && (event.key === '=' || event.key === '-')) {
+				event.preventDefault();
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, []);
 
 	return (
 		<>
