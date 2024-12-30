@@ -14,6 +14,7 @@ export type LimitedUser = {
 	displayedDays: number;
 	orderTasks: string;
 	language: string;
+	firstCalendarDay: Date | null;
 };
 
 /**
@@ -44,6 +45,7 @@ const getUser = async (): Promise<LimitedUser> => {
 			displayedDays: user.displayedDays,
 			orderTasks: user.orderTasks,
 			language: user.language,
+			firstCalendarDay: user.firstCalendarDay,
 		};
 
 		return limitedUser;
