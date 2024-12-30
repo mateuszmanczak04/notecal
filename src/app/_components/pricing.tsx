@@ -6,7 +6,7 @@ const Pricing = () => {
 				<article className='rounded-xl bg-neutral-100 p-4 sm:p-6 md:p-8 dark:bg-neutral-800'>
 					<h3 className='text-balance font-bold sm:text-lg md:text-xl'>Starter</h3>
 					<p className='mt-1 w-fit rounded-full bg-green-100 px-3 text-green-600'>Free forever</p>
-					<ul className='mt-2 list-disc pl-4'>
+					<ul className='mt-2 list-disc pl-4 opacity-75'>
 						<li>Unlimited courses</li>
 						<li>Unlimited notes</li>
 						<li>Unlimited tasks</li>
@@ -17,7 +17,7 @@ const Pricing = () => {
 				<article className='relative rounded-xl bg-neutral-100 p-4 sm:p-6 md:col-span-2 md:p-8 dark:bg-neutral-800'>
 					<h3 className='text-balance font-bold sm:text-lg md:text-xl'>A+ Student</h3>
 					<p>$10/month</p>
-					<ul className='mt-2 list-disc pl-4'>
+					<ul className='mt-2 list-disc pl-4 opacity-75'>
 						<li>All from Starter pack</li>
 						<li>Prompts to AI</li>
 						<li>Sharing notes with classmates</li>

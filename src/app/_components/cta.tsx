@@ -8,7 +8,7 @@ const CTA = () => {
 				<h2 className='text-center text-3xl font-black tracking-tight sm:text-4xl md:text-5xl'>
 					Get Started Today!
 				</h2>
-				<p className='mx-auto mt-4 max-w-[34ch] leading-relaxed sm:text-lg md:text-xl'>
+				<p className='mx-auto mt-4 max-w-[34ch] leading-relaxed opacity-75 sm:text-lg md:text-xl'>
 					Sign up now and take control of your study life with NoteCal.
 				</p>
 				<Button asChild size='lg'>

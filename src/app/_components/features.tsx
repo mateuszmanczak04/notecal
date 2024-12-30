@@ -12,7 +12,7 @@ const Features = () => {
 					<h3 className='text-balance font-semibold sm:text-lg md:text-xl'>
 						It helps you keep your university notes separated
 					</h3>
-					<p className='mx-auto text-balance leading-relaxed'>
+					<p className='mx-auto text-balance leading-relaxed opacity-75'>
 						You will never again struggle with organizing your notes by subjects. We&apos;ve made a tool
 						which will help you keep it simple.
 					</p>
@@ -29,7 +29,7 @@ const Features = () => {
 					<h3 className='text-balance font-semibold sm:text-lg md:text-xl'>
 						Write lecture notes with a powerful WYSIWYG editor.
 					</h3>
-					<p className='mx-auto text-balance leading-relaxed'>
+					<p className='mx-auto text-balance leading-relaxed opacity-75'>
 						You are able to write beautiful notes with our powerful WYSIWYG (What You See Is What You Get)
 						editor. It&apos;s as simple as it looks here:
 					</p>
@@ -46,7 +46,7 @@ const Features = () => {
 					<h3 className='text-balance font-semibold sm:text-lg md:text-xl'>
 						Organize tasks and plan your study schedule.
 					</h3>
-					<p className='mx-auto text-balance leading-relaxed'>
+					<p className='mx-auto text-balance leading-relaxed opacity-75'>
 						Never forget to keep track of your tasks and deadlines. Our app allows you to organize your
 						tasks efficiently and plan your study schedule effectively.
 					</p>
@@ -63,7 +63,7 @@ const Features = () => {
 					<h3 className='text-balance font-semibold sm:text-lg md:text-xl'>
 						Customizable calendar views to suit your needs.
 					</h3>
-					<p className='mx-auto text-balance leading-relaxed'>
+					<p className='mx-auto text-balance leading-relaxed opacity-75'>
 						You can see your schedule for any time forward in the calendar view. Moreover everything is
 						customisable to your needs.
 					</p>
