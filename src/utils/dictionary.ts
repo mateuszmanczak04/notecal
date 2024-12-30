@@ -38,7 +38,7 @@ export const en = {
 		INVALID_TOKEN: 'Invalid token',
 		TOKEN_EXPIRED: 'Token has expired',
 		CONFIRMATION_EMAIL_SENT: 'Confirmation email has been sent, check your inbox',
-		EMAIL_UPDATED: 'Email has updated, check your inbox to confirm it now',
+		EMAIL_UPDATED: 'Email has been updated, check your inbox to confirm it now',
 		EMAIL_IS_IDENTICAL: 'New email is identical to the old one',
 		RESET_PASSWORD_EMAIL_SENT: 'Recovery email has been sent, check your inbox',
 	},
