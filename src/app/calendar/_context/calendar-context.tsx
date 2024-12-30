@@ -26,11 +26,11 @@ type CalendarContextProps = {
 const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
-	const [currentFirstDay, setCurrentFirstDay] = useState(new Date());
 	const containerRef = useRef<HTMLDivElement>(null!);
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { data: user } = useUser();
+	const [currentFirstDay, setCurrentFirstDay] = useState(user?.firstCalendarDay || new Date());
 	const { mutate } = useMutation({
 		mutationFn: updateSettings,
 		onMutate: data => {
@@ -42,6 +42,7 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 					displayedDays: data.displayedDays || prev.displayedDays,
 					defaultNoteDuration: data.defaultNoteDuration || prev.defaultNoteDuration,
 					language: data.language || prev.language,
+					firstCalendarDay: data.firstCalendarDay || prev.firstCalendarDay,
 				};
 			});
 		},
@@ -69,6 +70,9 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	 * Changes the first seen day by 1 day forward.
 	 */
 	const goDayForward = () => {
+		if (!!user?.firstCalendarDay) {
+			mutate({ firstCalendarDay: getDayAfter(1) });
+		}
 		setCurrentFirstDay(getDayAfter(1));
 	};
 
@@ -76,6 +80,9 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	 * Changes the first seen day by 1 day back.
 	 */
 	const goDayBackward = () => {
+		if (!!user?.firstCalendarDay) {
+			mutate({ firstCalendarDay: getDayAfter(-1) });
+		}
 		setCurrentFirstDay(getDayAfter(-1));
 	};
 
