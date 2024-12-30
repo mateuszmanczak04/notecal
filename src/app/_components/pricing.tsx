@@ -5,7 +5,7 @@ const Pricing = () => {
 			<div className='mt-4 grid gap-4 sm:mt-6 md:mt-8 md:grid-cols-3'>
 				<article className='rounded-xl bg-neutral-100 p-4 sm:p-6 md:p-8 dark:bg-neutral-800'>
 					<h3 className='text-balance font-bold sm:text-lg md:text-xl'>Starter</h3>
-					<p>Free forever</p>
+					<p className='mt-1 w-fit rounded-full bg-green-100 px-3 text-green-600'>Free forever</p>
 					<ul className='mt-2 list-disc pl-4'>
 						<li>Unlimited courses</li>
 						<li>Unlimited notes</li>
