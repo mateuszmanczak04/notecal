@@ -10,7 +10,7 @@ export type T_UpdateSettingsInput = {
 	displayedDays?: number;
 	defaultNoteDuration?: number;
 	zoomLevel?: number;
-	firstCalendarDay: Date | null;
+	firstCalendarDay?: Date | null;
 };
 
 export type T_UpdateSettingsResult = Promise<{ error: string } | { message: string }>;
