@@ -30,8 +30,6 @@ const Completed = ({ task, forPage = 'tasks' }: Props) => {
 		mutate({ id: task.id, completed: newCompleted });
 	};
 
-	// TODO: when there is an error show a Toast message
-
 	return (
 		<Checkbox
 			checked={task.completed}
