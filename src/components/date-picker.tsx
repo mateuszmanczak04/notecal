@@ -57,6 +57,13 @@ const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date, className 
 		onSelect(newDate);
 	};
 
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			handleSubmit();
+			handleCloseMenu();
+		}
+	};
+
 	useOnClickOutside(menuRef, () => {
 		handleSubmit();
 		handleCloseMenu();
@@ -84,6 +91,7 @@ const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date, className 
 							type='text'
 							value={year}
 							onChange={e => setYear(e.target.value)}
+							onKeyDown={handleKeyDown}
 							className='w-12 bg-neutral-100 px-1 focus:outline-none dark:bg-neutral-700'
 							autoFocus
 						/>
@@ -93,6 +101,7 @@ const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date, className 
 							type='text'
 							value={month}
 							onChange={e => setMonth(e.target.value)}
+							onKeyDown={handleKeyDown}
 							className='w-7 bg-neutral-100 px-1 focus:outline-none dark:bg-neutral-700'
 						/>
 						/
@@ -101,6 +110,7 @@ const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date, className 
 							type='text'
 							value={day}
 							onChange={e => setDay(e.target.value)}
+							onKeyDown={handleKeyDown}
 							className='w-7 bg-neutral-100 px-1 focus:outline-none dark:bg-neutral-700'
 						/>
 					</div>
@@ -112,6 +122,7 @@ const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date, className 
 							type='text'
 							value={hour}
 							onChange={e => setHour(e.target.value)}
+							onKeyDown={handleKeyDown}
 							className='w-7 bg-neutral-100 px-1 focus:outline-none dark:bg-neutral-700'
 						/>
 						:
@@ -120,6 +131,7 @@ const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date, className 
 							type='text'
 							value={minute}
 							onChange={e => setMinute(e.target.value)}
+							onKeyDown={handleKeyDown}
 							className='w-7 bg-neutral-100 px-1 focus:outline-none dark:bg-neutral-700'
 						/>
 					</div>
