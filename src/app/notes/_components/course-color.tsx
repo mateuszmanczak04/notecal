@@ -30,7 +30,7 @@ const CourseColor = ({ course }: Props) => {
 				return (
 					<button
 						className={cn(
-							'size-6 cursor-pointer place-content-center rounded-full  border-2 border-transparent font-medium text-white transition-colors hover:opacity-90',
+							'aspect-square max-w-12 flex-1 cursor-pointer place-content-center rounded-full  border-2 border-transparent font-medium text-white transition-colors hover:opacity-90',
 							course.color === color.hex && 'border-white/50',
 						)}
 						style={{

@@ -63,7 +63,7 @@ const CourseTeacher = ({ course }: Props) => {
 		<p
 			ref={teacherRef}
 			contentEditable
-			className={cn('outline-none transition', isPending && 'pointer-events-none opacity-50')}
+			className={cn('break-all outline-none transition', isPending && 'pointer-events-none opacity-50')}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}
 			spellCheck={false}></p>

@@ -5,17 +5,10 @@ import { useNotes } from '@/hooks/use-notes';
 import { useTasks } from '@/hooks/use-tasks';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import ChangeCourse from './change-course';
 import Content from './content';
 import CourseColor from './course-color';
 import CourseName from './course-name';
 import CourseTeacher from './course-teacher';
-import DeleteCourseButton from './delete-course-button';
-import EndTime from './end-time';
-import SideNotes from './side-notes';
-import StartTime from './start-time';
-import Tasks from './tasks';
-import UsefulLinks from './useful-links';
 
 const NotePage = () => {
 	const params = useParams<{ noteId: string }>();
@@ -59,48 +52,47 @@ const NotePage = () => {
 				<Content note={currentNote} course={currentCourse} />
 			</article>
 
-			<aside className='grid h-full w-full shrink-0 gap-y-4 overflow-y-scroll py-2 scrollbar-hide md:w-72'>
+			<aside className='flex h-full w-full shrink-0 flex-col gap-y-4 overflow-y-scroll scrollbar-hide md:w-72'>
 				{/* Course related */}
-				<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
+				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200  p-4 dark:border-neutral-700'>
 					<legend className='px-2'>Course related</legend>
-					{/* <SectionHeading text='Course related' /> */}
 					<CourseName course={currentCourse} />
 					<CourseColor course={currentCourse} />
 					<CourseTeacher course={currentCourse} />
 				</fieldset>
 
 				{/* List of other notes from this course */}
-				<SideNotes
+				{/* <SideNotes
 					currentCourseNotes={currentCourseNotes}
 					currentNoteId={noteId}
 					currentCourse={currentCourse}
-				/>
+				/> */}
 
 				{/* Useful links */}
-				<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
+				{/* <fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
 					<legend className='px-2'>Useful links</legend>
 					<UsefulLinks course={currentCourse} />
-				</fieldset>
+				</fieldset> */}
 
 				{/* Tasks */}
-				<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
+				{/* <fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
 					<legend className='px-2'>Tasks</legend>
 					<Tasks tasks={currentCourseTasks} course={currentCourse} />
-				</fieldset>
+				</fieldset> */}
 
 				{/* Note related */}
-				<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
+				{/* <fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
 					<legend className='px-2'>Note related</legend>
 					<ChangeCourse currentCourse={currentCourse} note={currentNote} />
 					<StartTime note={currentNote} />
 					<EndTime note={currentNote} />
-				</fieldset>
+				</fieldset> */}
 
 				{/* Danger zone */}
-				<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
+				{/* <fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
 					<legend className='px-2'>Danger zone</legend>
 					<DeleteCourseButton id={currentCourse.id} />
-				</fieldset>
+				</fieldset> */}
 			</aside>
 		</main>
 	);
