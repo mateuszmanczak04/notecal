@@ -33,7 +33,7 @@ import {
 	Underline,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import DeleteNoteButton from '../_components/confirm-delete-note';
+import DeleteNoteButton from '../_components/delete-note-button';
 
 type Props = {
 	onSave: () => void;
