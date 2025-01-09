@@ -3,6 +3,7 @@
 import DatePicker from '@/components/date-picker';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
+import { toUTC } from '@/utils/timezone';
 import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import updateNote from '../_actions/update-note';
@@ -30,7 +31,7 @@ const EndTime = ({ note }: Props) => {
 		// TODO: display a message telling you can't set it like that
 		if (newEndTime < note.startTime) return;
 
-		mutate({ id: note.id, endTime: newEndTime });
+		mutate({ id: note.id, endTime: toUTC(newEndTime) });
 	};
 
 	return (
