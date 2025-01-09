@@ -46,11 +46,11 @@ const Course = ({ course }: Props) => {
 			href={`/notes/${thisCourseNotes[0]?.id}`}
 			className='flex cursor-pointer items-center justify-between rounded-xl bg-neutral-50 p-4 text-white transition hover:opacity-90'
 			style={{ background: course.color }}>
-			<div>
-				<p className='line-clamp-1 rounded-xl text-xl font-medium'>{course.name}</p>
-				<p className='mt-1 line-clamp-1 opacity-75'>{course.teacher}</p>
+			<div className='flex-1 overflow-x-hidden '>
+				<p className='truncate rounded-xl text-xl font-medium'>{course.name}</p>
+				<p className='mt-1 truncate opacity-75'>{course.teacher}</p>
 			</div>
-			<ChevronRight className='h-10 w-10 shrink-0' />
+			<ChevronRight className='h-10 w-10' />
 		</Link>
 	);
 };
