@@ -48,12 +48,13 @@ const UsefulLinks = ({ course }: Props) => {
 	};
 
 	return (
-		<article className={cn('w-full', isPending && 'pointer-events-none opacity-50')}>
+		<article className={cn('mt-2 w-full', isPending && 'pointer-events-none opacity-50')}>
 			<div className='grid gap-y-2'>
 				{usefulLinks.map(link => (
 					<div
 						key={link}
-						className='group flex w-full cursor-pointer items-center justify-between rounded-md px-2 py-1 dark:bg-neutral-700'>
+						className='group flex h-9 w-full cursor-pointer items-center justify-between rounded-xl px-3 dark:bg-neutral-700'
+						title={link}>
 						<a
 							target='_blank'
 							href={addHttpsIfMissing(link)}
@@ -71,7 +72,7 @@ const UsefulLinks = ({ course }: Props) => {
 			{/* Add new link */}
 			<form
 				onSubmit={handleAddNew}
-				className={cn('mt-4 grid gap-2', isPending && 'pointer-events-none opacity-50')}>
+				className={cn('mt-2 grid gap-2', isPending && 'pointer-events-none opacity-50')}>
 				<Input
 					id='create-task-title'
 					placeholder='New link'
