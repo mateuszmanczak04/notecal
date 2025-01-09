@@ -34,8 +34,7 @@ const Course = ({ task, forPage = 'tasks' }: Props) => {
 	};
 
 	return (
-		<DropdownMenu
-			className={cn('w-52', forPage === 'notes' && 'w-full', isPending && 'pointer-events-none opacity-50')}>
+		<DropdownMenu className={cn('w-52', forPage === 'notes' && '', isPending && 'pointer-events-none opacity-50')}>
 			<DropdownMenuTrigger showChevron>
 				{currentCourse && (
 					<div

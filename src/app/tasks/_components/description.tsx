@@ -9,9 +9,10 @@ import updateTask from '../_actions/update-task';
 
 type Props = {
 	task: Task;
+	forPage?: 'tasks' | 'notes';
 };
 
-const Description = ({ task }: Props) => {
+const Description = ({ task, forPage = 'tasks' }: Props) => {
 	const { id, description } = task;
 	const queryClient = useQueryClient();
 	const descriptionRef = useRef<HTMLParagraphElement>(null!);
@@ -61,7 +62,7 @@ const Description = ({ task }: Props) => {
 			ref={descriptionRef}
 			contentEditable
 			className={cn(
-				' mt-1 text-neutral-500 outline-none dark:text-neutral-400',
+				' mt-1 break-all text-neutral-500 outline-none dark:text-neutral-400',
 				description.trim().length === 0 && 'mb-0 h-4 focus:mb-2 focus:h-auto',
 				description.trim().length > 0 && 'mb-2',
 				isPending && 'pointer-events-none mb-2 h-auto opacity-50',

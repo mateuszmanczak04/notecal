@@ -15,16 +15,16 @@ type Props = {
 
 const Task = ({ task, forPage = 'tasks' }: Props) => {
 	return (
-		<div className={cn('flex gap-4 p-4', forPage === 'notes' && 'gap-2  p-2')}>
+		<div className={cn('flex gap-4 p-4', forPage === 'notes' && 'w-full gap-2 p-2')}>
 			<Completed task={task} forPage={forPage} />
-			<div className='min-w-0 flex-1'>
-				<Title task={task} />
-				<Description task={task} />
+			<div className='flex min-w-0 flex-1 flex-col '>
+				<Title task={task} forPage={forPage} />
+				<Description task={task} forPage={forPage} />
 
 				<div
 					className={cn(
 						forPage === 'tasks' && 'flex flex-wrap gap-4',
-						forPage === 'notes' && 'grid w-full gap-2 ',
+						forPage === 'notes' && 'flex flex-col gap-y-2 ',
 					)}>
 					<Course task={task} forPage={forPage} />
 					<DueDate task={task} forPage={forPage} />

@@ -111,7 +111,7 @@ export const DropdownMenuTrigger = ({
 		<Tag
 			onClick={handleToggle}
 			className={cn(
-				'h-full max-w-none rounded-none border border-l border-r border-t border-transparent font-medium',
+				'h-full max-w-none truncate rounded-none border border-l border-r border-t border-transparent font-medium',
 				isOpen ? 'rounded-t-xl dark:border-neutral-500' : 'rounded-xl',
 				className,
 			)}>

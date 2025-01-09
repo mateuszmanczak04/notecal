@@ -9,9 +9,10 @@ import updateTask from '../_actions/update-task';
 
 type Props = {
 	task: Task;
+	forPage?: 'tasks' | 'notes';
 };
 
-const Title = ({ task }: Props) => {
+const Title = ({ task, forPage = 'tasks' }: Props) => {
 	const { id, title } = task;
 	const titleRef = useRef<HTMLParagraphElement>(null!);
 	const queryClient = useQueryClient();
@@ -60,7 +61,10 @@ const Title = ({ task }: Props) => {
 		<p
 			ref={titleRef}
 			contentEditable
-			className={cn('font-bold outline-none transition-colors', isPending && 'pointer-events-none opacity-50')}
+			className={cn(
+				'break-all font-bold outline-none transition-colors',
+				isPending && 'pointer-events-none opacity-50',
+			)}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}
 			spellCheck={false}></p>

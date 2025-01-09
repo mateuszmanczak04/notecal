@@ -10,6 +10,7 @@ import CourseColor from './course-color';
 import CourseName from './course-name';
 import CourseTeacher from './course-teacher';
 import SideNotes from './side-notes';
+import Tasks from './tasks';
 import UsefulLinks from './useful-links';
 
 const NotePage = () => {
@@ -77,10 +78,10 @@ const NotePage = () => {
 				</fieldset>
 
 				{/* Tasks */}
-				{/* <fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
+				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
 					<legend className='px-2'>Tasks</legend>
 					<Tasks tasks={currentCourseTasks} course={currentCourse} />
-				</fieldset> */}
+				</fieldset>
 
 				{/* Note related */}
 				{/* <fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
