@@ -43,7 +43,6 @@ const updateCourse = async ({ id, name, teacher, color, usefulLinks }: T_UpdateC
 
 		return { course };
 	} catch (error) {
-		console.log({ error });
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
 };

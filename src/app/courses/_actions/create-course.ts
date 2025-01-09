@@ -1,5 +1,6 @@
 'use server';
 
+import createNote from '@/app/notes/_actions/create-note';
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
@@ -40,6 +41,9 @@ const createCourse = async ({ name, teacher, color }: T_CreateCourseInput) => {
 				color,
 			},
 		});
+
+		// Automatically create a first note for new courses
+		await createNote({ courseId: course.id });
 
 		return { course };
 	} catch (error) {

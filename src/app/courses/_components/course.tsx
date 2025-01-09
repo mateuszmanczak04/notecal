@@ -1,14 +1,10 @@
 'use client';
 
-import createNote from '@/app/notes/_actions/create-note';
 import LoadingSpinner from '@/components/loading-spinner';
-import { useToast } from '@/components/toast/use-toast';
 import { useNotes } from '@/hooks/use-notes';
 import { Course as T_Course } from '@prisma/client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
 
 type Props = {
 	course: T_Course;
@@ -34,38 +30,16 @@ const CourseErrorFallback = () => {
 };
 
 /**
- * A link navigating to the latest note from it's course. If there are not notes it will automatically create one before rendering.
+ * A link navigating to the latest note from it's course.
  */
 const Course = ({ course }: Props) => {
-	const queryClient = useQueryClient();
 	const { data: notes } = useNotes();
-	const { toast } = useToast();
-	const { error, isPending, mutate } = useMutation({
-		mutationFn: createNote,
-		onMutate: () => {
-			// TODO: optimistic update
-		},
-		onSettled: data => {
-			if (data && 'error' in data) {
-				toast({ description: data.error, variant: 'destructive' });
-			}
-			queryClient.invalidateQueries({ queryKey: ['notes'] });
-		},
-	});
-	const thisCourseNotes = notes?.filter(note => note.courseId === course.id) || [];
-	const hasCreatedNote = useRef(false);
+	const thisCourseNotes = notes?.filter(note => note.courseId === course.id);
 
-	// Create a first note if it doesn't exist yet
-	useEffect(() => {
-		if (thisCourseNotes.length === 0 && !hasCreatedNote.current) {
-			hasCreatedNote.current = true;
-			mutate({ courseId: course.id });
-		}
-	}, [course.id, thisCourseNotes.length, mutate]);
-
-	if (error) return <CourseErrorFallback />;
-
-	if (isPending) return <CourseLoadingFallback />;
+	// Should not occur as we are not allowing to leave a course without any note
+	if (!thisCourseNotes || thisCourseNotes.length === 0) {
+		return <CourseErrorFallback />;
+	}
 
 	return (
 		<Link

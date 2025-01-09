@@ -25,7 +25,9 @@ const CreateCourseForm = () => {
 				toast({ description: data.error, variant: 'destructive' });
 			}
 			queryClient.invalidateQueries({ queryKey: ['courses'] });
+			queryClient.invalidateQueries({ queryKey: ['notes'] });
 			queryClient.refetchQueries({ queryKey: ['courses'] });
+			queryClient.refetchQueries({ queryKey: ['notes'] });
 		},
 	});
 	const router = useRouter();

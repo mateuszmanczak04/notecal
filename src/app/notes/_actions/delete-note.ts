@@ -20,6 +20,19 @@ const deleteNote = async ({ id }: T_DeleteNoteInput): T_DeleteNoteResult => {
 			return { error: en.auth.UNAUTHENTICATED };
 		}
 
+		const note = await db.note.findUnique({ where: { id } });
+
+		const courseNotes = await db.note.findMany({
+			where: {
+				courseId: note?.courseId,
+			},
+		});
+
+		// Prevent users from deleting the only course's note
+		if (courseNotes.length === 1) {
+			return { error: 'Every course must have at least one note' };
+		}
+
 		await db.note.delete({
 			where: { id, userId: user.id },
 		});
