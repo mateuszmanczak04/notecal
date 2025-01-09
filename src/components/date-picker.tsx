@@ -2,18 +2,18 @@
 
 import { cn } from '@/utils/cn';
 import { format, isValid } from 'date-fns';
-import { FC, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import Tag from './tag';
 
-interface DatePickerProps {
+type Props = {
 	onSelect: (newDueDate: Date | null) => void;
 	date: Date | null;
 	isPending?: boolean;
 	className?: string;
-}
+};
 
-const DatePicker: FC<DatePickerProps> = ({ isPending, onSelect, date, className }) => {
+const DatePicker = ({ isPending, onSelect, date, className }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null!);
 
