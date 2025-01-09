@@ -54,7 +54,7 @@ const Content = ({ note, course }: Props) => {
 			)}>
 			<LexicalComposer initialConfig={editorConfig}>
 				<ToolbarPlugin note={note} onSave={handleSave} course={course} />
-				<div className='relative mt-4 flex-1 overflow-y-scroll scroll-auto  leading-loose'>
+				<div className='relative mt-4 flex-1 overflow-y-auto scroll-auto leading-loose'>
 					<RichTextPlugin
 						contentEditable={<ContentEditable className='relative h-full resize-none outline-none' />}
 						placeholder={
