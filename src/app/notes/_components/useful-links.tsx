@@ -48,7 +48,7 @@ const UsefulLinks = ({ course }: Props) => {
 	};
 
 	return (
-		<article className={cn('mt-2 w-full', isPending && 'pointer-events-none opacity-50')}>
+		<article className={cn(isPending && 'pointer-events-none opacity-50')}>
 			<div className='grid gap-y-2'>
 				{usefulLinks.map(link => (
 					<div
