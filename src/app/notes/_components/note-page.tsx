@@ -9,6 +9,7 @@ import Content from './content';
 import CourseColor from './course-color';
 import CourseName from './course-name';
 import CourseTeacher from './course-teacher';
+import SideNotes from './side-notes';
 
 const NotePage = () => {
 	const params = useParams<{ noteId: string }>();
@@ -62,11 +63,11 @@ const NotePage = () => {
 				</fieldset>
 
 				{/* List of other notes from this course */}
-				{/* <SideNotes
+				<SideNotes
 					currentCourseNotes={currentCourseNotes}
 					currentNoteId={noteId}
 					currentCourse={currentCourse}
-				/> */}
+				/>
 
 				{/* Useful links */}
 				{/* <fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>

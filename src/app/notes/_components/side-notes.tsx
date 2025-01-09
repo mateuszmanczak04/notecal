@@ -34,7 +34,7 @@ const SideNotes = ({ currentCourse, currentNoteId, currentCourseNotes }: Props) 
 	};
 
 	return (
-		<article className='grid'>
+		<article className='flex w-full flex-col'>
 			<>
 				{/* List of all notes from this course */}
 				{currentCourseNotes?.map((note, index) => (
@@ -45,12 +45,14 @@ const SideNotes = ({ currentCourse, currentNoteId, currentCourseNotes }: Props) 
 						aria-label={`link to note with date ${format(note.startTime, 'yyyy-MM-dd')}`}
 						title={`link to note with date ${format(note.startTime, 'yyyy-MM-dd')}`}
 						className={cn(
-							'flex h-9 items-center justify-center gap-2 border-b border-l border-r px-3 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700',
+							'flex h-9 items-center justify-center gap-2 overflow-x-clip border-b border-l border-r px-3 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700',
 							index === 0 && 'rounded-t-xl border-t',
 							index === currentCourseNotes.length - 1 && 'border-b-transparent',
 							note.id === currentNoteId && 'bg-neutral-200 dark:bg-neutral-600',
 						)}>
-						<span className='shrink-0 text-sm'>{format(note.startTime, 'yyyy-MM-dd')}</span>
+						<span className=' w-full shrink-0 truncate text-center text-sm'>
+							{format(note.startTime, 'yyyy-MM-dd')}
+						</span>{' '}
 					</Link>
 				))}
 			</>
