@@ -27,7 +27,30 @@ const updateNote = async ({ id, startTime, endTime, content, courseId }: T_Updat
 			return { error: en.auth.UNAUTHENTICATED };
 		}
 
-		const note = await db.note.update({
+		const note = await db.note.findUnique({
+			where: { id },
+		});
+
+		if (!note) {
+			return { error: 'Note not found' };
+		}
+
+		const notesCourse = await db.course.findUnique({ where: { id: note.courseId } });
+
+		// Don't allow users to leave a course without any note
+		if (notesCourse) {
+			const courseNotes = await db.note.findMany({ where: { courseId: notesCourse?.id } });
+			if (!courseNotes || courseNotes.length === 1) {
+				return {
+					error: 'You cannot leave this course without any note, please create a new one before moving this',
+				};
+			}
+		} else {
+			// Should never occur as every note should have corresponding course
+			return { error: 'Course not found' };
+		}
+
+		const updatedNote = await db.note.update({
 			where: { id, userId: user.id },
 			data: {
 				startTime,
@@ -37,7 +60,7 @@ const updateNote = async ({ id, startTime, endTime, content, courseId }: T_Updat
 			},
 		});
 
-		return { note };
+		return { note: updatedNote };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
