@@ -10,6 +10,7 @@ import Content from './content';
 import CourseColor from './course-color';
 import CourseName from './course-name';
 import CourseTeacher from './course-teacher';
+import DeleteCourseButton from './delete-course-button';
 import EndTime from './end-time';
 import SideNotes from './side-notes';
 import StartTime from './start-time';
@@ -95,10 +96,10 @@ const NotePage = () => {
 				</fieldset>
 
 				{/* Danger zone */}
-				{/* <fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
+				<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
 					<legend className='px-2'>Danger zone</legend>
 					<DeleteCourseButton id={currentCourse.id} />
-				</fieldset> */}
+				</fieldset>
 			</aside>
 		</main>
 	);
