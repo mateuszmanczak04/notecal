@@ -27,6 +27,7 @@ type Props = {
  */
 const Content = ({ note, course }: Props) => {
 	const [content, setContent] = useState(note.content);
+	const hasChanged = note.content !== content;
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate: mutateUpdate, isPending: isPendingUpdate } = useMutation({
@@ -43,6 +44,7 @@ const Content = ({ note, course }: Props) => {
 	});
 
 	const handleSave = () => {
+		if (!hasChanged) return;
 		mutateUpdate({ id: note.id, content });
 	};
 
@@ -53,7 +55,7 @@ const Content = ({ note, course }: Props) => {
 				isPendingUpdate && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer initialConfig={editorConfig}>
-				<ToolbarPlugin note={note} onSave={handleSave} course={course} />
+				<ToolbarPlugin note={note} onSave={handleSave} course={course} hasChanged={hasChanged} />
 				<div className='relative mt-4 flex-1 overflow-y-auto scroll-auto leading-loose'>
 					<RichTextPlugin
 						contentEditable={<ContentEditable className='relative h-full resize-none outline-none' />}

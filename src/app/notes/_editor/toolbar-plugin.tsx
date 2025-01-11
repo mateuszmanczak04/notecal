@@ -39,9 +39,10 @@ type Props = {
 	onSave: () => void;
 	note: Note;
 	course: Course;
+	hasChanged: boolean;
 };
 
-export default function ToolbarPlugin({ onSave, note, course }: Props) {
+export default function ToolbarPlugin({ onSave, note, course, hasChanged }: Props) {
 	const [editor] = useLexicalComposerContext();
 
 	/** Indicates which properties are disabled, e.g.:
@@ -250,7 +251,8 @@ export default function ToolbarPlugin({ onSave, note, course }: Props) {
 				variant='default'
 				className='rounded-md'
 				onClick={onSave}
-				style={{ backgroundColor: course?.color || '' }}>
+				style={{ backgroundColor: course?.color || '' }}
+				disabled={!hasChanged}>
 				<Check className='size-5' /> Save
 			</Button>
 			<DeleteNoteButton note={note} />
