@@ -359,7 +359,7 @@ const Note = ({ note, leftOffset }: Props) => {
 						key={day.toString()}
 						href={`/notes/${note.id}`}
 						className={cn(
-							'absolute z-20 min-h-4 min-w-8 select-none overflow-hidden rounded-xl border-2 border-white bg-primary-500 text-white transition dark:border-neutral-800',
+							'bg-primary-500 dark:border-neutral-800 absolute z-20 min-h-4 min-w-8 select-none overflow-hidden break-all rounded-xl border-2 border-white text-white transition',
 							isDragging && 'opacity-50',
 						)}
 						style={{
@@ -404,7 +404,7 @@ const Note = ({ note, leftOffset }: Props) => {
 					<div
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
-						className='pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl border-2 border-white bg-primary-500 text-white transition dark:border-neutral-800'
+						className='bg-primary-500 dark:border-neutral-800 pointer-events-none absolute z-30 select-none overflow-hidden rounded-xl border-2 border-white text-white transition'
 						style={{
 							top: getTopOffset(day, actualDragStartTime),
 							left: getLeftOffset(day),
