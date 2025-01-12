@@ -12,6 +12,7 @@ type CalendarContextProps = {
 	currentFirstDay: Date;
 	goDayForward: () => void;
 	goDayBackward: () => void;
+	goToToday: () => void;
 	getDayAfter: (days: number) => Date;
 	containerRef: RefObject<HTMLDivElement | null>;
 	getRelativePosition: (x: number, y: number) => { x: number | null; y: number | null };
@@ -84,6 +85,16 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 			mutate({ firstCalendarDay: getDayAfter(-1) });
 		}
 		setCurrentFirstDay(getDayAfter(-1));
+	};
+
+	/**
+	 * Changes the first seen day to today.
+	 */
+	const goToToday = () => {
+		if (!!user?.firstCalendarDay) {
+			mutate({ firstCalendarDay: new Date() });
+		}
+		setCurrentFirstDay(new Date());
 	};
 
 	/**
@@ -184,6 +195,7 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 				currentFirstDay,
 				goDayForward,
 				goDayBackward,
+				goToToday,
 				rowHeight: getRowHeight(),
 				zoomIn,
 				zoomOut,
