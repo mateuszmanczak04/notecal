@@ -12,6 +12,7 @@ import CourseName from './course-name';
 import CourseTeacher from './course-teacher';
 import DeleteCourseButton from './delete-course-button';
 import EndTime from './end-time';
+import GoToCalendar from './go-to-calendar';
 import SideNotes from './side-notes';
 import StartTime from './start-time';
 import Tasks from './tasks';
@@ -61,11 +62,12 @@ const NotePage = () => {
 
 			<aside className='flex h-full w-full shrink-0 flex-col gap-y-4 overflow-y-scroll pb-64 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96'>
 				{/* Course related */}
-				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
+				<fieldset className='border-neutral-200 dark:border-neutral-700 flex flex-col gap-y-4 rounded-xl border p-4'>
 					<legend className='px-2'>Course related</legend>
 					<CourseName course={currentCourse} />
 					<CourseColor course={currentCourse} />
 					<CourseTeacher course={currentCourse} />
+					<GoToCalendar note={currentNote} />
 				</fieldset>
 
 				{/* List of other notes from this course */}
@@ -76,19 +78,19 @@ const NotePage = () => {
 				/>
 
 				{/* Useful links */}
-				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
+				<fieldset className='border-neutral-200 dark:border-neutral-700 flex flex-col gap-y-4 rounded-xl border p-4'>
 					<legend className='px-2'>Useful links</legend>
 					<UsefulLinks course={currentCourse} />
 				</fieldset>
 
 				{/* Tasks */}
-				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
+				<fieldset className='border-neutral-200 dark:border-neutral-700 flex flex-col gap-y-4 rounded-xl border p-4'>
 					<legend className='px-2'>Tasks</legend>
 					<Tasks tasks={currentCourseTasks} course={currentCourse} />
 				</fieldset>
 
 				{/* Note related */}
-				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
+				<fieldset className='border-neutral-200 dark:border-neutral-700 flex flex-col gap-y-4 rounded-xl border p-4'>
 					<legend className='px-2'>Note related</legend>
 					<ChangeCourse currentCourse={currentCourse} note={currentNote} />
 					<StartTime note={currentNote} />
@@ -96,7 +98,7 @@ const NotePage = () => {
 				</fieldset>
 
 				{/* Danger zone */}
-				<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
+				<fieldset className='border-neutral-200 dark:border-neutral-700 space-y-4 rounded-xl border p-4 pt-0'>
 					<legend className='px-2'>Danger zone</legend>
 					<DeleteCourseButton id={currentCourse.id} />
 				</fieldset>
