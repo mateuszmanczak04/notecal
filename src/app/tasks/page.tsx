@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const page = () => {
 	return (
-		<main className='mx-auto max-w-3xl space-y-8'>
+		<main className='mx-auto max-w-3xl space-y-4'>
 			<CreateTaskForm />
 			<SortTasks />
 			<Tasks />
