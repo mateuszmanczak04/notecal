@@ -9,7 +9,7 @@ import TopBar from './top-bar';
 
 const CalendarPage = () => {
 	// Used to keep the same calendar scroll y level even after switching routes
-	const { scrollTop, setScrollTop, zoomIn, zoomOut } = useCalendarContext();
+	const { scrollTop, setScrollTop, zoomIn, zoomOut, goDayBackward, goDayForward } = useCalendarContext();
 	const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
 	const handleScroll = () => {
@@ -30,6 +30,10 @@ const CalendarPage = () => {
 				} else if (event.key === '-') {
 					zoomOut();
 				}
+			} else if (event.key === 'ArrowLeft') {
+				goDayBackward();
+			} else if (event.key === 'ArrowRight') {
+				goDayForward();
 			}
 		};
 
@@ -37,7 +41,7 @@ const CalendarPage = () => {
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown);
 		};
-	}, [zoomIn, zoomOut]);
+	}, [zoomIn, zoomOut, goDayBackward, goDayForward]);
 
 	return (
 		<div className='flex h-full flex-col'>
