@@ -24,8 +24,16 @@ const ChangeCourse = ({ currentCourse, note, forPage = 'notes', handleClose }: P
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateNote,
-		onMutate: () => {
-			// TODO: optimistic update
+		onMutate: data => {
+			// Optimistic update
+			queryClient.setQueryData(['notes'], (prev: Note[]) => {
+				return prev.map(n => {
+					if (n.id === data.id) {
+						return { ...n, courseId: data.courseId };
+					}
+					return n;
+				});
+			});
 		},
 		onSettled: data => {
 			if (data && 'error' in data) {
