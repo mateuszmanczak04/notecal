@@ -1,18 +1,20 @@
 'use client';
 
-import { addDays, format, getDay, getDaysInMonth, startOfMonth } from 'date-fns';
+import { useNotes } from '@/hooks/use-notes';
+import { addDays, format, getDay, getDaysInMonth, isSameDay, startOfMonth } from 'date-fns';
 import React from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
+import MonthViewNote from './month-view-note';
 
 const Tile = ({ children }: { children?: React.ReactNode }) => (
-	<div className='grid place-content-center border-b border-r border-neutral-300 py-10 last-of-type:rounded-br-xl dark:border-neutral-600'>
+	<div className='flex flex-col gap-y-1 border-b border-r border-neutral-300 p-2 py-10 text-center last-of-type:rounded-br-xl dark:border-neutral-600'>
 		{children}
 	</div>
 );
 
 const MonthView = () => {
 	const { currentFirstDay } = useCalendarContext();
-
+	const { data: notes } = useNotes();
 	const firstDayOfMonth = startOfMonth(currentFirstDay);
 	const amountOfDaysInMonth = getDaysInMonth(currentFirstDay);
 	const daysInMonth = new Array(amountOfDaysInMonth).fill(firstDayOfMonth).map((day, index) => addDays(day, index));
@@ -33,7 +35,7 @@ const MonthView = () => {
 	const renderedTiles: (Date | null)[] = [...new Array(daysOffset).fill(null), ...daysInMonth];
 
 	return (
-		<div className='mt-4 grid grid-cols-7 overflow-hidden rounded-xl border-l border-t border-neutral-300 dark:border-neutral-600'>
+		<div className='my-4 grid grid-cols-7 overflow-hidden rounded-xl border-l border-t border-neutral-300 dark:border-neutral-600'>
 			{/* Week day names */}
 			{['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(dayName => (
 				<Tile key={dayName}>{dayName}</Tile>
@@ -43,7 +45,15 @@ const MonthView = () => {
 				if (tile === null) {
 					return <Tile key={Math.random()} />;
 				}
-				return <Tile key={tile.toString()}>{format(tile, 'd')}</Tile>;
+				return (
+					<Tile key={tile.toString()}>
+						<p className='font-semibold'>{format(tile, 'd')}</p>
+						{notes &&
+							notes
+								.filter(note => isSameDay(note.startTime, tile))
+								.map(note => <MonthViewNote key={note.id} note={note} />)}
+					</Tile>
+				);
 			})}
 		</div>
 	);
