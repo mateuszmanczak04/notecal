@@ -25,7 +25,7 @@ const login = async (formData: FormData) => {
 		redirect(`/auth/login?error=${en.INVALID_CREDENTIALS}`);
 	}
 
-	if (!comparePasswords(password, user.password)) {
+	if (!(await comparePasswords(password, user.password))) {
 		redirect(`/auth/login?error=${en.INVALID_CREDENTIALS}`);
 	}
 
