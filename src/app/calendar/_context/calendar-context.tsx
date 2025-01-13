@@ -3,6 +3,7 @@
 import { LimitedUser } from '@/app/settings/_actions/get-user';
 import updateSettings from '@/app/settings/_actions/update-settings';
 import { useToast } from '@/components/toast/use-toast';
+import { useCourses } from '@/hooks/use-courses';
 import { useUser } from '@/hooks/use-user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addDays } from 'date-fns';
@@ -23,6 +24,8 @@ type CalendarContextProps = {
 	zoomOut: () => void;
 	scrollTop: number;
 	setScrollTop: (newValue: number) => void;
+	handleHideCourse: (id: string) => void;
+	handleShowCourse: (id: string) => void;
 };
 
 const CalendarContext = createContext({} as CalendarContextProps);
@@ -55,11 +58,31 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 			queryClient.invalidateQueries({ queryKey: ['user'] });
 		},
 	});
+	const { data: courses } = useCourses();
+	// Used when filtering courses, only courses in this array are visible
+	const [hiddenCoursesIds, setHiddenCoursesIds] = useState<string[]>([]);
 
 	// Needed to keep the same calendar scroll y level after switching routes
 	const [scrollTop, setScrollTop] = useState(0);
 
 	if (!user) return null; // TOOD: handle this
+
+	/**
+	 * Adds course id to the hidden courses array to stop
+	 * displaying it in the calendar grid.
+	 */
+	const handleHideCourse = (id: string) => {
+		if (hiddenCoursesIds.includes(id)) return;
+		setHiddenCoursesIds(prev => [...prev, id]);
+	};
+
+	/**
+	 * Removes course id from the hidden courses array to
+	 * recover it in calendar grid.
+	 */
+	const handleShowCourse = (id: string) => {
+		setHiddenCoursesIds(prev => prev.filter(c => c !== id));
+	};
 
 	/**
 	 * Returns a date object which is X days after "currentFirstDay"
@@ -216,6 +239,8 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 				getDateFromPosition,
 				scrollTop,
 				setScrollTop,
+				handleHideCourse,
+				handleShowCourse,
 			}}>
 			{children}
 		</CalendarContext.Provider>
