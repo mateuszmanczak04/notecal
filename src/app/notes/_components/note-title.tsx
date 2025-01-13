@@ -55,8 +55,6 @@ const NoteTitle = ({ note }: Props) => {
 		titleRef.current.innerText = note.title;
 	}, [note.title]);
 
-	console.log({ title: note.title, length: note.title.length });
-
 	return (
 		<h2
 			ref={titleRef}
