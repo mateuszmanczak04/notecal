@@ -9,7 +9,7 @@ import { toUTC } from '@/utils/timezone';
 import { type Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addDays, addMilliseconds, differenceInCalendarDays, startOfDay } from 'date-fns';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 
@@ -49,7 +49,7 @@ const Note = ({ note, leftOffset }: Props) => {
 
 	const { currentFirstDay, getRelativePosition, getDateFromPosition } = useCalendarContext();
 
-	const noteRef = useRef<HTMLAnchorElement[]>([]);
+	const noteRef = useRef<HTMLDivElement[]>([]);
 	const initialDragDate = useRef<Date | null>(null);
 
 	const topEdgeRef = useRef<HTMLDivElement | null>(null);
@@ -192,7 +192,7 @@ const Note = ({ note, leftOffset }: Props) => {
 	 * Here user starts dragging.
 	 */
 	const handleDragStart = (event: React.DragEvent) => {
-		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
+		if (!noteRef.current?.includes(event.target as HTMLDivElement)) return;
 
 		const { x, y } = getRelativePosition(event.clientX, event.clientY);
 		if (x === null || y === null) return;
@@ -209,7 +209,7 @@ const Note = ({ note, leftOffset }: Props) => {
 	 * Here user is in the middle of the dragging.
 	 */
 	const handleDrag = (event: React.DragEvent) => {
-		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
+		if (!noteRef.current?.includes(event.target as HTMLDivElement)) return;
 
 		if (!initialDragDate.current) return;
 
@@ -233,7 +233,7 @@ const Note = ({ note, leftOffset }: Props) => {
 	 * Here user releases the cursor.
 	 */
 	const handleDragEnd = (event: React.DragEvent) => {
-		if (!noteRef.current?.includes(event.target as HTMLAnchorElement)) return;
+		if (!noteRef.current?.includes(event.target as HTMLDivElement)) return;
 
 		mutate({
 			id: note.id,
@@ -385,6 +385,12 @@ const Note = ({ note, leftOffset }: Props) => {
 		};
 	}, [showContextMenuIndex]);
 
+	// Handle routng to the /notes/[id] page
+	const router = useRouter();
+	const handleRoute = () => {
+		router.push(`/notes/${note.id}`);
+	};
+
 	// Should not occur in normal app conditions
 	if (!courses || !user || !course) return;
 
@@ -393,19 +399,19 @@ const Note = ({ note, leftOffset }: Props) => {
 			{/* Primary notes: */}
 			{noteDays?.length > 0 &&
 				noteDays.map((day, index) => (
-					<Link
+					<div
 						draggable
 						onDragStart={handleDragStart}
 						onDrag={handleDrag}
 						onDragEnd={handleDragEnd}
 						ref={el => {
-							noteRef.current[index] = el as HTMLAnchorElement;
+							noteRef.current[index] = el as HTMLDivElement;
 						}}
 						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
-						href={`/notes/${note.id}`}
+						onClick={handleRoute}
 						className={cn(
-							'absolute z-20 min-h-4 min-w-8 select-none overflow-hidden break-all rounded-xl border-2 border-white bg-primary-500 text-sm text-white transition dark:border-neutral-800',
+							'absolute z-20 min-h-4 min-w-8 cursor-pointer select-none overflow-hidden break-all rounded-xl border-2 border-white bg-primary-500 text-sm text-white transition dark:border-neutral-800',
 							isDragging && 'opacity-50',
 						)}
 						onContextMenu={e => handleContextMenu(e, index)}
@@ -442,7 +448,7 @@ const Note = ({ note, leftOffset }: Props) => {
 								ref={bottomEdgeRef}
 								className='absolute inset-x-0 bottom-0 h-2 cursor-ns-resize opacity-0'></div>
 						)}
-					</Link>
+					</div>
 				))}
 			{/* Drag notes, visible only if user is currently dragging edge: */}
 			{isDragging &&
