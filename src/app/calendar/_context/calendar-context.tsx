@@ -6,7 +6,7 @@ import { useToast } from '@/components/toast/use-toast';
 import { useUser } from '@/hooks/use-user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addDays } from 'date-fns';
-import { ReactNode, RefObject, createContext, useContext, useRef, useState } from 'react';
+import { Dispatch, ReactNode, RefObject, SetStateAction, createContext, useContext, useRef, useState } from 'react';
 
 type CalendarContextProps = {
 	currentFirstDay: Date;
@@ -26,12 +26,15 @@ type CalendarContextProps = {
 	handleHideCourse: (id: string) => void;
 	handleShowCourse: (id: string) => void;
 	hiddenCoursesIds: string[];
+	viewMode: 'days' | 'month';
+	setViewMode: Dispatch<SetStateAction<'days' | 'month'>>;
 };
 
 const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
 	const containerRef = useRef<HTMLDivElement>(null!);
+	const [viewMode, setViewMode] = useState<'days' | 'month'>('days');
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { data: user } = useUser();
@@ -225,6 +228,8 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 		<CalendarContext.Provider
 			value={{
 				containerRef,
+				viewMode,
+				setViewMode,
 				currentFirstDay,
 				goDayForward,
 				goDayBackward,
