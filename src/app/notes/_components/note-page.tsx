@@ -60,7 +60,7 @@ const NotePage = () => {
 				<Content note={currentNote} course={currentCourse} />
 			</article>
 
-			<aside className='flex h-full w-full shrink-0 flex-col gap-y-4 overflow-y-scroll pb-64 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96'>
+			<aside className='flex h-full w-full shrink-0 flex-col gap-y-4 overflow-y-auto pb-64 md:w-72 lg:w-80 xl:w-72 2xl:w-96'>
 				{/* Course related */}
 				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
 					<legend className='px-2'>Course related</legend>
