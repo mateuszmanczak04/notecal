@@ -49,7 +49,7 @@ const ChangeCourse = ({ currentCourse, note, forPage = 'notes', handleClose }: P
 
 	if (forPage === 'calendar') {
 		return (
-			<div className='absolute left-0 top-9 z-20 flex w-full flex-col justify-center overflow-hidden rounded-b-xl border-b border-l border-r bg-white shadow-xl dark:border-neutral-500 dark:bg-neutral-600'>
+			<div className='absolute left-0 top-9 z-20 flex w-full flex-col justify-center overflow-hidden rounded-b-xl border-b border-l border-r bg-white text-neutral-800 shadow-xl dark:border-neutral-500 dark:bg-neutral-600 dark:text-white'>
 				{/* Options */}
 				{courses &&
 					courses.map(course => (
