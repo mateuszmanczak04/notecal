@@ -1,6 +1,8 @@
 'use client';
 
 import { useNotes } from '@/hooks/use-notes';
+import { useUser } from '@/hooks/use-user';
+import { addDays } from 'date-fns';
 import { MouseEvent, useMemo, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import CoursePicker from './course-picker';
@@ -8,7 +10,8 @@ import Note from './note';
 
 const Notes = () => {
 	const { data: notes } = useNotes();
-	const { containerRef, getRelativePosition, getDateFromPosition, rowHeight } = useCalendarContext();
+	const { containerRef, getRelativePosition, getDateFromPosition, rowHeight, currentFirstDay } = useCalendarContext();
+	const { data: user } = useUser();
 	const { hiddenCoursesIds } = useCalendarContext();
 	const [popupX, setPopupX] = useState(0);
 	const [popupY, setPopupY] = useState(0);
@@ -73,6 +76,12 @@ const Notes = () => {
 			{notes &&
 				notes
 					.filter(n => !hiddenCoursesIds.includes(n.courseId))
+					.filter(n => {
+						// Optimization to render only notes from the currently visible date span
+						if (n.endTime < currentFirstDay) return;
+						if (n.startTime > addDays(currentFirstDay, user?.displayedDays || 0)) return;
+						return n;
+					})
 					.map((note, index) => <Note key={note.id} note={note} leftOffset={leftOffsets[index]} />)}
 
 			{/* A popup to create a new note */}
