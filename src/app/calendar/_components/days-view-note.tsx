@@ -7,7 +7,7 @@ import { useCourses } from '@/hooks/use-courses';
 import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
 import { toUTC } from '@/utils/timezone';
-import { type Note } from '@prisma/client';
+import { type Note as DaysViewNote } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addDays, addMilliseconds, differenceInCalendarDays, startOfDay } from 'date-fns';
 import { useRouter } from 'next/navigation';
@@ -15,20 +15,20 @@ import { useEffect, useRef, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 
 type Props = {
-	note: Note & { loading?: boolean };
+	note: DaysViewNote & { loading?: boolean };
 	leftOffset: number;
 };
 
 /**
  * A single note block displayed in calendar grid.
  */
-const Note = ({ note, leftOffset }: Props) => {
+const DaysViewNote = ({ note, leftOffset }: Props) => {
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
 		mutationFn: updateNote,
 		onMutate: () => {
-			queryClient.setQueryData(['notes'], (oldData: Note[]) => {
+			queryClient.setQueryData(['notes'], (oldData: DaysViewNote[]) => {
 				const updatedNotes = oldData.map(n =>
 					n.id === note.id ? { ...n, startTime: toUTC(dragStartTime), endTime: toUTC(dragEndTime) } : n,
 				);
@@ -486,4 +486,4 @@ const Note = ({ note, leftOffset }: Props) => {
 	);
 };
 
-export default Note;
+export default DaysViewNote;

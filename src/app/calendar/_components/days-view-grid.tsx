@@ -1,10 +1,10 @@
 'use client';
 
 import { useUser } from '@/hooks/use-user';
-import DayColumn from './day-column';
+import DaysViewDayColumn from './days-view-day-column';
 import HourRow from './hour-row';
 
-const Grid = () => {
+const DaysViewGrid = () => {
 	const { data: user } = useUser();
 
 	// Should not occur in normal app conditions
@@ -26,11 +26,11 @@ const Grid = () => {
 					gridTemplateColumns: `repeat(${user.displayedDays}, 1fr)`,
 				}}>
 				{new Array(user.displayedDays).fill(0).map((_, index) => (
-					<DayColumn key={index} isLast={index === user.displayedDays - 1} />
+					<DaysViewDayColumn key={index} isLast={index === user.displayedDays - 1} />
 				))}
 			</div>
 		</div>
 	);
 };
 
-export default Grid;
+export default DaysViewGrid;

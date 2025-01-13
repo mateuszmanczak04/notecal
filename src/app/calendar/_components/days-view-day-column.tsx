@@ -1,7 +1,6 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import { FC } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 
 const Row = ({ isLast }: { isLast: boolean }) => {
@@ -17,11 +16,11 @@ const Row = ({ isLast }: { isLast: boolean }) => {
 	);
 };
 
-interface DayColumnProps {
+type Props = {
 	isLast?: boolean;
-}
+};
 
-const DayColumn: FC<DayColumnProps> = ({ isLast = false }) => {
+const DaysViewDayColumn = ({ isLast = false }: Props) => {
 	return (
 		<div className='grid'>
 			{new Array(24).fill(0).map((_, index) => (
@@ -31,4 +30,4 @@ const DayColumn: FC<DayColumnProps> = ({ isLast = false }) => {
 	);
 };
 
-export default DayColumn;
+export default DaysViewDayColumn;

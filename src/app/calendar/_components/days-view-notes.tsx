@@ -5,10 +5,10 @@ import { useUser } from '@/hooks/use-user';
 import { addDays } from 'date-fns';
 import { MouseEvent, useMemo, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
-import CoursePicker from './course-picker';
-import Note from './note';
+import DaysViewCoursePicker from './days-view-course-picker';
+import DaysViewNote from './days-view-note';
 
-const Notes = () => {
+const DaysViewNotes = () => {
 	const { data: notes } = useNotes();
 	const { containerRef, getRelativePosition, getDateFromPosition, rowHeight, currentFirstDay } = useCalendarContext();
 	const { data: user } = useUser();
@@ -82,14 +82,19 @@ const Notes = () => {
 						if (n.startTime > addDays(currentFirstDay, user?.displayedDays || 0)) return;
 						return n;
 					})
-					.map((note, index) => <Note key={note.id} note={note} leftOffset={leftOffsets[index]} />)}
+					.map((note, index) => <DaysViewNote key={note.id} note={note} leftOffset={leftOffsets[index]} />)}
 
 			{/* A popup to create a new note */}
 			{selectedTime && (
-				<CoursePicker time={selectedTime} x={popupX} y={popupY} hidePicker={() => setSelectedTime(null)} />
+				<DaysViewCoursePicker
+					time={selectedTime}
+					x={popupX}
+					y={popupY}
+					hidePicker={() => setSelectedTime(null)}
+				/>
 			)}
 		</div>
 	);
 };
 
-export default Notes;
+export default DaysViewNotes;

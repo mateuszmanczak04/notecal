@@ -21,7 +21,7 @@ type Props = {
 	hidePicker: () => void;
 };
 
-const CoursePicker = ({ hidePicker, time, x, y }: Props) => {
+const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { data: courses } = useCourses();
@@ -151,4 +151,4 @@ const CoursePicker = ({ hidePicker, time, x, y }: Props) => {
 	);
 };
 
-export default CoursePicker;
+export default DaysViewCoursePicker;

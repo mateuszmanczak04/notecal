@@ -3,7 +3,7 @@
 import LoadingSpinner from '@/components/loading-spinner';
 import { useUser } from '@/hooks/use-user';
 import { useCalendarContext } from '../_context/calendar-context';
-import DayHeading from './day-heading';
+import DaysViewDayHeading from './days-view-day-heading';
 
 const TopBar = () => {
 	const { getDayAfter } = useCalendarContext();
@@ -29,7 +29,7 @@ const TopBar = () => {
 					gridTemplateColumns: `repeat(${user.displayedDays}, 1fr)`,
 				}}>
 				{days.map((day, index) => (
-					<DayHeading key={day.toString()} date={day} isLast={index === user.displayedDays - 1} />
+					<DaysViewDayHeading key={day.toString()} date={day} isLast={index === user.displayedDays - 1} />
 				))}
 			</div>
 		</div>
