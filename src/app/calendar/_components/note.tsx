@@ -65,16 +65,13 @@ const Note = ({ note, leftOffset }: Props) => {
 		setDragEndTime(note.endTime);
 	}, [note.startTime, note.endTime]);
 
-	// Should not occur in normal app conditions
-	if (!courses || !user) return;
-
 	// Maybe filtering all courses for each note is not the fastest
 	// way to do it but let's assume that most of users don't have
 	// more than 10-20 coursers. Then we shouldn't care that much about
 	// the performance.
 	// Also we can assume that course exists because there shouldn't
 	// be any note without a corresponding course.
-	const course = courses.find(c => c.id === note.courseId);
+	const course = courses?.find(c => c.id === note.courseId);
 
 	/**
 	 * Returns days which are included in note's duration,
@@ -107,6 +104,7 @@ const Note = ({ note, leftOffset }: Props) => {
 	 * It's based on note's date.
 	 */
 	const getLeftOffset = (date: Date) => {
+		if (!user) return;
 		const daysFromFirstDay = differenceInCalendarDays(date, currentFirstDay);
 		return `calc(${daysFromFirstDay * (100 / user.displayedDays) + '%'} + ${leftOffset * 16 + 'px'})`;
 	};
@@ -116,6 +114,7 @@ const Note = ({ note, leftOffset }: Props) => {
 	 * 1 / settings.displayedDays with some improvements.
 	 */
 	const getWidth = () => {
+		if (!user) return;
 		return `calc(${100 / user.displayedDays}% - ${32 + 'px'})`;
 	};
 
@@ -342,6 +341,53 @@ const Note = ({ note, leftOffset }: Props) => {
 	 */
 	const dragDays = getDaysBetween(actualDragStartTime, actualDragEndTime);
 
+	const [showContextMenuIndex, setShowContextMenuIndex] = useState<number | null>(null);
+
+	/**
+	 * Handles context menu event on note.
+	 */
+	const handleContextMenu = (event: React.MouseEvent, index: number) => {
+		event.preventDefault();
+		setShowContextMenuIndex(index);
+	};
+
+	/**
+	 * Handles closing the context menu.
+	 */
+	const handleCloseContextMenu = () => {
+		setShowContextMenuIndex(null);
+	};
+
+	// Had to use this approach instead of "useClickOutside"
+	// because we have many days in a single note
+	useEffect(() => {
+		// Close context menu on outside click
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				showContextMenuIndex !== null &&
+				!noteRef.current[showContextMenuIndex]?.contains(event.target as Node)
+			) {
+				handleCloseContextMenu();
+			}
+		};
+
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') {
+				handleCloseContextMenu();
+			}
+		};
+
+		document.addEventListener('keydown', handleKeyDown);
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [showContextMenuIndex]);
+
+	// Should not occur in normal app conditions
+	if (!courses || !user || !course) return;
+
 	return (
 		<>
 			{/* Primary notes: */}
@@ -362,6 +408,7 @@ const Note = ({ note, leftOffset }: Props) => {
 							'absolute z-20 min-h-4 min-w-8 select-none overflow-hidden break-all rounded-xl border-2 border-white bg-primary-500 text-sm text-white transition dark:border-neutral-800',
 							isDragging && 'opacity-50',
 						)}
+						onContextMenu={e => handleContextMenu(e, index)}
 						style={{
 							top: getTopOffset(day, note.startTime),
 							left: getLeftOffset(day),
@@ -369,7 +416,7 @@ const Note = ({ note, leftOffset }: Props) => {
 							height: getHeight(day, note.startTime, note.endTime),
 							// If course was not found, the color will be undefined so
 							// the note should have "bg-primary-500" color as in className above
-							backgroundColor: course?.color || '',
+							backgroundColor: course.color || '',
 						}}>
 						{/* Top edge to drag: */}
 						{index === 0 && (
@@ -410,11 +457,16 @@ const Note = ({ note, leftOffset }: Props) => {
 							left: getLeftOffset(day),
 							width: getWidth(),
 							height: getHeight(day, actualDragStartTime, actualDragEndTime),
-							backgroundColor: course?.color,
+							backgroundColor: course.color,
 						}}>
-						<p className='m-4'>{note.title || course?.name}</p>
+						<p className='m-4'>{note.title || course.name}</p>
 					</div>
 				))}
+			{showContextMenuIndex !== null && (
+				<p>
+					Hello context menu {note.title} {showContextMenuIndex}
+				</p>
+			)}
 		</>
 	);
 };
