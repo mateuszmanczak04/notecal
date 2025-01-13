@@ -5,13 +5,15 @@ import updateSettings from '@/app/settings/_actions/update-settings';
 import { useToast } from '@/components/toast/use-toast';
 import { useUser } from '@/hooks/use-user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addDays } from 'date-fns';
+import { addDays, addMonths } from 'date-fns';
 import { Dispatch, ReactNode, RefObject, SetStateAction, createContext, useContext, useRef, useState } from 'react';
 
 type CalendarContextProps = {
 	currentFirstDay: Date;
 	goDayForward: () => void;
 	goDayBackward: () => void;
+	goMonthForward: () => void;
+	goMonthBackward: () => void;
 	goToToday: () => void;
 	goToDay: (date: Date) => void;
 	getDayAfter: (days: number) => Date;
@@ -111,6 +113,26 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 			mutate({ firstCalendarDay: getDayAfter(-1) });
 		}
 		setCurrentFirstDay(getDayAfter(-1));
+	};
+
+	/**
+	 * Changes the first seen day by 1 day forward.
+	 */
+	const goMonthForward = () => {
+		if (!!user?.firstCalendarDay) {
+			mutate({ firstCalendarDay: addMonths(user.firstCalendarDay, 1) });
+		}
+		setCurrentFirstDay(prev => addMonths(prev, 1));
+	};
+
+	/**
+	 * Changes the first seen day by 1 day back.
+	 */
+	const goMonthBackward = () => {
+		if (!!user?.firstCalendarDay) {
+			mutate({ firstCalendarDay: addMonths(user.firstCalendarDay, -1) });
+		}
+		setCurrentFirstDay(prev => addMonths(prev, -1));
 	};
 
 	/**
@@ -233,6 +255,8 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 				currentFirstDay,
 				goDayForward,
 				goDayBackward,
+				goMonthForward,
+				goMonthBackward,
 				goToToday,
 				goToDay,
 				rowHeight: getRowHeight(),

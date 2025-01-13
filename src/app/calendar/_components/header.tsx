@@ -5,11 +5,37 @@ import { useCalendarContext } from '../_context/calendar-context';
 import ViewSwitcher from './view-switcher';
 
 const Header = () => {
-	const { currentFirstDay, zoomIn, zoomOut, goDayBackward, goDayForward, goToToday } = useCalendarContext();
+	const {
+		currentFirstDay,
+		zoomIn,
+		zoomOut,
+		goDayBackward,
+		goDayForward,
+		goToToday,
+		viewMode,
+		goMonthForward,
+		goMonthBackward,
+	} = useCalendarContext();
 	const currentMonth = currentFirstDay.toLocaleString('default', {
 		month: 'long',
 	});
 	const currentYear = currentFirstDay.getFullYear();
+
+	const handleForward = () => {
+		if (viewMode === 'days') {
+			goDayForward();
+		} else if (viewMode === 'month') {
+			goMonthForward();
+		}
+	};
+
+	const handleBackward = () => {
+		if (viewMode === 'days') {
+			goDayBackward();
+		} else if (viewMode === 'month') {
+			goMonthBackward();
+		}
+	};
 
 	return (
 		<div className='z-50 flex items-center justify-between gap-2'>
@@ -34,14 +60,14 @@ const Header = () => {
 						className='flex flex-1 cursor-pointer items-center justify-center rounded-l-md border hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
 						aria-label='go day before'
 						title='go day before'
-						onClick={goDayBackward}>
+						onClick={handleBackward}>
 						<ChevronLeft />
 					</button>
 					<button
 						className='flex flex-1 cursor-pointer items-center justify-center rounded-r-md border-b border-r border-t hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
 						aria-label='go day after'
 						title='go day after'
-						onClick={goDayForward}>
+						onClick={handleForward}>
 						<ChevronRight />
 					</button>
 				</div>
