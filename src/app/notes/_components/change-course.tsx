@@ -11,13 +11,13 @@ import updateNote from '../_actions/update-note';
 type Props = {
 	currentCourse: Course;
 	note: Note;
-	forPage?: 'tasks' | 'notes';
+	forPage?: 'calendar' | 'notes';
 };
 
 /**
  * A dropdown menu used to choose a new course for the note.
  */
-const ChangeCourse = ({ currentCourse, note, forPage = 'tasks' }: Props) => {
+const ChangeCourse = ({ currentCourse, note, forPage = 'notes' }: Props) => {
 	const queryClient = useQueryClient();
 	const { data: courses } = useCourses();
 	const { toast } = useToast();

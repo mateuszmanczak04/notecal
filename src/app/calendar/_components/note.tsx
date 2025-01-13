@@ -1,6 +1,7 @@
 'use client';
 
 import updateNote from '@/app/notes/_actions/update-note';
+import ChangeCourse from '@/app/notes/_components/change-course';
 import { useToast } from '@/components/toast/use-toast';
 import { useCourses } from '@/hooks/use-courses';
 import { useUser } from '@/hooks/use-user';
@@ -342,6 +343,7 @@ const Note = ({ note, leftOffset }: Props) => {
 	const dragDays = getDaysBetween(actualDragStartTime, actualDragEndTime);
 
 	const [showContextMenuIndex, setShowContextMenuIndex] = useState<number | null>(null);
+	const contextMenuRef = useRef<HTMLDivElement | null>(null);
 
 	/**
 	 * Handles context menu event on note.
@@ -387,7 +389,8 @@ const Note = ({ note, leftOffset }: Props) => {
 
 	// Handle routng to the /notes/[id] page
 	const router = useRouter();
-	const handleRoute = () => {
+	const handleRoute = (e: React.MouseEvent) => {
+		if (contextMenuRef.current && contextMenuRef.current.contains(e.target as Node)) return;
 		router.push(`/notes/${note.id}`);
 	};
 
@@ -448,6 +451,12 @@ const Note = ({ note, leftOffset }: Props) => {
 								ref={bottomEdgeRef}
 								className='absolute inset-x-0 bottom-0 h-2 cursor-ns-resize opacity-0'></div>
 						)}
+
+						{showContextMenuIndex === index && (
+							<div ref={contextMenuRef}>
+								<ChangeCourse currentCourse={course} note={note} forPage='calendar' />
+							</div>
+						)}
 					</div>
 				))}
 			{/* Drag notes, visible only if user is currently dragging edge: */}
@@ -468,11 +477,6 @@ const Note = ({ note, leftOffset }: Props) => {
 						<p className='m-4'>{note.title || course.name}</p>
 					</div>
 				))}
-			{showContextMenuIndex !== null && (
-				<p>
-					Hello context menu {note.title} {showContextMenuIndex}
-				</p>
-			)}
 		</>
 	);
 };
