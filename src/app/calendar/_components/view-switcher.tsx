@@ -14,7 +14,7 @@ const ViewSwitcher = () => {
 			<DropdownMenuTrigger
 				showChevron
 				className='h-10 rounded-md border-neutral-200 bg-transparent hover:bg-neutral-100 dark:border-neutral-600 dark:bg-transparent dark:hover:bg-neutral-700'>
-				View mode
+				View mode ({viewMode})
 			</DropdownMenuTrigger>
 			<DropdownMenuList>
 				<DropdownMenuItem onSelect={setViewMode} value='days'>
