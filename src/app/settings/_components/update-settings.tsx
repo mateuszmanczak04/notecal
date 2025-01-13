@@ -29,14 +29,13 @@ const UpdateSettings = () => {
 		},
 	});
 
-	const [displayedDays, setDisplayedDays] = useState(user?.displayedDays);
 	const [defaultNoteDuration, setDefaultNoteDuration] = useState(user?.defaultNoteDuration);
 	const [language, setLanguage] = useState(user?.language);
 	const [firstCalendarDay, setFirstCalendarDay] = useState<Date | null>(user?.firstCalendarDay || null);
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		mutate({ displayedDays, defaultNoteDuration, language, firstCalendarDay });
+		mutate({ defaultNoteDuration, language, firstCalendarDay });
 	};
 
 	return (
@@ -44,21 +43,6 @@ const UpdateSettings = () => {
 			<h2 className='text-lg font-semibold'>Update your settings</h2>
 
 			<form onSubmit={handleSubmit} className={cn('mt-2 flex flex-col gap-4', isPending && 'opacity-50')}>
-				{/* Displayed days field */}
-				<div>
-					<label htmlFor='update-displayed-days' className='mb-1 block px-2 font-medium'>
-						Displayed days
-					</label>
-					<Input
-						placeholder='7'
-						type='number'
-						name='displayedDays'
-						id='update-displayed-days'
-						value={displayedDays}
-						onChange={e => setDisplayedDays(parseInt(e.target.value))}
-					/>
-				</div>
-
 				{/* Default note duration */}
 				<div>
 					<label htmlFor='update-default-note-duration' className='mb-1 block px-2 font-medium'>
