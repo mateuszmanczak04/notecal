@@ -21,7 +21,7 @@ const Tile = ({ children, onClick }: { children?: React.ReactNode; onClick?: () 
 };
 
 const MonthView = () => {
-	const { currentFirstDay, setViewMode, goToDay } = useCalendarContext();
+	const { currentFirstDay, setViewMode, goToDay, hiddenCoursesIds } = useCalendarContext();
 	const { data: notes } = useNotes();
 	const firstDayOfMonth = startOfMonth(currentFirstDay);
 	const amountOfDaysInMonth = getDaysInMonth(currentFirstDay);
@@ -64,6 +64,7 @@ const MonthView = () => {
 						{notes &&
 							notes
 								.filter(note => isSameDay(note.startTime, tile))
+								.filter(note => !hiddenCoursesIds.includes(note.courseId))
 								.map(note => <MonthViewNote key={note.id} note={note} />)}
 					</Tile>
 				);
