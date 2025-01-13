@@ -15,7 +15,7 @@ const getNotes = cache(async () => {
 				userId: user.id,
 			},
 			orderBy: {
-				startTime: 'desc',
+				startTime: 'asc',
 			},
 		});
 
