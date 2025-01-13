@@ -9,13 +9,21 @@ export type T_UpdateNoteInput = {
 	id: string;
 	startTime?: Date;
 	endTime?: Date;
+	title?: string;
 	content?: string;
 	courseId?: string;
 };
 
 export type T_UpdateNoteResult = Promise<{ error: string } | { note: Note }>;
 
-const updateNote = async ({ id, startTime, endTime, content, courseId }: T_UpdateNoteInput): T_UpdateNoteResult => {
+const updateNote = async ({
+	id,
+	startTime,
+	endTime,
+	title,
+	content,
+	courseId,
+}: T_UpdateNoteInput): T_UpdateNoteResult => {
 	if (!id) {
 		return { error: 'ID is required' };
 	}
@@ -56,6 +64,7 @@ const updateNote = async ({ id, startTime, endTime, content, courseId }: T_Updat
 		const updatedNote = await db.note.update({
 			where: { id, userId: user.id },
 			data: {
+				title,
 				startTime,
 				endTime,
 				content,
