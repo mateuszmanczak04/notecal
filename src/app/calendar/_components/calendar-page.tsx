@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
+import FilterCourses from './filter-courses';
 import Grid from './grid';
 import Header from './header';
 import Notes from './notes';
@@ -61,6 +62,8 @@ const CalendarPage = () => {
 				{/* Notes on top: */}
 				<Notes />
 			</div>
+
+			<FilterCourses />
 		</div>
 	);
 };
