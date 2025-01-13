@@ -454,7 +454,12 @@ const Note = ({ note, leftOffset }: Props) => {
 
 						{showContextMenuIndex === index && (
 							<div ref={contextMenuRef}>
-								<ChangeCourse currentCourse={course} note={note} forPage='calendar' />
+								<ChangeCourse
+									handleClose={handleCloseContextMenu}
+									currentCourse={course}
+									note={note}
+									forPage='calendar'
+								/>
 							</div>
 						)}
 					</div>

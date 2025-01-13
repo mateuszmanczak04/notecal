@@ -12,12 +12,13 @@ type Props = {
 	currentCourse: Course;
 	note: Note;
 	forPage?: 'calendar' | 'notes';
+	handleClose?: () => void;
 };
 
 /**
  * A dropdown menu used to choose a new course for the note.
  */
-const ChangeCourse = ({ currentCourse, note, forPage = 'notes' }: Props) => {
+const ChangeCourse = ({ currentCourse, note, forPage = 'notes', handleClose }: Props) => {
 	const queryClient = useQueryClient();
 	const { data: courses } = useCourses();
 	const { toast } = useToast();
@@ -38,6 +39,30 @@ const ChangeCourse = ({ currentCourse, note, forPage = 'notes' }: Props) => {
 		mutate({ id: note.id, courseId: newCourseId });
 	};
 
+	if (forPage === 'calendar') {
+		return (
+			<div className='absolute left-0 top-9 z-20 flex w-full flex-col justify-center overflow-hidden rounded-b-xl border-b border-l border-r bg-white shadow-xl dark:border-neutral-500 dark:bg-neutral-600'>
+				{/* Options */}
+				{courses &&
+					courses.map(course => (
+						<button
+							onClick={() => {
+								handleSelect(course.id);
+								handleClose && handleClose();
+							}}
+							key={course.id}
+							value={course.id}
+							className='flex h-9 cursor-pointer select-none items-center justify-center gap-2 truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 sm:max-w-none dark:hover:bg-neutral-500'>
+							<div
+								className='h-3 w-3 shrink-0 rounded-full'
+								style={{ backgroundColor: course.color }}></div>
+							<p className={'truncate text-sm'}>{course.name}</p>
+						</button>
+					))}
+			</div>
+		);
+	}
+
 	return (
 		<article>
 			<p className='text-xl font-semibold'>Note&apos;s course</p>
@@ -52,14 +77,6 @@ const ChangeCourse = ({ currentCourse, note, forPage = 'notes' }: Props) => {
 					<p className={cn('truncate', forPage === 'notes' && 'text-sm')}>{currentCourse?.name || 'None'}</p>
 				</DropdownMenuTrigger>
 				<DropdownMenuList>
-					{/* Null option */}
-					<DropdownMenuItem
-						onSelect={handleSelect}
-						key={'none' + Math.random()}
-						value={null}
-						className={cn(forPage === 'notes' && 'text-sm')}>
-						None
-					</DropdownMenuItem>
 					{/* Options */}
 					{courses &&
 						courses.map(course => (
