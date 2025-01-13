@@ -86,6 +86,7 @@ model Note {
   endTime   DateTime
   courseId  String
   course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title     String   @default("")
   content   String   @default("")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
