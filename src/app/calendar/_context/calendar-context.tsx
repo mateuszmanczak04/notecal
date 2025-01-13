@@ -34,7 +34,7 @@ const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
 	const containerRef = useRef<HTMLDivElement>(null!);
-	const [viewMode, setViewMode] = useState<'days' | 'month'>('days');
+	const [viewMode, setViewMode] = useState<'days' | 'month'>('month');
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { data: user } = useUser();

@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import DaysViewGrid from './days-view-grid';
 import DaysViewNotes from './days-view-notes';
+import TopBar from './top-bar';
 
 type Props = {};
 
@@ -44,16 +45,20 @@ const DaysView = ({}: Props) => {
 	}, [zoomIn, zoomOut, goDayBackward, goDayForward]);
 
 	return (
-		<div
-			className='relative overflow-y-scroll overscroll-none scroll-auto outline-none scrollbar-hide'
-			onScroll={handleScroll}
-			ref={scrollContainerRef}>
-			{/* Just grid: */}
-			<DaysViewGrid />
+		<>
+			{/* Dates */}
+			<TopBar />
+			<div
+				className='relative overflow-y-scroll overscroll-none scroll-auto outline-none scrollbar-hide'
+				onScroll={handleScroll}
+				ref={scrollContainerRef}>
+				{/* Just grid: */}
+				<DaysViewGrid />
 
-			{/* Notes on top: */}
-			<DaysViewNotes />
-		</div>
+				{/* Notes on top: */}
+				<DaysViewNotes />
+			</div>
+		</>
 	);
 };
 
