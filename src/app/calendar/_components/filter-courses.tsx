@@ -8,7 +8,7 @@ type Props = {};
 
 const FilterCourses = ({}: Props) => {
 	const { data: courses } = useCourses();
-	const { handleHideCourse, handleShowCourse } = useCalendarContext();
+	const { handleHideCourse, handleShowCourse, hiddenCoursesIds } = useCalendarContext();
 
 	const handleChange = (checked: boolean | string, id: string) => {
 		if (checked) {
@@ -29,6 +29,7 @@ const FilterCourses = ({}: Props) => {
 						<Checkbox
 							id={course.id + '-filter'}
 							className='size-5'
+							checked={!hiddenCoursesIds.includes(course.id)}
 							onCheckedChange={checked => handleChange(checked, course.id)}
 						/>
 						<label htmlFor={course.id + '-filter'} className='cursor-pointer'>

@@ -9,7 +9,7 @@ import Note from './note';
 const Notes = () => {
 	const { data: notes } = useNotes();
 	const { containerRef, getRelativePosition, getDateFromPosition, rowHeight } = useCalendarContext();
-
+	const { hiddenCoursesIds } = useCalendarContext();
 	const [popupX, setPopupX] = useState(0);
 	const [popupY, setPopupY] = useState(0);
 	// When there is selected time, we should display the course picker:
@@ -70,7 +70,10 @@ const Notes = () => {
 			onClick={handleClick}
 			style={{ height: rowHeight * 24 + 'px' }}>
 			{/* Notes */}
-			{notes?.map((note, index) => <Note key={note.id} note={note} leftOffset={leftOffsets[index]} />)}
+			{notes &&
+				notes
+					.filter(n => !hiddenCoursesIds.includes(n.courseId))
+					.map((note, index) => <Note key={note.id} note={note} leftOffset={leftOffsets[index]} />)}
 
 			{/* A popup to create a new note */}
 			{selectedTime && (
