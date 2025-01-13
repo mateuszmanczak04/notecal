@@ -25,14 +25,14 @@ const FilterCourses = ({}: Props) => {
 			<p className='text-nowrap font-semibold'>Filter courses:</p>
 			<div className='flex items-center gap-4'>
 				{courses.map(course => (
-					<div key={course.id} className='flex select-none items-center gap-1'>
+					<div key={course.id} className='flex select-none items-center'>
 						<Checkbox
 							id={course.id + '-filter'}
 							className='size-5'
 							checked={!hiddenCoursesIds.includes(course.id)}
 							onCheckedChange={checked => handleChange(checked, course.id)}
 						/>
-						<label htmlFor={course.id + '-filter'} className='cursor-pointer'>
+						<label htmlFor={course.id + '-filter'} className='cursor-pointer pl-1'>
 							{course.name}
 						</label>
 					</div>
