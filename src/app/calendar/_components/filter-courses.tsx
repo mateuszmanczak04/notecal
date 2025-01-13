@@ -32,7 +32,7 @@ const FilterCourses = ({}: Props) => {
 							checked={!hiddenCoursesIds.includes(course.id)}
 							onCheckedChange={checked => handleChange(checked, course.id)}
 						/>
-						<label htmlFor={course.id + '-filter'} className='cursor-pointer pl-1'>
+						<label htmlFor={course.id + '-filter'} className='cursor-pointer text-nowrap pl-1'>
 							{course.name}
 						</label>
 					</div>
