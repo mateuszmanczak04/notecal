@@ -48,10 +48,11 @@ const SideNotes = ({ currentCourse, currentNoteId, currentCourseNotes }: Props) 
 							'flex h-9 items-center justify-center gap-2 overflow-x-clip border-b border-l border-r px-3 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700',
 							index === 0 && 'rounded-t-xl border-t',
 							index === currentCourseNotes.length - 1 && 'border-b-transparent',
-							note.id === currentNoteId && 'bg-neutral-200 dark:bg-neutral-600',
+							note.id === currentNoteId && 'bg-neutral-100 dark:bg-neutral-600',
 						)}>
 						<span className=' w-full shrink-0 truncate text-center text-sm'>
-							{format(note.startTime, 'yyyy-MM-dd')}
+							<span className='mr-2 font-semibold'>{format(note.startTime, 'yyyy-MM-dd')}</span>{' '}
+							<span className='opacity-75'>{note.title}</span>
 						</span>{' '}
 					</Link>
 				))}
