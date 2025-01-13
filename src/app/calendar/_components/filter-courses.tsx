@@ -4,9 +4,7 @@ import { Checkbox } from '@/components/checkbox';
 import { useCourses } from '@/hooks/use-courses';
 import { useCalendarContext } from '../_context/calendar-context';
 
-type Props = {};
-
-const FilterCourses = ({}: Props) => {
+const FilterCourses = () => {
 	const { data: courses } = useCourses();
 	const { handleHideCourse, handleShowCourse, hiddenCoursesIds } = useCalendarContext();
 
