@@ -43,16 +43,17 @@ const DisplayedDays = ({}: Props) => {
 			<Button
 				onClick={handleMinus}
 				disabled={user?.displayedDays === 1}
-				className='h-10 w-10 rounded-l-md rounded-r-none border border-neutral-300 bg-transparent p-0 hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'>
+				className='h-10 w-10 rounded-l-md rounded-r-none border border-neutral-300 bg-transparent p-0 text-neutral-800 hover:bg-neutral-100 dark:border-neutral-600 dark:text-white dark:hover:bg-neutral-700'>
 				<Minus />
 			</Button>
-			<p className='h-10 border-b border-t border-neutral-300 px-4 leading-10 dark:border-neutral-600'>
-				{user?.displayedDays}
+			<p className='flex h-10 flex-col items-center justify-center border-b border-t border-neutral-300 px-4 leading-10 dark:border-neutral-600'>
+				<span className='text-sm font-semibold'>{user?.displayedDays}</span>
+				<span className='-mt-1 text-xs opacity-75'>Days</span>
 			</p>
 			<Button
 				onClick={handlePlus}
 				disabled={user?.displayedDays === 7}
-				className='h-10 w-10 rounded-l-none rounded-r-md border border-neutral-300 bg-transparent p-0 hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'>
+				className='h-10 w-10 rounded-l-none rounded-r-md border border-neutral-300 bg-transparent p-0 text-neutral-800 hover:bg-neutral-100 dark:border-neutral-600 dark:text-white dark:hover:bg-neutral-700'>
 				<Plus />
 			</Button>
 		</div>
