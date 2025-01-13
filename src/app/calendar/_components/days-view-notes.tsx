@@ -2,7 +2,7 @@
 
 import { useNotes } from '@/hooks/use-notes';
 import { useUser } from '@/hooks/use-user';
-import { addDays } from 'date-fns';
+import { addDays, isAfter, isBefore, startOfDay } from 'date-fns';
 import { MouseEvent, useMemo, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import DaysViewCoursePicker from './days-view-course-picker';
@@ -78,8 +78,9 @@ const DaysViewNotes = () => {
 					.filter(n => !hiddenCoursesIds.includes(n.courseId))
 					.filter(n => {
 						// Optimization to render only notes from the currently visible date span
-						if (n.endTime < currentFirstDay) return;
-						if (n.startTime > addDays(currentFirstDay, user?.displayedDays || 0)) return;
+						if (isAfter(n.startTime, addDays(startOfDay(currentFirstDay), user?.displayedDays || 7)))
+							return;
+						if (isBefore(n.endTime, startOfDay(currentFirstDay))) return;
 						return n;
 					})
 					.map((note, index) => <DaysViewNote key={note.id} note={note} leftOffset={leftOffsets[index]} />)}
