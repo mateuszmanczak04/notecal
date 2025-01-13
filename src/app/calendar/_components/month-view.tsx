@@ -1,19 +1,27 @@
 'use client';
 
 import { useNotes } from '@/hooks/use-notes';
+import { cn } from '@/utils/cn';
 import { addDays, format, getDay, getDaysInMonth, isSameDay, startOfMonth } from 'date-fns';
 import React from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import MonthViewNote from './month-view-note';
 
-const Tile = ({ children }: { children?: React.ReactNode }) => (
-	<div className='flex flex-col gap-y-1 border-b border-r border-neutral-300 p-2 py-10 text-center last-of-type:rounded-br-xl dark:border-neutral-600'>
-		{children}
-	</div>
-);
+const Tile = ({ children, onClick }: { children?: React.ReactNode; onClick?: () => void }) => {
+	return (
+		<div
+			onClick={onClick}
+			className={cn(
+				'flex flex-col gap-y-1 border-b border-r border-neutral-300 p-2 py-10 text-center last-of-type:rounded-br-xl dark:border-neutral-600',
+				!!onClick && 'cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-700',
+			)}>
+			{children}
+		</div>
+	);
+};
 
 const MonthView = () => {
-	const { currentFirstDay } = useCalendarContext();
+	const { currentFirstDay, setViewMode, goToDay } = useCalendarContext();
 	const { data: notes } = useNotes();
 	const firstDayOfMonth = startOfMonth(currentFirstDay);
 	const amountOfDaysInMonth = getDaysInMonth(currentFirstDay);
@@ -34,6 +42,11 @@ const MonthView = () => {
 	 */
 	const renderedTiles: (Date | null)[] = [...new Array(daysOffset).fill(null), ...daysInMonth];
 
+	const goToDayInDaysView = (date: Date) => {
+		goToDay(date);
+		setViewMode('days');
+	};
+
 	return (
 		<div className='my-4 grid grid-cols-7 overflow-hidden rounded-xl border-l border-t border-neutral-300 dark:border-neutral-600'>
 			{/* Week day names */}
@@ -46,7 +59,7 @@ const MonthView = () => {
 					return <Tile key={Math.random()} />;
 				}
 				return (
-					<Tile key={tile.toString()}>
+					<Tile key={tile.toString()} onClick={() => goToDayInDaysView(tile)}>
 						<p className='font-semibold'>{format(tile, 'd')}</p>
 						{notes &&
 							notes
