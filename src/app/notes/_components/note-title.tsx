@@ -60,7 +60,7 @@ const NoteTitle = ({ note }: Props) => {
 			ref={titleRef}
 			contentEditable
 			className={cn(
-				'mb-2 break-all rounded-md bg-white px-3 py-2 text-center text-2xl font-semibold outline-none transition-opacity dark:bg-gray-800',
+				'mb-2 break-all rounded-md bg-white px-3 py-2 text-center text-2xl font-semibold outline-none transition-opacity dark:bg-neutral-800',
 				isPending && 'pointer-events-none opacity-50',
 				// Styling for placeholder:
 				'relative after:pointer-events-none after:absolute after:left-1/2 after:top-1/2 after:hidden after:-translate-x-1/2 after:-translate-y-1/2 after:font-medium after:opacity-50 after:content-["Note_title"]',
