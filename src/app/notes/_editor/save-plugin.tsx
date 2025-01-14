@@ -1,46 +1,29 @@
 'use client';
 
-import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { $getRoot, $insertNodes, COMMAND_PRIORITY_LOW, KEY_MODIFIER_COMMAND } from 'lexical';
+import { COMMAND_PRIORITY_LOW, KEY_MODIFIER_COMMAND } from 'lexical';
 import { useEffect } from 'react';
 
 type Props = {
-	value: string;
-	onChange: (value: string) => void;
-	onSave: () => void;
+	handleSave: () => void;
+	hasChanged: boolean;
 };
 
-/** A plugin for persisting content in the database */
-const SavePlugin = ({ value, onChange, onSave }: Props) => {
+/** A plugin for persisting content in the database,
+ * when the user presses Cmd + S (or Ctrl + S) shortcut.
+ */
+const SavePlugin = ({ handleSave, hasChanged }: Props) => {
 	const [editor] = useLexicalComposerContext();
 
 	useEffect(() => {
-		// Initialize editor content if `value` exists
-		if (!value) return;
-
-		editor.update(() => {
-			const currentHTMl = $generateHtmlFromNodes(editor);
-			if (currentHTMl !== value) {
-				$getRoot().clear();
-				const parser = new DOMParser();
-				const dom = parser.parseFromString(value, 'text/html');
-				const nodes = $generateNodesFromDOM(editor, dom);
-				$insertNodes(nodes);
-			}
-		});
-	}, [value, editor]);
-
-	useEffect(() => {
-		// Register the Cmd + S (or Ctrl + S) command
 		const unregisterCommand = editor.registerCommand(
 			KEY_MODIFIER_COMMAND,
 			event => {
 				const isEditorFocused = document.activeElement === editor.getRootElement();
-				if (isEditorFocused && (event.metaKey || event.ctrlKey) && event.key === 's') {
+				const isSaveShortcut = (event.metaKey || event.ctrlKey) && event.key === 's';
+				if (isEditorFocused && isSaveShortcut && hasChanged) {
 					event.preventDefault();
-					onSave();
+					handleSave();
 					return true;
 				}
 				return false;
@@ -49,17 +32,9 @@ const SavePlugin = ({ value, onChange, onSave }: Props) => {
 		);
 
 		return () => unregisterCommand();
-	}, [editor, onSave]);
+	}, [editor, handleSave, hasChanged]);
 
-	return (
-		<OnChangePlugin
-			onChange={editorState => {
-				editorState.read(() => {
-					onChange($generateHtmlFromNodes(editor));
-				});
-			}}
-		/>
-	);
+	return null;
 };
 
 export default SavePlugin;

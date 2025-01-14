@@ -7,11 +7,12 @@ import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
-
 import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { EditorState } from 'lexical';
+import { useRef } from 'react';
 import updateNote from '../_actions/update-note';
 import { editorConfig } from '../_editor/editor-config';
 import SavePlugin from '../_editor/save-plugin';
@@ -27,8 +28,11 @@ type Props = {
  * A part of /note/[id] page where user enters the text content. It works like a WYSIWYG editor.
  */
 const Content = ({ note, course }: Props) => {
-	const [content, setContent] = useState(note.content);
-	const hasChanged = note.content !== content;
+	/**
+	 * Keeps the current editor state. It's used to save the note content.
+	 */
+	const editorStateRef = useRef<EditorState>(undefined);
+
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate: mutateUpdate, isPending: isPendingUpdate } = useMutation({
@@ -44,10 +48,17 @@ const Content = ({ note, course }: Props) => {
 		},
 	});
 
+	/**
+	 * Saves the note content to the database.
+	 * It's called when the user clicks the save button
+	 * or presses Cmd + S (or Ctrl + S) shortcut.
+	 */
 	const handleSave = () => {
-		if (!hasChanged) return;
-		mutateUpdate({ id: note.id, content });
+		if (!editorStateRef.current) return;
+		mutateUpdate({ id: note.id, content: JSON.stringify(editorStateRef.current) });
 	};
+
+	const hasChanged = true; // TODO: fix this
 
 	return (
 		<article
@@ -56,7 +67,11 @@ const Content = ({ note, course }: Props) => {
 				isPendingUpdate && 'pointer-events-none opacity-50',
 			)}>
 			<NoteTitle note={note} />
-			<LexicalComposer initialConfig={editorConfig}>
+			<LexicalComposer
+				initialConfig={{
+					...editorConfig,
+					editorState: note.content || undefined,
+				}}>
 				<ToolbarPlugin note={note} onSave={handleSave} course={course} hasChanged={hasChanged} />
 				<div className='relative mt-4 flex-1 overflow-y-auto scroll-auto leading-loose'>
 					<RichTextPlugin
@@ -71,7 +86,12 @@ const Content = ({ note, course }: Props) => {
 				</div>
 				<HistoryPlugin />
 				<AutoFocusPlugin />
-				<SavePlugin value={note.content} onChange={value => setContent(value)} onSave={handleSave} />
+				<SavePlugin handleSave={handleSave} hasChanged={hasChanged} />
+				<OnChangePlugin
+					onChange={editorState => {
+						editorStateRef.current = editorState;
+					}}
+				/>
 			</LexicalComposer>
 		</article>
 	);
