@@ -3,6 +3,7 @@
 import { parseLexicalJsonToPlainText } from '@/app/notes/_editor/parse-lexical-json-to-plain-text';
 import { useCourses } from '@/hooks/use-courses';
 import { useNotes } from '@/hooks/use-notes';
+import { format } from 'date-fns';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -23,9 +24,13 @@ const ListView = () => {
 							style={{ backgroundColor: course?.color }}
 							key={note.id}>
 							<div className='min-w-0'>
-								<p className='truncate text-sm font-semibold opacity-75'>{course?.name}</p>
-								<p className='truncate text-lg font-semibold'>{note.title}</p>
-								<p className='line-clamp-4 w-full whitespace-pre-line text-sm opacity-75'>
+								<div className='flex gap-2'>
+									<p>{format(note.startTime, 'P, HH:MM')}</p>-
+									<p>{format(note.endTime, 'P, HH:MM')}</p>
+								</div>
+								<p className='mt-2 truncate text-lg'>{course?.name}</p>
+								<p className='mt-2 truncate text-lg font-semibold'>{note.title}</p>
+								<p className='mt-2 line-clamp-4 w-full whitespace-pre-line text-sm opacity-75'>
 									{parseLexicalJsonToPlainText(JSON.parse(note.content))}
 								</p>
 							</div>
