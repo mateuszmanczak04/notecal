@@ -23,8 +23,8 @@ const ListView = () => {
 							style={{ backgroundColor: course?.color }}
 							key={note.id}>
 							<div className='min-w-0'>
-								<p className='text-sm font-semibold opacity-75'>{course?.name}</p>
-								<p className='text-lg font-semibold'>{note.title}</p>
+								<p className='truncate text-sm font-semibold opacity-75'>{course?.name}</p>
+								<p className='truncate text-lg font-semibold'>{note.title}</p>
 								<p className='line-clamp-4 w-full whitespace-pre-line text-sm opacity-75'>
 									{parseLexicalJsonToPlainText(JSON.parse(note.content))}
 								</p>
