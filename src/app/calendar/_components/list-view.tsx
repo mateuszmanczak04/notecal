@@ -21,7 +21,10 @@ const ListView = () => {
 							className='flex w-[clamp(240px,50%,800px)] items-center justify-between gap-4 rounded-xl p-4 hover:opacity-90'
 							style={{ backgroundColor: course?.color }}
 							key={note.id}>
-							<p className='font-semibold'>{note.title || course?.name}</p>
+							<div>
+								<p className='font-semibold'>{note.title || course?.name}</p>
+								<p className='text-sm opacity-75'>{note.content}</p>
+							</div>
 							<ChevronRight className='size-7 shrink-0' />
 						</Link>
 					);
