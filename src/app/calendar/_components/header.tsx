@@ -40,42 +40,52 @@ const Header = () => {
 
 	return (
 		<div className='z-50 flex items-center justify-between gap-2'>
-			<h2 className='text-2xl font-bold sm:text-3xl'>
-				{currentMonth} {currentYear}
-			</h2>
+			{/* Title */}
+			{['days', 'month'].includes(viewMode) && (
+				<h2 className='text-2xl font-bold sm:text-3xl'>
+					{currentMonth} {currentYear}
+				</h2>
+			)}
+
+			{/* Title */}
+			{['list'].includes(viewMode) && <h2 className='text-2xl font-bold sm:text-3xl'>Your notes</h2>}
 
 			<div className='flex flex-col gap-2 sm:flex-row'>
 				{viewMode === 'days' && <DisplayedDays />}
-				<ViewModeSwitcher />
 
-				<button
-					className='flex h-10 cursor-pointer items-center justify-center rounded-md border px-4 hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
-					aria-label='today'
-					title='today'
-					onClick={goToToday}>
-					Today
-				</button>
+				{/* Today button */}
+				{['days', 'month'].includes(viewMode) && (
+					<button
+						className='flex h-10 cursor-pointer items-center justify-center rounded-md border px-4 hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
+						aria-label='today'
+						title='today'
+						onClick={goToToday}>
+						Today
+					</button>
+				)}
 
 				{/* Left & Right */}
-				<div className='flex h-calendar-header w-20'>
-					<button
-						className='flex flex-1 cursor-pointer items-center justify-center rounded-l-md border hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
-						aria-label='go day before'
-						title='go day before'
-						onClick={handleBackward}>
-						<ChevronLeft />
-					</button>
-					<button
-						className='flex flex-1 cursor-pointer items-center justify-center rounded-r-md border-b border-r border-t hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
-						aria-label='go day after'
-						title='go day after'
-						onClick={handleForward}>
-						<ChevronRight />
-					</button>
-				</div>
+				{['days', 'month'].includes(viewMode) && (
+					<div className='flex h-calendar-header w-20'>
+						<button
+							className='flex flex-1 cursor-pointer items-center justify-center rounded-l-md border hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
+							aria-label='go day before'
+							title='go day before'
+							onClick={handleBackward}>
+							<ChevronLeft />
+						</button>
+						<button
+							className='flex flex-1 cursor-pointer items-center justify-center rounded-r-md border-b border-r border-t hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
+							aria-label='go day after'
+							title='go day after'
+							onClick={handleForward}>
+							<ChevronRight />
+						</button>
+					</div>
+				)}
 
 				{/* Zoom in/out */}
-				{viewMode === 'days' && (
+				{['days'].includes(viewMode) && (
 					<div className='flex h-calendar-header w-20'>
 						<button
 							className='flex flex-1 cursor-pointer items-center justify-center rounded-l-md border hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'
@@ -93,6 +103,8 @@ const Header = () => {
 						</button>
 					</div>
 				)}
+
+				<ViewModeSwitcher />
 			</div>
 		</div>
 	);
