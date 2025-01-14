@@ -20,7 +20,7 @@ const ListView = () => {
 					return (
 						<Link
 							href={`/notes/${note.id}`}
-							className='flex w-[clamp(240px,100%,800px)] items-center justify-between gap-4 rounded-xl p-4 hover:opacity-90'
+							className='flex w-[clamp(240px,100%,800px)] items-center justify-between gap-4 rounded-xl p-4 text-white hover:opacity-90'
 							style={{ backgroundColor: course?.color }}
 							key={note.id}>
 							<div className='min-w-0'>
