@@ -51,6 +51,8 @@ const createNote = async ({ courseId, startTime }: T_CreateNoteInput): T_CreateN
 				startTime: actualStartTime,
 				endTime: endTime,
 				userId: authUser.id,
+				content:
+					'{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',
 			},
 		});
 
