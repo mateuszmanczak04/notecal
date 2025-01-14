@@ -4,7 +4,7 @@ import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { $getRoot, $insertNodes, COMMAND_PRIORITY_LOW, KEY_MODIFIER_COMMAND } from 'lexical';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 type Props = {
 	value: string;
@@ -14,14 +14,11 @@ type Props = {
 
 /** A plugin for persisting content in the database */
 const SavePlugin = ({ value, onChange, onSave }: Props) => {
-	const [isFirstRender, setIsFirstRender] = useState(true);
 	const [editor] = useLexicalComposerContext();
 
 	useEffect(() => {
 		// Initialize editor content if `value` exists and it's the first render
-		if (!value || !isFirstRender) return;
-
-		setIsFirstRender(false);
+		if (!value) return;
 
 		editor.update(() => {
 			const currentHTMl = $generateHtmlFromNodes(editor);
@@ -33,7 +30,7 @@ const SavePlugin = ({ value, onChange, onSave }: Props) => {
 				$insertNodes(nodes);
 			}
 		});
-	}, [value, isFirstRender, editor]);
+	}, [value, editor]);
 
 	useEffect(() => {
 		// Register the Cmd + S (or Ctrl + S) command
