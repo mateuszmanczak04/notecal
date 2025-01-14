@@ -1,5 +1,6 @@
 'use client';
 
+import { parseLexicalJsonToPlainText } from '@/app/notes/_editor/parse-lexical-json-to-plain-text';
 import { useCourses } from '@/hooks/use-courses';
 import { useNotes } from '@/hooks/use-notes';
 import { ChevronRight } from 'lucide-react';
@@ -21,9 +22,11 @@ const ListView = () => {
 							className='flex w-[clamp(240px,50%,800px)] items-center justify-between gap-4 rounded-xl p-4 hover:opacity-90'
 							style={{ backgroundColor: course?.color }}
 							key={note.id}>
-							<div>
+							<div className='min-w-0'>
 								<p className='font-semibold'>{note.title || course?.name}</p>
-								<p className='text-sm opacity-75'>{note.content}</p>
+								<p className='line-clamp-4 w-full whitespace-pre-line text-sm opacity-75'>
+									{parseLexicalJsonToPlainText(JSON.parse(note.content))}
+								</p>
 							</div>
 							<ChevronRight className='size-7 shrink-0' />
 						</Link>
