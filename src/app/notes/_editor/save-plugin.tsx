@@ -17,7 +17,7 @@ const SavePlugin = ({ value, onChange, onSave }: Props) => {
 	const [editor] = useLexicalComposerContext();
 
 	useEffect(() => {
-		// Initialize editor content if `value` exists and it's the first render
+		// Initialize editor content if `value` exists
 		if (!value) return;
 
 		editor.update(() => {
