@@ -40,8 +40,9 @@ const SavePlugin = ({ value, onChange, onSave }: Props) => {
 		const unregisterCommand = editor.registerCommand(
 			KEY_MODIFIER_COMMAND,
 			event => {
-				if ((event.metaKey || event.ctrlKey) && event.key === 's') {
-					event.preventDefault(); // Prevent default browser save behvaior
+				const isEditorFocused = document.activeElement === editor.getRootElement();
+				if (isEditorFocused && (event.metaKey || event.ctrlKey) && event.key === 's') {
+					event.preventDefault();
 					onSave();
 					return true;
 				}
