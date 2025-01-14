@@ -8,6 +8,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addDays, addMonths } from 'date-fns';
 import { Dispatch, ReactNode, RefObject, SetStateAction, createContext, useContext, useRef, useState } from 'react';
 
+type T_ViewMode = 'month' | 'days' | 'list';
+
 type CalendarContextProps = {
 	currentFirstDay: Date;
 	goDayForward: () => void;
@@ -28,15 +30,15 @@ type CalendarContextProps = {
 	handleHideCourse: (id: string) => void;
 	handleShowCourse: (id: string) => void;
 	hiddenCoursesIds: string[];
-	viewMode: 'days' | 'month';
-	setViewMode: Dispatch<SetStateAction<'days' | 'month'>>;
+	viewMode: T_ViewMode;
+	setViewMode: Dispatch<SetStateAction<T_ViewMode>>;
 };
 
 const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
 	const containerRef = useRef<HTMLDivElement>(null!);
-	const [viewMode, setViewMode] = useState<'days' | 'month'>('month');
+	const [viewMode, setViewMode] = useState<T_ViewMode>('list');
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { data: user } = useUser();

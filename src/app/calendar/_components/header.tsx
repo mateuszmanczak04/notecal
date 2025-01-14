@@ -3,7 +3,7 @@
 import { ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
 import { useCalendarContext } from '../_context/calendar-context';
 import DisplayedDays from './displayed-days';
-import ViewSwitcher from './view-switcher';
+import ViewModeSwitcher from './view-mode-switcher';
 
 const Header = () => {
 	const {
@@ -46,7 +46,7 @@ const Header = () => {
 
 			<div className='flex flex-col gap-2 sm:flex-row'>
 				{viewMode === 'days' && <DisplayedDays />}
-				<ViewSwitcher />
+				<ViewModeSwitcher />
 
 				<button
 					className='flex h-10 cursor-pointer items-center justify-center rounded-md border px-4 hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'

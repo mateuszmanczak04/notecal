@@ -6,7 +6,7 @@ import { useCalendarContext } from '../_context/calendar-context';
 /**
  * A component to change week/month/list view in calendar grid
  */
-const ViewSwitcher = () => {
+const ViewModeSwitcher = () => {
 	const { viewMode, setViewMode } = useCalendarContext();
 
 	return (
@@ -23,9 +23,12 @@ const ViewSwitcher = () => {
 				<DropdownMenuItem onSelect={setViewMode} value='month'>
 					Month
 				</DropdownMenuItem>
+				<DropdownMenuItem onSelect={setViewMode} value='list'>
+					List
+				</DropdownMenuItem>
 			</DropdownMenuList>
 		</DropdownMenu>
 	);
 };
 
-export default ViewSwitcher;
+export default ViewModeSwitcher;

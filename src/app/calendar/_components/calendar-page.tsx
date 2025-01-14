@@ -4,6 +4,7 @@ import { useCalendarContext } from '../_context/calendar-context';
 import DaysView from './days-view';
 import FilterCourses from './filter-courses';
 import Header from './header';
+import ListView from './list-view';
 import MonthView from './month-view';
 
 const CalendarPage = () => {
@@ -16,6 +17,7 @@ const CalendarPage = () => {
 
 			{viewMode === 'days' && <DaysView />}
 			{viewMode === 'month' && <MonthView />}
+			{viewMode === 'list' && <ListView />}
 
 			<FilterCourses />
 		</div>
