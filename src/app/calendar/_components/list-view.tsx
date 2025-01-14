@@ -19,11 +19,12 @@ const ListView = () => {
 					return (
 						<Link
 							href={`/notes/${note.id}`}
-							className='flex w-[clamp(240px,50%,800px)] items-center justify-between gap-4 rounded-xl p-4 hover:opacity-90'
+							className='flex w-[clamp(240px,100%,800px)] items-center justify-between gap-4 rounded-xl p-4 hover:opacity-90'
 							style={{ backgroundColor: course?.color }}
 							key={note.id}>
 							<div className='min-w-0'>
-								<p className='font-semibold'>{note.title || course?.name}</p>
+								<p className='text-sm font-semibold opacity-75'>{course?.name}</p>
+								<p className='text-lg font-semibold'>{note.title}</p>
 								<p className='line-clamp-4 w-full whitespace-pre-line text-sm opacity-75'>
 									{parseLexicalJsonToPlainText(JSON.parse(note.content))}
 								</p>
