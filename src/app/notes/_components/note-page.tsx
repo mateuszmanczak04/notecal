@@ -67,7 +67,7 @@ const NotePage = () => {
 					<CourseName course={currentCourse} />
 					<CourseColor course={currentCourse} />
 					<CourseTeacher course={currentCourse} />
-					<GoToCalendar note={currentNote} />
+					{currentNote.startTime && currentNote.endTime && <GoToCalendar note={currentNote} />}
 				</fieldset>
 
 				{/* List of other notes from this course */}

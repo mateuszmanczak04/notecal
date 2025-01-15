@@ -18,6 +18,7 @@ const GoToCalendar = ({ note }: Props) => {
 	 * Note's start time is used to determine the first seen day in the grid.
 	 */
 	const handleGoToCalendar = () => {
+		if (!note.startTime || !note.endTime) return;
 		goToDay(note.startTime);
 		router.push('/calendar');
 	};
