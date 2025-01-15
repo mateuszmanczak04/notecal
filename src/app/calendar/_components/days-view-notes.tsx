@@ -1,6 +1,6 @@
 'use client';
 
-import { useNotes } from '@/hooks/use-notes';
+import { useNotesWithTime } from '@/hooks/use-notes-with-time';
 import { useUser } from '@/hooks/use-user';
 import { addDays, isAfter, isBefore, startOfDay } from 'date-fns';
 import { MouseEvent, useMemo, useState } from 'react';
@@ -9,7 +9,7 @@ import DaysViewCoursePicker from './days-view-course-picker';
 import DaysViewNote from './days-view-note';
 
 const DaysViewNotes = () => {
-	const { data: notes } = useNotes();
+	const { data: notes } = useNotesWithTime();
 	const { containerRef, getRelativePosition, getDateFromPosition, rowHeight, currentFirstDay } = useCalendarContext();
 	const { data: user } = useUser();
 	const { hiddenCoursesIds } = useCalendarContext();
