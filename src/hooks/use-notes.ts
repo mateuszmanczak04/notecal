@@ -12,8 +12,8 @@ export const useNotes = () => {
 	// Notes with time adjusted to the timezone
 	const shiftedNotes = data?.map(note => ({
 		...note,
-		startTime: fromUTC(note.startTime),
-		endTime: fromUTC(note.endTime),
+		startTime: note.startTime ? fromUTC(note.startTime) : null,
+		endTime: note.endTime ? fromUTC(note.endTime) : null,
 	}));
 	return { data: shiftedNotes, ...rest };
 };
