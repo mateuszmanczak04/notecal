@@ -1,6 +1,6 @@
 'use client';
 
-import { useNotes } from '@/hooks/use-notes';
+import { useNotesWithTime } from '@/hooks/use-notes-with-time';
 import { cn } from '@/utils/cn';
 import { addDays, format, getDay, getDaysInMonth, isSameDay, startOfMonth } from 'date-fns';
 import React from 'react';
@@ -22,7 +22,7 @@ const Tile = ({ children, onClick }: { children?: React.ReactNode; onClick?: () 
 
 const MonthView = () => {
 	const { currentFirstDay, setViewMode, goToDay, hiddenCoursesIds } = useCalendarContext();
-	const { data: notes } = useNotes();
+	const { data: notes } = useNotesWithTime();
 	const firstDayOfMonth = startOfMonth(currentFirstDay);
 	const amountOfDaysInMonth = getDaysInMonth(currentFirstDay);
 	const daysInMonth = new Array(amountOfDaysInMonth).fill(firstDayOfMonth).map((day, index) => addDays(day, index));
