@@ -42,8 +42,8 @@ const SideNotes = ({ currentCourse, currentNoteId, currentCourseNotes }: Props) 
 						prefetch
 						key={note.id}
 						href={`/notes/${note.id}`}
-						aria-label={`link to note with date ${format(note.startTime, 'yyyy-MM-dd')}`}
-						title={`link to note with date ${format(note.startTime, 'yyyy-MM-dd')}`}
+						aria-label={`link to note ${note.title}`}
+						title={`link to note ${note.title}`}
 						className={cn(
 							'flex h-9 items-center justify-center gap-2 overflow-x-clip border-b border-l border-r px-3 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700',
 							index === 0 && 'rounded-t-xl border-t',
