@@ -41,9 +41,12 @@ const createNote = async ({ courseId, startTime }: T_CreateNoteInput): T_CreateN
 			return { error: 'User does not exist' };
 		}
 
-		const actualStartTime = startTime || new Date();
-		actualStartTime.setSeconds(0, 0); // Set seconds and milliseconds to 0
-		const endTime = addMinutes(actualStartTime, user.defaultNoteDuration);
+		const actualStartTime = startTime || null;
+		let endTime: Date | null = null;
+		if (actualStartTime) {
+			actualStartTime.setSeconds(0, 0); // Set seconds and milliseconds to 0
+			endTime = addMinutes(actualStartTime, user.defaultNoteDuration);
+		}
 
 		const note = await db.note.create({
 			data: {
