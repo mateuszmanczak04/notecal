@@ -17,11 +17,14 @@ type Props = {
 
 const UsefulLinks = ({ course }: Props) => {
 	// Used in the form
-	const [newLink, setNewLink] = useState<string>('');
+	const [newLinkUrl, setNewLinkUrl] = useState<string>('');
+	const [newLinkTitle, setNewLinkTitle] = useState<string>('');
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	// In the database they are saved as stringified JSON
-	const [usefulLinks, setUsefulLinks] = useState<string[]>(JSON.parse(course.usefulLinks || '[]') || []);
+	const [usefulLinks, setUsefulLinks] = useState<{ url: string; title?: string }[]>(
+		JSON.parse(course.usefulLinks || '[]') || [],
+	);
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateCourse,
 		onSettled: data => {
@@ -29,20 +32,21 @@ const UsefulLinks = ({ course }: Props) => {
 				toast({ description: data.error, variant: 'destructive' });
 			}
 			queryClient.invalidateQueries({ queryKey: ['courses'] });
-			setNewLink('');
+			setNewLinkUrl('');
+			setNewLinkTitle('');
 		},
 	});
 
 	const handleAddNew = (e: FormEvent) => {
 		e.preventDefault();
 
-		const newLinks = [...usefulLinks, newLink];
+		const newLinks = [...usefulLinks, { url: newLinkUrl, title: newLinkTitle }];
 		setUsefulLinks(newLinks);
 		mutate({ id: course.id, usefulLinks: JSON.stringify(newLinks) });
 	};
 
-	const handleDelete = (link: string) => {
-		const newLinks = usefulLinks.filter(l => l !== link);
+	const handleDelete = (url: string) => {
+		const newLinks = usefulLinks.filter(l => l.url !== url);
 		setUsefulLinks(newLinks);
 		mutate({ id: course.id, usefulLinks: JSON.stringify(newLinks) });
 	};
@@ -52,17 +56,17 @@ const UsefulLinks = ({ course }: Props) => {
 			<div className='grid gap-y-2'>
 				{usefulLinks.map(link => (
 					<div
-						key={link}
+						key={link.url + link.title}
 						className='group flex h-9 w-full cursor-pointer items-center justify-between rounded-xl px-3 dark:bg-neutral-700'
-						title={link}>
+						title={link.title}>
 						<a
 							target='_blank'
-							href={addHttpsIfMissing(link)}
+							href={addHttpsIfMissing(link.url)}
 							className='block min-w-0 max-w-52 flex-1 truncate hover:underline'>
-							{removeProtocol(link)}
+							{link?.title || removeProtocol(link.url)}
 						</a>
 
-						<button onClick={() => handleDelete(link)}>
+						<button onClick={() => handleDelete(link.url)}>
 							<X className='size-5' />
 						</button>
 					</div>
@@ -75,12 +79,21 @@ const UsefulLinks = ({ course }: Props) => {
 				className={cn('mt-2 grid gap-2', isPending && 'pointer-events-none opacity-50')}>
 				<Input
 					id='create-task-title'
-					placeholder='New link'
+					placeholder='Title (optional)'
 					className=' text-sm '
-					aria-label='New link'
+					aria-label='Title'
 					name='title'
-					value={newLink}
-					onChange={e => setNewLink(e.target.value)}
+					value={newLinkTitle}
+					onChange={e => setNewLinkTitle(e.target.value)}
+				/>
+				<Input
+					id='create-task-title'
+					placeholder='URL'
+					className=' text-sm '
+					aria-label='URL'
+					name='url'
+					value={newLinkUrl}
+					onChange={e => setNewLinkUrl(e.target.value)}
 					required
 				/>
 				<Button
