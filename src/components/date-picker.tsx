@@ -41,6 +41,12 @@ const DatePicker = ({ isPending, onSelect, date, className }: Props) => {
 	};
 
 	const handleSubmit = () => {
+		// Clear the date if any input is empty:
+		if (!year || !month || !day || !hour || !minute) {
+			onSelect(null);
+			return;
+		}
+
 		const newDate = new Date(
 			parseInt(year),
 			parseInt(month || '1') - 1,
