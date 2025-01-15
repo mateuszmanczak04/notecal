@@ -4,6 +4,7 @@ import updateNote from '@/app/notes/_actions/update-note';
 import ChangeCourse from '@/app/notes/_components/change-course';
 import { useToast } from '@/components/toast/use-toast';
 import { useCourses } from '@/hooks/use-courses';
+import { T_NoteWithTime } from '@/hooks/use-notes-with-time';
 import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
 import { toUTC } from '@/utils/timezone';
@@ -15,7 +16,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 
 type Props = {
-	note: DaysViewNote & { loading?: boolean };
+	note: T_NoteWithTime & { loading?: boolean };
 	leftOffset: number;
 };
 
@@ -28,7 +29,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	const { mutate } = useMutation({
 		mutationFn: updateNote,
 		onMutate: () => {
-			queryClient.setQueryData(['notes'], (oldData: DaysViewNote[]) => {
+			queryClient.setQueryData(['notes'], (oldData: T_NoteWithTime[]) => {
 				const updatedNotes = oldData.map(n =>
 					n.id === note.id ? { ...n, startTime: toUTC(dragStartTime), endTime: toUTC(dragEndTime) } : n,
 				);
