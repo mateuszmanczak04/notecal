@@ -7,8 +7,8 @@ import { Note } from '@prisma/client';
 
 export type T_UpdateNoteInput = {
 	id: string;
-	startTime?: Date;
-	endTime?: Date;
+	startTime?: Date | null;
+	endTime?: Date | null;
 	title?: string;
 	content?: string;
 	courseId?: string;
