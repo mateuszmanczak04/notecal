@@ -79,15 +79,15 @@ model Task {
 }
 
 model Note {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  startTime DateTime
-  endTime   DateTime
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startTime DateTime?
+  endTime   DateTime?
   courseId  String
-  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  title     String   @default("")
-  content   String   @default("")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  course    Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title     String    @default("")
+  content   String    @default("")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
