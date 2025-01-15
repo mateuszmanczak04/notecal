@@ -22,7 +22,7 @@ const UsefulLinks = ({ course }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	// In the database they are saved as stringified JSON
-	const [usefulLinks, setUsefulLinks] = useState<{ url: string; title?: string }[]>(
+	const [usefulLinks, setUsefulLinks] = useState<{ id: string; url: string; title?: string }[]>(
 		JSON.parse(course.usefulLinks || '[]') || [],
 	);
 	const { mutate, isPending } = useMutation({
@@ -40,13 +40,13 @@ const UsefulLinks = ({ course }: Props) => {
 	const handleAddNew = (e: FormEvent) => {
 		e.preventDefault();
 
-		const newLinks = [...usefulLinks, { url: newLinkUrl, title: newLinkTitle }];
+		const newLinks = [...usefulLinks, { id: crypto.randomUUID(), url: newLinkUrl, title: newLinkTitle }];
 		setUsefulLinks(newLinks);
 		mutate({ id: course.id, usefulLinks: JSON.stringify(newLinks) });
 	};
 
-	const handleDelete = (url: string) => {
-		const newLinks = usefulLinks.filter(l => l.url !== url);
+	const handleDelete = (id: string) => {
+		const newLinks = usefulLinks.filter(l => l.id !== id);
 		setUsefulLinks(newLinks);
 		mutate({ id: course.id, usefulLinks: JSON.stringify(newLinks) });
 	};
@@ -56,8 +56,8 @@ const UsefulLinks = ({ course }: Props) => {
 			<div className='grid gap-y-2'>
 				{usefulLinks.map(link => (
 					<div
-						key={link.url + link.title}
-						className='group flex h-9 w-full cursor-pointer items-center justify-between rounded-xl px-3 dark:bg-neutral-700'
+						key={link.id}
+						className='group flex h-9 w-full items-center justify-between rounded-xl px-3 dark:bg-neutral-700'
 						title={link.title}>
 						<a
 							target='_blank'
@@ -66,7 +66,7 @@ const UsefulLinks = ({ course }: Props) => {
 							{link?.title || removeProtocol(link.url)}
 						</a>
 
-						<button onClick={() => handleDelete(link.url)}>
+						<button onClick={() => handleDelete(link.id)} className='hidden group-hover:block'>
 							<X className='size-5' />
 						</button>
 					</div>
@@ -76,7 +76,7 @@ const UsefulLinks = ({ course }: Props) => {
 			{/* Add new link */}
 			<form
 				onSubmit={handleAddNew}
-				className={cn('mt-2 grid gap-2', isPending && 'pointer-events-none opacity-50')}>
+				className={cn('mt-4 grid gap-2', isPending && 'pointer-events-none opacity-50')}>
 				<Input
 					id='create-task-title'
 					placeholder='Title (optional)'
