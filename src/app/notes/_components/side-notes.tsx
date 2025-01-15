@@ -55,6 +55,9 @@ const SideNotes = ({ currentCourse, currentNoteId, currentCourseNotes }: Props) 
 								<span className='mr-2 font-semibold'>{format(note.startTime, 'yyyy-MM-dd')}</span>
 							)}{' '}
 							<span className='opacity-75'>{note.title}</span>
+							{!note.startTime && !note.endTime && !note.title && (
+								<span className='ml-2 opacity-50'>Note without a title</span>
+							)}
 						</span>{' '}
 					</Link>
 				))}
