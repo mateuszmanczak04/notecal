@@ -5,7 +5,6 @@ import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 
 export type T_UpdateSettingsInput = {
-	orderTasks?: string;
 	language?: string;
 	displayedDays?: number;
 	defaultNoteDuration?: number;
@@ -14,7 +13,6 @@ export type T_UpdateSettingsInput = {
 export type T_UpdateSettingsResult = Promise<{ error: string } | { message: string }>;
 
 const updateSettings = async ({
-	orderTasks,
 	language,
 	displayedDays,
 	defaultNoteDuration,
@@ -31,7 +29,6 @@ const updateSettings = async ({
 				id: authUser.id,
 			},
 			data: {
-				orderTasks,
 				language,
 				displayedDays,
 				defaultNoteDuration,

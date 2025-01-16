@@ -1,26 +1,30 @@
 'use client';
 
-import updateSettings from '@/app/settings/_actions/update-settings';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
-import { useToast } from '@/components/toast/use-toast';
-import { useUser } from '@/hooks/use-user';
-import { cn } from '@/utils/cn';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useSettings } from '@/hooks/use-settings';
+
+const getNameOfCriteria = (criteria: string) => {
+	if (criteria === 'title') {
+		return 'Title';
+	}
+	if (criteria === 'createdAt') {
+		return 'Newest first';
+	}
+	if (criteria === 'dueDate') {
+		return 'Due date';
+	}
+	if (criteria === 'priority') {
+		return 'Priority';
+	}
+	if (criteria === 'completed') {
+		return 'Completed';
+	}
+	return '';
+};
 
 const SortTasks = () => {
-	const { toast } = useToast();
-	const queryClient = useQueryClient();
-	const { data: user } = useUser();
-	const { mutate, isPending } = useMutation({
-		mutationFn: updateSettings,
-		onSettled: data => {
-			if (data && 'error' in data) {
-				toast({ description: data.error, variant: 'destructive' });
-			}
-			queryClient.invalidateQueries({ queryKey: ['user'] });
-			queryClient.invalidateQueries({ queryKey: ['tasks'] });
-		},
-	});
+	// TODO: implement sorting them in UI, not only in settings
+	const { tasksOrder, setTasksOrder } = useSettings();
 
 	const handleSort = (newCriteria: string) => {
 		if (
@@ -31,34 +35,13 @@ const SortTasks = () => {
 				newCriteria === 'priority' ||
 				newCriteria === 'completed')
 		) {
-			mutate({ orderTasks: newCriteria });
+			setTasksOrder(newCriteria);
 		}
 	};
-
-	const getNameOfCriteria = (criteria: string) => {
-		if (criteria === 'title') {
-			return 'Title';
-		}
-		if (criteria === 'createdAt') {
-			return 'Newest first';
-		}
-		if (criteria === 'dueDate') {
-			return 'Due date';
-		}
-		if (criteria === 'priority') {
-			return 'Priority';
-		}
-		if (criteria === 'completed') {
-			return 'Completed';
-		}
-		return '';
-	};
-
-	if (!user) return;
 
 	return (
-		<DropdownMenu className={cn('relative flex-1', isPending && 'opacity-50')}>
-			<DropdownMenuTrigger showChevron>Order by ({getNameOfCriteria(user.orderTasks)})</DropdownMenuTrigger>
+		<DropdownMenu className='relative flex-1'>
+			<DropdownMenuTrigger showChevron>Order by ({getNameOfCriteria(tasksOrder)})</DropdownMenuTrigger>
 			<DropdownMenuList>
 				<DropdownMenuItem value='title' onSelect={handleSort}>
 					Title

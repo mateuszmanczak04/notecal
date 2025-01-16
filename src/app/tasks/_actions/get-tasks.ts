@@ -10,9 +10,6 @@ const getTasks = cache(async () => {
 
 		const tasks = await db.task.findMany({
 			where: { userId: user.id },
-			orderBy: {
-				[user.orderTasks]: 'asc',
-			},
 		});
 
 		return tasks;

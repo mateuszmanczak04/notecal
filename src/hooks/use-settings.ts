@@ -3,10 +3,14 @@ import { useLocalStorage } from 'usehooks-ts';
 
 type T_ViewMode = 'month' | 'days' | 'list';
 type T_ZoomLevel = 1 | 2 | 3 | 4 | 5;
+type T_TasksOrder = 'days' | 'priority' | 'dueDate' | 'createdAt' | 'completed' | 'title';
 
 export const useSettings = () => {
 	// TODO: load these values before rendering the app
 	const [viewMode, setViewMode] = useLocalStorage<T_ViewMode>('viewMode', 'days', { initializeWithValue: false });
+	const [tasksOrder, setTasksOrder] = useLocalStorage<T_TasksOrder>('tasksOrder', 'createdAt', {
+		initializeWithValue: false,
+	});
 	const [zoomLevel, setZoomLevel] = useLocalStorage<T_ZoomLevel>('zoomLevel', 1, {
 		initializeWithValue: false,
 		deserializer: (value: string) => parseInt(value) as T_ZoomLevel,
@@ -68,5 +72,7 @@ export const useSettings = () => {
 		goToDay,
 		zoomIn,
 		zoomOut,
+		tasksOrder,
+		setTasksOrder,
 	};
 };

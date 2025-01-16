@@ -18,7 +18,6 @@ model User {
   defaultNoteDuration Int    @default(60) // in minutes
   displayedDays       Int    @default(5)
   language            String @default("en")
-  orderTasks          String @default("createdAt")
 
   // Others
   createdAt DateTime @default(now())
