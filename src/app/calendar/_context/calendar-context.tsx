@@ -9,8 +9,10 @@ type T_ViewMode = 'month' | 'days' | 'list';
 type T_ZoomLevel = 1 | 2 | 3 | 4 | 5;
 
 type CalendarContextProps = {
+	containerRef: RefObject<HTMLElement | null>;
+
 	firstCalendarDay: Date;
-	zoomLevel: T_ZoomLevel;
+
 	goDayForward: () => void;
 	goDayBackward: () => void;
 	goMonthForward: () => void;
@@ -18,14 +20,18 @@ type CalendarContextProps = {
 	goToToday: () => void;
 	goToDay: (date: Date) => void;
 	getDayAfter: (days: number) => Date;
-	containerRef: RefObject<HTMLElement | null>;
+
+	zoomLevel: T_ZoomLevel;
 	zoomIn: () => void;
 	zoomOut: () => void;
+
 	scrollTop: number;
 	setScrollTop: (newValue: number) => void;
+
+	hiddenCoursesIds: string[];
 	handleHideCourse: (id: string) => void;
 	handleShowCourse: (id: string) => void;
-	hiddenCoursesIds: string[];
+
 	viewMode: T_ViewMode;
 	setViewMode: Dispatch<SetStateAction<T_ViewMode>>;
 };
