@@ -1,6 +1,5 @@
 'use client';
 
-import { useCalendarContext } from '@/app/calendar/_context/calendar-context';
 import ChangeCourse from '@/app/notes/_components/change-course';
 import { Course, Note } from '@prisma/client';
 import { useEffect, useLayoutEffect, useRef } from 'react';
@@ -10,14 +9,14 @@ type Props = {
 	note: Note;
 	currentCourse: Course;
 	handleClose: () => void;
+	position: { x: number; y: number };
 };
 
 /**
  * Context menu for notes where user can perform various actions.
  */
-const NoteContextMenu = ({ note, currentCourse, handleClose }: Props) => {
+const NoteContextMenu = ({ note, currentCourse, handleClose, position }: Props) => {
 	const contextMenuRef = useRef<HTMLDivElement>(null!);
-	const { containerRef } = useCalendarContext();
 
 	useOnClickOutside(contextMenuRef, handleClose);
 
@@ -38,26 +37,29 @@ const NoteContextMenu = ({ note, currentCourse, handleClose }: Props) => {
 
 	// Position the context menu so it doesn't overflow the container
 	useLayoutEffect(() => {
-		if (!containerRef.current || !contextMenuRef.current) return;
+		if (!contextMenuRef.current) return;
 
 		const rect = contextMenuRef.current.getBoundingClientRect();
-		const containerRect = containerRef.current.getBoundingClientRect();
 
-		if (rect.bottom > containerRect.bottom) {
+		if (rect.bottom > window.innerHeight) {
 			contextMenuRef.current.style.top = 'auto';
 			contextMenuRef.current.style.bottom = '0';
 		}
 
-		if (rect.right > containerRect.right) {
+		if (rect.right > window.innerWidth) {
 			contextMenuRef.current.style.left = 'auto';
 			contextMenuRef.current.style.right = '0';
 		}
-	}, [containerRef]);
+	}, []);
 
 	return (
 		<div
 			ref={contextMenuRef}
-			className='absolute left-0 top-0 z-30 w-72 rounded-xl bg-white p-4 shadow-xl dark:bg-neutral-700'>
+			className='fixed z-50 w-72 rounded-xl bg-white p-4 shadow-xl dark:bg-neutral-700'
+			style={{
+				left: position.x,
+				top: position.y,
+			}}>
 			<ChangeCourse handleClose={handleClose} currentCourse={currentCourse} note={note} forPage='context-menu' />
 		</div>
 	);

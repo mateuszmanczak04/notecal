@@ -344,13 +344,13 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	const dragDays = getDaysBetween(actualDragStartTime, actualDragEndTime);
 
 	// Context menu related below:
-	const [showContextMenuIndex, setShowContextMenuIndex] = useState<number | null>(null);
+	const [contextMenuPosition, setContextMenuPosition] = useState<{ x: number; y: number } | null>(null);
 	const handleContextMenu = (event: React.MouseEvent, index: number) => {
 		event.preventDefault();
-		setShowContextMenuIndex(index);
+		setContextMenuPosition({ x: event.clientX, y: event.clientY });
 	};
 	const closeContextMenu = () => {
-		setShowContextMenuIndex(null);
+		setContextMenuPosition(null);
 	};
 
 	// Handle routng to /notes/[id] page:
@@ -427,8 +427,13 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 						)}
 
 						{/* Context menu on right mouse click */}
-						{showContextMenuIndex === index && (
-							<NoteContextMenu note={note} currentCourse={course} handleClose={closeContextMenu} />
+						{contextMenuPosition && (
+							<NoteContextMenu
+								position={contextMenuPosition}
+								note={note}
+								currentCourse={course}
+								handleClose={closeContextMenu}
+							/>
 						)}
 					</div>
 				))}
