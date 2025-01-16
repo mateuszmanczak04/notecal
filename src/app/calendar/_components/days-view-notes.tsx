@@ -20,6 +20,7 @@ const DaysViewNotes = () => {
 	const [popupY, setPopupY] = useState(0);
 	// When there is selected time, we should display the course picker:
 	const [selectedTime, setSelectedTime] = useState<Date | null>(null);
+	const { zoomLevel } = useCalendarContext();
 
 	/**
 	 * Detect click on the grid and show popup to create a new note in that time.
@@ -86,7 +87,7 @@ const DaysViewNotes = () => {
 			ref={containerRef as RefObject<HTMLDivElement>}
 			className='absolute left-12 top-0 w-[calc(100%-48px)] cursor-crosshair overflow-hidden sm:left-20 sm:w-[calc(100%-80px)]'
 			onClick={handleClick}
-			style={{ height: getCalendarRowHeight({ zoomLevel: user.zoomLevel }) * 24 + 'px' }}>
+			style={{ height: getCalendarRowHeight({ zoomLevel }) * 24 + 'px' }}>
 			{/* Notes */}
 			{notes &&
 				notes

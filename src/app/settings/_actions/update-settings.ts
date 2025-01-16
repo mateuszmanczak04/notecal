@@ -9,7 +9,6 @@ export type T_UpdateSettingsInput = {
 	language?: string;
 	displayedDays?: number;
 	defaultNoteDuration?: number;
-	zoomLevel?: number;
 };
 
 export type T_UpdateSettingsResult = Promise<{ error: string } | { message: string }>;
@@ -19,7 +18,6 @@ const updateSettings = async ({
 	language,
 	displayedDays,
 	defaultNoteDuration,
-	zoomLevel,
 }: T_UpdateSettingsInput): T_UpdateSettingsResult => {
 	try {
 		const { authenticated, user: authUser } = await getAuthStatus();
@@ -37,7 +35,6 @@ const updateSettings = async ({
 				language,
 				displayedDays,
 				defaultNoteDuration,
-				zoomLevel,
 			},
 		});
 

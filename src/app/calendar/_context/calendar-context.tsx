@@ -1,18 +1,16 @@
 'use client';
 
-import { LimitedUser } from '@/app/settings/_actions/get-user';
-import updateSettings from '@/app/settings/_actions/update-settings';
-import { useToast } from '@/components/toast/use-toast';
 import { useUser } from '@/hooks/use-user';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addDays, addMonths } from 'date-fns';
 import { Dispatch, ReactNode, RefObject, SetStateAction, createContext, useContext, useRef, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 
 type T_ViewMode = 'month' | 'days' | 'list';
+type T_ZoomLevel = 1 | 2 | 3 | 4 | 5;
 
 type CalendarContextProps = {
 	firstCalendarDay: Date;
+	zoomLevel: T_ZoomLevel;
 	goDayForward: () => void;
 	goDayBackward: () => void;
 	goMonthForward: () => void;
@@ -36,36 +34,18 @@ const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
 	const [viewMode, setViewMode] = useLocalStorage<T_ViewMode>('viewMode', 'days', { initializeWithValue: false });
+	const [zoomLevel, setZoomLevel] = useLocalStorage<T_ZoomLevel>('zoomLevel', 1, {
+		initializeWithValue: false,
+		deserializer: (value: string) => parseInt(value) as T_ZoomLevel,
+		serializer: (value: T_ZoomLevel) => value.toString(),
+	});
 	const [firstCalendarDay, setFirstCalendarDay] = useLocalStorage<Date>('firstCalendarDay', new Date(), {
 		initializeWithValue: false,
 		deserializer: (value: string) => new Date(value),
 		serializer: (value: Date) => value.toString(),
 	});
 	const containerRef = useRef<HTMLElement | null>(null);
-	const { toast } = useToast();
-	const queryClient = useQueryClient();
 	const { data: user } = useUser();
-	const { mutate } = useMutation({
-		mutationFn: updateSettings,
-		onMutate: data => {
-			// Update settings optimistically
-			queryClient.setQueryData(['user'], (prev: LimitedUser) => {
-				return {
-					...prev,
-					zoomLevel: data.zoomLevel || prev.zoomLevel,
-					displayedDays: data.displayedDays || prev.displayedDays,
-					defaultNoteDuration: data.defaultNoteDuration || prev.defaultNoteDuration,
-					language: data.language || prev.language,
-				};
-			});
-		},
-		onSettled: data => {
-			if (data && 'error' in data) {
-				toast({ description: data.error, variant: 'destructive' });
-			}
-			queryClient.invalidateQueries({ queryKey: ['user'] });
-		},
-	});
 	// Used when filtering courses, only courses in this array are visible
 	const [hiddenCoursesIds, setHiddenCoursesIds] = useState<string[]>([]);
 
@@ -145,11 +125,7 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	 * Maximum possible value is 5.
 	 */
 	const zoomIn = () => {
-		if (user.zoomLevel !== 5) {
-			mutate({
-				zoomLevel: (user.zoomLevel + 1) as 1 | 2 | 3 | 4 | 5,
-			});
-		}
+		setZoomLevel(prev => (prev === 5 ? 5 : ((prev + 1) as T_ZoomLevel)));
 	};
 
 	/**
@@ -157,11 +133,7 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	 * Minimum possible value is 1.
 	 */
 	const zoomOut = () => {
-		if (user.zoomLevel > 1) {
-			mutate({
-				zoomLevel: (user.zoomLevel - 1) as 1 | 2 | 3 | 4 | 5,
-			});
-		}
+		setZoomLevel(prev => (prev === 1 ? 1 : ((prev - 1) as T_ZoomLevel)));
 	};
 
 	return (
@@ -185,6 +157,7 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 				hiddenCoursesIds,
 				handleHideCourse,
 				handleShowCourse,
+				zoomLevel,
 			}}>
 			{children}
 		</CalendarContext.Provider>
