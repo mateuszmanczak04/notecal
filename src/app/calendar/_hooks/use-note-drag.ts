@@ -1,6 +1,7 @@
 import updateNote from '@/app/notes/_actions/update-note';
 import { useToast } from '@/components/toast/use-toast';
 import { T_NoteWithTime } from '@/hooks/use-notes-with-time';
+import { useSettings } from '@/hooks/use-settings';
 import { useUser } from '@/hooks/use-user';
 import { toUTC } from '@/utils/timezone';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -42,7 +43,8 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
-	const { containerRef, firstCalendarDay } = useCalendarContext();
+	const { containerRef } = useCalendarContext();
+	const { firstCalendarDay } = useSettings();
 	const { data: user } = useUser();
 	const [isDragging, setIsDragging] = useState(false);
 	const topEdgeRef = useRef<HTMLDivElement | null>(null);

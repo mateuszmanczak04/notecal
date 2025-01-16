@@ -1,7 +1,7 @@
 'use client';
 
-import { useCalendarContext } from '@/app/calendar/_context/calendar-context';
 import { Button } from '@/components/button';
+import { useSettings } from '@/hooks/use-settings';
 import { Note } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 
@@ -10,7 +10,7 @@ type Props = {
 };
 
 const GoToCalendar = ({ note }: Props) => {
-	const { goToDay } = useCalendarContext();
+	const { goToDay } = useSettings();
 	const router = useRouter();
 
 	/**

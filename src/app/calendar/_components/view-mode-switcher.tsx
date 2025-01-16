@@ -1,13 +1,13 @@
 'use client';
 
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
-import { useCalendarContext } from '../_context/calendar-context';
+import { useSettings } from '@/hooks/use-settings';
 
 /**
  * A component to change week/month/list view in calendar grid
  */
 const ViewModeSwitcher = () => {
-	const { viewMode, setViewMode } = useCalendarContext();
+	const { viewMode, setViewMode } = useSettings();
 
 	return (
 		<DropdownMenu>

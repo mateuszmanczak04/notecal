@@ -4,12 +4,12 @@ import NoteContextMenu from '@/components/note-context-menu';
 import { useCourses } from '@/hooks/use-courses';
 import { useNoteContextMenu } from '@/hooks/use-note-context-menu';
 import { T_NoteWithTime } from '@/hooks/use-notes-with-time';
+import { useSettings } from '@/hooks/use-settings';
 import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
 import { type Note as DaysViewNote } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
-import { useCalendarContext } from '../_context/calendar-context';
 import { useNoteDrag } from '../_hooks/use-note-drag';
 import { getDaysIncludedInNote } from '../_utils/get-days-included-in-note';
 import { getNoteBlockHeight } from '../_utils/get-note-block-height';
@@ -29,7 +29,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	const { data: courses } = useCourses();
 	const { data: user } = useUser();
 	const noteBlocksRef = useRef<HTMLDivElement[]>([]);
-	const { firstCalendarDay } = useCalendarContext();
+	const { firstCalendarDay } = useSettings();
 
 	const {
 		handleDrag,

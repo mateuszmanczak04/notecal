@@ -1,12 +1,12 @@
 'use client';
 
 import LoadingSpinner from '@/components/loading-spinner';
+import { useSettings } from '@/hooks/use-settings';
 import { useUser } from '@/hooks/use-user';
-import { useCalendarContext } from '../_context/calendar-context';
 import DaysViewDayHeading from './days-view-day-heading';
 
 const TopBar = () => {
-	const { getDayAfter } = useCalendarContext();
+	const { getDayAfter } = useSettings();
 	const { data: user } = useUser();
 
 	// Should not occur in normal app conditions

@@ -1,7 +1,7 @@
 'use client';
 
+import { useSettings } from '@/hooks/use-settings';
 import { ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
-import { useCalendarContext } from '../_context/calendar-context';
 import DisplayedDays from './displayed-days';
 import ViewModeSwitcher from './view-mode-switcher';
 
@@ -16,7 +16,7 @@ const Header = () => {
 		viewMode,
 		goMonthForward,
 		goMonthBackward,
-	} = useCalendarContext();
+	} = useSettings();
 	const currentMonth = firstCalendarDay.toLocaleString('default', {
 		month: 'long',
 	});

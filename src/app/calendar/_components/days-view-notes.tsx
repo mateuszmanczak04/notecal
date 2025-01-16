@@ -1,6 +1,7 @@
 'use client';
 
 import { useNotesWithTime } from '@/hooks/use-notes-with-time';
+import { useSettings } from '@/hooks/use-settings';
 import { useUser } from '@/hooks/use-user';
 import { addDays, isAfter, isBefore, startOfDay } from 'date-fns';
 import { MouseEvent, RefObject, useMemo, useState } from 'react';
@@ -13,14 +14,13 @@ import DaysViewNote from './days-view-note';
 
 const DaysViewNotes = () => {
 	const { data: notes } = useNotesWithTime();
-	const { containerRef, firstCalendarDay } = useCalendarContext();
 	const { data: user } = useUser();
-	const { hiddenCoursesIds } = useCalendarContext();
+	const { hiddenCoursesIds, containerRef } = useCalendarContext();
 	const [popupX, setPopupX] = useState(0);
 	const [popupY, setPopupY] = useState(0);
 	// When there is selected time, we should display the course picker:
 	const [selectedTime, setSelectedTime] = useState<Date | null>(null);
-	const { zoomLevel } = useCalendarContext();
+	const { zoomLevel, firstCalendarDay } = useSettings();
 
 	/**
 	 * Detect click on the grid and show popup to create a new note in that time.

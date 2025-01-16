@@ -1,5 +1,6 @@
 'use client';
 
+import { useSettings } from '@/hooks/use-settings';
 import { useEffect, useRef } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import DaysViewGrid from './days-view-grid';
@@ -10,8 +11,9 @@ type Props = {};
 
 const DaysView = ({}: Props) => {
 	// Used to keep the same calendar scroll y level even after switching routes
-	const { scrollTop, setScrollTop, zoomIn, zoomOut, goDayBackward, goDayForward } = useCalendarContext();
+	const { scrollTop, setScrollTop } = useCalendarContext();
 	const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+	const { zoomIn, zoomOut, goDayBackward, goDayForward } = useSettings();
 
 	const handleScroll = () => {
 		setScrollTop(scrollContainerRef.current!.scrollTop);

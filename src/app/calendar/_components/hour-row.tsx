@@ -1,11 +1,11 @@
 'use client';
 
+import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
-import { useCalendarContext } from '../_context/calendar-context';
 import { getCalendarRowHeight } from '../_utils/get-calendar-row-height';
 
 const HourRow = ({ hour }: { hour: number }) => {
-	const { zoomLevel } = useCalendarContext();
+	const { zoomLevel } = useSettings();
 
 	return (
 		<div
