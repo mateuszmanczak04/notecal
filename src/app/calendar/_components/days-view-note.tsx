@@ -4,6 +4,7 @@ import updateNote from '@/app/notes/_actions/update-note';
 import NoteContextMenu from '@/components/note-context-menu';
 import { useToast } from '@/components/toast/use-toast';
 import { useCourses } from '@/hooks/use-courses';
+import { useNoteContextMenu } from '@/hooks/use-note-context-menu';
 import { T_NoteWithTime } from '@/hooks/use-notes-with-time';
 import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
@@ -344,14 +345,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	const dragDays = getDaysBetween(actualDragStartTime, actualDragEndTime);
 
 	// Context menu related below:
-	const [contextMenuPosition, setContextMenuPosition] = useState<{ x: number; y: number } | null>(null);
-	const handleContextMenu = (event: React.MouseEvent) => {
-		event.preventDefault();
-		setContextMenuPosition({ x: event.clientX, y: event.clientY });
-	};
-	const closeContextMenu = () => {
-		setContextMenuPosition(null);
-	};
+	const { closeContextMenu, contextMenuPosition, handleContextMenu } = useNoteContextMenu();
 
 	// Handle routng to /notes/[id] page:
 	const router = useRouter();
