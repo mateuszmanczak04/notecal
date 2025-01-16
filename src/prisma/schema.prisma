@@ -15,8 +15,7 @@ model User {
   password      String
 
   // Settings
-  defaultNoteDuration Int    @default(60) // in minutes
-  language            String @default("en")
+  language String @default("en")
 
   // Others
   createdAt DateTime @default(now())

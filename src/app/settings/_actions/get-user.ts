@@ -9,7 +9,6 @@ export type LimitedUser = {
 	id: string;
 	email: string;
 	emailVerified: boolean;
-	defaultNoteDuration: number;
 	language: string;
 };
 
@@ -36,7 +35,7 @@ const getUser = async (): Promise<LimitedUser> => {
 			id: user.id,
 			email: user.email,
 			emailVerified: !!user.emailVerified,
-			defaultNoteDuration: user.defaultNoteDuration,
+
 			language: user.language,
 		};
 

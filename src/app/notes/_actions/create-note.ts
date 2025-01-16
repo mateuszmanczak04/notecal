@@ -9,6 +9,7 @@ import { addMinutes } from 'date-fns';
 export type T_CreateNoteInput = {
 	courseId: string;
 	startTime?: Date;
+	duration?: number;
 };
 
 export type T_CreateNoteResult = Promise<{ error: string } | { note: Note }>;
@@ -16,7 +17,7 @@ export type T_CreateNoteResult = Promise<{ error: string } | { note: Note }>;
 /**
  * Creates a new note in the database related to passed courseId.
  */
-const createNote = async ({ courseId, startTime }: T_CreateNoteInput): T_CreateNoteResult => {
+const createNote = async ({ courseId, startTime, duration }: T_CreateNoteInput): T_CreateNoteResult => {
 	if (!courseId) {
 		return { error: 'Course ID is required' };
 	}
@@ -31,9 +32,6 @@ const createNote = async ({ courseId, startTime }: T_CreateNoteInput): T_CreateN
 		// Fetch user's settings to know default note duration
 		const user = await db.user.findUnique({
 			where: { id: authUser.id },
-			select: {
-				defaultNoteDuration: true,
-			},
 		});
 
 		// It should not occur in normal conditions
@@ -45,7 +43,7 @@ const createNote = async ({ courseId, startTime }: T_CreateNoteInput): T_CreateN
 		let endTime: Date | null = null;
 		if (actualStartTime) {
 			actualStartTime.setSeconds(0, 0); // Set seconds and milliseconds to 0
-			endTime = addMinutes(actualStartTime, user.defaultNoteDuration);
+			endTime = addMinutes(actualStartTime, duration || 60);
 		}
 
 		const note = await db.note.create({

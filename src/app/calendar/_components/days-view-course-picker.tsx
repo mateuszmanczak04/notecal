@@ -4,6 +4,7 @@ import createNote from '@/app/notes/_actions/create-note';
 import { Button } from '@/components/button';
 import { useToast } from '@/components/toast/use-toast';
 import { useCourses } from '@/hooks/use-courses';
+import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
 import { toUTC } from '@/utils/timezone';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -37,6 +38,7 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
+	const { defaultNoteDuration } = useSettings();
 
 	/** A reference to the popup div */
 	const pickerRef = useRef<HTMLDivElement>(null!);
@@ -69,7 +71,7 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 	}, [containerRef, x, y]);
 
 	const handleSelect = (courseId: string) => {
-		mutate({ courseId, startTime: toUTC(time) });
+		mutate({ courseId, startTime: toUTC(time), duration: defaultNoteDuration });
 		hidePicker();
 
 		// TODO: restore with optimistic updates

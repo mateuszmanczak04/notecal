@@ -4,6 +4,7 @@ import { Button } from '@/components/button';
 import ErrorMessage from '@/components/error-message';
 import { Input } from '@/components/input';
 import { useToast } from '@/components/toast/use-toast';
+import { T_DefaultNoteDuration, useSettings } from '@/hooks/use-settings';
 import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -27,12 +28,17 @@ const UpdateSettings = () => {
 		},
 	});
 
-	const [defaultNoteDuration, setDefaultNoteDuration] = useState(user?.defaultNoteDuration);
+	const { defaultNoteDuration, setDefaultNoteDuration } = useSettings();
 	const [language, setLanguage] = useState(user?.language);
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		mutate({ defaultNoteDuration, language });
+		mutate({ language });
+		setDefaultNoteDuration(
+			parseInt(
+				new FormData(e.target as HTMLFormElement).get('defaultNoteDuration') as string,
+			) as T_DefaultNoteDuration,
+		);
 	};
 
 	return (

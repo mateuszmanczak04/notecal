@@ -5,6 +5,7 @@ export type T_ViewMode = 'month' | 'days' | 'list';
 export type T_ZoomLevel = 1 | 2 | 3 | 4 | 5;
 export type T_TasksOrder = 'days' | 'priority' | 'dueDate' | 'createdAt' | 'completed' | 'title';
 export type T_DisplayedDays = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+export type T_DefaultNoteDuration = number;
 
 export const useSettings = () => {
 	// TODO: load these values before rendering the app
@@ -22,6 +23,15 @@ export const useSettings = () => {
 		deserializer: (value: string) => parseInt(value) as T_ZoomLevel,
 		serializer: (value: T_DisplayedDays) => value.toString(),
 	});
+	const [defaultNoteDuration, setDefaultNoteDuration] = useLocalStorage<T_DefaultNoteDuration>(
+		'defaultNoteDuration',
+		60,
+		{
+			initializeWithValue: false,
+			deserializer: (value: string) => parseInt(value) as T_DefaultNoteDuration,
+			serializer: (value: T_DefaultNoteDuration) => value.toString(),
+		},
+	);
 	const [firstCalendarDay, setFirstCalendarDay] = useLocalStorage<Date>('firstCalendarDay', new Date(), {
 		initializeWithValue: false,
 		deserializer: (value: string) => new Date(value),
@@ -82,5 +92,7 @@ export const useSettings = () => {
 		setTasksOrder,
 		displayedDays,
 		setDisplayedDays,
+		defaultNoteDuration,
+		setDefaultNoteDuration,
 	};
 };
