@@ -345,7 +345,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 
 	// Context menu related below:
 	const [contextMenuPosition, setContextMenuPosition] = useState<{ x: number; y: number } | null>(null);
-	const handleContextMenu = (event: React.MouseEvent, index: number) => {
+	const handleContextMenu = (event: React.MouseEvent) => {
 		event.preventDefault();
 		setContextMenuPosition({ x: event.clientX, y: event.clientY });
 	};
@@ -390,7 +390,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 						onDrag={handleDrag}
 						onDragEnd={handleDragEnd}
 						onDragOver={e => e.preventDefault()}
-						onContextMenu={e => handleContextMenu(e, index)}>
+						onContextMenu={handleContextMenu}>
 						{/* Top edge to drag: */}
 						{index === 0 && (
 							<div
