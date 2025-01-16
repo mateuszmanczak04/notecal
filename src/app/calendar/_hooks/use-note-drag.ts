@@ -1,11 +1,13 @@
 import updateNote from '@/app/notes/_actions/update-note';
 import { useToast } from '@/components/toast/use-toast';
 import { T_NoteWithTime } from '@/hooks/use-notes-with-time';
+import { useUser } from '@/hooks/use-user';
 import { toUTC } from '@/utils/timezone';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addMilliseconds } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
+import { getNoteDateFromXYPosition } from '../_utils/get-date-from-position';
 import { getDaysIncludedInNote } from '../_utils/get-days-included-in-note';
 import { getPositionRelativeToContainer } from '../_utils/get-position-relative-to-container';
 
@@ -40,8 +42,8 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
-	const { containerRef, getDateFromPosition } = useCalendarContext();
-
+	const { containerRef, currentFirstDay } = useCalendarContext();
+	const { data: user } = useUser();
 	const [isDragging, setIsDragging] = useState(false);
 	const topEdgeRef = useRef<HTMLDivElement | null>(null);
 	const bottomEdgeRef = useRef<HTMLDivElement | null>(null);
@@ -61,7 +63,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	const handleDragStart = (event: React.DragEvent) => {
 		if (!noteRef.current?.includes(event.target as HTMLDivElement)) return;
 
-		if (!containerRef.current) return;
+		if (!containerRef.current || !user) return;
 
 		const { x, y } = getPositionRelativeToContainer({
 			x: event.clientX,
@@ -70,7 +72,13 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 		});
 		if (x === null || y === null) return;
 
-		const date = getDateFromPosition(x, y);
+		const date = getNoteDateFromXYPosition({
+			x,
+			y,
+			container: containerRef.current,
+			currentFirstDay,
+			displayedDays: user.displayedDays,
+		});
 		if (!date) return;
 
 		initialDragDate.current = date;
@@ -84,7 +92,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	const handleDrag = (event: React.DragEvent) => {
 		if (!noteRef.current?.includes(event.target as HTMLDivElement)) return;
 
-		if (!initialDragDate.current || !containerRef.current) return;
+		if (!initialDragDate.current || !containerRef.current || !user) return;
 
 		const { x, y } = getPositionRelativeToContainer({
 			x: event.clientX,
@@ -93,7 +101,13 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 		});
 		if (x === null || y === null) return;
 
-		const date = getDateFromPosition(x, y);
+		const date = getNoteDateFromXYPosition({
+			x,
+			y,
+			container: containerRef.current,
+			currentFirstDay,
+			displayedDays: user.displayedDays,
+		});
 		if (!date) return;
 
 		const dateDifference = date.getTime() - initialDragDate.current.getTime();
@@ -134,7 +148,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	 * Here user is in the middle of the action.
 	 */
 	const handleDragTop = (event: React.DragEvent) => {
-		if (!containerRef.current) return;
+		if (!containerRef.current || !user) return;
 		const { x, y } = getPositionRelativeToContainer({
 			x: event.clientX,
 			y: event.clientY,
@@ -142,7 +156,13 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 		});
 		if (x === null || y === null) return;
 
-		const newStartTime = getDateFromPosition(x, y);
+		const newStartTime = getNoteDateFromXYPosition({
+			x,
+			y,
+			container: containerRef.current,
+			currentFirstDay,
+			displayedDays: user.displayedDays,
+		});
 		if (!newStartTime) return;
 
 		setDragStartTime(newStartTime);
@@ -179,15 +199,22 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	 * Here user is in the middle of the action.
 	 */
 	const handleDragBottom = (event: React.DragEvent) => {
-		if (!containerRef.current) return;
+		if (!containerRef.current || !user) return;
 		const { x, y } = getPositionRelativeToContainer({
 			x: event.clientX,
 			y: event.clientY,
 			container: containerRef.current,
 		});
+
 		if (x === null || y === null) return;
 
-		const newEndTime = getDateFromPosition(x, y);
+		const newEndTime = getNoteDateFromXYPosition({
+			x,
+			y,
+			container: containerRef.current,
+			currentFirstDay,
+			displayedDays: user.displayedDays,
+		});
 		if (!newEndTime) return;
 
 		setDragEndTime(newEndTime);

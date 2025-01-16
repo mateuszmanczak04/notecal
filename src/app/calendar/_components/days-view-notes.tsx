@@ -3,14 +3,16 @@
 import { useNotesWithTime } from '@/hooks/use-notes-with-time';
 import { useUser } from '@/hooks/use-user';
 import { addDays, isAfter, isBefore, startOfDay } from 'date-fns';
-import { MouseEvent, useMemo, useState } from 'react';
+import { MouseEvent, RefObject, useMemo, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
+import { getNoteDateFromXYPosition } from '../_utils/get-date-from-position';
+import { getPositionRelativeToContainer } from '../_utils/get-position-relative-to-container';
 import DaysViewCoursePicker from './days-view-course-picker';
 import DaysViewNote from './days-view-note';
 
 const DaysViewNotes = () => {
 	const { data: notes } = useNotesWithTime();
-	const { containerRef, getRelativePosition, getDateFromPosition, rowHeight, currentFirstDay } = useCalendarContext();
+	const { containerRef, rowHeight, currentFirstDay } = useCalendarContext();
 	const { data: user } = useUser();
 	const { hiddenCoursesIds } = useCalendarContext();
 	const [popupX, setPopupX] = useState(0);
@@ -22,17 +24,27 @@ const DaysViewNotes = () => {
 	 * Detect click on the grid and show popup to create a new note in that time.
 	 */
 	const handleClick = (event: MouseEvent) => {
-		if (!containerRef.current) return;
+		if (!containerRef.current || !user) return;
 
 		// Don't react when user clicks on existing notes
 		if (event.target !== containerRef.current) return;
 
-		const { x, y } = getRelativePosition(event.clientX, event.clientY);
+		const { x, y } = getPositionRelativeToContainer({
+			x: event.clientX,
+			y: event.clientY,
+			container: containerRef.current,
+		});
 		if (x === null || y === null) return;
 		setPopupX(x);
 		setPopupY(y);
 
-		const time = getDateFromPosition(x, y);
+		const time = getNoteDateFromXYPosition({
+			x,
+			y,
+			container: containerRef.current,
+			currentFirstDay,
+			displayedDays: user.displayedDays,
+		});
 		setSelectedTime(time);
 	};
 
@@ -68,7 +80,7 @@ const DaysViewNotes = () => {
 	return (
 		<div
 			onDragOver={e => e.preventDefault()}
-			ref={containerRef}
+			ref={containerRef as RefObject<HTMLDivElement>}
 			className='absolute left-12 top-0 w-[calc(100%-48px)] cursor-crosshair overflow-hidden sm:left-20 sm:w-[calc(100%-80px)]'
 			onClick={handleClick}
 			style={{ height: rowHeight * 24 + 'px' }}>

@@ -5,7 +5,7 @@ import updateSettings from '@/app/settings/_actions/update-settings';
 import { useToast } from '@/components/toast/use-toast';
 import { useUser } from '@/hooks/use-user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addDays, addMonths } from 'date-fns';
+import { addMonths } from 'date-fns';
 import { Dispatch, ReactNode, RefObject, SetStateAction, createContext, useContext, useRef, useState } from 'react';
 
 type T_ViewMode = 'month' | 'days' | 'list';
@@ -20,7 +20,6 @@ type CalendarContextProps = {
 	goToDay: (date: Date) => void;
 	getDayAfter: (days: number) => Date;
 	containerRef: RefObject<HTMLElement | null>;
-	getDateFromPosition: (x: number, y: number) => Date | null;
 	rowHeight: number;
 	zoomIn: () => void;
 	zoomOut: () => void;
@@ -157,34 +156,6 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	};
 
 	/**
-	 * Get day and time from relative position, round to 15 minutes.
-	 * Arguments passed here are usually results of "getRelativePosition()".
-	 */
-	const getDateFromPosition = (x: number, y: number) => {
-		if (!containerRef.current) return null;
-
-		const { width, height } = containerRef.current.getBoundingClientRect();
-
-		// Get day (YYYY-MM-DD):
-		const columnWidth = width / user.displayedDays;
-		const dayIndex = Math.floor(x / columnWidth);
-		const time = addDays(currentFirstDay, dayIndex);
-
-		// Get time (HH:MM):
-		const yRatio = y / height;
-		const minutesIn24H = 24 * 60;
-		const totalMinutes = yRatio * minutesIn24H;
-		const hours = Math.floor(totalMinutes / 60);
-		const minutes = Math.round((totalMinutes % 60) / 15) * 15;
-		time.setHours(hours);
-		time.setMinutes(minutes);
-		time.setSeconds(0);
-		time.setMilliseconds(0);
-
-		return time;
-	};
-
-	/**
 	 * Returns height of the calendar hour row in pixels. It's based on user's setting "zoomLevel".
 	 */
 	const getRowHeight = () => {
@@ -245,7 +216,6 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 				zoomIn,
 				zoomOut,
 				getDayAfter,
-				getDateFromPosition,
 				scrollTop,
 				setScrollTop,
 				hiddenCoursesIds,
