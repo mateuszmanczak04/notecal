@@ -19,8 +19,7 @@ type CalendarContextProps = {
 	goToToday: () => void;
 	goToDay: (date: Date) => void;
 	getDayAfter: (days: number) => Date;
-	containerRef: RefObject<HTMLDivElement | null>;
-	getRelativePosition: (x: number, y: number) => { x: number | null; y: number | null };
+	containerRef: RefObject<HTMLElement | null>;
 	getDateFromPosition: (x: number, y: number) => Date | null;
 	rowHeight: number;
 	zoomIn: () => void;
@@ -37,7 +36,7 @@ type CalendarContextProps = {
 const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
-	const containerRef = useRef<HTMLDivElement>(null!);
+	const containerRef = useRef<HTMLElement | null>(null);
 	const [viewMode, setViewMode] = useState<T_ViewMode>('days');
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
@@ -158,25 +157,6 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	};
 
 	/**
-	 * Returns a relative position to grid container (in pixels) and null when position is beyond the container.
-	 */
-	const getRelativePosition = (x: number, y: number) => {
-		if (!containerRef.current) return { x: null, y: null };
-
-		const { x: containerLeft, y: containerTop, width, height } = containerRef.current.getBoundingClientRect();
-
-		const relativeX = x - containerLeft;
-		const relativeY = y - containerTop;
-
-		// Case when position is beyond the container bounding box
-		if (relativeX < 0 || relativeY < 0 || relativeX > width || relativeY > height) {
-			return { x: null, y: null };
-		}
-
-		return { x: relativeX, y: relativeY };
-	};
-
-	/**
 	 * Get day and time from relative position, round to 15 minutes.
 	 * Arguments passed here are usually results of "getRelativePosition()".
 	 */
@@ -265,7 +245,6 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 				zoomIn,
 				zoomOut,
 				getDayAfter,
-				getRelativePosition,
 				getDateFromPosition,
 				scrollTop,
 				setScrollTop,

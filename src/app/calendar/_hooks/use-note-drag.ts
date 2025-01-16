@@ -7,6 +7,7 @@ import { addMilliseconds } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import { getDaysIncludedInNote } from '../_utils/get-days-included-in-note';
+import { getPositionRelativeToContainer } from '../_utils/get-position-relative-to-container';
 
 type T_Props = {
 	note: T_NoteWithTime;
@@ -39,7 +40,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
-	const { getRelativePosition, getDateFromPosition } = useCalendarContext();
+	const { containerRef, getDateFromPosition } = useCalendarContext();
 
 	const [isDragging, setIsDragging] = useState(false);
 	const topEdgeRef = useRef<HTMLDivElement | null>(null);
@@ -60,7 +61,13 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	const handleDragStart = (event: React.DragEvent) => {
 		if (!noteRef.current?.includes(event.target as HTMLDivElement)) return;
 
-		const { x, y } = getRelativePosition(event.clientX, event.clientY);
+		if (!containerRef.current) return;
+
+		const { x, y } = getPositionRelativeToContainer({
+			x: event.clientX,
+			y: event.clientY,
+			container: containerRef.current,
+		});
 		if (x === null || y === null) return;
 
 		const date = getDateFromPosition(x, y);
@@ -77,9 +84,13 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	const handleDrag = (event: React.DragEvent) => {
 		if (!noteRef.current?.includes(event.target as HTMLDivElement)) return;
 
-		if (!initialDragDate.current) return;
+		if (!initialDragDate.current || !containerRef.current) return;
 
-		const { x, y } = getRelativePosition(event.clientX, event.clientY);
+		const { x, y } = getPositionRelativeToContainer({
+			x: event.clientX,
+			y: event.clientY,
+			container: containerRef.current,
+		});
 		if (x === null || y === null) return;
 
 		const date = getDateFromPosition(x, y);
@@ -123,7 +134,12 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	 * Here user is in the middle of the action.
 	 */
 	const handleDragTop = (event: React.DragEvent) => {
-		const { x, y } = getRelativePosition(event.clientX, event.clientY);
+		if (!containerRef.current) return;
+		const { x, y } = getPositionRelativeToContainer({
+			x: event.clientX,
+			y: event.clientY,
+			container: containerRef.current,
+		});
 		if (x === null || y === null) return;
 
 		const newStartTime = getDateFromPosition(x, y);
@@ -163,7 +179,12 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	 * Here user is in the middle of the action.
 	 */
 	const handleDragBottom = (event: React.DragEvent) => {
-		const { x, y } = getRelativePosition(event.clientX, event.clientY);
+		if (!containerRef.current) return;
+		const { x, y } = getPositionRelativeToContainer({
+			x: event.clientX,
+			y: event.clientY,
+			container: containerRef.current,
+		});
 		if (x === null || y === null) return;
 
 		const newEndTime = getDateFromPosition(x, y);
