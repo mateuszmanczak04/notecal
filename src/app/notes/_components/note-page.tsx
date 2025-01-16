@@ -71,11 +71,7 @@ const NotePage = () => {
 				</fieldset>
 
 				{/* List of other notes from this course */}
-				<SideNotes
-					currentCourseNotes={currentCourseNotes}
-					currentNoteId={noteId}
-					currentCourse={currentCourse}
-				/>
+				<SideNotes currentCourseNotes={currentCourseNotes} currentCourse={currentCourse} />
 
 				{/* Useful links */}
 				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
