@@ -1,7 +1,7 @@
 'use client';
 
 import updateNote from '@/app/notes/_actions/update-note';
-import ChangeCourse from '@/app/notes/_components/change-course';
+import NoteContextMenu from '@/components/note-context-menu';
 import { useToast } from '@/components/toast/use-toast';
 import { useCourses } from '@/hooks/use-courses';
 import { T_NoteWithTime } from '@/hooks/use-notes-with-time';
@@ -343,55 +343,19 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	 */
 	const dragDays = getDaysBetween(actualDragStartTime, actualDragEndTime);
 
+	// Context menu related below:
 	const [showContextMenuIndex, setShowContextMenuIndex] = useState<number | null>(null);
-	const contextMenuRef = useRef<HTMLDivElement | null>(null);
-
-	/**
-	 * Handles context menu event on note.
-	 */
 	const handleContextMenu = (event: React.MouseEvent, index: number) => {
 		event.preventDefault();
 		setShowContextMenuIndex(index);
 	};
-
-	/**
-	 * Handles closing the context menu.
-	 */
-	const handleCloseContextMenu = () => {
+	const closeContextMenu = () => {
 		setShowContextMenuIndex(null);
 	};
 
-	// Had to use this approach instead of "useClickOutside"
-	// because we have many days in a single note
-	useEffect(() => {
-		// Close context menu on outside click
-		const handleClickOutside = (event: MouseEvent) => {
-			if (
-				showContextMenuIndex !== null &&
-				!noteRef.current[showContextMenuIndex]?.contains(event.target as Node)
-			) {
-				handleCloseContextMenu();
-			}
-		};
-
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === 'Escape') {
-				handleCloseContextMenu();
-			}
-		};
-
-		document.addEventListener('keydown', handleKeyDown);
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-			document.removeEventListener('keydown', handleKeyDown);
-		};
-	}, [showContextMenuIndex]);
-
-	// Handle routng to the /notes/[id] page
+	// Handle routng to /notes/[id] page:
 	const router = useRouter();
-	const handleRoute = (e: React.MouseEvent) => {
-		if (contextMenuRef.current && contextMenuRef.current.contains(e.target as Node)) return;
+	const handleRoute = () => {
 		router.push(`/notes/${note.id}`);
 	};
 
@@ -453,15 +417,9 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 								className='absolute inset-x-0 bottom-0 h-2 cursor-ns-resize opacity-0'></div>
 						)}
 
+						{/* Context menu on right mouse click */}
 						{showContextMenuIndex === index && (
-							<div ref={contextMenuRef}>
-								<ChangeCourse
-									handleClose={handleCloseContextMenu}
-									currentCourse={course}
-									note={note}
-									forPage='calendar'
-								/>
-							</div>
+							<NoteContextMenu note={note} currentCourse={course} handleClose={closeContextMenu} />
 						)}
 					</div>
 				))}
