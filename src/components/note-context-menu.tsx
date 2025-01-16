@@ -35,7 +35,7 @@ const NoteContextMenu = ({ note, currentCourse, handleClose, position }: Props) 
 		};
 	}, [handleClose]);
 
-	// Position the context menu so it doesn't overflow the container
+	// Position the context menu so it doesn't overflow the window
 	useLayoutEffect(() => {
 		if (!contextMenuRef.current) return;
 
