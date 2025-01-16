@@ -9,7 +9,7 @@ import { useOnClickOutside } from 'usehooks-ts';
 type Props = {
 	note: Note;
 	handleClose: () => void;
-	position: { x: number; y: number };
+	position: { x: number; y: number } | null;
 };
 
 /**
@@ -53,6 +53,8 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 			contextMenuRef.current.style.right = '0';
 		}
 	}, []);
+
+	if (position === null) return;
 
 	return (
 		<div
