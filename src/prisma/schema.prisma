@@ -13,16 +13,12 @@ model User {
   email         String    @unique
   emailVerified DateTime?
   password      String
-
-  // Settings
-  language String @default("en")
-
   // Others
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  courses   Course[]
-  Task      Task[]
-  Note      Note[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  courses       Course[]
+  Task          Task[]
+  Note          Note[]
 }
 
 model VerificationToken {

@@ -6,10 +6,12 @@ export type T_ZoomLevel = 1 | 2 | 3 | 4 | 5;
 export type T_TasksOrder = 'days' | 'priority' | 'dueDate' | 'createdAt' | 'completed' | 'title';
 export type T_DisplayedDays = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 export type T_DefaultNoteDuration = number;
+export type T_Language = 'en';
 
 export const useSettings = () => {
 	// TODO: load these values before rendering the app
 	const [viewMode, setViewMode] = useLocalStorage<T_ViewMode>('viewMode', 'days', { initializeWithValue: false });
+	const [language, setLanguage] = useLocalStorage<T_Language>('language', 'en', { initializeWithValue: false });
 	const [tasksOrder, setTasksOrder] = useLocalStorage<T_TasksOrder>('tasksOrder', 'createdAt', {
 		initializeWithValue: false,
 	});
@@ -94,5 +96,7 @@ export const useSettings = () => {
 		setDisplayedDays,
 		defaultNoteDuration,
 		setDefaultNoteDuration,
+		language,
+		setLanguage,
 	};
 };

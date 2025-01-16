@@ -9,7 +9,6 @@ export type LimitedUser = {
 	id: string;
 	email: string;
 	emailVerified: boolean;
-	language: string;
 };
 
 /**
@@ -35,8 +34,6 @@ const getUser = async (): Promise<LimitedUser> => {
 			id: user.id,
 			email: user.email,
 			emailVerified: !!user.emailVerified,
-
-			language: user.language,
 		};
 
 		return limitedUser;
