@@ -11,13 +11,11 @@ import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import { useNoteDrag } from '../_hooks/use-note-drag';
-import {
-	getDaysIncludedInNote,
-	getNoteBlockHeight,
-	getNoteBlockLeftOffset,
-	getNoteBlockTopOffset,
-	getNoteBlockWidth,
-} from '../_utils';
+import { getDaysIncludedInNote } from '../_utils/get-days-included-in-note';
+import { getNoteBlockHeight } from '../_utils/get-note-block-height';
+import { getNoteBlockLeftOffset } from '../_utils/get-note-block-left-offset';
+import { getNoteBlockTopOffset } from '../_utils/get-note-block-top-offset';
+import { getNoteBlockWidth } from '../_utils/get-note-block-width';
 
 type Props = {
 	note: T_NoteWithTime & { loading?: boolean };

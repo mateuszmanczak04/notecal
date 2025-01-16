@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addMilliseconds } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
-import { getDaysIncludedInNote } from '../_utils';
+import { getDaysIncludedInNote } from '../_utils/get-days-included-in-note';
 
 type T_Props = {
 	note: T_NoteWithTime;
