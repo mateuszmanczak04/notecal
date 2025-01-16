@@ -7,6 +7,7 @@ import { useUser } from '@/hooks/use-user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addMonths } from 'date-fns';
 import { Dispatch, ReactNode, RefObject, SetStateAction, createContext, useContext, useRef, useState } from 'react';
+import { useLocalStorage } from 'usehooks-ts';
 
 type T_ViewMode = 'month' | 'days' | 'list';
 
@@ -34,8 +35,8 @@ type CalendarContextProps = {
 const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
+	const [viewMode, setViewMode] = useLocalStorage<T_ViewMode>('viewMode', 'days', { initializeWithValue: false });
 	const containerRef = useRef<HTMLElement | null>(null);
-	const [viewMode, setViewMode] = useState<T_ViewMode>('days');
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { data: user } = useUser();
