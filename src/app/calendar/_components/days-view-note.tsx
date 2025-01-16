@@ -109,7 +109,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 								onDrag={handleDragTop}
 								ref={topEdgeRef}
 								className={cn(
-									'absolute inset-x-0 top-0 z-30 h-2 cursor-ns-resize bg-black',
+									'absolute inset-x-0 top-0 z-30 h-2 cursor-ns-resize rounded-t-xl bg-black',
 									isDragging ? 'opacity-0' : 'opacity-25',
 								)}></div>
 						)}
@@ -130,7 +130,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 								onDrag={handleDragBottom}
 								ref={bottomEdgeRef}
 								className={cn(
-									'absolute inset-x-0 bottom-0 h-2 cursor-ns-resize bg-black',
+									'absolute inset-x-0 bottom-0 h-2 cursor-ns-resize rounded-b-xl bg-black',
 									isDragging ? 'opacity-0' : 'opacity-25',
 								)}></div>
 						)}
