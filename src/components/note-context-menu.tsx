@@ -1,13 +1,13 @@
 'use client';
 
 import ChangeCourse from '@/app/notes/_components/change-course';
-import { Course, Note } from '@prisma/client';
+import { useCourses } from '@/hooks/use-courses';
+import { Note } from '@prisma/client';
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
 type Props = {
 	note: Note;
-	currentCourse: Course;
 	handleClose: () => void;
 	position: { x: number; y: number };
 };
@@ -15,7 +15,9 @@ type Props = {
 /**
  * Context menu for notes where user can perform various actions.
  */
-const NoteContextMenu = ({ note, currentCourse, handleClose, position }: Props) => {
+const NoteContextMenu = ({ note, handleClose, position }: Props) => {
+	const { data: courses } = useCourses();
+	const currentCourse = courses?.find(c => c.id === note.courseId);
 	const contextMenuRef = useRef<HTMLDivElement>(null!);
 
 	useOnClickOutside(contextMenuRef, handleClose);
@@ -60,7 +62,14 @@ const NoteContextMenu = ({ note, currentCourse, handleClose, position }: Props) 
 				left: position.x,
 				top: position.y,
 			}}>
-			<ChangeCourse handleClose={handleClose} currentCourse={currentCourse} note={note} forPage='context-menu' />
+			{currentCourse && (
+				<ChangeCourse
+					handleClose={handleClose}
+					currentCourse={currentCourse}
+					note={note}
+					forPage='context-menu'
+				/>
+			)}
 		</div>
 	);
 };
