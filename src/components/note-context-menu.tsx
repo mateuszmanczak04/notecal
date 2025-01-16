@@ -1,8 +1,9 @@
 'use client';
 
+import { useCalendarContext } from '@/app/calendar/_context/calendar-context';
 import ChangeCourse from '@/app/notes/_components/change-course';
 import { Course, Note } from '@prisma/client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
 type Props = {
@@ -16,9 +17,11 @@ type Props = {
  */
 const NoteContextMenu = ({ note, currentCourse, handleClose }: Props) => {
 	const contextMenuRef = useRef<HTMLDivElement>(null!);
+	const { containerRef } = useCalendarContext();
 
 	useOnClickOutside(contextMenuRef, handleClose);
 
+	// Close the context menu when user presses the escape key
 	useEffect(() => {
 		const handleEsc = (event: KeyboardEvent) => {
 			if (event.key === 'Escape') {
@@ -32,6 +35,24 @@ const NoteContextMenu = ({ note, currentCourse, handleClose }: Props) => {
 			document.removeEventListener('keydown', handleEsc);
 		};
 	}, [handleClose]);
+
+	// Position the context menu so it doesn't overflow the container
+	useLayoutEffect(() => {
+		if (!containerRef.current || !contextMenuRef.current) return;
+
+		const rect = contextMenuRef.current.getBoundingClientRect();
+		const containerRect = containerRef.current.getBoundingClientRect();
+
+		if (rect.bottom > containerRect.bottom) {
+			contextMenuRef.current.style.top = 'auto';
+			contextMenuRef.current.style.bottom = '0';
+		}
+
+		if (rect.right > containerRect.right) {
+			contextMenuRef.current.style.left = 'auto';
+			contextMenuRef.current.style.right = '0';
+		}
+	}, [containerRef]);
 
 	return (
 		<div
