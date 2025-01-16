@@ -425,7 +425,6 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 							<NoteContextMenu
 								position={contextMenuPosition}
 								note={note}
-								currentCourse={course}
 								handleClose={closeContextMenu}
 							/>
 						)}
