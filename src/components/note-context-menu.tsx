@@ -34,8 +34,10 @@ const NoteContextMenu = ({ note, currentCourse, handleClose }: Props) => {
 	}, [handleClose]);
 
 	return (
-		<div ref={contextMenuRef}>
-			<ChangeCourse handleClose={handleClose} currentCourse={currentCourse} note={note} forPage='calendar' />
+		<div
+			ref={contextMenuRef}
+			className='absolute left-0 top-0 z-30 w-72 rounded-xl bg-white p-4 shadow-xl dark:bg-neutral-700'>
+			<ChangeCourse handleClose={handleClose} currentCourse={currentCourse} note={note} forPage='context-menu' />
 		</div>
 	);
 };

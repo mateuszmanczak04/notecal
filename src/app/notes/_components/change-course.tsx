@@ -11,7 +11,7 @@ import updateNote from '../_actions/update-note';
 type Props = {
 	currentCourse: Course;
 	note: Note;
-	forPage?: 'calendar' | 'notes';
+	forPage?: 'context-menu' | 'notes';
 	handleClose?: () => void;
 };
 
@@ -47,9 +47,9 @@ const ChangeCourse = ({ currentCourse, note, forPage = 'notes', handleClose }: P
 		mutate({ id: note.id, courseId: newCourseId });
 	};
 
-	if (forPage === 'calendar') {
+	if (forPage === 'context-menu') {
 		return (
-			<div className='absolute left-0 top-9 z-20 flex w-full flex-col justify-center overflow-hidden rounded-b-xl border-b border-l border-r bg-white text-neutral-800 shadow-xl dark:border-neutral-500 dark:bg-neutral-600 dark:text-white'>
+			<div className='flex flex-col justify-center overflow-clip rounded-xl border bg-white text-neutral-800 dark:border-neutral-500 dark:bg-neutral-600 dark:text-white'>
 				{/* Options */}
 				{courses &&
 					courses.map(course => (
@@ -60,7 +60,7 @@ const ChangeCourse = ({ currentCourse, note, forPage = 'notes', handleClose }: P
 							}}
 							key={course.id}
 							value={course.id}
-							className='flex h-9 cursor-pointer select-none items-center justify-center gap-2 truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 sm:max-w-none dark:hover:bg-neutral-500'>
+							className='flex h-9 cursor-pointer select-none items-center gap-2 truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500'>
 							<div
 								className='h-3 w-3 shrink-0 rounded-full'
 								style={{ backgroundColor: course.color }}></div>
