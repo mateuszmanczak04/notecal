@@ -20,7 +20,6 @@ type CalendarContextProps = {
 	goToDay: (date: Date) => void;
 	getDayAfter: (days: number) => Date;
 	containerRef: RefObject<HTMLElement | null>;
-	rowHeight: number;
 	zoomIn: () => void;
 	zoomOut: () => void;
 	scrollTop: number;
@@ -156,26 +155,6 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	};
 
 	/**
-	 * Returns height of the calendar hour row in pixels. It's based on user's setting "zoomLevel".
-	 */
-	const getRowHeight = () => {
-		switch (user.zoomLevel) {
-			case 1:
-				return 40;
-			case 2:
-				return 60;
-			case 3:
-				return 80;
-			case 4:
-				return 120;
-			case 5:
-				return 160;
-			default:
-				return 80;
-		}
-	};
-
-	/**
 	 * Increase user's setting "zoomLevel" if it is <= 5.
 	 * Maximum possible value is 5.
 	 */
@@ -212,7 +191,6 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 				goMonthBackward,
 				goToToday,
 				goToDay,
-				rowHeight: getRowHeight(),
 				zoomIn,
 				zoomOut,
 				getDayAfter,

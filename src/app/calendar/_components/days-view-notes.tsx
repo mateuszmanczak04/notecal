@@ -5,6 +5,7 @@ import { useUser } from '@/hooks/use-user';
 import { addDays, isAfter, isBefore, startOfDay } from 'date-fns';
 import { MouseEvent, RefObject, useMemo, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
+import { getCalendarRowHeight } from '../_utils/get-calendar-row-height';
 import { getNoteDateFromXYPosition } from '../_utils/get-date-from-position';
 import { getPositionRelativeToContainer } from '../_utils/get-position-relative-to-container';
 import DaysViewCoursePicker from './days-view-course-picker';
@@ -12,7 +13,7 @@ import DaysViewNote from './days-view-note';
 
 const DaysViewNotes = () => {
 	const { data: notes } = useNotesWithTime();
-	const { containerRef, rowHeight, currentFirstDay } = useCalendarContext();
+	const { containerRef, currentFirstDay } = useCalendarContext();
 	const { data: user } = useUser();
 	const { hiddenCoursesIds } = useCalendarContext();
 	const [popupX, setPopupX] = useState(0);
@@ -77,13 +78,15 @@ const DaysViewNotes = () => {
 		return results.map(r => (r > 2 ? 2 : r));
 	}, [notes]);
 
+	if (!user) return;
+
 	return (
 		<div
 			onDragOver={e => e.preventDefault()}
 			ref={containerRef as RefObject<HTMLDivElement>}
 			className='absolute left-12 top-0 w-[calc(100%-48px)] cursor-crosshair overflow-hidden sm:left-20 sm:w-[calc(100%-80px)]'
 			onClick={handleClick}
-			style={{ height: rowHeight * 24 + 'px' }}>
+			style={{ height: getCalendarRowHeight({ zoomLevel: user.zoomLevel }) * 24 + 'px' }}>
 			{/* Notes */}
 			{notes &&
 				notes

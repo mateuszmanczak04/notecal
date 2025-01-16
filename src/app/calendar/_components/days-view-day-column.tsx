@@ -1,10 +1,13 @@
 'use client';
 
+import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
-import { useCalendarContext } from '../_context/calendar-context';
+import { getCalendarRowHeight } from '../_utils/get-calendar-row-height';
 
 const Row = ({ isLast }: { isLast: boolean }) => {
-	const { rowHeight } = useCalendarContext();
+	const { data: user } = useUser();
+
+	if (!user) return;
 
 	return (
 		<div
@@ -12,7 +15,7 @@ const Row = ({ isLast }: { isLast: boolean }) => {
 				'flex items-center justify-center border-b border-r font-semibold text-neutral-500 transition-[height] dark:border-neutral-600',
 				isLast && 'rounded-br-xl',
 			)}
-			style={{ height: rowHeight + 'px' }}></div>
+			style={{ height: getCalendarRowHeight({ zoomLevel: user.zoomLevel }) + 'px' }}></div>
 	);
 };
 
