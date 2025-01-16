@@ -364,25 +364,15 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 
 	return (
 		<>
-			{/* Primary notes: */}
+			{/* Primary notes, appear like ghost notes before user released mouse when dragging: */}
 			{noteDays?.length > 0 &&
 				noteDays.map((day, index) => (
 					<div
-						draggable
-						onDragStart={handleDragStart}
-						onDrag={handleDrag}
-						onDragEnd={handleDragEnd}
-						ref={el => {
-							noteRef.current[index] = el as HTMLDivElement;
-						}}
-						onDragOver={e => e.preventDefault()}
 						key={day.toString()}
-						onClick={handleRoute}
 						className={cn(
-							'absolute z-20 min-h-4 min-w-8 cursor-pointer select-none overflow-hidden break-all rounded-xl border-2 border-white bg-primary-500 text-sm text-white transition dark:border-neutral-800',
+							'absolute min-h-4 min-w-8 cursor-pointer select-none  rounded-xl border-2 border-white bg-primary-500 transition dark:border-neutral-800',
 							isDragging && 'opacity-50',
 						)}
-						onContextMenu={e => handleContextMenu(e, index)}
 						style={{
 							top: getTopOffset(day, note.startTime),
 							left: getLeftOffset(day),
@@ -391,7 +381,16 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 							// If course was not found, the color will be undefined so
 							// the note should have "bg-primary-500" color as in className above
 							backgroundColor: course.color || '',
-						}}>
+						}}
+						ref={el => {
+							noteRef.current[index] = el as HTMLDivElement;
+						}}
+						draggable
+						onDragStart={handleDragStart}
+						onDrag={handleDrag}
+						onDragEnd={handleDragEnd}
+						onDragOver={e => e.preventDefault()}
+						onContextMenu={e => handleContextMenu(e, index)}>
 						{/* Top edge to drag: */}
 						{index === 0 && (
 							<div
@@ -400,11 +399,18 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 								onDragEnd={handleDragEndTop}
 								onDrag={handleDragTop}
 								ref={topEdgeRef}
-								className='absolute inset-x-0 top-0 h-2 cursor-ns-resize opacity-0'></div>
+								className={cn(
+									'absolute inset-x-0 top-0 z-30 h-2 cursor-ns-resize bg-black',
+									isDragging ? 'opacity-0' : 'opacity-25',
+								)}></div>
 						)}
 
-						{/* Title: */}
-						{!isDragging && <p className='m-4'>{note.title || course?.name}</p>}
+						{/* Center part (link) */}
+						<div
+							onClick={handleRoute}
+							className='-mt-4 h-full w-full overflow-clip break-all pt-4 text-sm text-white'>
+							<p className='m-4'>{note.title || course?.name}</p>
+						</div>
 
 						{/* Bottom edge to drag: */}
 						{index === noteDays.length - 1 && (
@@ -414,7 +420,10 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 								onDragEnd={handleDragEndBottom}
 								onDrag={handleDragBottom}
 								ref={bottomEdgeRef}
-								className='absolute inset-x-0 bottom-0 h-2 cursor-ns-resize opacity-0'></div>
+								className={cn(
+									'absolute inset-x-0 bottom-0 h-2 cursor-ns-resize bg-black',
+									isDragging ? 'opacity-0' : 'opacity-25',
+								)}></div>
 						)}
 
 						{/* Context menu on right mouse click */}
@@ -423,7 +432,8 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 						)}
 					</div>
 				))}
-			{/* Drag notes, visible only if user is currently dragging edge: */}
+
+			{/* Drag notes, visible only if user is currently dragging note: */}
 			{isDragging &&
 				dragDays?.length > 0 &&
 				dragDays.map(day => (
@@ -438,7 +448,12 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 							height: getHeight(day, actualDragStartTime, actualDragEndTime),
 							backgroundColor: course.color,
 						}}>
-						<p className='m-4'>{note.title || course.name}</p>
+						{/* Center part (link) */}
+						<div
+							onClick={handleRoute}
+							className='-mt-4 h-full w-full overflow-clip break-all pt-4 text-sm text-white'>
+							<p className='m-4'>{note.title || course?.name}</p>
+						</div>
 					</div>
 				))}
 		</>
