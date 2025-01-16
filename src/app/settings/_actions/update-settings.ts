@@ -10,7 +10,6 @@ export type T_UpdateSettingsInput = {
 	displayedDays?: number;
 	defaultNoteDuration?: number;
 	zoomLevel?: number;
-	firstCalendarDay?: Date | null;
 };
 
 export type T_UpdateSettingsResult = Promise<{ error: string } | { message: string }>;
@@ -21,7 +20,6 @@ const updateSettings = async ({
 	displayedDays,
 	defaultNoteDuration,
 	zoomLevel,
-	firstCalendarDay,
 }: T_UpdateSettingsInput): T_UpdateSettingsResult => {
 	try {
 		const { authenticated, user: authUser } = await getAuthStatus();
@@ -40,7 +38,6 @@ const updateSettings = async ({
 				displayedDays,
 				defaultNoteDuration,
 				zoomLevel,
-				firstCalendarDay,
 			},
 		});
 

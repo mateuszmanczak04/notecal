@@ -29,7 +29,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	const { data: courses } = useCourses();
 	const { data: user } = useUser();
 	const noteBlocksRef = useRef<HTMLDivElement[]>([]);
-	const { currentFirstDay } = useCalendarContext();
+	const { firstCalendarDay } = useCalendarContext();
 
 	const {
 		handleDrag,
@@ -79,7 +79,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 							top: getNoteBlockTopOffset({ blockDay: day, noteStartTime: note.startTime }),
 							left: getNoteBlockLeftOffset({
 								blockDay: day,
-								currentFirstDay,
+								firstCalendarDay: firstCalendarDay,
 								displayedDays: user.displayedDays,
 								leftOffset,
 							}),
@@ -161,7 +161,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 							left: getNoteBlockLeftOffset({
 								blockDay: day,
 								displayedDays: user.displayedDays,
-								currentFirstDay,
+								firstCalendarDay: firstCalendarDay,
 								leftOffset,
 							}),
 							width: getNoteBlockWidth({ displayedDays: user.displayedDays }),

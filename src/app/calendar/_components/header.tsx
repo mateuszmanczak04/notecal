@@ -7,7 +7,7 @@ import ViewModeSwitcher from './view-mode-switcher';
 
 const Header = () => {
 	const {
-		currentFirstDay,
+		firstCalendarDay,
 		zoomIn,
 		zoomOut,
 		goDayBackward,
@@ -17,10 +17,10 @@ const Header = () => {
 		goMonthForward,
 		goMonthBackward,
 	} = useCalendarContext();
-	const currentMonth = currentFirstDay.toLocaleString('default', {
+	const currentMonth = firstCalendarDay.toLocaleString('default', {
 		month: 'long',
 	});
-	const currentYear = currentFirstDay.getFullYear();
+	const currentYear = firstCalendarDay.getFullYear();
 
 	const handleForward = () => {
 		if (viewMode === 'days') {

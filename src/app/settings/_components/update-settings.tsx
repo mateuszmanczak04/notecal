@@ -1,13 +1,11 @@
 'use client';
 
 import { Button } from '@/components/button';
-import { Checkbox } from '@/components/checkbox';
 import ErrorMessage from '@/components/error-message';
 import { Input } from '@/components/input';
 import { useToast } from '@/components/toast/use-toast';
 import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
-import { toUTC } from '@/utils/timezone';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
 import updateSettings from '../_actions/update-settings';
@@ -31,11 +29,10 @@ const UpdateSettings = () => {
 
 	const [defaultNoteDuration, setDefaultNoteDuration] = useState(user?.defaultNoteDuration);
 	const [language, setLanguage] = useState(user?.language);
-	const [firstCalendarDay, setFirstCalendarDay] = useState<Date | null>(user?.firstCalendarDay || null);
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		mutate({ defaultNoteDuration, language, firstCalendarDay });
+		mutate({ defaultNoteDuration, language });
 	};
 
 	return (
@@ -71,18 +68,6 @@ const UpdateSettings = () => {
 						value={language}
 						onChange={e => setLanguage(e.target.value)}
 					/>
-				</div>
-
-				<div className=' mt-2 flex items-center gap-1'>
-					<Checkbox
-						checked={!!firstCalendarDay}
-						id='first-calendar-day'
-						className='rounded-md'
-						onCheckedChange={checked => setFirstCalendarDay(checked ? toUTC(new Date()) : null)}
-					/>
-					<label htmlFor='first-calendar-day' className='mb-1 block cursor-pointer px-2 font-medium'>
-						Synchronize calendar timespan between devices
-					</label>
 				</div>
 
 				{/* Submit button */}

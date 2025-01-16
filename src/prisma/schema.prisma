@@ -15,12 +15,11 @@ model User {
   password      String
 
   // Settings
-  defaultNoteDuration Int       @default(60) // in minutes
-  displayedDays       Int       @default(5)
-  zoomLevel           Int       @default(3)
-  language            String    @default("en")
-  orderTasks          String    @default("createdAt")
-  firstCalendarDay    DateTime? @default(now())
+  defaultNoteDuration Int    @default(60) // in minutes
+  displayedDays       Int    @default(5)
+  zoomLevel           Int    @default(3)
+  language            String @default("en")
+  orderTasks          String @default("createdAt")
 
   // Others
   createdAt DateTime @default(now())

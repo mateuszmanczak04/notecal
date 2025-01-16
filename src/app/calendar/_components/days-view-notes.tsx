@@ -13,7 +13,7 @@ import DaysViewNote from './days-view-note';
 
 const DaysViewNotes = () => {
 	const { data: notes } = useNotesWithTime();
-	const { containerRef, currentFirstDay } = useCalendarContext();
+	const { containerRef, firstCalendarDay } = useCalendarContext();
 	const { data: user } = useUser();
 	const { hiddenCoursesIds } = useCalendarContext();
 	const [popupX, setPopupX] = useState(0);
@@ -43,7 +43,7 @@ const DaysViewNotes = () => {
 			x,
 			y,
 			container: containerRef.current,
-			currentFirstDay,
+			firstCalendarDay,
 			displayedDays: user.displayedDays,
 		});
 		setSelectedTime(time);
@@ -93,9 +93,9 @@ const DaysViewNotes = () => {
 					.filter(n => !hiddenCoursesIds.includes(n.courseId))
 					.filter(n => {
 						// Optimization to render only notes from the currently visible date span
-						if (isAfter(n.startTime, addDays(startOfDay(currentFirstDay), user?.displayedDays || 7)))
+						if (isAfter(n.startTime, addDays(startOfDay(firstCalendarDay), user?.displayedDays || 7)))
 							return;
-						if (isBefore(n.endTime, startOfDay(currentFirstDay))) return;
+						if (isBefore(n.endTime, startOfDay(firstCalendarDay))) return;
 						return n;
 					})
 					.map((note, index) => <DaysViewNote key={note.id} note={note} leftOffset={leftOffsets[index]} />)}

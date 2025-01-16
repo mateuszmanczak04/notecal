@@ -9,20 +9,20 @@ export const getNoteDateFromXYPosition = ({
 	y,
 	displayedDays,
 	container,
-	currentFirstDay,
+	firstCalendarDay,
 }: {
 	x: number;
 	y: number;
 	displayedDays: number;
 	container: HTMLElement;
-	currentFirstDay: Date;
+	firstCalendarDay: Date;
 }) => {
 	const { width, height } = container.getBoundingClientRect();
 
 	// Get day (YYYY-MM-DD):
 	const columnWidth = width / displayedDays;
 	const dayIndex = Math.floor(x / columnWidth);
-	const time = addDays(currentFirstDay, dayIndex);
+	const time = addDays(firstCalendarDay, dayIndex);
 
 	// Get time (HH:MM):
 	const yRatio = y / height;

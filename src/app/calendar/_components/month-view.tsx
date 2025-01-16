@@ -21,10 +21,10 @@ const Tile = ({ children, onClick }: { children?: React.ReactNode; onClick?: () 
 };
 
 const MonthView = () => {
-	const { currentFirstDay, setViewMode, goToDay, hiddenCoursesIds } = useCalendarContext();
+	const { firstCalendarDay, setViewMode, goToDay, hiddenCoursesIds } = useCalendarContext();
 	const { data: notes } = useNotesWithTime();
-	const firstDayOfMonth = startOfMonth(currentFirstDay);
-	const amountOfDaysInMonth = getDaysInMonth(currentFirstDay);
+	const firstDayOfMonth = startOfMonth(firstCalendarDay);
+	const amountOfDaysInMonth = getDaysInMonth(firstCalendarDay);
 	const daysInMonth = new Array(amountOfDaysInMonth).fill(firstDayOfMonth).map((day, index) => addDays(day, index));
 
 	/**

@@ -5,14 +5,14 @@ import updateSettings from '@/app/settings/_actions/update-settings';
 import { useToast } from '@/components/toast/use-toast';
 import { useUser } from '@/hooks/use-user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addMonths } from 'date-fns';
+import { addDays, addMonths } from 'date-fns';
 import { Dispatch, ReactNode, RefObject, SetStateAction, createContext, useContext, useRef, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 
 type T_ViewMode = 'month' | 'days' | 'list';
 
 type CalendarContextProps = {
-	currentFirstDay: Date;
+	firstCalendarDay: Date;
 	goDayForward: () => void;
 	goDayBackward: () => void;
 	goMonthForward: () => void;
@@ -36,11 +36,15 @@ const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
 	const [viewMode, setViewMode] = useLocalStorage<T_ViewMode>('viewMode', 'days', { initializeWithValue: false });
+	const [firstCalendarDay, setFirstCalendarDay] = useLocalStorage<Date>('firstCalendarDay', new Date(), {
+		initializeWithValue: false,
+		deserializer: (value: string) => new Date(value),
+		serializer: (value: Date) => value.toString(),
+	});
 	const containerRef = useRef<HTMLElement | null>(null);
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { data: user } = useUser();
-	const [currentFirstDay, setCurrentFirstDay] = useState(user?.firstCalendarDay || new Date());
 	const { mutate } = useMutation({
 		mutationFn: updateSettings,
 		onMutate: data => {
@@ -52,7 +56,6 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 					displayedDays: data.displayedDays || prev.displayedDays,
 					defaultNoteDuration: data.defaultNoteDuration || prev.defaultNoteDuration,
 					language: data.language || prev.language,
-					firstCalendarDay: data.firstCalendarDay || prev.firstCalendarDay,
 				};
 			});
 		},
@@ -89,70 +92,52 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	};
 
 	/**
-	 * Returns a date object which is X days after "currentFirstDay"
+	 * Returns a date object which is X days after "firstCalendarDay"
 	 */
 	const getDayAfter = (days: number) => {
-		return new Date(currentFirstDay.getTime() + days * 24 * 60 * 60 * 1000);
+		return addDays(firstCalendarDay, days);
 	};
 
 	/**
 	 * Changes the first seen day by 1 day forward.
 	 */
 	const goDayForward = () => {
-		if (!!user?.firstCalendarDay) {
-			mutate({ firstCalendarDay: getDayAfter(1) });
-		}
-		setCurrentFirstDay(getDayAfter(1));
+		setFirstCalendarDay(prev => addDays(prev, 1));
 	};
 
 	/**
 	 * Changes the first seen day by 1 day back.
 	 */
 	const goDayBackward = () => {
-		if (!!user?.firstCalendarDay) {
-			mutate({ firstCalendarDay: getDayAfter(-1) });
-		}
-		setCurrentFirstDay(getDayAfter(-1));
+		setFirstCalendarDay(prev => addDays(prev, -1));
 	};
 
 	/**
 	 * Changes the first seen day by 1 day forward.
 	 */
 	const goMonthForward = () => {
-		if (!!user?.firstCalendarDay) {
-			mutate({ firstCalendarDay: addMonths(user.firstCalendarDay, 1) });
-		}
-		setCurrentFirstDay(prev => addMonths(prev, 1));
+		setFirstCalendarDay(prev => addMonths(prev, 1));
 	};
 
 	/**
 	 * Changes the first seen day by 1 day back.
 	 */
 	const goMonthBackward = () => {
-		if (!!user?.firstCalendarDay) {
-			mutate({ firstCalendarDay: addMonths(user.firstCalendarDay, -1) });
-		}
-		setCurrentFirstDay(prev => addMonths(prev, -1));
+		setFirstCalendarDay(prev => addMonths(prev, -1));
 	};
 
 	/**
 	 * Changes the first seen day to today.
 	 */
 	const goToToday = () => {
-		if (!!user?.firstCalendarDay) {
-			mutate({ firstCalendarDay: new Date() });
-		}
-		setCurrentFirstDay(new Date());
+		setFirstCalendarDay(new Date());
 	};
 
 	/**
 	 * Changes the first seen day to the provided date.
 	 */
 	const goToDay = (date: Date) => {
-		if (!!user?.firstCalendarDay) {
-			mutate({ firstCalendarDay: date });
-		}
-		setCurrentFirstDay(date);
+		setFirstCalendarDay(date);
 	};
 
 	/**
@@ -185,7 +170,7 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 				containerRef,
 				viewMode,
 				setViewMode,
-				currentFirstDay,
+				firstCalendarDay,
 				goDayForward,
 				goDayBackward,
 				goMonthForward,

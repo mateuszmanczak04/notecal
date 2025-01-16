@@ -42,7 +42,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
-	const { containerRef, currentFirstDay } = useCalendarContext();
+	const { containerRef, firstCalendarDay } = useCalendarContext();
 	const { data: user } = useUser();
 	const [isDragging, setIsDragging] = useState(false);
 	const topEdgeRef = useRef<HTMLDivElement | null>(null);
@@ -76,7 +76,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			x,
 			y,
 			container: containerRef.current,
-			currentFirstDay,
+			firstCalendarDay,
 			displayedDays: user.displayedDays,
 		});
 		if (!date) return;
@@ -105,7 +105,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			x,
 			y,
 			container: containerRef.current,
-			currentFirstDay,
+			firstCalendarDay,
 			displayedDays: user.displayedDays,
 		});
 		if (!date) return;
@@ -160,7 +160,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			x,
 			y,
 			container: containerRef.current,
-			currentFirstDay,
+			firstCalendarDay,
 			displayedDays: user.displayedDays,
 		});
 		if (!newStartTime) return;
@@ -212,7 +212,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			x,
 			y,
 			container: containerRef.current,
-			currentFirstDay,
+			firstCalendarDay,
 			displayedDays: user.displayedDays,
 		});
 		if (!newEndTime) return;

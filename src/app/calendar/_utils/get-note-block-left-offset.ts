@@ -7,14 +7,14 @@ import { differenceInCalendarDays } from 'date-fns';
 export const getNoteBlockLeftOffset = ({
 	blockDay,
 	displayedDays,
-	currentFirstDay,
+	firstCalendarDay,
 	leftOffset,
 }: {
 	blockDay: Date;
 	displayedDays: number;
-	currentFirstDay: Date;
+	firstCalendarDay: Date;
 	leftOffset: number;
 }) => {
-	const daysFromFirstDay = differenceInCalendarDays(blockDay, currentFirstDay);
+	const daysFromFirstDay = differenceInCalendarDays(blockDay, firstCalendarDay);
 	return `calc(${daysFromFirstDay * (100 / displayedDays) + '%'} + ${leftOffset * 16 + 'px'})`;
 };
