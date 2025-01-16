@@ -39,6 +39,7 @@ type CalendarContextProps = {
 const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
+	// TODO: load these values before rendering the app
 	const [viewMode, setViewMode] = useLocalStorage<T_ViewMode>('viewMode', 'days', { initializeWithValue: false });
 	const [zoomLevel, setZoomLevel] = useLocalStorage<T_ZoomLevel>('zoomLevel', 1, {
 		initializeWithValue: false,
