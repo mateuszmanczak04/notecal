@@ -5,7 +5,6 @@ import { useCourses } from '@/hooks/use-courses';
 import { useNoteContextMenu } from '@/hooks/use-note-context-menu';
 import { T_NoteWithTime } from '@/hooks/use-notes-with-time';
 import { useSettings } from '@/hooks/use-settings';
-import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
 import { type Note as DaysViewNote } from '@prisma/client';
 import { useRouter } from 'next/navigation';
@@ -27,9 +26,8 @@ type Props = {
  */
 const DaysViewNote = ({ note, leftOffset }: Props) => {
 	const { data: courses } = useCourses();
-	const { data: user } = useUser();
 	const noteBlocksRef = useRef<HTMLDivElement[]>([]);
-	const { firstCalendarDay } = useSettings();
+	const { firstCalendarDay, displayedDays } = useSettings();
 
 	const {
 		handleDrag,
@@ -62,7 +60,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	};
 
 	// Should not occur in normal app conditions
-	if (!courses || !user || !course) return;
+	if (!courses || !course) return;
 
 	return (
 		<>
@@ -80,10 +78,10 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 							left: getNoteBlockLeftOffset({
 								blockDay: day,
 								firstCalendarDay: firstCalendarDay,
-								displayedDays: user.displayedDays,
+								displayedDays: displayedDays,
 								leftOffset,
 							}),
-							width: getNoteBlockWidth({ displayedDays: user.displayedDays }),
+							width: getNoteBlockWidth({ displayedDays: displayedDays }),
 							height: getNoteBlockHeight({
 								blockDay: day,
 								noteStartTime: note.startTime,
@@ -160,11 +158,11 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 							top: getNoteBlockTopOffset({ blockDay: day, noteStartTime: actualDragStartTime }),
 							left: getNoteBlockLeftOffset({
 								blockDay: day,
-								displayedDays: user.displayedDays,
+								displayedDays: displayedDays,
 								firstCalendarDay: firstCalendarDay,
 								leftOffset,
 							}),
-							width: getNoteBlockWidth({ displayedDays: user.displayedDays }),
+							width: getNoteBlockWidth({ displayedDays: displayedDays }),
 							height: getNoteBlockHeight({
 								blockDay: day,
 								noteStartTime: actualDragStartTime,

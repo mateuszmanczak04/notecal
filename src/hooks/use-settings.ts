@@ -1,9 +1,10 @@
 import { addDays, addMonths } from 'date-fns';
 import { useLocalStorage } from 'usehooks-ts';
 
-type T_ViewMode = 'month' | 'days' | 'list';
-type T_ZoomLevel = 1 | 2 | 3 | 4 | 5;
-type T_TasksOrder = 'days' | 'priority' | 'dueDate' | 'createdAt' | 'completed' | 'title';
+export type T_ViewMode = 'month' | 'days' | 'list';
+export type T_ZoomLevel = 1 | 2 | 3 | 4 | 5;
+export type T_TasksOrder = 'days' | 'priority' | 'dueDate' | 'createdAt' | 'completed' | 'title';
+export type T_DisplayedDays = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 export const useSettings = () => {
 	// TODO: load these values before rendering the app
@@ -15,6 +16,11 @@ export const useSettings = () => {
 		initializeWithValue: false,
 		deserializer: (value: string) => parseInt(value) as T_ZoomLevel,
 		serializer: (value: T_ZoomLevel) => value.toString(),
+	});
+	const [displayedDays, setDisplayedDays] = useLocalStorage<T_DisplayedDays>('displayedDays', 5, {
+		initializeWithValue: false,
+		deserializer: (value: string) => parseInt(value) as T_ZoomLevel,
+		serializer: (value: T_DisplayedDays) => value.toString(),
 	});
 	const [firstCalendarDay, setFirstCalendarDay] = useLocalStorage<Date>('firstCalendarDay', new Date(), {
 		initializeWithValue: false,
@@ -74,5 +80,7 @@ export const useSettings = () => {
 		zoomOut,
 		tasksOrder,
 		setTasksOrder,
+		displayedDays,
+		setDisplayedDays,
 	};
 };

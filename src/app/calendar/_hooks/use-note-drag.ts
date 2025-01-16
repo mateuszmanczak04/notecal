@@ -44,7 +44,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 		},
 	});
 	const { containerRef } = useCalendarContext();
-	const { firstCalendarDay } = useSettings();
+	const { firstCalendarDay, displayedDays } = useSettings();
 	const { data: user } = useUser();
 	const [isDragging, setIsDragging] = useState(false);
 	const topEdgeRef = useRef<HTMLDivElement | null>(null);
@@ -79,7 +79,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			y,
 			container: containerRef.current,
 			firstCalendarDay,
-			displayedDays: user.displayedDays,
+			displayedDays,
 		});
 		if (!date) return;
 
@@ -108,7 +108,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			y,
 			container: containerRef.current,
 			firstCalendarDay,
-			displayedDays: user.displayedDays,
+			displayedDays,
 		});
 		if (!date) return;
 
@@ -163,7 +163,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			y,
 			container: containerRef.current,
 			firstCalendarDay,
-			displayedDays: user.displayedDays,
+			displayedDays,
 		});
 		if (!newStartTime) return;
 
@@ -215,7 +215,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			y,
 			container: containerRef.current,
 			firstCalendarDay,
-			displayedDays: user.displayedDays,
+			displayedDays,
 		});
 		if (!newEndTime) return;
 

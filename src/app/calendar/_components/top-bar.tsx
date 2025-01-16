@@ -2,19 +2,14 @@
 
 import LoadingSpinner from '@/components/loading-spinner';
 import { useSettings } from '@/hooks/use-settings';
-import { useUser } from '@/hooks/use-user';
 import DaysViewDayHeading from './days-view-day-heading';
 
 const TopBar = () => {
-	const { getDayAfter } = useSettings();
-	const { data: user } = useUser();
-
-	// Should not occur in normal app conditions
-	if (!user) return;
+	const { getDayAfter, displayedDays } = useSettings();
 
 	const isNotesPending = false;
 	const isCoursesPending = false;
-	const days = new Array(user.displayedDays).fill(0).map((_, index) => getDayAfter(index));
+	const days = new Array(displayedDays).fill(0).map((_, index) => getDayAfter(index));
 
 	return (
 		<div className='mt-4 flex'>
@@ -26,10 +21,10 @@ const TopBar = () => {
 			<div
 				className='grid flex-1'
 				style={{
-					gridTemplateColumns: `repeat(${user.displayedDays}, 1fr)`,
+					gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
 				}}>
 				{days.map((day, index) => (
-					<DaysViewDayHeading key={day.toString()} date={day} isLast={index === user.displayedDays - 1} />
+					<DaysViewDayHeading key={day.toString()} date={day} isLast={index === displayedDays - 1} />
 				))}
 			</div>
 		</div>

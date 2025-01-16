@@ -1,14 +1,11 @@
 'use client';
 
-import { useUser } from '@/hooks/use-user';
+import { useSettings } from '@/hooks/use-settings';
 import DaysViewDayColumn from './days-view-day-column';
 import HourRow from './hour-row';
 
 const DaysViewGrid = () => {
-	const { data: user } = useUser();
-
-	// Should not occur in normal app conditions
-	if (!user) return;
+	const { displayedDays } = useSettings();
 
 	return (
 		<div className='flex'>
@@ -23,10 +20,10 @@ const DaysViewGrid = () => {
 			<div
 				className='grid flex-1'
 				style={{
-					gridTemplateColumns: `repeat(${user.displayedDays}, 1fr)`,
+					gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
 				}}>
-				{new Array(user.displayedDays).fill(0).map((_, index) => (
-					<DaysViewDayColumn key={index} isLast={index === user.displayedDays - 1} />
+				{new Array(displayedDays).fill(0).map((_, index) => (
+					<DaysViewDayColumn key={index} isLast={index === displayedDays - 1} />
 				))}
 			</div>
 		</div>

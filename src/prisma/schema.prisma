@@ -16,7 +16,6 @@ model User {
 
   // Settings
   defaultNoteDuration Int    @default(60) // in minutes
-  displayedDays       Int    @default(5)
   language            String @default("en")
 
   // Others

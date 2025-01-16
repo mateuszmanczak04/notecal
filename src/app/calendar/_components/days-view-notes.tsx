@@ -20,7 +20,7 @@ const DaysViewNotes = () => {
 	const [popupY, setPopupY] = useState(0);
 	// When there is selected time, we should display the course picker:
 	const [selectedTime, setSelectedTime] = useState<Date | null>(null);
-	const { zoomLevel, firstCalendarDay } = useSettings();
+	const { zoomLevel, firstCalendarDay, displayedDays } = useSettings();
 
 	/**
 	 * Detect click on the grid and show popup to create a new note in that time.
@@ -45,7 +45,7 @@ const DaysViewNotes = () => {
 			y,
 			container: containerRef.current,
 			firstCalendarDay,
-			displayedDays: user.displayedDays,
+			displayedDays,
 		});
 		setSelectedTime(time);
 	};
@@ -94,8 +94,7 @@ const DaysViewNotes = () => {
 					.filter(n => !hiddenCoursesIds.includes(n.courseId))
 					.filter(n => {
 						// Optimization to render only notes from the currently visible date span
-						if (isAfter(n.startTime, addDays(startOfDay(firstCalendarDay), user?.displayedDays || 7)))
-							return;
+						if (isAfter(n.startTime, addDays(startOfDay(firstCalendarDay), displayedDays || 7))) return;
 						if (isBefore(n.endTime, startOfDay(firstCalendarDay))) return;
 						return n;
 					})

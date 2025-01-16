@@ -6,17 +6,12 @@ import { en } from '@/utils/dictionary';
 
 export type T_UpdateSettingsInput = {
 	language?: string;
-	displayedDays?: number;
 	defaultNoteDuration?: number;
 };
 
 export type T_UpdateSettingsResult = Promise<{ error: string } | { message: string }>;
 
-const updateSettings = async ({
-	language,
-	displayedDays,
-	defaultNoteDuration,
-}: T_UpdateSettingsInput): T_UpdateSettingsResult => {
+const updateSettings = async ({ language, defaultNoteDuration }: T_UpdateSettingsInput): T_UpdateSettingsResult => {
 	try {
 		const { authenticated, user: authUser } = await getAuthStatus();
 
@@ -30,7 +25,6 @@ const updateSettings = async ({
 			},
 			data: {
 				language,
-				displayedDays,
 				defaultNoteDuration,
 			},
 		});
