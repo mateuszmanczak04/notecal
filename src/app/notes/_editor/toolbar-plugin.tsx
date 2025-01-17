@@ -82,6 +82,10 @@ export default function ToolbarPlugin({ onSave, note, course, hasChanged }: Prop
 				h1: type === 'h1',
 				h2: type === 'h2',
 				paragraph: type === 'paragraph',
+				alignLeft: element.getFormat() === 1 || element.getFormat() === 0,
+				alignCenter: element.getFormat() === 2,
+				alignRight: element.getFormat() === 3,
+				alignJustify: element.getFormat() === 4,
 				bold: selection.hasFormat('bold'),
 				italic: selection.hasFormat('italic'),
 				underline: selection.hasFormat('underline'),
@@ -250,25 +254,29 @@ export default function ToolbarPlugin({ onSave, note, course, hasChanged }: Prop
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
-					}}>
+					}}
+					className={selectionMap.alignLeft ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
 					<AlignLeft className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'center');
-					}}>
+					}}
+					className={selectionMap.alignCenter ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
 					<AlignCenter className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
-					}}>
+					}}
+					className={selectionMap.alignRight ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
 					<AlignRight className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify');
-					}}>
+					}}
+					className={selectionMap.alignJustify ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
 					<AlignJustify className='h-5 w-5' />
 				</Toggle>
 			</div>
