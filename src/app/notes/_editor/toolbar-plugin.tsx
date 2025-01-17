@@ -1,7 +1,7 @@
 import { Button } from '@/components/button';
 import { Toggle } from '@/components/toggle';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $createHeadingNode, HeadingTagType } from '@lexical/rich-text';
+import { $createHeadingNode, $isHeadingNode, HeadingTagType } from '@lexical/rich-text';
 import { $wrapNodes } from '@lexical/selection';
 import { mergeRegister } from '@lexical/utils';
 import { Course, Note } from '@prisma/client';
@@ -74,11 +74,19 @@ export default function ToolbarPlugin({ onSave, note, course, hasChanged }: Prop
 	const $updateToolbar = useCallback(() => {
 		const selection = $getSelection();
 		if ($isRangeSelection(selection)) {
+			const anchorNode = selection.anchor.getNode();
+			const element = anchorNode.getKey() === 'root' ? anchorNode : anchorNode.getTopLevelElementOrThrow();
+			const type = $isHeadingNode(element) ? element.getTag() : element.getType();
+
 			const newSelectionMap = {
+				h1: type === 'h1',
+				h2: type === 'h2',
+				paragraph: type === 'paragraph',
 				bold: selection.hasFormat('bold'),
 				italic: selection.hasFormat('italic'),
 				underline: selection.hasFormat('underline'),
 			};
+
 			setSelectionMap(newSelectionMap);
 		}
 	}, []);
@@ -186,13 +194,22 @@ export default function ToolbarPlugin({ onSave, note, course, hasChanged }: Prop
 
 			{/* Headings */}
 			<div className='grid grid-cols-3 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
-				<Toggle onClick={() => updateHeading('h1')} title='Heading'>
+				<Toggle
+					onClick={() => updateHeading('h1')}
+					title='Heading'
+					className={selectionMap.h1 ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
 					<Heading1 className='h-5 w-5' />
 				</Toggle>
-				<Toggle onClick={() => updateHeading('h2')} title='Subheading'>
+				<Toggle
+					onClick={() => updateHeading('h2')}
+					title='Subheading'
+					className={selectionMap.h2 ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
 					<Heading2 className='h-5 w-5' />
 				</Toggle>
-				<Toggle onClick={() => updateHeading(null)} title='Regular text'>
+				<Toggle
+					onClick={() => updateHeading(null)}
+					title='Regular text'
+					className={selectionMap.paragraph ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
 					Aa
 				</Toggle>
 			</div>
