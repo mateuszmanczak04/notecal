@@ -2,13 +2,11 @@
 
 import { Button } from '@/components/button';
 import FormLoadingSpinner from '@/components/form-loading-spinner';
-import GoBackButton from '@/components/go-back-button';
 import { Input } from '@/components/input';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { COLORS } from '@/utils/colors';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import createCourse from '../_actions/create-course';
 
@@ -30,7 +28,6 @@ const CreateCourseForm = () => {
 			queryClient.refetchQueries({ queryKey: ['notes'] });
 		},
 	});
-	const router = useRouter();
 
 	const [name, setName] = useState('');
 	const [teacher, setTeacher] = useState('');
@@ -39,7 +36,6 @@ const CreateCourseForm = () => {
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		mutate({ name, teacher, color: selectedColor });
-		router.push('/courses');
 	};
 
 	return (
@@ -101,14 +97,10 @@ const CreateCourseForm = () => {
 				})}
 			</div>
 
-			{/* Buttons */}
-			<div className='grid gap-x-4 gap-y-2 sm:grid-cols-2'>
-				<GoBackButton variant='secondary'>Cancel</GoBackButton>
-				<Button type='submit'>
-					<FormLoadingSpinner />
-					Create
-				</Button>
-			</div>
+			<Button type='submit' className='w-full'>
+				<FormLoadingSpinner />
+				Create
+			</Button>
 		</form>
 	);
 };
