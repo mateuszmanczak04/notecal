@@ -48,7 +48,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	} = useNoteDrag({ note, noteRef: noteBlocksRef });
 
 	// Context menu related below:
-	const { closeContextMenu, contextMenuPosition, handleContextMenu } = useNoteContextMenu();
+	const { closeContextMenu, contextMenuPosition, handleContextMenu, contextMenuBlockIndex } = useNoteContextMenu();
 
 	const course = courses?.find(c => c.id === note.courseId);
 	const noteDays = getDaysIncludedInNote({ noteStartTime: note.startTime, noteEndTime: note.endTime });
@@ -99,7 +99,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 						onDrag={handleDrag}
 						onDragEnd={handleDragEnd}
 						onDragOver={e => e.preventDefault()}
-						onContextMenu={handleContextMenu}>
+						onContextMenu={e => handleContextMenu(e, index)}>
 						{/* Top edge to drag: */}
 						{index === 0 && (
 							<div
@@ -136,7 +136,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 						)}
 
 						{/* Context menu on right mouse click */}
-						{contextMenuPosition && (
+						{contextMenuBlockIndex === index && contextMenuPosition && (
 							<NoteContextMenu
 								position={contextMenuPosition}
 								note={note}

@@ -5,9 +5,11 @@ import { useState } from 'react';
  */
 export const useNoteContextMenu = () => {
 	const [contextMenuPosition, setContextMenuPosition] = useState<{ x: number; y: number } | null>(null);
-	const handleContextMenu = (event: React.MouseEvent) => {
+	const [contextMenuBlockIndex, setContextMenuBlockIndex] = useState<number | null>(null);
+	const handleContextMenu = (event: React.MouseEvent, index: number) => {
 		event.preventDefault();
 		setContextMenuPosition({ x: event.clientX, y: event.clientY });
+		setContextMenuBlockIndex(index);
 	};
 	const closeContextMenu = () => {
 		setContextMenuPosition(null);
@@ -17,5 +19,6 @@ export const useNoteContextMenu = () => {
 		contextMenuPosition,
 		handleContextMenu,
 		closeContextMenu,
+		contextMenuBlockIndex,
 	};
 };
