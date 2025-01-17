@@ -6,6 +6,8 @@ import { Input } from '@/components/input';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { COLORS } from '@/utils/colors';
+import { createTemporaryCourse } from '@/utils/create-temporary-course';
+import { Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
 import createCourse from '../_actions/create-course';
@@ -19,8 +21,11 @@ const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 	const { toast } = useToast();
 	const { mutate } = useMutation({
 		mutationFn: createCourse,
-		onMutate: () => {
-			// TODO: optimistic update
+		onMutate: data => {
+			queryClient.setQueryData(['courses'], (prevCourses: Course[]) => {
+				const newTempCourse = createTemporaryCourse(data);
+				return [...prevCourses, newTempCourse];
+			});
 			handleCloseModal();
 		},
 		onSettled: data => {
