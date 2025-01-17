@@ -1,12 +1,12 @@
 'use client';
 
-import { useUser } from '@/hooks/use-user';
-import { ReactNode, RefObject, createContext, useContext, useRef, useState } from 'react';
+import { ReactNode, RefObject, createContext, useContext, useEffect, useRef, useState } from 'react';
+import { useLocalStorage } from 'usehooks-ts';
 
 type CalendarContextProps = {
 	containerRef: RefObject<HTMLElement | null>;
-	scrollTop: number;
-	setScrollTop: (newValue: number) => void;
+	calendarScrollTop: number;
+	setCalendarScrollTop: (newValue: number) => void;
 	hiddenCoursesIds: string[];
 	handleHideCourse: (id: string) => void;
 	handleShowCourse: (id: string) => void;
@@ -16,14 +16,35 @@ const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
 	const containerRef = useRef<HTMLElement | null>(null);
-	const { data: user } = useUser();
 	// Used when filtering courses, only courses in this array are visible
 	const [hiddenCoursesIds, setHiddenCoursesIds] = useState<string[]>([]);
 
 	// Needed to keep the same calendar scroll y level after switching routes
-	const [scrollTop, setScrollTop] = useState(0);
+	const [calendarScrollTop, setCalendarScrollTop] = useLocalStorage<number>('calendarScrollTop', 0, {
+		initializeWithValue: false,
+		deserializer: (value: string) => parseInt(value),
+		serializer: (value: number) => value.toString(),
+	});
 
-	if (!user) return null; // TOOD: handle this
+	/**
+	 * Listens to the scroll event on the calendar container and synchronize
+	 * it with localStorage to keep the same scroll position after switching routes.
+	 */
+	useEffect(() => {
+		if (!containerRef.current) return;
+		const listener = () => {
+			setCalendarScrollTop(containerRef.current!.scrollTop);
+		};
+
+		containerRef.current.addEventListener('scroll', listener);
+
+		containerRef.current.scrollTop = calendarScrollTop;
+
+		return () => {
+			if (!containerRef.current) return;
+			containerRef.current.removeEventListener('scroll', listener);
+		};
+	}, []);
 
 	/**
 	 * Adds course id to the hidden courses array to stop
@@ -46,8 +67,8 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 		<CalendarContext.Provider
 			value={{
 				containerRef,
-				scrollTop,
-				setScrollTop,
+				calendarScrollTop: calendarScrollTop,
+				setCalendarScrollTop: setCalendarScrollTop,
 				hiddenCoursesIds,
 				handleHideCourse,
 				handleShowCourse,
