@@ -10,13 +10,18 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
 import createCourse from '../_actions/create-course';
 
-const CreateCourseForm = () => {
+type T_Props = {
+	handleCloseModal: () => void;
+};
+
+const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate } = useMutation({
 		mutationFn: createCourse,
 		onMutate: () => {
 			// TODO: optimistic update
+			handleCloseModal();
 		},
 		onSettled: data => {
 			if (data && 'error' in data) {
