@@ -7,7 +7,7 @@ import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import createNote from '../_actions/create-note';
-import SideNote from './site-note';
+import SideNote from './side-note';
 
 type Props = {
 	currentCourse: Course;
