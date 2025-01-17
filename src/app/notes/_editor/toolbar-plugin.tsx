@@ -6,6 +6,7 @@ import { $wrapNodes } from '@lexical/selection';
 import { mergeRegister } from '@lexical/utils';
 import { Course, Note } from '@prisma/client';
 import {
+	$createParagraphNode,
 	$getSelection,
 	$isRangeSelection,
 	CAN_REDO_COMMAND,
@@ -83,12 +84,16 @@ export default function ToolbarPlugin({ onSave, note, course, hasChanged }: Prop
 	}, []);
 
 	const updateHeading = useCallback(
-		(heading: HeadingTagType) => {
+		(heading: HeadingTagType | null) => {
 			editor.update(() => {
 				const selection = $getSelection();
 
 				if ($isRangeSelection(selection)) {
-					$wrapNodes(selection, () => $createHeadingNode(heading));
+					if (heading === null) {
+						$wrapNodes(selection, () => $createParagraphNode());
+					} else {
+						$wrapNodes(selection, () => $createHeadingNode(heading));
+					}
 				}
 			});
 		},
@@ -180,12 +185,15 @@ export default function ToolbarPlugin({ onSave, note, course, hasChanged }: Prop
 			</div>
 
 			{/* Headings */}
-			<div className='grid grid-cols-2 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
-				<Toggle onClick={() => updateHeading('h1')} title='Ctrl + Shift + H'>
+			<div className='grid grid-cols-3 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
+				<Toggle onClick={() => updateHeading('h1')} title='Heading'>
 					<Heading1 className='h-5 w-5' />
 				</Toggle>
-				<Toggle onClick={() => updateHeading('h2')} title='Ctrl + Shift + J'>
+				<Toggle onClick={() => updateHeading('h2')} title='Subheading'>
 					<Heading2 className='h-5 w-5' />
+				</Toggle>
+				<Toggle onClick={() => updateHeading(null)} title='Regular text'>
+					Aa
 				</Toggle>
 			</div>
 
