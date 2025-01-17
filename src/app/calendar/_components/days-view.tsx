@@ -11,17 +11,17 @@ type Props = {};
 
 const DaysView = ({}: Props) => {
 	// Used to keep the same calendar scroll y level even after switching routes
-	const { calendarScrollTop: scrollTop, setCalendarScrollTop: setScrollTop } = useCalendarContext();
+	const { calendarScrollTop, setCalendarScrollTop } = useCalendarContext();
 	const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 	const { zoomIn, zoomOut, goDayBackward, goDayForward } = useSettings();
 
 	const handleScroll = () => {
-		setScrollTop(scrollContainerRef.current!.scrollTop);
+		setCalendarScrollTop(scrollContainerRef.current!.scrollTop);
 	};
 
 	useEffect(() => {
-		scrollContainerRef.current!.scrollTop = scrollTop;
-	}, [scrollTop]);
+		scrollContainerRef.current!.scrollTop = calendarScrollTop;
+	}, [calendarScrollTop]);
 
 	// Handle zooming in/out with keyboard
 	useEffect(() => {

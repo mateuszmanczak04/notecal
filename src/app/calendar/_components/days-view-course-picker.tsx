@@ -42,7 +42,7 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 
 	/** A reference to the popup div */
 	const pickerRef = useRef<HTMLDivElement>(null!);
-	const { containerRef } = useCalendarContext();
+	const { daysViewContainerRef: containerRef } = useCalendarContext();
 	const [pickerX, setPickerX] = useState(x);
 	const [pickerY, setPickerY] = useState(y);
 

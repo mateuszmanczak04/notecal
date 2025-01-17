@@ -15,7 +15,7 @@ import DaysViewNote from './days-view-note';
 const DaysViewNotes = () => {
 	const { data: notes } = useNotesWithTime();
 	const { data: user } = useUser();
-	const { hiddenCoursesIds, containerRef } = useCalendarContext();
+	const { hiddenCoursesIds, daysViewContainerRef } = useCalendarContext();
 	const [popupX, setPopupX] = useState(0);
 	const [popupY, setPopupY] = useState(0);
 	// When there is selected time, we should display the course picker:
@@ -26,15 +26,15 @@ const DaysViewNotes = () => {
 	 * Detect click on the grid and show popup to create a new note in that time.
 	 */
 	const handleClick = (event: MouseEvent) => {
-		if (!containerRef.current || !user) return;
+		if (!daysViewContainerRef.current || !user) return;
 
 		// Don't react when user clicks on existing notes
-		if (event.target !== containerRef.current) return;
+		if (event.target !== daysViewContainerRef.current) return;
 
 		const { x, y } = getPositionRelativeToContainer({
 			x: event.clientX,
 			y: event.clientY,
-			container: containerRef.current,
+			container: daysViewContainerRef.current,
 		});
 		if (x === null || y === null) return;
 		setPopupX(x);
@@ -43,7 +43,7 @@ const DaysViewNotes = () => {
 		const time = getNoteDateFromXYPosition({
 			x,
 			y,
-			container: containerRef.current,
+			container: daysViewContainerRef.current,
 			firstCalendarDay,
 			displayedDays,
 		});
@@ -84,7 +84,7 @@ const DaysViewNotes = () => {
 	return (
 		<div
 			onDragOver={e => e.preventDefault()}
-			ref={containerRef as RefObject<HTMLDivElement>}
+			ref={daysViewContainerRef as RefObject<HTMLDivElement>}
 			className='absolute left-12 top-0 w-[calc(100%-48px)] cursor-crosshair overflow-hidden sm:left-20 sm:w-[calc(100%-80px)]'
 			onClick={handleClick}
 			style={{ height: getCalendarRowHeight({ zoomLevel }) * 24 + 'px' }}>

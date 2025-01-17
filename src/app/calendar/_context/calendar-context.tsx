@@ -1,10 +1,10 @@
 'use client';
 
-import { ReactNode, RefObject, createContext, useContext, useEffect, useRef, useState } from 'react';
+import { ReactNode, RefObject, createContext, useContext, useRef, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 
 type CalendarContextProps = {
-	containerRef: RefObject<HTMLElement | null>;
+	daysViewContainerRef: RefObject<HTMLElement | null>;
 	calendarScrollTop: number;
 	setCalendarScrollTop: (newValue: number) => void;
 	hiddenCoursesIds: string[];
@@ -15,7 +15,7 @@ type CalendarContextProps = {
 const CalendarContext = createContext({} as CalendarContextProps);
 
 export const CalendarContextProvider = ({ children }: { children: ReactNode }) => {
-	const containerRef = useRef<HTMLElement | null>(null);
+	const daysViewContainerRef = useRef<HTMLElement | null>(null);
 	// Used when filtering courses, only courses in this array are visible
 	const [hiddenCoursesIds, setHiddenCoursesIds] = useState<string[]>([]);
 
@@ -25,26 +25,6 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 		deserializer: (value: string) => parseInt(value),
 		serializer: (value: number) => value.toString(),
 	});
-
-	/**
-	 * Listens to the scroll event on the calendar container and synchronize
-	 * it with localStorage to keep the same scroll position after switching routes.
-	 */
-	useEffect(() => {
-		if (!containerRef.current) return;
-		const listener = () => {
-			setCalendarScrollTop(containerRef.current!.scrollTop);
-		};
-
-		containerRef.current.addEventListener('scroll', listener);
-
-		containerRef.current.scrollTop = calendarScrollTop;
-
-		return () => {
-			if (!containerRef.current) return;
-			containerRef.current.removeEventListener('scroll', listener);
-		};
-	}, []);
 
 	/**
 	 * Adds course id to the hidden courses array to stop
@@ -66,9 +46,9 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 	return (
 		<CalendarContext.Provider
 			value={{
-				containerRef,
-				calendarScrollTop: calendarScrollTop,
-				setCalendarScrollTop: setCalendarScrollTop,
+				daysViewContainerRef,
+				calendarScrollTop,
+				setCalendarScrollTop,
 				hiddenCoursesIds,
 				handleHideCourse,
 				handleShowCourse,

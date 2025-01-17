@@ -43,7 +43,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
-	const { containerRef } = useCalendarContext();
+	const { daysViewContainerRef: containerRef } = useCalendarContext();
 	const { firstCalendarDay, displayedDays } = useSettings();
 	const { data: user } = useUser();
 	const [isDragging, setIsDragging] = useState(false);
