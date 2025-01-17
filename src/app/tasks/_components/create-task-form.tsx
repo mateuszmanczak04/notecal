@@ -39,6 +39,8 @@ const CreateTaskForm = ({ forPage = 'tasks', course }: Props) => {
 
 	// Detect keyboard shortcut
 	useEffect(() => {
+		if (!inputRef.current) return;
+
 		const listener = (e: KeyboardEvent) => {
 			// Don't do anything if input is active
 			if (inputRef.current === document.activeElement) return;
