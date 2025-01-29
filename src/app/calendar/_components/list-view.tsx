@@ -22,7 +22,7 @@ const ListView = () => {
 					const course = courses.find(c => c.id === note.courseId);
 					return (
 						<Link
-							href={`/notes/${note.id}`}
+							href={`/notes?noteId=${note.id}`}
 							className='flex w-[clamp(240px,100%,800px)] items-center justify-between gap-4 rounded-xl p-4 text-white hover:opacity-90'
 							style={{ backgroundColor: course?.color }}
 							key={note.id}>
@@ -47,7 +47,7 @@ const ListView = () => {
 					const course = courses.find(c => c.id === note.courseId);
 					return (
 						<Link
-							href={`/notes/${note.id}`}
+							href={`/notes?noteId=${note.id}`}
 							className='flex w-[clamp(240px,100%,800px)] items-center justify-between gap-4 rounded-xl p-4 text-white hover:opacity-90'
 							style={{ backgroundColor: course?.color }}
 							key={note.id}>

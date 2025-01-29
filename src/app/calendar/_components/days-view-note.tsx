@@ -56,7 +56,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	// Handle routng to /notes/[id] page:
 	const router = useRouter();
 	const handleRoute = () => {
-		router.push(`/notes/${note.id}`);
+		router.push(`/notes?noteId=${note.id}`);
 	};
 
 	// Should not occur in normal app conditions

@@ -16,7 +16,7 @@ const MonthViewNote = ({ note }: Props) => {
 
 	return (
 		<Link
-			href={`/notes/${note.id}`}
+			href={`/notes?noteId=${note.id}`}
 			style={{ backgroundColor: noteCourse.color }}
 			className='truncate text-nowrap rounded-md px-2 text-sm text-white'>
 			{note.title || noteCourse.name}

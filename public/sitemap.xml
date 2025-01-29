@@ -59,7 +59,7 @@
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://notecal.app/notes/[id]</loc>
+        <loc>https://notecal.app/notes</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
