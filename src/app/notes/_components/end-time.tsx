@@ -26,7 +26,6 @@ const EndTime = ({ note }: Props) => {
 	});
 
 	const onChange = (newEndTime: Date | null) => {
-		// TODO: display a message telling you can't set it like that
 		if (note.startTime && newEndTime && newEndTime < note.startTime) return;
 
 		mutate({ id: note.id, endTime: newEndTime ? toUTC(newEndTime) : null });
