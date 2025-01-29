@@ -12,8 +12,8 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { EditorState } from 'lexical';
-import { useRef } from 'react';
-import updateNote, { T_UpdateNoteInput } from '../_actions/update-note';
+import { useRef, useState } from 'react';
+import updateNote from '../_actions/update-note';
 import { editorConfig } from '../_editor/editor-config';
 import SavePlugin from '../_editor/save-plugin';
 import ToolbarPlugin from '../_editor/toolbar-plugin';
@@ -32,12 +32,12 @@ const Content = ({ note, course }: Props) => {
 	 * Keeps the current editor state. It's used to save the note content.
 	 */
 	const editorStateRef = useRef<EditorState>(undefined);
-
+	const [hasChanged, setHasChanged] = useState(false);
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate: mutateUpdate, isPending: isPendingUpdate } = useMutation({
 		mutationFn: updateNote,
-		onMutate: (data: T_UpdateNoteInput) => {
+		onMutate: () => {
 			// Better not to have optimistic updates here as user may leave app
 			// before saving important content
 		},
@@ -57,9 +57,8 @@ const Content = ({ note, course }: Props) => {
 	const handleSave = () => {
 		if (!editorStateRef.current) return;
 		mutateUpdate({ id: note.id, content: JSON.stringify(editorStateRef.current) });
+		setHasChanged(false);
 	};
-
-	const hasChanged = true; // TODO: fix this
 
 	return (
 		<article
@@ -91,6 +90,7 @@ const Content = ({ note, course }: Props) => {
 				<OnChangePlugin
 					onChange={editorState => {
 						editorStateRef.current = editorState;
+						setHasChanged(JSON.stringify(editorState) !== note.content);
 					}}
 				/>
 			</LexicalComposer>
