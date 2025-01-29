@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react';
 import updateNote from '../_actions/update-note';
 
 type Props = {
-	note?: Note;
+	note: Note;
 };
 
 const NoteTitle = ({ note }: Props) => {
@@ -26,7 +26,6 @@ const NoteTitle = ({ note }: Props) => {
 	});
 
 	const handleSubmit = () => {
-		if (!note) return;
 		const newTitle = titleRef.current.innerText;
 		// Don't want to update the same value:
 		if (newTitle.trim() === note.title) return;
@@ -37,7 +36,7 @@ const NoteTitle = ({ note }: Props) => {
 	 * Detect Enter and Escape keys for submission or cancellation.
 	 */
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLParagraphElement>) => {
-		if (!note || !titleRef.current) return;
+		if (!titleRef.current) return;
 		if (event.key === 'Enter' && !event.shiftKey) {
 			event.preventDefault();
 			titleRef.current.blur(); // It automatically triggers handleSubmit()
@@ -52,16 +51,9 @@ const NoteTitle = ({ note }: Props) => {
 
 	// Set initial value:
 	useEffect(() => {
-		if (!note || !titleRef.current) return;
+		if (!titleRef.current) return;
 		titleRef.current.innerText = note.title;
-	}, [note]);
-
-	if (!note)
-		return (
-			<h2 className='mb-2 break-all rounded-md bg-white px-3 py-2 text-center text-2xl font-semibold text-opacity-50 outline-none transition-opacity dark:bg-neutral-800'>
-				Please select or create a note to continue
-			</h2>
-		);
+	}, [note.title]);
 
 	return (
 		<h2

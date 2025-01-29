@@ -20,7 +20,7 @@ import ToolbarPlugin from '../_editor/toolbar-plugin';
 import NoteTitle from './note-title';
 
 type Props = {
-	note?: Note;
+	note: Note;
 	course: Course;
 };
 
@@ -54,7 +54,7 @@ const Content = ({ note, course }: Props) => {
 	 * or presses Cmd + S (or Ctrl + S) shortcut.
 	 */
 	const handleSave = () => {
-		if (!note || !editorStateRef.current) return;
+		if (!editorStateRef.current) return;
 		mutateUpdate({ id: note.id, content: JSON.stringify(editorStateRef.current) });
 	};
 
@@ -67,34 +67,32 @@ const Content = ({ note, course }: Props) => {
 				isPendingUpdate && 'pointer-events-none opacity-50',
 			)}>
 			<NoteTitle note={note} />
-			{note && (
-				<LexicalComposer
-					initialConfig={{
-						...editorConfig,
-						editorState: note.content || undefined,
-					}}>
-					<ToolbarPlugin note={note} onSave={handleSave} course={course} hasChanged={hasChanged} />
-					<div className='relative mt-4 flex-1 overflow-y-auto scroll-auto leading-loose'>
-						<RichTextPlugin
-							contentEditable={<ContentEditable className='relative h-full resize-none outline-none' />}
-							placeholder={
-								<p className='pointer-events-none absolute left-0 top-0 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
-									Enter some text...
-								</p>
-							}
-							ErrorBoundary={LexicalErrorBoundary}
-						/>
-					</div>
-					<HistoryPlugin />
-					<AutoFocusPlugin />
-					<SavePlugin handleSave={handleSave} hasChanged={hasChanged} />
-					<OnChangePlugin
-						onChange={editorState => {
-							editorStateRef.current = editorState;
-						}}
+			<LexicalComposer
+				initialConfig={{
+					...editorConfig,
+					editorState: note.content || undefined,
+				}}>
+				<ToolbarPlugin note={note} onSave={handleSave} course={course} hasChanged={hasChanged} />
+				<div className='relative mt-4 flex-1 overflow-y-auto scroll-auto leading-loose'>
+					<RichTextPlugin
+						contentEditable={<ContentEditable className='relative h-full resize-none outline-none' />}
+						placeholder={
+							<p className='pointer-events-none absolute left-0 top-0 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
+								Enter some text...
+							</p>
+						}
+						ErrorBoundary={LexicalErrorBoundary}
 					/>
-				</LexicalComposer>
-			)}
+				</div>
+				<HistoryPlugin />
+				<AutoFocusPlugin />
+				<SavePlugin handleSave={handleSave} hasChanged={hasChanged} />
+				<OnChangePlugin
+					onChange={editorState => {
+						editorStateRef.current = editorState;
+					}}
+				/>
+			</LexicalComposer>
 		</article>
 	);
 };
