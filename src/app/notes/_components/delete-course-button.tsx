@@ -1,6 +1,6 @@
 'use client';
 
-import deleteCourse from '@/app/courses/_actions/delete-course';
+import deleteCourse, { T_DeleteCourseInput } from '@/app/courses/_actions/delete-course';
 import { Button } from '@/components/button';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
@@ -21,8 +21,8 @@ const DeleteCourseButton = ({ id }: Props) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: deleteCourse,
-		onMutate: () => {
-			// TODO: optimistic update
+		onMutate: (data: T_DeleteCourseInput) => {
+			queryClient.setQueryData(['courses'], (old: any) => old.filter((course: any) => course.id !== data.id));
 		},
 		onSettled: data => {
 			if (data && 'error' in data) {
