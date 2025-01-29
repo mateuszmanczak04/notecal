@@ -1,11 +1,12 @@
 'use client';
 
-import createNote from '@/app/notes/_actions/create-note';
+import createNote, { T_CreateNoteInput } from '@/app/notes/_actions/create-note';
 import { Button } from '@/components/button';
 import { useToast } from '@/components/toast/use-toast';
 import { useCourses } from '@/hooks/use-courses';
 import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
+import { createTemporaryNote } from '@/utils/create-temporary-note';
 import { toUTC } from '@/utils/timezone';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
@@ -28,8 +29,9 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 	const { data: courses } = useCourses();
 	const { mutate, isPending } = useMutation({
 		mutationFn: createNote,
-		onMutate: () => {
-			// TODO: optimistic update
+		onMutate: (data: T_CreateNoteInput) => {
+			const tempNote = createTemporaryNote(data);
+			queryClient.setQueryData(['notes'], (old: any) => [...old, tempNote]);
 		},
 		onSettled: data => {
 			if (data && 'error' in data) {
@@ -73,13 +75,6 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 	const handleSelect = (courseId: string) => {
 		mutate({ courseId, startTime: toUTC(time), duration: defaultNoteDuration });
 		hidePicker();
-
-		// TODO: restore with optimistic updates
-		// Needed this timeout to move hidePicker at the end of the
-		// call stack. Otherwise it would be hidden before note was created
-		// setTimeout(() => {
-		// 	hidePicker();
-		// }, 0);
 	};
 
 	// Hide the course picker when clicked outside the popup
