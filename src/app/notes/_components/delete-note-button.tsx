@@ -15,6 +15,7 @@ import { cn } from '@/utils/cn';
 import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Trash } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import deleteNote from '../_actions/delete-note';
 
 type Props = {
@@ -36,9 +37,11 @@ const DeleteNoteButton = ({ note }: Props) => {
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
+	const router = useRouter();
 
 	const handleDelete = () => {
 		mutate({ id: note.id });
+		router.push(`/notes?courseId=${note.courseId}`);
 	};
 
 	return (

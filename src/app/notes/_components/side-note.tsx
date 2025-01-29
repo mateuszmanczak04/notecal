@@ -21,7 +21,7 @@ const SideNote = ({ note }: Props) => {
 	const { closeContextMenu, contextMenuPosition, handleContextMenu } = useNoteContextMenu();
 
 	const handleRoute = () => {
-		router.push(`/notes/${note.id}`);
+		router.push(`/notes?noteId=${note.id}`);
 	};
 
 	return (

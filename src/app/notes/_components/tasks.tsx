@@ -2,17 +2,23 @@
 
 import CreateTaskForm from '@/app/tasks/_components/create-task-form';
 import Task from '@/app/tasks/_components/task';
-import { Course, Task as T_Task } from '@prisma/client';
+import { useTasks } from '@/hooks/use-tasks';
+import { Course } from '@prisma/client';
 
 type Props = {
 	course: Course;
-	tasks: T_Task[];
 };
 
-const Tasks = ({ course, tasks }: Props) => {
+const Tasks = ({ course }: Props) => {
+	const { data: tasks } = useTasks();
+
+	if (!tasks) return;
+
+	const currentCourseTasks = tasks.filter(task => task.courseId === course.id);
+
 	return (
 		<article className='flex flex-col gap-y-4'>
-			{tasks?.map(task => <Task forPage='notes' key={task.id} task={task} />)}
+			{currentCourseTasks?.map(task => <Task forPage='notes' key={task.id} task={task} />)}
 
 			<CreateTaskForm course={course} forPage='notes' />
 		</article>
