@@ -13,7 +13,7 @@ import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { EditorState } from 'lexical';
 import { useRef } from 'react';
-import updateNote from '../_actions/update-note';
+import updateNote, { T_UpdateNoteInput } from '../_actions/update-note';
 import { editorConfig } from '../_editor/editor-config';
 import SavePlugin from '../_editor/save-plugin';
 import ToolbarPlugin from '../_editor/toolbar-plugin';
@@ -37,8 +37,9 @@ const Content = ({ note, course }: Props) => {
 	const { toast } = useToast();
 	const { mutate: mutateUpdate, isPending: isPendingUpdate } = useMutation({
 		mutationFn: updateNote,
-		onMutate: () => {
-			// TODO: optimistic update
+		onMutate: (data: T_UpdateNoteInput) => {
+			// Better not to have optimistic updates here as user may leave app
+			// before saving important content
 		},
 		onSettled: data => {
 			if (data && 'error' in data) {
