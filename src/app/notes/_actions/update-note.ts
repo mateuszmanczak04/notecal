@@ -43,24 +43,6 @@ const updateNote = async ({
 			return { error: 'Note not found' };
 		}
 
-		// Do these checks only if user requested change of note's course
-		if (courseId) {
-			const notesCourse = await db.course.findUnique({ where: { id: note.courseId } });
-
-			// Don't allow users to leave a course without any note
-			if (notesCourse) {
-				const courseNotes = await db.note.findMany({ where: { courseId: notesCourse?.id } });
-				if (!courseNotes || courseNotes.length === 1) {
-					return {
-						error: 'You cannot leave this course without any note, please create a new one before moving this',
-					};
-				}
-			} else {
-				// Should never occur as every note should have corresponding course
-				return { error: 'Course not found' };
-			}
-		}
-
 		const updatedNote = await db.note.update({
 			where: { id, userId: user.id },
 			data: {
