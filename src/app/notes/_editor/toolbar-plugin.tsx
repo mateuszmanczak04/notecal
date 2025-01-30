@@ -293,10 +293,7 @@ export default function ToolbarPlugin({ onSave, note, handleExport, course, hasC
 			</Button>
 
 			{/* Export button: */}
-			<Button
-				className='dark:bg-neutral-600 dark:hover:bg-neutral-500'
-				variant='secondary'
-				onClick={handleExport}>
+			<Button className='rounded-md' variant='secondary' onClick={handleExport}>
 				<FileOutput className='size-5' /> Export PDF
 			</Button>
 		</div>
