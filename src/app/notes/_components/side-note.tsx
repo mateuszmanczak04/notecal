@@ -5,7 +5,7 @@ import { useNoteContextMenu } from '@/hooks/use-note-context-menu';
 import { cn } from '@/utils/cn';
 import { Note } from '@prisma/client';
 import { format } from 'date-fns';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 type Props = {
 	note: Note;
@@ -15,8 +15,8 @@ type Props = {
  * Single note link used in /notes/[id] page as side note
  */
 const SideNote = ({ note }: Props) => {
-	const params = useParams();
-	const noteId = params.noteId;
+	const searchParams = useSearchParams();
+	const noteId = searchParams.get('noteId');
 	const router = useRouter();
 	const { closeContextMenu, contextMenuPosition, handleContextMenu } = useNoteContextMenu();
 
