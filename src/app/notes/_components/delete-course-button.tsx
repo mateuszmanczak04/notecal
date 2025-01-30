@@ -37,7 +37,7 @@ const DeleteCourseButton = ({ id }: Props) => {
 
 	const confirmDeletion = () => {
 		mutate({ id });
-		router.push('/courses');
+		router.replace('/courses');
 	};
 
 	if (isDeleting) {
