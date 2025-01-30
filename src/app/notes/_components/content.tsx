@@ -92,8 +92,6 @@ const Content = ({ note, course }: Props) => {
 		document.body.removeChild(link);
 	};
 
-	console.log('Content rendered', note.content.length);
-
 	return (
 		<article
 			className={cn(
