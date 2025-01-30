@@ -4,14 +4,25 @@ import { useNotesWithTime } from '@/hooks/use-notes-with-time';
 import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
 import { addDays, format, getDay, getDaysInMonth, isSameDay, startOfMonth } from 'date-fns';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import MonthViewNote from './month-view-note';
 
 const Tile = ({ children, onClick }: { children?: React.ReactNode; onClick?: () => void }) => {
+	const ref = useRef<HTMLDivElement>(null!);
+
+	const handleClick = (e: React.MouseEvent) => {
+		if (ref.current === e.target) {
+			console.log('CLICKED', ref.current, e.target);
+
+			onClick?.();
+		}
+	};
+
 	return (
 		<div
-			onClick={onClick}
+			ref={ref}
+			onClick={handleClick}
 			className={cn(
 				'flex flex-col gap-y-1 border-b border-r border-neutral-300 p-2 py-10 text-center last-of-type:rounded-br-xl dark:border-neutral-600',
 				!!onClick && 'cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-700',

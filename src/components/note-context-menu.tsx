@@ -63,7 +63,7 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 	return (
 		<div
 			ref={contextMenuRef}
-			className='fixed z-50 w-72 rounded-xl bg-white p-4 pb-20 shadow-xl dark:bg-neutral-700'
+			className='fixed z-50 w-72 cursor-default select-none rounded-xl bg-white p-4 pb-20 shadow-xl dark:bg-neutral-700'
 			style={{
 				left: position.x,
 				top: position.y,
