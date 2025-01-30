@@ -46,6 +46,7 @@ export const exportNoteToPDF = async ({
 			});
 		}
 
+		await page.addStyleTag({ content: '@page { padding: 36px; ' });
 		await page.addStyleTag({
 			content: '* { font-family: "Inter", sans-serif; box-sizing: border-box; margin: 0; padding: 0; }',
 		});
@@ -58,7 +59,6 @@ export const exportNoteToPDF = async ({
 		const pdfBuffer = await page.pdf({
 			format: 'A4',
 			printBackground: true,
-			margin: { top: 36, right: 36, bottom: 36, left: 36 },
 			waitForFonts: true,
 		});
 		await browser.close();
