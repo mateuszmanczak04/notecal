@@ -4,6 +4,7 @@ import puppeteer from 'puppeteer';
 
 export type T_ExportNoteToPDFInput = {
 	htmlContent: string;
+	theme: 'light' | 'dark';
 };
 
 export type T_ExportNoteToPDFResult = Promise<{ error: string } | { pdfBase64: string }>;
@@ -11,7 +12,7 @@ export type T_ExportNoteToPDFResult = Promise<{ error: string } | { pdfBase64: s
 /**
  * Receives HTML content and returns a PDF file in base64 format.
  */
-export const exportNoteToPDF = async ({ htmlContent }: T_ExportNoteToPDFInput): T_ExportNoteToPDFResult => {
+export const exportNoteToPDF = async ({ htmlContent, theme }: T_ExportNoteToPDFInput): T_ExportNoteToPDFResult => {
 	if (!htmlContent) {
 		return { error: 'Content is required' };
 	}
@@ -25,13 +26,24 @@ export const exportNoteToPDF = async ({ htmlContent }: T_ExportNoteToPDFInput): 
             </style>
             ${htmlContent}
         `);
+
+		// Themes:
+		if (theme === 'light') {
+			await page.addStyleTag({
+				content: 'body { margin: 24px; color: #202A37; background-color: white !important; }',
+			});
+		} else {
+			await page.addStyleTag({
+				content: 'body { margin: 24px; color: white; background-color: #202A37 !important; }',
+			});
+		}
+
 		await page.addStyleTag({ content: '* { font-family: "Inter", sans-serif; }' });
-		await page.addStyleTag({ content: 'body { margin: 24px; }' });
 		await page.addStyleTag({ content: 'h1 { font-size: 24px; line-height: 32px; }' });
 		await page.addStyleTag({ content: 'h2 { font-size: 20px; line-height: 28px; }' });
 		await page.addStyleTag({ content: 'p { font-size: 16px; line-height: 32px; }' });
 		await page.addStyleTag({ content: '.underline { text-decoration: underline; } ' });
-		const pdfBuffer = await page.pdf({ format: 'A4' });
+		const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
 		await browser.close();
 
 		const pdfBase64 = Buffer.from(pdfBuffer).toString('base64');

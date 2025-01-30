@@ -2,6 +2,7 @@
 
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
+import { isDarkMode } from '@/utils/is-dark-mode';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -64,7 +65,10 @@ const Content = ({ note, course }: Props) => {
 
 	/** Sends editor HTML markup to the backend, receives PDF result in base64 format and downloads it */
 	const handleExportToPDF = async () => {
-		const res = await exportNoteToPDF({ htmlContent: editorContentRef.current.innerHTML });
+		const res = await exportNoteToPDF({
+			htmlContent: editorContentRef.current.innerHTML,
+			theme: isDarkMode() ? 'dark' : 'light',
+		});
 
 		if ('error' in res) return;
 
