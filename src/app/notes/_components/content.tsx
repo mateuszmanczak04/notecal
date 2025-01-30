@@ -11,6 +11,7 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import jsPDF from 'jspdf';
 import { EditorState } from 'lexical';
 import { useRef, useState } from 'react';
 import updateNote from '../_actions/update-note';
@@ -48,6 +49,7 @@ const Content = ({ note, course }: Props) => {
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
+	const editorContentRef = useRef<HTMLDivElement>(null!);
 
 	/**
 	 * Saves the note content to the database.
@@ -58,6 +60,18 @@ const Content = ({ note, course }: Props) => {
 		if (!editorStateRef.current) return;
 		mutateUpdate({ id: note.id, content: JSON.stringify(editorStateRef.current) });
 		setHasChanged(false);
+	};
+
+	const handleExport = () => {
+		const doc = new jsPDF({ orientation: 'p', unit: 'pt', format: 'letter' });
+		doc.canvas.height = 80 * 11;
+		doc.canvas.width = 80 * 8.5;
+
+		doc.html(editorContentRef.current, {
+			callback: doc => {
+				doc.save(`${note.title}.pdf`);
+			},
+		});
 	};
 
 	return (
@@ -72,10 +86,21 @@ const Content = ({ note, course }: Props) => {
 					...editorConfig,
 					editorState: note.content || undefined,
 				}}>
-				<ToolbarPlugin note={note} onSave={handleSave} course={course} hasChanged={hasChanged} />
+				<ToolbarPlugin
+					handleExport={handleExport}
+					note={note}
+					onSave={handleSave}
+					course={course}
+					hasChanged={hasChanged}
+				/>
 				<div className='relative mt-4 flex-1 overflow-y-scroll scroll-auto leading-loose scrollbar-hide'>
 					<RichTextPlugin
-						contentEditable={<ContentEditable className='relative h-full resize-none outline-none' />}
+						contentEditable={
+							<ContentEditable
+								ref={editorContentRef}
+								className='relative h-full resize-none outline-none'
+							/>
+						}
 						placeholder={
 							<p className='pointer-events-none absolute left-0 top-0 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
 								Enter some text...

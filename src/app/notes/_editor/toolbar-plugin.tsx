@@ -28,6 +28,7 @@ import {
 	Check,
 	ChevronLeft,
 	ChevronRight,
+	FileOutput,
 	Heading1,
 	Heading2,
 	Italic,
@@ -40,9 +41,10 @@ type Props = {
 	note: Note;
 	course: Course;
 	hasChanged: boolean;
+	handleExport: () => void;
 };
 
-export default function ToolbarPlugin({ onSave, note, course, hasChanged }: Props) {
+export default function ToolbarPlugin({ onSave, note, handleExport, course, hasChanged }: Props) {
 	const [editor] = useLexicalComposerContext();
 
 	/** Indicates which properties are disabled, e.g.:
@@ -279,6 +281,8 @@ export default function ToolbarPlugin({ onSave, note, course, hasChanged }: Prop
 					<AlignJustify className='h-5 w-5' />
 				</Toggle>
 			</div>
+
+			{/* Save button: */}
 			<Button
 				variant='default'
 				className='rounded-md'
@@ -286,6 +290,14 @@ export default function ToolbarPlugin({ onSave, note, course, hasChanged }: Prop
 				style={{ backgroundColor: course?.color || '' }}
 				disabled={!hasChanged}>
 				<Check className='size-5' /> Save
+			</Button>
+
+			{/* Export button: */}
+			<Button
+				className='dark:bg-neutral-600 dark:hover:bg-neutral-500'
+				variant='secondary'
+				onClick={handleExport}>
+				<FileOutput className='size-5' /> Export PDF
 			</Button>
 		</div>
 	);
