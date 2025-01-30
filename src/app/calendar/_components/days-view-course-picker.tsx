@@ -114,12 +114,12 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 		return (
 			<div>
 				<p className='w-full py-1 text-center text-sm '>{format(time, 'yyyy/MM/dd hh:mm')}</p>
-				<div className='max-h-96 w-64 overflow-y-scroll'>
+				<div className='max-h-[60vh] w-fit max-w-80 overflow-x-hidden overflow-y-scroll scrollbar-hide '>
 					{courses?.map(course => (
 						<button
 							key={course.id}
 							onClick={() => handleSelect(course.id)}
-							className='flex w-full items-center justify-center px-4 py-2 text-white transition hover:bg-neutral-100 dark:hover:bg-neutral-600'
+							className=' w-full truncate  px-4 py-2 text-white transition hover:bg-neutral-100 dark:hover:bg-neutral-600'
 							style={{ color: course.color }}>
 							{course.name}
 						</button>
