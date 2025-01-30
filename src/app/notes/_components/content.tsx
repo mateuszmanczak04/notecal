@@ -73,7 +73,7 @@ const Content = ({ note, course }: Props) => {
 					editorState: note.content || undefined,
 				}}>
 				<ToolbarPlugin note={note} onSave={handleSave} course={course} hasChanged={hasChanged} />
-				<div className='relative mt-4 flex-1 overflow-y-auto scroll-auto leading-loose'>
+				<div className='relative mt-4 flex-1 overflow-y-scroll scroll-auto leading-loose scrollbar-hide'>
 					<RichTextPlugin
 						contentEditable={<ContentEditable className='relative h-full resize-none outline-none' />}
 						placeholder={
