@@ -53,7 +53,11 @@ const SideNotes = ({ currentCourse }: Props) => {
 			<Button
 				style={{ backgroundColor: currentCourse.color }}
 				onClick={handleNewNote}
-				className={cn('w-full rounded-t-none', isPending && 'pointer-events-none opacity-50')}
+				className={cn(
+					'w-full ',
+					notes.length !== 0 && 'rounded-t-none',
+					isPending && 'pointer-events-none opacity-50',
+				)}
 				disabled={isPending}>
 				<Plus className='h-4 w-4' /> Create a new note
 			</Button>
