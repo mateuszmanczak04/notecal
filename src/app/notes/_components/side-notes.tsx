@@ -56,7 +56,7 @@ const SideNotes = ({ currentCourse }: Props) => {
 				onClick={handleNewNote}
 				className={cn(
 					'w-full ',
-					notes.length !== 0 && 'rounded-t-none',
+					currentCourseNotes.length !== 0 && 'rounded-t-none',
 					isPending && 'pointer-events-none opacity-50',
 				)}
 				disabled={isPending}>
