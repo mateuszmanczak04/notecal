@@ -55,6 +55,7 @@ export const exportNoteToPDF = async ({
 			format: 'A4',
 			printBackground: true,
 			margin: { top: 36, right: 36, bottom: 36, left: 36 },
+			waitForFonts: true,
 		});
 		await browser.close();
 
