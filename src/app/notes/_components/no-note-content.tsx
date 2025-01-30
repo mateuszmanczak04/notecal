@@ -84,7 +84,7 @@ const NoNoteContent = ({ course }: T_Props) => {
 				</Button>
 			</div>
 
-			<div className='relative mt-4 flex-1 overflow-y-auto scroll-auto leading-loose'>
+			<div className='relative mt-4 flex-1 overflow-y-scroll scroll-auto leading-loose scrollbar-hide'>
 				<p className='pointer-events-none absolute left-0 top-0 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
 					Go to the sidebar to create a new note or select existing one to continue
 				</p>
