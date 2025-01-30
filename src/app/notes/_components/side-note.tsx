@@ -46,7 +46,7 @@ const SideNote = ({ note }: Props) => {
 					)}
 				</span>{' '}
 			</Link>
-			{/* Place it outside the link itself because it triggered */}
+			{/* Place it outside the link itself because it triggered link */}
 			{contextMenuPosition && (
 				<NoteContextMenu note={note} handleClose={closeContextMenu} position={contextMenuPosition} />
 			)}
