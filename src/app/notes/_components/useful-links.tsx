@@ -53,30 +53,30 @@ const UsefulLinks = ({ course }: Props) => {
 
 	return (
 		<article className={cn(isPending && 'pointer-events-none opacity-50')}>
-			<div className='grid gap-y-2'>
-				{usefulLinks.map(link => (
-					<div
-						key={link.id}
-						className='group flex h-9 w-full items-center justify-between rounded-xl px-3 dark:bg-neutral-700'
-						title={link.title}>
-						<a
-							target='_blank'
-							href={addHttpsIfMissing(link.url)}
-							className='block min-w-0 max-w-52 flex-1 truncate hover:underline'>
-							{link?.title || removeProtocol(link.url)}
-						</a>
+			{usefulLinks.length > 0 && (
+				<div className='mb-4 grid gap-y-2'>
+					{usefulLinks.map(link => (
+						<div
+							key={link.id}
+							className='group flex h-9 w-full items-center justify-between rounded-xl px-3 dark:bg-neutral-700'
+							title={link.title}>
+							<a
+								target='_blank'
+								href={addHttpsIfMissing(link.url)}
+								className='block min-w-0 max-w-52 flex-1 truncate hover:underline'>
+								{link?.title || removeProtocol(link.url)}
+							</a>
 
-						<button onClick={() => handleDelete(link.id)} className='hidden group-hover:block'>
-							<X className='size-5' />
-						</button>
-					</div>
-				))}
-			</div>
+							<button onClick={() => handleDelete(link.id)} className='hidden group-hover:block'>
+								<X className='size-5' />
+							</button>
+						</div>
+					))}
+				</div>
+			)}
 
 			{/* Add new link */}
-			<form
-				onSubmit={handleAddNew}
-				className={cn('mt-4 grid gap-2', isPending && 'pointer-events-none opacity-50')}>
+			<form onSubmit={handleAddNew} className={cn(' grid gap-2', isPending && 'pointer-events-none opacity-50')}>
 				<Input
 					id='create-task-title'
 					placeholder='Title (optional)'
