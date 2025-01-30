@@ -33,7 +33,7 @@ export const duplicateNote = async (data: T_DuplicateNoteInput): T_DuplicateNote
 
 		const newNote = await db.note.create({
 			data: {
-				title: note.title,
+				title: note.title + '(copy)',
 				startTime: note.startTime,
 				endTime: note.endTime,
 				content: note.content,

@@ -22,9 +22,12 @@ const DuplicateNote = ({ note, className, callback }: T_Props) => {
 		mutationFn: duplicateNote,
 		onMutate: (data: T_DuplicateNoteInput) => {
 			const duplicatedNote = notes?.find(note => note.id === data.id);
+			if (!duplicatedNote) {
+				return;
+			}
 			queryClient.setQueryData(['notes'], (old: Note[]) => [
 				...old,
-				{ ...duplicatedNote, id: Math.random().toString() },
+				{ ...duplicatedNote, id: Math.random().toString(), title: duplicatedNote.title + ' (copy)' },
 			]);
 			if (callback) {
 				callback();
