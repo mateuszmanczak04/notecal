@@ -1,6 +1,7 @@
 'use client';
 
 import ChangeCourse from '@/app/notes/_components/change-course';
+import DeleteNoteButton from '@/app/notes/_components/delete-note-button';
 import { useCourses } from '@/hooks/use-courses';
 import { Note } from '@prisma/client';
 import { useEffect, useLayoutEffect, useRef } from 'react';
@@ -20,7 +21,9 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 	const currentCourse = courses?.find(c => c.id === note.courseId);
 	const contextMenuRef = useRef<HTMLDivElement>(null!);
 
-	useOnClickOutside(contextMenuRef, handleClose);
+	useOnClickOutside(contextMenuRef, () => {
+		handleClose();
+	});
 
 	// Close the context menu when user presses the escape key
 	useEffect(() => {
@@ -65,12 +68,16 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 				top: position.y,
 			}}>
 			{currentCourse && (
-				<ChangeCourse
-					handleClose={handleClose}
-					currentCourse={currentCourse}
-					note={note}
-					forPage='context-menu'
-				/>
+				<div>
+					<p className='mb-2 px-2 font-semibold'>Move to another course</p>
+					<ChangeCourse
+						handleClose={handleClose}
+						currentCourse={currentCourse}
+						note={note}
+						forPage='context-menu'
+					/>
+					<DeleteNoteButton note={note} className='mt-4 w-full' />
+				</div>
 			)}
 		</div>
 	);

@@ -13,7 +13,6 @@ import {
 	Heading1,
 	Heading2,
 	Italic,
-	Trash,
 	Underline,
 } from 'lucide-react';
 
@@ -21,6 +20,9 @@ type T_Props = {
 	course: Course;
 };
 
+/**
+ * Content of the note editor when no note is selected
+ */
 const NoNoteContent = ({ course }: T_Props) => {
 	return (
 		<article className='flex h-full flex-1 flex-col rounded-xl bg-neutral-100 p-4 dark:bg-neutral-700'>
@@ -79,9 +81,6 @@ const NoNoteContent = ({ course }: T_Props) => {
 				</div>
 				<Button variant='default' className='rounded-md' style={{ backgroundColor: course?.color || '' }}>
 					<Check className='size-5' /> Save
-				</Button>
-				<Button variant='destructive' className='rounded-md'>
-					<Trash className='size-5' /> Delete note
 				</Button>
 			</div>
 

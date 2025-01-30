@@ -34,7 +34,6 @@ import {
 	Underline,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import DeleteNoteButton from '../_components/delete-note-button';
 
 type Props = {
 	onSave: () => void;
@@ -288,7 +287,6 @@ export default function ToolbarPlugin({ onSave, note, course, hasChanged }: Prop
 				disabled={!hasChanged}>
 				<Check className='size-5' /> Save
 			</Button>
-			<DeleteNoteButton note={note} />
 		</div>
 	);
 }

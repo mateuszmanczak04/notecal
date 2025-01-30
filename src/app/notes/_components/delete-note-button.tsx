@@ -1,75 +1,57 @@
 'use client';
 
 import { Button } from '@/components/button';
-import {
-	Dialog,
-	DialogClose,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from '@/components/dialog';
+import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Trash } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { ClassNameValue } from 'tailwind-merge';
 import deleteNote from '../_actions/delete-note';
 
 type Props = {
 	note: Note;
+	className?: ClassNameValue;
 };
 
-const DeleteNoteButton = ({ note }: Props) => {
+const DeleteNoteButton = ({ note, className }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
+	const [isDeleting, setIsDeleting] = useState(false);
+	const pathname = usePathname();
 	const { mutate, isPending } = useMutation({
 		mutationFn: deleteNote,
-		onMutate: () => {
-			// TODO: optimistic update
-		},
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
+			}
+			// If user is on the exact note page, redirect to the course page
+			if (pathname === `/notes?noteId=${note.id}`) {
+				router.push(`/notes?courseId=${note.courseId}`);
 			}
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
 	const router = useRouter();
 
-	const handleDelete = () => {
-		mutate({ id: note.id });
-		router.push(`/notes?courseId=${note.courseId}`);
-	};
+	if (isDeleting) {
+		return (
+			<Button
+				variant='destructive'
+				onClick={() => mutate({ id: note.id })}
+				className={cn('rounded-md', className)}>
+				<Trash className='size-5' /> Are you sure? {isPending && <LoadingSpinner className='size-4' />}
+			</Button>
+		);
+	}
 
 	return (
-		<Dialog>
-			<DialogTrigger asChild>
-				<Button variant='destructive' className='rounded-md'>
-					<Trash className='size-5' /> Delete note
-				</Button>
-			</DialogTrigger>
-			<DialogContent className='border-transparent bg-white dark:bg-neutral-800'>
-				<DialogHeader>
-					<DialogTitle>Are you sure to delete this note?</DialogTitle>
-					<DialogDescription>
-						All the content of this note will be permanently erased, you cannot restore it later.
-					</DialogDescription>
-				</DialogHeader>
-				<Button
-					variant='destructive'
-					className={cn(isPending && 'pointer-events-none opacity-50')}
-					disabled={isPending}
-					onClick={handleDelete}>
-					<Trash className='size-5' /> Yes, delete
-				</Button>
-				<DialogClose asChild>
-					<Button variant='secondary'>No, cancel</Button>
-				</DialogClose>
-			</DialogContent>
-		</Dialog>
+		<Button variant='destructive' onClick={() => setIsDeleting(true)} className={cn('rounded-md', className)}>
+			<Trash className='size-5' /> Delete note
+		</Button>
 	);
 };
 
