@@ -12,6 +12,7 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { format } from 'date-fns';
 import { EditorState } from 'lexical';
 import { useRef, useState } from 'react';
 import { exportNoteToPDF } from '../_actions/export-note-to-pdf';
@@ -68,6 +69,8 @@ const Content = ({ note, course }: Props) => {
 		const res = await exportNoteToPDF({
 			htmlContent: editorContentRef.current.innerHTML,
 			theme: isDarkMode() ? 'dark' : 'light',
+			fileTitle: note.title,
+			date: note.startTime ? format(note.startTime, 'yyyy-MM-dd HH:mm') : '',
 		});
 
 		if ('error' in res) return;

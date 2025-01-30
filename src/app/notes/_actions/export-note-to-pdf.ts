@@ -5,6 +5,8 @@ import puppeteer from 'puppeteer';
 export type T_ExportNoteToPDFInput = {
 	htmlContent: string;
 	theme: 'light' | 'dark';
+	fileTitle?: string;
+	date?: string;
 };
 
 export type T_ExportNoteToPDFResult = Promise<{ error: string } | { pdfBase64: string }>;
@@ -12,7 +14,12 @@ export type T_ExportNoteToPDFResult = Promise<{ error: string } | { pdfBase64: s
 /**
  * Receives HTML content and returns a PDF file in base64 format.
  */
-export const exportNoteToPDF = async ({ htmlContent, theme }: T_ExportNoteToPDFInput): T_ExportNoteToPDFResult => {
+export const exportNoteToPDF = async ({
+	htmlContent,
+	theme,
+	fileTitle,
+	date,
+}: T_ExportNoteToPDFInput): T_ExportNoteToPDFResult => {
 	if (!htmlContent) {
 		return { error: 'Content is required' };
 	}
@@ -24,6 +31,7 @@ export const exportNoteToPDF = async ({ htmlContent, theme }: T_ExportNoteToPDFI
             <style>
                 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
             </style>
+            ${fileTitle && `<small>${fileTitle} ${date && `,${date}`}</small>`}
             ${htmlContent}
         `);
 
