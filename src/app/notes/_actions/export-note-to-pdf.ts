@@ -19,8 +19,13 @@ export const exportNoteToPDF = async ({ htmlContent }: T_ExportNoteToPDFInput): 
 	try {
 		const browser = await puppeteer.launch();
 		const page = await browser.newPage();
-		await page.setContent(htmlContent);
-		await page.addStyleTag({ content: '* { font-family: "Arial", sans-serif; }' });
+		await page.setContent(`
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+            </style>
+            ${htmlContent}
+        `);
+		await page.addStyleTag({ content: '* { font-family: "Inter", sans-serif; }' });
 		await page.addStyleTag({ content: 'body { margin: 24px; }' });
 		await page.addStyleTag({ content: 'h1 { font-size: 24px; line-height: 32px; }' });
 		await page.addStyleTag({ content: 'h2 { font-size: 20px; line-height: 28px; }' });
