@@ -71,8 +71,10 @@ const DatePicker = ({ isPending, onSelect, date, className }: Props) => {
 	};
 
 	useOnClickOutside(menuRef, () => {
-		handleSubmit();
-		handleCloseMenu();
+		if (isOpen) {
+			handleSubmit();
+			handleCloseMenu();
+		}
 	});
 
 	useEffect(() => {
