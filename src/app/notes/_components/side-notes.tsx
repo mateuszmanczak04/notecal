@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/button';
+import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
 import { useNotes } from '@/hooks/use-notes';
 import { cn } from '@/utils/cn';
@@ -59,7 +60,7 @@ const SideNotes = ({ currentCourse }: Props) => {
 					isPending && 'pointer-events-none opacity-50',
 				)}
 				disabled={isPending}>
-				<Plus className='h-4 w-4' /> Create a new note
+				<Plus className='h-4 w-4' /> Create a new note {isPending && <LoadingSpinner className='size-4' />}
 			</Button>
 		</article>
 	);
