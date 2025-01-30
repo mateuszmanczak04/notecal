@@ -31,7 +31,7 @@ export const exportNoteToPDF = async ({
             <style>
                 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
             </style>
-            ${fileTitle && `<p class='title'>${fileTitle} ${date && `,${date}`}</p>`}
+            ${fileTitle && `<p class='title'>${fileTitle}${date && `, ${date}`}</p>`}
             ${htmlContent}
         `);
 
