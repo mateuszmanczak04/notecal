@@ -38,11 +38,11 @@ export const exportNoteToPDF = async ({
 		// Themes:
 		if (theme === 'light') {
 			await page.addStyleTag({
-				content: 'body { margin: 24px; color: #202A37; background-color: white !important; }',
+				content: 'body { color: #202A37; background-color: white !important; }',
 			});
 		} else {
 			await page.addStyleTag({
-				content: 'body { margin: 24px; color: white; background-color: #202A37 !important; }',
+				content: 'body { color: white; background-color: #202A37 !important; }',
 			});
 		}
 
@@ -51,7 +51,11 @@ export const exportNoteToPDF = async ({
 		await page.addStyleTag({ content: 'h2 { font-size: 20px; line-height: 28px; }' });
 		await page.addStyleTag({ content: 'p { font-size: 16px; line-height: 32px; }' });
 		await page.addStyleTag({ content: '.underline { text-decoration: underline; } ' });
-		const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
+		const pdfBuffer = await page.pdf({
+			format: 'A4',
+			printBackground: true,
+			margin: { top: 36, right: 36, bottom: 36, left: 36 },
+		});
 		await browser.close();
 
 		const pdfBase64 = Buffer.from(pdfBuffer).toString('base64');
