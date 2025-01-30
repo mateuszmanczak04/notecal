@@ -6,6 +6,7 @@ import { useNotes } from '@/hooks/use-notes';
 import { cn } from '@/utils/cn';
 import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { File } from 'lucide-react';
 import { ClassNameValue } from 'tailwind-merge';
 import { duplicateNote, T_DuplicateNoteInput } from '../_actions/duplicate-note';
 
@@ -46,6 +47,7 @@ const DuplicateNote = ({ note, className, callback }: T_Props) => {
 			onClick={() => mutate({ id: note.id })}
 			className={cn('dark:bg-neutral-600 dark:hover:bg-neutral-500', className)}
 			variant='secondary'>
+			<File className='size-5' />
 			Duplicate note
 		</Button>
 	);
