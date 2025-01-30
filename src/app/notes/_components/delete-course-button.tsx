@@ -1,7 +1,8 @@
 'use client';
 
-import deleteCourse, { T_DeleteCourseInput } from '@/app/courses/_actions/delete-course';
+import deleteCourse from '@/app/courses/_actions/delete-course';
 import { Button } from '@/components/button';
+import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -21,9 +22,6 @@ const DeleteCourseButton = ({ id }: Props) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: deleteCourse,
-		onMutate: (data: T_DeleteCourseInput) => {
-			queryClient.setQueryData(['courses'], (old: any) => old.filter((course: any) => course.id !== data.id));
-		},
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
@@ -52,7 +50,7 @@ const DeleteCourseButton = ({ id }: Props) => {
 					className={cn('mt-4 w-full', isPending && 'pointer-events-none opacity-50')}
 					aria-label='Yes, delete entire course'
 					disabled={isPending}>
-					Yes
+					Yes {isPending && <LoadingSpinner className='size-4' />}
 				</Button>
 				<Button
 					variant='secondary'
