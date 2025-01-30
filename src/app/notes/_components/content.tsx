@@ -11,9 +11,9 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import jsPDF from 'jspdf';
 import { EditorState } from 'lexical';
 import { useRef, useState } from 'react';
+import { exportNoteToPDF } from '../_actions/export-note-to-pdf';
 import updateNote from '../_actions/update-note';
 import { editorConfig } from '../_editor/editor-config';
 import SavePlugin from '../_editor/save-plugin';
@@ -62,16 +62,27 @@ const Content = ({ note, course }: Props) => {
 		setHasChanged(false);
 	};
 
-	const handleExport = () => {
-		const doc = new jsPDF({ orientation: 'p', unit: 'pt', format: 'letter' });
-		doc.canvas.height = 80 * 11;
-		doc.canvas.width = 80 * 8.5;
+	/** Sends editor HTML markup to the backend, receives PDF result in base64 format and downloads it */
+	const handleExportToPDF = async () => {
+		const res = await exportNoteToPDF({ htmlContent: editorContentRef.current.innerHTML });
 
-		doc.html(editorContentRef.current, {
-			callback: doc => {
-				doc.save(`${note.title}.pdf`);
-			},
-		});
+		if ('error' in res) return;
+
+		const byteCharacters = atob(res.pdfBase64);
+		const byteNumbers = new Array(byteCharacters.length);
+		for (let i = 0; i < byteCharacters.length; i++) {
+			byteNumbers[i] = byteCharacters.charCodeAt(i);
+		}
+		console.log(byteNumbers);
+		const byteArray = new Uint8Array(byteNumbers);
+		const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+		const link = document.createElement('a');
+		link.href = URL.createObjectURL(blob);
+		link.download = note.title || 'document.pdf';
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
 	};
 
 	return (
@@ -87,7 +98,7 @@ const Content = ({ note, course }: Props) => {
 					editorState: note.content || undefined,
 				}}>
 				<ToolbarPlugin
-					handleExport={handleExport}
+					handleExport={handleExportToPDF}
 					note={note}
 					onSave={handleSave}
 					course={course}
