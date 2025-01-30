@@ -92,6 +92,8 @@ const Content = ({ note, course }: Props) => {
 		document.body.removeChild(link);
 	};
 
+	console.log('Content rendered', note.content.length);
+
 	return (
 		<article
 			className={cn(
@@ -100,6 +102,7 @@ const Content = ({ note, course }: Props) => {
 			)}>
 			<NoteTitle note={note} />
 			<LexicalComposer
+				key={note.id}
 				initialConfig={{
 					...editorConfig,
 					editorState: note.content || undefined,
