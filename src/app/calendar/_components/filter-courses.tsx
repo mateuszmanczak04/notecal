@@ -19,7 +19,7 @@ const FilterCourses = () => {
 	if (!courses) return;
 
 	return (
-		<div className='mt-auto flex w-full items-center justify-between gap-8 overflow-x-auto rounded-md border border-neutral-200 p-4 dark:border-neutral-600'>
+		<div className='mt-auto flex w-full items-center justify-between gap-8 overflow-y-clip overflow-x-scroll rounded-md border border-neutral-200 p-4 scrollbar-hide dark:border-neutral-600'>
 			<p className='text-nowrap font-semibold'>Filter courses:</p>
 			<div className='flex items-center gap-4'>
 				{courses.map(course => (
