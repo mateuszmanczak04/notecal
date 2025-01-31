@@ -1,6 +1,7 @@
 'use client';
 
 import { useToast } from '@/components/toast/use-toast';
+import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
 import { isDarkMode } from '@/utils/is-dark-mode';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
@@ -14,7 +15,7 @@ import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { EditorState } from 'lexical';
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { exportNoteToPDF } from '../_actions/export-note-to-pdf';
 import updateNote from '../_actions/update-note';
 import { editorConfig } from '../_editor/editor-config';
@@ -36,6 +37,7 @@ const Content = ({ note, course }: Props) => {
 	const editorStateRef = useRef<EditorState>(undefined);
 	const [hasChanged, setHasChanged] = useState(false);
 	const queryClient = useQueryClient();
+	const { noteAutoSave } = useSettings();
 	const { toast } = useToast();
 	const { mutate: mutateUpdate, isPending: isPendingUpdate } = useMutation({
 		mutationFn: updateNote,
@@ -57,11 +59,19 @@ const Content = ({ note, course }: Props) => {
 	 * It's called when the user clicks the save button
 	 * or presses Cmd + S (or Ctrl + S) shortcut.
 	 */
-	const handleSave = () => {
+	const handleSave = useCallback(() => {
 		if (!editorStateRef.current) return;
 		mutateUpdate({ id: note.id, content: JSON.stringify(editorStateRef.current) });
 		setHasChanged(false);
-	};
+	}, [mutateUpdate, note.id]);
+
+	// Autosave
+	useEffect(() => {
+		if (!noteAutoSave) return;
+		handleSave();
+		const listener = setInterval(handleSave, 30 * 1000);
+		return () => clearInterval(listener);
+	}, [noteAutoSave, handleSave]);
 
 	/** Sends editor HTML markup to the backend, receives PDF result in base64 format and downloads it */
 	const handleExportToPDF = async () => {

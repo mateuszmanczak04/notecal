@@ -16,7 +16,7 @@ export type T_SidebarElements = {
 	dangerZone: boolean;
 	settings: boolean;
 };
-export type T_AutosaveTime = number;
+export type T_NoteAutoSave = boolean;
 
 export const useSettings = () => {
 	// TODO: load these values before rendering the app
@@ -44,10 +44,10 @@ export const useSettings = () => {
 			serializer: (value: T_DefaultNoteDuration) => value.toString(),
 		},
 	);
-	const [autosaveTime, setAutosaveTime] = useLocalStorage<T_AutosaveTime>('autosaveTime', 1, {
+	const [noteAutoSave, setNoteAutoSave] = useLocalStorage<T_NoteAutoSave>('noteAutoSave', false, {
 		initializeWithValue: false,
-		deserializer: (value: string) => parseInt(value) as T_DefaultNoteDuration,
-		serializer: (value: T_DefaultNoteDuration) => value.toString(),
+		deserializer: (value: string) => value === 'true',
+		serializer: (value: T_NoteAutoSave) => value.toString(),
 	});
 	const [firstCalendarDay, setFirstCalendarDay] = useLocalStorage<Date>('firstCalendarDay', new Date(), {
 		initializeWithValue: false,
@@ -132,7 +132,7 @@ export const useSettings = () => {
 		setLanguage,
 		sidebarElements,
 		setSidebarElements,
-		autosaveTime,
-		setAutosaveTime,
+		noteAutoSave,
+		setNoteAutoSave,
 	};
 };
