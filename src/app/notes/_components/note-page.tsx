@@ -2,6 +2,7 @@
 
 import { useCourses } from '@/hooks/use-courses';
 import { useNotes } from '@/hooks/use-notes';
+import { useSettings } from '@/hooks/use-settings';
 import { useSearchParams } from 'next/navigation';
 import ChangeCourse from './change-course';
 import Content from './content';
@@ -25,6 +26,7 @@ const NotePage = () => {
 
 	const { data: notes } = useNotes();
 	const { data: courses } = useCourses();
+	const { sidebarElements } = useSettings();
 
 	if (!notes || !courses) return;
 
@@ -49,30 +51,36 @@ const NotePage = () => {
 
 			<aside className='flex h-full w-full shrink-0 flex-col gap-y-4 overflow-y-scroll pb-64 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96'>
 				{/* Course related */}
-				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
-					<legend className='px-2'>Course related</legend>
-					<CourseName course={currentCourse} />
-					<CourseColor course={currentCourse} />
-					<CourseTeacher course={currentCourse} />
-				</fieldset>
+				{sidebarElements.courseRelated && (
+					<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
+						<legend className='px-2'>Course related</legend>
+						<CourseName course={currentCourse} />
+						<CourseColor course={currentCourse} />
+						<CourseTeacher course={currentCourse} />
+					</fieldset>
+				)}
 
 				{/* List of other notes from this course */}
-				<SideNotes currentCourse={currentCourse} />
+				{sidebarElements.notesList && <SideNotes currentCourse={currentCourse} />}
 
 				{/* Useful links */}
-				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
-					<legend className='px-2'>Useful links</legend>
-					<UsefulLinks course={currentCourse} />
-				</fieldset>
+				{sidebarElements.usefulLinks && (
+					<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
+						<legend className='px-2'>Useful links</legend>
+						<UsefulLinks course={currentCourse} />
+					</fieldset>
+				)}
 
 				{/* Tasks */}
-				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
-					<legend className='px-2'>Tasks</legend>
-					<Tasks course={currentCourse} />
-				</fieldset>
+				{sidebarElements.tasks && (
+					<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
+						<legend className='px-2'>Tasks</legend>
+						<Tasks course={currentCourse} />
+					</fieldset>
+				)}
 
 				{/* Note related */}
-				{currentNote && (
+				{sidebarElements.noteRelated && currentNote && (
 					<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
 						<legend className='px-2'>Note related</legend>
 						<ChangeCourse currentCourse={currentCourse} note={currentNote} />
@@ -83,10 +91,12 @@ const NotePage = () => {
 				)}
 
 				{/* Danger zone */}
-				<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
-					<legend className='px-2'>Danger zone</legend>
-					<DeleteCourseButton id={currentCourse.id} />
-				</fieldset>
+				{sidebarElements.dangerZone && (
+					<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
+						<legend className='px-2'>Danger zone</legend>
+						<DeleteCourseButton id={currentCourse.id} />
+					</fieldset>
+				)}
 
 				{/* Danger zone */}
 				<CustomizeSidebar />
