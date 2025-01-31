@@ -55,7 +55,7 @@ const Navigation = () => {
 					prefetch
 					href='/settings'
 					onClick={handleClose}
-					className='flex items-center justify-between gap-3 rounded-xl bg-white px-4 py-2 dark:bg-neutral-700'>
+					className='flex select-none items-center justify-between gap-3 rounded-xl bg-white px-4 py-2 dark:bg-neutral-700'>
 					{/* <Image
 							src='/avatar.jpg'
 							width={32}
