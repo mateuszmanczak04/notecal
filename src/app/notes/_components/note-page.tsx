@@ -64,12 +64,7 @@ const NotePage = () => {
 				{sidebarElements.notesList && <SideNotes currentCourse={currentCourse} />}
 
 				{/* Useful links */}
-				{sidebarElements.usefulLinks && (
-					<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
-						<legend className='px-2'>Useful links</legend>
-						<UsefulLinks course={currentCourse} />
-					</fieldset>
-				)}
+				{sidebarElements.usefulLinks && <UsefulLinks course={currentCourse} />}
 
 				{/* Tasks */}
 				{sidebarElements.tasks && (
