@@ -74,6 +74,16 @@ const CustomizeSidebar = () => {
 						Danger zone
 					</label>
 				</li>
+				<li className='flex select-none items-center'>
+					<Checkbox
+						id='show-settings'
+						checked={sidebarElements.settings}
+						onCheckedChange={value => handleToggle('settings', value === true)}
+					/>
+					<label htmlFor='show-settings' className='flex-1 cursor-pointer pl-2'>
+						Settings
+					</label>
+				</li>
 			</ul>
 		</fieldset>
 	);

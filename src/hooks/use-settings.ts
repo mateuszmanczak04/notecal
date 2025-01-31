@@ -14,6 +14,7 @@ export type T_SidebarElements = {
 	tasks: boolean;
 	noteRelated: boolean;
 	dangerZone: boolean;
+	settings: boolean;
 };
 export type T_AutosaveTime = number;
 
@@ -62,6 +63,7 @@ export const useSettings = () => {
 			tasks: true,
 			noteRelated: true,
 			dangerZone: true,
+			settings: true,
 		},
 		{
 			initializeWithValue: false,

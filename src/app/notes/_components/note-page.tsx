@@ -84,9 +84,9 @@ const NotePage = () => {
 
 				{sidebarElements.dangerZone && <NoteDangerZone id={currentCourse.id} />}
 
-				<CustomizeSidebar />
+				{sidebarElements.settings && <NotesSettings />}
 
-				<NotesSettings />
+				<CustomizeSidebar />
 			</aside>
 		</main>
 	);
