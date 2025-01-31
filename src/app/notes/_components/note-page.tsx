@@ -10,10 +10,10 @@ import CourseColor from './course-color';
 import CourseName from './course-name';
 import CourseTeacher from './course-teacher';
 import CustomizeSidebar from './customize-sidebar';
-import DeleteCourseButton from './delete-course-button';
 import EndTime from './end-time';
 import GoToCalendar from './go-to-calendar';
 import NoNoteContent from './no-note-content';
+import NoteDangerZone from './note-danger-zone';
 import SideNotes from './side-notes';
 import StartTime from './start-time';
 import Tasks from './tasks';
@@ -91,12 +91,7 @@ const NotePage = () => {
 				)}
 
 				{/* Danger zone */}
-				{sidebarElements.dangerZone && (
-					<fieldset className='space-y-4 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
-						<legend className='px-2'>Danger zone</legend>
-						<DeleteCourseButton id={currentCourse.id} />
-					</fieldset>
-				)}
+				{sidebarElements.dangerZone && <NoteDangerZone id={currentCourse.id} />}
 
 				{/* Danger zone */}
 				<CustomizeSidebar />
