@@ -2,9 +2,7 @@
 
 import { Checkbox } from '@/components/checkbox';
 
-type T_Props = {};
-
-const CustomizeSidebar = ({}: T_Props) => {
+const CustomizeSidebar = () => {
 	return (
 		<fieldset className='space-y-2 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
 			<legend className='px-2'>Customize sidebar</legend>
