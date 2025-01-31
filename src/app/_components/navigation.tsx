@@ -6,7 +6,7 @@ import { cn } from '@/utils/cn';
 import { Calendar, Check, List, Menu, Settings, User, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const Navigation = () => {
 	const pathname = usePathname();
@@ -20,20 +20,6 @@ const Navigation = () => {
 	const handleClose = () => {
 		setIsOpen(false);
 	};
-
-	// Prevent default zoom in/out behavior of the browser (Cmd + +) or (Cmd + -)
-	useEffect(() => {
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if ((event.metaKey || event.ctrlKey) && (event.key === '=' || event.key === '-')) {
-				event.preventDefault();
-			}
-		};
-
-		window.addEventListener('keydown', handleKeyDown);
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown);
-		};
-	}, []);
 
 	return (
 		<>
