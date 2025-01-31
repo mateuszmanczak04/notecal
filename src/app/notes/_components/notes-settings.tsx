@@ -23,7 +23,7 @@ const NotesSettings = () => {
 					onChange={e => setAutosaveTime(parseInt(e.target.value))}
 				/>
 				<label htmlFor='autosave-time' className='block px-2 font-medium'>
-					Autosave time
+					Autosave time (in minutes)
 				</label>
 			</div>
 		</fieldset>
