@@ -32,6 +32,12 @@ const CustomizeSidebar = () => {
 					</label>
 				</li>
 				<li className='flex select-none items-center'>
+					<Checkbox id='show-note-related' />
+					<label htmlFor='show-note-related' className='flex-1 cursor-pointer pl-2'>
+						Note related
+					</label>
+				</li>
+				<li className='flex select-none items-center'>
 					<Checkbox id='show-danger-zone' />
 					<label htmlFor='show-danger-zone' className='flex-1 cursor-pointer pl-2'>
 						Danger zone
