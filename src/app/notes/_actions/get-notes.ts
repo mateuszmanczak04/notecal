@@ -14,12 +14,17 @@ const getNotes = cache(async () => {
 			where: {
 				userId: user.id,
 			},
-			orderBy: {
-				startTime: {
-					sort: 'asc',
-					nulls: 'last',
+			orderBy: [
+				{
+					startTime: {
+						sort: 'asc',
+						nulls: 'last',
+					},
 				},
-			},
+				{
+					createdAt: 'desc',
+				},
+			],
 		});
 
 		return notes;

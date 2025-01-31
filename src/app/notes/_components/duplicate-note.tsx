@@ -26,10 +26,30 @@ const DuplicateNote = ({ note, className, callback }: T_Props) => {
 			if (!duplicatedNote) {
 				return;
 			}
-			queryClient.setQueryData(['notes'], (old: Note[]) => [
-				...old,
-				{ ...duplicatedNote, id: Math.random().toString(), title: duplicatedNote.title + ' (copy)' },
-			]);
+			queryClient.setQueryData(['notes'], (old: Note[]) =>
+				[
+					...old,
+					{
+						...duplicatedNote,
+						createdAt: new Date(),
+						id: Math.random().toString(),
+						title: duplicatedNote.title + ' (copy)',
+					},
+				].toSorted((a, b) => {
+					// Sort them by startTime if they have it, otherwise by createdAt
+					// The same as in get-notex.ts server action
+					if ((!a.startTime && !b.startTime) || (a.startTime && b.startTime && a.startTime === b.startTime)) {
+						return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+					}
+					if (!a.startTime) {
+						return 1;
+					}
+					if (!b.startTime) {
+						return -1;
+					}
+					return new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
+				}),
+			);
 			if (callback) {
 				callback();
 			}
