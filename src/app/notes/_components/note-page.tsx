@@ -13,6 +13,7 @@ import EndTime from './end-time';
 import GoToCalendar from './go-to-calendar';
 import NoNoteContent from './no-note-content';
 import NoteDangerZone from './note-danger-zone';
+import NotesSettings from './notes-settings';
 import SideNotes from './side-notes';
 import StartTime from './start-time';
 import Tasks from './tasks';
@@ -84,6 +85,8 @@ const NotePage = () => {
 				{sidebarElements.dangerZone && <NoteDangerZone id={currentCourse.id} />}
 
 				<CustomizeSidebar />
+
+				<NotesSettings />
 			</aside>
 		</main>
 	);
