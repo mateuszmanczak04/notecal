@@ -42,7 +42,9 @@ const SideNotes = ({ currentCourse }: Props) => {
 	const currentCourseNotes = notes.filter(note => note.courseId === currentCourse?.id);
 
 	return (
-		<article className='flex w-full flex-col'>
+		<fieldset className='flex w-full flex-col gap-y-2 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
+			<legend className='px-2'>Course notes</legend>
+
 			<>
 				{/* List of all notes from this course */}
 				{currentCourseNotes.map(note => (
@@ -54,15 +56,11 @@ const SideNotes = ({ currentCourse }: Props) => {
 			<Button
 				style={{ backgroundColor: currentCourse.color }}
 				onClick={handleNewNote}
-				className={cn(
-					'w-full ',
-					currentCourseNotes.length !== 0 && 'rounded-t-none',
-					isPending && 'pointer-events-none opacity-50',
-				)}
+				className={cn(isPending && 'pointer-events-none opacity-50')}
 				disabled={isPending}>
 				<Plus className='h-4 w-4' /> Create a new note {isPending && <LoadingSpinner className='size-4' />}
 			</Button>
-		</article>
+		</fieldset>
 	);
 };
 

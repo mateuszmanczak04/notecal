@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@/components/button';
 import NoteContextMenu from '@/components/note-context-menu';
 import { useNoteContextMenu } from '@/hooks/use-note-context-menu';
 import { cn } from '@/utils/cn';
@@ -22,30 +23,25 @@ const SideNote = ({ note }: Props) => {
 
 	return (
 		<>
-			<Link
-				href={`/notes?noteId=${note.id}`}
-				key={note.id}
-				aria-label={`link to note ${note.title}`}
-				title={`link to note ${note.title}`}
-				onContextMenu={handleContextMenu}
-				className={cn(
-					'flex h-9 cursor-pointer items-center justify-center gap-2 overflow-x-clip border-b border-l border-r px-3 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700',
-					// First element
-					'first-of-type:rounded-t-xl first-of-type:border-t',
-					// Last element
-					'last-of-type:border-b-transparent',
-					note.id === noteId && 'bg-neutral-100 dark:bg-neutral-600',
-				)}>
-				<span className=' w-full shrink-0 truncate text-center text-sm'>
-					{note.startTime && note.endTime && (
-						<span className='mr-2 font-semibold'>{format(note.startTime, 'yyyy-MM-dd')}</span>
-					)}{' '}
-					<span className='opacity-75'>{note.title}</span>
-					{!note.startTime && !note.endTime && !note.title && (
-						<span className='ml-2 opacity-50'>Note without a title</span>
-					)}
-				</span>{' '}
-			</Link>
+			<Button asChild variant='secondary'>
+				<Link
+					href={`/notes?noteId=${note.id}`}
+					key={note.id}
+					aria-label={`link to note ${note.title}`}
+					title={`link to note ${note.title}`}
+					onContextMenu={handleContextMenu}
+					className={cn(note.id === noteId && 'bg-neutral-100 dark:bg-neutral-500')}>
+					<span className=' w-auto max-w-48 shrink-0 truncate text-center text-sm'>
+						{note.startTime && note.endTime && (
+							<span className='mr-2 font-semibold'>{format(note.startTime, 'yyyy-MM-dd')}</span>
+						)}{' '}
+						<span className='opacity-75'>{note.title}</span>
+						{!note.startTime && !note.endTime && !note.title && (
+							<span className='ml-2 opacity-50'>Note without a title</span>
+						)}
+					</span>{' '}
+				</Link>
+			</Button>
 			{/* Place it outside the link itself because it triggered link */}
 			{contextMenuPosition && (
 				<NoteContextMenu note={note} handleClose={closeContextMenu} position={contextMenuPosition} />
