@@ -8,6 +8,7 @@ import Content from './content';
 import CourseColor from './course-color';
 import CourseName from './course-name';
 import CourseTeacher from './course-teacher';
+import CustomizeSidebar from './customize-sidebar';
 import DeleteCourseButton from './delete-course-button';
 import EndTime from './end-time';
 import GoToCalendar from './go-to-calendar';
@@ -86,6 +87,9 @@ const NotePage = () => {
 					<legend className='px-2'>Danger zone</legend>
 					<DeleteCourseButton id={currentCourse.id} />
 				</fieldset>
+
+				{/* Danger zone */}
+				<CustomizeSidebar />
 			</aside>
 		</main>
 	);
