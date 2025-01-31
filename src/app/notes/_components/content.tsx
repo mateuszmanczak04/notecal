@@ -20,7 +20,6 @@ import updateNote from '../_actions/update-note';
 import { editorConfig } from '../_editor/editor-config';
 import SavePlugin from '../_editor/save-plugin';
 import ToolbarPlugin from '../_editor/toolbar-plugin';
-import NoteTitle from './note-title';
 
 type Props = {
 	note: Note;
@@ -98,7 +97,6 @@ const Content = ({ note, course }: Props) => {
 				'flex h-full flex-1 flex-col rounded-xl bg-neutral-100 p-4 dark:bg-neutral-700',
 				isPendingUpdate && 'pointer-events-none opacity-50',
 			)}>
-			<NoteTitle note={note} />
 			<LexicalComposer
 				key={note.id}
 				initialConfig={{

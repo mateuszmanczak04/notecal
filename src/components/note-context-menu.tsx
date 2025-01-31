@@ -3,6 +3,7 @@
 import ChangeCourse from '@/app/notes/_components/change-course';
 import DeleteNoteButton from '@/app/notes/_components/delete-note-button';
 import DuplicateNote from '@/app/notes/_components/duplicate-note';
+import NoteTitle from '@/app/notes/_components/note-title';
 import { useCourses } from '@/hooks/use-courses';
 import { Note } from '@prisma/client';
 import { useEffect, useLayoutEffect, useRef } from 'react';
@@ -70,7 +71,8 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 			}}>
 			{currentCourse && (
 				<div>
-					<p className='mb-2 px-2 font-semibold'>Move to another course</p>
+					<NoteTitle note={note} callback={handleClose} />
+					<p className='mb-1 mt-4 px-2 font-semibold'>Move to another course</p>
 					<ChangeCourse
 						handleClose={handleClose}
 						currentCourse={currentCourse}
