@@ -59,10 +59,8 @@ const NotePage = () => {
 					</fieldset>
 				)}
 
-				{/* List of other notes from this course */}
 				{sidebarElements.notesList && <SideNotes currentCourse={currentCourse} />}
 
-				{/* Useful links */}
 				{sidebarElements.usefulLinks && <UsefulLinks course={currentCourse} />}
 
 				{/* Tasks */}
@@ -83,10 +81,8 @@ const NotePage = () => {
 					</fieldset>
 				)}
 
-				{/* Danger zone */}
 				{sidebarElements.dangerZone && <NoteDangerZone id={currentCourse.id} />}
 
-				{/* Danger zone */}
 				<CustomizeSidebar />
 			</aside>
 		</main>
