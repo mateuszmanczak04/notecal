@@ -7,6 +7,14 @@ export type T_TasksOrder = 'days' | 'priority' | 'dueDate' | 'createdAt' | 'comp
 export type T_DisplayedDays = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 export type T_DefaultNoteDuration = number;
 export type T_Language = 'en';
+export type T_SidebarElements = {
+	courseRelated: boolean;
+	notesList: boolean;
+	usefulLinks: boolean;
+	tasks: boolean;
+	noteRelated: boolean;
+	dangerZone: boolean;
+};
 
 export const useSettings = () => {
 	// TODO: load these values before rendering the app
@@ -39,6 +47,22 @@ export const useSettings = () => {
 		deserializer: (value: string) => new Date(value),
 		serializer: (value: Date) => value.toString(),
 	});
+	const [sidebarElements, setSidebarElements] = useLocalStorage<T_SidebarElements>(
+		'sidebarElements',
+		{
+			courseRelated: true,
+			notesList: true,
+			usefulLinks: true,
+			tasks: true,
+			noteRelated: true,
+			dangerZone: true,
+		},
+		{
+			initializeWithValue: false,
+			deserializer: (value: string) => JSON.parse(value),
+			serializer: (value: T_SidebarElements) => JSON.stringify(value),
+		},
+	);
 
 	const getDayAfter = (days: number) => {
 		return addDays(firstCalendarDay, days);
@@ -98,5 +122,7 @@ export const useSettings = () => {
 		setDefaultNoteDuration,
 		language,
 		setLanguage,
+		sidebarElements,
+		setSidebarElements,
 	};
 };
