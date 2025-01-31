@@ -67,6 +67,7 @@ model Task {
   course      Course?       @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId    String?
   createdAt   DateTime      @default(now())
+  weight      Int           @default(0)
 }
 
 model Note {
