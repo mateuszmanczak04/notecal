@@ -7,7 +7,7 @@ import { cn } from '@/utils/cn';
 import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Trash } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
 import deleteNote from '../_actions/delete-note';
@@ -21,7 +21,6 @@ const DeleteNoteButton = ({ note, className }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const [isDeleting, setIsDeleting] = useState(false);
-	const pathname = usePathname();
 	const { mutate, isPending } = useMutation({
 		mutationFn: deleteNote,
 		onSettled: data => {
@@ -29,7 +28,7 @@ const DeleteNoteButton = ({ note, className }: Props) => {
 				toast({ description: data.error, variant: 'destructive' });
 			}
 			// If user is on the exact note page, redirect to the course page
-			if (pathname === `/notes?noteId=${note.id}`) {
+			if (`${window.location.pathname}${window.location.search}` === `/notes?noteId=${note.id}`) {
 				router.push(`/notes?courseId=${note.courseId}`);
 			}
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
