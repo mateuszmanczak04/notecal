@@ -73,12 +73,7 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 				<div>
 					<NoteTitle note={note} callback={handleClose} />
 					<p className='mb-1 mt-4 px-2 font-semibold'>Move to another course</p>
-					<ChangeCourse
-						handleClose={handleClose}
-						currentCourse={currentCourse}
-						note={note}
-						forPage='context-menu'
-					/>
+					<ChangeCourse handleClose={handleClose} currentCourse={currentCourse} note={note} />
 					<DuplicateNote note={note} className='mt-4 w-full' callback={handleClose} />
 					<DeleteNoteButton note={note} className='mt-4 w-full' />
 				</div>

@@ -4,7 +4,6 @@ import { useCourses } from '@/hooks/use-courses';
 import { useNotes } from '@/hooks/use-notes';
 import { useSettings } from '@/hooks/use-settings';
 import { useSearchParams } from 'next/navigation';
-import ChangeCourse from './change-course';
 import Content from './content';
 import CourseColor from './course-color';
 import CourseName from './course-name';
@@ -78,7 +77,6 @@ const NotePage = () => {
 				{sidebarElements.noteRelated && currentNote && (
 					<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
 						<legend className='px-2'>Note related</legend>
-						<ChangeCourse currentCourse={currentCourse} note={currentNote} />
 						<StartTime note={currentNote} />
 						<EndTime note={currentNote} />
 						{currentNote.startTime && currentNote.endTime && <GoToCalendar note={currentNote} />}
