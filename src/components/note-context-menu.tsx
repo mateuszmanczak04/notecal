@@ -49,12 +49,12 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 
 		if (rect.bottom > window.innerHeight) {
 			contextMenuRef.current.style.top = 'auto';
-			contextMenuRef.current.style.bottom = '0';
+			contextMenuRef.current.style.bottom = '32px';
 		}
 
 		if (rect.right > window.innerWidth) {
 			contextMenuRef.current.style.left = 'auto';
-			contextMenuRef.current.style.right = '0';
+			contextMenuRef.current.style.right = '32px';
 		}
 	}, []);
 
