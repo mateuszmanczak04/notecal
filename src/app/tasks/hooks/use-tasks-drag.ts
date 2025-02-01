@@ -2,7 +2,7 @@ import { useToast } from '@/components/toast/use-toast';
 import { Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import updateTask from '../_actions/update-task';
+import updateTask, { T_UpdateTaskInput } from '../_actions/update-task';
 
 type T_Props = {
 	tasks: Task[];
@@ -13,6 +13,16 @@ export const useTasksDrag = ({ tasks }: T_Props) => {
 	const { toast } = useToast();
 	const { mutate } = useMutation({
 		mutationFn: updateTask,
+		onMutate: (data: T_UpdateTaskInput) => {
+			queryClient.setQueryData(['tasks'], (prev: Task[]) =>
+				prev.map(task => {
+					if (task.id === data.id) {
+						return { ...task, weight: data.weight };
+					}
+					return task;
+				}),
+			);
+		},
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
