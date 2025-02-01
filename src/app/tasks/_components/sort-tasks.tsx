@@ -59,7 +59,7 @@ const SortTasks = () => {
 
 	return (
 		<DropdownMenu className='relative flex-1'>
-			<DropdownMenuTrigger showChevron>Order by ({getNameOfCriteria(tasksOrder)})</DropdownMenuTrigger>
+			<DropdownMenuTrigger showChevron>Sort tasks</DropdownMenuTrigger>
 			<DropdownMenuList>
 				<DropdownMenuItem value='title' onSelect={handleSort}>
 					Title
