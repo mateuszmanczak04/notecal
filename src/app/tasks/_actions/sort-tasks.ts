@@ -41,12 +41,13 @@ export const sortTasks = async ({ newOrder }: T_SortTasksInput): T_SortTasksResu
 				});
 				break;
 			case 'priority':
-				console.log('SORTING BY PRIORITY');
 				tasks.sort((a, b) => {
 					const priotities = { A: 3, B: 2, C: 1 };
 					if (a.priority && b.priority) {
 						return priotities[b.priority] - priotities[a.priority];
 					}
+					if (a.priority && !b.priority) return -1;
+					if (!a.priority && b.priority) return 1;
 					return 0;
 				});
 				break;
@@ -72,8 +73,6 @@ export const sortTasks = async ({ newOrder }: T_SortTasksInput): T_SortTasksResu
 				}),
 			),
 		);
-
-		console.log('tasks', tasks);
 
 		return { tasks };
 	} catch {
