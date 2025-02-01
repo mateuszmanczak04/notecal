@@ -13,6 +13,7 @@ export type T_UpdateTaskInput = {
 	description?: string;
 	dueDate?: Date | null;
 	priority?: 'A' | 'B' | 'C';
+	weight: number;
 };
 
 export type T_UpdateTaskResult = Promise<{ error: string } | { task: Task }>;
