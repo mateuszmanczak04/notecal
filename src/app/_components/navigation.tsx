@@ -72,7 +72,7 @@ const Navigation = () => {
 
 				{/* Main menu */}
 				<div>
-					<p className='text-sm font-semibold uppercase opacity-50'>MAIN MENU</p>
+					<p className='text-sm font-semibold uppercase opacity-50'>MENU</p>
 					<div className='mt-2'>
 						<Link
 							prefetch
