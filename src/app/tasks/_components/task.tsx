@@ -44,7 +44,7 @@ const Task = ({ task, forPage = 'tasks', onDragEnter, onDrop, onDragStart, isBei
 					</div>
 				</div>
 			</div>
-			{isBeingDropped && <div className='h-px w-full rounded-md bg-red-500'></div>}
+			{isBeingDropped && <div className={cn('h-1 w-full rounded-md bg-neutral-200 dark:bg-neutral-600')}></div>}
 		</>
 	);
 };
