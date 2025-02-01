@@ -2,6 +2,7 @@
 
 import CreateTaskForm from '@/app/tasks/_components/create-task-form';
 import Task from '@/app/tasks/_components/task';
+import { useTasksDrag } from '@/app/tasks/hooks/use-tasks-drag';
 import { useTasks } from '@/hooks/use-tasks';
 import { Course } from '@prisma/client';
 
@@ -11,12 +12,9 @@ type Props = {
 
 const Tasks = ({ course }: Props) => {
 	const { data: tasks } = useTasks();
-
-	const handleDrag = (task: Task, e: React.DragEvent) => {};
-
-	const handleDragStart = (task: Task, e: React.DragEvent) => {};
-
-	const handleDragEnd = (task: Task, e: React.DragEvent) => {};
+	const { handleDragEnter, handleDragOver, handleDragStart, handleDrop, droppedTaskId } = useTasksDrag({
+		tasks: tasks || [],
+	});
 
 	if (!tasks) return;
 
@@ -29,9 +27,11 @@ const Tasks = ({ course }: Props) => {
 					forPage='notes'
 					key={task.id}
 					task={task}
-					onDragEnter={handleDrag}
-					onDrop={handleDragEnd}
+					onDragEnter={handleDragEnter}
+					onDragOver={handleDragOver}
+					onDrop={handleDrop}
 					onDragStart={handleDragStart}
+					isBeingDropped={task.id === droppedTaskId}
 				/>
 			))}
 
