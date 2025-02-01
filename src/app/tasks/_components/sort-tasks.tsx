@@ -1,7 +1,10 @@
 'use client';
 
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
+import { useToast } from '@/components/toast/use-toast';
 import { useSettings } from '@/hooks/use-settings';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { sortTasks, T_SortTasksInput } from '../_actions/sort-tasks';
 
 const getNameOfCriteria = (criteria: string) => {
 	if (criteria === 'title') {
@@ -23,8 +26,22 @@ const getNameOfCriteria = (criteria: string) => {
 };
 
 const SortTasks = () => {
-	// TODO: implement sorting them in UI, not only in settings
 	const { tasksOrder, setTasksOrder } = useSettings();
+	const { toast } = useToast();
+	const queryClient = useQueryClient();
+	const { mutate } = useMutation({
+		mutationFn: sortTasks,
+		onMutate: (data: T_SortTasksInput) => {},
+		onSettled: data => {
+			if (data && 'error' in data) {
+				toast({ description: data.error, variant: 'destructive' });
+			}
+			// queryClient.invalidateQueries({ queryKey: ['tasks'] });
+			if (data && 'tasks' in data) {
+				queryClient.setQueryData(['tasks'], data.tasks);
+			}
+		},
+	});
 
 	const handleSort = (newCriteria: string) => {
 		if (
@@ -36,6 +53,7 @@ const SortTasks = () => {
 				newCriteria === 'completed')
 		) {
 			setTasksOrder(newCriteria);
+			mutate({ newOrder: newCriteria });
 		}
 	};
 

@@ -26,11 +26,25 @@ const createTask = async ({ title, courseId }: T_CreateTaskInput): T_CreateTaskR
 			};
 		}
 
+		const userTasks = await db.task.findMany({
+			where: {
+				userId: user.id,
+			},
+		});
+
+		const largestWeight = userTasks.reduce((acc, task) => {
+			if (task.weight > acc) {
+				return task.weight;
+			}
+			return acc;
+		}, 0);
+
 		const task = await db.task.create({
 			data: {
 				userId: user.id,
 				title,
 				courseId,
+				weight: largestWeight + 10000,
 			},
 		});
 
