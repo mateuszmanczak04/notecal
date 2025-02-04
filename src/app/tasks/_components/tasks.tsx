@@ -11,10 +11,9 @@ import Task from './task';
  */
 const Tasks = () => {
 	const { data: tasks, error, isPending } = useTasks();
-	const { containerRef, handleMouseDown, movedTask, handleMouseEnterTop, handleMouseEnterBottom, movedTaskTop } =
-		useTasksDrag({
-			tasks: tasks || [],
-		});
+	const { containerRef, handleMouseDown, movedTask, movedTaskTop, movedTaskIndex, setMovedTaskIndex } = useTasksDrag({
+		tasks: tasks || [],
+	});
 
 	if (isPending) return <LoadingSpinner />;
 
@@ -25,17 +24,46 @@ const Tasks = () => {
 	}
 
 	return (
-		<div className='relative space-y-4' ref={containerRef}>
-			{tasks.map(task => (
-				<Task
-					key={task.id}
-					task={task}
-					onMouseDown={handleMouseDown}
-					onMouseEnterTop={handleMouseEnterTop}
-					onMouseEnterBottom={handleMouseEnterBottom}
-					top={task.id === movedTask?.id ? movedTaskTop : 0}
-				/>
-			))}
+		<div className='relative' ref={containerRef}>
+			{movedTaskIndex === null &&
+				tasks.map((task, index) => (
+					<Task
+						key={task.id}
+						task={task}
+						movedTask={movedTask}
+						index={index}
+						setMovedTaskIndex={setMovedTaskIndex}
+						onMouseDown={handleMouseDown}
+						top={task.id === movedTask?.id ? movedTaskTop : 0}
+					/>
+				))}
+			{movedTaskIndex !== null && (
+				<>
+					{tasks.slice(0, movedTaskIndex).map((task, index) => (
+						<Task
+							key={task.id}
+							task={task}
+							movedTask={movedTask}
+							index={index}
+							setMovedTaskIndex={setMovedTaskIndex}
+							onMouseDown={handleMouseDown}
+							top={task.id === movedTask?.id ? movedTaskTop : 0}
+						/>
+					))}
+					<div className='h-12 w-full bg-green-500'>Here</div>
+					{tasks.slice(movedTaskIndex).map((task, index) => (
+						<Task
+							key={task.id}
+							task={task}
+							movedTask={movedTask}
+							index={index + movedTaskIndex}
+							setMovedTaskIndex={setMovedTaskIndex}
+							onMouseDown={handleMouseDown}
+							top={task.id === movedTask?.id ? movedTaskTop : 0}
+						/>
+					))}
+				</>
+			)}
 		</div>
 	);
 };

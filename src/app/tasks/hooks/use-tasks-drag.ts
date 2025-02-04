@@ -35,6 +35,7 @@ export const useTasksDrag = ({ tasks }: T_Props) => {
 	const [movedTask, setMovedTask] = useState<Task | null>(null);
 	const [movedTaskTop, setMovedTaskTop] = useState<number>(0);
 	const [clickOffsetTop, setClickOffsetTop] = useState<number>(0);
+	const [movedTaskIndex, setMovedTaskIndex] = useState<number | null>(null);
 
 	/** Press the task */
 	const handleMouseDown = (task: Task, e: React.MouseEvent) => {
@@ -43,10 +44,6 @@ export const useTasksDrag = ({ tasks }: T_Props) => {
 		const clickOffset = e.clientY - taskTop;
 		setClickOffsetTop(clickOffset);
 	};
-
-	const handleMouseEnterTop = (task: Task, e: React.MouseEvent) => {};
-
-	const handleMouseEnterBottom = (task: Task, e: React.MouseEvent) => {};
 
 	useEffect(() => {
 		/** Move cursor and reposition it on the list */
@@ -60,6 +57,7 @@ export const useTasksDrag = ({ tasks }: T_Props) => {
 		const handleMouseUp = (e: MouseEvent) => {
 			setMovedTask(null);
 			setMovedTaskTop(0);
+			setMovedTaskIndex(null);
 			if (!movedTask) return;
 		};
 
@@ -75,9 +73,9 @@ export const useTasksDrag = ({ tasks }: T_Props) => {
 	return {
 		containerRef,
 		handleMouseDown,
-		handleMouseEnterTop,
-		handleMouseEnterBottom,
 		movedTask,
 		movedTaskTop,
+		setMovedTaskIndex,
+		movedTaskIndex,
 	};
 };
