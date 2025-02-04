@@ -33,9 +33,8 @@ const Task = ({
 		<>
 			<div
 				className={cn(
-					'flex gap-4 p-4',
+					'flex gap-4 bg-white p-4 transition-transform dark:bg-neutral-800',
 					forPage === 'notes' && 'w-full gap-2 p-2',
-					task.id === draggedTask?.id && ' opacity-25',
 				)}
 				draggable
 				onDragEnter={e => onDragEnter(task, e)}
