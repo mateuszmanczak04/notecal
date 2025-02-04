@@ -16,7 +16,7 @@ export type T_UpdateTaskInput = {
 	weight?: number;
 };
 
-export type T_UpdateTaskResult = Promise<{ error: string } | { task: Task }>;
+export type T_UpdateTaskResult = Promise<{ error: string } | { task: Task | null }>;
 
 const updateTask = async (data: T_UpdateTaskInput): T_UpdateTaskResult => {
 	if (!data.id) {
@@ -32,17 +32,18 @@ const updateTask = async (data: T_UpdateTaskInput): T_UpdateTaskResult => {
 			};
 		}
 
+		let task: Task | null = null;
 		// Delete task if it's title's length becomes equal zero
 		if (data.title?.trim() === '') {
 			await db.task.delete({
 				where: { id: data.id, userId: user.id },
 			});
+		} else {
+			task = await db.task.update({
+				where: { id: data.id, userId: user.id },
+				data,
+			});
 		}
-
-		const task = await db.task.update({
-			where: { id: data.id, userId: user.id },
-			data,
-		});
 
 		return { task };
 	} catch (error) {
