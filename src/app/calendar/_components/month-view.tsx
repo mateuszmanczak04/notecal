@@ -13,8 +13,6 @@ const Tile = ({ children, onClick }: { children?: React.ReactNode; onClick?: () 
 
 	const handleClick = (e: React.MouseEvent) => {
 		if (ref.current === e.target) {
-			console.log('CLICKED', ref.current, e.target);
-
 			onClick?.();
 		}
 	};

@@ -89,7 +89,6 @@ const Content = ({ note, course }: Props) => {
 		for (let i = 0; i < byteCharacters.length; i++) {
 			byteNumbers[i] = byteCharacters.charCodeAt(i);
 		}
-		console.log(byteNumbers);
 		const byteArray = new Uint8Array(byteNumbers);
 		const blob = new Blob([byteArray], { type: 'application/pdf' });
 

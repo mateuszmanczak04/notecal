@@ -30,10 +30,8 @@ const Task = ({ task, movedTask, index, setMovedTaskIndex, forPage = 'tasks', on
 			const bottomRect = bottomRef.current.getBoundingClientRect();
 
 			if (e.clientY > topRect.top && e.clientY < topRect.bottom) {
-				console.log('moved task index', task.title, index);
 				setMovedTaskIndex(index);
 			} else if (e.clientY > bottomRect.top && e.clientY < bottomRect.bottom) {
-				console.log('moved task index + 1', task.title, index + 1);
 				setMovedTaskIndex(index + 1);
 			}
 		};
@@ -50,7 +48,7 @@ const Task = ({ task, movedTask, index, setMovedTaskIndex, forPage = 'tasks', on
 			{/* Original to stay in place until update */}
 			<div
 				className={cn(
-					'relative flex w-full gap-4 border p-4',
+					'relative flex w-full select-none gap-4 border-b border-neutral-700 p-4',
 					forPage === 'notes' && 'gap-2 p-2',
 					movedTask?.id === task.id && 'opacity-50',
 				)}
@@ -78,7 +76,7 @@ const Task = ({ task, movedTask, index, setMovedTaskIndex, forPage = 'tasks', on
 			{!!top && (
 				<div
 					className={cn(
-						'absolute z-10 flex w-full select-none gap-4 bg-white p-4 opacity-50 shadow-xl dark:bg-neutral-800 ',
+						'absolute z-10 flex w-full cursor-move select-none gap-4 bg-white p-4 opacity-50 shadow-xl dark:bg-neutral-800 ',
 						forPage === 'notes' && 'gap-2 p-2',
 					)}
 					style={{ top }}
