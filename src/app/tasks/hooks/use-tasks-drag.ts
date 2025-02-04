@@ -58,7 +58,19 @@ export const useTasksDrag = ({ tasks }: T_Props) => {
 			setMovedTask(null);
 			setMovedTaskTop(0);
 			setMovedTaskIndex(null);
-			if (!movedTask) return;
+			if (!movedTask || !movedTaskIndex) return;
+			const prevTask = tasks[movedTaskIndex - 1];
+			const nextTask = tasks[movedTaskIndex];
+			console.log(prevTask, nextTask);
+			if (prevTask && nextTask) {
+				mutate({ id: movedTask.id, weight: (prevTask.weight + nextTask.weight) / 2 });
+			} else if (prevTask && !nextTask) {
+				const minWeight = tasks.reduce((acc, task) => (task.weight < acc ? task.weight : acc), prevTask.weight);
+				mutate({ id: movedTask.id, weight: minWeight });
+			} else if (!prevTask && nextTask) {
+				const maxWeight = tasks.reduce((acc, task) => (task.weight > acc ? task.weight : acc), nextTask.weight);
+				mutate({ id: movedTask.id, weight: maxWeight });
+			}
 		};
 
 		window.addEventListener('mousemove', handleMouseMove);
@@ -68,7 +80,7 @@ export const useTasksDrag = ({ tasks }: T_Props) => {
 			window.removeEventListener('mousemove', handleMouseMove);
 			window.removeEventListener('mouseup', handleMouseUp);
 		};
-	}, [movedTask, clickOffsetTop]);
+	}, [movedTask, clickOffsetTop, movedTaskIndex, tasks, mutate]);
 
 	return {
 		containerRef,
