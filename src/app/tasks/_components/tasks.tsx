@@ -5,6 +5,7 @@ import LoadingSpinner from '@/components/loading-spinner';
 import { useTasks } from '@/hooks/use-tasks';
 import { useTasksDrag } from '../hooks/use-tasks-drag';
 import Task from './task';
+import TaskWithoutDragging from './task-without-dragging';
 
 /**
  * List of all user's tasks.
@@ -50,7 +51,7 @@ const Tasks = () => {
 							top={task.id === movedTask?.id ? movedTaskTop : 0}
 						/>
 					))}
-					<div className='h-12 w-full bg-green-500'>Here</div>
+					{movedTask && <TaskWithoutDragging task={movedTask} forPage='tasks' />}
 					{tasks.slice(movedTaskIndex).map((task, index) => (
 						<Task
 							key={task.id}

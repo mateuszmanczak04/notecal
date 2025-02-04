@@ -49,7 +49,11 @@ const Task = ({ task, movedTask, index, setMovedTaskIndex, forPage = 'tasks', on
 		<>
 			{/* Original to stay in place until update */}
 			<div
-				className={cn('relative flex w-full gap-4 border p-4 ', forPage === 'notes' && 'gap-2 p-2')}
+				className={cn(
+					'relative flex w-full gap-4 border p-4',
+					forPage === 'notes' && 'gap-2 p-2',
+					movedTask?.id === task.id && 'opacity-50',
+				)}
 				onMouseDown={e => onMouseDown(task, e)}>
 				<Completed task={task} forPage={forPage} />
 				<div className='flex min-w-0 flex-1 flex-col '>
@@ -66,15 +70,15 @@ const Task = ({ task, movedTask, index, setMovedTaskIndex, forPage = 'tasks', on
 						<Priority task={task} forPage={forPage} />
 					</div>
 				</div>
-				<div ref={topRef} className='absolute left-0 top-0 h-1/2 w-full' />
-				<div ref={bottomRef} className='absolute left-0 top-1/2 h-1/2 w-full' />
+				<div ref={topRef} className='pointer-events-none absolute left-0 top-0 h-1/2 w-full' />
+				<div ref={bottomRef} className='pointer-events-none absolute left-0 top-1/2 h-1/2 w-full' />
 			</div>
 
 			{/* Copy */}
 			{!!top && (
 				<div
 					className={cn(
-						'absolute z-10 flex w-full gap-4 bg-white p-4 opacity-50 shadow-xl dark:bg-neutral-800 ',
+						'absolute z-10 flex w-full select-none gap-4 bg-white p-4 opacity-50 shadow-xl dark:bg-neutral-800 ',
 						forPage === 'notes' && 'gap-2 p-2',
 					)}
 					style={{ top }}
