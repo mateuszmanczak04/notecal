@@ -12,7 +12,7 @@ type Props = {
 
 const Tasks = ({ course }: Props) => {
 	const { data: tasks } = useTasks();
-	const { handleDragEnter, handleDragOver, handleDragStart, handleDrop, droppedTaskId } = useTasksDrag({
+	const { handleDragEnter, handleDragOver, handleDragStart, handleDrop, droppedTaskId, draggedTask } = useTasksDrag({
 		tasks: tasks || [],
 	});
 
@@ -31,6 +31,7 @@ const Tasks = ({ course }: Props) => {
 					onDragOver={handleDragOver}
 					onDrop={handleDrop}
 					onDragStart={handleDragStart}
+					draggedTask={draggedTask || undefined}
 					isBeingDropped={task.id === droppedTaskId}
 				/>
 			))}
