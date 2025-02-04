@@ -11,7 +11,7 @@ import Task from './task';
  */
 const Tasks = () => {
 	const { data: tasks, error, isPending } = useTasks();
-	const { handleDragEnter, handleDragOver, handleDragStart, handleDrop, droppedTaskId } = useTasksDrag({
+	const { handleDragEnter, handleDragOver, handleDragStart, handleDrop, droppedTaskId, draggedTask } = useTasksDrag({
 		tasks: tasks || [],
 	});
 
@@ -27,6 +27,7 @@ const Tasks = () => {
 		<div className='space-y-4'>
 			{tasks.map(task => (
 				<Task
+					draggedTask={draggedTask || undefined}
 					isBeingDropped={task.id === droppedTaskId}
 					key={task.id}
 					task={task}

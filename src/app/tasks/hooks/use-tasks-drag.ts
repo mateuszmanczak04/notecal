@@ -31,15 +31,15 @@ export const useTasksDrag = ({ tasks }: T_Props) => {
 		},
 	});
 
-	const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
+	const [draggedTask, setDraggedTask] = useState<Task | null>(null);
 	const [droppedTaskId, setDroppedTaskId] = useState<string | null>(null);
 
 	const handleDragStart = (task: Task, e: React.DragEvent) => {
-		setDraggedTaskId(task.id);
+		setDraggedTask(task);
 	};
 
 	const handleDragEnter = (task: Task, e: React.DragEvent) => {
-		if (!draggedTaskId) return;
+		if (!draggedTask) return;
 		setDroppedTaskId(task.id);
 	};
 
@@ -49,20 +49,20 @@ export const useTasksDrag = ({ tasks }: T_Props) => {
 	};
 
 	const handleDrop = (task: Task, e: React.DragEvent) => {
-		if (!draggedTaskId || !droppedTaskId) return;
+		if (!draggedTask || !droppedTaskId) return;
 
 		const droppedTaskIndex = tasks.findIndex(task => task.id === droppedTaskId);
 		const droppedTask = tasks[droppedTaskIndex];
 		const taskAfterDroppedTask = tasks[droppedTaskIndex + 1];
 		if (!taskAfterDroppedTask) {
-			mutate({ id: draggedTaskId, weight: droppedTask.weight + 10000 });
+			mutate({ id: draggedTask.id, weight: droppedTask.weight - 10000 });
 		} else {
-			mutate({ id: draggedTaskId, weight: (droppedTask.weight + taskAfterDroppedTask.weight) / 2 });
+			mutate({ id: draggedTask.id, weight: (droppedTask.weight + taskAfterDroppedTask.weight) / 2 });
 		}
 
-		setDraggedTaskId(null);
+		setDraggedTask(null);
 		setDroppedTaskId(null);
 	};
 
-	return { handleDragStart, handleDragEnter, handleDragOver, handleDrop, droppedTaskId };
+	return { handleDragStart, handleDragEnter, handleDragOver, handleDrop, droppedTaskId, draggedTask };
 };
