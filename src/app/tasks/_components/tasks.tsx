@@ -25,7 +25,7 @@ const Tasks = () => {
 	}
 
 	return (
-		<div className='relative select-none' ref={containerRef}>
+		<div className='relative' ref={containerRef}>
 			{movedTaskIndex === null &&
 				tasks.map((task, index) => (
 					<Task

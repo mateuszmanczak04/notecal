@@ -43,6 +43,7 @@ export const useTasksDrag = ({ tasks }: T_Props) => {
 		const taskTop = e.currentTarget.getBoundingClientRect().top;
 		const clickOffset = e.clientY - taskTop;
 		setClickOffsetTop(clickOffset);
+		document.body.classList.add('select-none');
 	};
 
 	useEffect(() => {
@@ -71,6 +72,7 @@ export const useTasksDrag = ({ tasks }: T_Props) => {
 				const maxWeight = tasks.reduce((acc, task) => (task.weight > acc ? task.weight : acc), nextTask.weight);
 				mutate({ id: movedTask.id, weight: maxWeight });
 			}
+			document.body.classList.remove('select-none');
 		};
 
 		window.addEventListener('mousemove', handleMouseMove);

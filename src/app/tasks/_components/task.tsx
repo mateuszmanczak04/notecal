@@ -48,13 +48,13 @@ const Task = ({ task, movedTask, index, setMovedTaskIndex, forPage = 'tasks', on
 			{/* Original to stay in place until update */}
 			<div
 				className={cn(
-					'relative flex w-full select-none gap-4 border-b border-neutral-700 p-4',
+					'relative flex w-full gap-4 border-b border-neutral-700 p-4',
 					forPage === 'notes' && 'gap-2 p-2',
 					movedTask?.id === task.id && 'opacity-50',
 				)}
 				onMouseDown={e => onMouseDown(task, e)}>
 				<Completed task={task} forPage={forPage} />
-				<div className='flex min-w-0 flex-1 flex-col '>
+				<div className='flex min-w-0 flex-1 select-none flex-col'>
 					<Title task={task} forPage={forPage} />
 					<Description task={task} forPage={forPage} />
 
