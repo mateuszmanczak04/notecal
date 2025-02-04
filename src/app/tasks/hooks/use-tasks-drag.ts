@@ -1,7 +1,7 @@
 import { useToast } from '@/components/toast/use-toast';
 import { Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import updateTask, { T_UpdateTaskInput } from '../_actions/update-task';
 
 type T_Props = {
@@ -31,38 +31,53 @@ export const useTasksDrag = ({ tasks }: T_Props) => {
 		},
 	});
 
-	const [draggedTask, setDraggedTask] = useState<Task | null>(null);
-	const [droppedTaskId, setDroppedTaskId] = useState<string | null>(null);
+	const containerRef = useRef<HTMLDivElement>(null!);
+	const [movedTask, setMovedTask] = useState<Task | null>(null);
+	const [movedTaskTop, setMovedTaskTop] = useState<number>(0);
+	const [clickOffsetTop, setClickOffsetTop] = useState<number>(0);
 
-	const handleDragStart = (task: Task, e: React.DragEvent) => {
-		setDraggedTask(task);
+	/** Press the task */
+	const handleMouseDown = (task: Task, e: React.MouseEvent) => {
+		setMovedTask(task);
+		const taskTop = e.currentTarget.getBoundingClientRect().top;
+		const clickOffset = e.clientY - taskTop;
+		setClickOffsetTop(clickOffset);
 	};
 
-	const handleDragEnter = (task: Task, e: React.DragEvent) => {
-		if (!draggedTask) return;
-		setDroppedTaskId(task.id);
+	const handleMouseEnterTop = (task: Task, e: React.MouseEvent) => {};
+
+	const handleMouseEnterBottom = (task: Task, e: React.MouseEvent) => {};
+
+	useEffect(() => {
+		/** Move cursor and reposition it on the list */
+		const handleMouseMove = (e: MouseEvent) => {
+			if (!movedTask) return;
+			const containerTop = containerRef.current.getBoundingClientRect().top;
+			setMovedTaskTop(e.clientY - containerTop - clickOffsetTop);
+		};
+
+		/** Release and update database */
+		const handleMouseUp = (e: MouseEvent) => {
+			setMovedTask(null);
+			setMovedTaskTop(0);
+			if (!movedTask) return;
+		};
+
+		window.addEventListener('mousemove', handleMouseMove);
+		window.addEventListener('mouseup', handleMouseUp);
+
+		return () => {
+			window.removeEventListener('mousemove', handleMouseMove);
+			window.removeEventListener('mouseup', handleMouseUp);
+		};
+	}, [movedTask, clickOffsetTop]);
+
+	return {
+		containerRef,
+		handleMouseDown,
+		handleMouseEnterTop,
+		handleMouseEnterBottom,
+		movedTask,
+		movedTaskTop,
 	};
-
-	// Necessary for handleDrop to work
-	const handleDragOver = (e: React.DragEvent) => {
-		e.preventDefault();
-	};
-
-	const handleDrop = (task: Task, e: React.DragEvent) => {
-		if (!draggedTask || !droppedTaskId) return;
-
-		const droppedTaskIndex = tasks.findIndex(task => task.id === droppedTaskId);
-		const droppedTask = tasks[droppedTaskIndex];
-		const taskAfterDroppedTask = tasks[droppedTaskIndex + 1];
-		if (!taskAfterDroppedTask) {
-			mutate({ id: draggedTask.id, weight: droppedTask.weight - 10000 });
-		} else {
-			mutate({ id: draggedTask.id, weight: (droppedTask.weight + taskAfterDroppedTask.weight) / 2 });
-		}
-
-		setDraggedTask(null);
-		setDroppedTaskId(null);
-	};
-
-	return { handleDragStart, handleDragEnter, handleDragOver, handleDrop, droppedTaskId, draggedTask };
 };

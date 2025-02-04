@@ -11,9 +11,10 @@ import Task from './task';
  */
 const Tasks = () => {
 	const { data: tasks, error, isPending } = useTasks();
-	const { handleDragEnter, handleDragOver, handleDragStart, handleDrop, droppedTaskId, draggedTask } = useTasksDrag({
-		tasks: tasks || [],
-	});
+	const { containerRef, handleMouseDown, movedTask, handleMouseEnterTop, handleMouseEnterBottom, movedTaskTop } =
+		useTasksDrag({
+			tasks: tasks || [],
+		});
 
 	if (isPending) return <LoadingSpinner />;
 
@@ -24,17 +25,15 @@ const Tasks = () => {
 	}
 
 	return (
-		<div className='space-y-4'>
+		<div className='relative space-y-4' ref={containerRef}>
 			{tasks.map(task => (
 				<Task
-					draggedTask={draggedTask || undefined}
-					isBeingDropped={task.id === droppedTaskId}
 					key={task.id}
 					task={task}
-					onDragEnter={handleDragEnter}
-					onDragStart={handleDragStart}
-					onDragOver={handleDragOver}
-					onDrop={handleDrop}
+					onMouseDown={handleMouseDown}
+					onMouseEnterTop={handleMouseEnterTop}
+					onMouseEnterBottom={handleMouseEnterBottom}
+					top={task.id === movedTask?.id ? movedTaskTop : 0}
 				/>
 			))}
 		</div>
