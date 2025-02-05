@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import DaysViewGrid from './days-view-grid';
 import DaysViewNotes from './days-view-notes';
-import TopBar from './top-bar';
+import DaysViewTopbar from './days-view-topbar';
 
 type Props = {};
 
@@ -49,7 +49,7 @@ const DaysView = ({}: Props) => {
 	return (
 		<>
 			{/* Dates */}
-			<TopBar />
+			<DaysViewTopbar />
 			<div className='relative outline-none scrollbar-hide' onScroll={handleScroll} ref={scrollContainerRef}>
 				{/* Just grid: */}
 				<DaysViewGrid />

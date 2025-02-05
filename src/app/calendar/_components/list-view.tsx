@@ -21,7 +21,7 @@ const ListView = () => {
 	if (!courses || !notesWithoutTime) return;
 
 	return (
-		<div className=' mt-4 flex flex-col items-center gap-2'>
+		<div className='flex flex-col items-center gap-2 border-t border-neutral-200 pt-4 dark:border-transparent'>
 			{/* Notes without time at the top */}
 			{filteredNotesWithoutTime?.map(note => {
 				const course = courses.find(c => c.id === note.courseId);

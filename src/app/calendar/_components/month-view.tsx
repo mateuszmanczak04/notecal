@@ -31,7 +31,7 @@ const Tile = ({
 			ref={ref}
 			onClick={handleClick}
 			className={cn(
-				'flex flex-col gap-y-1 border-b border-r border-neutral-300 p-2 py-10 text-center last-of-type:rounded-br-xl dark:border-neutral-600',
+				'flex flex-col gap-y-1 border-b border-r border-neutral-200 p-2 py-10 text-center last-of-type:rounded-br-xl dark:border-neutral-600',
 				!!onClick && 'cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-700',
 				className,
 			)}>
@@ -69,10 +69,10 @@ const MonthView = () => {
 	};
 
 	return (
-		<div className='grid grid-cols-7 overflow-hidden  border-l border-t border-neutral-300 dark:border-neutral-600'>
+		<div className='grid grid-cols-7 overflow-hidden  border-l border-t border-neutral-200 dark:border-neutral-600'>
 			{/* Week day names */}
 			{['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(dayName => (
-				<Tile className='flex h-10 justify-center bg-neutral-900 px-0 py-0' key={dayName}>
+				<Tile className='flex h-10 justify-center bg-white px-0 py-0 text-sm dark:bg-neutral-900' key={dayName}>
 					{dayName}
 				</Tile>
 			))}

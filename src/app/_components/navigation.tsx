@@ -37,7 +37,7 @@ const Navigation = () => {
 			</Button>
 			<div
 				className={cn(
-					'fixed left-0 top-0 z-40 mr-4 flex h-screen w-screen shrink-0 translate-x-0 flex-col gap-8 bg-neutral-100 p-8 pl-20 shadow-lg transition sm:w-96 xl:max-w-80 xl:p-4 xl:shadow-none dark:bg-neutral-900',
+					'fixed left-0 top-0 z-[999] mr-4 flex h-screen w-screen shrink-0 translate-x-0 flex-col gap-8 bg-neutral-100 p-8 pl-20 shadow-lg transition sm:w-96 xl:max-w-80 xl:p-6 xl:shadow-none dark:bg-neutral-900',
 					!isOpen && '-translate-x-full xl:translate-x-0',
 				)}>
 				{/* Close button */}
