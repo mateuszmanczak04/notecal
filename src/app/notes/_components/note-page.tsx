@@ -40,7 +40,7 @@ const NotePage = () => {
 	if (!currentCourse) return <p>Course not found</p>;
 
 	return (
-		<main className='mx-auto flex h-full min-h-80 max-w-screen-2xl flex-col md:flex-row'>
+		<main className='mx-auto flex h-full min-h-80 flex-col md:flex-row'>
 			<article className='flex h-screen flex-1 flex-col'>
 				{currentNote ? (
 					<Content note={currentNote} course={currentCourse} />
@@ -49,7 +49,7 @@ const NotePage = () => {
 				)}
 			</article>
 
-			<aside className='flex h-screen w-full shrink-0 flex-col gap-y-4 overflow-y-scroll p-4 pb-64 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96'>
+			<aside className='flex h-screen w-full shrink-0 flex-col gap-y-4 overflow-y-scroll border-l border-neutral-200 p-4 pb-64 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600'>
 				{/* Course related */}
 				{sidebarElements.courseRelated && (
 					<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>

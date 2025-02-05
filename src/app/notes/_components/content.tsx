@@ -103,7 +103,7 @@ const Content = ({ note, course }: Props) => {
 	return (
 		<article
 			className={cn(
-				'flex h-full flex-1 flex-col bg-neutral-100 p-4 dark:bg-neutral-700',
+				'flex h-full flex-1 flex-col bg-white dark:bg-neutral-700',
 				isPendingUpdate && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer
@@ -119,7 +119,7 @@ const Content = ({ note, course }: Props) => {
 					course={course}
 					hasChanged={hasChanged}
 				/>
-				<div className='relative mt-4 flex-1 overflow-y-scroll scroll-auto leading-loose scrollbar-hide'>
+				<div className='relative flex-1 overflow-y-scroll scroll-auto p-4 leading-loose scrollbar-hide'>
 					<RichTextPlugin
 						contentEditable={
 							<ContentEditable
@@ -128,7 +128,7 @@ const Content = ({ note, course }: Props) => {
 							/>
 						}
 						placeholder={
-							<p className='pointer-events-none absolute left-0 top-0 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
+							<p className='pointer-events-none absolute left-4 top-4 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
 								Enter some text...
 							</p>
 						}
