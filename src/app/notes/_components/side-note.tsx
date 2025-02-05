@@ -30,7 +30,7 @@ const SideNote = ({ note }: Props) => {
 					aria-label={`link to note ${note.title}`}
 					title={`link to note ${note.title}`}
 					onContextMenu={handleContextMenu}
-					className={cn(note.id === noteId && 'bg-neutral-100 dark:bg-neutral-500')}>
+					className={cn(note.id === noteId && 'border-2 border-neutral-200 dark:border-neutral-600')}>
 					<span className=' w-auto max-w-48 shrink-0 truncate text-center text-sm'>
 						{note.startTime && note.endTime && (
 							<span className='mr-2 font-semibold'>{format(note.startTime, 'yyyy-MM-dd')}</span>
