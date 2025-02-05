@@ -27,7 +27,7 @@ const Navigation = () => {
 			<Button
 				variant='secondary'
 				className={cn(
-					'transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none xl:hidden dark:bg-neutral-900 dark:text-neutral-100',
+					'transiton fixed left-0 top-0 z-50 h-full w-12 translate-x-0 rounded-none xl:hidden dark:bg-neutral-900 dark:text-neutral-100',
 					isOpen && '-translate-x-32',
 				)}
 				aria-label='open menu button'

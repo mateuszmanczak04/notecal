@@ -39,7 +39,7 @@ const Header = () => {
 	};
 
 	return (
-		<div className='z-50 flex items-center justify-between gap-2'>
+		<div className='z-10 flex items-center justify-between gap-2'>
 			{/* Title */}
 			{['days', 'month'].includes(viewMode) && (
 				<h2 className='text-2xl font-bold sm:text-3xl'>
