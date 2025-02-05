@@ -7,11 +7,13 @@ import {
 	MenubarItem,
 	MenubarLabel,
 	MenubarMenu,
+	MenubarRadioGroup,
+	MenubarRadioItem,
 	MenubarSeparator,
 	MenubarTrigger,
 } from '@/components/menubar';
 import { useCourses } from '@/hooks/use-courses';
-import { useSettings } from '@/hooks/use-settings';
+import { T_ViewMode, useSettings } from '@/hooks/use-settings';
 import { ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
 import { useCalendarContext } from '../_context/calendar-context';
 
@@ -77,9 +79,11 @@ const CalendarMenu = () => {
 				<MenubarMenu>
 					<MenubarTrigger>View mode</MenubarTrigger>
 					<MenubarContent>
-						<MenubarItem onClick={() => setViewMode('days')}>Days</MenubarItem>
-						<MenubarItem onClick={() => setViewMode('month')}>Month</MenubarItem>
-						<MenubarItem onClick={() => setViewMode('list')}>List</MenubarItem>
+						<MenubarRadioGroup value={viewMode} onValueChange={value => setViewMode(value as T_ViewMode)}>
+							<MenubarRadioItem value='days'>Days</MenubarRadioItem>
+							<MenubarRadioItem value='month'>Month</MenubarRadioItem>
+							<MenubarRadioItem value='list'>List</MenubarRadioItem>
+						</MenubarRadioGroup>
 					</MenubarContent>
 				</MenubarMenu>
 				<MenubarSeparator />
