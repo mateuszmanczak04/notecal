@@ -56,18 +56,19 @@ enum TaskPriority {
 }
 
 model Task {
-  id          String        @id @default(cuid())
-  title       String        @default("")
-  description String        @default("")
-  completed   Boolean       @default(false)
-  dueDate     DateTime?
-  priority    TaskPriority?
-  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
-  course      Course?       @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  courseId    String?
-  createdAt   DateTime      @default(now())
-  weight      Int           @default(0)
+  id           String        @id @default(cuid())
+  title        String        @default("")
+  description  String        @default("")
+  completed    Boolean       @default(false)
+  dueDate      DateTime?
+  priority     TaskPriority?
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  course       Course?       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId     String?
+  createdAt    DateTime      @default(now())
+  weight       Int           @default(0)
+  courseWeight Int           @default(0)
 }
 
 model Note {
