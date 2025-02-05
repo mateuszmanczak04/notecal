@@ -8,6 +8,8 @@ import { Note } from '@prisma/client';
 import { format } from 'date-fns';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import React from 'react';
+import { useSelectedNotes } from '../_hooks/use-selected-notes';
 
 type Props = {
 	note: Note;
@@ -20,17 +22,41 @@ const SideNote = ({ note }: Props) => {
 	const searchParams = useSearchParams();
 	const noteId = searchParams.get('noteId');
 	const { closeContextMenu, contextMenuPosition, handleContextMenu } = useNoteContextMenu();
+	const { deselectAll, deselectNote, selectNote, isNoteSelected } = useSelectedNotes();
+
+	const handleClick = (e: React.MouseEvent) => {
+		if (e.metaKey) {
+			e.preventDefault();
+			if (isNoteSelected(note)) {
+				deselectNote(note);
+			} else {
+				selectNote(note);
+			}
+		} else {
+			deselectAll();
+			selectNote(note);
+		}
+	};
+
+	const handleNoteContextMenu = (e: React.MouseEvent) => {
+		e.preventDefault();
+		if (noteId !== note.id && !isNoteSelected(note)) return;
+		handleContextMenu(e);
+	};
 
 	return (
 		<>
-			<Button asChild variant='secondary'>
+			<Button asChild variant='secondary' onClick={handleClick}>
 				<Link
 					href={`/notes?noteId=${note.id}`}
 					key={note.id}
 					aria-label={`link to note ${note.title}`}
 					title={`link to note ${note.title}`}
-					onContextMenu={handleContextMenu}
-					className={cn(note.id === noteId && 'border-2 border-neutral-200 dark:border-neutral-600')}>
+					onContextMenu={handleNoteContextMenu}
+					className={cn(
+						note.id === noteId && 'bg-neutral-300 dark:bg-neutral-500',
+						isNoteSelected(note) && 'border-2 border-neutral-500 dark:border-neutral-300',
+					)}>
 					<span className=' w-auto max-w-48 shrink-0 truncate text-center text-sm'>
 						{note.startTime && note.endTime && (
 							<span className='mr-2 font-semibold'>{format(note.startTime, 'yyyy-MM-dd')}</span>

@@ -1,9 +1,11 @@
 'use client';
 
 import ChangeCourse from '@/app/notes/_components/change-course';
+import DeleteManyNotesButton from '@/app/notes/_components/delete-many-notes-button';
 import DeleteNoteButton from '@/app/notes/_components/delete-note-button';
 import DuplicateNote from '@/app/notes/_components/duplicate-note';
 import NoteTitle from '@/app/notes/_components/note-title';
+import { useSelectedNotes } from '@/app/notes/_hooks/use-selected-notes';
 import { useCourses } from '@/hooks/use-courses';
 import { Note } from '@prisma/client';
 import { useEffect, useLayoutEffect, useRef } from 'react';
@@ -22,6 +24,7 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 	const { data: courses } = useCourses();
 	const currentCourse = courses?.find(c => c.id === note.courseId);
 	const contextMenuRef = useRef<HTMLDivElement>(null!);
+	const { selectedNotes, deselectAll } = useSelectedNotes();
 
 	useOnClickOutside(contextMenuRef, () => {
 		handleClose();
@@ -64,12 +67,12 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 	return (
 		<div
 			ref={contextMenuRef}
-			className='fixed z-50 w-[clamp(12rem,90vw,24rem)] cursor-default select-none rounded-xl bg-white p-4 pb-20 shadow-2xl dark:bg-neutral-700'
+			className='fixed z-50 w-[clamp(12rem,90vw,24rem)] cursor-default select-none rounded-xl bg-white p-4 shadow-2xl dark:bg-neutral-700'
 			style={{
 				left: position.x,
 				top: position.y,
 			}}>
-			{currentCourse && (
+			{selectedNotes.length <= 1 && currentCourse && (
 				<div>
 					<NoteTitle note={note} callback={handleClose} />
 					<p className='mb-1 mt-4 px-2 font-semibold'>Move to another course</p>
@@ -77,6 +80,9 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 					<DuplicateNote note={note} className='mt-4 w-full' callback={handleClose} />
 					<DeleteNoteButton note={note} className='mt-4 w-full' />
 				</div>
+			)}
+			{selectedNotes.length > 1 && (
+				<DeleteManyNotesButton onDelete={deselectAll} notes={selectedNotes} className='mt-4 w-full' />
 			)}
 		</div>
 	);

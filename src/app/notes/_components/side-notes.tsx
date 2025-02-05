@@ -9,6 +9,7 @@ import { Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import createNote from '../_actions/create-note';
+import { SelectNotesProvider } from '../_hooks/use-selected-notes';
 import SideNote from './side-note';
 
 type Props = {
@@ -46,10 +47,12 @@ const SideNotes = ({ currentCourse }: Props) => {
 			<legend className='px-2'>Course notes</legend>
 
 			<>
-				{/* List of all notes from this course */}
-				{currentCourseNotes.map(note => (
-					<SideNote key={note.id} note={note} />
-				))}
+				<SelectNotesProvider>
+					{/* List of all notes from this course */}
+					{currentCourseNotes.map(note => (
+						<SideNote key={note.id} note={note} />
+					))}
+				</SelectNotesProvider>
 			</>
 
 			{/* New note button */}
