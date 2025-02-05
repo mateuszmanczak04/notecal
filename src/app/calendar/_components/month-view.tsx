@@ -3,7 +3,7 @@
 import { useNotesWithTime } from '@/hooks/use-notes-with-time';
 import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
-import { addDays, format, getDay, getDaysInMonth, isSameDay, startOfMonth } from 'date-fns';
+import { addDays, format, getDay, getDaysInMonth, isSameDay, isToday, startOfMonth } from 'date-fns';
 import React, { useRef } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
 import { useCalendarContext } from '../_context/calendar-context';
@@ -82,8 +82,13 @@ const MonthView = () => {
 					return <Tile key={Math.random()} />;
 				}
 				return (
-					<Tile key={tile.toString()} onClick={() => goToDayInDaysView(tile)}>
-						<p className='font-semibold'>{format(tile, 'd')}</p>
+					<Tile
+						key={tile.toString()}
+						onClick={() => goToDayInDaysView(tile)}
+						className={cn(isToday(tile) && 'bg-neutral-100 dark:bg-neutral-700')}>
+						<p className='font-semibold'>
+							{format(tile, 'd')} {isToday(tile) && '(today)'}
+						</p>
 						{notes &&
 							notes
 								.filter(note => isSameDay(note.startTime, tile))
