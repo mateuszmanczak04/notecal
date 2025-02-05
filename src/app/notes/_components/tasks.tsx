@@ -9,6 +9,7 @@ import { useTasks } from '@/hooks/use-tasks';
 import { Course, type Task as T_Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Reorder } from 'motion/react';
+import { useState } from 'react';
 
 type Props = {
 	course: Course;
@@ -27,6 +28,7 @@ const Tasks = ({ course }: Props) => {
 			queryClient.invalidateQueries({ queryKey: ['tasks'] });
 		},
 	});
+	const [hasChangedOrder, setHasChangesOrder] = useState(false);
 
 	const handleReorder = (newTasks: T_Task[]) => {
 		const newTasksWithProperWeights = newTasks.map((task, index) => ({
@@ -34,11 +36,13 @@ const Tasks = ({ course }: Props) => {
 			courseWeight: (newTasks.length - 1 - index) * 10000,
 		}));
 		queryClient.setQueryData(['tasks'], newTasksWithProperWeights);
+		setHasChangesOrder(true);
 	};
 
 	const handleSaveNewOrder = () => {
 		const tasks = queryClient.getQueryData(['tasks']) as T_Task[];
 		mutate({ tasks });
+		setHasChangesOrder(false);
 	};
 
 	const currentCourseTasks = tasks
@@ -47,7 +51,11 @@ const Tasks = ({ course }: Props) => {
 
 	return (
 		<article className='flex flex-col gap-y-4'>
-			<Button onClick={handleSaveNewOrder}>Save new order</Button>
+			{hasChangedOrder && (
+				<Button className='w-full' onClick={handleSaveNewOrder}>
+					Save new order
+				</Button>
+			)}
 			{currentCourseTasks && (
 				<Reorder.Group values={currentCourseTasks} onReorder={handleReorder}>
 					{currentCourseTasks?.map(task => <Task forPage='notes' key={task.id} task={task} />)}
