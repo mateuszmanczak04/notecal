@@ -68,7 +68,7 @@ const CalendarMenu = () => {
 	return (
 		<>
 			<Menubar className='mb-4 w-fit text-nowrap'>
-				<MenubarLabel className='cursor-default select-none text-neutral-700 hover:bg-white data-[state=open]:bg-white'>
+				<MenubarLabel className='cursor-default select-none hover:bg-white data-[state=open]:bg-white dark:hover:bg-neutral-800 dark:data-[state=open]:bg-neutral-800'>
 					{currentMonth} {currentYear}
 				</MenubarLabel>
 				<MenubarSeparator />
