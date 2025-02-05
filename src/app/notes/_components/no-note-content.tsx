@@ -25,7 +25,7 @@ type T_Props = {
  */
 const NoNoteContent = ({ course }: T_Props) => {
 	return (
-		<article className='flex h-full flex-1 flex-col rounded-xl bg-neutral-100 p-4 dark:bg-neutral-700'>
+		<article className='flex h-full flex-1 flex-col bg-neutral-100 p-4 dark:bg-neutral-700'>
 			<h2 className='mb-2 break-all rounded-md bg-white px-3 py-2 text-center text-2xl font-semibold text-opacity-50 outline-none transition-opacity dark:bg-neutral-800'>
 				Please select or create a note to continue
 			</h2>

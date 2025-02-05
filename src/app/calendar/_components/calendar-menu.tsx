@@ -70,8 +70,8 @@ const CalendarMenu = () => {
 
 	return (
 		<>
-			<Menubar className='mb-4 w-fit text-nowrap'>
-				<MenubarLabel className='cursor-default select-none hover:bg-white data-[state=open]:bg-white dark:hover:bg-neutral-800 dark:data-[state=open]:bg-neutral-800'>
+			<Menubar className='sticky top-0 z-50 h-10 text-nowrap rounded-none border-0 border-l dark:bg-neutral-900'>
+				<MenubarLabel className='w-32 cursor-default select-none justify-center hover:bg-white data-[state=open]:bg-white dark:hover:bg-neutral-900 dark:data-[state=open]:bg-neutral-800'>
 					{currentMonth} {currentYear}
 				</MenubarLabel>
 				<MenubarSeparator />

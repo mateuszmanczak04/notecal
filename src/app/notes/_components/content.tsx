@@ -103,7 +103,7 @@ const Content = ({ note, course }: Props) => {
 	return (
 		<article
 			className={cn(
-				'flex h-full flex-1 flex-col rounded-xl bg-neutral-100 p-4 dark:bg-neutral-700',
+				'flex h-full flex-1 flex-col bg-neutral-100 p-4 dark:bg-neutral-700',
 				isPendingUpdate && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer

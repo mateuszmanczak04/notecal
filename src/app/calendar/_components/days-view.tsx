@@ -50,10 +50,7 @@ const DaysView = ({}: Props) => {
 		<>
 			{/* Dates */}
 			<TopBar />
-			<div
-				className='relative mb-4 overflow-y-scroll overscroll-none scroll-auto outline-none scrollbar-hide'
-				onScroll={handleScroll}
-				ref={scrollContainerRef}>
+			<div className='relative outline-none scrollbar-hide' onScroll={handleScroll} ref={scrollContainerRef}>
 				{/* Just grid: */}
 				<DaysViewGrid />
 

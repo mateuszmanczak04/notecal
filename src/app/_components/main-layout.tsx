@@ -49,11 +49,9 @@ const MainLayout = async ({ children }: Props) => {
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
 			<CalendarContextProvider>
-				<div className='flex h-screen overflow-y-hidden p-4 pl-12 xl:pl-4'>
+				<div className='flex pl-12 xl:pl-80 dark:bg-neutral-800'>
 					<Navigation />
-					<div className='h-full flex-1 overflow-y-scroll rounded-xl bg-white p-4 scrollbar-hide dark:bg-neutral-800'>
-						{children}
-					</div>
+					<div className='min-h-screen flex-1 rounded-xl bg-white dark:bg-neutral-800'>{children}</div>
 				</div>
 				<Toaster />
 			</CalendarContextProvider>

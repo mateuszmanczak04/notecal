@@ -12,8 +12,8 @@ const TopBar = () => {
 	const days = new Array(displayedDays).fill(0).map((_, index) => getDayAfter(index));
 
 	return (
-		<div className='flex'>
-			<div className='grid h-calendar-header w-12 place-content-center rounded-tl-xl border sm:w-20 dark:border-neutral-600'>
+		<div className='sticky top-10 z-50 flex w-full bg-neutral-900'>
+			<div className='grid h-calendar-header w-12 place-content-center border sm:w-20 dark:border-neutral-600'>
 				{(isNotesPending || isCoursesPending) && <LoadingSpinner className='h-5 w-5' />}
 			</div>
 
@@ -24,7 +24,7 @@ const TopBar = () => {
 					gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
 				}}>
 				{days.map((day, index) => (
-					<DaysViewDayHeading key={day.toString()} date={day} isLast={index === displayedDays - 1} />
+					<DaysViewDayHeading key={day.toString()} date={day} />
 				))}
 			</div>
 		</div>

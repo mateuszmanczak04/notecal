@@ -5,10 +5,19 @@ import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
 import { addDays, format, getDay, getDaysInMonth, isSameDay, startOfMonth } from 'date-fns';
 import React, { useRef } from 'react';
+import { ClassNameValue } from 'tailwind-merge';
 import { useCalendarContext } from '../_context/calendar-context';
 import MonthViewNote from './month-view-note';
 
-const Tile = ({ children, onClick }: { children?: React.ReactNode; onClick?: () => void }) => {
+const Tile = ({
+	children,
+	onClick,
+	className,
+}: {
+	children?: React.ReactNode;
+	onClick?: () => void;
+	className?: ClassNameValue;
+}) => {
 	const ref = useRef<HTMLDivElement>(null!);
 
 	const handleClick = (e: React.MouseEvent) => {
@@ -24,6 +33,7 @@ const Tile = ({ children, onClick }: { children?: React.ReactNode; onClick?: () 
 			className={cn(
 				'flex flex-col gap-y-1 border-b border-r border-neutral-300 p-2 py-10 text-center last-of-type:rounded-br-xl dark:border-neutral-600',
 				!!onClick && 'cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-700',
+				className,
 			)}>
 			{children}
 		</div>
@@ -59,10 +69,12 @@ const MonthView = () => {
 	};
 
 	return (
-		<div className='my-4 grid grid-cols-7 overflow-hidden rounded-xl border-l border-t border-neutral-300 dark:border-neutral-600'>
+		<div className='grid grid-cols-7 overflow-hidden  border-l border-t border-neutral-300 dark:border-neutral-600'>
 			{/* Week day names */}
 			{['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(dayName => (
-				<Tile key={dayName}>{dayName}</Tile>
+				<Tile className='flex h-10 justify-center bg-neutral-900 px-0 py-0' key={dayName}>
+					{dayName}
+				</Tile>
 			))}
 			{/* Month days */}
 			{renderedTiles.map(tile => {
