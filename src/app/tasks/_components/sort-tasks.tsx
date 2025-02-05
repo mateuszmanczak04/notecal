@@ -4,7 +4,7 @@ import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger }
 import { useToast } from '@/components/toast/use-toast';
 import { useSettings } from '@/hooks/use-settings';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { sortTasks, T_SortTasksInput } from '../_actions/sort-tasks';
+import { sortTasks } from '../_actions/sort-tasks';
 
 const getNameOfCriteria = (criteria: string) => {
 	if (criteria === 'title') {
@@ -31,7 +31,6 @@ const SortTasks = () => {
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
 		mutationFn: sortTasks,
-		onMutate: (data: T_SortTasksInput) => {},
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
