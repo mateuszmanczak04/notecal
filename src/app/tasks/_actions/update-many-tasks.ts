@@ -25,12 +25,6 @@ const updateManyTasks = async (data: T_UpdateManyTasksInput): T_UpdateManyTasksR
 			};
 		}
 
-		console.table(
-			data.tasks
-				.map(task => ({ title: task.title, weight: task.weight }))
-				.toSorted((a, b) => b.weight - a.weight),
-		);
-
 		const tasks = await Promise.all(
 			(data.tasks || []).map(async task => {
 				if (task.title.trim() === '') {
@@ -38,10 +32,6 @@ const updateManyTasks = async (data: T_UpdateManyTasksInput): T_UpdateManyTasksR
 				}
 				return db.task.update({ where: { id: task.id, userId: user.id }, data: task });
 			}),
-		);
-
-		console.table(
-			tasks.map(task => ({ title: task.title, weight: task.weight })).toSorted((a, b) => b.weight - a.weight),
 		);
 
 		return { tasks };
