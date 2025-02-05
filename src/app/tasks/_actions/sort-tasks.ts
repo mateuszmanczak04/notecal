@@ -30,7 +30,7 @@ export const sortTasks = async ({ newOrder }: T_SortTasksInput): T_SortTasksResu
 				tasks.sort((a, b) => a.title.localeCompare(b.title));
 				break;
 			case 'createdAt':
-				tasks.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+				tasks.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 				break;
 			case 'dueDate':
 				tasks.sort((a, b) => {
