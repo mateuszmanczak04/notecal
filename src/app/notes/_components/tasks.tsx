@@ -2,7 +2,6 @@
 
 import CreateTaskForm from '@/app/tasks/_components/create-task-form';
 import Task from '@/app/tasks/_components/task';
-import { useTasksDrag } from '@/app/tasks/hooks/use-tasks-drag';
 import { useTasks } from '@/hooks/use-tasks';
 import { Course } from '@prisma/client';
 
@@ -12,16 +11,6 @@ type Props = {
 
 const Tasks = ({ course }: Props) => {
 	const { data: tasks } = useTasks();
-	const {
-		handleMouseMove: handleDragEnter,
-		handleDragOver,
-		handleMouseDown: handleDragStart,
-		handleDrop,
-		droppedTaskId,
-		movedTask: draggedTask,
-	} = useTasksDrag({
-		tasks: tasks || [],
-	});
 
 	if (!tasks) return;
 
@@ -29,20 +18,7 @@ const Tasks = ({ course }: Props) => {
 
 	return (
 		<article className='flex flex-col gap-y-4'>
-			{currentCourseTasks?.map(task => (
-				<Task
-					forPage='notes'
-					key={task.id}
-					task={task}
-					onDragEnter={handleDragEnter}
-					onDragOver={handleDragOver}
-					onMouseUp={handleDrop}
-					onMouseDown={handleDragStart}
-					draggedTask={draggedTask || undefined}
-					isBeingDropped={task.id === droppedTaskId}
-				/>
-			))}
-
+			{currentCourseTasks?.map(task => <Task forPage='notes' key={task.id} task={task} />)}
 			<CreateTaskForm course={course} forPage='notes' />
 		</article>
 	);
