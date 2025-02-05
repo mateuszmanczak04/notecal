@@ -4,28 +4,28 @@ import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
 import { getCalendarRowHeight } from '../_utils/get-calendar-row-height';
 
-const Row = ({ isLast }: { isLast: boolean }) => {
+const Row = ({ isToday }: { isToday: boolean }) => {
 	const { zoomLevel } = useSettings();
 
 	return (
 		<div
 			className={cn(
 				'flex items-center justify-center border-b border-r font-semibold text-neutral-500 transition-[height] dark:border-neutral-600',
-				isLast && 'rounded-br-xl',
+				isToday && 'bg-neutral-100 dark:bg-neutral-700',
 			)}
 			style={{ height: getCalendarRowHeight({ zoomLevel }) + 'px' }}></div>
 	);
 };
 
 type Props = {
-	isLast?: boolean;
+	isToday?: boolean;
 };
 
-const DaysViewDayColumn = ({ isLast = false }: Props) => {
+const DaysViewDayColumn = ({ isToday = false }: Props) => {
 	return (
 		<div className='grid'>
 			{new Array(24).fill(0).map((_, index) => (
-				<Row key={index} isLast={index === 23 && isLast} />
+				<Row key={index} isToday={isToday} />
 			))}
 		</div>
 	);

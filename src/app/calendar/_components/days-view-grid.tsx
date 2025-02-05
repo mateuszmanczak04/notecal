@@ -1,11 +1,12 @@
 'use client';
 
 import { useSettings } from '@/hooks/use-settings';
+import { addDays, isSameDay } from 'date-fns';
 import DaysViewDayColumn from './days-view-day-column';
 import HourRow from './hour-row';
 
 const DaysViewGrid = () => {
-	const { displayedDays } = useSettings();
+	const { displayedDays, firstCalendarDay } = useSettings();
 
 	return (
 		<div className='flex'>
@@ -23,7 +24,7 @@ const DaysViewGrid = () => {
 					gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
 				}}>
 				{new Array(displayedDays).fill(0).map((_, index) => (
-					<DaysViewDayColumn key={index} isLast={index === displayedDays - 1} />
+					<DaysViewDayColumn key={index} isToday={isSameDay(addDays(firstCalendarDay, index), new Date())} />
 				))}
 			</div>
 		</div>
