@@ -1,5 +1,6 @@
 import { cn } from '@/utils/cn';
 import { type Task } from '@prisma/client';
+import { Reorder } from 'motion/react';
 import Completed from './completed';
 import Course from './course';
 import Description from './description';
@@ -15,9 +16,10 @@ type Props = {
 
 const Task = ({ task, forPage = 'tasks' }: Props) => {
 	return (
-		<div
+		<Reorder.Item
+			value={task}
 			className={cn(
-				'relative flex w-full gap-4 border-b border-neutral-700 p-4',
+				'relative flex w-full cursor-move gap-4 border-b border-neutral-700 bg-white p-4 dark:bg-neutral-800',
 				forPage === 'notes' && 'gap-2 p-2',
 			)}>
 			<Completed task={task} forPage={forPage} />
@@ -35,7 +37,7 @@ const Task = ({ task, forPage = 'tasks' }: Props) => {
 					<Priority task={task} forPage={forPage} />
 				</div>
 			</div>
-		</div>
+		</Reorder.Item>
 	);
 };
 

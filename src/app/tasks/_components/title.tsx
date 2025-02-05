@@ -62,7 +62,7 @@ const Title = ({ task, forPage = 'tasks' }: Props) => {
 			ref={titleRef}
 			contentEditable
 			className={cn(
-				'break-all font-bold outline-none transition-colors',
+				'cursor-text break-all font-bold outline-none transition-colors',
 				isPending && 'pointer-events-none opacity-50',
 			)}
 			onKeyDown={handleKeyDown}
