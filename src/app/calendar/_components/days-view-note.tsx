@@ -8,7 +8,7 @@ import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
 import { type Note as DaysViewNote } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useNoteDrag } from '../_hooks/use-note-drag';
 import { getDaysIncludedInNote } from '../_utils/get-days-included-in-note';
 import { getNoteBlockHeight } from '../_utils/get-note-block-height';
@@ -46,6 +46,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 		topEdgeRef,
 		bottomEdgeRef,
 	} = useNoteDrag({ note, noteRef: noteBlocksRef });
+	const [isHover, setIsHover] = useState(false);
 
 	// Context menu related below:
 	const { closeContextMenu, contextMenuPosition, handleContextMenu, contextMenuBlockIndex } = useNoteContextMenu();
@@ -72,7 +73,10 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 						className={cn(
 							'absolute min-h-4 min-w-8 cursor-pointer select-none  rounded-xl border-2 border-white bg-primary-500 transition dark:border-neutral-800',
 							isDragging && 'opacity-50',
+							isHover && 'opacity-90',
 						)}
+						onMouseEnter={() => setIsHover(true)}
+						onMouseLeave={() => setIsHover(false)}
 						style={{
 							top: getNoteBlockTopOffset({ blockDay: day, noteStartTime: note.startTime }),
 							left: getNoteBlockLeftOffset({
