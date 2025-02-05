@@ -1,4 +1,6 @@
 import { Button } from '@/components/button';
+import LoadingSpinner from '@/components/loading-spinner';
+import { useToast } from '@/components/toast/use-toast';
 import { Toggle } from '@/components/toggle';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $createHeadingNode, $isHeadingNode, HeadingTagType } from '@lexical/rich-text';
@@ -41,11 +43,27 @@ type Props = {
 	note: Note;
 	course: Course;
 	hasChanged: boolean;
-	handleExport: () => void;
+	handleExport: () => Promise<void>;
 };
 
 export default function ToolbarPlugin({ onSave, note, handleExport, course, hasChanged }: Props) {
 	const [editor] = useLexicalComposerContext();
+	const [isExportingPDF, setIsExportingPDF] = useState(false);
+	const { toast } = useToast();
+	const handleExportPDF = () => {
+		setIsExportingPDF(true);
+
+		handleExport()
+			.then(() => {
+				toast({ description: 'PDF exported successfully' });
+			})
+			.catch(error => {
+				toast({ description: error.message, variant: 'destructive' });
+			})
+			.finally(() => {
+				setIsExportingPDF(false);
+			});
+	};
 
 	/** Indicates which properties are disabled, e.g.:
 	 * {
@@ -293,8 +311,8 @@ export default function ToolbarPlugin({ onSave, note, handleExport, course, hasC
 			</Button>
 
 			{/* Export button: */}
-			<Button className='rounded-md' variant='secondary' onClick={handleExport}>
-				<FileOutput className='size-5' /> Export PDF
+			<Button className='rounded-md' variant='secondary' onClick={handleExportPDF} disabled={isExportingPDF}>
+				<FileOutput className='size-5' /> Export PDF {isExportingPDF && <LoadingSpinner className='size-5' />}
 			</Button>
 		</div>
 	);
