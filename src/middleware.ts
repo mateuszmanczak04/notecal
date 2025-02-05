@@ -22,13 +22,13 @@ export default async (request: NextRequest) => {
 
 	if (isAuthRoute) {
 		if (authenticated) {
-			return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, url));
+			return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, url.toString()));
 		}
 		return;
 	}
 
 	if (!authenticated && !isPublicRoute) {
-		return Response.redirect(new URL('/auth/login', url));
+		return Response.redirect(new URL('/auth/login', url.toString()));
 	}
 
 	return;
