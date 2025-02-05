@@ -2,6 +2,7 @@
 
 import {
 	Menubar,
+	MenubarCheckboxItem,
 	MenubarContent,
 	MenubarItem,
 	MenubarLabel,
@@ -9,8 +10,10 @@ import {
 	MenubarSeparator,
 	MenubarTrigger,
 } from '@/components/menubar';
+import { useCourses } from '@/hooks/use-courses';
 import { useSettings } from '@/hooks/use-settings';
 import { ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
+import { useCalendarContext } from '../_context/calendar-context';
 
 /**
  * A top bar above the calendar grid.
@@ -30,6 +33,17 @@ const CalendarMenu = () => {
 		setViewMode,
 		setDisplayedDays,
 	} = useSettings();
+	const { data: courses } = useCourses();
+	const { handleHideCourse, handleShowCourse, hiddenCoursesIds } = useCalendarContext();
+
+	const handleFilterCourse = (checked: boolean | string, id: string) => {
+		if (checked) {
+			handleShowCourse(id);
+		} else {
+			handleHideCourse(id);
+		}
+	};
+
 	const currentMonth = firstCalendarDay.toLocaleString('default', {
 		month: 'long',
 	});
@@ -69,6 +83,27 @@ const CalendarMenu = () => {
 					</MenubarContent>
 				</MenubarMenu>
 				<MenubarSeparator />
+
+				{/* Filter courses */}
+				{courses && (
+					<>
+						<MenubarMenu>
+							<MenubarTrigger>Filter courses</MenubarTrigger>
+							<MenubarContent>
+								{courses.map(course => (
+									<MenubarCheckboxItem
+										key={course.id}
+										checked={!hiddenCoursesIds.includes(course.id)}
+										onCheckedChange={checked => handleFilterCourse(checked, course.id)}
+										className='gap-1'>
+										{course.name}
+									</MenubarCheckboxItem>
+								))}
+							</MenubarContent>
+						</MenubarMenu>
+						<MenubarSeparator />
+					</>
+				)}
 
 				{/* displayedDays */}
 				{viewMode === 'days' && (
