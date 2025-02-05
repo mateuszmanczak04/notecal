@@ -13,7 +13,7 @@ import {
 	MenubarTrigger,
 } from '@/components/menubar';
 import { useCourses } from '@/hooks/use-courses';
-import { T_ViewMode, useSettings } from '@/hooks/use-settings';
+import { T_DisplayedDays, T_ViewMode, useSettings } from '@/hooks/use-settings';
 import { ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
 import { useCalendarContext } from '../_context/calendar-context';
 
@@ -33,6 +33,7 @@ const CalendarMenu = () => {
 		goMonthForward,
 		goMonthBackward,
 		setViewMode,
+		displayedDays,
 		setDisplayedDays,
 	} = useSettings();
 	const { data: courses } = useCourses();
@@ -115,13 +116,15 @@ const CalendarMenu = () => {
 						<MenubarMenu>
 							<MenubarTrigger>Days to see</MenubarTrigger>
 							<MenubarContent>
-								<MenubarItem onClick={() => setDisplayedDays(1)}>1</MenubarItem>
-								<MenubarItem onClick={() => setDisplayedDays(2)}>2</MenubarItem>
-								<MenubarItem onClick={() => setDisplayedDays(3)}>3</MenubarItem>
-								<MenubarItem onClick={() => setDisplayedDays(4)}>4</MenubarItem>
-								<MenubarItem onClick={() => setDisplayedDays(5)}>5</MenubarItem>
-								<MenubarItem onClick={() => setDisplayedDays(6)}>6</MenubarItem>
-								<MenubarItem onClick={() => setDisplayedDays(7)}>7</MenubarItem>
+								<MenubarRadioGroup
+									value={displayedDays.toString()}
+									onValueChange={value => setDisplayedDays(parseInt(value) as T_DisplayedDays)}>
+									{[1, 2, 3, 4, 5, 6, 7].map(days => (
+										<MenubarRadioItem key={days} value={days.toString()}>
+											{days}
+										</MenubarRadioItem>
+									))}
+								</MenubarRadioGroup>
 							</MenubarContent>
 						</MenubarMenu>
 						<MenubarSeparator />
