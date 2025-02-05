@@ -97,7 +97,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 						draggable
 						onDragStart={handleDragStart}
 						onDrag={handleDrag}
-						onDrop={handleDragEnd}
+						onDragEndCapture={handleDragEnd}
 						onDragOver={e => e.preventDefault()}
 						onContextMenu={e => handleContextMenu(e, index)}>
 						{/* Top edge to drag: */}
@@ -105,7 +105,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 							<div
 								draggable
 								onDragStart={handleDragStartTop}
-								onDrop={handleDragEndTop}
+								onDragEndCapture={handleDragEndTop}
 								onDrag={handleDragTop}
 								ref={topEdgeRef}
 								className={cn(
@@ -126,7 +126,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 							<div
 								draggable
 								onDragStart={handleDragStartBottom}
-								onDrop={handleDragEndBottom}
+								onDragEndCapture={handleDragEndBottom}
 								onDrag={handleDragBottom}
 								ref={bottomEdgeRef}
 								className={cn(

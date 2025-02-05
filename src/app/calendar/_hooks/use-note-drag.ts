@@ -126,6 +126,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	 * Here user releases the cursor.
 	 */
 	const handleDragEnd = (event: React.DragEvent) => {
+		console.log('handleDragEnd');
 		if (!noteRef.current?.includes(event.target as HTMLDivElement)) return;
 
 		mutate({
@@ -134,6 +135,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 			endTime: toUTC(dragEndTime),
 		});
 
+		console.log('DRAGGING FALSE');
 		setIsDragging(false);
 	};
 
