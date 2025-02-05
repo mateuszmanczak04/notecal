@@ -18,8 +18,9 @@ const Task = ({ task, forPage = 'tasks' }: Props) => {
 	return (
 		<Reorder.Item
 			value={task}
+			whileDrag={{ userSelect: 'none', pointerEvents: 'none' }}
 			className={cn(
-				'flex w-full cursor-move gap-4 border-b border-neutral-700 bg-white p-4 dark:bg-neutral-800',
+				'flex w-full cursor-grab gap-4 border-b border-neutral-700 bg-white p-4 dark:bg-neutral-800',
 				forPage === 'notes' && 'gap-2 p-2',
 			)}>
 			<Completed task={task} forPage={forPage} />
