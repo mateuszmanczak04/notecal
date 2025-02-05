@@ -22,7 +22,7 @@ const getNameOfCriteria = (criteria: string) => {
 	if (criteria === 'completed') {
 		return 'Completed';
 	}
-	return '';
+	return 'Custom';
 };
 
 const SortTasks = () => {
@@ -59,7 +59,7 @@ const SortTasks = () => {
 
 	return (
 		<DropdownMenu className='relative flex-1'>
-			<DropdownMenuTrigger showChevron>Sort tasks</DropdownMenuTrigger>
+			<DropdownMenuTrigger showChevron>Sort tasks ({getNameOfCriteria(tasksOrder)})</DropdownMenuTrigger>
 			<DropdownMenuList>
 				<DropdownMenuItem value='title' onSelect={handleSort}>
 					Title
