@@ -7,14 +7,14 @@ import ErrorMessage from '@/components/error-message';
 import LoadingSpinner from '@/components/loading-spinner';
 import { Course } from '@prisma/client';
 import { Reorder } from 'motion/react';
-import NoteTask from './note-task';
+import NoteTaskItem from './note-task-item';
 
 type T_Props = {
 	course: Course;
 };
 
 /** List of tasks for /notes page */
-const NoteTasks = ({ course }: T_Props) => {
+const NoteTasksList = ({ course }: T_Props) => {
 	const { handleReorder, error, handleSaveNewOrder, hasChangedOrder, isPending, tasks } = useTasksFunctionality({
 		courseId: course.id,
 	});
@@ -36,7 +36,7 @@ const NoteTasks = ({ course }: T_Props) => {
 			)}
 			{tasks && (
 				<Reorder.Group values={tasks} onReorder={handleReorder}>
-					{tasks?.map(task => <NoteTask key={task.id} task={task} />)}
+					{tasks?.map(task => <NoteTaskItem key={task.id} task={task} />)}
 				</Reorder.Group>
 			)}
 			<CreateTaskForm course={course} forPage='notes' />
@@ -44,4 +44,4 @@ const NoteTasks = ({ course }: T_Props) => {
 	);
 };
 
-export default NoteTasks;
+export default NoteTasksList;

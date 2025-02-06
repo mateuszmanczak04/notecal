@@ -4,15 +4,15 @@ import TaskDescription from '@/app/tasks/_components/task-description';
 import TaskDueDate from '@/app/tasks/_components/task-due-date';
 import TaskPriority from '@/app/tasks/_components/task-priority';
 import TaskTitle from '@/app/tasks/_components/task-title';
-import { Task as T_Task, type Task as NoteTask } from '@prisma/client';
+import { Task as T_Task, type Task as NoteTaskItem } from '@prisma/client';
 import { Reorder } from 'motion/react';
 
-type Props = {
+type T_Props = {
 	task: T_Task;
 };
 
 /** Single task used in /notes page */
-const NoteTask = ({ task }: Props) => {
+const NoteTaskItem = ({ task }: T_Props) => {
 	return (
 		<Reorder.Item
 			value={task}
@@ -33,4 +33,4 @@ const NoteTask = ({ task }: Props) => {
 	);
 };
 
-export default NoteTask;
+export default NoteTaskItem;
