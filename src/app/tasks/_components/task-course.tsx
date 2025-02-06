@@ -10,10 +10,10 @@ type T_Props = {
 };
 
 const TaskCourse = ({ task }: T_Props) => {
-	const { currentTaskCourse, handleSelectTaskCourse, isTaskCourseChangePending, courses } = useTaskCourse(task);
+	const { currentTaskCourse, isPending, updateTaskCourse, courses } = useTaskCourse(task);
 
 	return (
-		<DropdownMenu className={cn('w-52', isTaskCourseChangePending && 'pointer-events-none opacity-50')}>
+		<DropdownMenu className={cn('w-52', isPending && 'pointer-events-none opacity-50')}>
 			<DropdownMenuTrigger showChevron>
 				{currentTaskCourse && (
 					<div
@@ -24,13 +24,13 @@ const TaskCourse = ({ task }: T_Props) => {
 			</DropdownMenuTrigger>
 			<DropdownMenuList>
 				{/* Null option */}
-				<DropdownMenuItem onSelect={handleSelectTaskCourse} key={'none' + Math.random()} value={null}>
+				<DropdownMenuItem onSelect={updateTaskCourse} key={'none' + Math.random()} value={null}>
 					None
 				</DropdownMenuItem>
 				{/* Options */}
 				{courses &&
 					courses.map(course => (
-						<DropdownMenuItem onSelect={handleSelectTaskCourse} key={course.id} value={course.id}>
+						<DropdownMenuItem onSelect={updateTaskCourse} key={course.id} value={course.id}>
 							<div
 								className='h-3 w-3 shrink-0 rounded-full'
 								style={{ backgroundColor: course.color }}></div>

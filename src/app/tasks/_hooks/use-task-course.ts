@@ -8,7 +8,7 @@ export const useTaskCourse = (task: T_Task) => {
 	const queryClient = useQueryClient();
 	const { data: courses } = useCourses();
 	const { toast } = useToast();
-	const { mutate, isPending: isTaskCourseChangePending } = useMutation({
+	const { mutate, isPending } = useMutation({
 		mutationFn: updateTask,
 		onSettled: data => {
 			if (data && 'error' in data) {
@@ -19,15 +19,15 @@ export const useTaskCourse = (task: T_Task) => {
 	});
 	const currentTaskCourse = courses?.find(course => course.id === task.courseId);
 
-	const handleSelectTaskCourse = (newCourseId: string | null) => {
+	const updateTaskCourse = (newCourseId: string | null) => {
 		if (task.courseId && newCourseId === task.courseId) return;
 		mutate({ id: task.id, courseId: newCourseId });
 	};
 
 	return {
 		courses,
-		isTaskCourseChangePending,
+		isPending,
 		currentTaskCourse,
-		handleSelectTaskCourse,
+		updateTaskCourse,
 	};
 };

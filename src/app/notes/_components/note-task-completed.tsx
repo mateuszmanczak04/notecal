@@ -10,13 +10,13 @@ type T_Props = {
 };
 
 const NoteTaskCompleted = ({ task }: T_Props) => {
-	const { handleToggleTaskCompleted, isTaskCompletedChangePending } = useTaskCompleted(task);
+	const { isPending, toggleTaskCompleted } = useTaskCompleted(task);
 
 	return (
 		<Checkbox
 			checked={task.completed}
-			onCheckedChange={handleToggleTaskCompleted}
-			className={cn('size-5', isTaskCompletedChangePending && 'pointer-events-none  opacity-50')}
+			onCheckedChange={toggleTaskCompleted}
+			className={cn(isPending && 'pointer-events-none opacity-50')}
 			aria-label='task completed checkbox'
 			title='task completed checkbox'
 		/>

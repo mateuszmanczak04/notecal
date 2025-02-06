@@ -6,7 +6,7 @@ import updateTask from '../_actions/update-task';
 export const useTaskCompleted = (task: T_Task) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
-	const { mutate, isPending: isTaskCompletedChangePending } = useMutation({
+	const { mutate, isPending } = useMutation({
 		mutationFn: updateTask,
 		onSettled: data => {
 			if (data && 'error' in data) {
@@ -16,13 +16,13 @@ export const useTaskCompleted = (task: T_Task) => {
 		},
 	});
 
-	const handleToggleTaskCompleted = (newCompleted: boolean) => {
+	const toggleTaskCompleted = (newCompleted: boolean) => {
 		if (newCompleted === task.completed) return;
 		mutate({ id: task.id, completed: newCompleted });
 	};
 
 	return {
-		isTaskCompletedChangePending,
-		handleToggleTaskCompleted,
+		isPending,
+		toggleTaskCompleted,
 	};
 };
