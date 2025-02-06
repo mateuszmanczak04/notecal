@@ -21,7 +21,7 @@ const TaskWithoutDragging = ({ task, forPage = 'tasks' }: T_Props) => {
 			)}>
 			<TaskCompleted task={task} />
 			<div className='flex min-w-0 flex-1 flex-col '>
-				<TaskTitle task={task} forPage={forPage} />
+				<TaskTitle task={task} />
 				<TaskDescription task={task} />
 				<div
 					className={cn(

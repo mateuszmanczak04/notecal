@@ -20,7 +20,7 @@ const TaskItem = ({ task }: T_Props) => {
 			className='flex w-full cursor-grab gap-4 border-b border-neutral-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-800'>
 			<TaskCompleted task={task} />
 			<div className='flex min-w-0 flex-1 select-none flex-col'>
-				<TaskTitle task={task} forPage='tasks' />
+				<TaskTitle task={task} />
 				<TaskDescription task={task} />
 
 				<div className='flex flex-wrap gap-4'>
