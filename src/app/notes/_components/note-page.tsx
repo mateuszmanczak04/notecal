@@ -13,10 +13,10 @@ import EndTime from './end-time';
 import GoToCalendar from './go-to-calendar';
 import NoNoteContent from './no-note-content';
 import NoteDangerZone from './note-danger-zone';
+import NoteTasks from './note-tasks';
 import NotesSettings from './notes-settings';
 import SideNotes from './side-notes';
 import StartTime from './start-time';
-import Tasks from './tasks';
 import UsefulLinks from './useful-links';
 
 const NotePage = () => {
@@ -68,7 +68,7 @@ const NotePage = () => {
 				{sidebarElements.tasks && (
 					<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
 						<legend className='px-2'>Tasks</legend>
-						<Tasks course={currentCourse} />
+						<NoteTasks course={currentCourse} />
 					</fieldset>
 				)}
 
