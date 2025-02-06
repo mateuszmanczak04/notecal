@@ -24,7 +24,7 @@ const NoteTaskItem = ({ task }: T_Props) => {
 				<NoteTaskDescription task={task} forPage='notes' />
 
 				<div className='flex flex-col gap-y-2 '>
-					<NoteTaskCourse task={task} forPage='notes' />
+					<NoteTaskCourse task={task} />
 					<NoteTaskDueDate task={task} forPage='notes' />
 					<NoteTaskPriority task={task} forPage='notes' />
 				</div>

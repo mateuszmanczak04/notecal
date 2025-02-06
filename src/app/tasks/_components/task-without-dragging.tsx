@@ -28,7 +28,7 @@ const TaskWithoutDragging = ({ task, forPage = 'tasks' }: T_Props) => {
 						forPage === 'tasks' && 'flex flex-wrap gap-4',
 						forPage === 'notes' && 'flex flex-col gap-y-2 ',
 					)}>
-					<TaskCourse task={task} forPage={forPage} />
+					<TaskCourse task={task} />
 					<TaskDueDate task={task} forPage={forPage} />
 					<TaskPriority task={task} forPage={forPage} />
 				</div>
