@@ -7,12 +7,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import updateTask from '../_actions/update-task';
 
-type Props = {
+type T_Props = {
 	task: Task;
 	forPage?: 'tasks' | 'notes';
 };
 
-const Description = ({ task, forPage = 'tasks' }: Props) => {
+const TaskDescription = ({ task, forPage = 'tasks' }: T_Props) => {
 	const { id, description } = task;
 	const queryClient = useQueryClient();
 	const descriptionRef = useRef<HTMLParagraphElement>(null!);
@@ -73,4 +73,4 @@ const Description = ({ task, forPage = 'tasks' }: Props) => {
 	);
 };
 
-export default Description;
+export default TaskDescription;

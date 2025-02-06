@@ -1,11 +1,11 @@
 import { cn } from '@/utils/cn';
 import { Task as T_Task } from '@prisma/client';
-import Completed from './completed';
-import Course from './course';
-import Description from './description';
-import DueDate from './due-date';
-import Priority from './priority';
-import Title from './title';
+import TaskCompleted from './task-completed';
+import TaskCourse from './task-course';
+import TaskDescription from './task-description';
+import TaskDueDate from './task-due-date';
+import TaskPriority from './task-priority';
+import TaskTitle from './task-title';
 
 type T_Props = {
 	task: T_Task;
@@ -19,18 +19,18 @@ const TaskWithoutDragging = ({ task, forPage = 'tasks' }: T_Props) => {
 				'relative flex w-full gap-4 bg-neutral-100 p-4 dark:bg-neutral-700 ',
 				forPage === 'notes' && 'gap-2 p-2',
 			)}>
-			<Completed task={task} forPage={forPage} />
+			<TaskCompleted task={task} forPage={forPage} />
 			<div className='flex min-w-0 flex-1 flex-col '>
-				<Title task={task} forPage={forPage} />
-				<Description task={task} forPage={forPage} />
+				<TaskTitle task={task} forPage={forPage} />
+				<TaskDescription task={task} forPage={forPage} />
 				<div
 					className={cn(
 						forPage === 'tasks' && 'flex flex-wrap gap-4',
 						forPage === 'notes' && 'flex flex-col gap-y-2 ',
 					)}>
-					<Course task={task} forPage={forPage} />
-					<DueDate task={task} forPage={forPage} />
-					<Priority task={task} forPage={forPage} />
+					<TaskCourse task={task} forPage={forPage} />
+					<TaskDueDate task={task} forPage={forPage} />
+					<TaskPriority task={task} forPage={forPage} />
 				</div>
 			</div>
 		</div>

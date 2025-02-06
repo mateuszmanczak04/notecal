@@ -8,12 +8,12 @@ import { Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import updateTask from '../_actions/update-task';
 
-type Props = {
+type T_Props = {
 	task: Task;
 	forPage?: 'tasks' | 'notes';
 };
 
-const Course = ({ task, forPage = 'tasks' }: Props) => {
+const TaskCourse = ({ task, forPage = 'tasks' }: T_Props) => {
 	const queryClient = useQueryClient();
 	const { data: courses } = useCourses();
 	const { toast } = useToast();
@@ -67,4 +67,4 @@ const Course = ({ task, forPage = 'tasks' }: Props) => {
 	);
 };
 
-export default Course;
+export default TaskCourse;

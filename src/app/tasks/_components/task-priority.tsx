@@ -3,16 +3,16 @@
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
-import { Task, TaskPriority } from '@prisma/client';
+import { TaskPriority as T_TaskPriority, Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import updateTask from '../_actions/update-task';
 
-type Props = {
+type T_Props = {
 	task: Task;
 	forPage?: 'tasks' | 'notes';
 };
 
-const getPriorityTitle = (priority: TaskPriority | null) => {
+const getPriorityTitle = (priority: T_TaskPriority | null) => {
 	switch (priority) {
 		case 'A':
 			return (
@@ -40,7 +40,7 @@ const getPriorityTitle = (priority: TaskPriority | null) => {
 	}
 };
 
-const Priority = ({ task, forPage = 'tasks' }: Props) => {
+const TaskPriority = ({ task, forPage = 'tasks' }: T_Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
@@ -66,7 +66,7 @@ const Priority = ({ task, forPage = 'tasks' }: Props) => {
 				{getPriorityTitle(task.priority)}
 			</DropdownMenuTrigger>
 			<DropdownMenuList>
-				{([null, 'A', 'B', 'C'] as (TaskPriority | null)[]).map(priority => (
+				{([null, 'A', 'B', 'C'] as (T_TaskPriority | null)[]).map(priority => (
 					<DropdownMenuItem
 						key={priority || 'none'}
 						onSelect={handleSelect}
@@ -80,4 +80,4 @@ const Priority = ({ task, forPage = 'tasks' }: Props) => {
 	);
 };
 
-export default Priority;
+export default TaskPriority;

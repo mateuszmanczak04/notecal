@@ -7,12 +7,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import updateTask from '../_actions/update-task';
 
-type Props = {
+type T_Props = {
 	task: Task;
 	forPage?: 'tasks' | 'notes';
 };
 
-const Title = ({ task, forPage = 'tasks' }: Props) => {
+const TaskTitle = ({ task, forPage = 'tasks' }: T_Props) => {
 	const { id, title } = task;
 	const titleRef = useRef<HTMLParagraphElement>(null!);
 	const queryClient = useQueryClient();
@@ -71,4 +71,4 @@ const Title = ({ task, forPage = 'tasks' }: Props) => {
 	);
 };
 
-export default Title;
+export default TaskTitle;

@@ -5,10 +5,10 @@ import ErrorMessage from '@/components/error-message';
 import LoadingSpinner from '@/components/loading-spinner';
 import { Reorder } from 'motion/react';
 import { useTasksFunctionality } from '../_hooks/use-tasks-functionality';
-import Task from './task';
+import TaskItem from './task-item';
 
 /** List of tasks for /tasks page */
-const Tasks = () => {
+const TasksList = () => {
 	const { handleReorder, error, handleSaveNewOrder, hasChangedOrder, isPending, tasks } = useTasksFunctionality({});
 
 	if (isPending) return <LoadingSpinner />;
@@ -28,11 +28,11 @@ const Tasks = () => {
 			)}
 			<Reorder.Group values={tasks} onReorder={handleReorder}>
 				{tasks.map(task => (
-					<Task key={task.id} task={task} />
+					<TaskItem key={task.id} task={task} />
 				))}
 			</Reorder.Group>
 		</div>
 	);
 };
 
-export default Tasks;
+export default TasksList;
