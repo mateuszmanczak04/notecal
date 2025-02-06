@@ -30,7 +30,7 @@ const TaskWithoutDragging = ({ task, forPage = 'tasks' }: T_Props) => {
 					)}>
 					<TaskCourse task={task} />
 					<TaskDueDate task={task} />
-					<TaskPriority task={task} forPage={forPage} />
+					<TaskPriority task={task} />
 				</div>
 			</div>
 		</div>
