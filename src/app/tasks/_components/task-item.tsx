@@ -25,7 +25,7 @@ const TaskItem = ({ task }: T_Props) => {
 
 				<div className='flex flex-wrap gap-4'>
 					<TaskCourse task={task} />
-					<TaskDueDate task={task} forPage='tasks' />
+					<TaskDueDate task={task} />
 					<TaskPriority task={task} forPage='tasks' />
 				</div>
 			</div>
