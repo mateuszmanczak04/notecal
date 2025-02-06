@@ -7,9 +7,7 @@ import { Reorder } from 'motion/react';
 import { useTasksFunctionality } from '../_hooks/use-tasks-functionality';
 import Task from './task';
 
-/**
- * List of all user's tasks.
- */
+/** List of tasks for /tasks page */
 const Tasks = () => {
 	const { handleReorder, error, handleSaveNewOrder, hasChangedOrder, isPending, tasks } = useTasksFunctionality({});
 
