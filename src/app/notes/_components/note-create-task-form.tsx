@@ -8,8 +8,7 @@ import { cn } from '@/utils/cn';
 import { Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
-import { FormEvent, useEffect, useRef, useState } from 'react';
-import { useIntersectionObserver } from 'usehooks-ts';
+import { FormEvent, useState } from 'react';
 
 type Props = {
 	course?: Course;
@@ -28,32 +27,6 @@ const NoteCreateTaskForm = ({ course }: Props) => {
 		},
 	});
 	const [title, setTitle] = useState('');
-	const inputRef = useRef<HTMLInputElement>(null!);
-	const { isIntersecting, ref: intersectorRef } = useIntersectionObserver();
-
-	const handleFocusInput = () => {
-		inputRef.current.focus();
-	};
-
-	// Detect keyboard shortcut
-	useEffect(() => {
-		if (!inputRef.current) return;
-
-		const listener = (e: KeyboardEvent) => {
-			// Don't do anything if input is active
-			if (inputRef.current === document.activeElement) return;
-
-			// Focus input on Cmd + K
-			if (e.metaKey && e.key.toLowerCase() === 'k') {
-				handleFocusInput();
-			}
-		};
-		window.addEventListener('keydown', listener);
-
-		return () => {
-			window.removeEventListener('keydown', listener);
-		};
-	}, []);
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
