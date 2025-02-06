@@ -1,12 +1,12 @@
 'use client';
 
-import CreateTaskForm from '@/app/tasks/_components/create-task-form';
 import { useTasksFunctionality } from '@/app/tasks/_hooks/use-tasks-functionality';
 import { Button } from '@/components/button';
 import ErrorMessage from '@/components/error-message';
 import LoadingSpinner from '@/components/loading-spinner';
 import { Course } from '@prisma/client';
 import { Reorder } from 'motion/react';
+import NoteCreateTaskForm from './note-create-task-form';
 import NoteTaskItem from './note-task-item';
 
 type T_Props = {
@@ -14,7 +14,7 @@ type T_Props = {
 };
 
 /** List of tasks for /notes page */
-const NoteTasksList = ({ course }: T_Props) => {
+const NoteTasks = ({ course }: T_Props) => {
 	const { handleReorder, error, handleSaveNewOrder, hasChangedOrder, isPending, tasks } = useTasksFunctionality({
 		courseId: course.id,
 	});
@@ -39,9 +39,9 @@ const NoteTasksList = ({ course }: T_Props) => {
 					{tasks?.map(task => <NoteTaskItem key={task.id} task={task} />)}
 				</Reorder.Group>
 			)}
-			<CreateTaskForm course={course} forPage='notes' />
+			<NoteCreateTaskForm course={course} />
 		</article>
 	);
 };
 
-export default NoteTasksList;
+export default NoteTasks;
