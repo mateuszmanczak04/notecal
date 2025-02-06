@@ -1,18 +1,18 @@
 'use client';
 
-import { Checkbox } from '@/components/checkbox';
+import updateTask from '@/app/tasks/_actions/update-task';
+import DatePicker from '@/components/date-picker';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import updateTask from '../_actions/update-task';
 
 type T_Props = {
 	task: Task;
 	forPage?: 'tasks' | 'notes';
 };
 
-const NoteTaskCompleted = ({ task, forPage = 'tasks' }: T_Props) => {
+const NoteTaskDueDate = ({ task, forPage = 'tasks' }: T_Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
@@ -25,20 +25,22 @@ const NoteTaskCompleted = ({ task, forPage = 'tasks' }: T_Props) => {
 		},
 	});
 
-	const handleToggleTask = (newCompleted: boolean) => {
-		if (newCompleted === task.completed) return;
-		mutate({ id: task.id, completed: newCompleted });
+	const handleChangeDueDate = (newDueDate: Date | null) => {
+		if (newDueDate === task.dueDate) return;
+		mutate({ id: task.id, dueDate: newDueDate });
 	};
 
 	return (
-		<Checkbox
-			checked={task.completed}
-			onCheckedChange={handleToggleTask}
-			className={cn('', isPending && 'pointer-events-none opacity-50', forPage === 'notes' && 'size-5')}
-			aria-label='task completed checkbox'
-			title='task completed checkbox'
+		<DatePicker
+			date={task.dueDate}
+			onSelect={handleChangeDueDate}
+			className={cn(
+				'h-9 w-56',
+				forPage === 'notes' && 'w-full text-sm sm:text-sm',
+				isPending && 'pointer-events-none opacity-50',
+			)}
 		/>
 	);
 };
 
-export default NoteTaskCompleted;
+export default NoteTaskDueDate;

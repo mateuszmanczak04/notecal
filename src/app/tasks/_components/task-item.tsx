@@ -1,6 +1,6 @@
+import TaskCompleted from '@/app/notes/_components/note-task-completed';
 import { type Task as TaskItem } from '@prisma/client';
 import { Reorder } from 'motion/react';
-import TaskCompleted from './task-completed';
 import TaskCourse from './task-course';
 import TaskDescription from './task-description';
 import TaskDueDate from './task-due-date';

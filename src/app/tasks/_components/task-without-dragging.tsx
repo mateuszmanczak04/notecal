@@ -1,6 +1,6 @@
 import { cn } from '@/utils/cn';
 import { Task as T_Task } from '@prisma/client';
-import TaskCompleted from './task-completed';
+import NoteTaskCompleted from './task-completed';
 import TaskCourse from './task-course';
 import TaskDescription from './task-description';
 import TaskDueDate from './task-due-date';
@@ -19,7 +19,7 @@ const TaskWithoutDragging = ({ task, forPage = 'tasks' }: T_Props) => {
 				'relative flex w-full gap-4 bg-neutral-100 p-4 dark:bg-neutral-700 ',
 				forPage === 'notes' && 'gap-2 p-2',
 			)}>
-			<TaskCompleted task={task} forPage={forPage} />
+			<NoteTaskCompleted task={task} forPage={forPage} />
 			<div className='flex min-w-0 flex-1 flex-col '>
 				<TaskTitle task={task} forPage={forPage} />
 				<TaskDescription task={task} forPage={forPage} />
