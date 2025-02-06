@@ -21,7 +21,7 @@ const TaskItem = ({ task }: T_Props) => {
 			<TaskCompleted task={task} />
 			<div className='flex min-w-0 flex-1 select-none flex-col'>
 				<TaskTitle task={task} forPage='tasks' />
-				<TaskDescription task={task} forPage='tasks' />
+				<TaskDescription task={task} />
 
 				<div className='flex flex-wrap gap-4'>
 					<TaskCourse task={task} />

@@ -22,7 +22,7 @@ const TaskWithoutDragging = ({ task, forPage = 'tasks' }: T_Props) => {
 			<TaskCompleted task={task} />
 			<div className='flex min-w-0 flex-1 flex-col '>
 				<TaskTitle task={task} forPage={forPage} />
-				<TaskDescription task={task} forPage={forPage} />
+				<TaskDescription task={task} />
 				<div
 					className={cn(
 						forPage === 'tasks' && 'flex flex-wrap gap-4',

@@ -21,7 +21,7 @@ const NoteTaskItem = ({ task }: T_Props) => {
 			<NoteTaskCompleted task={task} />
 			<div className='flex min-w-0 flex-1 select-none flex-col'>
 				<NoteTaskTitle task={task} forPage='notes' />
-				<NoteTaskDescription task={task} forPage='notes' />
+				<NoteTaskDescription task={task} />
 
 				<div className='flex flex-col gap-y-2 '>
 					<NoteTaskCourse task={task} />
