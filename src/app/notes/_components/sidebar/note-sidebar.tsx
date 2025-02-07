@@ -7,9 +7,9 @@ import CourseUsefulLinks from './course-useful-links';
 import CustomizeSidebar from './customize-sidebar';
 import NoteDangerZone from './note-danger-zone';
 import NoteRelated from './note-related';
+import NoteTasks from './note-tasks';
 import NotesSettings from './notes-settings';
 import SideNotes from './side-notes';
-import NoteTasks from './tasks/note-tasks';
 
 type T_Props = {
 	course: T_Course;
