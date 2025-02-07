@@ -25,12 +25,12 @@ const CourseColor = ({ course }: Props) => {
 	});
 
 	return (
-		<div className={cn('flex flex-wrap gap-2 transition', isPending && 'pointer-events-none opacity-50')}>
+		<div className={cn('flex flex-wrap gap-1 transition', isPending && 'pointer-events-none opacity-50')}>
 			{COLORS.map(color => {
 				return (
 					<button
 						className={cn(
-							'aspect-square max-w-12 flex-1 cursor-pointer place-content-center rounded-full  border-2 border-transparent font-medium text-white transition-colors hover:opacity-90',
+							'aspect-square max-w-6 flex-1 cursor-pointer place-content-center rounded-full  border-2 border-transparent font-medium text-white transition-colors hover:opacity-90',
 							course.color === color.hex && 'border-white/50',
 						)}
 						style={{

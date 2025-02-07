@@ -6,9 +6,7 @@ import { useSettings } from '@/hooks/use-settings';
 import { useSearchParams } from 'next/navigation';
 import Editor from './editor/editor';
 import NoSelectedNoteEditor from './editor/no-selected-note-editor';
-import CourseColor from './sidebar/course-related/course-color';
-import CourseName from './sidebar/course-related/course-name';
-import CourseTeacher from './sidebar/course-related/course-teacher';
+import CourseRelated from './sidebar/course-related';
 import CustomizeSidebar from './sidebar/customize-sidebar';
 import NoteDangerZone from './sidebar/note-danger-zone';
 import GoToCalendarNote from './sidebar/note-related/go-to-calendar-note';
@@ -51,14 +49,7 @@ const NotePage = () => {
 
 			<aside className='flex h-screen w-full shrink-0 flex-col gap-y-4 overflow-y-scroll border-l border-neutral-200 bg-white p-4 pb-64 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:bg-neutral-900'>
 				{/* Course related */}
-				{sidebarElements.courseRelated && (
-					<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
-						<legend className='px-2'>Course related</legend>
-						<CourseName course={currentCourse} />
-						<CourseColor course={currentCourse} />
-						<CourseTeacher course={currentCourse} />
-					</fieldset>
-				)}
+				{sidebarElements.courseRelated && <CourseRelated course={currentCourse} />}
 
 				{sidebarElements.notesList && <SideNotesList currentCourse={currentCourse} />}
 
