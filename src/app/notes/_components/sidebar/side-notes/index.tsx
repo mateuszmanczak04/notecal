@@ -19,7 +19,7 @@ type Props = {
 /**
  * List of links to all course's notes
  */
-const SideNotesList = ({ currentCourse }: Props) => {
+const SideNotes = ({ currentCourse }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
@@ -67,4 +67,4 @@ const SideNotesList = ({ currentCourse }: Props) => {
 	);
 };
 
-export default SideNotesList;
+export default SideNotes;

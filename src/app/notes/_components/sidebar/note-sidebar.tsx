@@ -8,7 +8,7 @@ import CustomizeSidebar from './customize-sidebar';
 import NoteDangerZone from './note-danger-zone';
 import NoteRelated from './note-related';
 import NotesSettings from './notes-settings';
-import SideNotesList from './side-notes/side-notes-list';
+import SideNotes from './side-notes';
 import NoteTasks from './tasks/note-tasks';
 
 type T_Props = {
@@ -22,7 +22,7 @@ const NoteSidebar = ({ course, currentNote }: T_Props) => {
 	return (
 		<aside className='flex h-screen w-full shrink-0 flex-col gap-y-4 overflow-y-scroll border-l border-neutral-200 bg-white p-4 pb-64 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:bg-neutral-900'>
 			{sidebarElements.courseRelated && <CourseRelated course={course} />}
-			{sidebarElements.notesList && <SideNotesList currentCourse={course} />}
+			{sidebarElements.notesList && <SideNotes currentCourse={course} />}
 			{sidebarElements.usefulLinks && <CourseUsefulLinks course={course} />}
 			{sidebarElements.tasks && <NoteTasks course={course} />}
 			{sidebarElements.noteRelated && currentNote && <NoteRelated note={currentNote} />}
