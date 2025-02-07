@@ -28,19 +28,22 @@ const NoteTasks = ({ course }: T_Props) => {
 	}
 
 	return (
-		<article className='flex flex-col gap-y-4'>
-			{hasChangedOrder && (
-				<Button className='w-full' onClick={handleSaveNewOrder}>
-					Save new order
-				</Button>
-			)}
-			{tasks && (
-				<Reorder.Group values={tasks} onReorder={handleReorder}>
-					{tasks?.map(task => <NoteTaskItem key={task.id} task={task} />)}
-				</Reorder.Group>
-			)}
-			<NoteCreateTaskForm course={course} />
-		</article>
+		<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
+			<legend className='px-2'>Tasks</legend>
+			<div className='flex flex-col gap-y-4'>
+				{hasChangedOrder && (
+					<Button className='w-full' onClick={handleSaveNewOrder}>
+						Save new order
+					</Button>
+				)}
+				{tasks && (
+					<Reorder.Group values={tasks} onReorder={handleReorder}>
+						{tasks?.map(task => <NoteTaskItem key={task.id} task={task} />)}
+					</Reorder.Group>
+				)}
+				<NoteCreateTaskForm course={course} />
+			</div>
+		</fieldset>
 	);
 };
 

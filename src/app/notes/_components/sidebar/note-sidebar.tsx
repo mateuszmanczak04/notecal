@@ -23,20 +23,10 @@ const NoteSidebar = ({ course, currentNote }: T_Props) => {
 
 	return (
 		<aside className='flex h-screen w-full shrink-0 flex-col gap-y-4 overflow-y-scroll border-l border-neutral-200 bg-white p-4 pb-64 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:bg-neutral-900'>
-			{/* Course related */}
 			{sidebarElements.courseRelated && <CourseRelated course={course} />}
-
 			{sidebarElements.notesList && <SideNotesList currentCourse={course} />}
-
 			{sidebarElements.usefulLinks && <CourseUsefulLinks course={course} />}
-
-			{/* Tasks */}
-			{sidebarElements.tasks && (
-				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
-					<legend className='px-2'>Tasks</legend>
-					<NoteTasks course={course} />
-				</fieldset>
-			)}
+			{sidebarElements.tasks && <NoteTasks course={course} />}
 
 			{/* Note related */}
 			{sidebarElements.noteRelated && currentNote && (
