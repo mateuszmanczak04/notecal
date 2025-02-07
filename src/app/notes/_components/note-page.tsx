@@ -15,7 +15,7 @@ import EndTime from './sidebar/note-related/end-time';
 import GoToCalendar from './sidebar/note-related/go-to-calendar';
 import StartTime from './sidebar/note-related/start-time';
 import NotesSettings from './sidebar/notes-settings';
-import SideNotes from './sidebar/side-notes/side-notes';
+import SideNotesList from './sidebar/side-notes/side-notes-list';
 import NoteTasks from './sidebar/tasks/note-tasks';
 import UsefulLinks from './sidebar/useful-links';
 
@@ -60,7 +60,7 @@ const NotePage = () => {
 					</fieldset>
 				)}
 
-				{sidebarElements.notesList && <SideNotes currentCourse={currentCourse} />}
+				{sidebarElements.notesList && <SideNotesList currentCourse={currentCourse} />}
 
 				{sidebarElements.usefulLinks && <UsefulLinks course={currentCourse} />}
 

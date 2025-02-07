@@ -10,7 +10,7 @@ import { cn } from '@/utils/cn';
 import { Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
-import SideNote from './side-note';
+import SideNoteItem from './side-note-item';
 
 type Props = {
 	currentCourse: Course;
@@ -19,7 +19,7 @@ type Props = {
 /**
  * List of links to all course's notes
  */
-const SideNotes = ({ currentCourse }: Props) => {
+const SideNotesList = ({ currentCourse }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
@@ -50,7 +50,7 @@ const SideNotes = ({ currentCourse }: Props) => {
 				<SelectNotesProvider>
 					{/* List of all notes from this course */}
 					{currentCourseNotes.map(note => (
-						<SideNote key={note.id} note={note} />
+						<SideNoteItem key={note.id} note={note} />
 					))}
 				</SelectNotesProvider>
 			</>
@@ -67,4 +67,4 @@ const SideNotes = ({ currentCourse }: Props) => {
 	);
 };
 
-export default SideNotes;
+export default SideNotesList;

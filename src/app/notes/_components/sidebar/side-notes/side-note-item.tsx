@@ -18,7 +18,7 @@ type Props = {
 /**
  * Single note link used in /notes/[id] page as side note
  */
-const SideNote = ({ note }: Props) => {
+const SideNoteItem = ({ note }: Props) => {
 	const searchParams = useSearchParams();
 	const noteId = searchParams.get('noteId');
 	const { closeContextMenu, contextMenuPosition, handleContextMenu } = useNoteContextMenu();
@@ -76,4 +76,4 @@ const SideNote = ({ note }: Props) => {
 	);
 };
 
-export default SideNote;
+export default SideNoteItem;
