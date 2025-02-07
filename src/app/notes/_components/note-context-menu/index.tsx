@@ -1,6 +1,6 @@
 'use client';
 
-import { useSelectedNotes } from '@/app/notes/_context/selected-notes-context';
+import { useSelectedNotes } from '@/app/notes/_components/sidebar/side-notes/selected-notes-context';
 import { useCourses } from '@/hooks/use-courses';
 import { Note } from '@prisma/client';
 import { useEffect, useLayoutEffect, useRef } from 'react';

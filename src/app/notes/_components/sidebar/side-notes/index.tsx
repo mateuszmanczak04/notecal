@@ -1,7 +1,7 @@
 'use client';
 
 import createNote from '@/app/notes/_actions/create-note';
-import { SelectNotesProvider } from '@/app/notes/_context/selected-notes-context';
+import { SelectNotesProvider } from '@/app/notes/_components/sidebar/side-notes/selected-notes-context';
 import { Button } from '@/components/button';
 import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
@@ -43,19 +43,13 @@ const SideNotes = ({ currentCourse }: Props) => {
 	const currentCourseNotes = notes.filter(note => note.courseId === currentCourse?.id);
 
 	return (
-		<fieldset className='flex w-full flex-col gap-y-2 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
-			<legend className='px-2'>Course notes</legend>
+		<div className='flex flex-col gap-y-2 border-b border-neutral-200 pb-4 dark:border-neutral-700'>
+			<SelectNotesProvider>
+				{currentCourseNotes.map(note => (
+					<SideNoteItem key={note.id} note={note} />
+				))}
+			</SelectNotesProvider>
 
-			<>
-				<SelectNotesProvider>
-					{/* List of all notes from this course */}
-					{currentCourseNotes.map(note => (
-						<SideNoteItem key={note.id} note={note} />
-					))}
-				</SelectNotesProvider>
-			</>
-
-			{/* New note button */}
 			<Button
 				style={{ backgroundColor: currentCourse.color }}
 				onClick={handleNewNote}
@@ -63,7 +57,7 @@ const SideNotes = ({ currentCourse }: Props) => {
 				disabled={isPending}>
 				<Plus className='h-4 w-4' /> Create a new note {isPending && <LoadingSpinner className='size-4' />}
 			</Button>
-		</fieldset>
+		</div>
 	);
 };
 
