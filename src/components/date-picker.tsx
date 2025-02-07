@@ -1,9 +1,8 @@
 'use client';
 
+import { useDatePickerFunctionality } from '@/hooks/use-date-picker-functionality';
 import { cn } from '@/utils/cn';
-import { format, isValid } from 'date-fns';
-import { useEffect, useRef, useState } from 'react';
-import { useOnClickOutside } from 'usehooks-ts';
+import { format } from 'date-fns';
 import Tag from './tag';
 
 type Props = {
@@ -14,76 +13,22 @@ type Props = {
 };
 
 const DatePicker = ({ isPending, onSelect, date, className }: Props) => {
-	const [isOpen, setIsOpen] = useState(false);
-	const menuRef = useRef<HTMLDivElement>(null!);
-
-	// Inputs
-	const [year, setYear] = useState<string>(date ? date.getFullYear().toString() : '');
-	const [month, setMonth] = useState<string>(date ? (date.getMonth() + 1).toString().padStart(2, '00') : '');
-	const [day, setDay] = useState<string>(date ? date.getDate().toString().padStart(2, '00') : '');
-	const [hour, setHour] = useState<string>(date ? date.getHours().toString().padStart(2, '00') : '');
-	const [minute, setMinute] = useState<string>(date ? date.getMinutes().toString().padStart(2, '00') : '');
-
-	const handleCloseMenu = () => {
-		setIsOpen(false);
-	};
-
-	const handleOpenMenu = () => {
-		setIsOpen(true);
-	};
-
-	const handleToggleMenu = () => {
-		if (isOpen) {
-			handleCloseMenu();
-		} else {
-			handleOpenMenu();
-		}
-	};
-
-	const handleSubmit = () => {
-		// Clear the date if any input is empty:
-		if (!year || !month || !day || !hour || !minute) {
-			onSelect(null);
-			return;
-		}
-
-		const newDate = new Date(
-			parseInt(year),
-			parseInt(month || '1') - 1,
-			parseInt(day || '1'),
-			parseInt(hour || '0'),
-			parseInt(minute || '0'),
-		);
-
-		if (!isValid(newDate)) return;
-
-		// No need to update the date if these are the same:
-		if (date && newDate.getTime() === date.getTime()) return;
-
-		onSelect(newDate);
-	};
-
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Enter') {
-			handleSubmit();
-			handleCloseMenu();
-		}
-	};
-
-	useOnClickOutside(menuRef, () => {
-		if (isOpen) {
-			handleSubmit();
-			handleCloseMenu();
-		}
-	});
-
-	useEffect(() => {
-		setYear(date ? date.getFullYear().toString() : '');
-		setMonth(date ? (date.getMonth() + 1).toString().padStart(2, '00') : '');
-		setDay(date ? date.getDate().toString().padStart(2, '00') : '');
-		setHour(date ? date.getHours().toString().padStart(2, '00') : '');
-		setMinute(date ? date.getMinutes().toString().padStart(2, '00') : '');
-	}, [date]);
+	const {
+		day,
+		handleKeyDown,
+		handleToggleMenu,
+		hour,
+		isOpen,
+		menuRef,
+		minute,
+		month,
+		year,
+		setDay,
+		setHour,
+		setMinute,
+		setMonth,
+		setYear,
+	} = useDatePickerFunctionality({ onSelect, date });
 
 	return (
 		<div className={cn('relative h-9 text-sm font-medium sm:text-base', className)} ref={menuRef}>
