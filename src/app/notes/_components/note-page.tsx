@@ -4,20 +4,20 @@ import { useCourses } from '@/hooks/use-courses';
 import { useNotes } from '@/hooks/use-notes';
 import { useSettings } from '@/hooks/use-settings';
 import { useSearchParams } from 'next/navigation';
-import Content from './content';
-import CourseColor from './course-color';
-import CourseName from './course-name';
-import CourseTeacher from './course-teacher';
-import CustomizeSidebar from './customize-sidebar';
-import EndTime from './end-time';
-import GoToCalendar from './go-to-calendar';
-import NoNoteContent from './no-note-content';
-import NoteDangerZone from './note-danger-zone';
-import NotesSettings from './notes-settings';
-import SideNotes from './side-notes';
-import StartTime from './start-time';
-import NoteTasks from './tasks/note-tasks';
-import UsefulLinks from './useful-links';
+import Editor from './editor/editor';
+import NoSelectedNoteEditor from './editor/no-selected-note-editor';
+import CourseColor from './sidebar/course-related/course-color';
+import CourseName from './sidebar/course-related/course-name';
+import CourseTeacher from './sidebar/course-related/course-teacher';
+import CustomizeSidebar from './sidebar/customize-sidebar';
+import NoteDangerZone from './sidebar/note-danger-zone';
+import EndTime from './sidebar/note-related/end-time';
+import GoToCalendar from './sidebar/note-related/go-to-calendar';
+import StartTime from './sidebar/note-related/start-time';
+import NotesSettings from './sidebar/notes-settings';
+import SideNotes from './sidebar/side-notes/side-notes';
+import NoteTasks from './sidebar/tasks/note-tasks';
+import UsefulLinks from './sidebar/useful-links';
 
 const NotePage = () => {
 	const searchParams = useSearchParams();
@@ -43,9 +43,9 @@ const NotePage = () => {
 		<main className='mx-auto flex h-full min-h-80 flex-col md:flex-row'>
 			<article className='flex h-screen flex-1 flex-col'>
 				{currentNote ? (
-					<Content note={currentNote} course={currentCourse} />
+					<Editor note={currentNote} course={currentCourse} />
 				) : (
-					<NoNoteContent course={currentCourse} />
+					<NoSelectedNoteEditor course={currentCourse} />
 				)}
 			</article>
 

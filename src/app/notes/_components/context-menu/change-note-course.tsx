@@ -4,7 +4,7 @@ import { useToast } from '@/components/toast/use-toast';
 import { useCourses } from '@/hooks/use-courses';
 import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import updateNote from '../_actions/update-note';
+import updateNote from '../../_actions/update-note';
 
 type Props = {
 	currentCourse: Course;
@@ -15,7 +15,7 @@ type Props = {
 /**
  * A dropdown menu used to choose a new course for the note.
  */
-const ChangeCourse = ({ currentCourse, note, handleClose }: Props) => {
+const ChangeNoteCourse = ({ currentCourse, note, handleClose }: Props) => {
 	const queryClient = useQueryClient();
 	const { data: courses } = useCourses();
 	const { toast } = useToast();
@@ -69,4 +69,4 @@ const ChangeCourse = ({ currentCourse, note, handleClose }: Props) => {
 	);
 };
 
-export default ChangeCourse;
+export default ChangeNoteCourse;

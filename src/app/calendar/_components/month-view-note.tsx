@@ -1,6 +1,6 @@
 'use client';
 
-import NoteContextMenu from '@/components/note-context-menu';
+import NoteContextMenu from '@/app/notes/_components/context-menu/note-context-menu';
 import { useCourses } from '@/hooks/use-courses';
 import { useNoteContextMenu } from '@/hooks/use-note-context-menu';
 import { Note } from '@prisma/client';

@@ -1,6 +1,6 @@
 'use client';
 
-import { parseLexicalJsonToPlainText } from '@/app/notes/_editor/parse-lexical-json-to-plain-text';
+import { parseLexicalJsonToPlainText } from '@/app/notes/_components/editor/parse-lexical-json-to-plain-text';
 import { useCourses } from '@/hooks/use-courses';
 import { useNotes } from '@/hooks/use-notes';
 import { useNotesWithTime } from '@/hooks/use-notes-with-time';

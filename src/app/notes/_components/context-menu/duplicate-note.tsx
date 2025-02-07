@@ -8,7 +8,7 @@ import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { File } from 'lucide-react';
 import { ClassNameValue } from 'tailwind-merge';
-import { duplicateNote, T_DuplicateNoteInput } from '../_actions/duplicate-note';
+import { duplicateNote, T_DuplicateNoteInput } from '../../_actions/duplicate-note';
 
 type T_Props = {
 	note: Note;

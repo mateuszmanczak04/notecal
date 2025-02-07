@@ -16,11 +16,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { EditorState } from 'lexical';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { exportNoteToPDF } from '../_actions/export-note-to-pdf';
-import updateNote from '../_actions/update-note';
-import { editorConfig } from '../_editor/editor-config';
-import SavePlugin from '../_editor/save-plugin';
-import ToolbarPlugin from '../_editor/toolbar-plugin';
+import { exportNoteToPDF } from '../../_actions/export-note-to-pdf';
+import updateNote from '../../_actions/update-note';
+import { editorConfig } from './editor-config';
+import SavePlugin from './save-plugin';
+import ToolbarPlugin from './toolbar-plugin';
 
 type Props = {
 	note: Note;
@@ -30,7 +30,7 @@ type Props = {
 /**
  * A part of /note/[id] page where user enters the text content. It works like a WYSIWYG editor.
  */
-const Content = ({ note, course }: Props) => {
+const Editor = ({ note, course }: Props) => {
 	/**
 	 * Keeps the current editor state. It's used to save the note content.
 	 */
@@ -149,4 +149,4 @@ const Content = ({ note, course }: Props) => {
 	);
 };
 
-export default Content;
+export default Editor;

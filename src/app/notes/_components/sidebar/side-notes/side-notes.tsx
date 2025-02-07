@@ -1,5 +1,7 @@
 'use client';
 
+import createNote from '@/app/notes/_actions/create-note';
+import { SelectNotesProvider } from '@/app/notes/_context/selected-notes-context';
 import { Button } from '@/components/button';
 import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
@@ -8,8 +10,6 @@ import { cn } from '@/utils/cn';
 import { Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
-import createNote from '../_actions/create-note';
-import { SelectNotesProvider } from '../_hooks/use-selected-notes';
 import SideNote from './side-note';
 
 type Props = {

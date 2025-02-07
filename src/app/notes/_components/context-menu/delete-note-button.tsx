@@ -10,25 +10,27 @@ import { Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import deleteManyNotes from '../_actions/delete-many-notes';
+import deleteNote from '../../_actions/delete-note';
 
 type Props = {
-	notes: Note[];
+	note: Note;
 	className?: ClassNameValue;
-	onDelete: () => void;
 };
 
-const DeleteManyNotesButton = ({ notes, className, onDelete }: Props) => {
+const DeleteNoteButton = ({ note, className }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const [isDeleting, setIsDeleting] = useState(false);
 	const { mutate, isPending } = useMutation({
-		mutationFn: deleteManyNotes,
+		mutationFn: deleteNote,
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
 			}
-			router.push(`/notes?courseId=${notes[0]?.courseId}`);
+			// If user is on the exact note page, redirect to the course page
+			if (`${window.location.pathname}${window.location.search}` === `/notes?noteId=${note.id}`) {
+				router.push(`/notes?courseId=${note.courseId}`);
+			}
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
@@ -38,7 +40,7 @@ const DeleteManyNotesButton = ({ notes, className, onDelete }: Props) => {
 		return (
 			<Button
 				variant='destructive'
-				onClick={() => mutate({ ids: notes.map(n => n.id) })}
+				onClick={() => mutate({ id: note.id })}
 				className={cn('rounded-md', className)}>
 				<Trash className='size-5' /> Are you sure? {isPending && <LoadingSpinner className='size-4' />}
 			</Button>
@@ -47,9 +49,9 @@ const DeleteManyNotesButton = ({ notes, className, onDelete }: Props) => {
 
 	return (
 		<Button variant='destructive' onClick={() => setIsDeleting(true)} className={cn('rounded-md', className)}>
-			<Trash className='size-5' /> Delete these notes
+			<Trash className='size-5' /> Delete note
 		</Button>
 	);
 };
 
-export default DeleteManyNotesButton;
+export default DeleteNoteButton;

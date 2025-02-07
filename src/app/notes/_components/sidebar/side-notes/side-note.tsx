@@ -1,7 +1,8 @@
 'use client';
 
+import NoteContextMenu from '@/app/notes/_components/context-menu/note-context-menu';
+import { useSelectedNotes } from '@/app/notes/_context/selected-notes-context';
 import { Button } from '@/components/button';
-import NoteContextMenu from '@/components/note-context-menu';
 import { useNoteContextMenu } from '@/hooks/use-note-context-menu';
 import { cn } from '@/utils/cn';
 import { Note } from '@prisma/client';
@@ -9,7 +10,6 @@ import { format } from 'date-fns';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
-import { useSelectedNotes } from '../_hooks/use-selected-notes';
 
 type Props = {
 	note: Note;

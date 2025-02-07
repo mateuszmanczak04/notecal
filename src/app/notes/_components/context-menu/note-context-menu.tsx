@@ -1,15 +1,15 @@
 'use client';
 
-import ChangeCourse from '@/app/notes/_components/change-course';
-import DeleteManyNotesButton from '@/app/notes/_components/delete-many-notes-button';
-import DeleteNoteButton from '@/app/notes/_components/delete-note-button';
-import DuplicateNote from '@/app/notes/_components/duplicate-note';
-import NoteTitle from '@/app/notes/_components/note-title';
-import { useSelectedNotes } from '@/app/notes/_hooks/use-selected-notes';
+import NoteTitle from '@/app/notes/_components/context-menu/note-title';
+import { useSelectedNotes } from '@/app/notes/_context/selected-notes-context';
 import { useCourses } from '@/hooks/use-courses';
 import { Note } from '@prisma/client';
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
+import ChangeNoteCourse from './change-note-course';
+import DeleteManyNotesButton from './delete-many-notes-button';
+import DeleteNoteButton from './delete-note-button';
+import DuplicateNote from './duplicate-note';
 
 type Props = {
 	note: Note;
@@ -76,7 +76,7 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 				<div>
 					<NoteTitle note={note} callback={handleClose} />
 					<p className='mb-1 mt-4 px-2 font-semibold'>Move to another course</p>
-					<ChangeCourse handleClose={handleClose} currentCourse={currentCourse} note={note} />
+					<ChangeNoteCourse handleClose={handleClose} currentCourse={currentCourse} note={note} />
 					<DuplicateNote note={note} className='mt-4 w-full' callback={handleClose} />
 					<DeleteNoteButton note={note} className='mt-4 w-full' />
 				</div>

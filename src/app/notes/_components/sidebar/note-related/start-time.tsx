@@ -6,13 +6,13 @@ import { cn } from '@/utils/cn';
 import { toUTC } from '@/utils/timezone';
 import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import updateNote from '../_actions/update-note';
+import updateNote from '../../../_actions/update-note';
 
 type Props = {
 	note: Note;
 };
 
-const EndTime = ({ note }: Props) => {
+const StartTime = ({ note }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
@@ -25,22 +25,22 @@ const EndTime = ({ note }: Props) => {
 		},
 	});
 
-	const onChange = (newEndTime: Date | null) => {
-		if (note.startTime && newEndTime && newEndTime < note.startTime) return;
+	const onChange = (newStartTime: Date | null) => {
+		if (note.endTime && newStartTime && newStartTime > note.endTime) return;
 
-		mutate({ id: note.id, endTime: newEndTime ? toUTC(newEndTime) : null });
+		mutate({ id: note.id, startTime: newStartTime ? toUTC(newStartTime) : null });
 	};
 
 	return (
 		<article>
-			<p className='text-xl font-semibold'>Note&apos;s end time</p>
+			<p className='text-xl font-semibold'>Note&apos;s start time</p>
 			<DatePicker
 				className={cn('mt-2 w-56', isPending && 'pointer-events-none opacity-50')}
-				date={note.endTime}
+				date={note.startTime}
 				onSelect={onChange}
 			/>
 		</article>
 	);
 };
 
-export default EndTime;
+export default StartTime;

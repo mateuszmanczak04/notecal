@@ -22,9 +22,9 @@ type T_Props = {
 };
 
 /**
- * Content of the note editor when no note is selected
+ * Editor of the note editor when no note is selected
  */
-const NoNoteContent = ({ course }: T_Props) => {
+const NoSelectedNoteEditor = ({ course }: T_Props) => {
 	return (
 		<article className='flex h-full flex-1 flex-col bg-white dark:bg-neutral-700'>
 			{/* Toolbar */}
@@ -104,4 +104,4 @@ const NoNoteContent = ({ course }: T_Props) => {
 	);
 };
 
-export default NoNoteContent;
+export default NoSelectedNoteEditor;

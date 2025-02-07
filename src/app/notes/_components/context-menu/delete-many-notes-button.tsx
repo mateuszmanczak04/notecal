@@ -10,27 +10,25 @@ import { Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import deleteNote from '../_actions/delete-note';
+import deleteManyNotes from '../../_actions/delete-many-notes';
 
 type Props = {
-	note: Note;
+	notes: Note[];
 	className?: ClassNameValue;
+	onDelete: () => void;
 };
 
-const DeleteNoteButton = ({ note, className }: Props) => {
+const DeleteManyNotesButton = ({ notes, className, onDelete }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const [isDeleting, setIsDeleting] = useState(false);
 	const { mutate, isPending } = useMutation({
-		mutationFn: deleteNote,
+		mutationFn: deleteManyNotes,
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
 			}
-			// If user is on the exact note page, redirect to the course page
-			if (`${window.location.pathname}${window.location.search}` === `/notes?noteId=${note.id}`) {
-				router.push(`/notes?courseId=${note.courseId}`);
-			}
+			router.push(`/notes?courseId=${notes[0]?.courseId}`);
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
@@ -40,7 +38,7 @@ const DeleteNoteButton = ({ note, className }: Props) => {
 		return (
 			<Button
 				variant='destructive'
-				onClick={() => mutate({ id: note.id })}
+				onClick={() => mutate({ ids: notes.map(n => n.id) })}
 				className={cn('rounded-md', className)}>
 				<Trash className='size-5' /> Are you sure? {isPending && <LoadingSpinner className='size-4' />}
 			</Button>
@@ -49,9 +47,9 @@ const DeleteNoteButton = ({ note, className }: Props) => {
 
 	return (
 		<Button variant='destructive' onClick={() => setIsDeleting(true)} className={cn('rounded-md', className)}>
-			<Trash className='size-5' /> Delete note
+			<Trash className='size-5' /> Delete these notes
 		</Button>
 	);
 };
 
-export default DeleteNoteButton;
+export default DeleteManyNotesButton;

@@ -6,7 +6,7 @@ import { cn } from '@/utils/cn';
 import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import updateNote from '../_actions/update-note';
+import updateNote from '../../_actions/update-note';
 
 type Props = {
 	note: Note;
