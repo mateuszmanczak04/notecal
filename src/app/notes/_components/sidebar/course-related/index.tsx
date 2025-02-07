@@ -9,12 +9,11 @@ type T_Props = {
 
 const CourseRelated = ({ course }: T_Props) => {
 	return (
-		<fieldset className='flex flex-col gap-y-2 rounded-xl border border-neutral-200 p-4 pt-2 dark:border-neutral-700'>
-			<legend className='px-2'>Course related</legend>
+		<div className='flex flex-col gap-y-2 border-b border-neutral-200 pb-4 dark:border-neutral-700'>
 			<CourseName course={course} />
 			<CourseTeacher course={course} />
 			<CourseColor course={course} />
-		</fieldset>
+		</div>
 	);
 };
 
