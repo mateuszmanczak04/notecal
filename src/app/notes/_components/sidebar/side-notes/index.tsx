@@ -44,7 +44,7 @@ const SideNotes = ({ currentCourse }: Props) => {
 
 	return (
 		<div className='flex flex-col gap-y-2 border-b border-neutral-200 pb-4 dark:border-neutral-700'>
-			<p className='px-2 font-semibold'>Useful links</p>
+			<p className='px-2 font-semibold'>Course notes</p>
 
 			<SelectNotesProvider>
 				{currentCourseNotes.map(note => (
