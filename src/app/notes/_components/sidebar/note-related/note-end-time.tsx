@@ -1,7 +1,7 @@
 'use client';
 
-import DatePicker from '@/components/date-picker';
 import { useToast } from '@/components/toast/use-toast';
+import { useDatePickerFunctionality } from '@/hooks/use-date-picker-functionality';
 import { cn } from '@/utils/cn';
 import { toUTC } from '@/utils/timezone';
 import { Note } from '@prisma/client';
@@ -32,15 +32,65 @@ const NoteEndTime = ({ note }: Props) => {
 		mutate({ id: note.id, endTime: newEndTime ? toUTC(newEndTime) : null });
 	};
 
+	const { day, handleKeyDown, hour, menuRef, minute, month, year, setDay, setHour, setMinute, setMonth, setYear } =
+		useDatePickerFunctionality({ onSelect: onChange, date: note.endTime, isAlwaysOpen: true });
+
 	return (
-		<article>
-			<p className='text-xl font-semibold'>Note&apos;s end time</p>
-			<DatePicker
-				className={cn('mt-2 w-56', isPending && 'pointer-events-none opacity-50')}
-				date={note.endTime}
-				onSelect={onChange}
-			/>
-		</article>
+		<div className='flex flex-col gap-y-1 text-sm' ref={menuRef}>
+			<p className='px-1 font-semibold'>Note start time</p>
+			<div
+				className={cn(
+					'flex rounded-md border border-neutral-100 p-1 transition-opacity dark:border-neutral-800 dark:text-neutral-100',
+					isPending && 'pointer-events-none opacity-50',
+				)}>
+				{/* Year */}
+				<input
+					placeholder='yyyy'
+					type='text'
+					value={year}
+					onChange={e => setYear(e.target.value)}
+					onKeyDown={handleKeyDown}
+					className='w-12 bg-transparent px-1 focus:outline-none'
+					autoFocus
+				/>
+				/{/* Month */}
+				<input
+					placeholder='mm'
+					type='text'
+					value={month}
+					onChange={e => setMonth(e.target.value)}
+					onKeyDown={handleKeyDown}
+					className='w-8 bg-transparent px-1 focus:outline-none'
+				/>
+				/{/* Day */}
+				<input
+					placeholder='dd'
+					type='text'
+					value={day}
+					onChange={e => setDay(e.target.value)}
+					onKeyDown={handleKeyDown}
+					className='w-8 bg-transparent px-1 focus:outline-none'
+				/>
+				{/* Hour */}
+				<input
+					placeholder='hh'
+					type='text'
+					value={hour}
+					onChange={e => setHour(e.target.value)}
+					onKeyDown={handleKeyDown}
+					className='w-8 bg-transparent px-1 focus:outline-none'
+				/>
+				:{/* Minute */}
+				<input
+					placeholder='mm'
+					type='text'
+					value={minute}
+					onChange={e => setMinute(e.target.value)}
+					onKeyDown={handleKeyDown}
+					className='w-8 bg-transparent px-1 focus:outline-none'
+				/>
+			</div>
+		</div>
 	);
 };
 

@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/button';
 import { useSettings } from '@/hooks/use-settings';
 import { Note } from '@prisma/client';
 import { useRouter } from 'next/navigation';
@@ -27,9 +26,9 @@ const GoToCalendarNote = ({ note }: Props) => {
 	};
 
 	return (
-		<Button variant='secondary' onClick={handleGoToCalendar}>
+		<p className='cursor-pointer px-2 hover:underline' onClick={handleGoToCalendar}>
 			Go to calendar
-		</Button>
+		</p>
 	);
 };
 
