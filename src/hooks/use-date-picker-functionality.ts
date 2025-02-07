@@ -5,10 +5,11 @@ import { useOnClickOutside } from 'usehooks-ts';
 type T_Props = {
 	onSelect: (newDueDate: Date | null) => void;
 	date: Date | null;
+	isAlwaysOpen?: boolean;
 };
 
-export const useDatePickerFunctionality = ({ onSelect, date }: T_Props) => {
-	const [isOpen, setIsOpen] = useState(false);
+export const useDatePickerFunctionality = ({ onSelect, date, isAlwaysOpen }: T_Props) => {
+	const [isOpen, setIsOpen] = useState(isAlwaysOpen || false);
 	const menuRef = useRef<HTMLDivElement>(null!);
 
 	// Inputs
@@ -65,7 +66,7 @@ export const useDatePickerFunctionality = ({ onSelect, date }: T_Props) => {
 	};
 
 	useOnClickOutside(menuRef, () => {
-		if (isOpen) {
+		if (isOpen || isAlwaysOpen) {
 			handleSubmit();
 			handleCloseMenu();
 		}
