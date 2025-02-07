@@ -12,7 +12,8 @@ type Props = {
 	note: Note;
 };
 
-const StartTime = ({ note }: Props) => {
+/** Date picker to change note's startTime */
+const NoteStartTime = ({ note }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
@@ -43,4 +44,4 @@ const StartTime = ({ note }: Props) => {
 	);
 };
 
-export default StartTime;
+export default NoteStartTime;

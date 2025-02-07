@@ -11,7 +11,7 @@ import { Plus } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 
 type Props = {
-	course?: Course;
+	course: Course;
 };
 
 const NoteCreateTaskForm = ({ course }: Props) => {
@@ -30,7 +30,7 @@ const NoteCreateTaskForm = ({ course }: Props) => {
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		mutate({ title, courseId: course?.id });
+		mutate({ title, courseId: course.id });
 		setTitle('');
 	};
 

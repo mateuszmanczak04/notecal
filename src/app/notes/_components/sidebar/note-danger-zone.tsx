@@ -14,9 +14,7 @@ type Props = {
 	id: string;
 };
 
-/**
- * After first click it shows a confirmation message if user is sure to delete it.
- */
+/** Component to delete entire course */
 const NoteDangerZone = ({ id }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();

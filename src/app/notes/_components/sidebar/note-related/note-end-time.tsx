@@ -12,7 +12,8 @@ type Props = {
 	note: Note;
 };
 
-const EndTime = ({ note }: Props) => {
+/** Date picker to change note's endTime */
+const NoteEndTime = ({ note }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
@@ -43,4 +44,4 @@ const EndTime = ({ note }: Props) => {
 	);
 };
 
-export default EndTime;
+export default NoteEndTime;

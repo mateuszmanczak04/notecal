@@ -3,6 +3,7 @@
 import { Checkbox } from '@/components/checkbox';
 import { useSettings } from '@/hooks/use-settings';
 
+/** Component where user specifies what they want to see in the /notes page sidebar */
 const CustomizeSidebar = () => {
 	const { sidebarElements, setSidebarElements } = useSettings();
 

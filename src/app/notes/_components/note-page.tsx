@@ -11,9 +11,9 @@ import CourseName from './sidebar/course-related/course-name';
 import CourseTeacher from './sidebar/course-related/course-teacher';
 import CustomizeSidebar from './sidebar/customize-sidebar';
 import NoteDangerZone from './sidebar/note-danger-zone';
-import EndTime from './sidebar/note-related/end-time';
-import GoToCalendar from './sidebar/note-related/go-to-calendar';
-import StartTime from './sidebar/note-related/start-time';
+import GoToCalendarNote from './sidebar/note-related/go-to-calendar-note';
+import NoteEndTime from './sidebar/note-related/note-end-time';
+import NoteStartTime from './sidebar/note-related/note-start-time';
 import NotesSettings from './sidebar/notes-settings';
 import SideNotesList from './sidebar/side-notes/side-notes-list';
 import NoteTasks from './sidebar/tasks/note-tasks';
@@ -76,9 +76,9 @@ const NotePage = () => {
 				{sidebarElements.noteRelated && currentNote && (
 					<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
 						<legend className='px-2'>Note related</legend>
-						<StartTime note={currentNote} />
-						<EndTime note={currentNote} />
-						{currentNote.startTime && currentNote.endTime && <GoToCalendar note={currentNote} />}
+						<NoteStartTime note={currentNote} />
+						<NoteEndTime note={currentNote} />
+						{currentNote.startTime && currentNote.endTime && <GoToCalendarNote note={currentNote} />}
 					</fieldset>
 				)}
 

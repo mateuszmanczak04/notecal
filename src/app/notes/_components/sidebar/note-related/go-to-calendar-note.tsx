@@ -9,7 +9,10 @@ type Props = {
 	note: Note;
 };
 
-const GoToCalendar = ({ note }: Props) => {
+/**
+ * Button linking to the /calendar page with the note's start time as the first seen day.
+ */
+const GoToCalendarNote = ({ note }: Props) => {
 	const { goToDay } = useSettings();
 	const router = useRouter();
 
@@ -30,4 +33,4 @@ const GoToCalendar = ({ note }: Props) => {
 	);
 };
 
-export default GoToCalendar;
+export default GoToCalendarNote;
