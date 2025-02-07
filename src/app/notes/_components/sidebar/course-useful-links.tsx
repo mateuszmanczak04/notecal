@@ -6,16 +6,16 @@ import { Input } from '@/components/input';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { addHttpsIfMissing, removeProtocol } from '@/utils/links';
-import { Course } from '@prisma/client';
+import { Course as T_Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, X } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 
-type Props = {
-	course: Course;
+type T_Props = {
+	course: T_Course;
 };
 
-const UsefulLinks = ({ course }: Props) => {
+const CourseUsefulLinks = ({ course }: T_Props) => {
 	// Used in the form
 	const [newLinkUrl, setNewLinkUrl] = useState<string>('');
 	const [newLinkTitle, setNewLinkTitle] = useState<string>('');
@@ -114,4 +114,4 @@ const UsefulLinks = ({ course }: Props) => {
 	);
 };
 
-export default UsefulLinks;
+export default CourseUsefulLinks;

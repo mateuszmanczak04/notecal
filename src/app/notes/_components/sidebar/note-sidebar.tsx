@@ -3,6 +3,7 @@
 import { useSettings } from '@/hooks/use-settings';
 import { Course as T_Course, Note as T_Note } from '@prisma/client';
 import CourseRelated from './course-related';
+import CourseUsefulLinks from './course-useful-links';
 import CustomizeSidebar from './customize-sidebar';
 import NoteDangerZone from './note-danger-zone';
 import GoToCalendarNote from './note-related/go-to-calendar-note';
@@ -11,7 +12,6 @@ import NoteStartTime from './note-related/note-start-time';
 import NotesSettings from './notes-settings';
 import SideNotesList from './side-notes/side-notes-list';
 import NoteTasks from './tasks/note-tasks';
-import UsefulLinks from './useful-links';
 
 type T_Props = {
 	course: T_Course;
@@ -28,7 +28,7 @@ const NoteSidebar = ({ course, currentNote }: T_Props) => {
 
 			{sidebarElements.notesList && <SideNotesList currentCourse={course} />}
 
-			{sidebarElements.usefulLinks && <UsefulLinks course={course} />}
+			{sidebarElements.usefulLinks && <CourseUsefulLinks course={course} />}
 
 			{/* Tasks */}
 			{sidebarElements.tasks && (
