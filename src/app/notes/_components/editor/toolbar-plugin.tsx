@@ -194,7 +194,7 @@ export default function ToolbarPlugin({ onSave, note, handleExport, course, hasC
 	}, [editor, onSave, updateHeading]);
 
 	return (
-		<div className='flex flex-wrap items-center gap-2 border-b border-neutral-200 bg-white p-2 dark:border-neutral-600 dark:bg-neutral-700'>
+		<div className='flex flex-wrap items-center gap-2 border-b border-neutral-200 bg-white p-2 dark:border-neutral-600 dark:bg-neutral-800'>
 			{/* Undo & Redo */}
 			<div className='grid grid-cols-2 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
 				<Toggle

@@ -3,10 +3,10 @@
 import { useTaskCompleted } from '@/app/tasks/_hooks/use-task-completed';
 import { Checkbox } from '@/components/checkbox';
 import { cn } from '@/utils/cn';
-import { Task } from '@prisma/client';
+import { Task as T_Task } from '@prisma/client';
 
 type T_Props = {
-	task: Task;
+	task: T_Task;
 };
 
 const NoteTaskCompleted = ({ task }: T_Props) => {
@@ -16,7 +16,7 @@ const NoteTaskCompleted = ({ task }: T_Props) => {
 		<Checkbox
 			checked={task.completed}
 			onCheckedChange={toggleTaskCompleted}
-			className={cn(isPending && 'pointer-events-none opacity-50')}
+			className={cn('size-5 data-[state=checked]:bg-primary-500', isPending && 'pointer-events-none opacity-50')}
 			aria-label='task completed checkbox'
 			title='task completed checkbox'
 		/>

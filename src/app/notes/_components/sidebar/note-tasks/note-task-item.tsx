@@ -1,10 +1,7 @@
 import { Task as T_Task, type Task as NoteTaskItem } from '@prisma/client';
 import { Reorder } from 'motion/react';
 import NoteTaskCompleted from './note-task-completed';
-import NoteTaskCourse from './note-task-course';
 import NoteTaskDescription from './note-task-description';
-import NoteTaskDueDate from './note-task-due-date';
-import NoteTaskPriority from './note-task-priority';
 import NoteTaskTitle from './note-task-title';
 
 type T_Props = {
@@ -17,17 +14,17 @@ const NoteTaskItem = ({ task }: T_Props) => {
 		<Reorder.Item
 			value={task}
 			whileDrag={{ userSelect: 'none', pointerEvents: 'none' }}
-			className='flex w-full cursor-grab gap-2 border-b border-neutral-200 bg-white p-2 dark:border-neutral-700 dark:bg-neutral-800'>
+			className='my-2 flex w-full cursor-grab gap-2'>
 			<NoteTaskCompleted task={task} />
 			<div className='flex min-w-0 flex-1 select-none flex-col'>
 				<NoteTaskTitle task={task} />
 				<NoteTaskDescription task={task} />
 
-				<div className='flex flex-col gap-y-2 '>
+				{/* <div className='flex flex-col gap-y-2 '>
 					<NoteTaskCourse task={task} />
 					<NoteTaskDueDate task={task} />
 					<NoteTaskPriority task={task} />
-				</div>
+				</div> */}
 			</div>
 		</Reorder.Item>
 	);
