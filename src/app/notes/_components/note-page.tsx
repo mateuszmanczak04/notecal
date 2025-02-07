@@ -2,20 +2,10 @@
 
 import { useCourses } from '@/hooks/use-courses';
 import { useNotes } from '@/hooks/use-notes';
-import { useSettings } from '@/hooks/use-settings';
 import { useSearchParams } from 'next/navigation';
 import Editor from './editor/editor';
 import NoSelectedNoteEditor from './editor/no-selected-note-editor';
-import CourseRelated from './sidebar/course-related';
-import CustomizeSidebar from './sidebar/customize-sidebar';
-import NoteDangerZone from './sidebar/note-danger-zone';
-import GoToCalendarNote from './sidebar/note-related/go-to-calendar-note';
-import NoteEndTime from './sidebar/note-related/note-end-time';
-import NoteStartTime from './sidebar/note-related/note-start-time';
-import NotesSettings from './sidebar/notes-settings';
-import SideNotesList from './sidebar/side-notes/side-notes-list';
-import NoteTasks from './sidebar/tasks/note-tasks';
-import UsefulLinks from './sidebar/useful-links';
+import NoteSidebar from './sidebar/note-sidebar';
 
 const NotePage = () => {
 	const searchParams = useSearchParams();
@@ -24,7 +14,6 @@ const NotePage = () => {
 
 	const { data: notes } = useNotes();
 	const { data: courses } = useCourses();
-	const { sidebarElements } = useSettings();
 
 	if (!notes || !courses) return;
 
@@ -47,38 +36,7 @@ const NotePage = () => {
 				)}
 			</article>
 
-			<aside className='flex h-screen w-full shrink-0 flex-col gap-y-4 overflow-y-scroll border-l border-neutral-200 bg-white p-4 pb-64 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:bg-neutral-900'>
-				{/* Course related */}
-				{sidebarElements.courseRelated && <CourseRelated course={currentCourse} />}
-
-				{sidebarElements.notesList && <SideNotesList currentCourse={currentCourse} />}
-
-				{sidebarElements.usefulLinks && <UsefulLinks course={currentCourse} />}
-
-				{/* Tasks */}
-				{sidebarElements.tasks && (
-					<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
-						<legend className='px-2'>Tasks</legend>
-						<NoteTasks course={currentCourse} />
-					</fieldset>
-				)}
-
-				{/* Note related */}
-				{sidebarElements.noteRelated && currentNote && (
-					<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
-						<legend className='px-2'>Note related</legend>
-						<NoteStartTime note={currentNote} />
-						<NoteEndTime note={currentNote} />
-						{currentNote.startTime && currentNote.endTime && <GoToCalendarNote note={currentNote} />}
-					</fieldset>
-				)}
-
-				{sidebarElements.dangerZone && <NoteDangerZone id={currentCourse.id} />}
-
-				{sidebarElements.settings && <NotesSettings />}
-
-				<CustomizeSidebar />
-			</aside>
+			<NoteSidebar course={currentCourse} currentNote={currentNote} />
 		</main>
 	);
 };
