@@ -23,7 +23,7 @@ const NoteTaskDueDate = ({ task }: T_Props) => {
 				)}>
 				{/* Year */}
 				<input
-					placeholder={new Date().getFullYear().toString()}
+					placeholder='yyyy'
 					type='text'
 					value={year}
 					onChange={e => setYear(e.target.value)}
@@ -33,7 +33,7 @@ const NoteTaskDueDate = ({ task }: T_Props) => {
 				/>
 				/{/* Month */}
 				<input
-					placeholder={(new Date().getMonth() + 1).toString().padStart(2, '00')}
+					placeholder='mm'
 					type='text'
 					value={month}
 					onChange={e => setMonth(e.target.value)}
@@ -42,7 +42,7 @@ const NoteTaskDueDate = ({ task }: T_Props) => {
 				/>
 				/{/* Day */}
 				<input
-					placeholder={new Date().getDate().toString().padStart(2, '00')}
+					placeholder='dd'
 					type='text'
 					value={day}
 					onChange={e => setDay(e.target.value)}
@@ -51,7 +51,7 @@ const NoteTaskDueDate = ({ task }: T_Props) => {
 				/>
 				{/* Hour */}
 				<input
-					placeholder={new Date().getHours().toString().padStart(2, '00')}
+					placeholder='hh'
 					type='text'
 					value={hour}
 					onChange={e => setHour(e.target.value)}
@@ -60,7 +60,7 @@ const NoteTaskDueDate = ({ task }: T_Props) => {
 				/>
 				:{/* Minute */}
 				<input
-					placeholder={new Date().getMinutes().toString().padStart(2, '00')}
+					placeholder='mm'
 					type='text'
 					value={minute}
 					onChange={e => setMinute(e.target.value)}
