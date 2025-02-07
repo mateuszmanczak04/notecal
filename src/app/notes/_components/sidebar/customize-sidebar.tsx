@@ -12,9 +12,12 @@ const CustomizeSidebar = () => {
 	};
 
 	return (
-		<fieldset className='space-y-2 rounded-xl border border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
-			<legend className='px-2'>Customize sidebar</legend>
-			<ul className='grid gap-2 sm:grid-cols-2 md:grid-cols-1 2xl:grid-cols-2'>
+		<div className='border-b border-neutral-200 p-4 pt-0 dark:border-neutral-700'>
+			<p className='px-2 font-semibold'>Customize sidebar</p>
+			<p className='mt-2 px-2 text-sm opacity-75'>
+				You can choose which elements of this sidebar should be visible for you
+			</p>
+			<ul className='mt-4 grid gap-2 sm:grid-cols-2 md:grid-cols-1 2xl:grid-cols-2'>
 				<li className='flex select-none items-center'>
 					<Checkbox
 						id='show-course-related'
@@ -86,7 +89,7 @@ const CustomizeSidebar = () => {
 					</label>
 				</li>
 			</ul>
-		</fieldset>
+		</div>
 	);
 };
 
