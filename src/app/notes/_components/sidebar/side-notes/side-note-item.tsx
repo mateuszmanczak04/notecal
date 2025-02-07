@@ -54,7 +54,7 @@ const SideNoteItem = ({ note }: Props) => {
 				onContextMenu={handleNoteContextMenu}
 				className={cn(
 					'h-9 truncate rounded-xl border-2 border-transparent bg-neutral-100 px-3 text-sm leading-9 transition-colors dark:bg-neutral-800',
-					(note.id === noteId || isNoteSelected(note)) && 'border-neutral-200  dark:border-neutral-700 ',
+					(note.id === noteId || isNoteSelected(note)) && 'border-neutral-300  dark:border-neutral-600 ',
 				)}>
 				<span className=' w-auto max-w-48 shrink-0 truncate text-center text-sm'>
 					{note.startTime && note.endTime && (
