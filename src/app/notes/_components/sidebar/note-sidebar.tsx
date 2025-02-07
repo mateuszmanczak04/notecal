@@ -26,7 +26,7 @@ const NoteSidebar = ({ course, currentNote }: T_Props) => {
 			{sidebarElements.usefulLinks && <CourseUsefulLinks course={course} />}
 			{sidebarElements.tasks && <NoteTasks course={course} />}
 			{sidebarElements.noteRelated && currentNote && <NoteRelated note={currentNote} />}
-			{sidebarElements.dangerZone && <NoteDangerZone id={course.id} />}
+			{sidebarElements.dangerZone && <NoteDangerZone course={course} />}
 			{sidebarElements.settings && <NotesSettings />}
 			<CustomizeSidebar />
 		</aside>
