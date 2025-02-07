@@ -20,15 +20,15 @@ const NoteSidebar = ({ course, currentNote }: T_Props) => {
 	const { sidebarElements } = useSettings();
 
 	return (
-		<aside className='flex h-screen w-full shrink-0 flex-col gap-y-4 overflow-y-scroll border-l border-neutral-200 bg-white p-6 pb-64 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:border-transparent dark:bg-neutral-900'>
+		<aside className='flex h-screen w-full shrink-0 flex-col overflow-y-scroll border-l border-neutral-200 bg-white pb-32 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:border-transparent dark:bg-neutral-900'>
 			{sidebarElements.courseRelated && <CourseRelated course={course} />}
 			{sidebarElements.notesList && <SideNotes currentCourse={course} />}
 			{sidebarElements.usefulLinks && <CourseUsefulLinks course={course} />}
 			{sidebarElements.tasks && <NoteTasks course={course} />}
 			{sidebarElements.noteRelated && currentNote && <NoteRelated note={currentNote} />}
-			{sidebarElements.dangerZone && <NoteDangerZone course={course} />}
 			{sidebarElements.settings && <NotesSettings />}
-			<CustomizeSidebar />
+			{sidebarElements.dangerZone && <NoteDangerZone course={course} />}
+			<CustomizeSidebar course={course} />
 		</aside>
 	);
 };

@@ -11,7 +11,7 @@ type T_Props = {
 
 const NoteRelated = ({ note }: T_Props) => {
 	return (
-		<div className='flex flex-col gap-y-4 border-b border-neutral-200 pb-4 dark:border-neutral-700'>
+		<div className='flex flex-col gap-y-4 border-b border-neutral-200 p-6 dark:border-neutral-700'>
 			<NoteStartTime note={note} />
 			<NoteEndTime note={note} />
 			{note.startTime && note.endTime && <GoToCalendarNote note={note} />}

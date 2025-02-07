@@ -43,8 +43,9 @@ const SideNotes = ({ currentCourse }: Props) => {
 	const currentCourseNotes = notes.filter(note => note.courseId === currentCourse?.id);
 
 	return (
-		<div className='flex flex-col gap-y-2 border-b border-neutral-200 pb-4 dark:border-neutral-700'>
-			<p className='px-2 font-semibold'>Course notes</p>
+		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
+			<p className='font-semibold'>Course notes</p>
+			<p className='mb-4 mt-2 text-sm opacity-75'>List of all courses from this course</p>
 
 			<SelectNotesProvider>
 				{currentCourseNotes.map(note => (
@@ -55,7 +56,7 @@ const SideNotes = ({ currentCourse }: Props) => {
 			<Button
 				style={{ backgroundColor: currentCourse.color }}
 				onClick={handleNewNote}
-				className={cn(isPending && 'pointer-events-none opacity-50')}
+				className={cn('mt-2 transition-opacity', isPending && 'pointer-events-none opacity-50')}
 				disabled={isPending}>
 				<Plus className='size-5' /> Create a new note {isPending && <LoadingSpinner className='size-4' />}
 			</Button>

@@ -23,22 +23,23 @@ const NoteTasks = ({ course }: T_Props) => {
 
 	if (error) return <ErrorMessage>{error.message}</ErrorMessage>;
 
-	if (!tasks || tasks.length === 0) {
-		return <p className='text-center text-lg text-neutral-500 sm:ml-8'>You don&apos;t have any tasks yet.</p>;
-	}
+	if (!tasks) return;
 
 	return (
-		<div className='flex flex-col border-b border-neutral-200 pb-4 dark:border-neutral-700'>
-			<p className='px-2 font-semibold'>Tasks</p>
+		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
+			<p className='font-semibold'>Tasks</p>
+			<p className='mt-2 text-sm opacity-75'>Minimalistic subset of tasks from &quot;Tasks&quot; page</p>
 			{hasChangedOrder && (
-				<Button className='w-full' style={{ backgroundColor: course.color }} onClick={handleSaveNewOrder}>
+				<Button className='mt-4 w-full' style={{ backgroundColor: course.color }} onClick={handleSaveNewOrder}>
 					Save new order
 				</Button>
 			)}
-			{tasks && (
-				<Reorder.Group values={tasks} onReorder={handleReorder}>
-					{tasks?.map(task => <NoteTaskItem key={task.id} task={task} />)}
-				</Reorder.Group>
+			{tasks.length > 0 && (
+				<div className='mt-4'>
+					<Reorder.Group values={tasks} onReorder={handleReorder}>
+						{tasks?.map(task => <NoteTaskItem key={task.id} task={task} />)}
+					</Reorder.Group>
+				</div>
 			)}
 			<NoteCreateTaskForm course={course} />
 		</div>

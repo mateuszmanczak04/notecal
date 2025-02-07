@@ -9,7 +9,7 @@ type T_Props = {
 
 const CourseRelated = ({ course }: T_Props) => {
 	return (
-		<div className='flex flex-col gap-y-2 border-b border-neutral-200 pb-4 dark:border-neutral-700'>
+		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
 			<CourseName course={course} />
 			<CourseTeacher course={course} />
 			<CourseColor course={course} />

@@ -25,7 +25,7 @@ const CourseColor = ({ course }: Props) => {
 	});
 
 	return (
-		<div className={cn('flex flex-wrap gap-1 transition', isPending && 'pointer-events-none opacity-50')}>
+		<div className={cn('mt-4 flex flex-wrap gap-1 transition', isPending && 'pointer-events-none opacity-50')}>
 			{COLORS.map(color => {
 				return (
 					<button

@@ -36,11 +36,11 @@ const NoteStartTime = ({ note }: Props) => {
 		useDatePickerFunctionality({ onSelect: onChange, date: note.startTime, isAlwaysOpen: true });
 
 	return (
-		<div className='flex flex-col gap-y-1 text-sm' ref={menuRef}>
-			<p className='px-1 font-semibold'>Note start time</p>
+		<div className='flex flex-col gap-y-1' ref={menuRef}>
+			<p className='font-semibold'>Note start time</p>
 			<div
 				className={cn(
-					'flex rounded-md border border-neutral-100 p-1 transition-opacity dark:border-neutral-800 dark:text-neutral-100',
+					'mt-2 flex w-fit rounded-md border border-neutral-100 p-1 text-sm transition-opacity dark:border-neutral-800 dark:text-neutral-100',
 					isPending && 'pointer-events-none opacity-50',
 				)}>
 				{/* Year */}

@@ -16,7 +16,10 @@ const NoteTaskCompleted = ({ task }: T_Props) => {
 		<Checkbox
 			checked={task.completed}
 			onCheckedChange={toggleTaskCompleted}
-			className={cn('size-5 data-[state=checked]:bg-primary-500', isPending && 'pointer-events-none opacity-50')}
+			className={cn(
+				'size-5 data-[state=checked]:bg-neutral-700 dark:data-[state=checked]:bg-neutral-700',
+				isPending && 'pointer-events-none opacity-50',
+			)}
 			aria-label='task completed checkbox'
 			title='task completed checkbox'
 		/>

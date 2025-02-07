@@ -52,12 +52,13 @@ const CourseUsefulLinks = ({ course }: T_Props) => {
 	};
 
 	return (
-		<div className='flex flex-col gap-y-2 border-b border-neutral-200 pb-4 dark:border-neutral-700'>
-			<p className='px-2 font-semibold'>Useful links</p>
+		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
+			<p className='font-semibold'>Useful links</p>
+			<p className='mt-2 text-sm opacity-75'>Keep some links to external sources in one place</p>
 
 			{/* List of existing links */}
 			{usefulLinks.length > 0 && (
-				<div className='grid gap-y-2'>
+				<div className='mt-4 grid gap-y-4'>
 					{usefulLinks.map(link => (
 						<div
 							key={link.id}
@@ -79,7 +80,13 @@ const CourseUsefulLinks = ({ course }: T_Props) => {
 			)}
 
 			{/* Add new link */}
-			<form onSubmit={handleAddNew} className={cn(' grid gap-2', isPending && 'pointer-events-none opacity-50')}>
+			<form
+				onSubmit={handleAddNew}
+				className={cn(
+					'mt-2 grid gap-2',
+					usefulLinks.length === 0 && 'mt-4',
+					isPending && 'pointer-events-none opacity-50',
+				)}>
 				<Input
 					id='create-task-title'
 					placeholder='Title (optional)'

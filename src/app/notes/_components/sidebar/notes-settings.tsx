@@ -8,31 +8,33 @@ const NotesSettings = () => {
 	const { noteAutoSave, setNoteAutoSave, defaultNoteDuration, setDefaultNoteDuration } = useSettings();
 
 	return (
-		<div className='border-b border-neutral-200 pb-4 dark:border-neutral-700'>
-			<p className='px-2 font-semibold'>Settings</p>
-			<p className='mt-2 text-balance px-2 text-sm opacity-75'>
+		<div className='border-b border-neutral-200 p-6 dark:border-neutral-700'>
+			<p className='font-semibold'>Settings</p>
+			<p className='mt-2 text-sm opacity-75'>
 				Note that these settings are reflected in all your notes, not only for this course
 			</p>
 
 			{/* Autosave */}
-			<div className='mt-6 flex select-none items-center px-2'>
+			<div className='mt-6 flex select-none items-center'>
 				<Checkbox
 					id='autosave-time'
 					name='autosave-time'
 					checked={noteAutoSave}
+					className='size-5 data-[state=checked]:bg-neutral-700 dark:data-[state=checked]:bg-neutral-700'
 					onCheckedChange={value => setNoteAutoSave(value === true)}
 				/>
-				<label htmlFor='autosave-time' className='block flex-1 cursor-pointer pl-2 font-medium'>
+				<label htmlFor='autosave-time' className='block flex-1 cursor-pointer pl-2 text-sm font-medium'>
 					Auto save content (every 30s)
 				</label>
 			</div>
 
 			{/* Default note duration */}
 			<div className='mt-6 select-none'>
-				<label htmlFor='default-note-duration' className='mb-1 block px-2 font-medium '>
-					Default new note duration (min)
+				<label htmlFor='default-note-duration' className='block px-1 text-sm font-medium '>
+					Default new note duration (in minutes)
 				</label>
 				<Input
+					className='mt-2 w-20'
 					placeholder='60'
 					type='tel'
 					id='default-note-duration'

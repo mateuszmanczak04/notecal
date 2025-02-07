@@ -40,10 +40,11 @@ const NoteDangerZone = ({ course }: T_Props) => {
 	};
 
 	return (
-		<div className='space-y-4 border-b border-neutral-200 pb-4 dark:border-neutral-700'>
+		<div className='space-y-4 border-b border-neutral-200 p-6 dark:border-neutral-700'>
 			{isDeleting ? (
 				<div>
-					<p className='font-semibold'>Are you 100% sure? You cannot undone it later</p>
+					<p className='font-semibold'>Are you 100% sure to delete this course?</p>
+					<p className='mt-2 text-sm opacity-75'>You cannot undo it later</p>
 					<Button
 						variant='destructive'
 						onClick={confirmDeletion}
@@ -63,7 +64,7 @@ const NoteDangerZone = ({ course }: T_Props) => {
 			) : (
 				<article>
 					<h2 className='font-semibold'>Delete Course</h2>
-					<p className='mt-1 text-sm opacity-75'>
+					<p className='mt-2 text-sm opacity-75'>
 						Delete entire course with all related notes and tasks permanently
 					</p>
 
