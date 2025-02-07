@@ -6,9 +6,7 @@ import CourseRelated from './course-related';
 import CourseUsefulLinks from './course-useful-links';
 import CustomizeSidebar from './customize-sidebar';
 import NoteDangerZone from './note-danger-zone';
-import GoToCalendarNote from './note-related/go-to-calendar-note';
-import NoteEndTime from './note-related/note-end-time';
-import NoteStartTime from './note-related/note-start-time';
+import NoteRelated from './note-related';
 import NotesSettings from './notes-settings';
 import SideNotesList from './side-notes/side-notes-list';
 import NoteTasks from './tasks/note-tasks';
@@ -27,21 +25,9 @@ const NoteSidebar = ({ course, currentNote }: T_Props) => {
 			{sidebarElements.notesList && <SideNotesList currentCourse={course} />}
 			{sidebarElements.usefulLinks && <CourseUsefulLinks course={course} />}
 			{sidebarElements.tasks && <NoteTasks course={course} />}
-
-			{/* Note related */}
-			{sidebarElements.noteRelated && currentNote && (
-				<fieldset className='flex flex-col gap-y-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-700'>
-					<legend className='px-2'>Note related</legend>
-					<NoteStartTime note={currentNote} />
-					<NoteEndTime note={currentNote} />
-					{currentNote.startTime && currentNote.endTime && <GoToCalendarNote note={currentNote} />}
-				</fieldset>
-			)}
-
+			{sidebarElements.noteRelated && currentNote && <NoteRelated note={currentNote} />}
 			{sidebarElements.dangerZone && <NoteDangerZone id={course.id} />}
-
 			{sidebarElements.settings && <NotesSettings />}
-
 			<CustomizeSidebar />
 		</aside>
 	);
