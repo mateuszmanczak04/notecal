@@ -1,6 +1,5 @@
 'use client';
 
-import NoteTitle from '@/app/notes/_components/context-menu/note-title';
 import { useSelectedNotes } from '@/app/notes/_context/selected-notes-context';
 import { useCourses } from '@/hooks/use-courses';
 import { Note } from '@prisma/client';
@@ -10,6 +9,7 @@ import ChangeNoteCourse from './change-note-course';
 import DeleteManyNotesButton from './delete-many-notes-button';
 import DeleteNoteButton from './delete-note-button';
 import DuplicateNote from './duplicate-note';
+import NoteTitle from './note-title';
 
 type Props = {
 	note: Note;

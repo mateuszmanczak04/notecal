@@ -1,6 +1,5 @@
 'use client';
 
-import NoteContextMenu from '@/app/notes/_components/context-menu/note-context-menu';
 import { useSelectedNotes } from '@/app/notes/_context/selected-notes-context';
 import { Button } from '@/components/button';
 import { useNoteContextMenu } from '@/hooks/use-note-context-menu';
@@ -10,6 +9,7 @@ import { format } from 'date-fns';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
+import NoteContextMenu from '../../note-context-menu';
 
 type Props = {
 	note: Note;
