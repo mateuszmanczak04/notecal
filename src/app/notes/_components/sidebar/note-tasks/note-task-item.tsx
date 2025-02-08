@@ -17,7 +17,7 @@ const NoteTaskItem = ({ task }: T_Props) => {
 		<Reorder.Item
 			value={task}
 			whileDrag={{ userSelect: 'none', pointerEvents: 'none' }}
-			className='flex w-full cursor-grab gap-2 border-b border-neutral-200 pb-2 pt-4 first-of-type:pt-2 last-of-type:border-transparent dark:border-neutral-700'>
+			className='flex w-full cursor-grab gap-2 border-b border-neutral-200 py-4 first-of-type:pt-0 last-of-type:border-transparent dark:border-neutral-700'>
 			<div className='flex min-w-0 flex-1 select-none flex-col'>
 				<NoteTaskTitle task={task} />
 				<NoteTaskDescription task={task} />

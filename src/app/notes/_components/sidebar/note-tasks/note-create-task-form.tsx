@@ -35,7 +35,7 @@ const NoteCreateTaskForm = ({ course }: Props) => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className={cn('mt-2 grid gap-2', isPending && 'pointer-events-none opacity-50')}>
+		<form onSubmit={handleSubmit} className={cn('grid gap-2', isPending && 'pointer-events-none opacity-50')}>
 			<Input
 				id='create-task-title'
 				placeholder='New task title'

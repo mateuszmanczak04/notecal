@@ -27,15 +27,13 @@ const NoteTasks = ({ course }: T_Props) => {
 
 	return (
 		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
-			<p className='font-semibold'>Tasks</p>
-			<p className='mt-2 text-sm opacity-75'>Minimalistic subset of tasks from &quot;Tasks&quot; page</p>
 			{hasChangedOrder && (
-				<Button className='mt-4 w-full' style={{ backgroundColor: course.color }} onClick={handleSaveNewOrder}>
+				<Button className='mb-4 w-full' style={{ backgroundColor: course.color }} onClick={handleSaveNewOrder}>
 					Save new order
 				</Button>
 			)}
 			{tasks.length > 0 && (
-				<div className='mt-4'>
+				<div className='mb-2'>
 					<Reorder.Group values={tasks} onReorder={handleReorder}>
 						{tasks?.map(task => <NoteTaskItem key={task.id} task={task} />)}
 					</Reorder.Group>
