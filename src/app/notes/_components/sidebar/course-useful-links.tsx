@@ -9,6 +9,7 @@ import { addHttpsIfMissing, removeProtocol } from '@/utils/links';
 import { Course as T_Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, X } from 'lucide-react';
+import { Reorder } from 'motion/react';
 import { FormEvent, useState } from 'react';
 
 type T_Props = {
@@ -25,6 +26,8 @@ const CourseUsefulLinks = ({ course }: T_Props) => {
 	const [usefulLinks, setUsefulLinks] = useState<{ id: string; url: string; title?: string }[]>(
 		JSON.parse(course.usefulLinks || '[]') || [],
 	);
+	const [hasChangedOrder, setHasChangedOrder] = useState(false);
+
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateCourse,
 		onSettled: data => {
@@ -39,7 +42,6 @@ const CourseUsefulLinks = ({ course }: T_Props) => {
 
 	const handleAddNew = (e: FormEvent) => {
 		e.preventDefault();
-
 		const newLinks = [...usefulLinks, { id: crypto.randomUUID(), url: newLinkUrl, title: newLinkTitle }];
 		setUsefulLinks(newLinks);
 		mutate({ id: course.id, usefulLinks: JSON.stringify(newLinks) });
@@ -51,18 +53,36 @@ const CourseUsefulLinks = ({ course }: T_Props) => {
 		mutate({ id: course.id, usefulLinks: JSON.stringify(newLinks) });
 	};
 
+	const handleSaveNewOrder = () => {
+		mutate({ id: course.id, usefulLinks: JSON.stringify(usefulLinks) });
+		setHasChangedOrder(false);
+	};
+
 	return (
 		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
 			<p className='font-semibold'>Useful links</p>
-			<p className='mt-2 text-sm opacity-75'>Keep some links to external sources in one place</p>
+			<p className='mb-4 mt-2 text-sm opacity-75'>Keep some links to external sources in one place</p>
 
 			{/* List of existing links */}
+			{hasChangedOrder && (
+				<Button className='mb-2 w-full' style={{ backgroundColor: course.color }} onClick={handleSaveNewOrder}>
+					Save new order
+				</Button>
+			)}
+
 			{usefulLinks.length > 0 && (
-				<div className='mt-4 grid gap-y-2'>
+				<Reorder.Group
+					values={usefulLinks}
+					onReorder={newLinks => {
+						setUsefulLinks(newLinks);
+						setHasChangedOrder(true);
+					}}>
 					{usefulLinks.map(link => (
-						<div
+						<Reorder.Item
+							value={link}
+							whileDrag={{ pointerEvents: 'none' }}
 							key={link.id}
-							className='group flex h-9 w-full items-center justify-between rounded-xl px-3 text-sm dark:bg-neutral-700'
+							className='group mt-2 flex h-9 w-full cursor-move items-center justify-between rounded-xl px-3 text-sm first-of-type:mt-0 dark:bg-neutral-700'
 							title={link.title}>
 							<a
 								target='_blank'
@@ -74,9 +94,9 @@ const CourseUsefulLinks = ({ course }: T_Props) => {
 							<button onClick={() => handleDelete(link.id)} className='hidden group-hover:block'>
 								<X className='size-5' />
 							</button>
-						</div>
+						</Reorder.Item>
 					))}
-				</div>
+				</Reorder.Group>
 			)}
 
 			{/* Add new link */}
