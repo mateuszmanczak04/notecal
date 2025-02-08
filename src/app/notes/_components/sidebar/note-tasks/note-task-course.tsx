@@ -22,7 +22,7 @@ const NoteTaskCourse = ({ task }: T_Props) => {
 	return (
 		<div ref={ref} className={cn('relative transition-opacity', isPending && 'pointer-events-none opacity-50')}>
 			<button
-				className='size-6 w-fit rounded-md border border-neutral-200 p-1 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800'
+				className='size-6 rounded-md border border-neutral-200 p-1 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800'
 				onClick={() => setIsOpen(prev => !prev)}>
 				<div
 					className='aspect-square size-full rounded-full bg-neutral-200 dark:bg-neutral-700'
