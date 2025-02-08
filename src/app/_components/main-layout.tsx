@@ -8,7 +8,7 @@ import getCourses from '../courses/_actions/get-courses';
 import getNotes from '../notes/_actions/get-notes';
 import getUser from '../settings/_actions/get-user';
 import getTasks from '../tasks/_actions/get-tasks';
-import Navigation from './navigation';
+import Navigation from './navigation/navigation';
 
 type Props = {
 	children: ReactNode;

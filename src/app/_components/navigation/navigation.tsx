@@ -3,10 +3,11 @@
 import { Button } from '@/components/button';
 import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
-import { Calendar, Check, List, Menu, Settings, User, X } from 'lucide-react';
+import { Calendar, Check, Menu, Settings, User, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import NavCourses from './nav-courses';
 
 const Navigation = () => {
 	const pathname = usePathname();
@@ -94,16 +95,7 @@ const Navigation = () => {
 							onClick={handleClose}>
 							<Check className='h-4 w-4' /> Tasks
 						</Link>
-						<Link
-							prefetch
-							href='/courses'
-							className={cn(
-								'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
-								pathname.includes('/courses') && 'bg-white dark:bg-neutral-700',
-							)}
-							onClick={handleClose}>
-							<List className='h-4 w-4' /> Courses
-						</Link>
+						<NavCourses closeNavigation={handleClose} />
 					</div>
 				</div>
 			</div>
