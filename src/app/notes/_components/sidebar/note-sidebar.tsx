@@ -6,6 +6,7 @@ import CourseRelated from './course-related/course-related';
 import CourseUsefulLinks from './course-useful-links';
 import CustomizeSidebar from './customize-sidebar';
 import NoteDangerZone from './note-danger-zone';
+import NoteRelated from './note-related/note-related';
 import NoteTasks from './note-tasks/note-tasks';
 import NotesSettings from './notes-settings';
 import SideNotes from './side-notes/side-notes';
@@ -25,7 +26,7 @@ const NoteSidebar = ({ course, currentNote }: T_Props) => {
 			{sidebarElements.usefulLinks && <CourseUsefulLinks course={course} />}
 			{sidebarElements.tasks && <NoteTasks course={course} />}
 			{/* TODO: fix useDatePickerFunctionality to not be fired on every click outside */}
-			{/* {false && sidebarElements.noteRelated && currentNote && <NoteRelated note={currentNote} />} */}
+			{sidebarElements.noteRelated && currentNote && <NoteRelated note={currentNote} />}
 			{sidebarElements.settings && <NotesSettings />}
 			{sidebarElements.dangerZone && <NoteDangerZone course={course} />}
 			<CustomizeSidebar course={course} />

@@ -27,9 +27,11 @@ const NoteStartTime = ({ note }: Props) => {
 	});
 
 	const onChange = (newStartTime: Date | null) => {
-		if (note.endTime && newStartTime && newStartTime > note.endTime) return;
-
-		mutate({ id: note.id, startTime: newStartTime ? toUTC(newStartTime) : null });
+		if (note.endTime && newStartTime && newStartTime > note.endTime) {
+			toast({ description: 'Start time cannot be after end time', variant: 'destructive' });
+		} else {
+			mutate({ id: note.id, startTime: newStartTime ? toUTC(newStartTime) : null });
+		}
 	};
 
 	const { day, handleKeyDown, hour, menuRef, minute, month, year, setDay, setHour, setMinute, setMonth, setYear } =
