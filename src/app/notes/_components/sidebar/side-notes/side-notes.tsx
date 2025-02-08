@@ -47,11 +47,13 @@ const SideNotes = ({ currentCourse }: T_Props) => {
 			<p className='font-semibold'>Course notes</p>
 			<p className='mb-4 mt-2 text-sm opacity-75'>List of all courses from this course</p>
 
-			<SelectNotesProvider>
-				{currentCourseNotes.map(note => (
-					<SideNoteItem key={note.id} note={note} />
-				))}
-			</SelectNotesProvider>
+			<div className='flex flex-col gap-y-2'>
+				<SelectNotesProvider>
+					{currentCourseNotes.map(note => (
+						<SideNoteItem key={note.id} note={note} />
+					))}
+				</SelectNotesProvider>
+			</div>
 
 			<Button
 				style={{ backgroundColor: currentCourse.color }}
