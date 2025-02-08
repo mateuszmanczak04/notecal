@@ -17,6 +17,7 @@ export type T_SidebarElements = {
 	settings: boolean;
 };
 export type T_NoteAutoSave = boolean;
+export type T_MaxNoteWidthEnabled = boolean;
 
 export const useSettings = () => {
 	// TODO: load these values before rendering the app
@@ -49,6 +50,15 @@ export const useSettings = () => {
 		deserializer: (value: string) => value === 'true',
 		serializer: (value: T_NoteAutoSave) => value.toString(),
 	});
+	const [maxNoteWidthEnabled, setMaxNoteWidthEnabled] = useLocalStorage<T_MaxNoteWidthEnabled>(
+		'maxNoteWidthEnabled',
+		false,
+		{
+			initializeWithValue: false,
+			deserializer: (value: string) => value === 'true',
+			serializer: (value: T_MaxNoteWidthEnabled) => value.toString(),
+		},
+	);
 	const [firstCalendarDay, setFirstCalendarDay] = useLocalStorage<Date>('firstCalendarDay', new Date(), {
 		initializeWithValue: false,
 		deserializer: (value: string) => new Date(value),
@@ -134,5 +144,7 @@ export const useSettings = () => {
 		setSidebarElements,
 		noteAutoSave,
 		setNoteAutoSave,
+		maxNoteWidthEnabled,
+		setMaxNoteWidthEnabled,
 	};
 };

@@ -39,6 +39,7 @@ const Editor = ({ note, course }: Props) => {
 	const queryClient = useQueryClient();
 	const { noteAutoSave } = useSettings();
 	const { toast } = useToast();
+	const { maxNoteWidthEnabled } = useSettings();
 	const { mutate: mutateUpdate, isPending: isPendingUpdate } = useMutation({
 		mutationFn: updateNote,
 		onMutate: () => {
@@ -119,7 +120,11 @@ const Editor = ({ note, course }: Props) => {
 					course={course}
 					hasChanged={hasChanged}
 				/>
-				<div className='relative flex-1 overflow-y-scroll scroll-auto p-4 leading-loose scrollbar-hide'>
+				<div
+					className={cn(
+						'relative w-full flex-1 overflow-y-scroll scroll-auto p-4 leading-loose scrollbar-hide',
+						maxNoteWidthEnabled && 'mx-auto max-w-screen-lg',
+					)}>
 					<RichTextPlugin
 						contentEditable={
 							<ContentEditable

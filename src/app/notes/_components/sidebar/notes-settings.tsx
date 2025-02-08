@@ -5,7 +5,14 @@ import { Input } from '@/components/input';
 import { useSettings } from '@/hooks/use-settings';
 
 const NotesSettings = () => {
-	const { noteAutoSave, setNoteAutoSave, defaultNoteDuration, setDefaultNoteDuration } = useSettings();
+	const {
+		noteAutoSave,
+		setNoteAutoSave,
+		defaultNoteDuration,
+		setDefaultNoteDuration,
+		maxNoteWidthEnabled,
+		setMaxNoteWidthEnabled,
+	} = useSettings();
 
 	return (
 		<div className='border-b border-neutral-200 p-6 dark:border-neutral-700'>
@@ -25,6 +32,20 @@ const NotesSettings = () => {
 				/>
 				<label htmlFor='autosave-time' className='block flex-1 cursor-pointer pl-2 text-sm font-medium'>
 					Auto save content (every 30s)
+				</label>
+			</div>
+
+			{/* Max width of content */}
+			<div className='mt-6 flex select-none items-center'>
+				<Checkbox
+					id='limit-content-width'
+					name='limit-content-width'
+					checked={maxNoteWidthEnabled}
+					className='size-5 data-[state=checked]:bg-neutral-700 dark:data-[state=checked]:bg-neutral-700'
+					onCheckedChange={value => setMaxNoteWidthEnabled(value === true)}
+				/>
+				<label htmlFor='limit-content-width' className='block flex-1 cursor-pointer pl-2 text-sm font-medium'>
+					Limit content width
 				</label>
 			</div>
 
