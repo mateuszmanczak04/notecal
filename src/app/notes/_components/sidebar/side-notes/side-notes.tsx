@@ -45,7 +45,7 @@ const SideNotes = ({ currentCourse }: T_Props) => {
 	return (
 		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
 			<p className='font-semibold'>Course notes</p>
-			<p className='mb-4 mt-2 text-sm opacity-75'>List of all courses from this course</p>
+			<p className='mb-4 mt-2 text-sm opacity-75'>List of all notes from this course</p>
 
 			<div className='flex flex-col gap-y-2'>
 				<SelectNotesProvider>
