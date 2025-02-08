@@ -16,7 +16,7 @@ export const useTaskPriority = (task: T_Task) => {
 		},
 	});
 
-	const handleSelect = (newPriority: any) => {
+	const updateTaskPriority = (newPriority: any) => {
 		mutate({
 			id: task.id,
 			priority: newPriority,
@@ -25,6 +25,6 @@ export const useTaskPriority = (task: T_Task) => {
 
 	return {
 		isPending,
-		handleSelect,
+		updateTaskPriority: updateTaskPriority,
 	};
 };

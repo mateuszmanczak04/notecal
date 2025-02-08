@@ -1,29 +1,60 @@
 'use client';
 
-import { getTaskPriorityTitle } from '@/app/tasks/_components/task-priority';
 import { useTaskPriority } from '@/app/tasks/_hooks/use-task-priority';
-import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
 import { cn } from '@/utils/cn';
-import { TaskPriority as T_TaskPriority, Task } from '@prisma/client';
+import { Task } from '@prisma/client';
+import { AnimatePresence, motion } from 'motion/react';
+import { useState } from 'react';
 
 type T_Props = {
 	task: Task;
 };
 
 const NoteTaskPriority = ({ task }: T_Props) => {
-	const { handleSelect, isPending } = useTaskPriority(task);
+	const { updateTaskPriority, isPending } = useTaskPriority(task);
+	const [isOpen, setIsOpen] = useState(false);
 
 	return (
-		<DropdownMenu className={cn('w-52', isPending && 'pointer-events-none opacity-50')}>
-			<DropdownMenuTrigger showChevron>{getTaskPriorityTitle(task.priority)}</DropdownMenuTrigger>
-			<DropdownMenuList>
-				{([null, 'A', 'B', 'C'] as (T_TaskPriority | null)[]).map(priority => (
-					<DropdownMenuItem key={priority || 'none'} onSelect={handleSelect} value={priority}>
-						{getTaskPriorityTitle(priority)}
-					</DropdownMenuItem>
-				))}
-			</DropdownMenuList>
-		</DropdownMenu>
+		<div className={cn('relative transition-opacity', isPending && 'pointer-events-none opacity-50')}>
+			<button
+				className='size-6 w-fit rounded-md border border-neutral-200 p-1 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800'
+				onClick={() => setIsOpen(prev => !prev)}>
+				<div
+					className={cn(
+						'aspect-square size-full rounded-full ',
+						task.priority === null && 'bg-neutral-200 dark:bg-neutral-700',
+						task.priority === 'A' && 'bg-red-500 dark:bg-red-400',
+						task.priority === 'B' && 'bg-yellow-500 dark:bg-yellow-400',
+						task.priority === 'C' && 'bg-green-500 dark:bg-green-400',
+					)}></div>
+			</button>
+
+			<AnimatePresence>
+				{isOpen && (
+					<motion.div
+						initial={{ opacity: 0, y: -20 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -20 }}
+						className='absolute left-0 top-7 z-10 flex gap-x-2 rounded-md bg-white p-2 shadow-xl dark:bg-neutral-800'>
+						{[null, 'A', 'B', 'C'].map(priority => (
+							<button
+								key={priority}
+								onClick={() => updateTaskPriority(priority)}
+								className='flex items-center gap-2 text-nowrap rounded-md border border-neutral-200 px-2 py-1 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700'>
+								<div
+									className={cn(
+										'aspect-square size-3 rounded-full ',
+										priority === null && 'bg-neutral-200 dark:bg-neutral-700',
+										priority === 'A' && 'bg-red-500 dark:bg-red-400',
+										priority === 'B' && 'bg-yellow-500 dark:bg-yellow-400',
+										priority === 'C' && 'bg-green-500 dark:bg-green-400',
+									)}></div>
+							</button>
+						))}
+					</motion.div>
+				)}
+			</AnimatePresence>
+		</div>
 	);
 };
 

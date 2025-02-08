@@ -32,7 +32,7 @@ const NoteTaskCourse = ({ task }: T_Props) => {
 						initial={{ opacity: 0, y: -20 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -20 }}
-						className='absolute left-0 top-7 flex flex-col gap-y-2 rounded-md bg-white p-2 shadow-xl dark:bg-neutral-800'>
+						className='absolute left-0 top-7 z-10 flex flex-col gap-y-2 rounded-md bg-white p-2 shadow-xl dark:bg-neutral-800'>
 						{courses &&
 							courses.map(course => (
 								<button

@@ -38,7 +38,7 @@ export const getTaskPriorityTitle = (priority: T_TaskPriority | null) => {
 };
 
 const TaskPriority = ({ task }: T_Props) => {
-	const { handleSelect, isPending } = useTaskPriority(task);
+	const { updateTaskPriority: handleSelect, isPending } = useTaskPriority(task);
 
 	return (
 		<DropdownMenu className={cn('w-52', isPending && 'pointer-events-none opacity-50')}>

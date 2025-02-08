@@ -4,6 +4,7 @@ import NoteTaskCompleted from './note-task-completed';
 import NoteTaskCourse from './note-task-course';
 import NoteTaskDescription from './note-task-description';
 import NoteTaskDueDate from './note-task-due-date';
+import NoteTaskPriority from './note-task-priority';
 import NoteTaskTitle from './note-task-title';
 
 type T_Props = {
@@ -25,9 +26,7 @@ const NoteTaskItem = ({ task }: T_Props) => {
 				<div className='flex flex-col gap-y-2 '>
 					<NoteTaskCourse task={task} />
 					<NoteTaskDueDate task={task} />
-
-					{/* TODO restore after creating better component for this */}
-					{/* <NoteTaskPriority task={task} /> */}
+					<NoteTaskPriority task={task} />
 				</div>
 			</div>
 		</Reorder.Item>
