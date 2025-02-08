@@ -7,19 +7,19 @@ import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
 import { useNotes } from '@/hooks/use-notes';
 import { cn } from '@/utils/cn';
-import { Course } from '@prisma/client';
+import { Course as T_Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import SideNoteItem from './side-note-item';
 
-type Props = {
-	currentCourse: Course;
+type T_Props = {
+	currentCourse: T_Course;
 };
 
 /**
  * List of links to all course's notes
  */
-const SideNotes = ({ currentCourse }: Props) => {
+const SideNotes = ({ currentCourse }: T_Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
