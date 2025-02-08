@@ -1,4 +1,5 @@
 import { Task as T_Task, type Task as NoteTaskItem } from '@prisma/client';
+import { GripVertical } from 'lucide-react';
 import { Reorder } from 'motion/react';
 import NoteTaskCompleted from './note-task-completed';
 import NoteTaskCourse from './note-task-course';
@@ -17,8 +18,11 @@ const NoteTaskItem = ({ task }: T_Props) => {
 		<Reorder.Item
 			value={task}
 			whileDrag={{ userSelect: 'none', pointerEvents: 'none' }}
-			className='flex w-full cursor-grab gap-2 border-b border-neutral-200 py-4 first-of-type:pt-0 last-of-type:border-transparent dark:border-neutral-700'>
-			<div className='flex min-w-0 flex-1 select-none flex-col'>
+			className='mt-2 flex w-full cursor-grab gap-2 overflow-hidden rounded-md border border-neutral-200 bg-white first-of-type:mt-0 dark:border-neutral-700 dark:bg-neutral-800'>
+			<div className='grid h-auto w-6 cursor-move place-content-center bg-neutral-100 dark:bg-neutral-700'>
+				<GripVertical className='size-4' />
+			</div>
+			<div className='flex min-w-0 flex-1 select-none flex-col p-2'>
 				<NoteTaskTitle task={task} />
 				<NoteTaskDescription task={task} />
 
