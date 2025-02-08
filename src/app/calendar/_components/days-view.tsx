@@ -7,9 +7,7 @@ import DaysViewGrid from './days-view-grid';
 import DaysViewNotes from './days-view-notes';
 import DaysViewTopbar from './days-view-topbar';
 
-type Props = {};
-
-const DaysView = ({}: Props) => {
+const DaysView = () => {
 	// Used to keep the same calendar scroll y level even after switching routes
 	const { calendarScrollTop, setCalendarScrollTop } = useCalendarContext();
 	const scrollContainerRef = useRef<HTMLDivElement | null>(null);
