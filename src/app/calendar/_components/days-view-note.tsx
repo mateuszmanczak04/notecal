@@ -10,6 +10,7 @@ import { type Note as DaysViewNote } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { useNoteDrag } from '../_hooks/use-note-drag';
+import { getCalendarRowHeight } from '../_utils/get-calendar-row-height';
 import { getDaysIncludedInNote } from '../_utils/get-days-included-in-note';
 import { getNoteBlockHeight } from '../_utils/get-note-block-height';
 import { getNoteBlockLeftOffset } from '../_utils/get-note-block-left-offset';
@@ -27,8 +28,7 @@ type Props = {
 const DaysViewNote = ({ note, leftOffset }: Props) => {
 	const { data: courses } = useCourses();
 	const noteBlocksRef = useRef<HTMLDivElement[]>([]);
-	const { firstCalendarDay, displayedDays } = useSettings();
-
+	const { firstCalendarDay, displayedDays, zoomLevel } = useSettings();
 	const {
 		handleDrag,
 		handleDragBottom,
@@ -71,14 +71,24 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 					<div
 						key={day.toString()}
 						className={cn(
-							'absolute min-h-4 min-w-8 cursor-pointer select-none  rounded-xl border-2 border-white bg-primary-500 transition dark:border-neutral-800',
+							'absolute min-h-4 min-w-8 cursor-pointer select-none  rounded-xl border-2 border-white bg-primary-500 transition-all dark:border-neutral-800',
 							isDragging && 'opacity-50',
 							isHover && 'opacity-90',
 						)}
 						onMouseEnter={() => setIsHover(true)}
 						onMouseLeave={() => setIsHover(false)}
 						style={{
-							top: getNoteBlockTopOffset({ blockDay: day, noteStartTime: note.startTime }),
+							top: 0,
+							transform: (() => {
+								const notePercentTopOffset = getNoteBlockTopOffset({
+									blockDay: day,
+									noteStartTime: note.startTime,
+								});
+								const noteTopOffsetInAsNumber = parseFloat(notePercentTopOffset || '0') / 100;
+								const noteTopOffsetInPx =
+									noteTopOffsetInAsNumber * getCalendarRowHeight({ zoomLevel }) * 24;
+								return `translateY(${noteTopOffsetInPx}px)`;
+							})(),
 							left: getNoteBlockLeftOffset({
 								blockDay: day,
 								firstCalendarDay: firstCalendarDay,
