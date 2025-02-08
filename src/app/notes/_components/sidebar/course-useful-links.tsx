@@ -8,7 +8,7 @@ import { cn } from '@/utils/cn';
 import { addHttpsIfMissing, removeProtocol } from '@/utils/links';
 import { Course as T_Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus, X } from 'lucide-react';
+import { GripVertical, Plus, X } from 'lucide-react';
 import { Reorder } from 'motion/react';
 import { FormEvent, useState } from 'react';
 
@@ -82,8 +82,11 @@ const CourseUsefulLinks = ({ course }: T_Props) => {
 							value={link}
 							whileDrag={{ pointerEvents: 'none' }}
 							key={link.id}
-							className='group mt-2 flex h-9 w-full cursor-move items-center justify-between rounded-xl px-3 text-sm first-of-type:mt-0 dark:bg-neutral-700'
+							className='group mt-2 flex h-9 w-full cursor-move items-center justify-between overflow-hidden rounded-xl border border-neutral-200 bg-white pr-3 text-sm first-of-type:mt-0 dark:border-neutral-700 dark:bg-neutral-800'
 							title={link.title}>
+							<div className='mr-3 grid h-full w-6 place-content-center bg-neutral-100 dark:bg-neutral-700'>
+								<GripVertical className='size-4' />
+							</div>
 							<a
 								target='_blank'
 								href={addHttpsIfMissing(link.url)}
