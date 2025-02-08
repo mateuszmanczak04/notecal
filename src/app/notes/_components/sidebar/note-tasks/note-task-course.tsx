@@ -4,7 +4,8 @@ import { useTaskCourse } from '@/app/tasks/_hooks/use-task-course';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
 import { AnimatePresence, motion } from 'motion/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useOnClickOutside } from 'usehooks-ts';
 
 type T_Props = {
 	task: Task;
@@ -13,11 +14,13 @@ type T_Props = {
 const NoteTaskCourse = ({ task }: T_Props) => {
 	const { currentTaskCourse, isPending, updateTaskCourse, courses } = useTaskCourse(task);
 	const [isOpen, setIsOpen] = useState(false);
+	const ref = useRef<HTMLDivElement>(null!);
+	useOnClickOutside(ref, () => setIsOpen(false));
 
 	if (!currentTaskCourse) return;
 
 	return (
-		<div className={cn('relative transition-opacity', isPending && 'pointer-events-none opacity-50')}>
+		<div ref={ref} className={cn('relative transition-opacity', isPending && 'pointer-events-none opacity-50')}>
 			<button
 				className='size-6 w-fit rounded-md border border-neutral-200 p-1 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800'
 				onClick={() => setIsOpen(prev => !prev)}>
@@ -37,7 +40,10 @@ const NoteTaskCourse = ({ task }: T_Props) => {
 							courses.map(course => (
 								<button
 									key={course.id}
-									onClick={() => updateTaskCourse(course.id)}
+									onClick={() => {
+										setIsOpen(false);
+										updateTaskCourse(course.id);
+									}}
 									className='flex items-center gap-2 text-nowrap rounded-md border border-neutral-200 px-2 py-1 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700'>
 									<div
 										className='aspect-square size-3 rounded-full   bg-neutral-200  dark:bg-neutral-600'

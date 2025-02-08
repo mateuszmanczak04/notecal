@@ -4,7 +4,8 @@ import { useTaskPriority } from '@/app/tasks/_hooks/use-task-priority';
 import { cn } from '@/utils/cn';
 import { Task } from '@prisma/client';
 import { AnimatePresence, motion } from 'motion/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useOnClickOutside } from 'usehooks-ts';
 
 type T_Props = {
 	task: Task;
@@ -13,9 +14,11 @@ type T_Props = {
 const NoteTaskPriority = ({ task }: T_Props) => {
 	const { updateTaskPriority, isPending } = useTaskPriority(task);
 	const [isOpen, setIsOpen] = useState(false);
+	const ref = useRef<HTMLDivElement>(null!);
+	useOnClickOutside(ref, () => setIsOpen(false));
 
 	return (
-		<div className={cn('relative transition-opacity', isPending && 'pointer-events-none opacity-50')}>
+		<div ref={ref} className={cn('relative transition-opacity', isPending && 'pointer-events-none opacity-50')}>
 			<button
 				className='size-6 w-fit rounded-md border border-neutral-200 p-1 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800'
 				onClick={() => setIsOpen(prev => !prev)}>
@@ -35,12 +38,15 @@ const NoteTaskPriority = ({ task }: T_Props) => {
 						initial={{ opacity: 0, y: -20 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -20 }}
-						className='absolute left-0 top-7 z-10 flex gap-x-2 rounded-md bg-white p-2 shadow-xl dark:bg-neutral-800'>
+						className='absolute left-0 top-7 z-10 flex gap-x-1 rounded-md bg-white p-2 shadow-xl dark:bg-neutral-800'>
 						{[null, 'A', 'B', 'C'].map(priority => (
 							<button
 								key={priority}
-								onClick={() => updateTaskPriority(priority)}
-								className='flex items-center gap-2 text-nowrap rounded-md border border-neutral-200 px-2 py-1 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700'>
+								onClick={() => {
+									setIsOpen(false);
+									updateTaskPriority(priority);
+								}}
+								className='rounded-md border border-neutral-200 p-1 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700'>
 								<div
 									className={cn(
 										'aspect-square size-3 rounded-full ',
