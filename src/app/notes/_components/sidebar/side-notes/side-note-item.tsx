@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
-import NoteContextMenu from '../../note-context-menu/note-context-menu';
+import NoteContextMenu from '../../context-menu/note-context-menu';
 
 type Props = {
 	note: Note;
