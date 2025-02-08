@@ -1,8 +1,8 @@
 'use client';
 
 import NoteContextMenu from '@/app/notes/_components/context-menu/note-context-menu';
+import { useNoteContextMenu } from '@/app/notes/_components/context-menu/use-note-context-menu';
 import { useCourses } from '@/hooks/use-courses';
-import { useNoteContextMenu } from '@/hooks/use-note-context-menu';
 import { T_NoteWithTime } from '@/hooks/use-notes-with-time';
 import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';

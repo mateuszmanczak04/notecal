@@ -1,7 +1,7 @@
 'use client';
 
+import { useNoteContextMenu } from '@/app/notes/_components/context-menu/use-note-context-menu';
 import { useSelectedNotes } from '@/app/notes/_components/sidebar/side-notes/selected-notes-context';
-import { useNoteContextMenu } from '@/hooks/use-note-context-menu';
 import { cn } from '@/utils/cn';
 import { Note } from '@prisma/client';
 import { format } from 'date-fns';
