@@ -1,10 +1,26 @@
+import { CodeHighlightNode, CodeNode } from '@lexical/code';
+import { AutoLinkNode, LinkNode } from '@lexical/link';
+import { ListItemNode, ListNode } from '@lexical/list';
 import { InitialConfigType } from '@lexical/react/LexicalComposer';
-import { HeadingNode } from '@lexical/rich-text';
+import { HeadingNode, QuoteNode } from '@lexical/rich-text';
+import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
 
 /** A config for lexical library (WYSIWYG text editor). */
 export const editorConfig: InitialConfigType = {
 	namespace: 'Note content',
-	nodes: [HeadingNode],
+	nodes: [
+		HeadingNode,
+		ListNode,
+		ListItemNode,
+		QuoteNode,
+		CodeNode,
+		CodeHighlightNode,
+		TableNode,
+		TableCellNode,
+		TableRowNode,
+		AutoLinkNode,
+		LinkNode,
+	],
 	onError(error: Error) {
 		throw error;
 	},
@@ -17,6 +33,14 @@ export const editorConfig: InitialConfigType = {
 			bold: 'font-bold',
 			italic: 'italic',
 			underline: 'underline',
+		},
+		list: {
+			nested: {
+				listitem: 'pl-8',
+			},
+			ol: 'list-decimal list-inside',
+			ul: 'list-disc list-inside',
+			listitem: '',
 		},
 	},
 };

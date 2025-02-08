@@ -4,11 +4,15 @@ import { useToast } from '@/components/toast/use-toast';
 import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
 import { isDarkMode } from '@/utils/is-dark-mode';
+import { TRANSFORMERS } from '@lexical/markdown';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
+import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
+import { ListPlugin } from '@lexical/react/LexicalListPlugin';
+import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { Course, Note } from '@prisma/client';
@@ -149,6 +153,9 @@ const Editor = ({ note, course }: Props) => {
 						setHasChanged(JSON.stringify(editorState) !== note.content);
 					}}
 				/>
+				<ListPlugin />
+				<LinkPlugin />
+				<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
 			</LexicalComposer>
 		</article>
 	);
