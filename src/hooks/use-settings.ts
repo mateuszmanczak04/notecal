@@ -2,7 +2,7 @@ import { addDays, addMonths } from 'date-fns';
 import { useLocalStorage } from 'usehooks-ts';
 
 export type T_ViewMode = 'month' | 'days' | 'list';
-export type T_ZoomLevel = 1 | 2 | 3 | 4 | 5;
+export type T_ZoomLevel = number;
 export type T_TasksOrder = 'days' | 'priority' | 'dueDate' | 'createdAt' | 'completed' | 'title' | 'custom';
 export type T_DisplayedDays = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 export type T_DefaultNoteDuration = number;
@@ -27,12 +27,12 @@ export const useSettings = () => {
 	});
 	const [zoomLevel, setZoomLevel] = useLocalStorage<T_ZoomLevel>('zoomLevel', 1, {
 		initializeWithValue: false,
-		deserializer: (value: string) => parseInt(value) as T_ZoomLevel,
+		deserializer: (value: string) => parseInt(value),
 		serializer: (value: T_ZoomLevel) => value.toString(),
 	});
 	const [displayedDays, setDisplayedDays] = useLocalStorage<T_DisplayedDays>('displayedDays', 5, {
 		initializeWithValue: false,
-		deserializer: (value: string) => parseInt(value) as T_ZoomLevel,
+		deserializer: (value: string) => parseInt(value) as T_DisplayedDays,
 		serializer: (value: T_DisplayedDays) => value.toString(),
 	});
 	const [defaultNoteDuration, setDefaultNoteDuration] = useLocalStorage<T_DefaultNoteDuration>(

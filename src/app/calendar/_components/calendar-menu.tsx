@@ -158,11 +158,11 @@ const CalendarMenu = () => {
 						<MenubarSeparator />
 
 						{/* Zooming */}
-						<MenubarLabel onClick={zoomOut} className='data-[state=open]:bg-white'>
+						<MenubarLabel onClick={() => zoomOut()} className='data-[state=open]:bg-white'>
 							<Minus className='size-5' />
 						</MenubarLabel>
 						<MenubarSeparator />
-						<MenubarLabel onClick={zoomIn} className='data-[state=open]:bg-white'>
+						<MenubarLabel onClick={() => zoomIn()} className='data-[state=open]:bg-white'>
 							<Plus className='size-5' />
 						</MenubarLabel>
 					</>

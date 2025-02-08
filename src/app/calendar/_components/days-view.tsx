@@ -40,9 +40,22 @@ const DaysView = ({}: Props) => {
 			}
 		};
 
+		const handleWheel = (event: WheelEvent) => {
+			if (event.metaKey) {
+				event.preventDefault();
+				if (event.deltaY > 0) {
+					zoomOut();
+				} else {
+					zoomIn();
+				}
+			}
+		};
+
 		window.addEventListener('keydown', handleKeyDown);
+		window.addEventListener('wheel', handleWheel, { passive: false });
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown);
+			window.removeEventListener('wheel', handleWheel);
 		};
 	}, [zoomIn, zoomOut, goDayBackward, goDayForward]);
 
