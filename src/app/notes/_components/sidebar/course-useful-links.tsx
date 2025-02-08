@@ -58,7 +58,7 @@ const CourseUsefulLinks = ({ course }: T_Props) => {
 
 			{/* List of existing links */}
 			{usefulLinks.length > 0 && (
-				<div className='mt-4 grid gap-y-4'>
+				<div className='mt-4 grid gap-y-2'>
 					{usefulLinks.map(link => (
 						<div
 							key={link.id}
