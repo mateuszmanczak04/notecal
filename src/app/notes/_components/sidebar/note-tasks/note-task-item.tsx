@@ -1,6 +1,7 @@
 import { Task as T_Task, type Task as NoteTaskItem } from '@prisma/client';
 import { Reorder } from 'motion/react';
 import NoteTaskCompleted from './note-task-completed';
+import NoteTaskCourse from './note-task-course';
 import NoteTaskDescription from './note-task-description';
 import NoteTaskDueDate from './note-task-due-date';
 import NoteTaskTitle from './note-task-title';
@@ -22,9 +23,7 @@ const NoteTaskItem = ({ task }: T_Props) => {
 				<NoteTaskDescription task={task} />
 
 				<div className='flex flex-col gap-y-2 '>
-					{/* TODO: recover after creating better component for this */}
-					{/* <NoteTaskCourse task={task} /> */}
-
+					<NoteTaskCourse task={task} />
 					<NoteTaskDueDate task={task} />
 
 					{/* TODO restore after creating better component for this */}
