@@ -44,7 +44,10 @@ const ListViewNote = ({ note }: T_Props) => {
 				</div>
 				<ChevronRight className='size-7 shrink-0' />
 			</Link>
-			<NoteContextMenu handleClose={closeContextMenu} note={note} position={contextMenuPosition} />
+			{/* Context menu on right mouse click */}
+			{contextMenuPosition && (
+				<NoteContextMenu handleClose={closeContextMenu} note={note} position={contextMenuPosition} />
+			)}
 		</>
 	);
 };
