@@ -15,6 +15,7 @@ import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
 import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
@@ -162,6 +163,7 @@ const Editor = ({ note, course }: Props) => {
 				<ListMaxIndentLevelPlugin maxDepth={7} />
 				<CodeHighlightPlugin />
 				<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+				<TabIndentationPlugin />
 			</LexicalComposer>
 		</article>
 	);
