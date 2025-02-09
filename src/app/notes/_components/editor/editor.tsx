@@ -139,7 +139,7 @@ const Editor = ({ note, course }: Props) => {
 						contentEditable={
 							<ContentEditable
 								ref={editorContentRef}
-								className='relative h-full resize-none space-y-4 outline-none'
+								className='relative resize-none space-y-4 pb-64 outline-none'
 							/>
 						}
 						placeholder={
