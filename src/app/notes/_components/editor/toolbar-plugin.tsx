@@ -34,6 +34,7 @@ import {
 	Heading1,
 	Heading2,
 	Italic,
+	Strikethrough,
 	Underline,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
@@ -238,7 +239,7 @@ export default function ToolbarPlugin({ onSave, note, handleExport, course, hasC
 			</div>
 
 			{/* Bold, Italic, Underline */}
-			<div className='grid grid-cols-3 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
+			<div className='grid grid-cols-4 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
 				<Toggle
 					pressed={selectionMap.bold}
 					className={selectionMap.bold ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
@@ -265,6 +266,15 @@ export default function ToolbarPlugin({ onSave, note, handleExport, course, hasC
 					}}
 					title='Ctrl + U'>
 					<Underline className='h-5 w-5' />
+				</Toggle>
+				<Toggle
+					pressed={selectionMap.underline}
+					className={selectionMap.underline ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
+					onPressedChange={() => {
+						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
+					}}
+					title='Ctrl + U'>
+					<Strikethrough className='h-5 w-5' />
 				</Toggle>
 			</div>
 
