@@ -109,6 +109,7 @@ export default function ToolbarPlugin({ onSave, note, handleExport, course, hasC
 				bold: selection.hasFormat('bold'),
 				italic: selection.hasFormat('italic'),
 				underline: selection.hasFormat('underline'),
+				strikethrough: selection.hasFormat('strikethrough'),
 			};
 
 			setSelectionMap(newSelectionMap);
@@ -268,8 +269,8 @@ export default function ToolbarPlugin({ onSave, note, handleExport, course, hasC
 					<Underline className='h-5 w-5' />
 				</Toggle>
 				<Toggle
-					pressed={selectionMap.underline}
-					className={selectionMap.underline ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
+					pressed={selectionMap.strikethrough}
+					className={selectionMap.strikethrough ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
 					}}
