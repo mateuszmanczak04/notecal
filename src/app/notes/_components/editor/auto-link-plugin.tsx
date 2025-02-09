@@ -6,7 +6,7 @@ const URL_MATCHER =
 const EMAIL_MATCHER =
 	/(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
 
-export const autoLinkPluginMatchers = [
+const autoLinkPluginMatchers = [
 	(text: string) => {
 		const match = URL_MATCHER.exec(text);
 		return (
@@ -31,6 +31,6 @@ export const autoLinkPluginMatchers = [
 	},
 ];
 
-export default function PlaygroundAutoLinkPlugin() {
+export default function AppAutoLinkPlugin() {
 	return <AutoLinkPlugin matchers={autoLinkPluginMatchers} />;
 }

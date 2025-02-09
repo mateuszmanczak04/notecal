@@ -6,7 +6,6 @@ import { cn } from '@/utils/cn';
 import { isDarkMode } from '@/utils/is-dark-mode';
 import { TRANSFORMERS } from '@lexical/markdown';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
-import { AutoLinkPlugin } from '@lexical/react/LexicalAutoLinkPlugin';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
@@ -23,7 +22,7 @@ import { EditorState } from 'lexical';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { exportNoteToPDF } from '../../_actions/export-note-to-pdf';
 import updateNote from '../../_actions/update-note';
-import { autoLinkPluginMatchers } from './auto-link-plugin';
+import AppAutoLinkPlugin from './auto-link-plugin';
 import CodeHighlightPlugin from './code-highlight-plugin';
 import { editorConfig } from './editor-config';
 import ListMaxIndentLevelPlugin from './list-max-indent-level-plugin';
@@ -159,7 +158,7 @@ const Editor = ({ note, course }: Props) => {
 				/>
 				<ListPlugin />
 				<LinkPlugin />
-				<AutoLinkPlugin matchers={autoLinkPluginMatchers} />
+				<AppAutoLinkPlugin />
 				<ListMaxIndentLevelPlugin maxDepth={7} />
 				<CodeHighlightPlugin />
 				<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
