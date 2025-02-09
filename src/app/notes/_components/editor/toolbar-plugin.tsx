@@ -30,6 +30,7 @@ import {
 	Check,
 	ChevronLeft,
 	ChevronRight,
+	Code,
 	FileOutput,
 	Heading1,
 	Heading2,
@@ -110,6 +111,7 @@ export default function ToolbarPlugin({ onSave, note, handleExport, course, hasC
 				italic: selection.hasFormat('italic'),
 				underline: selection.hasFormat('underline'),
 				strikethrough: selection.hasFormat('strikethrough'),
+				code: selection.hasFormat('code'),
 			};
 
 			setSelectionMap(newSelectionMap);
@@ -182,6 +184,10 @@ export default function ToolbarPlugin({ onSave, note, handleExport, course, hasC
 							event.preventDefault();
 							updateHeading('h2');
 							break;
+						case 'c':
+							event.preventDefault();
+							editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
+							break;
 					}
 					return true;
 				}
@@ -236,6 +242,18 @@ export default function ToolbarPlugin({ onSave, note, handleExport, course, hasC
 					title='Regular text'
 					className={selectionMap.paragraph ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
 					Aa
+				</Toggle>
+			</div>
+
+			<div className='grid grid-cols-1 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
+				<Toggle
+					pressed={selectionMap.code}
+					className={selectionMap.code ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
+					onPressedChange={() => {
+						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
+					}}
+					title='Ctrl + Shift + C (Code)'>
+					<Code className='h-5 w-5' />
 				</Toggle>
 			</div>
 
