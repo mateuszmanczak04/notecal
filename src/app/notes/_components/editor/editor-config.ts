@@ -38,7 +38,7 @@ export const editorConfig: InitialConfigType = {
 			hashtag: 'text-blue-500',
 			strikethrough: 'line-through',
 			underlineStrikethrough: 'underline line-through',
-			code: 'bg-gray-100 text-red-500 font-mono p-1 rounded',
+			code: 'bg-gray-100 dark:bg-neutral-700 text-red-500 font-mono p-1 rounded',
 		},
 		list: {
 			nested: {
@@ -55,7 +55,7 @@ export const editorConfig: InitialConfigType = {
 		paragraph: 'mb-4',
 		quote: 'border-l-4 border-gray-300 pl-4 italic text-gray-600',
 		image: 'max-w-full h-auto',
-		code: 'bg-gray-100 text-red-500 font-mono p-1 rounded',
+		code: 'bg-gray-100 dark:bg-neutral-700 p-2 rounded-md w-full block',
 		codeHighlight: {
 			atrule: 'text-pink-500',
 			attr: 'text-green-500',
