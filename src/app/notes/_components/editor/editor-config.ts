@@ -42,7 +42,7 @@ export const editorConfig: InitialConfigType = {
 		},
 		list: {
 			nested: {
-				listitem: 'pl-8',
+				listitem: 'pl-8 list-none',
 			},
 			ol: 'list-decimal list-inside',
 			ul: 'list-disc list-inside',
