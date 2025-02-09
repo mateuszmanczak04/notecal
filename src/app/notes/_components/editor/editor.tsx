@@ -131,14 +131,14 @@ const Editor = ({ note, course }: Props) => {
 				/>
 				<div
 					className={cn(
-						'relative w-full flex-1 overflow-y-scroll scroll-auto p-4 leading-loose scrollbar-hide',
+						'relative w-full flex-1 overflow-y-scroll scroll-auto p-4 leading-normal scrollbar-hide',
 						maxNoteWidthEnabled && 'mx-auto max-w-screen-lg',
 					)}>
 					<RichTextPlugin
 						contentEditable={
 							<ContentEditable
 								ref={editorContentRef}
-								className='relative h-full resize-none outline-none'
+								className='relative h-full resize-none space-y-4 outline-none'
 							/>
 						}
 						placeholder={

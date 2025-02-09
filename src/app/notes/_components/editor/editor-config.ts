@@ -38,7 +38,7 @@ export const editorConfig: InitialConfigType = {
 			hashtag: 'text-blue-500',
 			strikethrough: 'line-through',
 			underlineStrikethrough: 'underline line-through',
-			code: 'bg-gray-100 dark:bg-neutral-700 text-red-500 font-mono p-1 rounded',
+			code: 'bg-gray-100 dark:bg-neutral-700 text-red-600 dark:text-red-300 font-mono p-1 rounded',
 		},
 		list: {
 			nested: {
