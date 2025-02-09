@@ -78,11 +78,12 @@ const Editor = ({ note, course }: Props) => {
 
 	// Autosave
 	useEffect(() => {
-		if (!noteAutoSave) return;
-		handleSave();
-		const listener = setInterval(handleSave, 30 * 1000);
+		if (!noteAutoSave || !hasChanged) return;
+		const listener = setInterval(() => {
+			handleSave();
+		}, 30 * 1000);
 		return () => clearInterval(listener);
-	}, [noteAutoSave, handleSave]);
+	}, [noteAutoSave, handleSave, hasChanged]);
 
 	/** Sends editor HTML markup to the backend, receives PDF result in base64 format and downloads it */
 	const handleExportToPDF = async () => {
