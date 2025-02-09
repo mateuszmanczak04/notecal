@@ -21,8 +21,8 @@ const SavePlugin = ({ handleSave, hasChanged }: Props) => {
 			event => {
 				const isEditorFocused = document.activeElement === editor.getRootElement();
 				const isSaveShortcut = (event.metaKey || event.ctrlKey) && event.key === 's';
+				event.preventDefault();
 				if (isEditorFocused && isSaveShortcut && hasChanged) {
-					event.preventDefault();
 					handleSave();
 					return true;
 				}
