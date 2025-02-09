@@ -26,6 +26,7 @@ import { exportNoteToPDF } from '../../_actions/export-note-to-pdf';
 import updateNote from '../../_actions/update-note';
 import AppAutoLinkPlugin from './auto-link-plugin';
 import CodeHighlightPlugin from './code-highlight-plugin';
+import { HR } from './custom-transformers';
 import { editorConfig } from './editor-config';
 import ListMaxIndentLevelPlugin from './list-max-indent-level-plugin';
 import SavePlugin from './save-plugin';
@@ -164,7 +165,7 @@ const Editor = ({ note, course }: Props) => {
 				<ClickableLinkPlugin />
 				<ListMaxIndentLevelPlugin maxDepth={7} />
 				<CodeHighlightPlugin />
-				<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+				<MarkdownShortcutPlugin transformers={[...TRANSFORMERS, HR]} />
 				<TabIndentationPlugin />
 			</LexicalComposer>
 		</article>

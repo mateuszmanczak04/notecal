@@ -2,6 +2,7 @@ import { CodeHighlightNode, CodeNode } from '@lexical/code';
 import { AutoLinkNode, LinkNode } from '@lexical/link';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { InitialConfigType } from '@lexical/react/LexicalComposer';
+import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
 
@@ -21,6 +22,7 @@ export const editorConfig: InitialConfigType = {
 		AutoLinkNode,
 		LinkNode,
 		AutoLinkNode,
+		HorizontalRuleNode,
 	],
 	onError(error: Error) {
 		throw error;
@@ -30,6 +32,7 @@ export const editorConfig: InitialConfigType = {
 			h1: 'text-2xl font-bold',
 			h2: 'text-xl font-bold',
 		},
+		hr: 'border-neutral-300 dark:border-neutral-600 ',
 		text: {
 			bold: 'font-bold',
 			italic: 'italic',
