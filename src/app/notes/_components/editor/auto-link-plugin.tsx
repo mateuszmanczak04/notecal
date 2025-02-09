@@ -6,7 +6,7 @@ const URL_MATCHER =
 const EMAIL_MATCHER =
 	/(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
 
-const autoLinkPluginMatchers = [
+const MATCHERS = [
 	(text: string) => {
 		const match = URL_MATCHER.exec(text);
 		return (
@@ -32,5 +32,5 @@ const autoLinkPluginMatchers = [
 ];
 
 export default function AppAutoLinkPlugin() {
-	return <AutoLinkPlugin matchers={autoLinkPluginMatchers} />;
+	return <AutoLinkPlugin matchers={MATCHERS} />;
 }

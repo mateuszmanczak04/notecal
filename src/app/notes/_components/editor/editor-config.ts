@@ -42,5 +42,6 @@ export const editorConfig: InitialConfigType = {
 			ul: 'list-disc list-inside',
 			listitem: '',
 		},
+		link: 'text-blue-500 underline',
 	},
 };
