@@ -20,6 +20,7 @@ export const editorConfig: InitialConfigType = {
 		TableRowNode,
 		AutoLinkNode,
 		LinkNode,
+		AutoLinkNode,
 	],
 	onError(error: Error) {
 		throw error;
@@ -47,7 +48,7 @@ export const editorConfig: InitialConfigType = {
 			ul: 'list-disc list-inside',
 			listitem: '',
 		},
-		link: 'text-blue-500 underline',
+		link: 'text-blue-500 underline cursor-pointer',
 		ltr: 'ltr',
 		rtl: 'rtl',
 		placeholder: 'text-gray-500',

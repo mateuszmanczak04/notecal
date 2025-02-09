@@ -6,6 +6,7 @@ import { cn } from '@/utils/cn';
 import { isDarkMode } from '@/utils/is-dark-mode';
 import { TRANSFORMERS } from '@lexical/markdown';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import { ClickableLinkPlugin } from '@lexical/react/LexicalClickableLinkPlugin';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
@@ -160,6 +161,7 @@ const Editor = ({ note, course }: Props) => {
 				<ListPlugin />
 				<LinkPlugin />
 				<AppAutoLinkPlugin />
+				<ClickableLinkPlugin />
 				<ListMaxIndentLevelPlugin maxDepth={7} />
 				<CodeHighlightPlugin />
 				<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
