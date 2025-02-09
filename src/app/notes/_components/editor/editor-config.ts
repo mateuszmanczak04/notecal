@@ -56,7 +56,7 @@ export const editorConfig: InitialConfigType = {
 		rtl: 'rtl',
 		placeholder: 'text-gray-500',
 		paragraph: 'mb-4',
-		quote: 'border-l-4 border-gray-300 pl-4 italic text-gray-600',
+		quote: 'border-l-4 border-neutral-300 pl-4 italic text-neutral-600 dark:text-neutral-300',
 		image: 'max-w-full h-auto',
 		code: 'bg-gray-100 dark:bg-neutral-700 p-2 rounded-md w-full block',
 		codeHighlight: {
