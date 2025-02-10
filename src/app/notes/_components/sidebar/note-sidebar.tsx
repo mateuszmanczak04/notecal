@@ -2,7 +2,6 @@
 
 import { useSettings } from '@/hooks/use-settings';
 import { Course as T_Course, Note as T_Note } from '@prisma/client';
-import React, { useEffect, useRef, useState } from 'react';
 import CourseRelated from './course-related/course-related';
 import CourseUsefulLinks from './course-useful-links';
 import CustomizeSidebar from './customize-sidebar';
@@ -11,6 +10,7 @@ import NoteRelated from './note-related/note-related';
 import NoteTasks from './note-tasks/note-tasks';
 import NotesSettings from './notes-settings';
 import SideNotes from './side-notes/side-notes';
+import { useResizeSidebar } from './use-resize-sidebar';
 
 type T_Props = {
 	course: T_Course;
@@ -20,31 +20,7 @@ type T_Props = {
 const NoteSidebar = ({ course, currentNote }: T_Props) => {
 	const { sidebarElements } = useSettings();
 
-	const [isResizing, setIsResizing] = useState(false);
-	const [sidebarWidth, setSidebarWidth] = useState(360);
-	const sidebarRef = useRef<HTMLDivElement>(null!);
-
-	const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.preventDefault();
-		setIsResizing(true);
-	};
-
-	const handleMouseUp = () => {
-		setIsResizing(false);
-	};
-
-	useEffect(() => {
-		const handleMouseMove = (e: MouseEvent) => {
-			if (!isResizing) return;
-			setSidebarWidth(prev => prev - e.movementX);
-		};
-
-		document.addEventListener('mousemove', handleMouseMove);
-
-		return () => {
-			document.removeEventListener('mousemove', handleMouseMove);
-		};
-	}, [isResizing]);
+	const { handleMouseDown, handleMouseUp, sidebarRef, sidebarWidth } = useResizeSidebar();
 
 	return (
 		<aside
