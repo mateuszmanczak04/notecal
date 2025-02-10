@@ -18,31 +18,15 @@ const DaysViewGrid = () => {
 			</div>
 
 			{/* Empty grid: */}
-			<div className='relative flex-1'>
-				<div
-					className='absolute left-0 top-0 -z-10 -translate-x-full '
-					style={{ width: `${(1 / displayedDays) * 100}%` }}>
-					{/* Day before (hidden) */}
-					<DaysViewDayColumn isToday={false} />
-				</div>
-				<div
-					className='grid flex-1 '
-					style={{
-						gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
-					}}>
-					{new Array(displayedDays).fill(0).map((_, index) => (
-						<DaysViewDayColumn
-							key={index}
-							isToday={isSameDay(addDays(firstCalendarDay, index), new Date())}
-						/>
-					))}
-				</div>
-				<div
-					className='absolute right-0 top-0 -z-10 translate-x-full'
-					style={{ width: `${(1 / displayedDays) * 100}%` }}>
-					{/* Day after (hidden) */}
-					<DaysViewDayColumn isToday={false} />
-				</div>
+
+			<div
+				className='grid flex-1 '
+				style={{
+					gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
+				}}>
+				{new Array(displayedDays).fill(0).map((_, index) => (
+					<DaysViewDayColumn key={index} isToday={isSameDay(addDays(firstCalendarDay, index), new Date())} />
+				))}
 			</div>
 		</div>
 	);
