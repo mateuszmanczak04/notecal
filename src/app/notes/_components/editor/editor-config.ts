@@ -5,7 +5,7 @@ import { InitialConfigType } from '@lexical/react/LexicalComposer';
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
-import MathNode from './math/math-node';
+import EquationNode from './math/equation-node';
 
 /** A config for lexical library (WYSIWYG text editor). */
 export const editorConfig: InitialConfigType = {
@@ -24,7 +24,7 @@ export const editorConfig: InitialConfigType = {
 		LinkNode,
 		AutoLinkNode,
 		HorizontalRuleNode,
-		MathNode,
+		EquationNode,
 	],
 	onError(error: Error) {
 		throw error;

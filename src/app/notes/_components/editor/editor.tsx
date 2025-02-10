@@ -29,7 +29,7 @@ import CodeHighlightPlugin from './code-highlight-plugin';
 import { HR } from './custom-transformers';
 import { editorConfig } from './editor-config';
 import ListMaxIndentLevelPlugin from './list-max-indent-level-plugin';
-import MathPlugin from './math/math-plugin';
+import EquationPlugin from './math/equation-plugin';
 import SavePlugin from './save-plugin';
 import ToolbarPlugin from './toolbar-plugin';
 
@@ -169,7 +169,7 @@ const Editor = ({ note, course }: Props) => {
 				<CodeHighlightPlugin />
 				<MarkdownShortcutPlugin transformers={[...TRANSFORMERS, HR]} />
 				<TabIndentationPlugin />
-				<MathPlugin />
+				<EquationPlugin />
 			</LexicalComposer>
 		</article>
 	);
