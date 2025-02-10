@@ -41,8 +41,10 @@ const NoteSidebar = ({ course, currentNote }: T_Props) => {
 					{sidebarElements.settings && <NotesSettings />}
 					{sidebarElements.dangerZone && <NoteDangerZone course={course} />}
 					<CustomizeSidebar course={course} />
+
+					{/* Resize bar */}
 					<div
-						className='absolute left-0 h-full w-1 cursor-ew-resize bg-neutral-200 dark:bg-neutral-700'
+						className='absolute left-0 h-full w-1 cursor-ew-resize border-l border-neutral-200 dark:border-neutral-700'
 						onMouseDown={handleMouseDown}
 						onMouseUp={handleMouseUp}></div>
 				</aside>
