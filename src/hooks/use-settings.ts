@@ -81,6 +81,11 @@ export const useSettings = () => {
 			serializer: (value: T_SidebarElements) => JSON.stringify(value),
 		},
 	);
+	const [noteSidebarWidth, setNoteSidebarWidth] = useLocalStorage<number>('noteSidebarWidth', 320, {
+		initializeWithValue: false,
+		deserializer: (value: string) => parseInt(value),
+		serializer: (value: number) => value.toString(),
+	});
 
 	const getDayAfter = (days: number) => {
 		return addDays(firstCalendarDay, days);
@@ -146,5 +151,7 @@ export const useSettings = () => {
 		setNoteAutoSave,
 		maxNoteWidthEnabled,
 		setMaxNoteWidthEnabled,
+		noteSidebarWidth,
+		setNoteSidebarWidth,
 	};
 };

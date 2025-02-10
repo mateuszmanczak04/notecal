@@ -1,8 +1,9 @@
+import { useSettings } from '@/hooks/use-settings';
 import { useEffect, useRef, useState } from 'react';
 
 export const useResizeSidebar = () => {
 	const [isResizing, setIsResizing] = useState(false);
-	const [sidebarWidth, setSidebarWidth] = useState(360);
+	const { noteSidebarWidth, setNoteSidebarWidth } = useSettings();
 	const sidebarRef = useRef<HTMLDivElement>(null!);
 
 	const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -17,7 +18,7 @@ export const useResizeSidebar = () => {
 	useEffect(() => {
 		const handleMouseMove = (e: MouseEvent) => {
 			if (!isResizing) return;
-			setSidebarWidth(prev => prev - e.movementX);
+			setNoteSidebarWidth(prev => prev - e.movementX);
 		};
 
 		document.addEventListener('mousemove', handleMouseMove);
@@ -25,7 +26,7 @@ export const useResizeSidebar = () => {
 		return () => {
 			document.removeEventListener('mousemove', handleMouseMove);
 		};
-	}, [isResizing]);
+	}, [isResizing, setNoteSidebarWidth]);
 
-	return { sidebarRef, sidebarWidth, handleMouseDown, handleMouseUp };
+	return { sidebarRef, noteSidebarWidth, handleMouseDown, handleMouseUp };
 };

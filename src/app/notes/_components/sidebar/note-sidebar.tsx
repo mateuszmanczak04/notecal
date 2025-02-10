@@ -20,14 +20,14 @@ type T_Props = {
 const NoteSidebar = ({ course, currentNote }: T_Props) => {
 	const { sidebarElements } = useSettings();
 
-	const { handleMouseDown, handleMouseUp, sidebarRef, sidebarWidth } = useResizeSidebar();
+	const { handleMouseDown, handleMouseUp, sidebarRef, noteSidebarWidth } = useResizeSidebar();
 
 	return (
 		<aside
 			ref={sidebarRef}
 			className='relative flex h-screen w-full shrink-0 flex-col overflow-y-scroll bg-white pb-32 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:bg-neutral-900'
 			style={{
-				width: sidebarWidth,
+				width: noteSidebarWidth,
 			}}>
 			{sidebarElements.courseRelated && <CourseRelated course={course} />}
 			{sidebarElements.notesList && <SideNotes currentCourse={course} />}
