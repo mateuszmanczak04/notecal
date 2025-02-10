@@ -86,6 +86,11 @@ export const useSettings = () => {
 		deserializer: (value: string) => parseInt(value),
 		serializer: (value: number) => value.toString(),
 	});
+	const [showNoteSidebar, setShowNoteSidebar] = useLocalStorage<boolean>('showNoteSidebar', true, {
+		initializeWithValue: false,
+		deserializer: (value: string) => value === 'true',
+		serializer: (value: T_NoteAutoSave) => value.toString(),
+	});
 
 	const getDayAfter = (days: number) => {
 		return addDays(firstCalendarDay, days);
@@ -153,5 +158,7 @@ export const useSettings = () => {
 		setMaxNoteWidthEnabled,
 		noteSidebarWidth,
 		setNoteSidebarWidth,
+		showNoteSidebar,
+		setShowNoteSidebar,
 	};
 };
