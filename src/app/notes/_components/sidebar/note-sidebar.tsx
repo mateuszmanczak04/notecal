@@ -2,6 +2,7 @@
 
 import { useSettings } from '@/hooks/use-settings';
 import { Course as T_Course, Note as T_Note } from '@prisma/client';
+import React, { useEffect, useRef, useState } from 'react';
 import CourseRelated from './course-related/course-related';
 import CourseUsefulLinks from './course-useful-links';
 import CustomizeSidebar from './customize-sidebar';
@@ -19,8 +20,39 @@ type T_Props = {
 const NoteSidebar = ({ course, currentNote }: T_Props) => {
 	const { sidebarElements } = useSettings();
 
+	const [isResizing, setIsResizing] = useState(false);
+	const [sidebarWidth, setSidebarWidth] = useState(360);
+	const sidebarRef = useRef<HTMLDivElement>(null!);
+
+	const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.preventDefault();
+		setIsResizing(true);
+	};
+
+	const handleMouseUp = () => {
+		setIsResizing(false);
+	};
+
+	useEffect(() => {
+		const handleMouseMove = (e: MouseEvent) => {
+			if (!isResizing) return;
+			setSidebarWidth(prev => prev - e.movementX);
+		};
+
+		document.addEventListener('mousemove', handleMouseMove);
+
+		return () => {
+			document.removeEventListener('mousemove', handleMouseMove);
+		};
+	}, [isResizing]);
+
 	return (
-		<aside className='flex h-screen w-full shrink-0 flex-col overflow-y-scroll border-l border-neutral-200 bg-white pb-32 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:border-transparent dark:bg-neutral-900'>
+		<aside
+			ref={sidebarRef}
+			className='relative flex h-screen w-full shrink-0 flex-col overflow-y-scroll bg-white pb-32 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:bg-neutral-900'
+			style={{
+				width: sidebarWidth,
+			}}>
 			{sidebarElements.courseRelated && <CourseRelated course={course} />}
 			{sidebarElements.notesList && <SideNotes currentCourse={course} />}
 			{sidebarElements.usefulLinks && <CourseUsefulLinks course={course} />}
@@ -30,6 +62,10 @@ const NoteSidebar = ({ course, currentNote }: T_Props) => {
 			{sidebarElements.settings && <NotesSettings />}
 			{sidebarElements.dangerZone && <NoteDangerZone course={course} />}
 			<CustomizeSidebar course={course} />
+			<div
+				className='absolute left-0 h-full w-1 cursor-ew-resize bg-neutral-200 dark:bg-neutral-700'
+				onMouseDown={handleMouseDown}
+				onMouseUp={handleMouseUp}></div>
 		</aside>
 	);
 };
