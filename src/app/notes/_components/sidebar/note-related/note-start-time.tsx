@@ -53,7 +53,6 @@ const NoteStartTime = ({ note }: Props) => {
 					onChange={e => setYear(e.target.value)}
 					onKeyDown={handleKeyDown}
 					className='w-12 bg-transparent px-1 focus:outline-none'
-					autoFocus
 				/>
 				/{/* Month */}
 				<input
