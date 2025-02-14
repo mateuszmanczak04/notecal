@@ -2,6 +2,7 @@ import { Button } from '@/components/button';
 import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
 import { Toggle } from '@/components/toggle';
+import { useClientSide } from '@/hooks/use-client-side';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $createHeadingNode, $isHeadingNode, HeadingTagType } from '@lexical/rich-text';
 import { $wrapNodes } from '@lexical/selection';
@@ -47,7 +48,8 @@ type Props = {
 };
 
 export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Props) {
-	const { currentCourse, currentNote } = useNoteContext();
+	const { currentCourse } = useNoteContext();
+	const isClient = useClientSide();
 	const [editor] = useLexicalComposerContext();
 	const [isExportingPDF, setIsExportingPDF] = useState(false);
 	const { toast } = useToast();
@@ -333,7 +335,7 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 				variant='default'
 				className='rounded-md'
 				onClick={onSave}
-				style={{ backgroundColor: currentCourse?.color || '' }}
+				style={{ backgroundColor: isClient ? currentCourse?.color || '' : '' }}
 				disabled={!hasChanged}>
 				<Check className='size-5' /> Save
 			</Button>
