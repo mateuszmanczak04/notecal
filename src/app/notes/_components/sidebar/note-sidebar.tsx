@@ -20,28 +20,30 @@ const NoteSidebar = () => {
 	return (
 		<>
 			{showNoteSidebar && (
-				<aside
-					ref={sidebarRef}
-					className='relative flex h-screen w-full shrink-0 flex-col overflow-y-scroll bg-white pb-32 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:bg-neutral-900'
-					style={{
-						width: noteSidebarWidth,
-					}}>
-					{sidebarElements.courseRelated && <CourseRelated />}
-					{sidebarElements.notesList && <SideNotes />}
-					{sidebarElements.usefulLinks && <CourseUsefulLinks />}
-					{sidebarElements.tasks && <NoteTasks />}
-					{/* TODO: fix useDatePickerFunctionality to not be fired on every click outside */}
-					{sidebarElements.noteRelated && <NoteRelated />}
-					{sidebarElements.settings && <NotesSettings />}
-					{sidebarElements.dangerZone && <NoteDangerZone />}
-					<CustomizeSidebar />
-
+				<>
 					{/* Resize bar */}
 					<div
-						className='absolute left-0 h-full w-1 cursor-ew-resize border-l border-neutral-200 dark:border-neutral-700'
+						className='fixed right-0 top-0 z-10 h-screen w-2 cursor-ew-resize bg-neutral-200   dark:bg-neutral-700'
+						style={{ right: noteSidebarWidth }}
 						onMouseDown={handleMouseDown}
 						onMouseUp={handleMouseUp}></div>
-				</aside>
+					<aside
+						ref={sidebarRef}
+						className='relative flex h-screen w-full shrink-0 flex-col overflow-y-scroll bg-white pb-32 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:bg-neutral-900'
+						style={{
+							width: noteSidebarWidth,
+						}}>
+						{sidebarElements.courseRelated && <CourseRelated />}
+						{sidebarElements.notesList && <SideNotes />}
+						{sidebarElements.usefulLinks && <CourseUsefulLinks />}
+						{sidebarElements.tasks && <NoteTasks />}
+						{/* TODO: fix useDatePickerFunctionality to not be fired on every click outside */}
+						{sidebarElements.noteRelated && <NoteRelated />}
+						{sidebarElements.settings && <NotesSettings />}
+						{sidebarElements.dangerZone && <NoteDangerZone />}
+						<CustomizeSidebar />
+					</aside>
+				</>
 			)}
 			<button
 				onClick={() => setShowNoteSidebar(prev => !prev)}
