@@ -17,13 +17,13 @@ import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPl
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
-import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { EditorState } from 'lexical';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { exportNoteToPDF } from '../../_actions/export-note-to-pdf';
 import updateNote from '../../_actions/update-note';
+import { useNoteContext } from '../../_content/note-context';
 import AppAutoLinkPlugin from './auto-link-plugin';
 import CodeHighlightPlugin from './code-highlight-plugin';
 import { HR } from './custom-transformers';
@@ -33,15 +33,11 @@ import EquationPlugin from './math/equation-plugin';
 import SavePlugin from './save-plugin';
 import ToolbarPlugin from './toolbar-plugin';
 
-type Props = {
-	note: Note;
-	course: Course;
-};
-
 /**
  * A part of /note/[id] page where user enters the text content. It works like a WYSIWYG editor.
  */
-const Editor = ({ note, course }: Props) => {
+const Editor = () => {
+	const { currentNote, currentCourse } = useNoteContext();
 	/**
 	 * Keeps the current editor state. It's used to save the note content.
 	 */
@@ -72,10 +68,10 @@ const Editor = ({ note, course }: Props) => {
 	 * or presses Cmd + S (or Ctrl + S) shortcut.
 	 */
 	const handleSave = useCallback(() => {
-		if (!editorStateRef.current) return;
-		mutateUpdate({ id: note.id, content: JSON.stringify(editorStateRef.current) });
+		if (!editorStateRef.current || !currentNote) return;
+		mutateUpdate({ id: currentNote.id, content: JSON.stringify(editorStateRef.current) });
 		setHasChanged(false);
-	}, [mutateUpdate, note.id]);
+	}, [mutateUpdate, currentNote]);
 
 	// Autosave
 	useEffect(() => {
@@ -88,11 +84,12 @@ const Editor = ({ note, course }: Props) => {
 
 	/** Sends editor HTML markup to the backend, receives PDF result in base64 format and downloads it */
 	const handleExportToPDF = async () => {
+		if (!currentNote) return;
 		const res = await exportNoteToPDF({
 			htmlContent: editorContentRef.current.innerHTML,
 			theme: isDarkMode() ? 'dark' : 'light',
-			fileTitle: note.title,
-			date: note.startTime ? format(note.startTime, 'yyyy-MM-dd HH:mm') : '',
+			fileTitle: currentNote.title,
+			date: currentNote.startTime ? format(currentNote.startTime, 'yyyy-MM-dd HH:mm') : '',
 		});
 
 		if ('error' in res) return;
@@ -107,7 +104,7 @@ const Editor = ({ note, course }: Props) => {
 
 		const link = document.createElement('a');
 		link.href = URL.createObjectURL(blob);
-		link.download = note.title || 'document.pdf';
+		link.download = currentNote.title || 'document.pdf';
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
@@ -120,18 +117,12 @@ const Editor = ({ note, course }: Props) => {
 				isPendingUpdate && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer
-				key={note.id}
+				key={currentNote?.id}
 				initialConfig={{
 					...editorConfig,
-					editorState: note.content || undefined,
+					editorState: currentNote?.content || undefined,
 				}}>
-				<ToolbarPlugin
-					handleExport={handleExportToPDF}
-					note={note}
-					onSave={handleSave}
-					course={course}
-					hasChanged={hasChanged}
-				/>
+				<ToolbarPlugin handleExport={handleExportToPDF} onSave={handleSave} hasChanged={hasChanged} />
 				<div
 					className={cn(
 						'relative w-full flex-1 overflow-y-scroll scroll-auto p-4 leading-normal scrollbar-hide',
@@ -158,7 +149,7 @@ const Editor = ({ note, course }: Props) => {
 				<OnChangePlugin
 					onChange={editorState => {
 						editorStateRef.current = editorState;
-						setHasChanged(JSON.stringify(editorState) !== note.content);
+						setHasChanged(JSON.stringify(editorState) !== currentNote?.content);
 					}}
 				/>
 				<ListPlugin />

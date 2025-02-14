@@ -2,7 +2,6 @@
 
 import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
-import { Course as T_Course, Note as T_Note } from '@prisma/client';
 import { Menu } from 'lucide-react';
 import CourseRelated from './course-related/course-related';
 import CourseUsefulLinks from './course-useful-links';
@@ -14,12 +13,7 @@ import NotesSettings from './notes-settings';
 import SideNotes from './side-notes/side-notes';
 import { useResizeSidebar } from './use-resize-sidebar';
 
-type T_Props = {
-	course: T_Course;
-	currentNote?: T_Note;
-};
-
-const NoteSidebar = ({ course, currentNote }: T_Props) => {
+const NoteSidebar = () => {
 	const { sidebarElements, setShowNoteSidebar, showNoteSidebar } = useSettings();
 	const { handleMouseDown, handleMouseUp, sidebarRef, noteSidebarWidth } = useResizeSidebar();
 
@@ -32,15 +26,15 @@ const NoteSidebar = ({ course, currentNote }: T_Props) => {
 					style={{
 						width: noteSidebarWidth,
 					}}>
-					{sidebarElements.courseRelated && <CourseRelated course={course} />}
-					{sidebarElements.notesList && <SideNotes currentCourse={course} />}
-					{sidebarElements.usefulLinks && <CourseUsefulLinks course={course} />}
-					{sidebarElements.tasks && <NoteTasks course={course} />}
+					{sidebarElements.courseRelated && <CourseRelated />}
+					{sidebarElements.notesList && <SideNotes />}
+					{sidebarElements.usefulLinks && <CourseUsefulLinks />}
+					{sidebarElements.tasks && <NoteTasks />}
 					{/* TODO: fix useDatePickerFunctionality to not be fired on every click outside */}
-					{sidebarElements.noteRelated && currentNote && <NoteRelated note={currentNote} />}
+					{sidebarElements.noteRelated && <NoteRelated />}
 					{sidebarElements.settings && <NotesSettings />}
-					{sidebarElements.dangerZone && <NoteDangerZone course={course} />}
-					<CustomizeSidebar course={course} />
+					{sidebarElements.dangerZone && <NoteDangerZone />}
+					<CustomizeSidebar />
 
 					{/* Resize bar */}
 					<div

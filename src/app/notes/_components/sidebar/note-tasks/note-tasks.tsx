@@ -1,22 +1,19 @@
 'use client';
 
+import { useNoteContext } from '@/app/notes/_content/note-context';
 import { useTasksFunctionality } from '@/app/tasks/_hooks/use-tasks-functionality';
 import { Button } from '@/components/button';
 import ErrorMessage from '@/components/error-message';
 import LoadingSpinner from '@/components/loading-spinner';
-import { Course } from '@prisma/client';
 import { Reorder } from 'motion/react';
 import NoteCreateTaskForm from './note-create-task-form';
 import NoteTaskItem from './note-task-item';
 
-type T_Props = {
-	course: Course;
-};
-
 /** List of tasks for /notes page */
-const NoteTasks = ({ course }: T_Props) => {
+const NoteTasks = () => {
+	const { currentCourse } = useNoteContext();
 	const { handleReorder, error, handleSaveNewOrder, hasChangedOrder, isPending, tasks } = useTasksFunctionality({
-		courseId: course.id,
+		courseId: currentCourse?.id,
 	});
 
 	if (isPending) return <LoadingSpinner />;
@@ -25,10 +22,15 @@ const NoteTasks = ({ course }: T_Props) => {
 
 	if (!tasks) return;
 
+	if (!currentCourse) return;
+
 	return (
 		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
 			{hasChangedOrder && (
-				<Button className='mb-4 w-full' style={{ backgroundColor: course.color }} onClick={handleSaveNewOrder}>
+				<Button
+					className='mb-4 w-full'
+					style={{ backgroundColor: currentCourse.color }}
+					onClick={handleSaveNewOrder}>
 					Save new order
 				</Button>
 			)}
@@ -39,7 +41,7 @@ const NoteTasks = ({ course }: T_Props) => {
 					</Reorder.Group>
 				</div>
 			)}
-			<NoteCreateTaskForm course={course} />
+			<NoteCreateTaskForm course={currentCourse} />
 		</div>
 	);
 };

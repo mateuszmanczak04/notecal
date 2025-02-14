@@ -2,14 +2,9 @@
 
 import { Checkbox } from '@/components/checkbox';
 import { useSettings } from '@/hooks/use-settings';
-import { Course as T_Course } from '@prisma/client';
-
-type T_Props = {
-	course: T_Course;
-};
 
 /** Component where user specifies what they want to see in the /notes page sidebar */
-const CustomizeSidebar = ({ course }: T_Props) => {
+const CustomizeSidebar = () => {
 	const { sidebarElements, setSidebarElements } = useSettings();
 
 	const handleToggle = (property: keyof typeof sidebarElements, value: boolean) => {

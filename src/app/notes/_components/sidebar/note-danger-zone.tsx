@@ -5,18 +5,15 @@ import { Button } from '@/components/button';
 import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
-import { Course as T_Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-
-type T_Props = {
-	course: T_Course;
-};
+import { useNoteContext } from '../../_content/note-context';
 
 /** Component to delete entire course */
-const NoteDangerZone = ({ course }: T_Props) => {
+const NoteDangerZone = () => {
+	const { currentCourse } = useNoteContext();
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
@@ -35,9 +32,12 @@ const NoteDangerZone = ({ course }: T_Props) => {
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const confirmDeletion = () => {
-		mutate({ id: course.id });
+		if (!currentCourse) return;
+		mutate({ id: currentCourse.id });
 		router.replace('/courses');
 	};
+
+	if (!currentCourse) return;
 
 	return (
 		<div className='space-y-4 border-b border-neutral-200 p-6 dark:border-neutral-700'>

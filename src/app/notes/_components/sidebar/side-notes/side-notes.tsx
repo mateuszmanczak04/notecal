@@ -2,24 +2,21 @@
 
 import createNote from '@/app/notes/_actions/create-note';
 import { SelectNotesProvider } from '@/app/notes/_components/sidebar/side-notes/selected-notes-context';
+import { useNoteContext } from '@/app/notes/_content/note-context';
 import { Button } from '@/components/button';
 import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
 import { useNotes } from '@/hooks/use-notes';
 import { cn } from '@/utils/cn';
-import { Course as T_Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import SideNoteItem from './side-note-item';
 
-type T_Props = {
-	currentCourse: T_Course;
-};
-
 /**
  * List of links to all course's notes
  */
-const SideNotes = ({ currentCourse }: T_Props) => {
+const SideNotes = () => {
+	const { currentCourse } = useNoteContext();
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
@@ -33,6 +30,7 @@ const SideNotes = ({ currentCourse }: T_Props) => {
 	});
 
 	const handleNewNote = () => {
+		if (!currentCourse) return;
 		mutate({ courseId: currentCourse.id });
 	};
 
@@ -41,6 +39,8 @@ const SideNotes = ({ currentCourse }: T_Props) => {
 	if (!notes) return;
 
 	const currentCourseNotes = notes.filter(note => note.courseId === currentCourse?.id);
+
+	if (!currentCourse) return;
 
 	return (
 		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>

@@ -1,17 +1,14 @@
 'use client';
 
 import updateCourse from '@/app/courses/_actions/update-course';
+import { useNoteContext } from '@/app/notes/_content/note-context';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { COLORS } from '@/utils/colors';
-import { Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-type Props = {
-	course: Course;
-};
-
-const CourseColor = ({ course }: Props) => {
+const CourseColor = () => {
+	const { currentCourse } = useNoteContext();
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
@@ -24,6 +21,8 @@ const CourseColor = ({ course }: Props) => {
 		},
 	});
 
+	if (!currentCourse) return;
+
 	return (
 		<div className={cn('mt-4 flex flex-wrap gap-1 transition', isPending && 'pointer-events-none opacity-50')}>
 			{COLORS.map(color => {
@@ -31,12 +30,12 @@ const CourseColor = ({ course }: Props) => {
 					<button
 						className={cn(
 							'aspect-square max-w-6 flex-1 cursor-pointer place-content-center rounded-full  border-2 border-transparent font-medium text-white transition-colors hover:opacity-90',
-							course.color === color.hex && 'border-white/50',
+							currentCourse.color === color.hex && 'border-white/50',
 						)}
 						style={{
 							backgroundColor: color.hex,
 						}}
-						onClick={() => mutate({ id: course.id, color: color.hex })}
+						onClick={() => mutate({ id: currentCourse.id, color: color.hex })}
 						key={color.hex}></button>
 				);
 			})}

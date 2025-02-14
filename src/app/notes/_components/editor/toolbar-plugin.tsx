@@ -6,7 +6,6 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { $createHeadingNode, $isHeadingNode, HeadingTagType } from '@lexical/rich-text';
 import { $wrapNodes } from '@lexical/selection';
 import { mergeRegister } from '@lexical/utils';
-import { Course, Note } from '@prisma/client';
 import {
 	$createParagraphNode,
 	$getSelection,
@@ -39,16 +38,16 @@ import {
 	Underline,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
+import { useNoteContext } from '../../_content/note-context';
 
 type Props = {
 	onSave: () => void;
-	note: Note;
-	course: Course;
 	hasChanged: boolean;
 	handleExport: () => Promise<void>;
 };
 
-export default function ToolbarPlugin({ onSave, note, handleExport, course, hasChanged }: Props) {
+export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Props) {
+	const { currentCourse, currentNote } = useNoteContext();
 	const [editor] = useLexicalComposerContext();
 	const [isExportingPDF, setIsExportingPDF] = useState(false);
 	const { toast } = useToast();
@@ -334,7 +333,7 @@ export default function ToolbarPlugin({ onSave, note, handleExport, course, hasC
 				variant='default'
 				className='rounded-md'
 				onClick={onSave}
-				style={{ backgroundColor: course?.color || '' }}
+				style={{ backgroundColor: currentCourse?.color || '' }}
 				disabled={!hasChanged}>
 				<Check className='size-5' /> Save
 			</Button>

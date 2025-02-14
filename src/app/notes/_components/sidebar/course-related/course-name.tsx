@@ -1,17 +1,14 @@
 'use client';
 
 import updateCourse from '@/app/courses/_actions/update-course';
+import { useNoteContext } from '@/app/notes/_content/note-context';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
-import { Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
-type Props = {
-	course: Course;
-};
-
-const CourseName = ({ course }: Props) => {
+const CourseName = () => {
+	const { currentCourse } = useNoteContext();
 	const queryClient = useQueryClient();
 	const nameRef = useRef<HTMLHeadingElement>(null!);
 	const { toast } = useToast();
@@ -26,20 +23,22 @@ const CourseName = ({ course }: Props) => {
 	});
 
 	const handleSubmit = () => {
+		if (!currentCourse) return;
 		const newName = nameRef.current.innerText;
 		// Don't want to update the same value:
-		if (newName.trim() === course.name) return;
+		if (newName.trim() === currentCourse.name) return;
 		if (newName.trim().length === 0) {
-			nameRef.current.innerText = course.name;
+			nameRef.current.innerText = currentCourse.name;
 			return;
 		}
-		mutate({ id: course.id, name: newName.trim() });
+		mutate({ id: currentCourse.id, name: newName.trim() });
 	};
 
 	/**
 	 * Detect Enter and Escape keys for submission or cancellation.
 	 */
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLParagraphElement>) => {
+		if (!currentCourse) return;
 		if (!nameRef.current) return;
 		if (event.key === 'Enter' && !event.shiftKey) {
 			event.preventDefault();
@@ -47,7 +46,7 @@ const CourseName = ({ course }: Props) => {
 			return;
 		}
 		if (event.key === 'Escape') {
-			nameRef.current.innerText = course.name;
+			nameRef.current.innerText = currentCourse.name;
 			nameRef.current.blur();
 			return;
 		}
@@ -55,9 +54,12 @@ const CourseName = ({ course }: Props) => {
 
 	// Set initial value:
 	useEffect(() => {
+		if (!currentCourse) return;
 		if (!nameRef.current) return;
-		nameRef.current.innerText = course.name;
-	}, [course.name]);
+		nameRef.current.innerText = currentCourse.name;
+	}, [currentCourse]);
+
+	if (!currentCourse) return;
 
 	return (
 		<h2

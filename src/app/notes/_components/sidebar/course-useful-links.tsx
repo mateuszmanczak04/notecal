@@ -6,17 +6,14 @@ import { Input } from '@/components/input';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { addHttpsIfMissing, removeProtocol } from '@/utils/links';
-import { Course as T_Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GripVertical, Plus, X } from 'lucide-react';
 import { Reorder } from 'motion/react';
 import { FormEvent, useState } from 'react';
+import { useNoteContext } from '../../_content/note-context';
 
-type T_Props = {
-	course: T_Course;
-};
-
-const CourseUsefulLinks = ({ course }: T_Props) => {
+const CourseUsefulLinks = () => {
+	const { currentCourse } = useNoteContext();
 	// Used in the form
 	const [newLinkUrl, setNewLinkUrl] = useState<string>('');
 	const [newLinkTitle, setNewLinkTitle] = useState<string>('');
@@ -24,7 +21,7 @@ const CourseUsefulLinks = ({ course }: T_Props) => {
 	const { toast } = useToast();
 	// In the database they are saved as stringified JSON
 	const [usefulLinks, setUsefulLinks] = useState<{ id: string; url: string; title?: string }[]>(
-		JSON.parse(course.usefulLinks || '[]') || [],
+		JSON.parse(currentCourse?.usefulLinks || '[]') || [],
 	);
 	const [hasChangedOrder, setHasChangedOrder] = useState(false);
 
@@ -41,22 +38,27 @@ const CourseUsefulLinks = ({ course }: T_Props) => {
 	});
 
 	const handleAddNew = (e: FormEvent) => {
+		if (!currentCourse) return;
 		e.preventDefault();
 		const newLinks = [...usefulLinks, { id: crypto.randomUUID(), url: newLinkUrl, title: newLinkTitle }];
 		setUsefulLinks(newLinks);
-		mutate({ id: course.id, usefulLinks: JSON.stringify(newLinks) });
+		mutate({ id: currentCourse.id, usefulLinks: JSON.stringify(newLinks) });
 	};
 
 	const handleDelete = (id: string) => {
+		if (!currentCourse) return;
 		const newLinks = usefulLinks.filter(l => l.id !== id);
 		setUsefulLinks(newLinks);
-		mutate({ id: course.id, usefulLinks: JSON.stringify(newLinks) });
+		mutate({ id: currentCourse.id, usefulLinks: JSON.stringify(newLinks) });
 	};
 
 	const handleSaveNewOrder = () => {
-		mutate({ id: course.id, usefulLinks: JSON.stringify(usefulLinks) });
+		if (!currentCourse) return;
+		mutate({ id: currentCourse.id, usefulLinks: JSON.stringify(usefulLinks) });
 		setHasChangedOrder(false);
 	};
+
+	if (!currentCourse) return;
 
 	return (
 		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
@@ -65,7 +67,10 @@ const CourseUsefulLinks = ({ course }: T_Props) => {
 
 			{/* List of existing links */}
 			{hasChangedOrder && (
-				<Button className='mb-2 w-full' style={{ backgroundColor: course.color }} onClick={handleSaveNewOrder}>
+				<Button
+					className='mb-2 w-full'
+					style={{ backgroundColor: currentCourse.color }}
+					onClick={handleSaveNewOrder}>
 					Save new order
 				</Button>
 			)}
@@ -133,7 +138,7 @@ const CourseUsefulLinks = ({ course }: T_Props) => {
 					className='rounded-xl text-sm'
 					type='submit'
 					disabled={isPending}
-					style={{ backgroundColor: course?.color || '' }}>
+					style={{ backgroundColor: currentCourse?.color || '' }}>
 					<Plus className='size-5' />
 					Add new link to the list
 				</Button>
