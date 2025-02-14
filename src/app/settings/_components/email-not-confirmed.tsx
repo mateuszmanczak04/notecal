@@ -5,30 +5,35 @@ import { Button } from '@/components/button';
 import ErrorMessage from '@/components/error-message';
 import LoadingSpinner from '@/components/loading-spinner';
 import SuccessMessage from '@/components/success-message';
+import { useUser } from '@/hooks/use-user';
 import { Mail } from 'lucide-react';
-import { useActionState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 
-type Props = {
-	emailConfirmed: boolean;
-	email: string;
-};
-
-const EmailNotConfirmed = ({ emailConfirmed, email }: Props) => {
+const EmailNotConfirmed = () => {
+	const { data: user } = useUser();
 	const [state, formAction, isPending] = useActionState(sendConfirmationEmailForm, { error: '' });
 
+	const [isClient, setIsClient] = useState(false);
+
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
+
+	if (!isClient || !user) return null;
+
 	// Don't want to show this component when user has email verified
-	if (emailConfirmed) return;
+	if (user.emailVerified) return;
 
 	return (
 		<div className='space-y-4 rounded-xl border-2 border-error-500 p-4 dark:text-white'>
 			<p>
-				Your email <strong>{email}</strong> is not confirmed
+				Your email <strong>{user.email}</strong> is not confirmed
 			</p>
 			<p className=' opacity-75'>Confirm your email to secure your account in case you lose your password</p>
 
 			{/* Main form */}
 			<form action={formAction}>
-				<input type='hidden' name='email' value={email} />
+				<input type='hidden' name='email' value={user.email} />
 				<Button type='submit'>
 					<Mail />
 					Resend confirmation link
