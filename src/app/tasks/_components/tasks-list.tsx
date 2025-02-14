@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/button';
 import ErrorMessage from '@/components/error-message';
-import LoadingSpinner from '@/components/loading-spinner';
 import { Reorder } from 'motion/react';
 import { useTasksFunctionality } from '../_hooks/use-tasks-functionality';
 import TaskItem from './task-item';
@@ -11,7 +10,20 @@ import TaskItem from './task-item';
 const TasksList = () => {
 	const { handleReorder, error, handleSaveNewOrder, hasChangedOrder, isPending, tasks } = useTasksFunctionality({});
 
-	if (isPending) return <LoadingSpinner />;
+	if (isPending)
+		return (
+			<div>
+				<div className='mt-4 h-8 w-full  animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-700'></div>
+				<div className='mt-2 h-6 w-2/3 animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-700'></div>
+				<div className='mt-2 h-10 w-3/4 animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-700'></div>
+				<div className='mt-4 h-8 w-full animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-700'></div>
+				<div className='mt-2 h-6 w-2/3 animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-700'></div>
+				<div className='mt-2 h-10 w-3/4 animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-700'></div>
+				<div className='mt-4 h-8 w-full animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-700'></div>
+				<div className='mt-2 h-6 w-2/3 animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-700'></div>
+				<div className='mt-2 h-10 w-3/4 animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-700'></div>
+			</div>
+		);
 
 	if (error) return <ErrorMessage>{error.message}</ErrorMessage>;
 
