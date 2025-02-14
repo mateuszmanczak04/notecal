@@ -2,6 +2,7 @@
 
 import NoteContextMenu from '@/app/notes/_components/context-menu/note-context-menu';
 import { useNoteContextMenu } from '@/app/notes/_components/context-menu/use-note-context-menu';
+import { useClientSide } from '@/hooks/use-client-side';
 import { useCourses } from '@/hooks/use-courses';
 import { T_NoteWithTime } from '@/hooks/use-notes-with-time';
 import { useSettings } from '@/hooks/use-settings';
@@ -47,6 +48,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 		bottomEdgeRef,
 	} = useNoteDrag({ note, noteRef: noteBlocksRef });
 	const [isHover, setIsHover] = useState(false);
+	const isClient = useClientSide();
 
 	// Context menu related below:
 	const { closeContextMenu, contextMenuPosition, handleContextMenu, contextMenuBlockIndex } = useNoteContextMenu();
@@ -59,6 +61,8 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	const handleRoute = () => {
 		router.push(`/notes?noteId=${note.id}`);
 	};
+
+	if (!isClient) return;
 
 	// Should not occur in normal app conditions
 	if (!courses || !course) return;
