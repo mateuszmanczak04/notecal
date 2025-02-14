@@ -14,7 +14,7 @@ const DaysViewDayHeading = ({ date }: Props) => {
 	return (
 		<div
 			className={cn(
-				'flex h-calendar-header items-center justify-center overflow-hidden text-nowrap border-b border-r border-t text-sm font-semibold text-neutral-500 sm:text-base dark:border-neutral-600 dark:text-neutral-400',
+				'flex h-calendar-header select-none items-center justify-center overflow-hidden text-nowrap border-b border-r border-t text-sm font-semibold text-neutral-500 sm:text-base dark:border-neutral-600 dark:text-neutral-400',
 				isToday(date) && 'bg-neutral-200 dark:bg-neutral-800',
 			)}>
 			{dayOfTheWeek} {dayOfTheMonth} {isToday(date) && '(today)'}
