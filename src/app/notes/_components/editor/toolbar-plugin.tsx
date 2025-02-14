@@ -3,6 +3,7 @@ import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
 import { Toggle } from '@/components/toggle';
 import { useClientSide } from '@/hooks/use-client-side';
+import { useSettings } from '@/hooks/use-settings';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $createHeadingNode, $isHeadingNode, HeadingTagType } from '@lexical/rich-text';
 import { $wrapNodes } from '@lexical/selection';
@@ -35,6 +36,7 @@ import {
 	Heading1,
 	Heading2,
 	Italic,
+	Menu,
 	Strikethrough,
 	Underline,
 } from 'lucide-react';
@@ -48,6 +50,7 @@ type Props = {
 };
 
 export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Props) {
+	const { setShowNoteSidebar, showNoteSidebar } = useSettings();
 	const { currentCourse } = useNoteContext();
 	const isClient = useClientSide();
 	const [editor] = useLexicalComposerContext();
@@ -203,7 +206,7 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 	}, [editor, onSave, updateHeading]);
 
 	return (
-		<div className='flex flex-wrap items-center gap-2 border-b border-neutral-200 bg-white p-2 dark:border-neutral-600 dark:bg-neutral-800'>
+		<div className='relative flex flex-wrap items-center gap-2 border-b border-neutral-200 bg-white p-2 pr-14 dark:border-neutral-600 dark:bg-neutral-800'>
 			{/* Undo & Redo */}
 			<div className='grid grid-cols-2 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
 				<Toggle
@@ -348,6 +351,14 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 				disabled={true || isExportingPDF}>
 				<FileOutput className='size-5' /> Export PDF {isExportingPDF && <LoadingSpinner className='size-5' />}
 			</Button>
+
+			{!showNoteSidebar && (
+				<button
+					onClick={() => setShowNoteSidebar(prev => !prev)}
+					className='absolute right-0 top-0 grid size-[52px] cursor-pointer place-content-center border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800'>
+					<Menu />
+				</button>
+			)}
 		</div>
 	);
 }

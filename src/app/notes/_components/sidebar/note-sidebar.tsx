@@ -23,13 +23,13 @@ const NoteSidebar = () => {
 				<>
 					{/* Resize bar */}
 					<div
-						className='fixed right-0 top-0 z-10 h-screen w-2 cursor-ew-resize bg-neutral-200   dark:bg-neutral-700'
+						className='fixed right-0 top-0 z-10 hidden h-screen w-2 cursor-ew-resize bg-neutral-200 md:block dark:bg-neutral-700'
 						style={{ right: noteSidebarWidth }}
 						onMouseDown={handleMouseDown}
 						onMouseUp={handleMouseUp}></div>
 					<aside
 						ref={sidebarRef}
-						className='relative flex h-screen w-full shrink-0 flex-col overflow-y-scroll bg-white pb-32 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:bg-neutral-900'
+						className='relative flex h-screen w-full shrink-0 flex-col overflow-y-scroll pb-32 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:bg-neutral-900'
 						style={{
 							width: noteSidebarWidth,
 						}}>
@@ -42,18 +42,17 @@ const NoteSidebar = () => {
 						{sidebarElements.settings && <NotesSettings />}
 						{sidebarElements.dangerZone && <NoteDangerZone />}
 						<CustomizeSidebar />
+
+						<button
+							onClick={() => setShowNoteSidebar(prev => !prev)}
+							className={cn(
+								'absolute right-0 top-0 grid size-[53px] cursor-pointer place-content-center bg-white dark:bg-neutral-900',
+							)}>
+							<Menu />
+						</button>
 					</aside>
 				</>
 			)}
-			<button
-				onClick={() => setShowNoteSidebar(prev => !prev)}
-				className={cn(
-					'fixed right-0 top-0 grid size-[53px] cursor-pointer place-content-center bg-white dark:bg-neutral-800',
-					!showNoteSidebar && 'border-b border-neutral-200 dark:border-neutral-600 ',
-					showNoteSidebar && 'rounded-bl-xl shadow-xl dark:bg-neutral-800',
-				)}>
-				<Menu />
-			</button>
 		</>
 	);
 };
