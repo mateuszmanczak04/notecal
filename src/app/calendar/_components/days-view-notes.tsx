@@ -1,8 +1,8 @@
 'use client';
 
+import LoadingSpinner from '@/components/loading-spinner';
 import { useNotesWithTime } from '@/hooks/use-notes-with-time';
 import { useSettings } from '@/hooks/use-settings';
-import { useUser } from '@/hooks/use-user';
 import { addDays, isAfter, isBefore, startOfDay } from 'date-fns';
 import { MouseEvent, RefObject, useMemo, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
@@ -13,8 +13,7 @@ import DaysViewCoursePicker from './days-view-course-picker';
 import DaysViewNote from './days-view-note';
 
 const DaysViewNotes = () => {
-	const { data: notes } = useNotesWithTime();
-	const { data: user } = useUser();
+	const { data: notes, isPending: isNotesPending } = useNotesWithTime();
 	const { hiddenCoursesIds, daysViewContainerRef } = useCalendarContext();
 	const [popupX, setPopupX] = useState(0);
 	const [popupY, setPopupY] = useState(0);
@@ -26,7 +25,7 @@ const DaysViewNotes = () => {
 	 * Detect click on the grid and show popup to create a new note in that time.
 	 */
 	const handleClick = (event: MouseEvent) => {
-		if (!daysViewContainerRef.current || !user) return;
+		if (!daysViewContainerRef.current) return;
 
 		// Don't react when user clicks on existing notes
 		if (event.target !== daysViewContainerRef.current) return;
@@ -79,7 +78,14 @@ const DaysViewNotes = () => {
 		return results.map(r => (r > 2 ? 2 : r));
 	}, [notes]);
 
-	if (!user) return;
+	if (isNotesPending)
+		return (
+			<div className='absolute left-12 top-0 w-[calc(100%-48px)] cursor-crosshair overflow-hidden sm:left-20 sm:w-[calc(100%-80px)]'>
+				<div className='flex items-center gap-2 p-4'>
+					<LoadingSpinner /> We are loading your notes...
+				</div>
+			</div>
+		);
 
 	return (
 		<div

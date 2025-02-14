@@ -3,9 +3,10 @@
 import { useSettings } from '@/hooks/use-settings';
 import CalendarMenu from './calendar-menu';
 import DaysView from './days-view';
-
 import ListView from './list-view';
 import MonthView from './month-view';
+
+export const dynamic = 'force-static';
 
 const CalendarPage = () => {
 	const { viewMode } = useSettings();

@@ -1,5 +1,6 @@
 'use client';
 
+import LoadingSpinner from '@/components/loading-spinner';
 import { useNotesWithTime } from '@/hooks/use-notes-with-time';
 import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
@@ -43,7 +44,7 @@ const Tile = ({
 const MonthView = () => {
 	const { hiddenCoursesIds } = useCalendarContext();
 	const { firstCalendarDay, setViewMode, goToDay } = useSettings();
-	const { data: notes } = useNotesWithTime();
+	const { data: notes, isPending: isNotesPending } = useNotesWithTime();
 	const firstDayOfMonth = startOfMonth(firstCalendarDay);
 	const amountOfDaysInMonth = getDaysInMonth(firstCalendarDay);
 	const daysInMonth = new Array(amountOfDaysInMonth).fill(firstDayOfMonth).map((day, index) => addDays(day, index));
@@ -69,35 +70,44 @@ const MonthView = () => {
 	};
 
 	return (
-		<div className='grid grid-cols-7 overflow-hidden  border-l border-t border-neutral-200 dark:border-neutral-600'>
-			{/* Week day names */}
-			{['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(dayName => (
-				<Tile className='flex h-10 justify-center bg-white px-0 py-0 text-sm dark:bg-neutral-900' key={dayName}>
-					{dayName}
-				</Tile>
-			))}
-			{/* Month days */}
-			{renderedTiles.map(tile => {
-				if (tile === null) {
-					return <Tile key={Math.random()} />;
-				}
-				return (
+		<>
+			<div className='grid grid-cols-7 overflow-hidden  border-l border-t border-neutral-200 dark:border-neutral-600'>
+				{/* Week day names */}
+				{['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(dayName => (
 					<Tile
-						key={tile.toString()}
-						onClick={() => goToDayInDaysView(tile)}
-						className={cn(isToday(tile) && 'bg-neutral-100 dark:bg-neutral-700')}>
-						<p className='font-semibold'>
-							{format(tile, 'd')} {isToday(tile) && '(today)'}
-						</p>
-						{notes &&
-							notes
-								.filter(note => isSameDay(note.startTime, tile))
-								.filter(note => !hiddenCoursesIds.includes(note.courseId))
-								.map(note => <MonthViewNote key={note.id} note={note} />)}
+						className='flex h-10 justify-center bg-white px-0 py-0 text-sm dark:bg-neutral-900'
+						key={dayName}>
+						{dayName}
 					</Tile>
-				);
-			})}
-		</div>
+				))}
+				{/* Month days */}
+				{renderedTiles.map(tile => {
+					if (tile === null) {
+						return <Tile key={Math.random()} />;
+					}
+					return (
+						<Tile
+							key={tile.toString()}
+							onClick={() => goToDayInDaysView(tile)}
+							className={cn(isToday(tile) && 'bg-neutral-100 dark:bg-neutral-700')}>
+							<p className='font-semibold'>
+								{format(tile, 'd')} {isToday(tile) && '(today)'}
+							</p>
+							{notes &&
+								notes
+									.filter(note => isSameDay(note.startTime, tile))
+									.filter(note => !hiddenCoursesIds.includes(note.courseId))
+									.map(note => <MonthViewNote key={note.id} note={note} />)}
+						</Tile>
+					);
+				})}
+			</div>
+			{isNotesPending && (
+				<div className='flex items-center gap-2 p-4'>
+					<LoadingSpinner /> We are loading your notes...
+				</div>
+			)}
+		</>
 	);
 };
 
