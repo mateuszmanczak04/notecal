@@ -6,6 +6,7 @@ import { useNoteContext } from '@/app/notes/_content/note-context';
 import { Button } from '@/components/button';
 import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
+import { useClientSide } from '@/hooks/use-client-side';
 import { useNotes } from '@/hooks/use-notes';
 import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -18,6 +19,7 @@ import SideNoteItem from './side-note-item';
 const SideNotes = () => {
 	const { currentCourse } = useNoteContext();
 	const queryClient = useQueryClient();
+	const isClient = useClientSide();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: createNote,
@@ -36,27 +38,25 @@ const SideNotes = () => {
 
 	const { data: notes } = useNotes();
 
-	if (!notes) return;
-
-	const currentCourseNotes = notes.filter(note => note.courseId === currentCourse?.id);
-
-	if (!currentCourse) return;
+	const currentCourseNotes = notes?.filter(note => note.courseId === currentCourse?.id);
 
 	return (
 		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
 			<p className='font-semibold'>Course notes</p>
 			<p className='mb-4 mt-2 text-sm opacity-75'>List of all notes from this course</p>
 
-			<div className='flex flex-col gap-y-2'>
-				<SelectNotesProvider>
-					{currentCourseNotes.map(note => (
-						<SideNoteItem key={note.id} note={note} />
-					))}
-				</SelectNotesProvider>
-			</div>
+			{isClient && currentCourseNotes && (
+				<div className='flex flex-col gap-y-2'>
+					<SelectNotesProvider>
+						{currentCourseNotes.map(note => (
+							<SideNoteItem key={note.id} note={note} />
+						))}
+					</SelectNotesProvider>
+				</div>
+			)}
 
 			<Button
-				style={{ backgroundColor: currentCourse.color }}
+				style={{ backgroundColor: isClient ? currentCourse?.color : '' }}
 				onClick={handleNewNote}
 				className={cn('mt-2 transition-opacity', isPending && 'pointer-events-none opacity-50')}
 				disabled={isPending}>

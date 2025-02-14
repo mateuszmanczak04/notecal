@@ -59,8 +59,6 @@ const CourseName = () => {
 		nameRef.current.innerText = currentCourse.name;
 	}, [currentCourse]);
 
-	if (!currentCourse) return;
-
 	return (
 		<h2
 			ref={nameRef}

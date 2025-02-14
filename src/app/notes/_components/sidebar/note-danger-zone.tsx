@@ -37,8 +37,6 @@ const NoteDangerZone = () => {
 		router.replace('/courses');
 	};
 
-	if (!currentCourse) return;
-
 	return (
 		<div className='space-y-4 border-b border-neutral-200 p-6 dark:border-neutral-700'>
 			{isDeleting ? (

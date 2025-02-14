@@ -4,6 +4,7 @@ import updateCourse from '@/app/courses/_actions/update-course';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { useToast } from '@/components/toast/use-toast';
+import { useClientSide } from '@/hooks/use-client-side';
 import { cn } from '@/utils/cn';
 import { addHttpsIfMissing, removeProtocol } from '@/utils/links';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -14,6 +15,7 @@ import { useNoteContext } from '../../_content/note-context';
 
 const CourseUsefulLinks = () => {
 	const { currentCourse } = useNoteContext();
+	const isClient = useClientSide();
 	// Used in the form
 	const [newLinkUrl, setNewLinkUrl] = useState<string>('');
 	const [newLinkTitle, setNewLinkTitle] = useState<string>('');
@@ -58,8 +60,6 @@ const CourseUsefulLinks = () => {
 		setHasChangedOrder(false);
 	};
 
-	if (!currentCourse) return;
-
 	return (
 		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
 			<p className='font-semibold'>Useful links</p>
@@ -69,13 +69,13 @@ const CourseUsefulLinks = () => {
 			{hasChangedOrder && (
 				<Button
 					className='mb-2 w-full'
-					style={{ backgroundColor: currentCourse.color }}
+					style={{ backgroundColor: currentCourse?.color }}
 					onClick={handleSaveNewOrder}>
 					Save new order
 				</Button>
 			)}
 
-			{usefulLinks.length > 0 && (
+			{isClient && usefulLinks.length > 0 && (
 				<Reorder.Group
 					values={usefulLinks}
 					onReorder={newLinks => {
@@ -112,7 +112,7 @@ const CourseUsefulLinks = () => {
 				onSubmit={handleAddNew}
 				className={cn(
 					'mt-2 grid gap-2',
-					usefulLinks.length === 0 && 'mt-4',
+					isClient ? usefulLinks.length === 0 && 'mt-4' : '',
 					isPending && 'pointer-events-none opacity-50',
 				)}>
 				<Input
@@ -138,7 +138,7 @@ const CourseUsefulLinks = () => {
 					className='rounded-xl text-sm'
 					type='submit'
 					disabled={isPending}
-					style={{ backgroundColor: currentCourse?.color || '' }}>
+					style={{ backgroundColor: isClient ? currentCourse?.color || '' : '' }}>
 					<Plus className='size-5' />
 					Add new link to the list
 				</Button>

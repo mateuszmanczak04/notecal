@@ -59,8 +59,6 @@ const CourseTeacher = () => {
 		teacherRef.current.innerText = currentCourse.teacher;
 	}, [currentCourse]);
 
-	if (!currentCourse) return;
-
 	return (
 		<p
 			ref={teacherRef}
