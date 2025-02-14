@@ -12,7 +12,7 @@ const login = async (formData: FormData) => {
 	const password = formData.get('password')?.toString();
 
 	if (!email || email.length === 0 || !password || password.length === 0) {
-		redirect(`/auth/login?error=${en.INVALID_CREDENTIALS}`);
+		return { error: en.INVALID_CREDENTIALS };
 	}
 
 	const user = await db.user.findUnique({
@@ -22,11 +22,11 @@ const login = async (formData: FormData) => {
 	});
 
 	if (!user) {
-		redirect(`/auth/login?error=${en.INVALID_CREDENTIALS}`);
+		return { error: en.INVALID_CREDENTIALS };
 	}
 
 	if (!(await comparePasswords(password, user.password))) {
-		redirect(`/auth/login?error=${en.INVALID_CREDENTIALS}`);
+		return { error: en.INVALID_CREDENTIALS };
 	}
 
 	// Generate JWT

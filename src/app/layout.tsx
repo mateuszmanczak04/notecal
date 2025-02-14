@@ -29,13 +29,9 @@ export default async function RootLayout({
 					' fill-neutral-800 text-neutral-800 dark:bg-neutral-900 dark:fill-neutral-100 dark:text-neutral-100',
 					authenticated && 'bg-neutral-100',
 				)}>
-				{authenticated ? (
-					<Providers>
-						<MainLayout>{children}</MainLayout>
-					</Providers>
-				) : (
-					<div className='pt-16'>{children}</div>
-				)}
+				<Providers>
+					{authenticated ? <MainLayout>{children}</MainLayout> : <div className='pt-16'>{children}</div>}
+				</Providers>
 
 				<Analytics />
 				<SpeedInsights />
