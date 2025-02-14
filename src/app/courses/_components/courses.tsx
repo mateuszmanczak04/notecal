@@ -27,7 +27,7 @@ const Courses = () => {
 	const { data: courses, isPending } = useCourses();
 	const isClient = useClientSide();
 
-	if (!isClient) return;
+	if (!isClient) return <CoursesSkeleton />;
 
 	if (isPending) return <CoursesSkeleton />;
 
