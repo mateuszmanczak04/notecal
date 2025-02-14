@@ -5,19 +5,15 @@ import { Button } from '@/components/button';
 import ErrorMessage from '@/components/error-message';
 import LoadingSpinner from '@/components/loading-spinner';
 import SuccessMessage from '@/components/success-message';
+import { useClientSide } from '@/hooks/use-client-side';
 import { useUser } from '@/hooks/use-user';
 import { Mail } from 'lucide-react';
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState } from 'react';
 
 const EmailNotConfirmed = () => {
 	const { data: user } = useUser();
 	const [state, formAction, isPending] = useActionState(sendConfirmationEmailForm, { error: '' });
-
-	const [isClient, setIsClient] = useState(false);
-
-	useEffect(() => {
-		setIsClient(true);
-	}, []);
+	const isClient = useClientSide();
 
 	if (!isClient || !user) return null;
 

@@ -1,8 +1,8 @@
 'use client';
 
+import { useClientSide } from '@/hooks/use-client-side';
 import { useCourses } from '@/hooks/use-courses';
 import { ChevronRight } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import Course from './course';
 
 export const CoursesSkeleton = () => {
@@ -25,13 +25,7 @@ export const CoursesSkeleton = () => {
 
 const Courses = () => {
 	const { data: courses, isPending } = useCourses();
-	const [isClient, setIsClient] = useState(false);
-
-	// This is a workaround to prevent the component from rendering on the server.
-	// Without it we could get a hydration mismatch warning.
-	useEffect(() => {
-		setIsClient(true);
-	}, []);
+	const isClient = useClientSide();
 
 	if (!isClient) return;
 
