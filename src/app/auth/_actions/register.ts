@@ -18,14 +18,14 @@ const register = async (formData: FormData) => {
 	if (!email || email.length === 0 || !password || password.length === 0) return;
 
 	if (password.length < 6) {
-		redirect('/auth/register?error=Password must be at least 6 characters long.');
+		return { error: 'Password must be at least 6 characters long.' };
 	}
 
 	const existingUser = await db.user.findUnique({ where: { email } });
 
 	// Email taken
 	if (existingUser) {
-		redirect('/auth/register?error=This email is already taken.');
+		return { error: 'This email is already taken.' };
 	}
 
 	const hashedPassword = await hashPassword(password);
