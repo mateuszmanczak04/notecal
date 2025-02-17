@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/button';
+import { useClientSide } from '@/hooks/use-client-side';
 import { useUser } from '@/hooks/use-user';
 import { cn } from '@/utils/cn';
 import { Calendar, Check, Menu, Settings, User, X } from 'lucide-react';
@@ -13,6 +14,7 @@ const Navigation = () => {
 	const pathname = usePathname();
 	const { data: user } = useUser();
 	const [isOpen, setIsOpen] = useState(false);
+	const isClient = useClientSide();
 
 	const handleOpen = () => {
 		setIsOpen(true);
@@ -80,7 +82,7 @@ const Navigation = () => {
 							href='/calendar'
 							className={cn(
 								'flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
-								pathname.includes('/calendar') && 'bg-white dark:bg-neutral-700',
+								isClient && pathname.includes('/calendar') && 'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
 							<Calendar className='h-4 w-4' /> Calendar
@@ -90,7 +92,7 @@ const Navigation = () => {
 							href='/tasks'
 							className={cn(
 								'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
-								pathname.includes('/tasks') && 'bg-white dark:bg-neutral-700',
+								isClient && pathname.includes('/tasks') && 'bg-white dark:bg-neutral-700',
 							)}
 							onClick={handleClose}>
 							<Check className='h-4 w-4' /> Tasks
