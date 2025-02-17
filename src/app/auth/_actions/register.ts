@@ -50,6 +50,7 @@ const register = async (formData: FormData) => {
 		httpOnly: true,
 		secure: true,
 		sameSite: 'strict',
+		maxAge: 60 * 60 * 24 * 7,
 	});
 
 	redirect('/calendar');
