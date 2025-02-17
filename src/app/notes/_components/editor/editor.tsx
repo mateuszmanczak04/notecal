@@ -17,13 +17,11 @@ import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPl
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { EditorState } from 'lexical';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { exportNoteToPDF } from '../../_actions/export-note-to-pdf';
 import getNote from '../../_actions/get-note';
-import updateNote from '../../_actions/update-note';
 import { useNoteContext } from '../../_content/note-context';
 import AppAutoLinkPlugin from './auto-link-plugin';
 import CodeHighlightPlugin from './code-highlight-plugin';
@@ -44,55 +42,69 @@ const Editor = () => {
 	 */
 	const editorStateRef = useRef<EditorState>(undefined);
 	const [hasChanged, setHasChanged] = useState(false);
-	const queryClient = useQueryClient();
 	const { noteAutoSave } = useSettings();
 	const { toast } = useToast();
 	const { maxNoteWidthEnabled } = useSettings();
-	const { mutate: mutateUpdate, isPending: isPendingUpdate } = useMutation({
-		mutationFn: updateNote,
-		onMutate: () => {
-			// Better not to have optimistic updates here as user may leave app
-			// before saving important content
-		},
-		onSettled: data => {
-			if (data && 'error' in data) {
-				toast({ description: data.error, variant: 'destructive' });
-			}
-			queryClient.invalidateQueries({ queryKey: ['notes'] });
-		},
-	});
 	const editorContentRef = useRef<HTMLDivElement>(null!);
+	const [getUrl, setGetUrl] = useState<string | null>(null);
+	const [putUrl, setPutUrl] = useState<string | null>(null);
 	const [content, setContent] = useState<string | null>(null);
 
+	const [isPendingGet, setIsPendingGet] = useState(false);
+	const [isPendingUpdate, setIsPendingUpdate] = useState(false);
+
 	useEffect(() => {
-		/** Make a request to S3 bucket to retrieve note content. Then put it into state */
-		const fetchNoteContent = async () => {
+		/** Get presigned urls to allow user editing note content directly in S3. */
+		const fetchNoteWithPresignedUrls = async () => {
 			if (!currentNote) return;
-			const res = await getNote({ id: currentNote.id });
+			setIsPendingGet(true);
+			const res = await getNote({
+				id: currentNote.id,
+			});
 			if ('error' in res) {
 				toast({ description: res.error, variant: 'destructive' });
 				return;
 			}
-			const noteFile = await fetch(res.presignedUrlGet, {
+			setGetUrl(res.presignedUrlGet);
+			setPutUrl(res.presignedUrlPut);
+			setIsPendingGet(false);
+		};
+
+		fetchNoteWithPresignedUrls();
+	}, [currentNote, toast]);
+
+	useEffect(() => {
+		/** Make a request to S3 bucket to retrieve note content. Then put it into state. */
+		const fetchNoteContent = async () => {
+			if (!getUrl) return;
+			setIsPendingGet(true);
+			const noteFile = await fetch(getUrl, {
 				headers: { 'Content-Type': 'application/json' },
 			});
 			const noteContent = await noteFile.json();
-			setContent(noteContent);
+			setContent(JSON.stringify(noteContent));
+			setIsPendingGet(false);
 		};
 
 		fetchNoteContent();
-	}, [currentNote, toast]);
+	}, [getUrl]);
 
 	/**
 	 * Saves the note content to the database.
 	 * It's called when the user clicks the save button
 	 * or presses Cmd + S (or Ctrl + S) shortcut.
 	 */
-	const handleSave = useCallback(() => {
-		if (!editorStateRef.current || !currentNote) return;
-		mutateUpdate({ id: currentNote.id, content: JSON.stringify(editorStateRef.current) });
+	const handleSave = useCallback(async () => {
+		if (!editorStateRef.current || !currentNote || !putUrl) return;
+		setIsPendingUpdate(true);
+		await fetch(putUrl, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(editorStateRef.current),
+		});
+		setIsPendingUpdate(false);
 		setHasChanged(false);
-	}, [mutateUpdate, currentNote]);
+	}, [putUrl, currentNote]);
 
 	// Autosave
 	useEffect(() => {
@@ -138,16 +150,17 @@ const Editor = () => {
 				isPendingUpdate && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer
-				key={currentNote?.id}
+				key={content}
 				initialConfig={{
 					...editorConfig,
-					editorState: currentNote?.content || undefined,
+					editorState: content || undefined,
 				}}>
 				<ToolbarPlugin handleExport={handleExportToPDF} onSave={handleSave} hasChanged={hasChanged} />
 				<div
 					className={cn(
 						'relative w-full flex-1 overflow-y-scroll scroll-auto p-4 leading-normal scrollbar-hide',
 						maxNoteWidthEnabled && 'mx-auto max-w-screen-lg',
+						isPendingGet && 'pointer-events-none opacity-50',
 					)}>
 					<RichTextPlugin
 						contentEditable={
@@ -170,7 +183,7 @@ const Editor = () => {
 				<OnChangePlugin
 					onChange={editorState => {
 						editorStateRef.current = editorState;
-						setHasChanged(JSON.stringify(editorState) !== currentNote?.content);
+						setHasChanged(JSON.stringify(editorState) !== content);
 					}}
 				/>
 				<ListPlugin />
