@@ -56,38 +56,48 @@ export const exportNoteToPDF = async ({
 				'body { color: #202A37; background-color: white !important; display: flex; flex-direction: column; gap: 0.5rem; }',
 		});
 
-		await page.addStyleTag({ content: 'h1 { font-size: 24px; line-height: 32px; }' });
-		await page.addStyleTag({ content: 'h2 { font-size: 20px; line-height: 28px; }' });
-		await page.addStyleTag({ content: 'p { font-size: 16px; line-height: 32px; }' });
-		await page.addStyleTag({ content: '.underline { text-decoration: underline; }' });
-		await page.addStyleTag({ content: '.title { margin-bottom: 16px; font-size: 14px; }' });
-		await page.addStyleTag({ content: 'hr { border-color: #d1d5db; }' });
-
-		await page.addStyleTag({ content: 'b, strong { font-weight: bold; }' });
-		await page.addStyleTag({ content: 'i, em { font-style: italic; }' });
-		await page.addStyleTag({ content: 'u { text-decoration: underline; }' });
-		await page.addStyleTag({ content: 's { text-decoration: line-through; }' });
-
-		await page.addStyleTag({ content: 'ul { list-style-type: disc; padding-left: 1rem; }' });
-		await page.addStyleTag({ content: 'ol { list-style-type: decimal; padding-left: 1rem; }' });
-
-		await page.addStyleTag({
-			content:
-				'blockquote { border-left: 4px solid #d1d5db; padding-left: 1rem; font-style: italic; color: #4b5563; }',
-		});
-
+		/** Manually added TailwindCSS classes for styling PDF */
 		await page.addStyleTag({
 			content: `
 			.block { display: block; }
-			code { background-color: #f3f4f6; color: #dc2626; width: 100%; font-family: monospace; padding: 0.5rem; border-radius: 0.5rem; white-space-collapse: preserve; word-break: break-word; }
-			pre { background-color: #f3f4f6; padding: 0.25rem 0.5rem; border-radius: 0.25rem; width: 100%; display: block; }
-			.text-pink-500 { color: #ec4899; }
+			.bold { font-weight: bold; }
+			.border-l-4 { border-left-width: 4px; }
+			.border-neutral-300 { border-color: #d1d5db; }
+			.bg-neutral-100 { background-color: #f3f4f6; }
+			.font-bold { font-weight: 700; }
+			.font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; }
+			.h-auto { height: auto; }
+			.italic { font-style: italic; }
+			.leading-normal { line-height: 1.5; }
+			.line-through { text-decoration: line-through; }
+			.list-decimal { list-style-type: decimal; }
+			.list-disc { list-style-type: disc; }
+			.list-inside { padding-left: 1rem; }
+			.list-none { list-style-type: none; }
+			.max-w-full { max-width: 100%; }
+			.overflow-hidden { overflow: hidden; }
+			.p-1 { padding: 0.25rem; }
+			.p-2 { padding: 0.5rem; }
+			.p-4 { padding: 1rem; }
+			.pl-4 { padding-left: 1rem; }
+			.pl-8 { padding-left: 2rem; }
+			.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+			.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+			.rounded { border-radius: 0.25rem; }
+			.rounded-md { border-radius: 0.375rem; }
+			.scroll-auto { overflow-y: auto; }
+			.text-2xl { font-size: 1.5rem; }
+			.text-center { text-align: center; }
 			.text-green-500 { color: #10b981; }
-			.text-purple-500 { color: #8b5cf6; }
+			.text-neutral-500 { color: #6b7280; }
+			.text-neutral-600 { color: #6b7280; }
 			.text-orange-500 { color: #f97316; }
-			.text-neutral-500 { color: #737373; }
-			.text-blue-500 { color: #3b82f6; }
+			.text-pink-500 { color: #ec4899; }
+			.text-purple-500 { color: #8b5cf6; }
 			.text-red-500 { color: #ef4444; }
+			.text-red-600 { color: #dc2626; }
+			.text-xl { font-size: 1.25rem; }
+			.w-full { width: 100%; }
 			`,
 		});
 
