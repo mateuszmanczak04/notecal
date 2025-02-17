@@ -14,7 +14,7 @@ export const generatePutPresignedUrl = async (noteId: string) => {
 
 	const command = new PutObjectCommand({
 		Bucket: 'notecal',
-		Key: `notes/${noteId}`,
+		Key: `notes/${noteId}.json`,
 		ContentType: 'application/json',
 	});
 
@@ -33,7 +33,7 @@ export const generateGetPresignedUrl = async (noteId: string) => {
 
 	const command = new GetObjectCommand({
 		Bucket: 'notecal',
-		Key: `notes/${noteId}`,
+		Key: `notes/${noteId}.json`,
 	});
 
 	const url = await getSignedUrl(client, command, { expiresIn: 3600 });
