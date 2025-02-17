@@ -129,7 +129,7 @@ const Editor = () => {
 				isPendingUpdate && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer
-				key={content}
+				key={content + (currentNote?.id || '')}
 				initialConfig={{
 					...editorConfig,
 					editorState: content || undefined,
