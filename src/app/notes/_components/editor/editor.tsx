@@ -148,12 +148,15 @@ const Editor = () => {
 						contentEditable={
 							<ContentEditable
 								ref={editorContentRef}
-								className='relative resize-none space-y-4 pb-64 outline-none'
+								className={cn(
+									'relative resize-none space-y-4 pb-64 outline-none',
+									!currentNote && 'hidden',
+								)}
 							/>
 						}
 						placeholder={
 							<p className='pointer-events-none absolute left-4 top-4 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
-								Enter some text...
+								{currentNote ? 'Enter some text...' : 'Please select a note to start'}
 							</p>
 						}
 						ErrorBoundary={LexicalErrorBoundary}
