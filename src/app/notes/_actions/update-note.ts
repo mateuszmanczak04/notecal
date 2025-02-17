@@ -10,20 +10,12 @@ export type T_UpdateNoteInput = {
 	startTime?: Date | null;
 	endTime?: Date | null;
 	title?: string;
-	content?: string;
 	courseId?: string;
 };
 
 export type T_UpdateNoteResult = Promise<{ error: string } | { note: Note }>;
 
-const updateNote = async ({
-	id,
-	startTime,
-	endTime,
-	title,
-	content,
-	courseId,
-}: T_UpdateNoteInput): T_UpdateNoteResult => {
+const updateNote = async ({ id, startTime, endTime, title, courseId }: T_UpdateNoteInput): T_UpdateNoteResult => {
 	if (!id) {
 		return { error: 'ID is required' };
 	}
@@ -49,7 +41,6 @@ const updateNote = async ({
 				title,
 				startTime,
 				endTime,
-				content,
 				courseId,
 			},
 		});
