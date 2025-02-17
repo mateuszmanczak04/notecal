@@ -36,7 +36,6 @@ export const duplicateNote = async (data: T_DuplicateNoteInput): T_DuplicateNote
 				title: note.title + '(copy)',
 				startTime: note.startTime,
 				endTime: note.endTime,
-				content: note.content,
 				courseId: note.courseId,
 				userId: user.id,
 			},
