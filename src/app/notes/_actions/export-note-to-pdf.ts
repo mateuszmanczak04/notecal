@@ -1,6 +1,9 @@
 'use server';
 
-import puppeteer from 'puppeteer';
+import * as puppeteer from 'puppeteer';
+
+import chromium from '@sparticuz/chromium';
+import puppeteerCore from 'puppeteer-core';
 
 export type T_ExportNoteToPDFInput = {
 	htmlContent: string;
@@ -24,7 +27,30 @@ export const exportNoteToPDF = async ({
 	}
 
 	try {
-		const browser = await puppeteer.launch();
+		let browser = null;
+
+		if (process.env.NODE_ENV === 'development') {
+			console.log('Development browser: ');
+			browser = await puppeteer.launch({
+				args: ['--no-sandbox', '--disable-setuid-sandbox'],
+				headless: true,
+			});
+		}
+		if (process.env.NODE_ENV === 'production') {
+			console.log('Development production: ');
+			browser = await puppeteerCore.launch({
+				args: chromium.args,
+				defaultViewport: chromium.defaultViewport,
+				executablePath: await chromium.executablePath(),
+				headless: chromium.headless === 'shell',
+			});
+		}
+
+		if (!browser)
+			return {
+				error: 'Browser is not available',
+			};
+
 		const page = await browser.newPage();
 		await page.setContent(`
             <style>
