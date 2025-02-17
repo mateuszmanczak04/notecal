@@ -3,7 +3,6 @@
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
-import { getDefaultNewNoteContent } from '@/utils/get-default-new-note-content';
 import { Note } from '@prisma/client';
 import { addMinutes } from 'date-fns';
 
@@ -53,7 +52,6 @@ const createNote = async ({ courseId, startTime, duration }: T_CreateNoteInput):
 				startTime: actualStartTime,
 				endTime: endTime,
 				userId: authUser.id,
-				content: getDefaultNewNoteContent(),
 			},
 		});
 
