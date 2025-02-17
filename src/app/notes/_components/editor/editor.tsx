@@ -22,6 +22,7 @@ import { format } from 'date-fns';
 import { EditorState } from 'lexical';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { exportNoteToPDF } from '../../_actions/export-note-to-pdf';
+import getNote from '../../_actions/get-note';
 import updateNote from '../../_actions/update-note';
 import { useNoteContext } from '../../_content/note-context';
 import AppAutoLinkPlugin from './auto-link-plugin';
@@ -37,7 +38,7 @@ import ToolbarPlugin from './toolbar-plugin';
  * A part of /note/[id] page where user enters the text content. It works like a WYSIWYG editor.
  */
 const Editor = () => {
-	const { currentNote, currentCourse } = useNoteContext();
+	const { currentNote } = useNoteContext();
 	/**
 	 * Keeps the current editor state. It's used to save the note content.
 	 */
@@ -61,6 +62,26 @@ const Editor = () => {
 		},
 	});
 	const editorContentRef = useRef<HTMLDivElement>(null!);
+	const [content, setContent] = useState<string | null>(null);
+
+	useEffect(() => {
+		/** Make a request to S3 bucket to retrieve note content. Then put it into state */
+		const fetchNoteContent = async () => {
+			if (!currentNote) return;
+			const res = await getNote({ id: currentNote.id });
+			if ('error' in res) {
+				toast({ description: res.error, variant: 'destructive' });
+				return;
+			}
+			const noteFile = await fetch(res.presignedUrlGet, {
+				headers: { 'Content-Type': 'application/json' },
+			});
+			const noteContent = await noteFile.json();
+			setContent(noteContent);
+		};
+
+		fetchNoteContent();
+	}, [currentNote, toast]);
 
 	/**
 	 * Saves the note content to the database.
