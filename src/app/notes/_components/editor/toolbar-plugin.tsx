@@ -344,11 +344,7 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 			</Button>
 
 			{/* Export button: */}
-			<Button
-				className='rounded-md'
-				variant='secondary'
-				onClick={handleExportPDF}
-				disabled={true || isExportingPDF}>
+			<Button className='rounded-md' variant='secondary' onClick={handleExportPDF} disabled={isExportingPDF}>
 				<FileOutput className='size-5' /> Export PDF {isExportingPDF && <LoadingSpinner className='size-5' />}
 			</Button>
 
