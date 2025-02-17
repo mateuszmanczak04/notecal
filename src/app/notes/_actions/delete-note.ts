@@ -3,6 +3,7 @@
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
+import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
 export type T_DeleteNoteInput = { id: string };
 
@@ -20,9 +21,34 @@ const deleteNote = async ({ id }: T_DeleteNoteInput): T_DeleteNoteResult => {
 			return { error: en.auth.UNAUTHENTICATED };
 		}
 
-		await db.note.delete({
-			where: { id, userId: user.id },
+		const note = await db.note.findUnique({
+			where: { id },
 		});
+
+		if (!note) return { error: 'Note not found' };
+
+		if (!note.userId || note.userId !== user.id) {
+			return { error: 'Note not found' };
+		}
+
+		await db.note.delete({
+			where: { id },
+		});
+
+		const client = new S3Client({
+			region: 'eu-central-1',
+			credentials: {
+				accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+				secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+			},
+		});
+
+		const command = new DeleteObjectCommand({
+			Bucket: 'notecal',
+			Key: `notes/${id}.json`,
+		});
+
+		await client.send(command);
 
 		return { success: true };
 	} catch (error) {

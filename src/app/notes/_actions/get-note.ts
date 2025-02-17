@@ -42,7 +42,6 @@ const getNote = async ({ id }: T_GetNoteInput): T_GetNoteOutput => {
 
 		return { note, presignedUrlGet, presignedUrlPut };
 	} catch (error) {
-		console.log(error);
 		return { error: 'An error occurred' };
 	}
 };

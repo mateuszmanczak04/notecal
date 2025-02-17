@@ -64,8 +64,6 @@ const createNote = async ({ courseId, startTime, duration }: T_CreateNoteInput):
 			body: getDefaultNewNoteContent(),
 		});
 
-		console.log(res);
-
 		return { note };
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };

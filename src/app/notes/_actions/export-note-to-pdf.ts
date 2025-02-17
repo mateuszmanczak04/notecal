@@ -30,14 +30,12 @@ export const exportNoteToPDF = async ({
 		let browser = null;
 
 		if (process.env.NODE_ENV === 'development') {
-			console.log('Development browser: ');
 			browser = await puppeteer.launch({
 				args: ['--no-sandbox', '--disable-setuid-sandbox'],
 				headless: true,
 			});
 		}
 		if (process.env.NODE_ENV === 'production') {
-			console.log('Development production: ');
 			browser = await puppeteerCore.launch({
 				args: chromium.args,
 				defaultViewport: chromium.defaultViewport,
