@@ -5,10 +5,10 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 export const generatePutPresignedUrl = async (noteId: string) => {
 	const client = new S3Client({
-		region: 'us-central-1',
+		region: 'eu-central-1',
 		credentials: {
-			accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-			secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+			accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+			secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
 		},
 	});
 
@@ -24,7 +24,7 @@ export const generatePutPresignedUrl = async (noteId: string) => {
 
 export const generateGetPresignedUrl = async (noteId: string) => {
 	const client = new S3Client({
-		region: 'us-central-1',
+		region: 'eu-central-1',
 		credentials: {
 			accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
 			secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
