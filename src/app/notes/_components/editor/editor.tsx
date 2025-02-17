@@ -55,11 +55,14 @@ const Editor = () => {
 	useEffect(() => {
 		/** Make a request to S3 bucket to retrieve note content. Then put it into state. */
 		const fetchNoteContent = async () => {
-			if (!currentNote) return;
-			setIsPendingGet(true);
-			const noteContent = await getNoteContent(currentNote.id);
-			setContent(noteContent);
-			setIsPendingGet(false);
+			if (currentNote) {
+				setIsPendingGet(true);
+				const noteContent = await getNoteContent(currentNote.id);
+				setContent(noteContent);
+				setIsPendingGet(false);
+			} else {
+				setContent(null);
+			}
 		};
 
 		fetchNoteContent();
@@ -129,7 +132,7 @@ const Editor = () => {
 				isPendingUpdate && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer
-				key={content + (currentNote?.id || '')}
+				key={content}
 				initialConfig={{
 					...editorConfig,
 					editorState: content || undefined,
