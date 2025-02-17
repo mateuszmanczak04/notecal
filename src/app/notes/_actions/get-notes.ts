@@ -2,9 +2,8 @@
 
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
-import { cache } from 'react';
 
-const getNotes = cache(async () => {
+const getNotes = async () => {
 	const { authenticated, user } = await getAuthStatus();
 
 	if (!authenticated) return [];
@@ -31,6 +30,6 @@ const getNotes = cache(async () => {
 	} catch {
 		return [];
 	}
-});
+};
 
 export default getNotes;
