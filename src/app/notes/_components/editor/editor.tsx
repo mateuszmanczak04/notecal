@@ -125,7 +125,10 @@ const Editor = () => {
 			date: currentNote.startTime ? format(currentNote.startTime, 'yyyy-MM-dd HH:mm') : '',
 		});
 
-		if ('error' in res) return;
+		if ('error' in res) {
+			toast({ description: res.error, variant: 'destructive' });
+			return;
+		}
 
 		const byteCharacters = atob(res.pdfBase64);
 		const byteNumbers = new Array(byteCharacters.length);
