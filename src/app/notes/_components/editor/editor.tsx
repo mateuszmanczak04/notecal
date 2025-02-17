@@ -21,9 +21,9 @@ import { format } from 'date-fns';
 import { EditorState } from 'lexical';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { exportNoteToPDF } from '../../_actions/export-note-to-pdf';
-import getNote from '../../_actions/get-note';
 import { useNoteContext } from '../../_content/note-context';
 import { getNoteContent } from '../../_utils/get-note-content';
+import { updateNoteContent } from '../../_utils/update-note-content';
 import AppAutoLinkPlugin from './auto-link-plugin';
 import CodeHighlightPlugin from './code-highlight-plugin';
 import { HR } from './custom-transformers';
@@ -47,32 +47,10 @@ const Editor = () => {
 	const { toast } = useToast();
 	const { maxNoteWidthEnabled } = useSettings();
 	const editorContentRef = useRef<HTMLDivElement>(null!);
-	const [getUrl, setGetUrl] = useState<string | null>(null);
-	const [putUrl, setPutUrl] = useState<string | null>(null);
 	const [content, setContent] = useState<string | null>(null);
 
 	const [isPendingGet, setIsPendingGet] = useState(false);
 	const [isPendingUpdate, setIsPendingUpdate] = useState(false);
-
-	useEffect(() => {
-		/** Get presigned urls to allow user editing note content directly in S3. */
-		const fetchNoteWithPresignedUrls = async () => {
-			if (!currentNote) return;
-			setIsPendingGet(true);
-			const res = await getNote({
-				id: currentNote.id,
-			});
-			if ('error' in res) {
-				toast({ description: res.error, variant: 'destructive' });
-				return;
-			}
-			setGetUrl(res.presignedUrlGet);
-			setPutUrl(res.presignedUrlPut);
-			setIsPendingGet(false);
-		};
-
-		fetchNoteWithPresignedUrls();
-	}, [currentNote, toast]);
 
 	useEffect(() => {
 		/** Make a request to S3 bucket to retrieve note content. Then put it into state. */
@@ -93,16 +71,16 @@ const Editor = () => {
 	 * or presses Cmd + S (or Ctrl + S) shortcut.
 	 */
 	const handleSave = useCallback(async () => {
-		if (!editorStateRef.current || !currentNote || !putUrl) return;
+		if (!editorStateRef.current || !currentNote) return;
 		setIsPendingUpdate(true);
-		await fetch(putUrl, {
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(editorStateRef.current),
-		});
+		const hasUpdatedSuccessfully = await updateNoteContent(currentNote.id, JSON.stringify(editorStateRef.current));
+		if (!hasUpdatedSuccessfully) {
+			toast({ description: 'Failed to save the note', variant: 'destructive' });
+		} else {
+			setHasChanged(false);
+		}
 		setIsPendingUpdate(false);
-		setHasChanged(false);
-	}, [putUrl, currentNote]);
+	}, [currentNote, toast]);
 
 	// Autosave
 	useEffect(() => {
