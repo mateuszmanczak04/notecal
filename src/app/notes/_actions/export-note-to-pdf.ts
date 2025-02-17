@@ -45,8 +45,6 @@ export const exportNoteToPDF = async ({
 		// 	});
 		// }
 
-		console.log(htmlContent);
-
 		await page.addStyleTag({ content: '@page { padding: 36px; ' });
 		await page.addStyleTag({
 			content: '* { font-family: "Inter", sans-serif; box-sizing: border-box; margin: 0; padding: 0; }',
