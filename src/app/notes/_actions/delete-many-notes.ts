@@ -3,6 +3,7 @@
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
+import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
 export type T_DeleteManyNotesInput = { ids: string[] };
 
@@ -20,11 +21,26 @@ const deleteManyNotes = async ({ ids }: T_DeleteManyNotesInput): T_DeleteManyNot
 			return { error: en.auth.UNAUTHENTICATED };
 		}
 
+		const client = new S3Client({
+			region: 'eu-central-1',
+			credentials: {
+				accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+				secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+			},
+		});
+
 		await Promise.all(
 			ids.map(async id => {
 				await db.note.delete({
 					where: { id, userId: user.id },
 				});
+
+				const command = new DeleteObjectCommand({
+					Bucket: 'notecal',
+					Key: `notes/${id}.json`,
+				});
+
+				await client.send(command);
 			}),
 		);
 
