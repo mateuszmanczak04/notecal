@@ -23,6 +23,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { exportNoteToPDF } from '../../_actions/export-note-to-pdf';
 import getNote from '../../_actions/get-note';
 import { useNoteContext } from '../../_content/note-context';
+import { getNoteContent } from '../../_utils/get-note-content';
 import AppAutoLinkPlugin from './auto-link-plugin';
 import CodeHighlightPlugin from './code-highlight-plugin';
 import { HR } from './custom-transformers';
@@ -76,18 +77,15 @@ const Editor = () => {
 	useEffect(() => {
 		/** Make a request to S3 bucket to retrieve note content. Then put it into state. */
 		const fetchNoteContent = async () => {
-			if (!getUrl) return;
+			if (!currentNote) return;
 			setIsPendingGet(true);
-			const noteFile = await fetch(getUrl, {
-				headers: { 'Content-Type': 'application/json' },
-			});
-			const noteContent = await noteFile.json();
-			setContent(JSON.stringify(noteContent));
+			const noteContent = await getNoteContent(currentNote.id);
+			setContent(noteContent);
 			setIsPendingGet(false);
 		};
 
 		fetchNoteContent();
-	}, [getUrl]);
+	}, [currentNote]);
 
 	/**
 	 * Saves the note content to the database.
