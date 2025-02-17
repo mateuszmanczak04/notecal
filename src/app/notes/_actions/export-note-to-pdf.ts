@@ -77,7 +77,7 @@ export const exportNoteToPDF = async ({
 		});
 		await page.addStyleTag({
 			content:
-				'body { color: #202A37; background-color: white !important; display: flex; flex-direction: column; gap: 0.5rem; }',
+				'body { color: #202A37; background-color: white !important; display: flex; flex-direction: column; gap: 1rem; }',
 		});
 
 		/** Manually added TailwindCSS classes for styling PDF */
