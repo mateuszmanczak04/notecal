@@ -12,7 +12,7 @@ const DaysViewTopbar = () => {
 	const days = new Array(displayedDays).fill(0).map((_, index) => getDayAfter(index));
 
 	return (
-		<div className='sticky top-10 z-50 flex w-full bg-white dark:bg-neutral-900'>
+		<div className='sticky top-10 z-40 flex w-full bg-white dark:bg-neutral-900'>
 			<div className='grid h-calendar-header w-12 place-content-center border sm:w-20 dark:border-neutral-600'>
 				{(isNotesPending || isCoursesPending) && <LoadingSpinner className='h-5 w-5' />}
 			</div>
