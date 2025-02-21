@@ -64,14 +64,14 @@ const CourseUsefulLinks = () => {
 	}, [currentCourse?.usefulLinks]);
 
 	return (
-		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
+		<div className='flex flex-col space-y-2 border-b border-neutral-200 p-6 dark:border-neutral-700'>
 			<p className='font-semibold'>Useful links</p>
-			<p className='mb-4 mt-2 text-sm opacity-75'>Keep some links to external sources in one place</p>
+			<p className='text-sm opacity-75'>Keep some links to external sources in one place</p>
 
 			{/* List of existing links */}
 			{hasChangedOrder && (
 				<Button
-					className='mb-2 w-full'
+					className='w-full'
 					style={{ backgroundColor: currentCourse?.color }}
 					onClick={handleSaveNewOrder}>
 					Save new order
@@ -118,7 +118,7 @@ const CourseUsefulLinks = () => {
 			<form
 				onSubmit={handleAddNew}
 				className={cn(
-					'mt-2 grid gap-2',
+					'grid gap-2',
 					isClient ? usefulLinks.length === 0 && 'mt-4' : '',
 					isPending && 'pointer-events-none opacity-50',
 				)}>
