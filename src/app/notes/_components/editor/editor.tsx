@@ -57,6 +57,7 @@ const Editor = () => {
 		/** Make a request to S3 bucket to retrieve note content. Then put it into state. */
 		const fetchNoteContent = async () => {
 			if (currentNote) {
+				setIsPendingGet(true);
 				const noteContent = await getNoteContent(currentNote.id);
 				setContent(noteContent);
 				setIsPendingGet(false);
