@@ -1,5 +1,6 @@
 'use client';
 
+import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
 import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/utils/cn';
@@ -49,14 +50,13 @@ const Editor = () => {
 	const editorContentRef = useRef<HTMLDivElement>(null!);
 	const [content, setContent] = useState<string | null>(null);
 
-	const [isPendingGet, setIsPendingGet] = useState(false);
+	const [isPendingGet, setIsPendingGet] = useState(true);
 	const [isPendingUpdate, setIsPendingUpdate] = useState(false);
 
 	useEffect(() => {
 		/** Make a request to S3 bucket to retrieve note content. Then put it into state. */
 		const fetchNoteContent = async () => {
 			if (currentNote) {
-				setIsPendingGet(true);
 				const noteContent = await getNoteContent(currentNote.id);
 				setContent(noteContent);
 				setIsPendingGet(false);
@@ -138,6 +138,11 @@ const Editor = () => {
 					editorState: content || undefined,
 				}}>
 				<ToolbarPlugin handleExport={handleExportToPDF} onSave={handleSave} hasChanged={hasChanged} />
+				{isPendingGet && (
+					<div className='p-4'>
+						<LoadingSpinner />
+					</div>
+				)}
 				<div
 					className={cn(
 						'relative w-full flex-1 overflow-y-scroll scroll-auto p-4 leading-normal scrollbar-hide',
