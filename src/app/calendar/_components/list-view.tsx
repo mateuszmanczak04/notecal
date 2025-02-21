@@ -19,6 +19,8 @@ const ListView = () => {
 					<LoadingSpinner /> We are loading your notes...
 				</div>
 			)}
+			{notes?.length === 0 && <p>You don&apos;t have any notes yet</p>}
+
 			{notes &&
 				notes
 					.filter(note => hiddenCoursesIds.includes(note.courseId) === false)
