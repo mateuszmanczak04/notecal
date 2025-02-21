@@ -16,7 +16,7 @@ const TaskTitle = ({ task }: T_Props) => {
 			ref={titleRef}
 			contentEditable
 			className={cn(
-				'cursor-text break-all font-bold outline-none transition-colors',
+				'cursor-text break-all text-sm font-semibold outline-none transition-colors',
 				isPending && 'pointer-events-none opacity-50',
 			)}
 			onKeyDown={handleKeyDown}

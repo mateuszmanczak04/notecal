@@ -1,56 +1,94 @@
 'use client';
 
-import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
+import { useTaskPriority } from '@/app/tasks/_hooks/use-task-priority';
 import { cn } from '@/utils/cn';
-import { TaskPriority as T_TaskPriority, Task } from '@prisma/client';
-import { useTaskPriority } from '../_hooks/use-task-priority';
+import { Task } from '@prisma/client';
+import { AnimatePresence, motion } from 'motion/react';
+import { useRef, useState } from 'react';
+import { useOnClickOutside } from 'usehooks-ts';
 
 type T_Props = {
 	task: Task;
 };
 
-export const getTaskPriorityTitle = (priority: T_TaskPriority | null) => {
-	switch (priority) {
-		case 'A':
-			return (
-				<>
-					<div className='h-3 w-3 shrink-0 rounded-full bg-red-500'></div>
-					High
-				</>
-			);
-		case 'B':
-			return (
-				<>
-					<div className='h-3 w-3 shrink-0 rounded-full bg-yellow-500'></div>
-					Medium
-				</>
-			);
-		case 'C':
-			return (
-				<>
-					<div className='h-3 w-3 shrink-0 rounded-full bg-green-500'></div>
-					Low
-				</>
-			);
-		default:
-			return 'None';
-	}
-};
-
 const TaskPriority = ({ task }: T_Props) => {
-	const { updateTaskPriority: handleSelect, isPending } = useTaskPriority(task);
+	const { updateTaskPriority, isPending } = useTaskPriority(task);
+	const [isOpen, setIsOpen] = useState(false);
+	const ref = useRef<HTMLDivElement>(null!);
+	useOnClickOutside(ref, () => setIsOpen(false));
 
 	return (
-		<DropdownMenu className={cn('w-52', isPending && 'pointer-events-none opacity-50')}>
-			<DropdownMenuTrigger showChevron>{getTaskPriorityTitle(task.priority)}</DropdownMenuTrigger>
-			<DropdownMenuList>
-				{([null, 'A', 'B', 'C'] as (T_TaskPriority | null)[]).map(priority => (
-					<DropdownMenuItem key={priority || 'none'} onSelect={handleSelect} value={priority}>
-						{getTaskPriorityTitle(priority)}
-					</DropdownMenuItem>
-				))}
-			</DropdownMenuList>
-		</DropdownMenu>
+		<div ref={ref} className={cn('relative transition-opacity', isPending && 'pointer-events-none opacity-50')}>
+			<button
+				className='flex h-6 items-center gap-1 rounded-md border border-neutral-200 p-1 px-2 text-sm hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800'
+				onClick={() => setIsOpen(prev => !prev)}>
+				<div
+					className={cn(
+						'aspect-square size-full rounded-full ',
+						task.priority === null && 'bg-neutral-200 dark:bg-neutral-700',
+						task.priority === 'A' && 'bg-red-500 dark:bg-red-400',
+						task.priority === 'B' && 'bg-yellow-500 dark:bg-yellow-400',
+						task.priority === 'C' && 'bg-green-500 dark:bg-green-400',
+					)}></div>
+				<p>
+					{(() => {
+						switch (task.priority) {
+							case 'A':
+								return 'High';
+							case 'B':
+								return 'Medium';
+							case 'C':
+								return 'Low';
+							default:
+								return 'None';
+						}
+					})()}
+				</p>
+			</button>
+
+			<AnimatePresence>
+				{isOpen && (
+					<motion.div
+						initial={{ opacity: 0, y: -20 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -20 }}
+						className='absolute left-0 top-7 z-10 flex flex-col rounded-md bg-white p-2 shadow-xl dark:bg-neutral-800'>
+						{['A', 'B', 'C', null].map(priority => (
+							<button
+								key={priority}
+								onClick={() => {
+									setIsOpen(false);
+									updateTaskPriority(priority);
+								}}
+								className='flex items-center gap-2 text-nowrap border border-b-0 border-neutral-200 px-2 py-1 text-sm transition-colors  first-of-type:rounded-t-md last-of-type:rounded-b-md last-of-type:border-b hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700'>
+								<div
+									className={cn(
+										'aspect-square size-3 rounded-full ',
+										priority === null && 'bg-neutral-200 dark:bg-neutral-700',
+										priority === 'A' && 'bg-red-500 dark:bg-red-400',
+										priority === 'B' && 'bg-yellow-500 dark:bg-yellow-400',
+										priority === 'C' && 'bg-green-500 dark:bg-green-400',
+									)}></div>
+								<p className='max-w-32 truncate text-start'>
+									{(() => {
+										switch (priority) {
+											case 'A':
+												return 'High';
+											case 'B':
+												return 'Medium';
+											case 'C':
+												return 'Low';
+											default:
+												return 'None';
+										}
+									})()}
+								</p>
+							</button>
+						))}
+					</motion.div>
+				)}
+			</AnimatePresence>
+		</div>
 	);
 };
 
