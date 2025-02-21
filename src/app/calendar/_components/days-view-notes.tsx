@@ -4,6 +4,7 @@ import LoadingSpinner from '@/components/loading-spinner';
 import { useNotesWithTime } from '@/hooks/use-notes-with-time';
 import { useSettings } from '@/hooks/use-settings';
 import { addDays, isAfter, isBefore, startOfDay } from 'date-fns';
+import { AnimatePresence } from 'motion/react';
 import { MouseEvent, RefObject, useMemo, useState } from 'react';
 import { useCalendarContext } from '../_context/calendar-context';
 import { getCalendarRowHeight } from '../_utils/get-calendar-row-height';
@@ -107,14 +108,16 @@ const DaysViewNotes = () => {
 					.map((note, index) => <DaysViewNote key={note.id} note={note} leftOffset={leftOffsets[index]} />)}
 
 			{/* A popup to create a new note */}
-			{selectedTime && (
-				<DaysViewCoursePicker
-					time={selectedTime}
-					x={popupX}
-					y={popupY}
-					hidePicker={() => setSelectedTime(null)}
-				/>
-			)}
+			<AnimatePresence>
+				{selectedTime && (
+					<DaysViewCoursePicker
+						time={selectedTime}
+						x={popupX}
+						y={popupY}
+						hidePicker={() => setSelectedTime(null)}
+					/>
+				)}
+			</AnimatePresence>
 		</div>
 	);
 };

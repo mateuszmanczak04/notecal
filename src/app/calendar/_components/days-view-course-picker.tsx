@@ -1,7 +1,6 @@
 'use client';
 
 import createNote, { T_CreateNoteInput } from '@/app/notes/_actions/create-note';
-import { Button } from '@/components/button';
 import { useToast } from '@/components/toast/use-toast';
 import { useCourses } from '@/hooks/use-courses';
 import { useSettings } from '@/hooks/use-settings';
@@ -10,8 +9,7 @@ import { createTemporaryNote } from '@/utils/create-temporary-note';
 import { toUTC } from '@/utils/timezone';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { Plus } from 'lucide-react';
-import Link from 'next/link';
+import { motion } from 'motion/react';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useEventListener, useOnClickOutside } from 'usehooks-ts';
 import { useCalendarContext } from '../_context/calendar-context';
@@ -59,16 +57,12 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 		const containerWidth = containerRef.current.clientWidth;
 		const containerHeight = containerRef.current.clientHeight;
 
-		if (pickerWidth / 2 + x > containerWidth) {
-			setPickerX(containerWidth - pickerWidth / 2);
-		} else if (pickerWidth / 2 > x) {
-			setPickerX(pickerWidth / 2);
+		if (pickerWidth + x > containerWidth) {
+			setPickerX(containerWidth - pickerWidth);
 		}
 
-		if (pickerHeight / 2 + y > containerHeight) {
-			setPickerY(containerHeight - pickerHeight / 2);
-		} else if (pickerHeight / 2 > y) {
-			setPickerY(pickerHeight / 2);
+		if (pickerHeight + y > containerHeight) {
+			setPickerY(containerHeight - pickerHeight);
 		}
 	}, [containerRef, x, y]);
 
@@ -87,63 +81,45 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 		}
 	});
 
-	/**
-	 * It's displayed when user doesn't have any courses.
-	 * It shows a link to /courses/create page.
-	 */
-	const ZeroCoursesContent = () => {
-		return (
-			<div className='w-64 p-4'>
-				<p>You don&apos;t have any courses yet</p>
-				<Button asChild className='mt-2 w-full'>
-					<Link href='/courses/create' prefetch>
-						<Plus />
-						Create one
-					</Link>
-				</Button>
-			</div>
-		);
-	};
-
-	/**
-	 * Displayed when user has at least one course.
-	 * It shows a list of available courses which they want to
-	 * choose for the new note.
-	 */
-	const SomeCoursesContent = () => {
-		return (
-			<div>
-				<p className='w-full py-1 text-center text-sm '>{format(time, 'yyyy/MM/dd hh:mm')}</p>
-				<div className='max-h-[60vh] w-fit max-w-80 overflow-x-hidden overflow-y-scroll scrollbar-hide '>
-					{courses?.map(course => (
-						<button
-							key={course.id}
-							onClick={() => handleSelect(course.id)}
-							className=' w-full truncate  px-4 py-2 text-white transition hover:bg-neutral-100 dark:hover:bg-neutral-600'
-							style={{ color: course.color }}>
-							{course.name}
-						</button>
-					))}
-				</div>
-			</div>
-		);
-	};
-
 	return (
 		<>
 			{/* Backdrop: */}
-			<div className='absolute inset-0 z-30 bg-neutral-300 opacity-50 dark:bg-neutral-900'></div>
+			<motion.div
+				key='backdrop'
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 0.25 }}
+				exit={{ opacity: 0 }}
+				className='absolute inset-0 z-30 bg-black'></motion.div>
 
 			{/* Popup: */}
-			<div
-				className={cn(
-					'absolute z-40 flex min-w-40 max-w-96 -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-xl bg-white shadow-xl dark:bg-neutral-700',
-					isPending && 'pointer-events-none opacity-50',
-				)}
-				ref={pickerRef}
-				style={{ left: pickerX, top: pickerY }}>
-				{courses && courses.length > 0 ? <SomeCoursesContent /> : <ZeroCoursesContent />}
-			</div>
+			{courses && courses.length > 0 && (
+				<motion.div
+					key='popup'
+					initial={{ opacity: 0, y: -20 }}
+					animate={{ opacity: 1, y: 0 }}
+					exit={{ opacity: 0, y: -20 }}
+					className={cn(
+						'absolute z-30 flex max-h-[60vh] min-w-40 max-w-96 flex-col overflow-hidden rounded-xl bg-white p-4 shadow-xl dark:bg-neutral-800',
+						isPending && 'pointer-events-none opacity-50',
+					)}
+					ref={pickerRef}
+					style={{ left: pickerX, top: pickerY }}>
+					<p className='text-sm font-semibold'>Create a new note</p>
+					<p className='mt-1 text-sm opacity-75'>{format(time, 'yyyy/MM/dd hh:mm')}</p>
+					{courses.length === 0 && <p className='mt-2 text-sm'>You don&apos;t have any courses yet</p>}
+					<div className='mt-2 overflow-y-scroll rounded-md scrollbar-hide'>
+						{courses?.map(course => (
+							<button
+								key={course.id}
+								onClick={() => handleSelect(course.id)}
+								className='w-full rounded-md px-3 py-2 text-start text-sm text-white transition hover:bg-neutral-100 hover:opacity-75 dark:hover:bg-neutral-700 '
+								style={{ color: course.color }}>
+								<p className='truncate'>{course.name}</p>
+							</button>
+						))}
+					</div>
+				</motion.div>
+			)}
 		</>
 	);
 };
