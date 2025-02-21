@@ -51,7 +51,7 @@ type Props = {
 
 export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Props) {
 	const { setShowNoteSidebar, showNoteSidebar } = useSettings();
-	const { currentCourse } = useNoteContext();
+	const { currentCourse, currentNote } = useNoteContext();
 	const isClient = useClientSide();
 	const [editor] = useLexicalComposerContext();
 	const [isExportingPDF, setIsExportingPDF] = useState(false);
@@ -339,12 +339,16 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 				className='rounded-md'
 				onClick={onSave}
 				style={{ backgroundColor: isClient ? currentCourse?.color || '' : '' }}
-				disabled={!hasChanged}>
+				disabled={!currentNote || !hasChanged}>
 				<Check className='size-5' /> Save
 			</Button>
 
 			{/* Export button: */}
-			<Button className='rounded-md' variant='secondary' onClick={handleExportPDF} disabled={isExportingPDF}>
+			<Button
+				className='rounded-md'
+				variant='secondary'
+				onClick={handleExportPDF}
+				disabled={!currentNote || isExportingPDF}>
 				<FileOutput className='size-5' /> Export PDF {isExportingPDF && <LoadingSpinner className='size-5' />}
 			</Button>
 
