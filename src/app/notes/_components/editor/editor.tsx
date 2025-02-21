@@ -63,6 +63,7 @@ const Editor = () => {
 				setIsPendingGet(false);
 			} else {
 				setContent(null);
+				setIsPendingGet(false);
 			}
 		};
 
