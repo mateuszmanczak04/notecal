@@ -9,7 +9,7 @@ import { cn } from '@/utils/cn';
 import { addHttpsIfMissing, removeProtocol } from '@/utils/links';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GripVertical, Plus, X } from 'lucide-react';
-import { Reorder } from 'motion/react';
+import { Reorder, useDragControls } from 'motion/react';
 import { FormEvent, useState } from 'react';
 import { useNoteContext } from '../../_content/note-context';
 
@@ -26,6 +26,7 @@ const CourseUsefulLinks = () => {
 		JSON.parse(currentCourse?.usefulLinks || '[]') || [],
 	);
 	const [hasChangedOrder, setHasChangedOrder] = useState(false);
+	const dragControls = useDragControls();
 
 	const { mutate, isPending } = useMutation({
 		mutationFn: updateCourse,
@@ -86,10 +87,14 @@ const CourseUsefulLinks = () => {
 						<Reorder.Item
 							value={link}
 							whileDrag={{ pointerEvents: 'none' }}
+							dragListener={false}
+							dragControls={dragControls}
 							key={link.id}
 							className='group mt-2 flex h-9 w-full cursor-move items-center justify-start overflow-hidden rounded-xl border border-neutral-200 bg-white pr-3 text-sm first-of-type:mt-0 dark:border-neutral-700 dark:bg-neutral-800'
 							title={link.title}>
-							<div className='mr-3 grid h-full w-6 place-content-center bg-neutral-100 dark:bg-neutral-700'>
+							<div
+								className='mr-3 grid h-full w-6 place-content-center bg-neutral-100 dark:bg-neutral-700'
+								onPointerDown={e => dragControls.start(e)}>
 								<GripVertical className='size-4' />
 							</div>
 							<a
