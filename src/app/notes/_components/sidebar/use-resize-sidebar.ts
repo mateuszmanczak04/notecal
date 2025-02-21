@@ -11,10 +11,6 @@ export const useResizeSidebar = () => {
 		setIsResizing(true);
 	};
 
-	const handleMouseUp = () => {
-		setIsResizing(false);
-	};
-
 	useEffect(() => {
 		const handleMouseMove = (e: MouseEvent) => {
 			if (!isResizing) return;
@@ -31,12 +27,18 @@ export const useResizeSidebar = () => {
 			});
 		};
 
+		const handleMouseUp = () => {
+			setIsResizing(false);
+		};
+
+		document.addEventListener('mouseup', handleMouseUp);
 		document.addEventListener('mousemove', handleMouseMove);
 
 		return () => {
+			document.removeEventListener('mouseup', handleMouseUp);
 			document.removeEventListener('mousemove', handleMouseMove);
 		};
 	}, [isResizing, setNoteSidebarWidth]);
 
-	return { sidebarRef, noteSidebarWidth, handleMouseDown, handleMouseUp };
+	return { sidebarRef, noteSidebarWidth, handleMouseDown };
 };
