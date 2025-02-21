@@ -10,7 +10,7 @@ import { addHttpsIfMissing, removeProtocol } from '@/utils/links';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GripVertical, Plus, X } from 'lucide-react';
 import { Reorder, useDragControls } from 'motion/react';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useNoteContext } from '../../_content/note-context';
 
 const CourseUsefulLinks = () => {
@@ -22,9 +22,7 @@ const CourseUsefulLinks = () => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	// In the database they are saved as stringified JSON
-	const [usefulLinks, setUsefulLinks] = useState<{ id: string; url: string; title?: string }[]>(
-		JSON.parse(currentCourse?.usefulLinks || '[]') || [],
-	);
+	const [usefulLinks, setUsefulLinks] = useState<{ id: string; url: string; title?: string }[]>([]);
 	const [hasChangedOrder, setHasChangedOrder] = useState(false);
 	const dragControls = useDragControls();
 
@@ -60,6 +58,10 @@ const CourseUsefulLinks = () => {
 		mutate({ id: currentCourse.id, usefulLinks: JSON.stringify(usefulLinks) });
 		setHasChangedOrder(false);
 	};
+
+	useEffect(() => {
+		setUsefulLinks(JSON.parse(currentCourse?.usefulLinks || '[]') || []);
+	}, [currentCourse?.usefulLinks]);
 
 	return (
 		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
