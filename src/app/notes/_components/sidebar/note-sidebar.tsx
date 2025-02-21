@@ -23,7 +23,7 @@ const NoteSidebar = () => {
 				<>
 					{/* Resize bar */}
 					<div
-						className='fixed right-0 top-0 z-10 hidden h-screen w-2 cursor-ew-resize bg-neutral-200 md:block dark:bg-neutral-700'
+						className='fixed right-0 top-0 z-10 hidden h-screen w-2 cursor-ew-resize border-r-[7px]  border-white bg-neutral-200 md:block dark:border-neutral-900 dark:bg-neutral-700'
 						style={{ right: noteSidebarWidth }}
 						onMouseDown={handleMouseDown}
 						onMouseUp={handleMouseUp}></div>
