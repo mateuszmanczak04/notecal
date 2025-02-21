@@ -38,6 +38,7 @@ const TasksList = () => {
 					Save new order
 				</Button>
 			)}
+
 			<Reorder.Group values={tasks} onReorder={handleReorder}>
 				{tasks.map(task => (
 					<TaskItem key={task.id} task={task} />
