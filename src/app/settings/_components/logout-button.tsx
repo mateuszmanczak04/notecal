@@ -1,6 +1,5 @@
 'use client';
 
-import logout from '@/app/auth/_actions/logout';
 import { Button } from '@/components/button';
 import LoadingSpinner from '@/components/loading-spinner';
 import { useMutation } from '@tanstack/react-query';
@@ -8,7 +7,7 @@ import { LogOut } from 'lucide-react';
 
 const LogoutButton = () => {
 	const { mutate: handleLogout, isPending: isLogoutPending } = useMutation({
-		mutationFn: logout,
+		mutationFn: async () => await fetch('/api/auth/logout').then(() => window.location.reload()),
 	});
 
 	return (

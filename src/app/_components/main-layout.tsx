@@ -1,4 +1,3 @@
-import logout from '@/app/auth/_actions/logout';
 import { Toaster } from '@/components/toast/toaster';
 import { getAuthStatus } from '@/utils/auth';
 import { ReactNode } from 'react';
@@ -17,7 +16,7 @@ type Props = {
 const MainLayout = async ({ children }: Props) => {
 	// Check if user is authenticated, if not logout them
 	const { authenticated } = await getAuthStatus();
-	if (!authenticated) return logout();
+	if (!authenticated) return fetch('/api/auth/logout');
 
 	// Prefetch all needed data for quicker access in client components
 	// await Promise.all([
