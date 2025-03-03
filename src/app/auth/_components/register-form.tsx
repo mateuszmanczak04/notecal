@@ -19,7 +19,7 @@ const RegisterForm = () => {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ email, password }),
+				body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
 			}).then(res => res.json());
 			if ('error' in res) {
 				setError(res.error);
