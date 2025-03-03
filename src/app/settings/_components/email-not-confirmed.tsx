@@ -1,6 +1,5 @@
 'use client';
 
-import { sendConfirmationEmailForm } from '@/app/auth/_actions/send-confirmation-email';
 import { Button } from '@/components/button';
 import ErrorMessage from '@/components/error-message';
 import LoadingSpinner from '@/components/loading-spinner';
@@ -12,7 +11,17 @@ import { useActionState } from 'react';
 
 const EmailNotConfirmed = () => {
 	const { data: user } = useUser();
-	const [state, formAction, isPending] = useActionState(sendConfirmationEmailForm, { error: '' });
+	const [state, formAction, isPending] = useActionState(
+		async () =>
+			fetch('/api/auth/email-verified', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ email: user?.email.trim().toLowerCase() }),
+			}).then(res => res.json()),
+		{ error: '', message: '' },
+	);
 	const isClient = useClientSide();
 
 	if (!isClient || !user) return null;

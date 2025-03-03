@@ -1,6 +1,6 @@
 'use server';
 
-import sendConfirmationEmail from '@/app/auth/_actions/send-confirmation-email';
+import { sendConfirmationEmail } from '@/app/api/auth/send-confirmation-email';
 import { getAuthStatus } from '@/utils/auth';
 import { comparePasswords } from '@/utils/bcrypt';
 import db from '@/utils/db';

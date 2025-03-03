@@ -1,6 +1,6 @@
 'use server';
 
-import logout from '@/app/auth/_actions/logout';
+import { logout } from '@/app/api/auth/logout';
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
