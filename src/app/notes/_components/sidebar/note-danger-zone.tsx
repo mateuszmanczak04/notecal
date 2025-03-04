@@ -1,6 +1,5 @@
 'use client';
 
-import deleteCourse from '@/app/courses/_actions/delete-course';
 import { Button } from '@/components/button';
 import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
@@ -17,7 +16,10 @@ const NoteDangerZone = () => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
-		mutationFn: deleteCourse,
+		mutationFn: async (data: { id: string }) =>
+			await fetch(`/api/courses/${data.id}`, {
+				method: 'DELETE',
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

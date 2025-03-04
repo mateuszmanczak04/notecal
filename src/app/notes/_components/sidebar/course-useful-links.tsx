@@ -1,6 +1,5 @@
 'use client';
 
-import updateCourse from '@/app/courses/_actions/update-course';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { useToast } from '@/components/toast/use-toast';
@@ -27,7 +26,11 @@ const CourseUsefulLinks = () => {
 	const dragControls = useDragControls();
 
 	const { mutate, isPending } = useMutation({
-		mutationFn: updateCourse,
+		mutationFn: async (data: { id: string; usefulLinks: string }) =>
+			await fetch(`/api/courses/${data.id}`, {
+				method: 'PATCH',
+				body: JSON.stringify({ usefulLinks: data.usefulLinks }),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

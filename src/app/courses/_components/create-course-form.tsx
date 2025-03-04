@@ -1,16 +1,13 @@
 'use client';
 
 import { Button } from '@/components/button';
-import FormLoadingSpinner from '@/components/form-loading-spinner';
 import { Input } from '@/components/input';
+import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { COLORS } from '@/utils/colors';
-import { createTemporaryCourse } from '@/utils/create-temporary-course';
-import { Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
-import createCourse from '../_actions/create-course';
 
 type T_Props = {
 	handleCloseModal: () => void;
@@ -19,23 +16,33 @@ type T_Props = {
 const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
-	const { mutate } = useMutation({
-		mutationFn: createCourse,
-		onMutate: data => {
-			queryClient.setQueryData(['courses'], (prevCourses: Course[]) => {
-				const newTempCourse = createTemporaryCourse(data);
-				return [...prevCourses, newTempCourse];
-			});
-			handleCloseModal();
-		},
-		onSettled: data => {
+	const { mutate, isPending } = useMutation({
+		mutationFn: async (data: { name: string; teacher: string; color: string }) =>
+			await fetch('/api/courses', {
+				method: 'POST',
+				body: JSON.stringify(data),
+			})
+				.then(res => res.json())
+				.then(res => {
+					console.log('create', res);
+					return res;
+				}),
+		// onMutate: data => {
+		// 	queryClient.setQueryData(['courses'], (prevCourses: Course[]) => {
+		// 		const newTempCourse = createTemporaryCourse(data);
+		// 		return [...prevCourses, newTempCourse];
+		// 	});
+		// 	handleCloseModal();
+		// }, // TODO
+		onSettled: async data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
 			}
-			queryClient.invalidateQueries({ queryKey: ['courses'] });
-			queryClient.invalidateQueries({ queryKey: ['notes'] });
-			queryClient.refetchQueries({ queryKey: ['courses'] });
-			queryClient.refetchQueries({ queryKey: ['notes'] });
+			await queryClient.invalidateQueries({ queryKey: ['courses'] });
+			await queryClient.invalidateQueries({ queryKey: ['notes'] });
+			await queryClient.refetchQueries({ queryKey: ['courses'] });
+			await queryClient.refetchQueries({ queryKey: ['notes'] });
+			handleCloseModal();
 		},
 	});
 
@@ -108,7 +115,7 @@ const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 			</div>
 
 			<Button type='submit' className='w-full'>
-				<FormLoadingSpinner />
+				{isPending && <LoadingSpinner />}
 				Create
 			</Button>
 		</form>

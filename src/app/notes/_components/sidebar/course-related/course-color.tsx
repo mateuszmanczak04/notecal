@@ -1,6 +1,5 @@
 'use client';
 
-import updateCourse from '@/app/courses/_actions/update-course';
 import { useNoteContext } from '@/app/notes/_content/note-context';
 import { useToast } from '@/components/toast/use-toast';
 import { useClientSide } from '@/hooks/use-client-side';
@@ -14,7 +13,11 @@ const CourseColor = () => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
-		mutationFn: updateCourse,
+		mutationFn: async (data: { id: string; color: string }) =>
+			await fetch(`/api/courses/${data.id}`, {
+				method: 'PATCH',
+				body: JSON.stringify({ color: data.color }),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

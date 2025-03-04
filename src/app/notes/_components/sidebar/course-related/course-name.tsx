@@ -1,6 +1,5 @@
 'use client';
 
-import updateCourse from '@/app/courses/_actions/update-course';
 import { useNoteContext } from '@/app/notes/_content/note-context';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
@@ -13,7 +12,11 @@ const CourseName = () => {
 	const nameRef = useRef<HTMLHeadingElement>(null!);
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
-		mutationFn: updateCourse,
+		mutationFn: async (data: { id: string; name: string }) =>
+			await fetch(`/api/courses/${data.id}`, {
+				method: 'PATCH',
+				body: JSON.stringify({ name: data.name }),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

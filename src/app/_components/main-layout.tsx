@@ -18,26 +18,6 @@ const MainLayout = async ({ children }: Props) => {
 	const { authenticated } = await getAuthStatus();
 	if (!authenticated) return fetch('/api/auth/logout', { method: 'POST' });
 
-	// Prefetch all needed data for quicker access in client components
-	// await Promise.all([
-	// 	queryClient.prefetchQuery({
-	// 		queryKey: ['user'],
-	// 		queryFn: getUser,
-	// 	}),
-	// 	queryClient.prefetchQuery({
-	// 		queryKey: ['courses'],
-	// 		queryFn: getCourses,
-	// 	}),
-	// 	queryClient.prefetchQuery({
-	// 		queryKey: ['notes'],
-	// 		queryFn: getNotes,
-	// 	}),
-	// 	queryClient.prefetchQuery({
-	// 		queryKey: ['tasks'],
-	// 		queryFn: getTasks,
-	// 	}),
-	// ]);
-
 	return (
 		<CalendarContextProvider>
 			<div className='flex pl-12 xl:pl-80 dark:bg-neutral-800'>
