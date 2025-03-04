@@ -6,20 +6,21 @@ import { comparePasswords } from '@/utils/bcrypt';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 
-const changeEmail = async (_prevState: any, formData: FormData): Promise<{ message?: string; error?: string }> => {
-	const email = formData.get('email')?.toString().trim(); // New email
-	const password = formData.get('password')?.toString(); // Current password
-
-	if (!email || !password) {
-		return { error: en.INVALID_DATA };
-	}
-
+export async function PUT(request: Request) {
 	try {
+		const body = await request.json();
+		const email = body.email;
+		const password = body.password;
+
+		if (!email || !password) {
+			return Response.json({ error: en.INVALID_DATA }, { status: 400 });
+		}
+
 		const { authenticated, user: authUser } = await getAuthStatus();
 
 		// Only authenticated users can change their email
 		if (!authenticated) {
-			return { error: en.auth.UNAUTHENTICATED };
+			return Response.json({ error: en.auth.UNAUTHENTICATED }, { status: 401 });
 		}
 
 		// Check if user exists, should not occur in normal conditions
@@ -28,24 +29,24 @@ const changeEmail = async (_prevState: any, formData: FormData): Promise<{ messa
 			select: { password: true, email: true },
 		});
 		if (!user) {
-			return { error: en.auth.USER_DOES_NOT_EXIST };
+			return Response.json({ error: en.auth.USER_DOES_NOT_EXIST }, { status: 404 });
 		}
 
 		// Check if new email is the same
 		if (user.email === email) {
-			return { error: en.auth.EMAIL_IS_IDENTICAL };
+			return Response.json({ error: en.auth.EMAIL_IS_IDENTICAL }, { status: 400 });
 		}
 
 		// Check if password is correct
 		const passwordsMatch = await comparePasswords(password, user.password);
 		if (!passwordsMatch) {
-			return { error: en.auth.WRONG_PASSWORD };
+			return Response.json({ error: en.auth.WRONG_PASSWORD }, { status: 403 });
 		}
 
 		// Check if email is not taken
 		const userWithEmail = await db.user.findUnique({ where: { email } });
 		if (userWithEmail) {
-			return { error: en.auth.EMAIL_TAKEN };
+			return Response.json({ error: en.auth.EMAIL_TAKEN }, { status: 409 });
 		}
 
 		// Delete tokens associated with old email
@@ -61,12 +62,10 @@ const changeEmail = async (_prevState: any, formData: FormData): Promise<{ messa
 		});
 
 		// Users must verify their new email
-		sendConfirmationEmail(email);
+		await sendConfirmationEmail(email);
 
-		return { message: en.auth.EMAIL_UPDATED };
+		return Response.json({ message: en.auth.EMAIL_UPDATED }, { status: 200 });
 	} catch (error) {
 		return { error: en.SOMETHING_WENT_WRONG };
 	}
-};
-
-export default changeEmail;
+}
