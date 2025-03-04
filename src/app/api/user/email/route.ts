@@ -64,6 +64,6 @@ export async function PUT(request: Request) {
 
 		return Response.json({ message: en.auth.EMAIL_UPDATED }, { status: 200 });
 	} catch (error) {
-		return { error: en.SOMETHING_WENT_WRONG };
+		return Response.json({ error: en.SOMETHING_WENT_WRONG }, { status: 500 });
 	}
 }
