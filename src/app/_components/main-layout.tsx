@@ -1,6 +1,7 @@
 'use client';
 
 import { Toaster } from '@/components/toast/toaster';
+import { useUser } from '@/hooks/use-user';
 import { ReactNode } from 'react';
 import { CalendarContextProvider } from '../calendar/_context/calendar-context';
 import Navigation from './navigation/navigation';
@@ -14,10 +15,10 @@ type Props = {
  * Unauthenticated users get just a static landing page instead
  * for better loading time.
  */
-const MainLayout = async ({ children }: Props) => {
-	const authenticated = true;
+const MainLayout = ({ children }: Props) => {
+	const { data: user } = useUser();
 
-	if (!authenticated) {
+	if (!user) {
 		return <div className='pt-16'>{children}</div>;
 	}
 
