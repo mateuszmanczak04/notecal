@@ -20,7 +20,7 @@ const ChangePasswordSetting = () => {
 		startTransition(async () => {
 			setError('');
 			setMessage('');
-			const res = await fetch('/api/auth/update-password', {
+			const res = await fetch('/api/user/update-password', {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

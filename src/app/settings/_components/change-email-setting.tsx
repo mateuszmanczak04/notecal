@@ -19,7 +19,7 @@ const ChangeEmailSetting = () => {
 		startTransition(async () => {
 			setMessage('');
 			setError('');
-			const res = await fetch('/api/auth/update-email', {
+			const res = await fetch('/api/user/update-email', {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

@@ -7,7 +7,8 @@ import { LogOut } from 'lucide-react';
 
 const LogoutButton = () => {
 	const { mutate: handleLogout, isPending: isLogoutPending } = useMutation({
-		mutationFn: async () => await fetch('/api/auth/logout').then(() => window.location.reload()),
+		mutationFn: async () =>
+			await fetch('/api/auth/logout', { method: 'POST' }).then(() => window.location.reload()),
 	});
 
 	return (

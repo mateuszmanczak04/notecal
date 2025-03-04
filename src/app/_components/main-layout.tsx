@@ -16,7 +16,7 @@ type Props = {
 const MainLayout = async ({ children }: Props) => {
 	// Check if user is authenticated, if not logout them
 	const { authenticated } = await getAuthStatus();
-	if (!authenticated) return fetch('/api/auth/logout');
+	if (!authenticated) return fetch('/api/auth/logout', { method: 'POST' });
 
 	// Prefetch all needed data for quicker access in client components
 	// await Promise.all([
