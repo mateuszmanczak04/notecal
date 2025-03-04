@@ -1,7 +1,7 @@
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 import { isAfter } from 'date-fns';
-import { sendConfirmationEmail } from '../send-confirmation-email';
+import { sendConfirmationEmail } from '../../../../utils/send-confirmation-email';
 
 /**
  * Sends a confirmation email to the user.

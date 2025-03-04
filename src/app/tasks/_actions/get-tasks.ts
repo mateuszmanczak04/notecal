@@ -1,7 +1,7 @@
 'use server';
 
-import getUser from '@/app/api/auth/get-user';
 import db from '@/utils/db';
+import getUser from '@/utils/get-user';
 import { cache } from 'react';
 
 const getTasks = cache(async () => {

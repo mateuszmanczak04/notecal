@@ -1,9 +1,9 @@
 'use server';
 
-import getUser from '@/app/api/auth/get-user';
 import { T_TasksOrder } from '@/hooks/use-settings';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
+import getUser from '@/utils/get-user';
 import { Task } from '@prisma/client';
 
 export type T_SortTasksInput = {

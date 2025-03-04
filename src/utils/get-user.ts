@@ -1,9 +1,9 @@
 'use server';
 
-import { logout } from '@/app/api/auth/logout';
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
+import { logout } from '@/utils/logout';
 
 export type LimitedUser = {
 	id: string;

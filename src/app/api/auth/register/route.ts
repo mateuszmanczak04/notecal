@@ -5,7 +5,7 @@ import { en } from '@/utils/dictionary';
 import { generateToken } from '@/utils/jwt';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { sendConfirmationEmail } from '../send-confirmation-email';
+import { sendConfirmationEmail } from '../../../../utils/send-confirmation-email';
 
 export async function POST(request: Request) {
 	try {
