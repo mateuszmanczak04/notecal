@@ -24,7 +24,7 @@ export const DELETE = async (_request: Request, { params }: T_Params) => {
 
 		return Response.json({ success: true }, { status: 200 });
 	} catch (error) {
-		return { error: en.SOMETHING_WENT_WRONG };
+		return Response.json({ error: en.SOMETHING_WENT_WRONG }, { status: 500 });
 	}
 };
 
