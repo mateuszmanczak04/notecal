@@ -7,7 +7,7 @@ export const useUser = () => {
 		queryFn: async () =>
 			await fetch('/api/user')
 				.then(res => res.json())
-				.then(res => res.user as LimitedUser)
+				.then(res => (res.user as LimitedUser) || null)
 				.catch(() => null),
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,

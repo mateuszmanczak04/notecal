@@ -24,6 +24,8 @@ const Navigation = () => {
 		setIsOpen(false);
 	};
 
+	if (pathname === '/') return null;
+
 	return (
 		<>
 			{/* Open button */}

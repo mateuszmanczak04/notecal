@@ -1,5 +1,6 @@
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
+import { en } from '@/utils/dictionary';
 import { logout } from '@/utils/logout';
 
 export type LimitedUser = {
@@ -34,5 +35,6 @@ export const GET = async (request: Request) => {
 	} catch {
 		// TODO: think about how to fix this issue the better way
 		logout();
+		return Response.json({ error: en.SOMETHING_WENT_WRONG }, { status: 500 });
 	}
 };

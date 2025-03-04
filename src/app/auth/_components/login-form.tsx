@@ -25,6 +25,9 @@ const LoginForm = () => {
 			if ('error' in res) {
 				setError(res.error);
 			}
+			if (res.success) {
+				window.location.reload();
+			}
 		});
 	};
 

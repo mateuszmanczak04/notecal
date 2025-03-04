@@ -2,7 +2,9 @@
 
 import { Toaster } from '@/components/toast/toaster';
 import { useUser } from '@/hooks/use-user';
-import { ReactNode } from 'react';
+import { DEFAULT_LOGIN_REDIRECT, routesForAllUsers, routesForUnauthenticatedUsers } from '@/routes';
+import { usePathname, useRouter } from 'next/navigation';
+import { ReactNode, useEffect } from 'react';
 import { CalendarContextProvider } from '../calendar/_context/calendar-context';
 import Navigation from './navigation/navigation';
 
@@ -11,11 +13,28 @@ type Props = {
 };
 
 const MainLayout = ({ children }: Props) => {
-	const { data: user } = useUser();
+	const pathname = usePathname();
+	const { data: user, isPending } = useUser();
+	const router = useRouter();
 
-	if (!user) {
+	useEffect(() => {
+		if (isPending) return;
+
+		if (routesForUnauthenticatedUsers.includes(pathname) && user) {
+			router.replace(DEFAULT_LOGIN_REDIRECT);
+			return;
+		}
+
+		if (!user && !routesForAllUsers.includes(pathname) && !routesForUnauthenticatedUsers.includes(pathname)) {
+			router.replace('/');
+			return;
+		}
+	}, [user, pathname]);
+
+	if (isPending) return;
+
+	if (routesForAllUsers.includes(pathname) || routesForUnauthenticatedUsers.includes(pathname))
 		return <div className='pt-16'>{children}</div>;
-	}
 
 	return (
 		<CalendarContextProvider>

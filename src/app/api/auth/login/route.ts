@@ -1,10 +1,8 @@
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { comparePasswords } from '@/utils/bcrypt';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
 import { generateToken } from '@/utils/jwt';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 
 export async function POST(request: Request) {
 	try {
@@ -37,8 +35,8 @@ export async function POST(request: Request) {
 			sameSite: 'strict',
 			maxAge: 60 * 60 * 24 * 7,
 		});
+		return Response.json({ success: true }, { status: 200 });
 	} catch (error) {
 		return Response.json({ error: en.SOMETHING_WENT_WRONG }, { status: 500 });
 	}
-	redirect(DEFAULT_LOGIN_REDIRECT);
 }
