@@ -4,7 +4,6 @@ import { useToast } from '@/components/toast/use-toast';
 import { useCourses } from '@/hooks/use-courses';
 import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import updateNote from '../../_actions/update-note';
 
 type Props = {
 	currentCourse: Course;
@@ -20,7 +19,14 @@ const ChangeNoteCourse = ({ currentCourse, note, handleClose }: Props) => {
 	const { data: courses } = useCourses();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
-		mutationFn: updateNote,
+		mutationFn: async (data: { id: string; courseId: string }) =>
+			await fetch(`/api/notes/${data.id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ courseId: data.courseId }),
+			}).then(res => res.json()),
 		onMutate: data => {
 			// Optimistic update
 			queryClient.setQueryData(['notes'], (prev: Note[]) => {

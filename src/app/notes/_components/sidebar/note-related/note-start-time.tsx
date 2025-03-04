@@ -6,7 +6,6 @@ import { cn } from '@/utils/cn';
 import { toUTC } from '@/utils/timezone';
 import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import updateNote from '../../../_actions/update-note';
 
 type Props = {
 	note: Note;
@@ -17,7 +16,14 @@ const NoteStartTime = ({ note }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
-		mutationFn: updateNote,
+		mutationFn: async (data: { id: string; startTime: Date | null }) =>
+			await fetch(`/api/notes/${data.id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ startTime: data.startTime }),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

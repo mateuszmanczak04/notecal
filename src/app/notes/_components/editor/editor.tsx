@@ -21,7 +21,6 @@ import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin
 import { format } from 'date-fns';
 import { EditorState } from 'lexical';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { exportNoteToPDF } from '../../_actions/export-note-to-pdf';
 import { useNoteContext } from '../../_content/note-context';
 import { getNoteContent } from '../../_utils/get-note-content';
 import { updateNoteContent } from '../../_utils/update-note-content';
@@ -99,12 +98,18 @@ const Editor = () => {
 	/** Sends editor HTML markup to the backend, receives PDF result in base64 format and downloads it */
 	const handleExportToPDF = async () => {
 		if (!currentNote) return;
-		const res = await exportNoteToPDF({
-			htmlContent: editorContentRef.current.innerHTML,
-			theme: isDarkMode() ? 'dark' : 'light',
-			fileTitle: currentNote.title,
-			date: currentNote.startTime ? format(currentNote.startTime, 'yyyy-MM-dd HH:mm') : '',
-		});
+		const res = await fetch(`/api/notes/${currentNote.id}/export`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				htmlContent: editorContentRef.current.innerHTML,
+				theme: isDarkMode() ? 'dark' : 'light',
+				fileTitle: currentNote.title,
+				date: currentNote.startTime ? format(currentNote.startTime, 'yyyy-MM-dd HH:mm') : '',
+			}),
+		}).then(res => res.json());
 
 		if ('error' in res) {
 			toast({ description: res.error, variant: 'destructive' });

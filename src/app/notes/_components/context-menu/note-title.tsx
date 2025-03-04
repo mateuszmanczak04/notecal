@@ -6,7 +6,6 @@ import { cn } from '@/utils/cn';
 import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import updateNote from '../../_actions/update-note';
 
 type Props = {
 	note: Note;
@@ -18,7 +17,14 @@ const NoteTitle = ({ note, callback }: Props) => {
 	const [title, setTitle] = useState(note.title);
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
-		mutationFn: updateNote,
+		mutationFn: async (data: { id: string; title: string }) =>
+			await fetch(`/api/notes/${data.id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ title: data.title }),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

@@ -1,6 +1,5 @@
 'use client';
 
-import createNote from '@/app/notes/_actions/create-note';
 import { SelectNotesProvider } from '@/app/notes/_components/sidebar/side-notes/selected-notes-context';
 import { useNoteContext } from '@/app/notes/_content/note-context';
 import { Button } from '@/components/button';
@@ -22,7 +21,14 @@ const SideNotes = () => {
 	const isClient = useClientSide();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
-		mutationFn: createNote,
+		mutationFn: async (data: { courseId: string }) =>
+			await fetch(`/api/notes`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ courseId: data.courseId }),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

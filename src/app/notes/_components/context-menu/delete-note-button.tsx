@@ -10,7 +10,6 @@ import { Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import deleteNote from '../../_actions/delete-note';
 
 type Props = {
 	note: Note;
@@ -22,7 +21,7 @@ const DeleteNoteButton = ({ note, className }: Props) => {
 	const { toast } = useToast();
 	const [isDeleting, setIsDeleting] = useState(false);
 	const { mutate, isPending } = useMutation({
-		mutationFn: deleteNote,
+		mutationFn: async () => await fetch(`/api/notes/${note.id}`, { method: 'DELETE' }).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
@@ -38,10 +37,7 @@ const DeleteNoteButton = ({ note, className }: Props) => {
 
 	if (isDeleting) {
 		return (
-			<Button
-				variant='destructive'
-				onClick={() => mutate({ id: note.id })}
-				className={cn('rounded-md', className)}>
+			<Button variant='destructive' onClick={() => mutate()} className={cn('rounded-md', className)}>
 				<Trash className='size-5' /> Are you sure? {isPending && <LoadingSpinner className='size-4' />}
 			</Button>
 		);

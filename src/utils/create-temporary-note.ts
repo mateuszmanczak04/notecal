@@ -1,8 +1,15 @@
-import { T_CreateNoteInput } from '@/app/notes/_actions/create-note';
 import { Note as T_Note } from '@prisma/client';
 import { addMinutes } from 'date-fns';
 
-export const createTemporaryNote = ({ courseId, duration, startTime }: T_CreateNoteInput): T_Note => {
+export const createTemporaryNote = ({
+	courseId,
+	duration,
+	startTime,
+}: {
+	courseId: string;
+	duration?: number;
+	startTime?: Date;
+}): T_Note => {
 	return {
 		id: 'temp',
 		courseId,

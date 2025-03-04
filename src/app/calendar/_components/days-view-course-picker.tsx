@@ -1,6 +1,5 @@
 'use client';
 
-import createNote, { T_CreateNoteInput } from '@/app/notes/_actions/create-note';
 import { useToast } from '@/components/toast/use-toast';
 import { useCourses } from '@/hooks/use-courses';
 import { useSettings } from '@/hooks/use-settings';
@@ -26,8 +25,15 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 	const { toast } = useToast();
 	const { data: courses } = useCourses();
 	const { mutate, isPending } = useMutation({
-		mutationFn: createNote,
-		onMutate: (data: T_CreateNoteInput) => {
+		mutationFn: async (data: { courseId: string; startTime?: Date; duration?: number }) =>
+			await fetch('/api/notes', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					body: JSON.stringify(data),
+				},
+			}).then(res => res.json()),
+		onMutate: data => {
 			const tempNote = createTemporaryNote(data);
 			queryClient.setQueryData(['notes'], (old: any) => [...old, tempNote]);
 		},

@@ -1,9 +1,6 @@
-import getNote from '../_actions/get-note';
-
 export const updateNoteContent = async (id: string, content: string) => {
-	const res = await getNote({
-		id,
-	});
+	const res = await fetch(`/api/notes/${id}`).then(res => res.json());
+
 	if ('error' in res) {
 		return null;
 	}

@@ -1,4 +1,3 @@
-import updateNote from '@/app/notes/_actions/update-note';
 import { useToast } from '@/components/toast/use-toast';
 import { T_NoteWithTime } from '@/hooks/use-notes-with-time';
 import { useSettings } from '@/hooks/use-settings';
@@ -24,7 +23,14 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
-		mutationFn: updateNote,
+		mutationFn: async (data: { startTime?: Date; endTime?: Date }) =>
+			await fetch(`/api/notes/${note.id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			}).then(res => res.json()),
 		onMutate: () => {
 			queryClient.setQueryData(['notes'], (oldData: T_NoteWithTime[]) => {
 				const updatedNotes = oldData.map(n =>
@@ -129,7 +135,6 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 		if (!noteRef.current?.includes(event.target as HTMLDivElement)) return;
 
 		mutate({
-			id: note.id,
 			startTime: toUTC(dragStartTime),
 			endTime: toUTC(dragEndTime),
 		});
@@ -175,10 +180,9 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	 */
 	const handleDragEndTop = () => {
 		if (dragStartTime < note.endTime) {
-			mutate({ id: note.id, startTime: toUTC(dragStartTime) });
+			mutate({ startTime: toUTC(dragStartTime) });
 		} else {
 			mutate({
-				id: note.id,
 				startTime: toUTC(note.endTime),
 				endTime: toUTC(dragStartTime),
 			});
@@ -227,10 +231,9 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	 */
 	const handleDragEndBottom = () => {
 		if (dragEndTime > note.startTime) {
-			mutate({ id: note.id, endTime: toUTC(dragEndTime) });
+			mutate({ endTime: toUTC(dragEndTime) });
 		} else {
 			mutate({
-				id: note.id,
 				endTime: toUTC(note.startTime),
 				startTime: toUTC(dragEndTime),
 			});

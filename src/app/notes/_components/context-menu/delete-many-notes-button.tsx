@@ -10,7 +10,6 @@ import { Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import deleteManyNotes from '../../_actions/delete-many-notes';
 
 type Props = {
 	notes: Note[];
@@ -23,7 +22,8 @@ const DeleteManyNotesButton = ({ notes, className, onDelete }: Props) => {
 	const { toast } = useToast();
 	const [isDeleting, setIsDeleting] = useState(false);
 	const { mutate, isPending } = useMutation({
-		mutationFn: deleteManyNotes,
+		mutationFn: async (data: { ids: string[] }) =>
+			await fetch('/api/notes', { method: 'DELETE', body: JSON.stringify(data) }).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

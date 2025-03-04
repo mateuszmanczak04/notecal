@@ -1,32 +1,31 @@
-'use server';
-
+// TODO: Do it without need of passing HTML content from client
+// but rather fetching it from the server by id
 import * as puppeteer from 'puppeteer';
 
+import { en } from '@/utils/dictionary';
 import chromium from '@sparticuz/chromium';
 import puppeteerCore from 'puppeteer-core';
 
-export type T_ExportNoteToPDFInput = {
-	htmlContent: string;
-	theme: 'light' | 'dark';
-	fileTitle?: string;
-	date?: string;
-};
-
-export type T_ExportNoteToPDFResult = Promise<{ error: string } | { pdfBase64: string }>;
-
-/**
- * Receives HTML content and returns a PDF file in base64 format.
- */
-export const exportNoteToPDF = async ({
-	htmlContent,
-	fileTitle,
-	date,
-}: T_ExportNoteToPDFInput): T_ExportNoteToPDFResult => {
-	if (!htmlContent) {
-		return { error: 'Content is required' };
-	}
-
+/** Export note to PDF */
+export const POST = async (request: Request) => {
 	try {
+		const body = await request.json();
+		const {
+			htmlContent,
+			fileTitle,
+			date,
+			theme: _theme,
+		} = body as {
+			htmlContent?: string;
+			theme?: 'light' | 'dark';
+			fileTitle?: string;
+			date?: string;
+		};
+
+		if (!htmlContent) {
+			return Response.json({ error: 'Content is required' }, { status: 400 });
+		}
+
 		let browser = null;
 
 		if (process.env.NODE_ENV === 'development') {
@@ -45,9 +44,12 @@ export const exportNoteToPDF = async ({
 		}
 
 		if (!browser)
-			return {
-				error: 'Browser is not available',
-			};
+			return Response.json(
+				{
+					error: en.SOMETHING_WENT_WRONG,
+				},
+				{ status: 500 },
+			);
 
 		const page = await browser.newPage();
 		await page.setContent(`
@@ -134,8 +136,8 @@ export const exportNoteToPDF = async ({
 
 		const pdfBase64 = Buffer.from(pdfBuffer).toString('base64');
 
-		return { pdfBase64 };
+		return Response.json({ pdfBase64 }, { status: 200 });
 	} catch (error) {
-		return { error: 'Something went wrong' };
+		return Response.json({ error: 'Something went wrong' }, { status: 500 });
 	}
 };
