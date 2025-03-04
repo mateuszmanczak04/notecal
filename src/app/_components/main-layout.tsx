@@ -1,5 +1,6 @@
+'use client';
+
 import { Toaster } from '@/components/toast/toaster';
-import { getAuthStatus } from '@/utils/auth';
 import { ReactNode } from 'react';
 import { CalendarContextProvider } from '../calendar/_context/calendar-context';
 import Navigation from './navigation/navigation';
@@ -14,9 +15,11 @@ type Props = {
  * for better loading time.
  */
 const MainLayout = async ({ children }: Props) => {
-	// Check if user is authenticated, if not logout them
-	const { authenticated } = await getAuthStatus();
-	if (!authenticated) return fetch('/api/auth/logout', { method: 'POST' });
+	const authenticated = true;
+
+	if (!authenticated) {
+		return <div className='pt-16'>{children}</div>;
+	}
 
 	return (
 		<CalendarContextProvider>

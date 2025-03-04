@@ -1,7 +1,14 @@
-import { T_CreateCourseInput } from '@/app/courses/_actions/create-course';
 import { Course } from '@prisma/client';
 
-export const createTemporaryCourse = ({ color, name, teacher }: T_CreateCourseInput): Course => {
+export const createTemporaryCourse = ({
+	color,
+	name,
+	teacher,
+}: {
+	color: string;
+	name: string;
+	teacher: string;
+}): Course => {
 	return {
 		id: 'temp',
 		name,
