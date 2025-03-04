@@ -9,7 +9,7 @@ import { useUser } from '@/hooks/use-user';
 import { Mail } from 'lucide-react';
 import { useActionState } from 'react';
 
-const EmailNotConfirmed = () => {
+const EmailNotVerified = () => {
 	const { data: user } = useUser();
 	const [state, formAction, isPending] = useActionState(
 		async () =>
@@ -32,7 +32,7 @@ const EmailNotConfirmed = () => {
 	return (
 		<div className='space-y-4 rounded-xl border-2 border-error-500 p-4 dark:text-white'>
 			<p>
-				Your email <strong>{user.email}</strong> is not confirmed
+				Your email <strong>{user.email}</strong> is not verified
 			</p>
 			<p className=' opacity-75'>Confirm your email to secure your account in case you lose your password</p>
 
@@ -40,7 +40,7 @@ const EmailNotConfirmed = () => {
 				<input type='hidden' name='email' value={user.email} />
 				<Button type='submit'>
 					{isPending ? <LoadingSpinner /> : <Mail />}
-					Resend confirmation link
+					Resend verification link
 				</Button>
 			</form>
 
@@ -50,4 +50,4 @@ const EmailNotConfirmed = () => {
 	);
 };
 
-export default EmailNotConfirmed;
+export default EmailNotVerified;
