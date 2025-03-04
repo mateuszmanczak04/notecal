@@ -10,11 +10,6 @@ type Props = {
 	children: ReactNode;
 };
 
-/**
- * This layout is shown only to authenticated users.
- * Unauthenticated users get just a static landing page instead
- * for better loading time.
- */
 const MainLayout = ({ children }: Props) => {
 	const { data: user } = useUser();
 
