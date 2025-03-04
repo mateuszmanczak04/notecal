@@ -6,7 +6,7 @@ import FormLoadingSpinner from '@/components/form-loading-spinner';
 import { Input } from '@/components/input';
 import LoadingSpinner from '@/components/loading-spinner';
 import SuccessMessage from '@/components/success-message';
-import { useRef, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 
 const ChangePasswordSetting = () => {
 	const [error, setError] = useState('');
@@ -14,7 +14,6 @@ const ChangePasswordSetting = () => {
 	const [isPending, startTransition] = useTransition();
 	const [oldPassword, setOldPassword] = useState('');
 	const [newPassword, setNewPassword] = useState('');
-	const formRef = useRef<HTMLFormElement>(null!);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -33,7 +32,8 @@ const ChangePasswordSetting = () => {
 			}
 			if ('message' in res) {
 				setMessage(res.message);
-				formRef.current.reset();
+				setOldPassword('');
+				setNewPassword('');
 			}
 		});
 	};
@@ -42,7 +42,7 @@ const ChangePasswordSetting = () => {
 		<section className='flex flex-col gap-2'>
 			<h2 className='text-lg font-semibold'>Change your password</h2>
 
-			<form onSubmit={handleSubmit} ref={formRef} className='mt-2 flex flex-col gap-4'>
+			<form onSubmit={handleSubmit} className='mt-2 flex flex-col gap-4'>
 				{/* Old password field */}
 				<div>
 					<label htmlFor='change-password-old' className='mb-1 block px-2 font-medium'>
