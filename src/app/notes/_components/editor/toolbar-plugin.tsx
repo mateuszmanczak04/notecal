@@ -41,7 +41,7 @@ import {
 	Underline,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import { useNoteContext } from '../../_content/note-context';
+import { useNoteContext } from '../../_context/note-context';
 
 type Props = {
 	onSave: () => void;

@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useNoteContext } from '../../_content/note-context';
+import { useNoteContext } from '../../_context/note-context';
 
 /** Component to delete entire course */
 const NoteDangerZone = () => {

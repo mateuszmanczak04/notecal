@@ -1,6 +1,6 @@
 'use client';
 
-import { useNoteContext } from '@/app/notes/_content/note-context';
+import { useNoteContext } from '@/app/notes/_context/note-context';
 import { useToast } from '@/components/toast/use-toast';
 import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

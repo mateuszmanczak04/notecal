@@ -1,6 +1,6 @@
 'use client';
 
-import { useNoteContext } from '@/app/notes/_content/note-context';
+import { useNoteContext } from '@/app/notes/_context/note-context';
 import { useTasksFunctionality } from '@/app/tasks/_hooks/use-tasks-functionality';
 import { Button } from '@/components/button';
 import ErrorMessage from '@/components/error-message';

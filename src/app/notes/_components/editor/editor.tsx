@@ -21,7 +21,7 @@ import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin
 import { format } from 'date-fns';
 import { EditorState } from 'lexical';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNoteContext } from '../../_content/note-context';
+import { useNoteContext } from '../../_context/note-context';
 import { getNoteContent } from '../../_utils/get-note-content';
 import { updateNoteContent } from '../../_utils/update-note-content';
 import AppAutoLinkPlugin from './auto-link-plugin';

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Editor from './_components/editor/editor';
 import NoteSidebar from './_components/sidebar/note-sidebar';
-import { NoteContextProvider } from './_content/note-context';
+import { NoteContextProvider } from './_context/note-context';
 
 export const metadata: Metadata = {
 	title: 'Notecal | Note',

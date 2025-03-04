@@ -10,7 +10,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GripVertical, Plus, X } from 'lucide-react';
 import { Reorder, useDragControls } from 'motion/react';
 import { FormEvent, useEffect, useState } from 'react';
-import { useNoteContext } from '../../_content/note-context';
+import { useNoteContext } from '../../_context/note-context';
 
 const CourseUsefulLinks = () => {
 	const { currentCourse } = useNoteContext();

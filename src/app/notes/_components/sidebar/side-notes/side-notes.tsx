@@ -1,7 +1,7 @@
 'use client';
 
 import { SelectNotesProvider } from '@/app/notes/_components/sidebar/side-notes/selected-notes-context';
-import { useNoteContext } from '@/app/notes/_content/note-context';
+import { useNoteContext } from '@/app/notes/_context/note-context';
 import { Button } from '@/components/button';
 import LoadingSpinner from '@/components/loading-spinner';
 import { useToast } from '@/components/toast/use-toast';

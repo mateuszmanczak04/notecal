@@ -1,6 +1,6 @@
 'use client';
 
-import { useNoteContext } from '@/app/notes/_content/note-context';
+import { useNoteContext } from '@/app/notes/_context/note-context';
 import GoToCalendarNote from './go-to-calendar-note';
 import NoteEndTime from './note-end-time';
 import NoteStartTime from './note-start-time';
