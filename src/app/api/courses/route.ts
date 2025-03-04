@@ -1,5 +1,3 @@
-'use server';
-
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';

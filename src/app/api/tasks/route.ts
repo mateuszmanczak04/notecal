@@ -1,13 +1,21 @@
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
-import getUser from '@/utils/get-user';
 import { Task } from '@prisma/client';
 
 /** Get all user's tasks */
 export const GET = async (_request: Request) => {
 	try {
-		const user = await getUser();
+		const { authenticated, user } = await getAuthStatus();
+
+		if (!authenticated) {
+			return Response.json(
+				{
+					error: en.auth.UNAUTHENTICATED,
+				},
+				{ status: 401 },
+			);
+		}
 
 		const tasks = await db.task.findMany({
 			where: { userId: user.id },

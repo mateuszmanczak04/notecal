@@ -1,8 +1,5 @@
-'use server';
-
 import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
 import { logout } from '@/utils/logout';
 
 export type LimitedUser = {
@@ -11,23 +8,20 @@ export type LimitedUser = {
 	emailVerified: boolean;
 };
 
-/**
- * Fetch user from database and return only public properties.
- */
-const getUser = async (): Promise<LimitedUser> => {
+export const GET = async (request: Request) => {
 	try {
 		const { authenticated, user: authUser } = await getAuthStatus();
 
 		if (!authenticated) {
 			logout();
-			throw new Error('User is not authenticated');
+			return Response.json({ error: 'User is not authenticated' }, { status: 401 });
 		}
 
 		const user = await db.user.findUnique({ where: { id: authUser.id } });
 
 		if (!user) {
 			logout();
-			throw new Error('User not found');
+			return Response.json({ error: 'User not found' }, { status: 404 });
 		}
 
 		const limitedUser: LimitedUser = {
@@ -36,12 +30,9 @@ const getUser = async (): Promise<LimitedUser> => {
 			emailVerified: !!user.emailVerified,
 		};
 
-		return limitedUser;
+		return Response.json({ user: limitedUser }, { status: 200 });
 	} catch {
 		// TODO: think about how to fix this issue the better way
 		logout();
-		throw new Error(en.SOMETHING_WENT_WRONG);
 	}
 };
-
-export default getUser;

@@ -60,7 +60,7 @@ const CreateTaskForm = ({ course }: Props) => {
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		mutate({ title, courseId: course?.id });
+		mutate({ title, courseId: course?.id || '' });
 		setTitle('');
 	};
 

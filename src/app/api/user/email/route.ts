@@ -1,5 +1,3 @@
-'use server';
-
 import { getAuthStatus } from '@/utils/auth';
 import { comparePasswords } from '@/utils/bcrypt';
 import db from '@/utils/db';
