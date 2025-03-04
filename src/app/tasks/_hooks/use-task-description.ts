@@ -2,7 +2,6 @@ import { useToast } from '@/components/toast/use-toast';
 import { Task as T_Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
-import updateTask from '../_actions/update-task';
 
 export const useTaskDescription = (task: T_Task) => {
 	const { id, description } = task;
@@ -10,7 +9,11 @@ export const useTaskDescription = (task: T_Task) => {
 	const descriptionRef = useRef<HTMLParagraphElement>(null!);
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
-		mutationFn: updateTask,
+		mutationFn: async (data: { description: string }) =>
+			await fetch(`/api/tasks/${task.id}`, {
+				method: 'PATCH',
+				body: JSON.stringify(data),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
@@ -23,7 +26,7 @@ export const useTaskDescription = (task: T_Task) => {
 		const newDescription = descriptionRef.current.innerText;
 		// Don't want to update the same value:
 		if (newDescription.trim() === description) return;
-		mutate({ id, description: newDescription.trim() });
+		mutate({ description: newDescription.trim() });
 	};
 
 	/**

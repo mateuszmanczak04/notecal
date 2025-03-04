@@ -1,23 +1,21 @@
-'use server';
-
-import { T_TasksOrder } from '@/hooks/use-settings';
+import { getAuthStatus } from '@/utils/auth';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
-import getUser from '@/utils/get-user';
-import { Task } from '@prisma/client';
 
-export type T_SortTasksInput = {
-	newOrder?: T_TasksOrder;
-};
-
-export type T_SortTasksResult = Promise<{ error: string } | { tasks: Task[] }>;
-
-/**
- * Iterates through all tasks and updates their weights based on the new sort criteria
- */
-export const sortTasks = async ({ newOrder }: T_SortTasksInput): T_SortTasksResult => {
+export const PATCH = async (request: Request) => {
 	try {
-		const user = await getUser();
+		const body = await request.json();
+		const { newOrder } = body;
+
+		if (!newOrder) {
+			return Response.json({ error: 'New order is required' }, { status: 400 });
+		}
+
+		const { authenticated, user } = await getAuthStatus();
+
+		if (!authenticated) {
+			return Response.json({ error: en.auth.UNAUTHENTICATED }, { status: 401 });
+		}
 
 		let tasks = await db.task.findMany({
 			where: { userId: user.id },
@@ -74,8 +72,8 @@ export const sortTasks = async ({ newOrder }: T_SortTasksInput): T_SortTasksResu
 			),
 		);
 
-		return { tasks };
+		return Response.json({ tasks }, { status: 200 });
 	} catch {
-		return { error: en.SOMETHING_WENT_WRONG };
+		return Response.json({ error: en.SOMETHING_WENT_WRONG }, { status: 500 });
 	}
 };

@@ -9,7 +9,7 @@ export const useNotes = () => {
 			await fetch('/api/notes')
 				.then(res => res.json())
 				.then(data => (data.notes || []) as Note[])
-				.catch(), // TODO
+				.catch(() => []),
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,
 	});

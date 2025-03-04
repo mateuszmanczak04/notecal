@@ -1,6 +1,5 @@
 'use client';
 
-import createTask from '@/app/tasks/_actions/create-task';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { useToast } from '@/components/toast/use-toast';
@@ -18,7 +17,11 @@ const NoteCreateTaskForm = ({ course }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
-		mutationFn: createTask,
+		mutationFn: async (data: { title: string; courseId: string }) =>
+			await fetch('/api/tasks', {
+				method: 'POST',
+				body: JSON.stringify(data),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

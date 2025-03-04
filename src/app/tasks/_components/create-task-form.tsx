@@ -9,7 +9,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Command, Plus } from 'lucide-react';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useIntersectionObserver } from 'usehooks-ts';
-import createTask from '../_actions/create-task';
 
 type Props = {
 	course?: Course;
@@ -19,7 +18,11 @@ const CreateTaskForm = ({ course }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
-		mutationFn: createTask,
+		mutationFn: async (data: { title: string; courseId: string }) =>
+			await fetch('/api/tasks', {
+				method: 'POST',
+				body: JSON.stringify(data),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

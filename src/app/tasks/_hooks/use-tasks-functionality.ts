@@ -1,10 +1,9 @@
 import { useToast } from '@/components/toast/use-toast';
 import { useSettings } from '@/hooks/use-settings';
 import { useTasks } from '@/hooks/use-tasks';
-import { type Task as T_Task } from '@prisma/client';
+import { Task, type Task as T_Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import updateManyTasks from '../_actions/update-many-tasks';
 
 type T_Props = {
 	courseId?: string;
@@ -16,7 +15,11 @@ export const useTasksFunctionality = ({ courseId }: T_Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate } = useMutation({
-		mutationFn: updateManyTasks,
+		mutationFn: async (data: { tasks: Task[] }) =>
+			await fetch(`/api/tasks`, {
+				method: 'PUT',
+				body: JSON.stringify(data),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

@@ -8,7 +8,7 @@ export const useCourses = () => {
 			await fetch('/api/courses')
 				.then(res => res.json())
 				.then(data => (data.courses || []) as Course[])
-				.catch(), // TODO
+				.catch(() => []),
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,
 	});

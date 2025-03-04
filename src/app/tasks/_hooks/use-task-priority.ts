@@ -1,13 +1,16 @@
 import { useToast } from '@/components/toast/use-toast';
-import { Task as T_Task } from '@prisma/client';
+import { Task as T_Task, TaskPriority } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import updateTask from '../_actions/update-task';
 
 export const useTaskPriority = (task: T_Task) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
-		mutationFn: updateTask,
+		mutationFn: async (data: { priority: TaskPriority }) =>
+			await fetch(`/api/tasks/${task.id}`, {
+				method: 'PATCH',
+				body: JSON.stringify(data),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
@@ -18,7 +21,6 @@ export const useTaskPriority = (task: T_Task) => {
 
 	const updateTaskPriority = (newPriority: any) => {
 		mutate({
-			id: task.id,
 			priority: newPriority,
 		});
 	};

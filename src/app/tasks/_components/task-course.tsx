@@ -17,8 +17,6 @@ const TaskCourse = ({ task }: T_Props) => {
 	const ref = useRef<HTMLDivElement>(null!);
 	useOnClickOutside(ref, () => setIsOpen(false));
 
-	if (!currentTaskCourse) return;
-
 	return (
 		<div ref={ref} className={cn('relative transition-opacity', isPending && 'pointer-events-none opacity-50')}>
 			<button
@@ -26,8 +24,8 @@ const TaskCourse = ({ task }: T_Props) => {
 				onClick={() => setIsOpen(prev => !prev)}>
 				<div
 					className='aspect-square size-3 rounded-full   bg-neutral-200  dark:bg-neutral-600'
-					style={{ backgroundColor: currentTaskCourse.color }}></div>
-				<p className='max-w-32 truncate text-start text-sm'> {currentTaskCourse.name}</p>
+					style={{ backgroundColor: currentTaskCourse?.color }}></div>
+				<p className='max-w-32 truncate text-start text-sm'> {currentTaskCourse?.name}</p>
 			</button>
 
 			<AnimatePresence>

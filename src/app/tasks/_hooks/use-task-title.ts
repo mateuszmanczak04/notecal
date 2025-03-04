@@ -2,15 +2,18 @@ import { useToast } from '@/components/toast/use-toast';
 import { Task as T_Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
-import updateTask from '../_actions/update-task';
 
 export const useTaskTitle = (task: T_Task) => {
-	const { id, title } = task;
+	const { title } = task;
 	const titleRef = useRef<HTMLParagraphElement>(null!);
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
-		mutationFn: updateTask,
+		mutationFn: async (data: { title: string }) =>
+			await fetch(`/api/tasks/${task.id}`, {
+				method: 'PATCH',
+				body: JSON.stringify(data),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
@@ -19,11 +22,13 @@ export const useTaskTitle = (task: T_Task) => {
 		},
 	});
 
+	// TODO: delete if title empty
+
 	const handleSubmit = () => {
 		const newTitle = titleRef.current.innerText;
 		// Don't want to update the same value:
 		if (newTitle.trim() === title) return;
-		mutate({ id, title: newTitle.trim() });
+		mutate({ title: newTitle.trim() });
 	};
 
 	/**
