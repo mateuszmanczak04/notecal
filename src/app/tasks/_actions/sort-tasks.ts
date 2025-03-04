@@ -1,6 +1,6 @@
 'use server';
 
-import getUser from '@/app/settings/_actions/get-user';
+import getUser from '@/app/api/auth/get-user';
 import { T_TasksOrder } from '@/hooks/use-settings';
 import db from '@/utils/db';
 import { en } from '@/utils/dictionary';
