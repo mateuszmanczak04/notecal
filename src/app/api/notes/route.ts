@@ -62,7 +62,7 @@ export const POST = async (request: Request) => {
 			return Response.json({ error: 'User does not exist' }, { status: 404 });
 		}
 
-		const actualStartTime = new Date(startTime) || null;
+		const actualStartTime = startTime ? new Date(startTime) : null;
 		let endTime: Date | null = null;
 		if (actualStartTime) {
 			actualStartTime.setSeconds(0, 0); // Set seconds and milliseconds to 0
@@ -87,6 +87,7 @@ export const POST = async (request: Request) => {
 
 		return Response.json({ note }, { status: 201 });
 	} catch (error) {
+		console.log(error);
 		return Response.json({ error: en.SOMETHING_WENT_WRONG }, { status: 500 });
 	}
 };
