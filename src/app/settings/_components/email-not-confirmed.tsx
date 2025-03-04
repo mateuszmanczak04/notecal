@@ -36,19 +36,16 @@ const EmailNotConfirmed = () => {
 			</p>
 			<p className=' opacity-75'>Confirm your email to secure your account in case you lose your password</p>
 
-			{/* Main form */}
 			<form action={formAction}>
 				<input type='hidden' name='email' value={user.email} />
 				<Button type='submit'>
-					<Mail />
+					{isPending ? <LoadingSpinner /> : <Mail />}
 					Resend confirmation link
 				</Button>
 			</form>
 
-			{/* Result */}
 			{state.error && <ErrorMessage className='mt-2'>{state.error}</ErrorMessage>}
 			{state.message && <SuccessMessage className='mt-2'>{state.message}</SuccessMessage>}
-			{isPending && <LoadingSpinner className='mt-2' />}
 		</div>
 	);
 };
