@@ -23,7 +23,7 @@ export default async function RootLayout({
 			<body
 				className={cn(
 					inter.className,
-					' fill-neutral-800 text-neutral-800 dark:bg-neutral-900 dark:fill-neutral-100 dark:text-neutral-100',
+					'fill-neutral-800 text-neutral-800 dark:bg-neutral-900 dark:fill-neutral-100 dark:text-neutral-100',
 				)}>
 				<Providers>
 					<MainLayout>{children}</MainLayout>

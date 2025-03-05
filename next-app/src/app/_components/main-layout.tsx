@@ -1,10 +1,10 @@
 'use client';
 
-import { Toaster } from '@/components/toast/toaster';
 import { useUser } from '@/hooks/use-user';
 import { DEFAULT_LOGIN_REDIRECT, routesForAllUsers, routesForUnauthenticatedUsers } from '@/routes';
 import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
+import { Toaster } from '../../components/toast/toaster';
 import { CalendarContextProvider } from '../calendar/_context/calendar-context';
 import Navigation from './navigation/navigation';
 
