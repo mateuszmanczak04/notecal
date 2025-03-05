@@ -5,7 +5,8 @@ function App() {
 
 	return (
 		<div>
-			<h1>Hello world {id}</h1>
+			<h1>Hello world</h1>
+			<p className='text-red-500'>{id}</p>
 		</div>
 	);
 }
