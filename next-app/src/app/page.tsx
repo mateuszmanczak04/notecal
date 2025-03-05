@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
-import CTA from './_components/cta';
-import Features from './_components/features';
-import Footer from './_components/footer';
-import Hero from './_components/hero';
-import HowItWorks from './_components/how-it-works';
-import Pricing from './_components/pricing';
+import CTA from '../components/cta';
+import Features from '../components/features';
+import Footer from '../components/footer';
+import Hero from '../components/hero';
+import HowItWorks from '../components/how-it-works';
+import Pricing from '../components/pricing';
 
 export const metadata: Metadata = {
 	title: 'NoteCal - The Ultimate Student Note and Task Organizer',

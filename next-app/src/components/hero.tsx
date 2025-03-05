@@ -1,4 +1,4 @@
-import { Button } from '@/components/button';
+import { Button } from '@/_components/button';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -7,7 +7,7 @@ const Hero = () => {
 		<section className='fles-1 mx-auto items-center px-4 pb-32 pt-16 text-center sm:pb-40 md:pb-48'>
 			<h1 className='mx-auto max-w-[12ch] text-6xl font-black tracking-tight sm:text-7xl md:text-8xl'>
 				Welcome to
-				<span className='bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-[1.25em] text-transparent'>
+				<span className='from-primary-600 bg-gradient-to-r to-purple-600 bg-clip-text text-[1.25em] text-transparent'>
 					{' '}
 					NoteCal
 				</span>

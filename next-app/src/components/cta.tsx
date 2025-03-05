@@ -1,10 +1,10 @@
-import { Button } from '@/components/button';
+import { Button } from '@/_components/button';
 import Link from 'next/link';
 
 const CTA = () => {
 	return (
 		<section id='cta' className='mx-auto max-w-screen-sm px-4'>
-			<div className='space-y-4 rounded-xl border-4 border-primary-500 bg-white p-8 text-center shadow-2xl sm:p-12 md:p-16 dark:bg-neutral-800'>
+			<div className='border-primary-500 space-y-4 rounded-xl border-4 bg-white p-8 text-center shadow-2xl sm:p-12 md:p-16 dark:bg-neutral-800'>
 				<h2 className='text-center text-3xl font-black tracking-tight sm:text-4xl md:text-5xl'>
 					Get Started Today!
 				</h2>
