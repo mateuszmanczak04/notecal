@@ -1,15 +1,12 @@
-'use client';
-
-import NoteContextMenu from '@/app/notes/_components/context-menu/note-context-menu';
-import { useNoteContextMenu } from '@/app/notes/_components/context-menu/use-note-context-menu';
-import { useClientSide } from '@/hooks/use-client-side';
-import { useCourses } from '@/hooks/use-courses';
-import { T_NoteWithTime } from '@/hooks/use-notes-with-time';
-import { useSettings } from '@/hooks/use-settings';
-import { cn } from '@/utils/cn';
-import { type Note as DaysViewNote } from '@prisma/client';
-import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { useClientSide } from '../../../hooks/use-client-side';
+import { useCourses } from '../../../hooks/use-courses';
+import { T_NoteWithTime } from '../../../hooks/use-notes-with-time';
+import { useSettings } from '../../../hooks/use-settings';
+import { cn } from '../../../utils/cn';
+import NoteContextMenu from '../../notes/components/context-menu/note-context-menu';
+import { useNoteContextMenu } from '../../notes/components/context-menu/use-note-context-menu';
 import { useNoteDrag } from '../hooks/use-note-drag';
 import { getCalendarRowHeight } from '../utils/get-calendar-row-height';
 import { getDaysIncludedInNote } from '../utils/get-days-included-in-note';
@@ -57,9 +54,9 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	const noteDays = getDaysIncludedInNote({ noteStartTime: note.startTime, noteEndTime: note.endTime });
 
 	// Handle routng to /notes/[id] page:
-	const router = useRouter();
+	const navigate = useNavigate();
 	const handleRoute = () => {
-		router.push(`/notes?noteId=${note.id}`);
+		navigate(`/notes?noteId=${note.id}`);
 	};
 
 	if (!isClient) return;

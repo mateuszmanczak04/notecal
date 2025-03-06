@@ -1,7 +1,5 @@
-'use client';
-
-import LoadingSpinner from '@/components/loading-spinner';
-import { useSettings } from '@/hooks/use-settings';
+import LoadingSpinner from '../../../components/loading-spinner';
+import { useSettings } from '../../../hooks/use-settings';
 import DaysViewDayHeading from './days-view-day-heading';
 
 const DaysViewTopbar = () => {
@@ -13,7 +11,7 @@ const DaysViewTopbar = () => {
 
 	return (
 		<div className='sticky top-10 z-40 flex w-full bg-white dark:bg-neutral-900'>
-			<div className='grid h-calendar-header w-12 place-content-center border sm:w-20 dark:border-neutral-600'>
+			<div className='h-calendar-header grid w-12 place-content-center border sm:w-20 dark:border-neutral-600'>
 				{(isNotesPending || isCoursesPending) && <LoadingSpinner className='h-5 w-5' />}
 			</div>
 
@@ -23,7 +21,7 @@ const DaysViewTopbar = () => {
 				style={{
 					gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
 				}}>
-				{days.map((day, index) => (
+				{days.map(day => (
 					<DaysViewDayHeading key={day.toString()} date={day} />
 				))}
 			</div>

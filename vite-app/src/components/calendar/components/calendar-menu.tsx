@@ -1,7 +1,5 @@
-'use client';
-
-import { Menubar, MenubarLabel } from '@/components/menubar';
-import { useSettings } from '@/hooks/use-settings';
+import { Menubar, MenubarLabel } from '../../../components/menubar';
+import { useSettings } from '../../../hooks/use-settings';
 import CalendarMenuBackForward from './menu/back-forward';
 import CalendarMenuDisplayedDays from './menu/displayed-days';
 import CalendarMenuFilterCourses from './menu/filter-courses';

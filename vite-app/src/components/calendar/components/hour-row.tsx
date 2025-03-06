@@ -1,6 +1,4 @@
-'use client';
-
-import { useSettings } from '@/hooks/use-settings';
+import { useSettings } from '../../../hooks/use-settings';
 import { getCalendarRowHeight } from '../utils/get-calendar-row-height';
 
 const HourRow = ({ hour }: { hour: number }) => {

@@ -1,16 +1,13 @@
-'use client';
-
-import { useToast } from '@/components/toast/use-toast';
-import { useCourses } from '@/hooks/use-courses';
-import { useSettings } from '@/hooks/use-settings';
-import { cn } from '@/utils/cn';
-import { createTemporaryNote } from '@/utils/create-temporary-note';
-import { toUTC } from '@/utils/timezone';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { motion } from 'motion/react';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useEventListener, useOnClickOutside } from 'usehooks-ts';
+import { useToast } from '../../../components/toast/use-toast';
+import { useCourses } from '../../../hooks/use-courses';
+import { useSettings } from '../../../hooks/use-settings';
+import { cn } from '../../../utils/cn';
+import { toUTC } from '../../../utils/timezone';
 import { useCalendarContext } from '../context/calendar-context';
 
 type Props = {
@@ -33,10 +30,10 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 				},
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
-		onMutate: data => {
-			const tempNote = createTemporaryNote(data);
-			queryClient.setQueryData(['notes'], (old: any) => [...old, tempNote]);
-		},
+		// onMutate: data => {
+		// 	const tempNote = createTemporaryNote(data);
+		// 	queryClient.setQueryData(['notes'], old => [...old, tempNote]);
+		// },
 		onSettled: data => {
 			console.log(data);
 			if (data && 'error' in data) {

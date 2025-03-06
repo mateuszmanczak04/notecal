@@ -1,7 +1,5 @@
-'use client';
-
-import { useSettings } from '@/hooks/use-settings';
 import { useEffect, useRef } from 'react';
+import { useSettings } from '../../../hooks/use-settings';
 import { useCalendarContext } from '../context/calendar-context';
 import DaysViewGrid from './days-view-grid';
 import DaysViewNotes from './days-view-notes';

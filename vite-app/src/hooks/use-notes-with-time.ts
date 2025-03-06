@@ -1,7 +1,7 @@
-import { Note } from '@prisma/client';
+import { T_Note } from '../types';
 import { useNotes } from './use-notes';
 
-export type T_NoteWithTime = Omit<Note, 'startTime' | 'endTime'> & {
+export type T_NoteWithTime = Omit<T_Note, 'startTime' | 'endTime'> & {
 	startTime: Date;
 	endTime: Date;
 };

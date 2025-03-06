@@ -1,11 +1,9 @@
-'use client';
-
-import LoadingSpinner from '@/components/loading-spinner';
-import { useNotesWithTime } from '@/hooks/use-notes-with-time';
-import { useSettings } from '@/hooks/use-settings';
 import { addDays, isAfter, isBefore, startOfDay } from 'date-fns';
 import { AnimatePresence } from 'motion/react';
 import { MouseEvent, RefObject, useMemo, useState } from 'react';
+import LoadingSpinner from '../../../components/loading-spinner';
+import { useNotesWithTime } from '../../../hooks/use-notes-with-time';
+import { useSettings } from '../../../hooks/use-settings';
 import { useCalendarContext } from '../context/calendar-context';
 import { getCalendarRowHeight } from '../utils/get-calendar-row-height';
 import { getNoteDateFromXYPosition } from '../utils/get-date-from-position';
@@ -57,7 +55,7 @@ const DaysViewNotes = () => {
 	const leftOffsets = useMemo(() => {
 		if (!notes || notes.length === 0) return [];
 
-		let results = new Array(notes.length).fill(0);
+		const results = new Array(notes.length).fill(0);
 		for (let i = 0; i < notes?.length; i++) {
 			for (let j = 0; j < i; j++) {
 				if (

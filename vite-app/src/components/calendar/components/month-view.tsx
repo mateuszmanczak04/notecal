@@ -1,12 +1,10 @@
-'use client';
-
-import LoadingSpinner from '@/components/loading-spinner';
-import { useNotesWithTime } from '@/hooks/use-notes-with-time';
-import { useSettings } from '@/hooks/use-settings';
-import { cn } from '@/utils/cn';
 import { addDays, format, getDay, getDaysInMonth, isSameDay, isToday, startOfMonth } from 'date-fns';
 import React, { useRef } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
+import LoadingSpinner from '../../../components/loading-spinner';
+import { useNotesWithTime } from '../../../hooks/use-notes-with-time';
+import { useSettings } from '../../../hooks/use-settings';
+import { cn } from '../../../utils/cn';
 import { useCalendarContext } from '../context/calendar-context';
 import MonthViewNote from './month-view-note';
 

@@ -1,13 +1,11 @@
-'use client';
-
-import NoteContextMenu from '@/app/notes/_components/context-menu/note-context-menu';
-import { useNoteContextMenu } from '@/app/notes/_components/context-menu/use-note-context-menu';
-import { useCourses } from '@/hooks/use-courses';
-import { Note } from '@prisma/client';
-import Link from 'next/link';
+import { NavLink } from 'react-router';
+import { useCourses } from '../../../hooks/use-courses';
+import { T_Note } from '../../../types';
+import NoteContextMenu from '../../notes/components/context-menu/note-context-menu';
+import { useNoteContextMenu } from '../../notes/components/context-menu/use-note-context-menu';
 
 type Props = {
-	note: Note;
+	note: T_Note;
 };
 
 const MonthViewNote = ({ note }: Props) => {
@@ -19,13 +17,13 @@ const MonthViewNote = ({ note }: Props) => {
 
 	return (
 		<>
-			<Link
+			<NavLink
 				onContextMenu={handleContextMenu}
-				href={`/notes?noteId=${note.id}`}
+				to={`/notes?noteId=${note.id}`}
 				style={{ backgroundColor: noteCourse.color }}
 				className='truncate text-nowrap rounded-md px-2 text-sm text-white'>
 				{note.title || noteCourse.name}
-			</Link>
+			</NavLink>
 			{/* Context menu on right mouse click */}
 			{contextMenuPosition && (
 				<NoteContextMenu position={contextMenuPosition} note={note} handleClose={closeContextMenu} />

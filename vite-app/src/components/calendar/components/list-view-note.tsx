@@ -1,15 +1,13 @@
-'use client';
-
-import NoteContextMenu from '@/app/notes/_components/context-menu/note-context-menu';
-import { useNoteContextMenu } from '@/app/notes/_components/context-menu/use-note-context-menu';
-import { parseLexicalJsonToPlainText } from '@/app/notes/_components/editor/parse-lexical-json-to-plain-text';
-import { getNoteContent } from '@/app/notes/_utils/get-note-content';
-import { useCourses } from '@/hooks/use-courses';
-import { Note as T_Note } from '@prisma/client';
 import { format } from 'date-fns';
 import { ChevronRight } from 'lucide-react';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router';
+import { useCourses } from '../../../hooks/use-courses';
+import { T_Note } from '../../../types';
+import NoteContextMenu from '../../notes/components/context-menu/note-context-menu';
+import { useNoteContextMenu } from '../../notes/components/context-menu/use-note-context-menu';
+import { parseLexicalJsonToPlainText } from '../../notes/components/editor/parse-lexical-json-to-plain-text';
+import { getNoteContent } from '../../notes/utils/get-note-content';
 
 type T_Props = {
 	note: T_Note;
@@ -32,9 +30,9 @@ const ListViewNote = ({ note }: T_Props) => {
 
 	return (
 		<>
-			<Link
+			<NavLink
 				onContextMenu={handleContextMenu}
-				href={`/notes?noteId=${note.id}`}
+				to={`/notes?noteId=${note.id}`}
 				className='flex w-[clamp(240px,100%,800px)] items-center justify-between gap-4 rounded-xl p-4 text-white hover:opacity-90'
 				style={{ backgroundColor: course?.color }}
 				key={note.id}>
@@ -54,7 +52,7 @@ const ListViewNote = ({ note }: T_Props) => {
 					)}
 				</div>
 				<ChevronRight className='size-7 shrink-0' />
-			</Link>
+			</NavLink>
 			{/* Context menu on right mouse click */}
 			{contextMenuPosition && (
 				<NoteContextMenu handleClose={closeContextMenu} note={note} position={contextMenuPosition} />

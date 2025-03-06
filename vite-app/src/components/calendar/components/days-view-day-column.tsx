@@ -1,7 +1,5 @@
-'use client';
-
-import { useSettings } from '@/hooks/use-settings';
-import { cn } from '@/utils/cn';
+import { useSettings } from '../../../hooks/use-settings';
+import { cn } from '../../../utils/cn';
 import { getCalendarRowHeight } from '../utils/get-calendar-row-height';
 
 const Row = ({ isToday }: { isToday: boolean }) => {
