@@ -66,13 +66,13 @@ export const POST = async (request: Request) => {
 			data: {
 				userId: user.id,
 				title,
-				courseId,
+				courseId: courseId || null,
 				weight: largestWeight + 10000,
 			},
 		});
 
 		return Response.json({ task }, { status: 201 });
-	} catch (error) {
+	} catch {
 		return Response.json({ error: en.SOMETHING_WENT_WRONG }, { status: 500 });
 	}
 };

@@ -32,7 +32,7 @@ export const useTasksFunctionality = ({ courseId }: T_Props) => {
 
 	const sortedTasks = tasks ? [...tasks].sort((a, b) => a.weight - b.weight) : [];
 
-	const wantedTasks = sortedTasks.filter(task => task.courseId === courseId);
+	const wantedTasks = sortedTasks.filter(task => (courseId ? task.courseId === courseId : true));
 
 	const handleReorder = (newTasks: T_Task[]) => {
 		const newTasksWithProperWeights = newTasks.map((task, index) => ({
