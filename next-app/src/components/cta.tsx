@@ -1,5 +1,5 @@
-import { Button } from '@/_components/button';
 import Link from 'next/link';
+import { Button } from './button';
 
 const CTA = () => {
 	return (
