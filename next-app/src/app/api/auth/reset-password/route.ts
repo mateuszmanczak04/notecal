@@ -1,8 +1,8 @@
-import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
-import { generateToken } from '@/utils/jwt';
 import bcryptjs from 'bcryptjs';
 import { cookies } from 'next/headers';
+import db from '../../../../utils/db';
+import { en } from '../../../../utils/dictionary';
+import { generateToken } from '../../../../utils/jwt';
 
 /**
  * A function updating user password after they forgot it.

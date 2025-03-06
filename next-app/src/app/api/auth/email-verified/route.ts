@@ -1,6 +1,6 @@
-import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
 import { isAfter } from 'date-fns';
+import db from '../../../../utils/db';
+import { en } from '../../../../utils/dictionary';
 import { sendConfirmationEmail } from '../../../../utils/send-confirmation-email';
 
 /**

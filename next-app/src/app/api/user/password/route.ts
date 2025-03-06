@@ -1,7 +1,7 @@
-import { getAuthStatus } from '@/utils/auth';
-import { comparePasswords, hashPassword } from '@/utils/bcrypt';
-import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
+import { getAuthStatus } from '../../../../utils/auth';
+import { comparePasswords, hashPassword } from '../../../../utils/bcrypt';
+import db from '../../../../utils/db';
+import { en } from '../../../../utils/dictionary';
 
 export async function PUT(request: Request) {
 	try {

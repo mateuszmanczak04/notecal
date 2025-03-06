@@ -1,6 +1,6 @@
-import { getAuthStatus } from '@/utils/auth';
-import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
+import { getAuthStatus } from '../../../../utils/auth';
+import db from '../../../../utils/db';
+import { en } from '../../../../utils/dictionary';
 
 export const PATCH = async (request: Request) => {
 	try {

@@ -1,8 +1,8 @@
-import { getAuthStatus } from '@/utils/auth';
-import { comparePasswords } from '@/utils/bcrypt';
-import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
-import { sendConfirmationEmail } from '@/utils/send-confirmation-email';
+import { getAuthStatus } from '../../../../utils/auth';
+import { comparePasswords } from '../../../../utils/bcrypt';
+import db from '../../../../utils/db';
+import { en } from '../../../../utils/dictionary';
+import { sendConfirmationEmail } from '../../../../utils/send-confirmation-email';
 
 export async function PUT(request: Request) {
 	try {

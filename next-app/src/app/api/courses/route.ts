@@ -1,6 +1,6 @@
-import { getAuthStatus } from '@/utils/auth';
-import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
+import { getAuthStatus } from '../../../utils/auth';
+import db from '../../../utils/db';
+import { en } from '../../../utils/dictionary';
 
 /** Create new course */
 export const POST = async (request: Request) => {

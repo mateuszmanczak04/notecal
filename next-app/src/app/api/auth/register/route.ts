@@ -1,8 +1,8 @@
-import { hashPassword } from '@/utils/bcrypt';
-import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
-import { generateToken } from '@/utils/jwt';
 import { cookies } from 'next/headers';
+import { hashPassword } from '../../../../utils/bcrypt';
+import db from '../../../../utils/db';
+import { en } from '../../../../utils/dictionary';
+import { generateToken } from '../../../../utils/jwt';
 import { sendConfirmationEmail } from '../../../../utils/send-confirmation-email';
 
 export async function POST(request: Request) {

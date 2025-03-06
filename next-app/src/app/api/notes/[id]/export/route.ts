@@ -2,9 +2,9 @@
 // but rather fetching it from the server by id
 import * as puppeteer from 'puppeteer';
 
-import { en } from '@/utils/dictionary';
 import chromium from '@sparticuz/chromium';
 import puppeteerCore from 'puppeteer-core';
+import { en } from '../../../../../utils/dictionary';
 
 /** Export note to PDF */
 export const POST = async (request: Request) => {

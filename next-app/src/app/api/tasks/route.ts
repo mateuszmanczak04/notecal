@@ -1,7 +1,7 @@
-import { getAuthStatus } from '@/utils/auth';
-import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
 import { Task } from '@prisma/client';
+import { getAuthStatus } from '../../../utils/auth';
+import db from '../../../utils/db';
+import { en } from '../../../utils/dictionary';
 
 /** Get all user's tasks */
 export const GET = async (_request: Request) => {

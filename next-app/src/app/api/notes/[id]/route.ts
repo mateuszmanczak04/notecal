@@ -1,8 +1,8 @@
-import { getAuthStatus } from '@/utils/auth';
-import { generateGetPresignedUrl, generatePutPresignedUrl } from '@/utils/aws';
-import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
 import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { getAuthStatus } from '../../../../utils/auth';
+import { generateGetPresignedUrl, generatePutPresignedUrl } from '../../../../utils/aws';
+import db from '../../../../utils/db';
+import { en } from '../../../../utils/dictionary';
 
 type T_Params = {
 	params: Promise<{ id: string }>;

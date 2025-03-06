@@ -1,6 +1,6 @@
-import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
 import nodemailer from 'nodemailer';
+import db from '../../../../utils/db';
+import { en } from '../../../../utils/dictionary';
 
 /**
  * Query to the database to find a ResetPasswordToken by email.

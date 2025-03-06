@@ -1,8 +1,8 @@
-import { comparePasswords } from '@/utils/bcrypt';
-import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
-import { generateToken } from '@/utils/jwt';
 import { cookies } from 'next/headers';
+import { comparePasswords } from '../../../../utils/bcrypt';
+import db from '../../../../utils/db';
+import { en } from '../../../../utils/dictionary';
+import { generateToken } from '../../../../utils/jwt';
 
 export async function POST(request: Request) {
 	try {
