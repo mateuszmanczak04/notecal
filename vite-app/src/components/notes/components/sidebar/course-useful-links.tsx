@@ -119,7 +119,7 @@ const CourseUsefulLinks = () => {
 				onSubmit={handleAddNew}
 				className={cn(
 					'grid gap-2',
-					isClient ? usefulLinks.length === 0 && 'mt-4' : '',
+					usefulLinks.length === 0 && 'mt-4',
 					isPending && 'pointer-events-none opacity-50',
 				)}>
 				<Input
@@ -145,7 +145,7 @@ const CourseUsefulLinks = () => {
 					className='rounded-xl text-sm'
 					type='submit'
 					disabled={isPending}
-					style={{ backgroundColor: isClient ? currentCourse?.color || '' : '' }}>
+					style={{ backgroundColor: currentCourse?.color || '' }}>
 					<Plus className='size-5' />
 					Add new link to the list
 				</Button>

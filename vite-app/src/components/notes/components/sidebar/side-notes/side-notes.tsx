@@ -59,7 +59,7 @@ const SideNotes = () => {
 			)}
 
 			<Button
-				style={{ backgroundColor: isClient ? currentCourse?.color : '' }}
+				style={{ backgroundColor: currentCourse?.color }}
 				onClick={handleNewNote}
 				className={cn('mt-2 transition-opacity', isPending && 'pointer-events-none opacity-50')}
 				disabled={isPending}>

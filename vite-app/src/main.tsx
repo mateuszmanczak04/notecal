@@ -25,7 +25,7 @@ createRoot(document.getElementById('root')!).render(
 						<Route path='/tasks' element={<TasksPage />} />
 						<Route path='/courses' element={<CoursesPage />} />
 						<Route path='/settings' element={<SettingsPage />} />
-						<Route path='/notes/:id' element={<NotesPage />} />
+						<Route path='/notes' element={<NotesPage />} />
 						<Route path='/auth/login' element={<LoginPage />} />
 						<Route path='/auth/register' element={<RegisterPage />} />
 						<Route path='/auth/forgot-password' element={<ForgotPasswordPage />} />
