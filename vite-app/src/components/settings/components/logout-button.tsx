@@ -1,9 +1,9 @@
 'use client';
 
-import { Button } from '@/components/button';
-import LoadingSpinner from '@/components/loading-spinner';
 import { useMutation } from '@tanstack/react-query';
 import { LogOut } from 'lucide-react';
+import { Button } from '../../../components/button';
+import LoadingSpinner from '../../../components/loading-spinner';
 
 const LogoutButton = () => {
 	const { mutate, isPending } = useMutation({

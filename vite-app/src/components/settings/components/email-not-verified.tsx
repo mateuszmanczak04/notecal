@@ -1,13 +1,13 @@
 'use client';
 
-import { Button } from '@/components/button';
-import ErrorMessage from '@/components/error-message';
-import LoadingSpinner from '@/components/loading-spinner';
-import SuccessMessage from '@/components/success-message';
-import { useClientSide } from '@/hooks/use-client-side';
-import { useUser } from '@/hooks/use-user';
 import { Mail } from 'lucide-react';
 import { useActionState } from 'react';
+import { Button } from '../../../components/button';
+import ErrorMessage from '../../../components/error-message';
+import LoadingSpinner from '../../../components/loading-spinner';
+import SuccessMessage from '../../../components/success-message';
+import { useClientSide } from '../../../hooks/use-client-side';
+import { useUser } from '../../../hooks/use-user';
 
 const EmailNotVerified = () => {
 	const { data: user } = useUser();
@@ -30,11 +30,11 @@ const EmailNotVerified = () => {
 	if (user.emailVerified) return;
 
 	return (
-		<div className='space-y-4 rounded-xl border-2 border-error-500 p-4 dark:text-white'>
+		<div className='border-error-500 space-y-4 rounded-xl border-2 p-4 dark:text-white'>
 			<p>
 				Your email <strong>{user.email}</strong> is not verified
 			</p>
-			<p className=' opacity-75'>Confirm your email to secure your account in case you lose your password</p>
+			<p className='opacity-75'>Confirm your email to secure your account in case you lose your password</p>
 
 			<form action={formAction}>
 				<input type='hidden' name='email' value={user.email} />

@@ -1,12 +1,12 @@
 'use client';
 
-import { Button } from '@/components/button';
-import ErrorMessage from '@/components/error-message';
-import FormLoadingSpinner from '@/components/form-loading-spinner';
-import { Input } from '@/components/input';
-import LoadingSpinner from '@/components/loading-spinner';
-import SuccessMessage from '@/components/success-message';
 import { useState, useTransition } from 'react';
+import { Button } from '../../../components/button';
+import ErrorMessage from '../../../components/error-message';
+import FormLoadingSpinner from '../../../components/form-loading-spinner';
+import { Input } from '../../../components/input';
+import LoadingSpinner from '../../../components/loading-spinner';
+import SuccessMessage from '../../../components/success-message';
 
 const ChangePasswordSetting = () => {
 	const [error, setError] = useState('');
