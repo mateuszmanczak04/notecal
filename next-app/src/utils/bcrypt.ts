@@ -1,3 +1,5 @@
+'server-only';
+
 import bcryptjs from 'bcryptjs';
 
 export const hashPassword = async (password: string) => {

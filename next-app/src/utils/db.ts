@@ -1,3 +1,5 @@
+'server-only';
+
 import { PrismaClient } from '@prisma/client';
 
 // we do all of this for development mode to not create

@@ -1,3 +1,5 @@
+'server-only';
+
 export const en = {
 	SOMETHING_WENT_WRONG: 'Something went wrong, please try again later',
 	INVALID_DATA: 'Invalid data',
