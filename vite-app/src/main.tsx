@@ -1,7 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router';
-import App from './App.tsx';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import ConfirmEmailPage from './components/auth/confirm-email/ConfirmEmailPage.tsx';
 import ForgotPasswordPage from './components/auth/forgot-password/ForgotPasswordPage.tsx';
 import LoginPage from './components/auth/login/LoginPage.tsx';
@@ -22,7 +21,6 @@ createRoot(document.getElementById('root')!).render(
 			<BrowserRouter>
 				<Routes>
 					<Route element={<Layout />}>
-						<Route path='/' element={<App />} />
 						<Route path='/calendar' element={<CalendarPage />} />
 						<Route path='/tasks' element={<TasksPage />} />
 						<Route path='/courses' element={<CoursesPage />} />
@@ -33,6 +31,8 @@ createRoot(document.getElementById('root')!).render(
 						<Route path='/auth/forgot-password' element={<ForgotPasswordPage />} />
 						<Route path='/auth/confirm-email' element={<ConfirmEmailPage />} />
 						<Route path='/auth/reset-password' element={<ResetPasswordPage />} />
+						<Route path='/' element={<Navigate to='/calendar' />} />
+						{/* TODO: catch all and show 404 page */}
 					</Route>
 				</Routes>
 			</BrowserRouter>
