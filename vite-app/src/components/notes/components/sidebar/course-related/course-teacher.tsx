@@ -70,7 +70,8 @@ const CourseTeacher = () => {
 			)}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}
-			spellCheck={false}></p>
+			spellCheck={false}
+		></p>
 	);
 };
 

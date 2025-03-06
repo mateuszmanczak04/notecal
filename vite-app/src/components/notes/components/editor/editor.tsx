@@ -135,13 +135,15 @@ const Editor = () => {
 			className={cn(
 				'flex h-full flex-1 flex-col bg-white dark:bg-neutral-800',
 				isPendingUpdate && 'pointer-events-none opacity-50',
-			)}>
+			)}
+		>
 			<LexicalComposer
 				key={content}
 				initialConfig={{
 					...editorConfig,
 					editorState: content || undefined,
-				}}>
+				}}
+			>
 				<ToolbarPlugin handleExport={handleExportToPDF} onSave={handleSave} hasChanged={hasChanged} />
 				{isPendingGet && (
 					<div className='p-4'>
@@ -153,7 +155,8 @@ const Editor = () => {
 						'scrollbar-hide relative w-full flex-1 overflow-y-scroll scroll-auto p-4 leading-normal',
 						maxNoteWidthEnabled && 'mx-auto max-w-screen-lg',
 						isPendingGet && 'pointer-events-none opacity-50',
-					)}>
+					)}
+				>
 					<RichTextPlugin
 						contentEditable={
 							<ContentEditable

@@ -29,7 +29,8 @@ const NoteTasks = () => {
 				<Button
 					className='mb-4 w-full'
 					style={{ backgroundColor: currentCourse.color }}
-					onClick={handleSaveNewOrder}>
+					onClick={handleSaveNewOrder}
+				>
 					Save new order
 				</Button>
 			)}

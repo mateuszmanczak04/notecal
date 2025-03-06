@@ -37,7 +37,8 @@ const CourseColor = () => {
 							backgroundColor: color.hex,
 						}}
 						onClick={() => mutate({ id: currentCourse?.id || '', color: color.hex })}
-						key={color.hex}></button>
+						key={color.hex}
+					></button>
 				);
 			})}
 		</div>

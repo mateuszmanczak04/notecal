@@ -37,7 +37,8 @@ const DeleteManyNotesButton = ({ notes, className }: Props) => {
 			<Button
 				variant='destructive'
 				onClick={() => mutate({ ids: notes.map(n => n.id) })}
-				className={cn('rounded-md', className)}>
+				className={cn('rounded-md', className)}
+			>
 				<Trash className='size-5' /> Are you sure? {isPending && <LoadingSpinner className='size-4' />}
 			</Button>
 		);

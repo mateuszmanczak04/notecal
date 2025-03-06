@@ -48,14 +48,16 @@ const NoteDangerZone = () => {
 						onClick={confirmDeletion}
 						className={cn('mt-4 w-full', isPending && 'pointer-events-none opacity-50')}
 						aria-label='Yes, delete entire course'
-						disabled={isPending}>
+						disabled={isPending}
+					>
 						Yes {isPending && <LoadingSpinner className='size-4' />}
 					</Button>
 					<Button
 						variant='secondary'
 						className='mt-2 w-full'
 						onClick={() => setIsDeleting(false)}
-						aria-label='No, do not delete entire course'>
+						aria-label='No, do not delete entire course'
+					>
 						No, cancel
 					</Button>
 				</div>

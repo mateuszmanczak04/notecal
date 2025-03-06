@@ -114,7 +114,8 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 						onDrag={handleDrag}
 						onDragEndCapture={handleDragEnd}
 						onDragOver={e => e.preventDefault()}
-						onContextMenu={e => handleContextMenu(e, index)}>
+						onContextMenu={e => handleContextMenu(e, index)}
+					>
 						{/* Top edge to drag: */}
 						{index === 0 && (
 							<div
@@ -126,13 +127,15 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 								className={cn(
 									'absolute inset-x-0 top-0 z-30 h-2 cursor-ns-resize rounded-t-xl bg-white',
 									isDragging ? 'opacity-0' : 'opacity-25',
-								)}></div>
+								)}
+							></div>
 						)}
 
 						{/* Center part (link) */}
 						<div
 							onClick={handleRoute}
-							className='-mt-4 h-full w-full overflow-clip break-all pt-4 text-sm text-white'>
+							className='-mt-4 h-full w-full overflow-clip break-all pt-4 text-sm text-white'
+						>
 							<p className='m-4'>{note.title || course?.name}</p>
 						</div>
 
@@ -147,7 +150,8 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 								className={cn(
 									'absolute inset-x-0 bottom-0 h-2 cursor-ns-resize rounded-b-xl bg-black',
 									isDragging ? 'opacity-0' : 'opacity-25',
-								)}></div>
+								)}
+							></div>
 						)}
 
 						{/* Context menu on right mouse click */}
@@ -184,11 +188,13 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 								noteEndTime: actualDragEndTime,
 							}),
 							backgroundColor: course.color,
-						}}>
+						}}
+					>
 						{/* Center part (link) */}
 						<div
 							onClick={handleRoute}
-							className='-mt-4 h-full w-full overflow-clip break-all pt-4 text-sm text-white'>
+							className='-mt-4 h-full w-full overflow-clip break-all pt-4 text-sm text-white'
+						>
 							<p className='m-4'>{note.title || course?.name}</p>
 						</div>
 					</div>

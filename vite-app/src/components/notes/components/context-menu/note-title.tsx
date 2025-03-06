@@ -41,7 +41,8 @@ const NoteTitle = ({ note, callback }: Props) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className={cn('transition-opacity', isPending && 'pointer-events-none opacity-50')}>
+			className={cn('transition-opacity', isPending && 'pointer-events-none opacity-50')}
+		>
 			<label htmlFor='note-title' className='mb-1 block px-2 font-semibold'>
 				Title
 			</label>

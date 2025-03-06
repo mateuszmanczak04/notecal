@@ -1,5 +1,3 @@
-'use client';
-
 import { Mail } from 'lucide-react';
 import { useState, useTransition } from 'react';
 import { Button } from '../../../components/button';
@@ -35,7 +33,8 @@ const ForgotPasswordForm = () => {
 		<>
 			<form
 				className='mt-4 rounded-xl border border-neutral-200 p-4 dark:border-transparent dark:bg-neutral-800'
-				onSubmit={handleSubmit}>
+				onSubmit={handleSubmit}
+			>
 				<label htmlFor='email' className='ml-2 block font-medium'>
 					Email
 				</label>

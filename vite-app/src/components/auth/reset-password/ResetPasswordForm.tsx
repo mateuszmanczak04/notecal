@@ -1,5 +1,3 @@
-'use client';
-
 import { useState, useTransition } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { Button } from '../../../components/button';
@@ -40,7 +38,8 @@ const ResetPasswordForm = () => {
 		<>
 			<form
 				className='mt-4 rounded-xl border border-neutral-200 p-4 dark:border-transparent dark:bg-neutral-800'
-				onSubmit={handleSubmit}>
+				onSubmit={handleSubmit}
+			>
 				<label htmlFor='password' className='ml-2 block font-medium'>
 					New Password
 				</label>

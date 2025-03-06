@@ -21,7 +21,8 @@ const MonthViewNote = ({ note }: Props) => {
 				onContextMenu={handleContextMenu}
 				to={`/notes?noteId=${note.id}`}
 				style={{ backgroundColor: noteCourse.color }}
-				className='truncate text-nowrap rounded-md px-2 text-sm text-white'>
+				className='truncate text-nowrap rounded-md px-2 text-sm text-white'
+			>
 				{note.title || noteCourse.name}
 			</NavLink>
 			{/* Context menu on right mouse click */}

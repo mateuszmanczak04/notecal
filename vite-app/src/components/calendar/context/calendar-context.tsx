@@ -1,5 +1,3 @@
-'use client';
-
 import { ReactNode, RefObject, createContext, useContext, useRef, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 
@@ -52,7 +50,8 @@ export const CalendarContextProvider = ({ children }: { children: ReactNode }) =
 				hiddenCoursesIds,
 				handleHideCourse,
 				handleShowCourse,
-			}}>
+			}}
+		>
 			{children}
 		</CalendarContext.Provider>
 	);

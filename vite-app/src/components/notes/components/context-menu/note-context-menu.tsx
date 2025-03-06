@@ -69,7 +69,8 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 			style={{
 				left: position.x,
 				top: position.y,
-			}}>
+			}}
+		>
 			{selectedNotes.length <= 1 && currentCourse && (
 				<div>
 					<NoteTitle note={note} callback={handleClose} />

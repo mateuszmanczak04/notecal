@@ -1,5 +1,3 @@
-'use client';
-
 import { Mail } from 'lucide-react';
 import { useActionState } from 'react';
 import { Button } from '../../../components/button';

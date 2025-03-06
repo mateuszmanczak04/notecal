@@ -18,7 +18,8 @@ const NoteTaskDueDate = ({ task }: T_Props) => {
 				className={cn(
 					'flex h-6 items-center rounded-md border border-neutral-100 px-1 transition-opacity dark:border-neutral-800 dark:text-neutral-100',
 					isPending && 'pointer-events-none opacity-50',
-				)}>
+				)}
+			>
 				{/* Year */}
 				<input
 					placeholder='yyyy'

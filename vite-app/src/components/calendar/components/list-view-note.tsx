@@ -35,7 +35,8 @@ const ListViewNote = ({ note }: T_Props) => {
 				to={`/notes?noteId=${note.id}`}
 				className='flex w-[clamp(240px,100%,800px)] items-center justify-between gap-4 rounded-xl p-4 text-white hover:opacity-90'
 				style={{ backgroundColor: course?.color }}
-				key={note.id}>
+				key={note.id}
+			>
 				<div className='w-full min-w-0'>
 					{note.startTime && note.endTime && (
 						<div className='flex gap-2'>

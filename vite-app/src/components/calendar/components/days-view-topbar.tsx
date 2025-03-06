@@ -20,7 +20,8 @@ const DaysViewTopbar = () => {
 				className='grid flex-1'
 				style={{
 					gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
-				}}>
+				}}
+			>
 				{days.map(day => (
 					<DaysViewDayHeading key={day.toString()} date={day} />
 				))}

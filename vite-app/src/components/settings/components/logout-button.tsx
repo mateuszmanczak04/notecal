@@ -1,5 +1,3 @@
-'use client';
-
 import { useMutation } from '@tanstack/react-query';
 import { LogOut } from 'lucide-react';
 import { Button } from '../../../components/button';

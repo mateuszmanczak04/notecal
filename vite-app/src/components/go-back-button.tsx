@@ -12,7 +12,8 @@ const GoBackButton = forwardRef<HTMLButtonElement, ButtonProps>(({ children, cla
 			className={className}
 			variant={variant}
 			// onClick={router.back}
-			{...props}>
+			{...props}
+		>
 			{children}
 		</Button>
 	);

@@ -21,7 +21,8 @@ const TaskDescription = ({ task }: T_Props) => {
 			)}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}
-			spellCheck={false}></p>
+			spellCheck={false}
+		></p>
 	);
 };
 

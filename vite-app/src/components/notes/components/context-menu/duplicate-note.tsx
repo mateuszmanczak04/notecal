@@ -67,7 +67,8 @@ const DuplicateNote = ({ note, className }: T_Props) => {
 		<Button
 			onClick={() => mutate()}
 			className={cn('dark:bg-neutral-600 dark:hover:bg-neutral-500', className)}
-			variant='secondary'>
+			variant='secondary'
+		>
 			<File className='size-5' />
 			Duplicate note
 		</Button>

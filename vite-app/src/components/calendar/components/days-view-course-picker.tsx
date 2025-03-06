@@ -93,7 +93,8 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 0.25 }}
 				exit={{ opacity: 0 }}
-				className='absolute inset-0 z-30 bg-black'></motion.div>
+				className='absolute inset-0 z-30 bg-black'
+			></motion.div>
 
 			{/* Popup: */}
 			{courses && courses.length > 0 && (
@@ -107,7 +108,8 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 						isPending && 'pointer-events-none opacity-50',
 					)}
 					ref={pickerRef}
-					style={{ left: pickerX, top: pickerY }}>
+					style={{ left: pickerX, top: pickerY }}
+				>
 					<p className='text-sm font-semibold'>Create a new note</p>
 					<p className='mt-1 text-sm opacity-75'>{format(time, 'yyyy/MM/dd hh:mm')}</p>
 					{courses.length === 0 && <p className='mt-2 text-sm'>You don&apos;t have any courses yet</p>}
@@ -117,7 +119,8 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 								key={course.id}
 								onClick={() => handleSelect(course.id)}
 								className='w-full rounded-md px-3 py-2 text-start text-sm text-white transition hover:bg-neutral-100 hover:opacity-75 dark:hover:bg-neutral-700'
-								style={{ color: course.color }}>
+								style={{ color: course.color }}
+							>
 								<p className='truncate'>{course.name}</p>
 							</button>
 						))}

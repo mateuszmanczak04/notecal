@@ -16,7 +16,8 @@ const CalendarMenuDisplayedDays = () => {
 			<MenubarContent>
 				<MenubarRadioGroup
 					value={displayedDays.toString()}
-					onValueChange={value => setDisplayedDays(parseInt(value) as T_DisplayedDays)}>
+					onValueChange={value => setDisplayedDays(parseInt(value) as T_DisplayedDays)}
+				>
 					{[1, 2, 3, 4, 5, 6, 7].map(days => (
 						<MenubarRadioItem key={days} value={days.toString()}>
 							{days}

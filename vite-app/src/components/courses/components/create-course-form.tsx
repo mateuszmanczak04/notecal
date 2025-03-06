@@ -1,5 +1,3 @@
-'use client';
-
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
 import { Button } from '../../../components/button';
@@ -101,12 +99,14 @@ const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 							style={{
 								backgroundColor: color.hex,
 							}}
-							key={color.hex}>
+							key={color.hex}
+						>
 							<span
 								className={cn(
 									'rounded-xl bg-neutral-900/50 px-1 text-sm leading-5 transition',
 									selectedColor === color.hex ? 'opacity-1' : 'opacity-0',
-								)}>
+								)}
+							>
 								{color.description}
 							</span>
 						</div>

@@ -52,7 +52,8 @@ const SideNoteItem = ({ note }: Props) => {
 				className={cn(
 					'h-9 truncate rounded-xl border-2 border-transparent bg-neutral-100 px-3 text-sm leading-9 transition-colors dark:bg-neutral-800',
 					(note.id === noteId || isNoteSelected(note)) && 'border-neutral-300 dark:border-neutral-600',
-				)}>
+				)}
+			>
 				<span className='w-auto max-w-48 shrink-0 truncate text-center text-sm'>
 					{note.startTime && note.endTime && (
 						<span className='mr-2 font-semibold'>{format(note.startTime, 'yyyy-MM-dd')}</span>

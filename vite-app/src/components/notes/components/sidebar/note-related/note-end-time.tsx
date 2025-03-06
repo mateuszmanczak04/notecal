@@ -49,7 +49,8 @@ const NoteEndTime = ({ note }: Props) => {
 				className={cn(
 					'mt-2 flex w-fit rounded-md border border-neutral-100 p-1 text-sm transition-opacity dark:border-neutral-800 dark:text-neutral-100',
 					isPending && 'pointer-events-none opacity-50',
-				)}>
+				)}
+			>
 				{/* Year */}
 				<input
 					placeholder='yyyy'

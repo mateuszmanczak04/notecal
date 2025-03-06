@@ -51,7 +51,8 @@ const NoteCreateTaskForm = ({ course }: Props) => {
 				className='rounded-xl text-sm'
 				type='submit'
 				disabled={isPending}
-				style={{ backgroundColor: course?.color || '' }}>
+				style={{ backgroundColor: course?.color || '' }}
+			>
 				<Plus className='size-5' />
 				Create a new task
 			</Button>

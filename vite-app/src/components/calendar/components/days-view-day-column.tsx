@@ -11,7 +11,8 @@ const Row = ({ isToday }: { isToday: boolean }) => {
 				'flex items-center justify-center border-b border-r font-semibold text-neutral-500 transition-[height] dark:border-neutral-600',
 				isToday && 'bg-neutral-100 dark:bg-neutral-700',
 			)}
-			style={{ height: getCalendarRowHeight({ zoomLevel }) + 'px' }}></div>
+			style={{ height: getCalendarRowHeight({ zoomLevel }) + 'px' }}
+		></div>
 	);
 };
 

@@ -63,7 +63,8 @@ const SideNotes = () => {
 				style={{ backgroundColor: isClient ? currentCourse?.color : '' }}
 				onClick={handleNewNote}
 				className={cn('mt-2 transition-opacity', isPending && 'pointer-events-none opacity-50')}
-				disabled={isPending}>
+				disabled={isPending}
+			>
 				<Plus className='size-5' /> Create a new note {isPending && <LoadingSpinner className='size-4' />}
 			</Button>
 		</div>

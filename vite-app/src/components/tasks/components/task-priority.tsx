@@ -19,7 +19,8 @@ const TaskPriority = ({ task }: T_Props) => {
 		<div ref={ref} className={cn('relative transition-opacity', isPending && 'pointer-events-none opacity-50')}>
 			<button
 				className='flex h-6 items-center gap-1 rounded-md border border-neutral-200 p-1 px-2 text-sm hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800'
-				onClick={() => setIsOpen(prev => !prev)}>
+				onClick={() => setIsOpen(prev => !prev)}
+			>
 				<div
 					className={cn(
 						'aspect-square size-full rounded-full',
@@ -27,7 +28,8 @@ const TaskPriority = ({ task }: T_Props) => {
 						task.priority === 'A' && 'bg-red-500 dark:bg-red-400',
 						task.priority === 'B' && 'bg-yellow-500 dark:bg-yellow-400',
 						task.priority === 'C' && 'bg-green-500 dark:bg-green-400',
-					)}></div>
+					)}
+				></div>
 				<p>
 					{(() => {
 						switch (task.priority) {
@@ -50,7 +52,8 @@ const TaskPriority = ({ task }: T_Props) => {
 						initial={{ opacity: 0, y: -20 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -20 }}
-						className='absolute left-0 top-7 z-10 flex flex-col rounded-md bg-white p-2 shadow-xl dark:bg-neutral-800'>
+						className='absolute left-0 top-7 z-10 flex flex-col rounded-md bg-white p-2 shadow-xl dark:bg-neutral-800'
+					>
 						{['A', 'B', 'C', null].map(priority => (
 							<button
 								key={priority}
@@ -58,7 +61,8 @@ const TaskPriority = ({ task }: T_Props) => {
 									setIsOpen(false);
 									updateTaskPriority(priority);
 								}}
-								className='flex items-center gap-2 text-nowrap border border-b-0 border-neutral-200 px-2 py-1 text-sm transition-colors first-of-type:rounded-t-md last-of-type:rounded-b-md last-of-type:border-b hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700'>
+								className='flex items-center gap-2 text-nowrap border border-b-0 border-neutral-200 px-2 py-1 text-sm transition-colors first-of-type:rounded-t-md last-of-type:rounded-b-md last-of-type:border-b hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700'
+							>
 								<div
 									className={cn(
 										'aspect-square size-3 rounded-full',
@@ -66,7 +70,8 @@ const TaskPriority = ({ task }: T_Props) => {
 										priority === 'A' && 'bg-red-500 dark:bg-red-400',
 										priority === 'B' && 'bg-yellow-500 dark:bg-yellow-400',
 										priority === 'C' && 'bg-green-500 dark:bg-green-400',
-									)}></div>
+									)}
+								></div>
 								<p className='max-w-32 truncate text-start'>
 									{(() => {
 										switch (priority) {

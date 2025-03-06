@@ -20,7 +20,8 @@ const NoteTaskCompleted = ({ task }: T_Props) => {
 				task.completed && 'border-neutral-300 bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700',
 			)}
 			aria-label='task completed checkbox'
-			title='task completed checkbox'>
+			title='task completed checkbox'
+		>
 			{task.completed && <Check className='size-4' />}
 		</button>
 	);

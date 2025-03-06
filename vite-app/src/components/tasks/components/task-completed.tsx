@@ -1,5 +1,3 @@
-'use client';
-
 import { Checkbox } from '../../../components/checkbox';
 import { T_Task } from '../../../types';
 import { cn } from '../../../utils/cn';

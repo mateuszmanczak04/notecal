@@ -214,7 +214,8 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 					onPressedChange={() => {
 						editor.dispatchCommand(UNDO_COMMAND, undefined);
 					}}
-					title='Ctrl + Z'>
+					title='Ctrl + Z'
+				>
 					<ChevronLeft className='h-5 w-5' />
 				</Toggle>
 				<Toggle
@@ -222,7 +223,8 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 					onPressedChange={() => {
 						editor.dispatchCommand(REDO_COMMAND, undefined);
 					}}
-					title='Ctrl + Shift + Z'>
+					title='Ctrl + Shift + Z'
+				>
 					<ChevronRight className='h-5 w-5' />
 				</Toggle>
 			</div>
@@ -232,19 +234,22 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 				<Toggle
 					onClick={() => updateHeading('h1')}
 					title='Heading'
-					className={selectionMap.h1 ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
+					className={selectionMap.h1 ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
+				>
 					<Heading1 className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => updateHeading('h2')}
 					title='Subheading'
-					className={selectionMap.h2 ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
+					className={selectionMap.h2 ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
+				>
 					<Heading2 className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => updateHeading(null)}
 					title='Regular text'
-					className={selectionMap.paragraph ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
+					className={selectionMap.paragraph ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
+				>
 					Aa
 				</Toggle>
 			</div>
@@ -256,7 +261,8 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
 					}}
-					title='Ctrl + Shift + C (Code)'>
+					title='Ctrl + Shift + C (Code)'
+				>
 					<Code className='h-5 w-5' />
 				</Toggle>
 			</div>
@@ -269,7 +275,8 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
 					}}
-					title='Ctrl + B'>
+					title='Ctrl + B'
+				>
 					<Bold className='h-5 w-5' />
 				</Toggle>
 				<Toggle
@@ -278,7 +285,8 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
 					}}
-					title='Ctrl + I'>
+					title='Ctrl + I'
+				>
 					<Italic className='h-5 w-5' />
 				</Toggle>
 				<Toggle
@@ -287,7 +295,8 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
 					}}
-					title='Ctrl + U'>
+					title='Ctrl + U'
+				>
 					<Underline className='h-5 w-5' />
 				</Toggle>
 				<Toggle
@@ -296,7 +305,8 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 					onPressedChange={() => {
 						editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
 					}}
-					title='Ctrl + U'>
+					title='Ctrl + U'
+				>
 					<Strikethrough className='h-5 w-5' />
 				</Toggle>
 			</div>
@@ -307,28 +317,32 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
 					}}
-					className={selectionMap.alignLeft ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
+					className={selectionMap.alignLeft ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
+				>
 					<AlignLeft className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'center');
 					}}
-					className={selectionMap.alignCenter ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
+					className={selectionMap.alignCenter ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
+				>
 					<AlignCenter className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
 					}}
-					className={selectionMap.alignRight ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
+					className={selectionMap.alignRight ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
+				>
 					<AlignRight className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					onClick={() => {
 						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify');
 					}}
-					className={selectionMap.alignJustify ? 'bg-neutral-300 dark:bg-neutral-600' : ''}>
+					className={selectionMap.alignJustify ? 'bg-neutral-300 dark:bg-neutral-600' : ''}
+				>
 					<AlignJustify className='h-5 w-5' />
 				</Toggle>
 			</div>
@@ -339,7 +353,8 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 				className='rounded-md'
 				onClick={onSave}
 				style={{ backgroundColor: isClient ? currentCourse?.color || '' : '' }}
-				disabled={!currentNote || !hasChanged}>
+				disabled={!currentNote || !hasChanged}
+			>
 				<Check className='size-5' /> Save
 			</Button>
 
@@ -348,14 +363,16 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 				className='rounded-md'
 				variant='secondary'
 				onClick={handleExportPDF}
-				disabled={!currentNote || isExportingPDF}>
+				disabled={!currentNote || isExportingPDF}
+			>
 				<FileOutput className='size-5' /> Export PDF {isExportingPDF && <LoadingSpinner className='size-5' />}
 			</Button>
 
 			{!showNoteSidebar && (
 				<button
 					onClick={() => setShowNoteSidebar(prev => !prev)}
-					className='absolute right-0 top-0 grid size-[52px] cursor-pointer place-content-center border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800'>
+					className='absolute right-0 top-0 grid size-[52px] cursor-pointer place-content-center border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800'
+				>
 					<Menu />
 				</button>
 			)}

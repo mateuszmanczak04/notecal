@@ -1,5 +1,3 @@
-'use client';
-
 import { useState, useTransition } from 'react';
 import { Button } from '../../../components/button';
 import ErrorMessage from '../../../components/error-message';

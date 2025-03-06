@@ -74,7 +74,8 @@ const CourseUsefulLinks = () => {
 				<Button
 					className='w-full'
 					style={{ backgroundColor: currentCourse?.color }}
-					onClick={handleSaveNewOrder}>
+					onClick={handleSaveNewOrder}
+				>
 					Save new order
 				</Button>
 			)}
@@ -85,7 +86,8 @@ const CourseUsefulLinks = () => {
 					onReorder={newLinks => {
 						setUsefulLinks(newLinks);
 						setHasChangedOrder(true);
-					}}>
+					}}
+				>
 					{usefulLinks.map(link => (
 						<Reorder.Item
 							value={link}
@@ -94,16 +96,19 @@ const CourseUsefulLinks = () => {
 							dragControls={dragControls}
 							key={link.id}
 							className='group mt-2 flex h-9 w-full cursor-move items-center justify-start overflow-hidden rounded-xl border border-neutral-200 bg-white pr-3 text-sm first-of-type:mt-0 dark:border-neutral-700 dark:bg-neutral-800'
-							title={link.title}>
+							title={link.title}
+						>
 							<div
 								className='mr-3 grid h-full w-6 place-content-center bg-neutral-100 dark:bg-neutral-700'
-								onPointerDown={e => dragControls.start(e)}>
+								onPointerDown={e => dragControls.start(e)}
+							>
 								<GripVertical className='size-4' />
 							</div>
 							<a
 								target='_blank'
 								href={addHttpsIfMissing(link.url)}
-								className='block min-w-0 flex-1 truncate hover:underline'>
+								className='block min-w-0 flex-1 truncate hover:underline'
+							>
 								{link?.title || removeProtocol(link.url)}
 							</a>
 
@@ -122,7 +127,8 @@ const CourseUsefulLinks = () => {
 					'grid gap-2',
 					isClient ? usefulLinks.length === 0 && 'mt-4' : '',
 					isPending && 'pointer-events-none opacity-50',
-				)}>
+				)}
+			>
 				<Input
 					id='create-task-title'
 					placeholder='Title (optional)'
@@ -146,7 +152,8 @@ const CourseUsefulLinks = () => {
 					className='rounded-xl text-sm'
 					type='submit'
 					disabled={isPending}
-					style={{ backgroundColor: isClient ? currentCourse?.color || '' : '' }}>
+					style={{ backgroundColor: isClient ? currentCourse?.color || '' : '' }}
+				>
 					<Plus className='size-5' />
 					Add new link to the list
 				</Button>

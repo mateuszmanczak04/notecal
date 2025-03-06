@@ -92,7 +92,8 @@ const DaysViewNotes = () => {
 			ref={daysViewContainerRef as RefObject<HTMLDivElement>}
 			className='absolute left-12 top-0 w-[calc(100%-48px)] cursor-crosshair overflow-hidden sm:left-20 sm:w-[calc(100%-80px)]'
 			onClick={handleClick}
-			style={{ height: getCalendarRowHeight({ zoomLevel }) * 24 + 'px' }}>
+			style={{ height: getCalendarRowHeight({ zoomLevel }) * 24 + 'px' }}
+		>
 			{/* Notes */}
 			{notes &&
 				notes

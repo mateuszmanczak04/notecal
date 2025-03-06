@@ -30,7 +30,8 @@ const CalendarMenuFilterCourses = () => {
 						key={course.id}
 						checked={!hiddenCoursesIds.includes(course.id)}
 						onCheckedChange={checked => handleFilterCourse(checked, course.id)}
-						className='gap-1'>
+						className='gap-1'
+					>
 						{course.name}
 					</MenubarCheckboxItem>
 				))}
