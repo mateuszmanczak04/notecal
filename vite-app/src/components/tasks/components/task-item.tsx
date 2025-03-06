@@ -1,8 +1,6 @@
-'use client';
-
-import { type Task as TaskItem } from '@prisma/client';
 import { GripVertical } from 'lucide-react';
 import { Reorder, useDragControls } from 'motion/react';
+import { T_Task } from '../../../types';
 import TaskCompleted from './task-completed';
 import TaskCourse from './task-course';
 import TaskDescription from './task-description';
@@ -11,7 +9,7 @@ import TaskPriority from './task-priority';
 import TaskTitle from './task-title';
 
 type T_Props = {
-	task: TaskItem;
+	task: T_Task;
 };
 
 /** Single task for /tasks page */

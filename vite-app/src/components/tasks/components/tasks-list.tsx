@@ -1,8 +1,7 @@
-'use client';
-
-import { Button } from '@/components/button';
-import ErrorMessage from '@/components/error-message';
 import { Reorder } from 'motion/react';
+import { Button } from '../../../components/button';
+import ErrorMessage from '../../../components/error-message';
+import { T_Task } from '../../../types';
 import { useTasksFunctionality } from '../hooks/use-tasks-functionality';
 import TaskItem from './task-item';
 
@@ -40,7 +39,7 @@ const TasksList = () => {
 			)}
 
 			<Reorder.Group values={tasks} onReorder={handleReorder}>
-				{tasks.map(task => (
+				{tasks.map((task: T_Task) => (
 					<TaskItem key={task.id} task={task} />
 				))}
 			</Reorder.Group>

@@ -1,14 +1,12 @@
-'use client';
-
-import { useTaskCourse } from '@/app/tasks/_hooks/use-task-course';
-import { cn } from '@/utils/cn';
-import { Task } from '@prisma/client';
 import { AnimatePresence, motion } from 'motion/react';
 import { useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
+import { T_Course, T_Task } from '../../../types';
+import { cn } from '../../../utils/cn';
+import { useTaskCourse } from '../hooks/use-task-course';
 
 type T_Props = {
-	task: Task;
+	task: T_Task;
 };
 
 const TaskCourse = ({ task }: T_Props) => {
@@ -23,7 +21,7 @@ const TaskCourse = ({ task }: T_Props) => {
 				className='flex h-6 items-center gap-1 rounded-md border border-neutral-200 px-2 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800'
 				onClick={() => setIsOpen(prev => !prev)}>
 				<div
-					className='aspect-square size-3 rounded-full   bg-neutral-200  dark:bg-neutral-600'
+					className='aspect-square size-3 rounded-full bg-neutral-200 dark:bg-neutral-600'
 					style={{ backgroundColor: currentTaskCourse?.color }}></div>
 				<p className='max-w-32 truncate text-start text-sm'> {currentTaskCourse?.name}</p>
 			</button>
@@ -36,16 +34,16 @@ const TaskCourse = ({ task }: T_Props) => {
 						exit={{ opacity: 0, y: -20 }}
 						className='absolute left-0 top-7 z-10 flex flex-col rounded-md bg-white p-2 shadow-xl dark:bg-neutral-800'>
 						{courses &&
-							courses.map(course => (
+							courses.map((course: T_Course) => (
 								<button
 									key={course.id}
 									onClick={() => {
 										setIsOpen(false);
 										updateTaskCourse(course.id);
 									}}
-									className='flex items-center gap-2 text-nowrap border border-b-0 border-neutral-200 px-2 py-1 transition-colors first-of-type:rounded-t-md  hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700'>
+									className='flex items-center gap-2 text-nowrap border border-b-0 border-neutral-200 px-2 py-1 transition-colors first-of-type:rounded-t-md hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700'>
 									<div
-										className='aspect-square size-3 rounded-full   bg-neutral-200  dark:bg-neutral-600'
+										className='aspect-square size-3 rounded-full bg-neutral-200 dark:bg-neutral-600'
 										style={{ backgroundColor: course.color }}></div>
 									<p className='max-w-32 truncate text-start text-sm'> {course.name}</p>
 								</button>
@@ -57,7 +55,7 @@ const TaskCourse = ({ task }: T_Props) => {
 								updateTaskCourse(null);
 							}}
 							className='flex items-center gap-2 text-nowrap rounded-b-md border border-neutral-200 px-2 py-1 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700'>
-							<div className='aspect-square size-3 rounded-full   bg-neutral-200  dark:bg-neutral-600'></div>
+							<div className='aspect-square size-3 rounded-full bg-neutral-200 dark:bg-neutral-600'></div>
 							<p className='max-w-32 truncate text-start text-sm'>None</p>
 						</button>
 					</motion.div>

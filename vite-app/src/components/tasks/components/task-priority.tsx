@@ -1,14 +1,12 @@
-'use client';
-
-import { useTaskPriority } from '@/app/tasks/_hooks/use-task-priority';
-import { cn } from '@/utils/cn';
-import { Task } from '@prisma/client';
 import { AnimatePresence, motion } from 'motion/react';
 import { useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
+import { T_Task } from '../../../types';
+import { cn } from '../../../utils/cn';
+import { useTaskPriority } from '../hooks/use-task-priority';
 
 type T_Props = {
-	task: Task;
+	task: T_Task;
 };
 
 const TaskPriority = ({ task }: T_Props) => {
@@ -24,7 +22,7 @@ const TaskPriority = ({ task }: T_Props) => {
 				onClick={() => setIsOpen(prev => !prev)}>
 				<div
 					className={cn(
-						'aspect-square size-full rounded-full ',
+						'aspect-square size-full rounded-full',
 						task.priority === null && 'bg-neutral-200 dark:bg-neutral-700',
 						task.priority === 'A' && 'bg-red-500 dark:bg-red-400',
 						task.priority === 'B' && 'bg-yellow-500 dark:bg-yellow-400',
@@ -60,10 +58,10 @@ const TaskPriority = ({ task }: T_Props) => {
 									setIsOpen(false);
 									updateTaskPriority(priority);
 								}}
-								className='flex items-center gap-2 text-nowrap border border-b-0 border-neutral-200 px-2 py-1 text-sm transition-colors  first-of-type:rounded-t-md last-of-type:rounded-b-md last-of-type:border-b hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700'>
+								className='flex items-center gap-2 text-nowrap border border-b-0 border-neutral-200 px-2 py-1 text-sm transition-colors first-of-type:rounded-t-md last-of-type:rounded-b-md last-of-type:border-b hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700'>
 								<div
 									className={cn(
-										'aspect-square size-3 rounded-full ',
+										'aspect-square size-3 rounded-full',
 										priority === null && 'bg-neutral-200 dark:bg-neutral-700',
 										priority === 'A' && 'bg-red-500 dark:bg-red-400',
 										priority === 'B' && 'bg-yellow-500 dark:bg-yellow-400',

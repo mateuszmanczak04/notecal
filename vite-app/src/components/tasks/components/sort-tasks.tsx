@@ -1,9 +1,14 @@
 'use client';
 
-import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '@/components/dropdown-menu';
-import { useToast } from '@/components/toast/use-toast';
-import { useSettings } from '@/hooks/use-settings';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+	DropdownMenu,
+	DropdownMenuItem,
+	DropdownMenuList,
+	DropdownMenuTrigger,
+} from '../../../components/dropdown-menu';
+import { useToast } from '../../../components/toast/use-toast';
+import { useSettings } from '../../../hooks/use-settings';
 
 const getNameOfCriteria = (criteria: string) => {
 	if (criteria === 'title') {

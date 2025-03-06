@@ -1,9 +1,9 @@
-import { useToast } from '@/components/toast/use-toast';
-import { useSettings } from '@/hooks/use-settings';
-import { useTasks } from '@/hooks/use-tasks';
-import { Task, type Task as T_Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useToast } from '../../../components/toast/use-toast';
+import { useSettings } from '../../../hooks/use-settings';
+import { useTasks } from '../../../hooks/use-tasks';
+import { T_Task } from '../../../types';
 
 type T_Props = {
 	courseId?: string;
@@ -15,7 +15,7 @@ export const useTasksFunctionality = ({ courseId }: T_Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate } = useMutation({
-		mutationFn: async (data: { tasks: Task[] }) =>
+		mutationFn: async (data: { tasks: T_Task[] }) =>
 			await fetch(`/api/tasks`, {
 				method: 'PUT',
 				body: JSON.stringify(data),
@@ -29,9 +29,9 @@ export const useTasksFunctionality = ({ courseId }: T_Props) => {
 	});
 	const [hasChangedOrder, setHasChangesOrder] = useState(false);
 
-	const wantedTasks = courseId
-		? tasks?.filter(task => task.courseId === courseId).toSorted((a, b) => b.courseWeight - a.courseWeight)
-		: tasks;
+	const sortedTasks = tasks ? [...tasks].sort((a, b) => a.weight - b.weight) : [];
+
+	const wantedTasks = sortedTasks.filter(task => task.courseId === courseId);
 
 	const handleReorder = (newTasks: T_Task[]) => {
 		const newTasksWithProperWeights = newTasks.map((task, index) => ({

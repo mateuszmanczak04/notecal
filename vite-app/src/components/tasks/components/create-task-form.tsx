@@ -1,17 +1,15 @@
-'use client';
-
-import { Button } from '@/components/button';
-import { Input } from '@/components/input';
-import { useToast } from '@/components/toast/use-toast';
-import { cn } from '@/utils/cn';
-import { Course } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Command, Plus } from 'lucide-react';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useIntersectionObserver } from 'usehooks-ts';
+import { Button } from '../../../components/button';
+import { Input } from '../../../components/input';
+import { useToast } from '../../../components/toast/use-toast';
+import { T_Course } from '../../../types';
+import { cn } from '../../../utils/cn';
 
 type Props = {
-	course?: Course;
+	course?: T_Course;
 };
 
 const CreateTaskForm = ({ course }: Props) => {

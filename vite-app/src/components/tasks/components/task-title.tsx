@@ -1,11 +1,9 @@
-'use client';
-
-import { cn } from '@/utils/cn';
-import { Task } from '@prisma/client';
+import { T_Task } from '../../../types';
+import { cn } from '../../../utils/cn';
 import { useTaskTitle } from '../hooks/use-task-title';
 
 type T_Props = {
-	task: Task;
+	task: T_Task;
 };
 
 const TaskTitle = ({ task }: T_Props) => {

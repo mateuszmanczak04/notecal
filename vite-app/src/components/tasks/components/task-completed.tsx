@@ -1,12 +1,12 @@
 'use client';
 
-import { Checkbox } from '@/components/checkbox';
-import { cn } from '@/utils/cn';
-import { Task } from '@prisma/client';
+import { Checkbox } from '../../../components/checkbox';
+import { T_Task } from '../../../types';
+import { cn } from '../../../utils/cn';
 import { useTaskCompleted } from '../hooks/use-task-completed';
 
 type T_Props = {
-	task: Task;
+	task: T_Task;
 };
 
 const TaskCompleted = ({ task }: T_Props) => {

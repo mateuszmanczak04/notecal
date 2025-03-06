@@ -1,6 +1,6 @@
-import { useToast } from '@/components/toast/use-toast';
-import { Task as T_Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useToast } from '../../../components/toast/use-toast';
+import { T_Task } from '../../../types';
 
 export const useTaskCompleted = (task: T_Task) => {
 	const queryClient = useQueryClient();

@@ -1,7 +1,7 @@
-import { useToast } from '@/components/toast/use-toast';
-import { useCourses } from '@/hooks/use-courses';
-import { Task as T_Task } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useToast } from '../../../components/toast/use-toast';
+import { useCourses } from '../../../hooks/use-courses';
+import { T_Task } from '../../../types';
 
 export const useTaskCourse = (task: T_Task) => {
 	const queryClient = useQueryClient();
