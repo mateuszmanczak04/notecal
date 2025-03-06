@@ -1,8 +1,8 @@
 'use client';
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/dialog';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../../../components/dialog';
 import CreateCourseForm from './create-course-form';
 
 const CreateCourseDialog = () => {

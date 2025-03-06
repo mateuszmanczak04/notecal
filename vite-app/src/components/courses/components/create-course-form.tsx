@@ -1,13 +1,13 @@
 'use client';
 
-import { Button } from '@/components/button';
-import { Input } from '@/components/input';
-import LoadingSpinner from '@/components/loading-spinner';
-import { useToast } from '@/components/toast/use-toast';
-import { cn } from '@/utils/cn';
-import { COLORS } from '@/utils/colors';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
+import { Button } from '../../../components/button';
+import { Input } from '../../../components/input';
+import LoadingSpinner from '../../../components/loading-spinner';
+import { useToast } from '../../../components/toast/use-toast';
+import { cn } from '../../../utils/cn';
+import { COLORS } from '../../../utils/colors';
 
 type T_Props = {
 	handleCloseModal: () => void;
@@ -89,7 +89,7 @@ const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 
 			{/* Color field */}
 			<input type='hidden' name='color' value={selectedColor} />
-			<div className='grid grid-cols-3 gap-2 sm:grid-cols-4	md:grid-cols-7'>
+			<div className='grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-7'>
 				{COLORS.map(color => {
 					return (
 						<div
