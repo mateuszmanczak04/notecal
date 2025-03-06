@@ -1,5 +1,5 @@
-import { useSettings } from '@/hooks/use-settings';
 import { useEffect, useRef, useState } from 'react';
+import { useSettings } from '../../../../hooks/use-settings';
 
 export const useResizeSidebar = () => {
 	const [isResizing, setIsResizing] = useState(false);

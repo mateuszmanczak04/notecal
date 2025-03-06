@@ -1,24 +1,21 @@
-'use client';
-
-import { useNoteContextMenu } from '@/app/notes/_components/context-menu/use-note-context-menu';
-import { useSelectedNotes } from '@/app/notes/_components/sidebar/side-notes/selected-notes-context';
-import { cn } from '@/utils/cn';
-import { Note } from '@prisma/client';
 import { format } from 'date-fns';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import React from 'react';
+import { NavLink, useSearchParams } from 'react-router';
+import { T_Note } from '../../../../../types';
+import { cn } from '../../../../../utils/cn';
 import NoteContextMenu from '../../context-menu/note-context-menu';
+import { useNoteContextMenu } from '../../context-menu/use-note-context-menu';
+import { useSelectedNotes } from './selected-notes-context';
 
 type Props = {
-	note: Note;
+	note: T_Note;
 };
 
 /**
  * Single note link used in /notes/[id] page as side note
  */
 const SideNoteItem = ({ note }: Props) => {
-	const searchParams = useSearchParams();
+	const [searchParams] = useSearchParams();
 	const noteId = searchParams.get('noteId');
 	const { closeContextMenu, contextMenuPosition, handleContextMenu } = useNoteContextMenu();
 	const { deselectAll, deselectNote, selectNote, isNoteSelected } = useSelectedNotes();
@@ -45,18 +42,18 @@ const SideNoteItem = ({ note }: Props) => {
 
 	return (
 		<>
-			<Link
+			<NavLink
 				onClick={handleClick}
-				href={`/notes?noteId=${note.id}`}
+				to={`/notes?noteId=${note.id}`}
 				key={note.id}
 				aria-label={`link to note ${note.title}`}
 				title={`link to note ${note.title}`}
 				onContextMenu={handleNoteContextMenu}
 				className={cn(
 					'h-9 truncate rounded-xl border-2 border-transparent bg-neutral-100 px-3 text-sm leading-9 transition-colors dark:bg-neutral-800',
-					(note.id === noteId || isNoteSelected(note)) && 'border-neutral-300  dark:border-neutral-600 ',
+					(note.id === noteId || isNoteSelected(note)) && 'border-neutral-300 dark:border-neutral-600',
 				)}>
-				<span className=' w-auto max-w-48 shrink-0 truncate text-center text-sm'>
+				<span className='w-auto max-w-48 shrink-0 truncate text-center text-sm'>
 					{note.startTime && note.endTime && (
 						<span className='mr-2 font-semibold'>{format(note.startTime, 'yyyy-MM-dd')}</span>
 					)}{' '}
@@ -65,7 +62,7 @@ const SideNoteItem = ({ note }: Props) => {
 						<span className='ml-2 opacity-50'>Note without a title</span>
 					)}
 				</span>{' '}
-			</Link>
+			</NavLink>
 
 			{/* Place it outside the link itself because it triggered link */}
 			{contextMenuPosition && (

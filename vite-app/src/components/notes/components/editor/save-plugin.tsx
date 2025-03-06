@@ -1,5 +1,3 @@
-'use client';
-
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { COMMAND_PRIORITY_LOW, KEY_MODIFIER_COMMAND } from 'lexical';
 import { useEffect } from 'react';

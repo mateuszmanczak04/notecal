@@ -1,11 +1,9 @@
-'use client';
-
-import { useTaskTitle } from '@/app/tasks/_hooks/use-task-title';
-import { cn } from '@/utils/cn';
-import { Task } from '@prisma/client';
+import { T_Task } from '../../../../../types';
+import { cn } from '../../../../../utils/cn';
+import { useTaskTitle } from '../../../../tasks/hooks/use-task-title';
 
 type T_Props = {
-	task: Task;
+	task: T_Task;
 };
 
 const NoteTaskTitle = ({ task }: T_Props) => {

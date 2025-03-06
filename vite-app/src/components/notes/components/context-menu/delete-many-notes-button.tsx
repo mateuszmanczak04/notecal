@@ -1,23 +1,21 @@
-'use client';
-
-import { Button } from '@/components/button';
-import LoadingSpinner from '@/components/loading-spinner';
-import { useToast } from '@/components/toast/use-toast';
-import { cn } from '@/utils/cn';
-import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Trash } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { ClassNameValue } from 'tailwind-merge';
+import { Button } from '../../../../components/button';
+import LoadingSpinner from '../../../../components/loading-spinner';
+import { useToast } from '../../../../components/toast/use-toast';
+import { T_Note } from '../../../../types';
+import { cn } from '../../../../utils/cn';
 
 type Props = {
-	notes: Note[];
+	notes: T_Note[];
 	className?: ClassNameValue;
 	onDelete: () => void;
 };
 
-const DeleteManyNotesButton = ({ notes, className, onDelete }: Props) => {
+const DeleteManyNotesButton = ({ notes, className }: Props) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const [isDeleting, setIsDeleting] = useState(false);
@@ -28,11 +26,11 @@ const DeleteManyNotesButton = ({ notes, className, onDelete }: Props) => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
 			}
-			router.push(`/notes?courseId=${notes[0]?.courseId}`);
+			navigate(`/notes?courseId=${notes[0]?.courseId}`);
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	if (isDeleting) {
 		return (

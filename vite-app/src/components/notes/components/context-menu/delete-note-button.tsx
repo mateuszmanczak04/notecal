@@ -1,18 +1,16 @@
-'use client';
-
-import { Button } from '@/components/button';
-import LoadingSpinner from '@/components/loading-spinner';
-import { useToast } from '@/components/toast/use-toast';
-import { cn } from '@/utils/cn';
-import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Trash } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { ClassNameValue } from 'tailwind-merge';
+import { Button } from '../../../../components/button';
+import LoadingSpinner from '../../../../components/loading-spinner';
+import { useToast } from '../../../../components/toast/use-toast';
+import { T_Note } from '../../../../types';
+import { cn } from '../../../../utils/cn';
 
 type Props = {
-	note: Note;
+	note: T_Note;
 	className?: ClassNameValue;
 };
 
@@ -28,12 +26,12 @@ const DeleteNoteButton = ({ note, className }: Props) => {
 			}
 			// If user is on the exact note page, redirect to the course page
 			if (`${window.location.pathname}${window.location.search}` === `/notes?noteId=${note.id}`) {
-				router.push(`/notes?courseId=${note.courseId}`);
+				navigate(`/notes?courseId=${note.courseId}`);
 			}
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
 		},
 	});
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	if (isDeleting) {
 		return (

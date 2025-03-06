@@ -1,11 +1,9 @@
-'use client';
-
-import { useNoteContext } from '@/app/notes/_context/note-context';
-import { useToast } from '@/components/toast/use-toast';
-import { useClientSide } from '@/hooks/use-client-side';
-import { cn } from '@/utils/cn';
-import { COLORS } from '@/utils/colors';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useToast } from '../../../../../components/toast/use-toast';
+import { useClientSide } from '../../../../../hooks/use-client-side';
+import { cn } from '../../../../../utils/cn';
+import { COLORS } from '../../../../../utils/colors';
+import { useNoteContext } from '../../../context/note-context';
 
 const CourseColor = () => {
 	const { currentCourse } = useNoteContext();
@@ -32,7 +30,7 @@ const CourseColor = () => {
 				return (
 					<button
 						className={cn(
-							'aspect-square max-w-6 flex-1 cursor-pointer place-content-center rounded-full  border-2 border-transparent font-medium text-white transition-colors hover:opacity-90',
+							'aspect-square max-w-6 flex-1 cursor-pointer place-content-center rounded-full border-2 border-transparent font-medium text-white transition-colors hover:opacity-90',
 							isClient ? currentCourse?.color === color.hex && 'border-white/50' : '',
 						)}
 						style={{

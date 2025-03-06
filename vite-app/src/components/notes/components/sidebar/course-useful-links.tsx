@@ -1,15 +1,13 @@
-'use client';
-
-import { Button } from '@/components/button';
-import { Input } from '@/components/input';
-import { useToast } from '@/components/toast/use-toast';
-import { useClientSide } from '@/hooks/use-client-side';
-import { cn } from '@/utils/cn';
-import { addHttpsIfMissing, removeProtocol } from '@/utils/links';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GripVertical, Plus, X } from 'lucide-react';
 import { Reorder, useDragControls } from 'motion/react';
 import { FormEvent, useEffect, useState } from 'react';
+import { Button } from '../../../../components/button';
+import { Input } from '../../../../components/input';
+import { useToast } from '../../../../components/toast/use-toast';
+import { useClientSide } from '../../../../hooks/use-client-side';
+import { cn } from '../../../../utils/cn';
+import { addHttpsIfMissing, removeProtocol } from '../../../../utils/links';
 import { useNoteContext } from '../../context/note-context';
 
 const CourseUsefulLinks = () => {

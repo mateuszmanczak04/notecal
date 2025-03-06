@@ -1,18 +1,16 @@
-'use client';
-
-import { useTaskDueDate } from '@/app/tasks/_hooks/use-task-due-date';
-import { useDatePickerFunctionality } from '@/hooks/use-date-picker-functionality';
-import { cn } from '@/utils/cn';
-import { Task } from '@prisma/client';
+import { useDatePickerFunctionality } from '../../../../../hooks/use-date-picker-functionality';
+import { T_Task } from '../../../../../types';
+import { cn } from '../../../../../utils/cn';
+import { useTaskDueDate } from '../../../../tasks/hooks/use-task-due-date';
 
 type T_Props = {
-	task: Task;
+	task: T_Task;
 };
 
 const NoteTaskDueDate = ({ task }: T_Props) => {
 	const { updateTaskDueDate, isPending } = useTaskDueDate(task);
 	const { day, handleKeyDown, hour, menuRef, minute, month, year, setDay, setHour, setMinute, setMonth, setYear } =
-		useDatePickerFunctionality({ onSelect: updateTaskDueDate, date: task.dueDate, isAlwaysOpen: true });
+		useDatePickerFunctionality({ onSelect: updateTaskDueDate, date: task.dueDate || null, isAlwaysOpen: true });
 
 	return (
 		<div className='flex text-sm' ref={menuRef}>

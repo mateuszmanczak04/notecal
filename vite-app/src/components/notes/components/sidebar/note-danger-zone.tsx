@@ -1,13 +1,11 @@
-'use client';
-
-import { Button } from '@/components/button';
-import LoadingSpinner from '@/components/loading-spinner';
-import { useToast } from '@/components/toast/use-toast';
-import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
+import { Button } from '../../../../components/button';
+import LoadingSpinner from '../../../../components/loading-spinner';
+import { useToast } from '../../../../components/toast/use-toast';
+import { cn } from '../../../../utils/cn';
 import { useNoteContext } from '../../context/note-context';
 
 /** Component to delete entire course */
@@ -30,13 +28,13 @@ const NoteDangerZone = () => {
 		},
 	});
 
-	const router = useRouter();
+	const navigate = useNavigate();
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const confirmDeletion = () => {
 		if (!currentCourse) return;
 		mutate({ id: currentCourse.id });
-		router.replace('/courses');
+		navigate('/courses');
 	};
 
 	return (

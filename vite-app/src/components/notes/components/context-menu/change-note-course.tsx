@@ -1,13 +1,11 @@
-'use client';
-
-import { useToast } from '@/components/toast/use-toast';
-import { useCourses } from '@/hooks/use-courses';
-import { Course, Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useToast } from '../../../../components/toast/use-toast';
+import { useCourses } from '../../../../hooks/use-courses';
+import { T_Course, T_Note } from '../../../../types';
 
 type Props = {
-	currentCourse: Course;
-	note: Note;
+	currentCourse: T_Course;
+	note: T_Note;
 	handleClose?: () => void;
 };
 
@@ -18,7 +16,7 @@ const ChangeNoteCourse = ({ currentCourse, note, handleClose }: Props) => {
 	const queryClient = useQueryClient();
 	const { data: courses } = useCourses();
 	const { toast } = useToast();
-	const { mutate, isPending } = useMutation({
+	const { mutate } = useMutation({
 		mutationFn: async (data: { id: string; courseId: string }) =>
 			await fetch(`/api/notes/${data.id}`, {
 				method: 'PUT',
@@ -29,7 +27,7 @@ const ChangeNoteCourse = ({ currentCourse, note, handleClose }: Props) => {
 			}).then(res => res.json()),
 		onMutate: data => {
 			// Optimistic update
-			queryClient.setQueryData(['notes'], (prev: Note[]) => {
+			queryClient.setQueryData(['notes'], (prev: T_Note[]) => {
 				return prev.map(n => {
 					if (n.id === data.id) {
 						return { ...n, courseId: data.courseId };
@@ -60,7 +58,7 @@ const ChangeNoteCourse = ({ currentCourse, note, handleClose }: Props) => {
 						<button
 							onClick={() => {
 								handleSelect(course.id);
-								handleClose && handleClose();
+								handleClose?.();
 							}}
 							key={course.id}
 							value={course.id}

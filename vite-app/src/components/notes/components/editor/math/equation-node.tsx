@@ -1,12 +1,4 @@
-import {
-	$applyNodeReplacement,
-	DecoratorNode,
-	EditorConfig,
-	LexicalNode,
-	NodeKey,
-	SerializedLexicalNode,
-	Spread,
-} from 'lexical';
+import { $applyNodeReplacement, DecoratorNode, LexicalNode, NodeKey, SerializedLexicalNode, Spread } from 'lexical';
 import { JSX, Suspense } from 'react';
 import { InlineMath } from 'react-katex';
 
@@ -45,13 +37,13 @@ class EquationNode extends DecoratorNode<JSX.Element> {
 		};
 	}
 
-	createDOM(_config: EditorConfig): HTMLElement {
+	createDOM(): HTMLElement {
 		const element = document.createElement('p');
 		element.className = 'py-2 px-3 text-center';
 		return element;
 	}
 
-	updateDOM(prevNode: EquationNode, dom: HTMLElement): boolean {
+	updateDOM(): boolean {
 		return false;
 	}
 

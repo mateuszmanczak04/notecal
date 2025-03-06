@@ -1,11 +1,9 @@
-'use client';
-
-import { useSettings } from '@/hooks/use-settings';
-import { Note } from '@prisma/client';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router';
+import { useSettings } from '../../../../../hooks/use-settings';
+import { T_Note } from '../../../../../types';
 
 type Props = {
-	note: Note;
+	note: T_Note;
 };
 
 /**
@@ -13,7 +11,7 @@ type Props = {
  */
 const GoToCalendarNote = ({ note }: Props) => {
 	const { goToDay } = useSettings();
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	/**
 	 * Go to the day of the note in the calendar.
@@ -22,7 +20,7 @@ const GoToCalendarNote = ({ note }: Props) => {
 	const handleGoToCalendar = () => {
 		if (!note.startTime || !note.endTime) return;
 		goToDay(note.startTime);
-		router.push('/calendar');
+		navigate('/calendar');
 	};
 
 	return (

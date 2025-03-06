@@ -1,5 +1,5 @@
-import { Note as T_Note } from '@prisma/client';
 import React, { createContext, use, useState } from 'react';
+import { T_Note } from '../../../../../types';
 
 type T_ContextResult = {
 	selectedNotes: T_Note[];

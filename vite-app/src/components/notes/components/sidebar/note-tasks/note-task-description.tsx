@@ -1,11 +1,9 @@
-'use client';
-
-import { useTaskDescription } from '@/app/tasks/_hooks/use-task-description';
-import { cn } from '@/utils/cn';
-import { Task } from '@prisma/client';
+import { T_Task } from '../../../../../types';
+import { cn } from '../../../../../utils/cn';
+import { useTaskDescription } from '../../../../tasks/hooks/use-task-description';
 
 type T_Props = {
-	task: Task;
+	task: T_Task;
 };
 
 const NoteTaskDescription = ({ task }: T_Props) => {

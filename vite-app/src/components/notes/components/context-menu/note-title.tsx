@@ -1,14 +1,12 @@
-'use client';
-
-import { Input } from '@/components/input';
-import { useToast } from '@/components/toast/use-toast';
-import { cn } from '@/utils/cn';
-import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
+import { Input } from '../../../../components/input';
+import { useToast } from '../../../../components/toast/use-toast';
+import { T_Note } from '../../../../types';
+import { cn } from '../../../../utils/cn';
 
 type Props = {
-	note: Note;
+	note: T_Note;
 	callback?: () => void;
 };
 

@@ -1,10 +1,3 @@
-'use client';
-
-import LoadingSpinner from '@/components/loading-spinner';
-import { useToast } from '@/components/toast/use-toast';
-import { useSettings } from '@/hooks/use-settings';
-import { cn } from '@/utils/cn';
-import { isDarkMode } from '@/utils/is-dark-mode';
 import { TRANSFORMERS } from '@lexical/markdown';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { ClickableLinkPlugin } from '@lexical/react/LexicalClickableLinkPlugin';
@@ -21,6 +14,11 @@ import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin
 import { format } from 'date-fns';
 import { EditorState } from 'lexical';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import LoadingSpinner from '../../../../components/loading-spinner';
+import { useToast } from '../../../../components/toast/use-toast';
+import { useSettings } from '../../../../hooks/use-settings';
+import { cn } from '../../../../utils/cn';
+import { isDarkMode } from '../../../../utils/is-dark-mode';
 import { useNoteContext } from '../../context/note-context';
 import { getNoteContent } from '../../utils/get-note-content';
 import { updateNoteContent } from '../../utils/update-note-content';

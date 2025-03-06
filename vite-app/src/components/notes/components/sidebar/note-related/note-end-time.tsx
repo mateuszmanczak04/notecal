@@ -1,14 +1,12 @@
-'use client';
-
-import { useToast } from '@/components/toast/use-toast';
-import { useDatePickerFunctionality } from '@/hooks/use-date-picker-functionality';
-import { cn } from '@/utils/cn';
-import { toUTC } from '@/utils/timezone';
-import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useToast } from '../../../../../components/toast/use-toast';
+import { useDatePickerFunctionality } from '../../../../../hooks/use-date-picker-functionality';
+import { T_Note } from '../../../../../types';
+import { cn } from '../../../../../utils/cn';
+import { toUTC } from '../../../../../utils/timezone';
 
 type Props = {
-	note: Note;
+	note: T_Note;
 };
 
 /** Date picker to change note's endTime */
@@ -42,7 +40,7 @@ const NoteEndTime = ({ note }: Props) => {
 	};
 
 	const { day, handleKeyDown, hour, menuRef, minute, month, year, setDay, setHour, setMinute, setMonth, setYear } =
-		useDatePickerFunctionality({ onSelect: onChange, date: note.endTime, isAlwaysOpen: true });
+		useDatePickerFunctionality({ onSelect: onChange, date: note.endTime || null, isAlwaysOpen: true });
 
 	return (
 		<div className='flex flex-col gap-y-1' ref={menuRef}>

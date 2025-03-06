@@ -1,8 +1,6 @@
-'use client';
-
-import { Checkbox } from '@/components/checkbox';
-import { Input } from '@/components/input';
-import { useSettings } from '@/hooks/use-settings';
+import { Checkbox } from '../../../../components/checkbox';
+import { Input } from '../../../../components/input';
+import { useSettings } from '../../../../hooks/use-settings';
 
 const NotesSettings = () => {
 	const {
@@ -51,7 +49,7 @@ const NotesSettings = () => {
 
 			{/* Default note duration */}
 			<div className='mt-6 select-none'>
-				<label htmlFor='default-note-duration' className='block px-1 text-sm font-medium '>
+				<label htmlFor='default-note-duration' className='block px-1 text-sm font-medium'>
 					Default new note duration (in minutes)
 				</label>
 				<Input

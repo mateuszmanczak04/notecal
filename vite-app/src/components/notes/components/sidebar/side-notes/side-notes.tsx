@@ -1,15 +1,13 @@
-'use client';
-
-import { SelectNotesProvider } from '@/app/notes/_components/sidebar/side-notes/selected-notes-context';
-import { useNoteContext } from '@/app/notes/_context/note-context';
-import { Button } from '@/components/button';
-import LoadingSpinner from '@/components/loading-spinner';
-import { useToast } from '@/components/toast/use-toast';
-import { useClientSide } from '@/hooks/use-client-side';
-import { useNotes } from '@/hooks/use-notes';
-import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
+import { Button } from '../../../../../components/button';
+import LoadingSpinner from '../../../../../components/loading-spinner';
+import { useToast } from '../../../../../components/toast/use-toast';
+import { useClientSide } from '../../../../../hooks/use-client-side';
+import { useNotes } from '../../../../../hooks/use-notes';
+import { cn } from '../../../../../utils/cn';
+import { useNoteContext } from '../../../context/note-context';
+import { SelectNotesProvider } from './selected-notes-context';
 import SideNoteItem from './side-note-item';
 
 /**

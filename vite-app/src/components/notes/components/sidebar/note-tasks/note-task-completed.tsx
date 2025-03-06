@@ -1,9 +1,7 @@
-'use client';
-
-import { useTaskCompleted } from '@/app/tasks/_hooks/use-task-completed';
-import { cn } from '@/utils/cn';
-import { Task as T_Task } from '@prisma/client';
 import { Check } from 'lucide-react';
+import { T_Task } from '../../../../../types';
+import { cn } from '../../../../../utils/cn';
+import { useTaskCompleted } from '../../../../tasks/hooks/use-task-completed';
 
 type T_Props = {
 	task: T_Task;

@@ -1,11 +1,10 @@
-'use client';
-
-import { useNoteContext } from '@/app/notes/_context/note-context';
-import { useTasksFunctionality } from '@/app/tasks/_hooks/use-tasks-functionality';
-import { Button } from '@/components/button';
-import ErrorMessage from '@/components/error-message';
-import LoadingSpinner from '@/components/loading-spinner';
 import { Reorder } from 'motion/react';
+import { Button } from '../../../../../components/button';
+import ErrorMessage from '../../../../../components/error-message';
+import LoadingSpinner from '../../../../../components/loading-spinner';
+import { T_Task } from '../../../../../types';
+import { useTasksFunctionality } from '../../../../tasks/hooks/use-tasks-functionality';
+import { useNoteContext } from '../../../context/note-context';
 import NoteCreateTaskForm from './note-create-task-form';
 import NoteTaskItem from './note-task-item';
 
@@ -37,7 +36,7 @@ const NoteTasks = () => {
 			{tasks.length > 0 && (
 				<div className='mb-2'>
 					<Reorder.Group values={tasks} onReorder={handleReorder}>
-						{tasks?.map(task => <NoteTaskItem key={task.id} task={task} />)}
+						{tasks?.map((task: T_Task) => <NoteTaskItem key={task.id} task={task} />)}
 					</Reorder.Group>
 				</div>
 			)}

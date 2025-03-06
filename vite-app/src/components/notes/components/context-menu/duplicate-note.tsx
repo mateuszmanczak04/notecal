@@ -1,22 +1,18 @@
-'use client';
-
-import { Button } from '@/components/button';
-import { toast } from '@/components/toast/use-toast';
-import { useNotes } from '@/hooks/use-notes';
-import { cn } from '@/utils/cn';
-import { Note } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { File } from 'lucide-react';
 import { ClassNameValue } from 'tailwind-merge';
+import { Button } from '../../../../components/button';
+import { toast } from '../../../../components/toast/use-toast';
+import { T_Note } from '../../../../types';
+import { cn } from '../../../../utils/cn';
 
 type T_Props = {
-	note: Note;
+	note: T_Note;
 	className?: ClassNameValue;
 	callback?: () => void;
 };
 
-const DuplicateNote = ({ note, className, callback }: T_Props) => {
-	const { data: notes } = useNotes();
+const DuplicateNote = ({ note, className }: T_Props) => {
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
 		mutationFn: async () =>

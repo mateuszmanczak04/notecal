@@ -1,9 +1,3 @@
-import { Button } from '@/components/button';
-import LoadingSpinner from '@/components/loading-spinner';
-import { useToast } from '@/components/toast/use-toast';
-import { Toggle } from '@/components/toggle';
-import { useClientSide } from '@/hooks/use-client-side';
-import { useSettings } from '@/hooks/use-settings';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $createHeadingNode, $isHeadingNode, HeadingTagType } from '@lexical/rich-text';
 import { $wrapNodes } from '@lexical/selection';
@@ -41,6 +35,12 @@ import {
 	Underline,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
+import { Button } from '../../../../components/button';
+import LoadingSpinner from '../../../../components/loading-spinner';
+import { useToast } from '../../../../components/toast/use-toast';
+import { Toggle } from '../../../../components/toggle';
+import { useClientSide } from '../../../../hooks/use-client-side';
+import { useSettings } from '../../../../hooks/use-settings';
 import { useNoteContext } from '../../context/note-context';
 
 type Props = {

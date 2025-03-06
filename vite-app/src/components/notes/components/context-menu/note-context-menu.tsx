@@ -1,10 +1,8 @@
-'use client';
-
-import { useSelectedNotes } from '@/app/notes/_components/sidebar/side-notes/selected-notes-context';
-import { useCourses } from '@/hooks/use-courses';
-import { Note } from '@prisma/client';
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
+import { useCourses } from '../../../../hooks/use-courses';
+import { T_Note } from '../../../../types';
+import { useSelectedNotes } from '../sidebar/side-notes/selected-notes-context';
 import ChangeNoteCourse from './change-note-course';
 import DeleteManyNotesButton from './delete-many-notes-button';
 import DeleteNoteButton from './delete-note-button';
@@ -12,7 +10,7 @@ import DuplicateNote from './duplicate-note';
 import NoteTitle from './note-title';
 
 type Props = {
-	note: Note;
+	note: T_Note;
 	handleClose: () => void;
 	position: { x: number; y: number } | null;
 };

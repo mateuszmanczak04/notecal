@@ -1,8 +1,6 @@
-'use client';
-
-import { Task as T_Task, type Task as NoteTaskItem } from '@prisma/client';
 import { GripVertical } from 'lucide-react';
 import { Reorder, useDragControls } from 'motion/react';
+import { T_Task } from '../../../../../types';
 import NoteTaskCompleted from './note-task-completed';
 import NoteTaskCourse from './note-task-course';
 import NoteTaskDescription from './note-task-description';

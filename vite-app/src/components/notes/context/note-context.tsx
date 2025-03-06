@@ -1,10 +1,8 @@
-'use client';
-
-import { useCourses } from '@/hooks/use-courses';
-import { useNotes } from '@/hooks/use-notes';
-import { Course as T_Course, Note as T_Note } from '@prisma/client';
-import { useSearchParams } from 'next/navigation';
 import React, { createContext } from 'react';
+import { useSearchParams } from 'react-router';
+import { useCourses } from '../../../hooks/use-courses';
+import { useNotes } from '../../../hooks/use-notes';
+import { T_Course, T_Note } from '../../../types';
 
 type NoteContextType = {
 	currentNote: T_Note | null;
@@ -17,7 +15,7 @@ const NoteContext = createContext<NoteContextType>({
 });
 
 export const NoteContextProvider = ({ children }: { children: React.ReactNode }) => {
-	const searchParams = useSearchParams();
+	const [searchParams] = useSearchParams();
 	const noteId = searchParams.get('noteId');
 	const courseId = searchParams.get('courseId');
 

@@ -1,8 +1,6 @@
-'use client';
-
-import { useSettings } from '@/hooks/use-settings';
-import { cn } from '@/utils/cn';
 import { Menu } from 'lucide-react';
+import { useSettings } from '../../../../hooks/use-settings';
+import { cn } from '../../../../utils/cn';
 import CourseRelated from './course-related/course-related';
 import CourseUsefulLinks from './course-useful-links';
 import CustomizeSidebar from './customize-sidebar';
@@ -23,12 +21,12 @@ const NoteSidebar = () => {
 				<>
 					{/* Resize bar */}
 					<div
-						className='fixed right-0 top-0 z-10 hidden h-screen w-2 cursor-ew-resize border-r-[7px]  border-white bg-neutral-200 md:block dark:border-neutral-900 dark:bg-neutral-700'
+						className='fixed right-0 top-0 z-10 hidden h-screen w-2 cursor-ew-resize border-r-[7px] border-white bg-neutral-200 md:block dark:border-neutral-900 dark:bg-neutral-700'
 						style={{ right: noteSidebarWidth }}
 						onMouseDown={handleMouseDown}></div>
 					<aside
 						ref={sidebarRef}
-						className='relative flex h-screen w-full shrink-0 flex-col overflow-y-scroll pb-32 scrollbar-hide md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:bg-neutral-900'
+						className='scrollbar-hide relative flex h-screen w-full shrink-0 flex-col overflow-y-scroll pb-32 md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:border-neutral-600 dark:bg-neutral-900'
 						style={{
 							width: noteSidebarWidth,
 						}}>

@@ -1,10 +1,8 @@
-'use client';
-
-import { useNoteContext } from '@/app/notes/_context/note-context';
-import { useToast } from '@/components/toast/use-toast';
-import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
+import { useToast } from '../../../../../components/toast/use-toast';
+import { cn } from '../../../../../utils/cn';
+import { useNoteContext } from '../../../context/note-context';
 
 const CourseName = () => {
 	const { currentCourse } = useNoteContext();
@@ -68,7 +66,7 @@ const CourseName = () => {
 			contentEditable
 			className={cn(
 				'break-words pr-10 text-2xl font-bold outline-none transition',
-				isPending && 'pointer-events-none  opacity-50',
+				isPending && 'pointer-events-none opacity-50',
 			)}
 			onKeyDown={handleKeyDown}
 			onBlur={handleSubmit}
