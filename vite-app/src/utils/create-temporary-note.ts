@@ -1,5 +1,5 @@
-import { Note as T_Note } from '@prisma/client';
 import { addMinutes } from 'date-fns';
+import { T_Note } from '../types';
 
 export const createTemporaryNote = ({
 	courseId,

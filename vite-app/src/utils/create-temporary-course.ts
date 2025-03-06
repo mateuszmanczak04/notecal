@@ -1,4 +1,4 @@
-import { Course } from '@prisma/client';
+import { T_Course } from '../types';
 
 export const createTemporaryCourse = ({
 	color,
@@ -8,7 +8,7 @@ export const createTemporaryCourse = ({
 	color: string;
 	name: string;
 	teacher: string;
-}): Course => {
+}): T_Course => {
 	return {
 		id: 'temp',
 		name,
