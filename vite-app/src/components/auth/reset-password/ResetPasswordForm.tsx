@@ -1,18 +1,17 @@
 'use client';
 
-import { Button } from '@/components/button';
-import { Input } from '@/components/input';
-import LoadingSpinner from '@/components/loading-spinner';
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
+import { Button } from '../../../components/button';
+import { Input } from '../../../components/input';
+import LoadingSpinner from '../../../components/loading-spinner';
 
 const ResetPasswordForm = () => {
 	const [error, setError] = useState('');
 	const [isPending, startTransition] = useTransition();
 	const [password, setPassword] = useState('');
-	const searchParams = useSearchParams();
-	const router = useRouter();
+	const [searchParams] = useSearchParams();
+	const navigate = useNavigate();
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -32,7 +31,7 @@ const ResetPasswordForm = () => {
 				setError(res.error);
 			}
 			if ('message' in res) {
-				router.push(DEFAULT_LOGIN_REDIRECT);
+				navigate('/calendar');
 			}
 		});
 	};
@@ -62,7 +61,7 @@ const ResetPasswordForm = () => {
 				</Button>
 			</form>
 
-			{error && <p className='mx-4 mt-4 text-error-600 dark:text-error-400'>{error}</p>}
+			{error && <p className='text-error-600 dark:text-error-400 mx-4 mt-4'>{error}</p>}
 		</>
 	);
 };

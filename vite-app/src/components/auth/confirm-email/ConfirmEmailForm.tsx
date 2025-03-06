@@ -1,20 +1,19 @@
 'use client';
 
-import { Button } from '@/components/button';
-import LoadingSpinner from '@/components/loading-spinner';
-import { useUser } from '@/hooks/use-user';
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { Mail } from 'lucide-react';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, useTransition } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
+import { Button } from '../../../components/button';
+import LoadingSpinner from '../../../components/loading-spinner';
+import { useUser } from '../../../hooks/use-user';
 
 const ConfirmEmailForm = () => {
 	const [error, setError] = useState('');
 	const [message, setMessage] = useState('');
 	const [isPending, startTransition] = useTransition();
-	const searchParams = useSearchParams();
+	const [searchParams] = useSearchParams();
 	const { data: user } = useUser();
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -37,21 +36,21 @@ const ConfirmEmailForm = () => {
 
 	useEffect(() => {
 		if (user?.emailVerified) {
-			router.replace(DEFAULT_LOGIN_REDIRECT);
+			navigate('/');
 		}
-	}, []);
+	}, [navigate, user?.emailVerified]);
 
 	return (
 		<>
-			<form onSubmit={handleSubmit} className='mt-4 '>
+			<form onSubmit={handleSubmit} className='mt-4'>
 				<Button type='submit' className='w-full' disabled={!!error || !!message}>
 					{isPending ? <LoadingSpinner className='h-5 w-5' /> : <Mail className='h-5 w-5' />}
 					Confirm
 				</Button>
 			</form>
 
-			{error && <p className='mx-4 mt-4 text-error-600 dark:text-error-400'>{error}</p>}
-			{message && <p className='mx-4 mt-4 text-success-600 dark:text-success-400'>{message}</p>}
+			{error && <p className='text-error-600 dark:text-error-400 mx-4 mt-4'>{error}</p>}
+			{message && <p className='text-success-600 dark:text-success-400 mx-4 mt-4'>{message}</p>}
 		</>
 	);
 };

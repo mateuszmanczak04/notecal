@@ -1,10 +1,10 @@
 'use client';
 
-import { Button } from '@/components/button';
-import { Input } from '@/components/input';
-import LoadingSpinner from '@/components/loading-spinner';
 import { Mail } from 'lucide-react';
 import { useState, useTransition } from 'react';
+import { Button } from '../../../components/button';
+import { Input } from '../../../components/input';
+import LoadingSpinner from '../../../components/loading-spinner';
 
 const ForgotPasswordForm = () => {
 	const [email, setEmail] = useState('');
@@ -57,8 +57,8 @@ const ForgotPasswordForm = () => {
 			</form>
 
 			{/* Result messages */}
-			{error && <p className='mx-4 mt-4 text-error-600 dark:text-error-400'>{error}</p>}
-			{message && <p className='mx-4 mt-4 text-success-600 dark:text-success-400'>{message}</p>}
+			{error && <p className='text-error-600 dark:text-error-400 mx-4 mt-4'>{error}</p>}
+			{message && <p className='text-success-600 dark:text-success-400 mx-4 mt-4'>{message}</p>}
 		</>
 	);
 };
