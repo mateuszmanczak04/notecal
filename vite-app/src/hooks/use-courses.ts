@@ -1,5 +1,5 @@
-import { Course } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
+import { T_Course } from '../types';
 
 export const useCourses = () => {
 	return useQuery({
@@ -7,7 +7,7 @@ export const useCourses = () => {
 		queryFn: async () =>
 			await fetch('/api/courses')
 				.then(res => res.json())
-				.then(data => (data.courses || []) as Course[])
+				.then(data => (data.courses || []) as T_Course[])
 				.catch(() => []),
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,

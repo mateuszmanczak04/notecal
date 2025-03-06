@@ -1,5 +1,5 @@
-import { Task } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
+import { T_Task } from '../types';
 
 export const useTasks = () => {
 	return useQuery({
@@ -7,7 +7,7 @@ export const useTasks = () => {
 		queryFn: async () =>
 			await fetch('/api/tasks')
 				.then(res => res.json())
-				.then(res => res.tasks as Task[])
+				.then(res => res.tasks as T_Task[])
 				.then(tasks => tasks.map(t => ({ ...t, dueDate: t.dueDate ? new Date(t.dueDate) : null })))
 				.catch(() => []),
 		refetchOnMount: false,

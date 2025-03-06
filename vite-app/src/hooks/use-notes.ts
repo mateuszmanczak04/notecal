@@ -1,6 +1,6 @@
-import { fromUTC } from '@/utils/timezone';
-import { Note } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
+import { T_Note } from '../types';
+import { fromUTC } from '../utils/timezone';
 
 export const useNotes = () => {
 	const { data, ...rest } = useQuery({
@@ -8,7 +8,7 @@ export const useNotes = () => {
 		queryFn: async () =>
 			await fetch('/api/notes')
 				.then(res => res.json())
-				.then(data => (data.notes || []) as Note[])
+				.then(data => (data.notes || []) as T_Note[])
 				.catch(() => []),
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,

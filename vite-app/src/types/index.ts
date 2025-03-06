@@ -10,6 +10,12 @@ export interface T_User {
 	Note: T_Note[];
 }
 
+export type T_LimitedUser = {
+	id: string;
+	email: string;
+	emailVerified: boolean;
+};
+
 export interface T_Course {
 	id: string;
 	name: string;

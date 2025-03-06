@@ -1,5 +1,5 @@
-import { LimitedUser } from '@/app/api/user/route';
 import { useQuery } from '@tanstack/react-query';
+import { T_LimitedUser } from '../types';
 
 export const useUser = () => {
 	return useQuery({
@@ -7,7 +7,7 @@ export const useUser = () => {
 		queryFn: async () =>
 			await fetch('/api/user')
 				.then(res => res.json())
-				.then(res => (res.user as LimitedUser) || null)
+				.then(res => (res.user as T_LimitedUser) || null)
 				.catch(() => null),
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,
