@@ -7,9 +7,13 @@ import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 const LogoutButton = () => {
 	const { mutate, isPending } = useMutation({
 		mutationFn: async () =>
-			await fetch(`${BACKEND_DOMAIN}/api/auth/logout`, { method: 'POST' }).then(() => {
-				window.location.reload();
-			}),
+			await fetch(`${BACKEND_DOMAIN}/api/auth/logout`, { method: 'POST' })
+				.then(res => res.json())
+				.then(res => {
+					if (res.success) {
+						window.location.reload();
+					}
+				}),
 	});
 
 	return (
