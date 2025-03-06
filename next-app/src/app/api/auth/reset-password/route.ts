@@ -57,7 +57,7 @@ export async function PUT(request: Request) {
 		cookieStore.set('authToken', jwtToken, {
 			httpOnly: true,
 			secure: true,
-			sameSite: 'strict',
+			sameSite: 'lax',
 		});
 
 		return Response.json({ message: 'Password reset successfully' }, { status: 200 });

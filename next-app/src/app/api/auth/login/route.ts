@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 		cookieStore.set('authToken', token, {
 			httpOnly: true,
 			secure: true,
-			sameSite: 'strict',
+			sameSite: 'lax',
 			maxAge: 60 * 60 * 24 * 7,
 		});
 		return Response.json({ success: true }, { status: 200 });

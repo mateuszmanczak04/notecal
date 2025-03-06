@@ -15,14 +15,14 @@ export const GET = async (request: Request) => {
 
 		if (!authenticated) {
 			await logout();
-			return Response.json({ error: 'User is not authenticated' }, { status: 401 });
+			return Response.json({ error: 'User is not authenticated' }, { status: 200 });
 		}
 
 		const user = await db.user.findUnique({ where: { id: authUser.id } });
 
 		if (!user) {
 			logout();
-			return Response.json({ error: 'User not found' }, { status: 404 });
+			return Response.json({ error: 'User not found' }, { status: 200 });
 		}
 
 		const limitedUser: LimitedUser = {

@@ -23,8 +23,7 @@ const LoginForm = () => {
 			}).then(res => res.json());
 			if ('error' in res) {
 				setError(res.error);
-			}
-			if (res.success) {
+			} else if (res.success) {
 				window.location.reload();
 			}
 		});
