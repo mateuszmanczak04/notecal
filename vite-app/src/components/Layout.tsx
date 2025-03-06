@@ -14,8 +14,6 @@ export default function Layout() {
 	useEffect(() => {
 		if (isPending) return;
 
-		console.log(user);
-
 		if (routesForUnauthenticatedUsers.includes(location.pathname) && user) {
 			navigate(DEFAULT_LOGIN_REDIRECT);
 			return;

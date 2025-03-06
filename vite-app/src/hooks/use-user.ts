@@ -8,10 +8,6 @@ export const useUser = () => {
 		queryFn: async () =>
 			await fetch(`${BACKEND_DOMAIN}/api/user`)
 				.then(res => res.json())
-				.then(res => {
-					console.log(res);
-					return res;
-				})
 				.then(res => (res.user as T_LimitedUser) || null)
 				.catch(() => null),
 		refetchOnMount: false,

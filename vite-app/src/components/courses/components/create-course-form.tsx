@@ -20,12 +20,7 @@ const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 			await fetch(`${BACKEND_DOMAIN}/api/courses`, {
 				method: 'POST',
 				body: JSON.stringify(data),
-			})
-				.then(res => res.json())
-				.then(res => {
-					console.log('create', res);
-					return res;
-				}),
+			}).then(res => res.json()),
 		// onMutate: data => {
 		// 	queryClient.setQueryData(['courses'], (prevCourses: Course[]) => {
 		// 		const newTempCourse = createTemporaryCourse(data);

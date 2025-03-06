@@ -123,7 +123,6 @@ export const PUT = async (request: Request, { params }: T_Params) => {
 
 		return Response.json({ note: updatedNote }, { status: 200 });
 	} catch (error) {
-		console.log(error);
 		return Response.json({ error: en.SOMETHING_WENT_WRONG }, { status: 500 });
 	}
 };

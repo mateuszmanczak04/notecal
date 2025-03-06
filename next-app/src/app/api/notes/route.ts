@@ -87,7 +87,6 @@ export const POST = async (request: Request) => {
 
 		return Response.json({ note }, { status: 201 });
 	} catch (error) {
-		console.log(error);
 		return Response.json({ error: en.SOMETHING_WENT_WRONG }, { status: 500 });
 	}
 };

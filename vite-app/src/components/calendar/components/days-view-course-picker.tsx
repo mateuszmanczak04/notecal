@@ -36,7 +36,6 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 		// 	queryClient.setQueryData(['notes'], old => [...old, tempNote]);
 		// },
 		onSettled: data => {
-			console.log(data);
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
 			}
