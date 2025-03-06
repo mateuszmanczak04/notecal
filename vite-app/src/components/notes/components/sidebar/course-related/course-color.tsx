@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../../../../../components/toast/use-toast';
-import { useClientSide } from '../../../../../hooks/use-client-side';
 import { BACKEND_DOMAIN } from '../../../../../utils/app-domain';
 import { cn } from '../../../../../utils/cn';
 import { COLORS } from '../../../../../utils/colors';
@@ -8,7 +7,6 @@ import { useNoteContext } from '../../../context/note-context';
 
 const CourseColor = () => {
 	const { currentCourse } = useNoteContext();
-	const isClient = useClientSide();
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
@@ -32,7 +30,7 @@ const CourseColor = () => {
 					<button
 						className={cn(
 							'aspect-square max-w-6 flex-1 cursor-pointer place-content-center rounded-full border-2 border-transparent font-medium text-white transition-colors hover:opacity-90',
-							isClient ? currentCourse?.color === color.hex && 'border-white/50' : '',
+							currentCourse?.color === color.hex && 'border-white/50',
 						)}
 						style={{
 							backgroundColor: color.hex,

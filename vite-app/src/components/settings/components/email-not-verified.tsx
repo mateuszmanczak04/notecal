@@ -4,7 +4,6 @@ import { Button } from '../../../components/button';
 import ErrorMessage from '../../../components/error-message';
 import LoadingSpinner from '../../../components/loading-spinner';
 import SuccessMessage from '../../../components/success-message';
-import { useClientSide } from '../../../hooks/use-client-side';
 import { useUser } from '../../../hooks/use-user';
 import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 
@@ -21,9 +20,8 @@ const EmailNotVerified = () => {
 			}).then(res => res.json()),
 		{ error: '', message: '' },
 	);
-	const isClient = useClientSide();
 
-	if (!isClient || !user) return null;
+	if (!user) return null;
 
 	// Don't want to show this component when user has email verified
 	if (user.emailVerified) return;

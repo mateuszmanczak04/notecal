@@ -3,7 +3,6 @@ import { Plus } from 'lucide-react';
 import { Button } from '../../../../../components/button';
 import LoadingSpinner from '../../../../../components/loading-spinner';
 import { useToast } from '../../../../../components/toast/use-toast';
-import { useClientSide } from '../../../../../hooks/use-client-side';
 import { useNotes } from '../../../../../hooks/use-notes';
 import { BACKEND_DOMAIN } from '../../../../../utils/app-domain';
 import { cn } from '../../../../../utils/cn';
@@ -17,7 +16,6 @@ import SideNoteItem from './side-note-item';
 const SideNotes = () => {
 	const { currentCourse } = useNoteContext();
 	const queryClient = useQueryClient();
-	const isClient = useClientSide();
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { courseId: string }) =>
@@ -50,7 +48,7 @@ const SideNotes = () => {
 			<p className='font-semibold'>Course notes</p>
 			<p className='mb-4 mt-2 text-sm opacity-75'>List of all notes from this course</p>
 
-			{isClient && currentCourseNotes && (
+			{currentCourseNotes && (
 				<div className='flex flex-col gap-y-2'>
 					<SelectNotesProvider>
 						{currentCourseNotes.map(note => (

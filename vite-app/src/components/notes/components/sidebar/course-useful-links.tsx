@@ -5,7 +5,6 @@ import { FormEvent, useEffect, useState } from 'react';
 import { Button } from '../../../../components/button';
 import { Input } from '../../../../components/input';
 import { useToast } from '../../../../components/toast/use-toast';
-import { useClientSide } from '../../../../hooks/use-client-side';
 import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { cn } from '../../../../utils/cn';
 import { addHttpsIfMissing, removeProtocol } from '../../../../utils/links';
@@ -13,7 +12,6 @@ import { useNoteContext } from '../../context/note-context';
 
 const CourseUsefulLinks = () => {
 	const { currentCourse } = useNoteContext();
-	const isClient = useClientSide();
 	// Used in the form
 	const [newLinkUrl, setNewLinkUrl] = useState<string>('');
 	const [newLinkTitle, setNewLinkTitle] = useState<string>('');
@@ -80,7 +78,7 @@ const CourseUsefulLinks = () => {
 				</Button>
 			)}
 
-			{isClient && usefulLinks.length > 0 && (
+			{usefulLinks.length > 0 && (
 				<Reorder.Group
 					values={usefulLinks}
 					onReorder={newLinks => {
