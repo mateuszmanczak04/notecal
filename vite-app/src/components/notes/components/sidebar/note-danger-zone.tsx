@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import { Button } from '../../../../components/button';
 import LoadingSpinner from '../../../../components/loading-spinner';
 import { useToast } from '../../../../components/toast/use-toast';
+import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { cn } from '../../../../utils/cn';
 import { useNoteContext } from '../../context/note-context';
 
@@ -15,7 +16,7 @@ const NoteDangerZone = () => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { id: string }) =>
-			await fetch(`/api/courses/${data.id}`, {
+			await fetch(`${BACKEND_DOMAIN}/api/courses/${data.id}`, {
 				method: 'DELETE',
 			}).then(res => res.json()),
 		onSettled: data => {
@@ -48,16 +49,14 @@ const NoteDangerZone = () => {
 						onClick={confirmDeletion}
 						className={cn('mt-4 w-full', isPending && 'pointer-events-none opacity-50')}
 						aria-label='Yes, delete entire course'
-						disabled={isPending}
-					>
+						disabled={isPending}>
 						Yes {isPending && <LoadingSpinner className='size-4' />}
 					</Button>
 					<Button
 						variant='secondary'
 						className='mt-2 w-full'
 						onClick={() => setIsDeleting(false)}
-						aria-label='No, do not delete entire course'
-					>
+						aria-label='No, do not delete entire course'>
 						No, cancel
 					</Button>
 				</div>

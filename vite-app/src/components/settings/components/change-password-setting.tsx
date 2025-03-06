@@ -5,6 +5,7 @@ import FormLoadingSpinner from '../../../components/form-loading-spinner';
 import { Input } from '../../../components/input';
 import LoadingSpinner from '../../../components/loading-spinner';
 import SuccessMessage from '../../../components/success-message';
+import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 
 const ChangePasswordSetting = () => {
 	const [error, setError] = useState('');
@@ -18,7 +19,7 @@ const ChangePasswordSetting = () => {
 		startTransition(async () => {
 			setError('');
 			setMessage('');
-			const res = await fetch('/api/user/password', {
+			const res = await fetch(`${BACKEND_DOMAIN}/api/user/password`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

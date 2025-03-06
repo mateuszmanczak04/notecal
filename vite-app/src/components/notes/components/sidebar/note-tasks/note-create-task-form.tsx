@@ -5,6 +5,7 @@ import { Button } from '../../../../../components/button';
 import { Input } from '../../../../../components/input';
 import { useToast } from '../../../../../components/toast/use-toast';
 import { T_Course } from '../../../../../types';
+import { BACKEND_DOMAIN } from '../../../../../utils/app-domain';
 import { cn } from '../../../../../utils/cn';
 
 type Props = {
@@ -16,7 +17,7 @@ const NoteCreateTaskForm = ({ course }: Props) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { title: string; courseId: string }) =>
-			await fetch('/api/tasks', {
+			await fetch(`${BACKEND_DOMAIN}/api/tasks`, {
 				method: 'POST',
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
@@ -51,8 +52,7 @@ const NoteCreateTaskForm = ({ course }: Props) => {
 				className='rounded-xl text-sm'
 				type='submit'
 				disabled={isPending}
-				style={{ backgroundColor: course?.color || '' }}
-			>
+				style={{ backgroundColor: course?.color || '' }}>
 				<Plus className='size-5' />
 				Create a new task
 			</Button>

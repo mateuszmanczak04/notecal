@@ -4,6 +4,7 @@ import { ClassNameValue } from 'tailwind-merge';
 import { Button } from '../../../../components/button';
 import { toast } from '../../../../components/toast/use-toast';
 import { T_Note } from '../../../../types';
+import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { cn } from '../../../../utils/cn';
 
 type T_Props = {
@@ -16,7 +17,7 @@ const DuplicateNote = ({ note, className }: T_Props) => {
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
 		mutationFn: async () =>
-			await fetch(`/api/notes/${note.id}/duplicate`, {
+			await fetch(`${BACKEND_DOMAIN}/api/notes/${note.id}/duplicate`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -67,8 +68,7 @@ const DuplicateNote = ({ note, className }: T_Props) => {
 		<Button
 			onClick={() => mutate()}
 			className={cn('dark:bg-neutral-600 dark:hover:bg-neutral-500', className)}
-			variant='secondary'
-		>
+			variant='secondary'>
 			<File className='size-5' />
 			Duplicate note
 		</Button>

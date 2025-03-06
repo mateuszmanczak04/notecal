@@ -14,7 +14,7 @@ export const GET = async (request: Request) => {
 		const { authenticated, user: authUser } = await getAuthStatus();
 
 		if (!authenticated) {
-			logout();
+			await logout();
 			return Response.json({ error: 'User is not authenticated' }, { status: 401 });
 		}
 

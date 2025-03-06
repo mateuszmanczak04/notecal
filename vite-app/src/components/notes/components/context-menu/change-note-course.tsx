@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../../../../components/toast/use-toast';
 import { useCourses } from '../../../../hooks/use-courses';
 import { T_Course, T_Note } from '../../../../types';
+import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 
 type Props = {
 	currentCourse: T_Course;
@@ -18,7 +19,7 @@ const ChangeNoteCourse = ({ currentCourse, note, handleClose }: Props) => {
 	const { toast } = useToast();
 	const { mutate } = useMutation({
 		mutationFn: async (data: { id: string; courseId: string }) =>
-			await fetch(`/api/notes/${data.id}`, {
+			await fetch(`${BACKEND_DOMAIN}/api/notes/${data.id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -62,12 +63,10 @@ const ChangeNoteCourse = ({ currentCourse, note, handleClose }: Props) => {
 							}}
 							key={course.id}
 							value={course.id}
-							className='flex h-9 cursor-pointer select-none items-center gap-2 truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500'
-						>
+							className='flex h-9 cursor-pointer select-none items-center gap-2 truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500'>
 							<div
 								className='h-3 w-3 shrink-0 rounded-full'
-								style={{ backgroundColor: course.color }}
-							></div>
+								style={{ backgroundColor: course.color }}></div>
 							<p className={'truncate text-sm'}>{course.name}</p>
 						</button>
 					))}

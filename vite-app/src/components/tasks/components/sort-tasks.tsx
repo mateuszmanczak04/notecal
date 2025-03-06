@@ -7,6 +7,7 @@ import {
 } from '../../../components/dropdown-menu';
 import { useToast } from '../../../components/toast/use-toast';
 import { useSettings } from '../../../hooks/use-settings';
+import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 
 const getNameOfCriteria = (criteria: string) => {
 	if (criteria === 'title') {
@@ -33,7 +34,7 @@ const SortTasks = () => {
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
 		mutationFn: async (data: { newOrder: string }) =>
-			await fetch('/api/tasks/sort', {
+			await fetch(`${BACKEND_DOMAIN}/api/tasks/sort`, {
 				method: 'PATCH',
 				body: JSON.stringify(data),
 			}).then(res => res.json()),

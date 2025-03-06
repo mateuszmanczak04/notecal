@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { useToast } from '../../../components/toast/use-toast';
 import { T_Task } from '../../../types';
+import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 
 export const useTaskTitle = (task: T_Task) => {
 	const { title } = task;
@@ -10,7 +11,7 @@ export const useTaskTitle = (task: T_Task) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { title: string }) =>
-			await fetch(`/api/tasks/${task.id}`, {
+			await fetch(`${BACKEND_DOMAIN}/api/tasks/${task.id}`, {
 				method: 'PATCH',
 				body: JSON.stringify(data),
 			}).then(res => res.json()),

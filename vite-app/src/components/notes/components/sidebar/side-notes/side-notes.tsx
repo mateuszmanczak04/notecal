@@ -5,6 +5,7 @@ import LoadingSpinner from '../../../../../components/loading-spinner';
 import { useToast } from '../../../../../components/toast/use-toast';
 import { useClientSide } from '../../../../../hooks/use-client-side';
 import { useNotes } from '../../../../../hooks/use-notes';
+import { BACKEND_DOMAIN } from '../../../../../utils/app-domain';
 import { cn } from '../../../../../utils/cn';
 import { useNoteContext } from '../../../context/note-context';
 import { SelectNotesProvider } from './selected-notes-context';
@@ -20,7 +21,7 @@ const SideNotes = () => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { courseId: string }) =>
-			await fetch(`/api/notes`, {
+			await fetch(`${BACKEND_DOMAIN}/api/notes`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -63,8 +64,7 @@ const SideNotes = () => {
 				style={{ backgroundColor: isClient ? currentCourse?.color : '' }}
 				onClick={handleNewNote}
 				className={cn('mt-2 transition-opacity', isPending && 'pointer-events-none opacity-50')}
-				disabled={isPending}
-			>
+				disabled={isPending}>
 				<Plus className='size-5' /> Create a new note {isPending && <LoadingSpinner className='size-4' />}
 			</Button>
 		</div>

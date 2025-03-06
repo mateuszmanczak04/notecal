@@ -7,6 +7,7 @@ import { Button } from '../../../../components/button';
 import LoadingSpinner from '../../../../components/loading-spinner';
 import { useToast } from '../../../../components/toast/use-toast';
 import { T_Note } from '../../../../types';
+import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { cn } from '../../../../utils/cn';
 
 type Props = {
@@ -21,7 +22,9 @@ const DeleteManyNotesButton = ({ notes, className }: Props) => {
 	const [isDeleting, setIsDeleting] = useState(false);
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { ids: string[] }) =>
-			await fetch('/api/notes', { method: 'DELETE', body: JSON.stringify(data) }).then(res => res.json()),
+			await fetch(`${BACKEND_DOMAIN}/api/notes`, { method: 'DELETE', body: JSON.stringify(data) }).then(res =>
+				res.json(),
+			),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
@@ -37,8 +40,7 @@ const DeleteManyNotesButton = ({ notes, className }: Props) => {
 			<Button
 				variant='destructive'
 				onClick={() => mutate({ ids: notes.map(n => n.id) })}
-				className={cn('rounded-md', className)}
-			>
+				className={cn('rounded-md', className)}>
 				<Trash className='size-5' /> Are you sure? {isPending && <LoadingSpinner className='size-4' />}
 			</Button>
 		);

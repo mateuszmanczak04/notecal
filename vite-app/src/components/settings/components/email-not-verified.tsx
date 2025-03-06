@@ -6,12 +6,13 @@ import LoadingSpinner from '../../../components/loading-spinner';
 import SuccessMessage from '../../../components/success-message';
 import { useClientSide } from '../../../hooks/use-client-side';
 import { useUser } from '../../../hooks/use-user';
+import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 
 const EmailNotVerified = () => {
 	const { data: user } = useUser();
 	const [state, formAction, isPending] = useActionState(
 		async () =>
-			fetch('/api/auth/email-verified', {
+			fetch(`${BACKEND_DOMAIN}/api/auth/email-verified`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

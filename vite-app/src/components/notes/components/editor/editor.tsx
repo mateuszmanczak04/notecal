@@ -17,6 +17,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import LoadingSpinner from '../../../../components/loading-spinner';
 import { useToast } from '../../../../components/toast/use-toast';
 import { useSettings } from '../../../../hooks/use-settings';
+import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { cn } from '../../../../utils/cn';
 import { isDarkMode } from '../../../../utils/is-dark-mode';
 import { useNoteContext } from '../../context/note-context';
@@ -96,7 +97,7 @@ const Editor = () => {
 	/** Sends editor HTML markup to the backend, receives PDF result in base64 format and downloads it */
 	const handleExportToPDF = async () => {
 		if (!currentNote) return;
-		const res = await fetch(`/api/notes/${currentNote.id}/export`, {
+		const res = await fetch(`${BACKEND_DOMAIN}/api/notes/${currentNote.id}/export`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -135,15 +136,13 @@ const Editor = () => {
 			className={cn(
 				'flex h-full flex-1 flex-col bg-white dark:bg-neutral-800',
 				isPendingUpdate && 'pointer-events-none opacity-50',
-			)}
-		>
+			)}>
 			<LexicalComposer
 				key={content}
 				initialConfig={{
 					...editorConfig,
 					editorState: content || undefined,
-				}}
-			>
+				}}>
 				<ToolbarPlugin handleExport={handleExportToPDF} onSave={handleSave} hasChanged={hasChanged} />
 				{isPendingGet && (
 					<div className='p-4'>
@@ -155,8 +154,7 @@ const Editor = () => {
 						'scrollbar-hide relative w-full flex-1 overflow-y-scroll scroll-auto p-4 leading-normal',
 						maxNoteWidthEnabled && 'mx-auto max-w-screen-lg',
 						isPendingGet && 'pointer-events-none opacity-50',
-					)}
-				>
+					)}>
 					<RichTextPlugin
 						contentEditable={
 							<ContentEditable

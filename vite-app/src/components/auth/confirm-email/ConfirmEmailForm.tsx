@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router';
 import { Button } from '../../../components/button';
 import LoadingSpinner from '../../../components/loading-spinner';
 import { useUser } from '../../../hooks/use-user';
+import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 
 const ConfirmEmailForm = () => {
 	const [error, setError] = useState('');
@@ -16,7 +17,7 @@ const ConfirmEmailForm = () => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		startTransition(async () => {
-			const res = await fetch('/api/auth/email-verified', {
+			const res = await fetch(`${BACKEND_DOMAIN}/api/auth/email-verified`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

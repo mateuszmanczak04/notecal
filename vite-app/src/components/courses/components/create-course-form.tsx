@@ -4,6 +4,7 @@ import { Button } from '../../../components/button';
 import { Input } from '../../../components/input';
 import LoadingSpinner from '../../../components/loading-spinner';
 import { useToast } from '../../../components/toast/use-toast';
+import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { cn } from '../../../utils/cn';
 import { COLORS } from '../../../utils/colors';
 
@@ -16,7 +17,7 @@ const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { name: string; teacher: string; color: string }) =>
-			await fetch('/api/courses', {
+			await fetch(`${BACKEND_DOMAIN}/api/courses`, {
 				method: 'POST',
 				body: JSON.stringify(data),
 			})
@@ -99,14 +100,12 @@ const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 							style={{
 								backgroundColor: color.hex,
 							}}
-							key={color.hex}
-						>
+							key={color.hex}>
 							<span
 								className={cn(
 									'rounded-xl bg-neutral-900/50 px-1 text-sm leading-5 transition',
 									selectedColor === color.hex ? 'opacity-1' : 'opacity-0',
-								)}
-							>
+								)}>
 								{color.description}
 							</span>
 						</div>

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Input } from '../../../../components/input';
 import { useToast } from '../../../../components/toast/use-toast';
 import { T_Note } from '../../../../types';
+import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { cn } from '../../../../utils/cn';
 
 type Props = {
@@ -16,7 +17,7 @@ const NoteTitle = ({ note, callback }: Props) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { id: string; title: string }) =>
-			await fetch(`/api/notes/${data.id}`, {
+			await fetch(`${BACKEND_DOMAIN}/api/notes/${data.id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -41,8 +42,7 @@ const NoteTitle = ({ note, callback }: Props) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className={cn('transition-opacity', isPending && 'pointer-events-none opacity-50')}
-		>
+			className={cn('transition-opacity', isPending && 'pointer-events-none opacity-50')}>
 			<label htmlFor='note-title' className='mb-1 block px-2 font-semibold'>
 				Title
 			</label>

@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router';
 import { Button } from '../../../components/button';
 import { Input } from '../../../components/input';
 import LoadingSpinner from '../../../components/loading-spinner';
+import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 
 const ResetPasswordForm = () => {
 	const [error, setError] = useState('');
@@ -14,7 +15,7 @@ const ResetPasswordForm = () => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		startTransition(async () => {
-			const res = await fetch('/api/auth/reset-password', {
+			const res = await fetch(`${BACKEND_DOMAIN}/api/auth/reset-password`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -38,8 +39,7 @@ const ResetPasswordForm = () => {
 		<>
 			<form
 				className='mt-4 rounded-xl border border-neutral-200 p-4 dark:border-transparent dark:bg-neutral-800'
-				onSubmit={handleSubmit}
-			>
+				onSubmit={handleSubmit}>
 				<label htmlFor='password' className='ml-2 block font-medium'>
 					New Password
 				</label>

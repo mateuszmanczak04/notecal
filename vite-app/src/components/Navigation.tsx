@@ -1,12 +1,13 @@
 import { Calendar, Check, Menu, Settings, User, X } from 'lucide-react';
 import { useState } from 'react';
 import { NavLink } from 'react-router';
+import { useUser } from '../hooks/use-user';
 import { cn } from '../utils/cn';
 import { Button } from './button';
 // import NavCourses from './nav-courses';
 
 const Navigation = () => {
-	const user = { email: 'example@abc.com' };
+	const { data: user } = useUser();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleOpen = () => {
@@ -28,24 +29,21 @@ const Navigation = () => {
 				)}
 				aria-label='open menu button'
 				title='open menu button'
-				onClick={handleOpen}
-			>
+				onClick={handleOpen}>
 				<Menu />
 			</Button>
 			<div
 				className={cn(
 					'fixed left-0 top-0 z-50 mr-4 flex h-screen w-screen shrink-0 translate-x-0 flex-col gap-8 bg-neutral-100 p-8 pl-20 shadow-lg transition sm:w-96 xl:max-w-80 xl:p-6 xl:shadow-none dark:bg-neutral-900',
 					!isOpen && '-translate-x-full xl:translate-x-0',
-				)}
-			>
+				)}>
 				{/* Close button */}
 				<Button
 					variant='secondary'
 					className='transiton fixed left-0 top-0 z-10 h-full w-12 translate-x-0 rounded-none bg-neutral-200 xl:hidden dark:bg-neutral-800 dark:text-neutral-100'
 					onClick={handleClose}
 					aria-label='close menu button'
-					title='close menu button'
-				>
+					title='close menu button'>
 					<X />
 				</Button>
 
@@ -53,8 +51,7 @@ const Navigation = () => {
 				<NavLink
 					to='/settings'
 					onClick={handleClose}
-					className='flex select-none items-center justify-between gap-3 rounded-xl bg-white px-4 py-2 dark:bg-neutral-700'
-				>
+					className='flex select-none items-center justify-between gap-3 rounded-xl bg-white px-4 py-2 dark:bg-neutral-700'>
 					{/* <Image
 							src='/avatar.jpg'
 							width={32}
@@ -81,8 +78,7 @@ const Navigation = () => {
 									isActive && 'bg-white dark:bg-neutral-700',
 								)
 							}
-							onClick={handleClose}
-						>
+							onClick={handleClose}>
 							<Calendar className='h-4 w-4' /> Calendar
 						</NavLink>
 						<NavLink
@@ -93,8 +89,7 @@ const Navigation = () => {
 									isActive && 'bg-white dark:bg-neutral-700',
 								)
 							}
-							onClick={handleClose}
-						>
+							onClick={handleClose}>
 							<Check className='h-4 w-4' /> Tasks
 						</NavLink>
 						<NavLink
@@ -105,8 +100,7 @@ const Navigation = () => {
 									isActive && 'bg-white dark:bg-neutral-700',
 								)
 							}
-							onClick={handleClose}
-						>
+							onClick={handleClose}>
 							<Check className='h-4 w-4' /> Course
 						</NavLink>
 

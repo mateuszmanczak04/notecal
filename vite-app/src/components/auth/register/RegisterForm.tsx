@@ -2,6 +2,7 @@ import { useState, useTransition } from 'react';
 import { Button } from '../../../components/button';
 import { Input } from '../../../components/input';
 import LoadingSpinner from '../../../components/loading-spinner';
+import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 
 const RegisterForm = () => {
 	const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ const RegisterForm = () => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		startTransition(async () => {
-			const res = await fetch('/api/auth/register', {
+			const res = await fetch(`${BACKEND_DOMAIN}/api/auth/register`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -31,8 +32,7 @@ const RegisterForm = () => {
 	return (
 		<form
 			className='mt-4 rounded-xl border border-neutral-200 p-4 dark:border-transparent dark:bg-neutral-800'
-			onSubmit={handleSubmit}
-		>
+			onSubmit={handleSubmit}>
 			<label htmlFor='email' className='ml-2 block font-medium'>
 				Email
 			</label>

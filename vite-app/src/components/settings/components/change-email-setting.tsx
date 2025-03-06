@@ -4,6 +4,7 @@ import ErrorMessage from '../../../components/error-message';
 import { Input } from '../../../components/input';
 import LoadingSpinner from '../../../components/loading-spinner';
 import SuccessMessage from '../../../components/success-message';
+import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 
 const ChangeEmailSetting = () => {
 	const [error, setError] = useState('');
@@ -17,7 +18,7 @@ const ChangeEmailSetting = () => {
 		startTransition(async () => {
 			setMessage('');
 			setError('');
-			const res = await fetch('/api/user/email', {
+			const res = await fetch(`${BACKEND_DOMAIN}/api/user/email`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

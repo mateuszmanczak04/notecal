@@ -1,3 +1,5 @@
+import { FRONTEND_DOMAIN } from './utils/app-domain';
+
 export const routesForAllUsers: string[] = ['/auth/confirm-email'];
 
 export const routesForUnauthenticatedUsers: string[] = [
@@ -8,4 +10,4 @@ export const routesForUnauthenticatedUsers: string[] = [
 	'/auth/reset-password',
 ];
 
-export const DEFAULT_LOGIN_REDIRECT: string = '/calendar';
+export const DEFAULT_LOGIN_REDIRECT: string = FRONTEND_DOMAIN + '/calendar';

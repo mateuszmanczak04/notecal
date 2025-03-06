@@ -6,6 +6,7 @@ import { Button } from '../../../components/button';
 import { Input } from '../../../components/input';
 import { useToast } from '../../../components/toast/use-toast';
 import { T_Course } from '../../../types';
+import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { cn } from '../../../utils/cn';
 
 type Props = {
@@ -17,7 +18,7 @@ const CreateTaskForm = ({ course }: Props) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { title: string; courseId: string }) =>
-			await fetch('/api/tasks', {
+			await fetch(`${BACKEND_DOMAIN}/api/tasks`, {
 				method: 'POST',
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
@@ -69,8 +70,7 @@ const CreateTaskForm = ({ course }: Props) => {
 				'z-20 space-y-4 rounded-2xl bg-white p-4 shadow-[0_0_32px_-20px_rgba(0,0,0,0.3)] sm:sticky sm:top-4 sm:p-8 dark:bg-neutral-700',
 				isPending && 'opacity-50',
 			)}
-			onClick={handleFocusInput}
-		>
+			onClick={handleFocusInput}>
 			{/* Heading */}
 			<h2 className='text-xl font-bold sm:text-2xl'>
 				Create a new task <br className='sm:hidden' />
@@ -85,8 +85,7 @@ const CreateTaskForm = ({ course }: Props) => {
 				className={cn(
 					'flex flex-col gap-4 sm:flex-row sm:gap-0',
 					isPending && 'pointer-events-none opacity-50',
-				)}
-			>
+				)}>
 				<Input
 					id='create-task-title'
 					placeholder='Do the math homework'

@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../../../../../components/toast/use-toast';
 import { useDatePickerFunctionality } from '../../../../../hooks/use-date-picker-functionality';
 import { T_Note } from '../../../../../types';
+import { BACKEND_DOMAIN } from '../../../../../utils/app-domain';
 import { cn } from '../../../../../utils/cn';
 import { toUTC } from '../../../../../utils/timezone';
 
@@ -15,7 +16,7 @@ const NoteStartTime = ({ note }: Props) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { id: string; startTime: Date | null }) =>
-			await fetch(`/api/notes/${data.id}`, {
+			await fetch(`${BACKEND_DOMAIN}/api/notes/${data.id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -48,8 +49,7 @@ const NoteStartTime = ({ note }: Props) => {
 				className={cn(
 					'mt-2 flex w-fit rounded-md border border-neutral-100 p-1 text-sm transition-opacity dark:border-neutral-800 dark:text-neutral-100',
 					isPending && 'pointer-events-none opacity-50',
-				)}
-			>
+				)}>
 				{/* Year */}
 				<input
 					placeholder='yyyy'

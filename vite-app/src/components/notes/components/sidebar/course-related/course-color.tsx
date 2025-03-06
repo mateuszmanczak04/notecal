@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../../../../../components/toast/use-toast';
 import { useClientSide } from '../../../../../hooks/use-client-side';
+import { BACKEND_DOMAIN } from '../../../../../utils/app-domain';
 import { cn } from '../../../../../utils/cn';
 import { COLORS } from '../../../../../utils/colors';
 import { useNoteContext } from '../../../context/note-context';
@@ -12,7 +13,7 @@ const CourseColor = () => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { id: string; color: string }) =>
-			await fetch(`/api/courses/${data.id}`, {
+			await fetch(`${BACKEND_DOMAIN}/api/courses/${data.id}`, {
 				method: 'PATCH',
 				body: JSON.stringify({ color: data.color }),
 			}).then(res => res.json()),
@@ -37,8 +38,7 @@ const CourseColor = () => {
 							backgroundColor: color.hex,
 						}}
 						onClick={() => mutate({ id: currentCourse?.id || '', color: color.hex })}
-						key={color.hex}
-					></button>
+						key={color.hex}></button>
 				);
 			})}
 		</div>

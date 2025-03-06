@@ -7,6 +7,7 @@ import { Button } from '../../../../components/button';
 import LoadingSpinner from '../../../../components/loading-spinner';
 import { useToast } from '../../../../components/toast/use-toast';
 import { T_Note } from '../../../../types';
+import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { cn } from '../../../../utils/cn';
 
 type Props = {
@@ -19,7 +20,8 @@ const DeleteNoteButton = ({ note, className }: Props) => {
 	const { toast } = useToast();
 	const [isDeleting, setIsDeleting] = useState(false);
 	const { mutate, isPending } = useMutation({
-		mutationFn: async () => await fetch(`/api/notes/${note.id}`, { method: 'DELETE' }).then(res => res.json()),
+		mutationFn: async () =>
+			await fetch(`${BACKEND_DOMAIN}/api/notes/${note.id}`, { method: 'DELETE' }).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });
