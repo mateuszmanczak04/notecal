@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { FRONTEND_DOMAIN } from '../../../../utils/app-domain';
 import db from '../../../../utils/db';
 import { en } from '../../../../utils/dictionary';
 
@@ -65,7 +66,7 @@ export async function POST(request: Request) {
 
 		// Generate reset token.
 		const tokenData = await generateResetToken(email);
-		const url = `${process.env.APP_DOMAIN}/auth/reset-password?token=${tokenData.token}&email=${email}`;
+		const url = `${FRONTEND_DOMAIN}/auth/reset-password?token=${tokenData.token}&email=${email}`;
 
 		// Email template.
 		const html = `

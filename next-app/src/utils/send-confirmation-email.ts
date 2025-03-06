@@ -1,8 +1,9 @@
 'server-only';
 
-import db from '@/utils/db';
-import { en } from '@/utils/dictionary';
 import nodemailer from 'nodemailer';
+import { FRONTEND_DOMAIN } from './app-domain';
+import db from './db';
+import { en } from './dictionary';
 
 const getVerificationTokenByEmail = async (email: string) => {
 	const verificationToken = await db.verificationToken.findFirst({
@@ -47,7 +48,7 @@ export const sendConfirmationEmail = async (email: string): Promise<{ error?: st
 		});
 
 		const token = await generateVerificationToken(email);
-		const url = `${process.env.APP_DOMAIN}/auth/confirm-email?token=${token.token}`;
+		const url = `${FRONTEND_DOMAIN}/auth/confirm-email?token=${token.token}`;
 
 		const html = `
             <div style="

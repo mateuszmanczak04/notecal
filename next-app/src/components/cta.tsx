@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { FRONTEND_DOMAIN } from '../utils/app-domain';
 import { Button } from './button';
 
 const CTA = () => {
@@ -12,7 +13,7 @@ const CTA = () => {
 					Sign up now and take control of your study life with NoteCal.
 				</p>
 				<Button asChild size='lg'>
-					<Link href='/auth/register'>Sign Up for Free</Link>
+					<Link href={`${FRONTEND_DOMAIN}/auth/register`}>Sign Up for Free</Link>
 				</Button>
 			</div>
 		</section>
