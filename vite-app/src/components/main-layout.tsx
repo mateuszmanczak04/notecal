@@ -1,39 +1,41 @@
-'use client';
-
-import { useUser } from '@/hooks/use-user';
-import { DEFAULT_LOGIN_REDIRECT, routesForAllUsers, routesForUnauthenticatedUsers } from '@/routes';
-import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
-import { Toaster } from '../../components/toast/toaster';
-import { CalendarContextProvider } from '../calendar/_context/calendar-context';
-import Navigation from './navigation/navigation';
+import { useLocation, useNavigate } from 'react-router';
+import { CalendarContextProvider } from '../components/calendar/context/calendar-context';
+import { useUser } from '../hooks/use-user';
+import { DEFAULT_LOGIN_REDIRECT, routesForAllUsers, routesForUnauthenticatedUsers } from '../utils/routes';
+import Navigation from './Navigation';
+import { Toaster } from './toast/toaster';
 
 type Props = {
 	children: ReactNode;
 };
 
 const MainLayout = ({ children }: Props) => {
-	const pathname = usePathname();
+	const location = useLocation();
 	const { data: user, isPending } = useUser();
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (isPending) return;
 
-		if (routesForUnauthenticatedUsers.includes(pathname) && user) {
-			router.replace(DEFAULT_LOGIN_REDIRECT);
+		if (routesForUnauthenticatedUsers.includes(location.pathname) && user) {
+			navigate(DEFAULT_LOGIN_REDIRECT);
 			return;
 		}
 
-		if (!user && !routesForAllUsers.includes(pathname) && !routesForUnauthenticatedUsers.includes(pathname)) {
-			router.replace('/');
+		if (
+			!user &&
+			!routesForAllUsers.includes(location.pathname) &&
+			!routesForUnauthenticatedUsers.includes(location.pathname)
+		) {
+			navigate('/');
 			return;
 		}
-	}, [user, pathname]);
+	}, [user, location.pathname, isPending, navigate]);
 
 	if (isPending) return;
 
-	if (routesForAllUsers.includes(pathname) || routesForUnauthenticatedUsers.includes(pathname))
+	if (routesForAllUsers.includes(location.pathname) || routesForUnauthenticatedUsers.includes(location.pathname))
 		return <div className='pt-16'>{children}</div>;
 
 	return (

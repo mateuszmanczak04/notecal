@@ -1,5 +1,3 @@
-'use client';
-
 import { useFormStatus } from 'react-dom';
 import { ClassNameValue } from 'tailwind-merge';
 import LoadingSpinner from './loading-spinner';

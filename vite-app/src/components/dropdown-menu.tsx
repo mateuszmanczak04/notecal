@@ -1,10 +1,8 @@
-'use client';
-
-import { cn } from '@/utils/cn';
 import { ChevronDown } from 'lucide-react';
 import React, { createContext, RefObject, useContext, useRef, useState } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
 import { useOnClickOutside } from 'usehooks-ts';
+import { cn } from '../utils/cn';
 import Tag from './tag';
 
 const DropdownMenuContext = createContext(

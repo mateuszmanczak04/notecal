@@ -1,8 +1,6 @@
-'use client';
-
-import { useDatePickerFunctionality } from '@/hooks/use-date-picker-functionality';
-import { cn } from '@/utils/cn';
 import { format } from 'date-fns';
+import { useDatePickerFunctionality } from '../hooks/use-date-picker-functionality';
+import { cn } from '../utils/cn';
 import Tag from './tag';
 
 type Props = {

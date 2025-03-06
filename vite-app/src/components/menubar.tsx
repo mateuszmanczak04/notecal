@@ -1,10 +1,7 @@
-'use client';
-
 import * as MenubarPrimitive from '@radix-ui/react-menubar';
 import { Check, ChevronRight, Circle } from 'lucide-react';
 import * as React from 'react';
-
-import { cn } from '@/utils/cn';
+import { cn } from '../utils/cn';
 
 function MenubarMenu({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Menu>) {
 	return <MenubarPrimitive.Menu {...props} />;
@@ -65,7 +62,7 @@ const MenubarSubTrigger = React.forwardRef<
 	<MenubarPrimitive.SubTrigger
 		ref={ref}
 		className={cn(
-			' flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-neutral-100 data-[state=open]:bg-neutral-100 dark:hover:bg-neutral-700 dark:data-[state=open]:bg-neutral-700',
+			'flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-neutral-100 data-[state=open]:bg-neutral-100 dark:hover:bg-neutral-700 dark:data-[state=open]:bg-neutral-700',
 			inset && 'pl-8',
 			className,
 		)}
@@ -84,7 +81,7 @@ const MenubarSubContent = React.forwardRef<
 	<MenubarPrimitive.SubContent
 		ref={ref}
 		className={cn(
-			'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-neutral-800',
+			'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 shadow-lg dark:bg-neutral-800',
 			className,
 		)}
 		{...props}
@@ -103,7 +100,7 @@ const MenubarContent = React.forwardRef<
 			alignOffset={alignOffset}
 			sideOffset={sideOffset}
 			className={cn(
-				'z-50 min-w-[12rem] overflow-hidden rounded-md border border-neutral-200 bg-white p-1 shadow-md data-[state=open]:animate-in data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:border-neutral-600 dark:bg-neutral-800',
+				'data-[state=open]:animate-in data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[12rem] overflow-hidden rounded-md border border-neutral-200 bg-white p-1 shadow-md dark:border-neutral-600 dark:bg-neutral-800',
 				className,
 			)}
 			{...props}

@@ -1,6 +1,6 @@
-import { cn } from '@/utils/cn';
 import { LoaderCircle } from 'lucide-react';
 import { ClassNameValue } from 'tailwind-merge';
+import { cn } from '../utils/cn';
 
 /**
  * Simple spinning ring.

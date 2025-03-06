@@ -1,5 +1,5 @@
-import { cn } from '@/utils/cn';
 import React, { FC, MouseEvent } from 'react';
+import { cn } from '../utils/cn';
 
 interface TagProps {
 	className?: string;
