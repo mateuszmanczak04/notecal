@@ -1,11 +1,11 @@
-import { useToast } from '@/components/toast/use-toast';
-import { T_NoteWithTime } from '@/hooks/use-notes-with-time';
-import { useSettings } from '@/hooks/use-settings';
-import { useUser } from '@/hooks/use-user';
-import { toUTC } from '@/utils/timezone';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addMilliseconds } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
+import { useToast } from '../../../components/toast/use-toast';
+import { T_NoteWithTime } from '../../../hooks/use-notes-with-time';
+import { useSettings } from '../../../hooks/use-settings';
+import { useUser } from '../../../hooks/use-user';
+import { toUTC } from '../../../utils/timezone';
 import { useCalendarContext } from '../context/calendar-context';
 import { getNoteDateFromXYPosition } from '../utils/get-date-from-position';
 import { getDaysIncludedInNote } from '../utils/get-days-included-in-note';
