@@ -1,7 +1,11 @@
-'use client';
-
-import { MenubarContent, MenubarMenu, MenubarRadioGroup, MenubarRadioItem, MenubarTrigger } from '@/components/menubar';
-import { T_DisplayedDays, useSettings } from '@/hooks/use-settings';
+import {
+	MenubarContent,
+	MenubarMenu,
+	MenubarRadioGroup,
+	MenubarRadioItem,
+	MenubarTrigger,
+} from '../../../../components/menubar';
+import { T_DisplayedDays, useSettings } from '../../../../hooks/use-settings';
 
 const CalendarMenuDisplayedDays = () => {
 	const { displayedDays, setDisplayedDays } = useSettings();

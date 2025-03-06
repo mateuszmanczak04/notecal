@@ -1,8 +1,6 @@
-'use client';
-
-import { MenubarLabel } from '@/components/menubar';
-import { useSettings } from '@/hooks/use-settings';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { MenubarLabel } from '../../../../components/menubar';
+import { useSettings } from '../../../../hooks/use-settings';
 
 const CalendarMenuBackForward = () => {
 	const { viewMode, goDayForward, goDayBackward, goMonthForward, goMonthBackward } = useSettings();

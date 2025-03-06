@@ -1,8 +1,6 @@
-'use client';
-
-import { MenubarLabel } from '@/components/menubar';
-import { useSettings } from '@/hooks/use-settings';
 import { Minus, Plus } from 'lucide-react';
+import { MenubarLabel } from '../../../../components/menubar';
+import { useSettings } from '../../../../hooks/use-settings';
 
 const CalendarMenuZoom = () => {
 	const { zoomIn, zoomOut } = useSettings();

@@ -1,7 +1,5 @@
-'use client';
-
-import { MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '@/components/menubar';
-import { useSettings } from '@/hooks/use-settings';
+import { MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '../../../../components/menubar';
+import { useSettings } from '../../../../hooks/use-settings';
 
 const CalendarMenuGoTo = () => {
 	const { goToToday } = useSettings();

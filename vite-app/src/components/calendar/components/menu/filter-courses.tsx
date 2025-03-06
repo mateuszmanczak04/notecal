@@ -1,11 +1,9 @@
-'use client';
-
-import { MenubarCheckboxItem, MenubarContent, MenubarMenu, MenubarTrigger } from '@/components/menubar';
-import { useCourses } from '@/hooks/use-courses';
+import { MenubarCheckboxItem, MenubarContent, MenubarMenu, MenubarTrigger } from '../../../../components/menubar';
+import { useCourses } from '../../../../hooks/use-courses';
 import { useCalendarContext } from '../../context/calendar-context';
 
 const CalendarMenuFilterCourses = () => {
-	const { data: courses, isPending, error } = useCourses();
+	const { data: courses, isPending } = useCourses();
 	const { handleHideCourse, handleShowCourse, hiddenCoursesIds } = useCalendarContext();
 
 	const handleFilterCourse = (checked: boolean | string, id: string) => {

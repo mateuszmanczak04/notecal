@@ -1,7 +1,11 @@
-'use client';
-
-import { MenubarContent, MenubarMenu, MenubarRadioGroup, MenubarRadioItem, MenubarTrigger } from '@/components/menubar';
-import { T_ViewMode, useSettings } from '@/hooks/use-settings';
+import {
+	MenubarContent,
+	MenubarMenu,
+	MenubarRadioGroup,
+	MenubarRadioItem,
+	MenubarTrigger,
+} from '../../../../components/menubar';
+import { T_ViewMode, useSettings } from '../../../../hooks/use-settings';
 
 const CalendarMenuViewMode = () => {
 	const { viewMode, setViewMode } = useSettings();
