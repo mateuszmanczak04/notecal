@@ -1,12 +1,13 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import { FRONTEND_DOMAIN } from './utils/app-domain';
 
 export async function middleware(request: NextRequest) {
 	const response = NextResponse.next();
 
 	// Set CORS headers
 	response.headers.set('Access-Control-Allow-Credentials', 'true');
-	response.headers.set('Access-Control-Allow-Origin', 'http://localhost:5173');
+	response.headers.set('Access-Control-Allow-Origin', FRONTEND_DOMAIN);
 	response.headers.set('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT');
 	response.headers.set(
 		'Access-Control-Allow-Headers',
