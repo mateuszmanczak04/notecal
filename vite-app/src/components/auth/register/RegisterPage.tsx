@@ -11,6 +11,7 @@ import RegisterForm from './RegisterForm';
 const RegisterPage = () => {
 	return (
 		<main className='mx-auto max-w-lg px-4'>
+			<title>Create an Account</title>
 			<h1 className='px-4 text-3xl font-bold'>Create an account</h1>
 			<p className='mt-2 px-4 opacity-75'>
 				Don&apos;t hesitate and join Notecal community today. Simplify your university notes organization and

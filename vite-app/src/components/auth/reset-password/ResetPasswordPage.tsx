@@ -13,6 +13,7 @@ import ResetPasswordForm from './ResetPasswordForm';
 const ResetPasswordPage = () => {
 	return (
 		<main className='mx-auto max-w-lg px-4'>
+			<title>Reset Your Password</title>
 			<h1 className='px-4 text-3xl font-bold'>Reset Your Password</h1>
 			<p className='mt-2 px-4 opacity-75'>
 				It is the last step to get access to your account again! After the submission you will be automatically

@@ -16,6 +16,7 @@ const CalendarPage = () => {
 
 	return (
 		<div className='flex h-full flex-col'>
+			<title>Calendar</title>
 			{/* Year and month, back, forward, zoom in/out */}
 			<CalendarMenu />
 

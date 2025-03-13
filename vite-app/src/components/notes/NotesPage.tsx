@@ -13,6 +13,7 @@ import { NoteContextProvider } from './context/note-context';
 const NotesPage = () => {
 	return (
 		<NoteContextProvider>
+			<title>Notes</title>
 			<main className='mx-auto flex h-full min-h-80 flex-col md:flex-row'>
 				<article className='flex h-screen flex-1 flex-col'>
 					<Editor />

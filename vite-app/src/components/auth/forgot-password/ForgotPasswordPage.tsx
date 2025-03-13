@@ -14,6 +14,7 @@ import ForgotPasswordForm from './ForgotPasswordForm';
 const ForgotPasswordPage = () => {
 	return (
 		<main className='mx-auto max-w-lg px-4'>
+			<title>Reset Your Password</title>
 			<h1 className='px-4 text-3xl font-bold'>Reset Your Password</h1>
 			<p className='mt-2 px-4 opacity-75'>
 				Don&apos;t worry! We are her to help you recover your account access. Simply enter your e-mail address

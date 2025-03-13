@@ -13,6 +13,7 @@ import ConfirmEmailForm from './ConfirmEmailForm';
 const ConfirmEmailPage = () => {
 	return (
 		<main className='mx-auto max-w-lg px-6 pt-8'>
+			<title>Confirm Your Email</title>
 			<h1 className='px-2 text-3xl font-bold'>Confirm your e-mail address</h1>
 			<p className='mt-2 px-2 opacity-75'>
 				Confirming your e-mail address will help you recover access to your account if you lose your password.
