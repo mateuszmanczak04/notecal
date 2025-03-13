@@ -4,11 +4,13 @@ import { Button } from '../../../components/button';
 import ErrorMessage from '../../../components/error-message';
 import LoadingSpinner from '../../../components/loading-spinner';
 import SuccessMessage from '../../../components/success-message';
+import { useEmailVerified } from '../../../hooks/use-email-verified';
 import { useUser } from '../../../hooks/use-user';
 import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 
 const EmailNotVerified = () => {
 	const { data: user } = useUser();
+	const emailVerified = useEmailVerified();
 	const [state, formAction, isPending] = useActionState(
 		async () =>
 			fetch(`${BACKEND_DOMAIN}/api/auth/email-verified`, {
@@ -21,20 +23,17 @@ const EmailNotVerified = () => {
 		{ error: '', message: '' },
 	);
 
-	if (!user) return null;
-
 	// Don't want to show this component when user has email verified
-	if (user.emailVerified) return;
+	if (emailVerified) return;
 
 	return (
 		<div className='border-error-500 space-y-4 rounded-xl border-2 p-4 dark:text-white'>
 			<p>
-				Your email <strong>{user.email}</strong> is not verified
+				Your email <strong>{user?.email}</strong> is not verified
 			</p>
 			<p className='opacity-75'>Confirm your email to secure your account in case you lose your password</p>
 
 			<form action={formAction}>
-				<input type='hidden' name='email' value={user.email} />
 				<Button type='submit'>
 					{isPending ? <LoadingSpinner /> : <Mail />}
 					Resend verification link

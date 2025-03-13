@@ -1,7 +1,7 @@
 import { Mail } from 'lucide-react';
 import { useEffect, useState, useTransition } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
-import { useUser } from '../../../hooks/use-user';
+import { useEmailVerified } from '../../../hooks/use-email-verified';
 import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { Button } from '../../button';
 import ErrorMessage from '../../error-message';
@@ -13,7 +13,7 @@ const ConfirmEmailForm = () => {
 	const [message, setMessage] = useState('');
 	const [isPending, startTransition] = useTransition();
 	const [searchParams] = useSearchParams();
-	const { data: user } = useUser();
+	const emailVerified = useEmailVerified();
 	const navigate = useNavigate();
 
 	const handleSubmit = (e: React.FormEvent) => {
@@ -36,10 +36,10 @@ const ConfirmEmailForm = () => {
 	};
 
 	useEffect(() => {
-		if (user?.emailVerified) {
+		if (emailVerified) {
 			navigate('/');
 		}
-	}, [navigate, user?.emailVerified]);
+	}, [navigate, emailVerified]);
 
 	return (
 		<>
