@@ -4,7 +4,11 @@ It is a web application which was made to help students organize their universit
 
 # Technological stack
 
-App is entirely made with Next.js framework including Frontend and Backend. Next to that I've helped myself by using the following libraries and technologies:
+This app is split into 2 parts:
+1. Backend and API routes in `./next-app` made with Next.js,
+2. Frontend in `./vite-app` made with Vite/React.
+
+Some of libraries/frameworks used are listed here (not all):
 
 - AWS S3
 - TailwindCSS
@@ -28,7 +32,7 @@ Currently app is hosted on Vercel with database on neon.tech. It's also using AW
 
 ## Installation
 
-I recommend using `bun` instead of `npm` but skipping this step should still work.
+I recommend using `bun` instead of `npm` but skipping this step should still work. Remember that in order to work properly you will have to launch frontend and backend separately (`cd ./next-app`, `cd ./vite-app`):
 
 ```bash
 bun install
@@ -42,9 +46,8 @@ AUTH_SECRET=...
 EMAIL_HOST=...
 EMAIL_USER=...
 EMAIL_PASSWORD=...
-APP_DOMAIN="http://localhost:3000"
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
 ```
 
 where:
@@ -52,16 +55,19 @@ where:
 - `DATABASE_URL` - for example `postgresql://admin:notecal@localhost:5432/development`
 - `AUTH_SECRET` - any text
 - `EMAIL_HOST`, `EMAIL_USER` and `EMAIL_PASSWORD` - needed for email verification after signing up
-- `APP_DOMAIN` - for local development may leave just `http://localhost:3000`, for production replace it with your url (in my case `https://www.notecal.app`)
 - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` - needed to connect to AWS S3 where user notes are stored as json files
 
+Then if you are going to send app to the production go to `./next-app/src/utils/app-domain.ts` and replace `app.notecal.app` with your own domain where you will host you frontend.
+
 ## Running development server
+
+Run this script either in `next-app` adn `vite-app` folders:
 
 ```bash
 bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000) too see landing page. Or go directly to [http://localhost:5173](http://localhost:5173) to the app.
 
 # Usage tutorial
 
