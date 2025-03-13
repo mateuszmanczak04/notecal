@@ -1,9 +1,5 @@
 import { NavLink } from 'react-router';
-import RegisterForm from './RegisterForm';
-
-// export const metadata: Metadata = {
-// 	title: 'Join us today and improve your productivity!',
-// };
+import RegisterForm from './register-form';
 
 /**
  *  This page is entirely server component with optional error from search params because I wanted to use "metadata" without splitting this component into 2 files.

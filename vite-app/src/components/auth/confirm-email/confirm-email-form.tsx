@@ -1,10 +1,10 @@
 import { Mail } from 'lucide-react';
 import { useEffect, useState, useTransition } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
-import { Button } from '../../../components/button';
-import LoadingSpinner from '../../../components/loading-spinner';
 import { useUser } from '../../../hooks/use-user';
 import { BACKEND_DOMAIN } from '../../../utils/app-domain';
+import { Button } from '../../button';
+import LoadingSpinner from '../../loading-spinner';
 
 const ConfirmEmailForm = () => {
 	const [error, setError] = useState('');

@@ -1,18 +1,18 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
-import ConfirmEmailPage from './components/auth/confirm-email/ConfirmEmailPage.tsx';
-import ForgotPasswordPage from './components/auth/forgot-password/ForgotPasswordPage.tsx';
-import LoginPage from './components/auth/login/LoginPage.tsx';
-import RegisterPage from './components/auth/register/RegisterPage.tsx';
-import ResetPasswordPage from './components/auth/reset-password/ResetPasswordPage.tsx';
-import CalendarPage from './components/calendar/CalendarPage.tsx';
-import CoursesPage from './components/courses/CoursesPage.tsx';
-import Layout from './components/Layout.tsx';
-import NotesPage from './components/notes/NotesPage.tsx';
+import ConfirmEmailPage from './components/auth/confirm-email/confirm-email-page.tsx';
+import ForgotPasswordPage from './components/auth/forgot-password/forgot-password-page.tsx';
+import LoginPage from './components/auth/login/login-page.tsx';
+import RegisterPage from './components/auth/register/register-page.tsx';
+import ResetPasswordPage from './components/auth/reset-password/reset-password-page.tsx';
+import CalendarPage from './components/calendar/calendar-page.tsx';
+import CoursesPage from './components/courses/courses-page.tsx';
+import Layout from './components/layout.tsx';
+import NotesPage from './components/notes/notes-page.tsx';
 import Providers from './components/providers.tsx';
-import SettingsPage from './components/settings/SettingsPage.tsx';
-import TasksPage from './components/tasks/TasksPage.tsx';
+import SettingsPage from './components/settings/settings-page.tsx';
+import TasksPage from './components/tasks/tasks-page.tsx';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(

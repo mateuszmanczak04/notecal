@@ -1,11 +1,4 @@
-import ResetPasswordForm from './ResetPasswordForm';
-
-// export const metadata: Metadata = {
-// 	title: 'Reset your password',
-// 	robots: {
-// 		index: false,
-// 	},
-// };
+import ResetPasswordForm from './reset-password-form';
 
 /**
  *  This page is entirely server component with optional error from search params because I wanted to use "metadata" without splitting this component into 2 files.

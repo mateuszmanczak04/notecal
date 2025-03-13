@@ -1,10 +1,3 @@
-// export const metadata: Metadata = {
-// 	title: 'Notecal | Settings',
-// 	robots: {
-// 		index: false,
-// 	},
-// };
-
 import ChangeEmailSetting from './components/change-email-setting';
 import ChangePasswordSetting from './components/change-password-setting';
 import EmailNotVerified from './components/email-not-verified';

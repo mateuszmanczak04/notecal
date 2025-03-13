@@ -1,12 +1,5 @@
 import { NavLink } from 'react-router';
-import ForgotPasswordForm from './ForgotPasswordForm';
-
-// export const metadata: Metadata = {
-// 	title: 'Forgot your password?',
-// 	robots: {
-// 		index: false,
-// 	},
-// };
+import ForgotPasswordForm from './forgot-password-form';
 
 /**
  *  This page is entirely server component with optional error from search params because I wanted to use "metadata" without splitting this component into 2 files.

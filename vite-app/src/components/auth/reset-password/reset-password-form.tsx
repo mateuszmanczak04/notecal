@@ -1,9 +1,9 @@
 import { useState, useTransition } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
-import { Button } from '../../../components/button';
-import { Input } from '../../../components/input';
-import LoadingSpinner from '../../../components/loading-spinner';
 import { BACKEND_DOMAIN } from '../../../utils/app-domain';
+import { Button } from '../../button';
+import { Input } from '../../input';
+import LoadingSpinner from '../../loading-spinner';
 
 const ResetPasswordForm = () => {
 	const [error, setError] = useState('');

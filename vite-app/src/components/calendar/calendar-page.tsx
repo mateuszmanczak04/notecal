@@ -4,13 +4,6 @@ import DaysView from './components/days-view';
 import ListView from './components/list-view';
 import MonthView from './components/month-view';
 
-// export const metadata: Metadata = {
-// 	title: 'Notecal | Calendar view',
-// 	robots: {
-// 		index: false,
-// 	},
-// };
-
 const CalendarPage = () => {
 	const { viewMode } = useSettings();
 

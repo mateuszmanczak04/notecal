@@ -1,11 +1,4 @@
-import ConfirmEmailForm from './ConfirmEmailForm';
-
-// export const metadata: Metadata = {
-// 	title: 'Confirm your e-mail address',
-// 	robots: {
-// 		index: false,
-// 	},
-// };
+import ConfirmEmailForm from './confirm-email-form';
 
 /**
  * User may get to this page by following a link sent into his email inbox.

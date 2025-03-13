@@ -1,9 +1,5 @@
 import { NavLink } from 'react-router';
-import LoginForm from './LoginForm';
-
-// export const metadata: Metadata = {
-// 	title: 'Login to your account!',
-// };
+import LoginForm from './login-form';
 
 /**
  *  This page is entirely server component with optional error from search params because I wanted to use "metadata" without splitting this component into 2 files.

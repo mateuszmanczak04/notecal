@@ -2,13 +2,6 @@ import Editor from './components/editor/editor';
 import NoteSidebar from './components/sidebar/note-sidebar';
 import { NoteContextProvider } from './context/note-context';
 
-// export const metadata: Metadata = {
-// 	title: 'Notecal | Note',
-// 	robots: {
-// 		index: false,
-// 	},
-// };
-
 // Had to extract it to a separate file to use metadata API.
 const NotesPage = () => {
 	return (
