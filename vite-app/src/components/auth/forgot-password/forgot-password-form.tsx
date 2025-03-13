@@ -2,8 +2,10 @@ import { Mail } from 'lucide-react';
 import { useState, useTransition } from 'react';
 import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { Button } from '../../button';
+import ErrorMessage from '../../error-message';
 import { Input } from '../../input';
 import LoadingSpinner from '../../loading-spinner';
+import SuccessMessage from '../../success-message';
 
 const ForgotPasswordForm = () => {
 	const [email, setEmail] = useState('');
@@ -56,8 +58,8 @@ const ForgotPasswordForm = () => {
 			</form>
 
 			{/* Result messages */}
-			{error && <p className='text-error-600 dark:text-error-400 mx-4 mt-4'>{error}</p>}
-			{message && <p className='text-success-600 dark:text-success-400 mx-4 mt-4'>{message}</p>}
+			{error && <ErrorMessage>{error}</ErrorMessage>}
+			{message && <SuccessMessage>{message}</SuccessMessage>}
 		</>
 	);
 };

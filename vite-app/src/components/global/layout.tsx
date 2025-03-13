@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import { useUser } from '../hooks/use-user';
-import { DEFAULT_LOGIN_REDIRECT, routesForAllUsers, routesForUnauthenticatedUsers } from '../utils/routes';
-import { CalendarContextProvider } from './calendar/context/calendar-context';
+import { useUser } from '../../hooks/use-user';
+import { DEFAULT_LOGIN_REDIRECT, routesForAllUsers, routesForUnauthenticatedUsers } from '../../utils/routes';
+import { CalendarContextProvider } from '../calendar/context/calendar-context';
+import { Toaster } from '../toast/toaster';
 import Navigation from './navigation';
-import { Toaster } from './toast/toaster';
 
 export default function Layout() {
 	const location = useLocation();

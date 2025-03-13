@@ -2,6 +2,7 @@ import { useState, useTransition } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { Button } from '../../button';
+import ErrorMessage from '../../error-message';
 import { Input } from '../../input';
 import LoadingSpinner from '../../loading-spinner';
 
@@ -60,7 +61,7 @@ const ResetPasswordForm = () => {
 				</Button>
 			</form>
 
-			{error && <p className='text-error-600 dark:text-error-400 mx-4 mt-4'>{error}</p>}
+			{error && <ErrorMessage>{error}</ErrorMessage>}
 		</>
 	);
 };

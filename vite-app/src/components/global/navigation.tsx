@@ -1,9 +1,9 @@
 import { Calendar, Check, Menu, Settings, User, X } from 'lucide-react';
 import { useState } from 'react';
 import { NavLink } from 'react-router';
-import { useUser } from '../hooks/use-user';
-import { cn } from '../utils/cn';
-import { Button } from './button';
+import { useUser } from '../../hooks/use-user';
+import { cn } from '../../utils/cn';
+import { Button } from '../button';
 // import NavCourses from './nav-courses';
 
 const Navigation = () => {

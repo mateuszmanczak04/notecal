@@ -2,6 +2,7 @@ import React, { useState, useTransition } from 'react';
 import { NavLink } from 'react-router';
 import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { Button } from '../../button';
+import ErrorMessage from '../../error-message';
 import { Input } from '../../input';
 import LoadingSpinner from '../../loading-spinner';
 
@@ -70,7 +71,7 @@ const LoginForm = () => {
 				Log in
 			</Button>
 
-			{error && <p className='text-error-600 dark:text-error-400 mx-2 mt-4'>{error}</p>}
+			{error && <ErrorMessage>{error}</ErrorMessage>}
 		</form>
 	);
 };
