@@ -4,7 +4,6 @@ import { NavLink } from 'react-router';
 import { useUser } from '../../hooks/use-user';
 import { cn } from '../../utils/cn';
 import { Button } from '../button';
-// import NavCourses from './nav-courses';
 
 const Navigation = () => {
 	const { data: user } = useUser();
@@ -51,14 +50,7 @@ const Navigation = () => {
 				<NavLink
 					to='/settings'
 					onClick={handleClose}
-					className='flex select-none items-center justify-between gap-3 rounded-xl bg-white px-4 py-2 dark:bg-neutral-700'>
-					{/* <Image
-							src='/avatar.jpg'
-							width={32}
-							height={32}
-							alt='profile picture'
-							className='h-8 w-8 overflow-hidden rounded-full object-cover'
-						/> */}
+					className='flex select-none items-center justify-between gap-3 rounded-xl bg-white px-4 py-2 dark:bg-neutral-800'>
 					<User className='h-8 w-8 shrink-0 rounded-full bg-neutral-100 p-1 dark:bg-neutral-800' />
 					<div className='overflow-hidden'>
 						<p className='truncate text-sm font-medium'>{user?.email}</p>
@@ -75,7 +67,7 @@ const Navigation = () => {
 							className={({ isActive }) =>
 								cn(
 									'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
-									isActive && 'bg-white dark:bg-neutral-700',
+									isActive && 'bg-white dark:bg-neutral-800',
 								)
 							}
 							onClick={handleClose}>
@@ -86,7 +78,7 @@ const Navigation = () => {
 							className={({ isActive }) =>
 								cn(
 									'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
-									isActive && 'bg-white dark:bg-neutral-700',
+									isActive && 'bg-white dark:bg-neutral-800',
 								)
 							}
 							onClick={handleClose}>
@@ -97,7 +89,7 @@ const Navigation = () => {
 							className={({ isActive }) =>
 								cn(
 									'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
-									isActive && 'bg-white dark:bg-neutral-700',
+									isActive && 'bg-white dark:bg-neutral-800',
 								)
 							}
 							onClick={handleClose}>

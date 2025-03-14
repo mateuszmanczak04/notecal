@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router';
+import { Link } from 'react-router';
 import RegisterForm from './register-form';
 
 /**
@@ -14,9 +14,9 @@ const RegisterPage = () => {
 				improve productivity!
 			</p>
 
-			<NavLink to='/auth/login' className='mt-4 block px-4 underline opacity-75'>
+			<Link to='/auth/login' className='mt-4 block px-4 underline opacity-75'>
 				Already have an account? Log in instead!
-			</NavLink>
+			</Link>
 
 			<RegisterForm />
 

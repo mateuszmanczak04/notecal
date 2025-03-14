@@ -1,5 +1,5 @@
 import React, { useState, useTransition } from 'react';
-import { NavLink } from 'react-router';
+import { Link } from 'react-router';
 import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { Button } from '../../button';
 import ErrorMessage from '../../error-message';
@@ -62,9 +62,9 @@ const LoginForm = () => {
 				onChange={e => setPassword(e.target.value)}
 			/>
 
-			<NavLink to='/auth/forgot-password' className='mt-4 block px-2 text-sm underline opacity-75'>
+			<Link to='/auth/forgot-password' className='mt-4 block px-2 text-sm underline opacity-75'>
 				Forgot your password?
-			</NavLink>
+			</Link>
 
 			<Button type='submit' className='mt-6 w-full'>
 				{isPending && <LoadingSpinner className='h-5 w-5' />}

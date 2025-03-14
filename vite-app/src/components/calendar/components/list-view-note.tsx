@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router';
+import { Link } from 'react-router';
 import { useCourses } from '../../../hooks/use-courses';
 import { T_Note } from '../../../types';
 import NoteContextMenu from '../../notes/components/context-menu/note-context-menu';
@@ -30,13 +30,12 @@ const ListViewNote = ({ note }: T_Props) => {
 
 	return (
 		<>
-			<NavLink
+			<Link
 				onContextMenu={handleContextMenu}
 				to={`/notes?noteId=${note.id}`}
 				className='flex w-[clamp(240px,100%,800px)] items-center justify-between gap-4 rounded-xl p-4 text-white hover:opacity-90'
 				style={{ backgroundColor: course?.color }}
-				key={note.id}
-			>
+				key={note.id}>
 				<div className='w-full min-w-0'>
 					{note.startTime && note.endTime && (
 						<div className='flex gap-2'>
@@ -53,7 +52,7 @@ const ListViewNote = ({ note }: T_Props) => {
 					)}
 				</div>
 				<ChevronRight className='size-7 shrink-0' />
-			</NavLink>
+			</Link>
 			{/* Context menu on right mouse click */}
 			{contextMenuPosition && (
 				<NoteContextMenu handleClose={closeContextMenu} note={note} position={contextMenuPosition} />

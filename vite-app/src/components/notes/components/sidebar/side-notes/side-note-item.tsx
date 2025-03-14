@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import React from 'react';
-import { NavLink, useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { T_Note } from '../../../../../types';
 import { cn } from '../../../../../utils/cn';
 import NoteContextMenu from '../../context-menu/note-context-menu';
@@ -42,7 +42,7 @@ const SideNoteItem = ({ note }: Props) => {
 
 	return (
 		<>
-			<NavLink
+			<Link
 				onClick={handleClick}
 				to={`/notes?noteId=${note.id}`}
 				key={note.id}
@@ -51,9 +51,9 @@ const SideNoteItem = ({ note }: Props) => {
 				onContextMenu={handleNoteContextMenu}
 				className={cn(
 					'h-9 truncate rounded-xl border-2 border-transparent bg-neutral-100 px-3 text-sm leading-9 transition-colors dark:bg-neutral-800',
-					(note.id === noteId || isNoteSelected(note)) && 'border-neutral-300 dark:border-neutral-600',
-				)}
-			>
+					(note.id === noteId || isNoteSelected(note)) &&
+						'border-neutral-300 bg-neutral-200 dark:border-neutral-600 dark:bg-neutral-700',
+				)}>
 				<span className='w-auto max-w-48 shrink-0 truncate text-center text-sm'>
 					{note.startTime && note.endTime && (
 						<span className='mr-2 font-semibold'>{format(note.startTime, 'yyyy-MM-dd')}</span>
@@ -63,7 +63,7 @@ const SideNoteItem = ({ note }: Props) => {
 						<span className='ml-2 opacity-50'>Note without a title</span>
 					)}
 				</span>{' '}
-			</NavLink>
+			</Link>
 
 			{/* Place it outside the link itself because it triggered link */}
 			{contextMenuPosition && (

@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router';
+import { Link } from 'react-router';
 import ForgotPasswordForm from './forgot-password-form';
 
 /**
@@ -14,9 +14,9 @@ const ForgotPasswordPage = () => {
 				here and we will send you further instructions!
 			</p>
 
-			<NavLink to='/auth/login' className='mt-4 block px-4 underline opacity-75'>
+			<Link to='/auth/login' className='mt-4 block px-4 underline opacity-75'>
 				Go back to the login page if it was a missclick
-			</NavLink>
+			</Link>
 
 			<ForgotPasswordForm />
 

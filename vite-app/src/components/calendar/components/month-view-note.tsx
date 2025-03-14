@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router';
+import { Link } from 'react-router';
 import { useCourses } from '../../../hooks/use-courses';
 import { T_Note } from '../../../types';
 import NoteContextMenu from '../../notes/components/context-menu/note-context-menu';
@@ -17,14 +17,13 @@ const MonthViewNote = ({ note }: Props) => {
 
 	return (
 		<>
-			<NavLink
+			<Link
 				onContextMenu={handleContextMenu}
 				to={`/notes?noteId=${note.id}`}
 				style={{ backgroundColor: noteCourse.color }}
-				className='truncate text-nowrap rounded-md px-2 text-sm text-white'
-			>
+				className='truncate text-nowrap rounded-md px-2 text-sm text-white'>
 				{note.title || noteCourse.name}
-			</NavLink>
+			</Link>
 			{/* Context menu on right mouse click */}
 			{contextMenuPosition && (
 				<NoteContextMenu position={contextMenuPosition} note={note} handleClose={closeContextMenu} />

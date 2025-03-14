@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router';
+import { Link } from 'react-router';
 import LoginForm from './login-form';
 
 /**
@@ -13,9 +13,9 @@ const LoginPage = () => {
 				We&apos;re so happy to see you again! Your notes are waiting for you!
 			</p>
 
-			<NavLink to='/auth/register' className='mt-4 block px-4 underline opacity-75'>
+			<Link to='/auth/register' className='mt-4 block px-4 underline opacity-75'>
 				Don&apos;t have an account yet? Register now!
-			</NavLink>
+			</Link>
 
 			<LoginForm />
 		</main>
