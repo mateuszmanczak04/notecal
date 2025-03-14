@@ -4,6 +4,7 @@ import { NavLink } from 'react-router';
 import { useUser } from '../../hooks/use-user';
 import { cn } from '../../utils/cn';
 import { Button } from '../button';
+import NavigationCourses from './navigation-courses';
 
 const Navigation = () => {
 	const { data: user } = useUser();
@@ -84,19 +85,8 @@ const Navigation = () => {
 							onClick={handleClose}>
 							<Check className='h-4 w-4' /> Tasks
 						</NavLink>
-						<NavLink
-							to='/courses'
-							className={({ isActive }) =>
-								cn(
-									'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
-									isActive && 'bg-white dark:bg-neutral-800',
-								)
-							}
-							onClick={handleClose}>
-							<Check className='h-4 w-4' /> Course
-						</NavLink>
 
-						{/* <NavCourses closeNavigation={handleClose} /> */}
+						<NavigationCourses closeNavigation={handleClose} />
 					</div>
 				</div>
 			</div>
