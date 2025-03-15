@@ -21,8 +21,7 @@ const DaysViewGrid = () => {
 				className='grid flex-1'
 				style={{
 					gridTemplateColumns: `repeat(${displayedDays}, 1fr)`,
-				}}
-			>
+				}}>
 				{new Array(displayedDays).fill(0).map((_, index) => (
 					<DaysViewDayColumn key={index} isToday={isSameDay(addDays(firstCalendarDay, index), new Date())} />
 				))}

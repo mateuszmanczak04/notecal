@@ -134,7 +134,7 @@ const Editor = () => {
 	return (
 		<article
 			className={cn(
-				'flex h-full flex-1 flex-col bg-white dark:bg-neutral-800',
+				'flex flex-1 flex-col bg-white dark:bg-neutral-900',
 				isPendingUpdate && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer
@@ -151,7 +151,7 @@ const Editor = () => {
 				)}
 				<div
 					className={cn(
-						'scrollbar-hide relative w-full flex-1 overflow-y-scroll scroll-auto p-4 leading-normal',
+						'scrollbar-hide relative w-full flex-1 scroll-auto p-4 leading-normal',
 						maxNoteWidthEnabled && 'mx-auto max-w-screen-lg',
 						isPendingGet && 'pointer-events-none opacity-50',
 					)}>
@@ -166,7 +166,7 @@ const Editor = () => {
 							/>
 						}
 						placeholder={
-							<p className='pointer-events-none absolute left-4 top-4 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
+							<p className='pointer-events-none absolute top-4 left-4 inline-block overflow-hidden text-ellipsis opacity-50 select-none'>
 								{currentNote ? 'Enter some text...' : 'Please select a note to start'}
 							</p>
 						}

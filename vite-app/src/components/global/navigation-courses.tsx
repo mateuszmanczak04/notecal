@@ -18,7 +18,7 @@ const NavigationCourses = ({ closeNavigation }: T_Props) => {
 				className={({ isActive }) =>
 					cn(
 						'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
-						isActive && 'bg-white dark:bg-neutral-800',
+						isActive && 'bg-white dark:bg-neutral-700',
 					)
 				}
 				onClick={closeNavigation}>
@@ -27,14 +27,14 @@ const NavigationCourses = ({ closeNavigation }: T_Props) => {
 			</NavLink>
 
 			{courses && (
-				<div className='ml-6 flex flex-col rounded-xl'>
+				<div className='mt-1 ml-6 flex flex-col'>
 					{courses.map(course => (
 						<NavLink
 							key={course.id}
 							to={`/notes?courseId=${course.id}`}
 							className={cn(
-								'group flex items-center rounded-md px-2 py-1 text-sm',
-								searchParams.get('courseId') == course.id && 'bg-white dark:bg-neutral-800',
+								'group flex items-center rounded-md px-3 py-2 text-sm',
+								searchParams.get('courseId') == course.id && 'bg-white dark:bg-neutral-700',
 							)}
 							onClick={closeNavigation}>
 							<div

@@ -8,8 +8,8 @@ const Row = ({ isToday }: { isToday: boolean }) => {
 	return (
 		<div
 			className={cn(
-				'flex items-center justify-center border-b border-r border-neutral-300 font-semibold text-neutral-500 transition-[height] dark:border-neutral-600',
-				isToday && 'bg-neutral-100 dark:bg-neutral-700',
+				'flex items-center justify-center border-r border-b border-neutral-300 font-semibold text-neutral-500 transition-[height] dark:border-neutral-600',
+				isToday && 'bg-neutral-100 dark:bg-neutral-800',
 			)}
 			style={{ height: getCalendarRowHeight({ zoomLevel }) + 'px' }}></div>
 	);

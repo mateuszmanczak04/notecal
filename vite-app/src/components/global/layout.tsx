@@ -40,9 +40,9 @@ export default function Layout() {
 
 	return (
 		<CalendarContextProvider>
-			<div className='flex pl-12 xl:pl-80 dark:bg-neutral-800'>
+			<div className='flex pl-12 xl:pl-80'>
 				<Navigation />
-				<div className='min-h-screen flex-1 bg-white dark:bg-neutral-800'>
+				<div className='min-h-screen flex-1'>
 					<Outlet />
 				</div>
 			</div>

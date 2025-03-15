@@ -30,11 +30,10 @@ const Tile = ({
 			ref={ref}
 			onClick={handleClick}
 			className={cn(
-				'flex flex-col gap-y-1 border-b border-r border-neutral-200 p-2 py-10 text-center last-of-type:rounded-br-xl dark:border-neutral-600',
-				!!onClick && 'cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-700',
+				'flex flex-col gap-y-1 border-r border-b border-neutral-200 p-2 py-10 text-center last-of-type:rounded-br-xl dark:border-neutral-600',
+				!!onClick && 'cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800',
 				className,
-			)}
-		>
+			)}>
 			{children}
 		</div>
 	);
@@ -70,13 +69,12 @@ const MonthView = () => {
 
 	return (
 		<>
-			<div className='grid grid-cols-7 overflow-hidden border-l border-t border-neutral-200 dark:border-neutral-600'>
+			<div className='grid grid-cols-7 overflow-hidden border-t border-l border-neutral-200 dark:border-neutral-600'>
 				{/* Week day names */}
 				{['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(dayName => (
 					<Tile
 						className='flex h-10 justify-center bg-white px-0 py-0 text-sm dark:bg-neutral-900'
-						key={dayName}
-					>
+						key={dayName}>
 						{dayName}
 					</Tile>
 				))}
@@ -89,8 +87,7 @@ const MonthView = () => {
 						<Tile
 							key={tile.toString()}
 							onClick={() => goToDayInDaysView(tile)}
-							className={cn(isToday(tile) && 'bg-neutral-100 dark:bg-neutral-700')}
-						>
+							className={cn(isToday(tile) && 'bg-neutral-100 dark:bg-neutral-800')}>
 							<p className='font-semibold'>
 								{format(tile, 'd')} {isToday(tile) && '(today)'}
 							</p>

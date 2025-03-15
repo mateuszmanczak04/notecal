@@ -204,7 +204,7 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 	}, [editor, onSave, updateHeading]);
 
 	return (
-		<div className='relative flex flex-wrap items-center gap-2 border-b border-neutral-200 bg-white p-2 pr-14 dark:border-neutral-600 dark:bg-neutral-800'>
+		<div className='sticky top-0 z-10 flex flex-wrap items-center gap-2 border-b border-neutral-200 bg-white p-2 pr-14 dark:border-neutral-600 dark:bg-neutral-900'>
 			{/* Undo & Redo */}
 			<div className='grid grid-cols-2 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
 				<Toggle
@@ -353,7 +353,7 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 			{!showNoteSidebar && (
 				<button
 					onClick={() => setShowNoteSidebar(prev => !prev)}
-					className='absolute right-0 top-0 grid size-[52px] cursor-pointer place-content-center border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800'>
+					className='absolute top-0 right-0 grid size-13 cursor-pointer place-content-center'>
 					<Menu />
 				</button>
 			)}
