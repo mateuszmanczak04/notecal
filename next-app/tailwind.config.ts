@@ -14,10 +14,6 @@ const config = {
 				warning: colors.orange,
 				error: colors.red,
 			},
-			height: {
-				'calendar-header': '40px',
-				'calendar-row': '80px',
-			},
 		},
 	},
 	plugins: [],
