@@ -4,6 +4,7 @@ import { useUser } from '../../hooks/use-user';
 import { DEFAULT_LOGIN_REDIRECT, routesForAllUsers, routesForUnauthenticatedUsers } from '../../utils/routes';
 import { CalendarContextProvider } from '../calendar/context/calendar-context';
 import { Toaster } from '../toast/toaster';
+import LoadingScreen from './loading-screen';
 import Navigation from './navigation';
 
 export default function Layout() {
@@ -29,7 +30,7 @@ export default function Layout() {
 		}
 	}, [user, location.pathname, isPending, navigate]);
 
-	if (isPending) return;
+	if (isPending) return <LoadingScreen />;
 
 	if (routesForAllUsers.includes(location.pathname) || routesForUnauthenticatedUsers.includes(location.pathname))
 		return (
