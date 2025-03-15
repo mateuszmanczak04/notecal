@@ -66,7 +66,8 @@ const Editor = () => {
 		};
 
 		fetchNoteContent();
-	}, [currentNote]);
+		// TODO: think how to not rerender without warnings
+	}, [currentNote?.id]);
 
 	/**
 	 * Saves the note content to the database.
@@ -166,9 +167,13 @@ const Editor = () => {
 							/>
 						}
 						placeholder={
-							<p className='pointer-events-none absolute top-4 left-4 inline-block overflow-hidden text-ellipsis opacity-50 select-none'>
-								{currentNote ? 'Enter some text...' : 'Please select a note to start'}
-							</p>
+							<>
+								{!isPendingGet && (
+									<p className='pointer-events-none absolute left-4 top-4 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
+										{currentNote ? 'Enter some text...' : 'Please select a note to start'}
+									</p>
+								)}
+							</>
 						}
 						ErrorBoundary={LexicalErrorBoundary}
 					/>
