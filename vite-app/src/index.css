@@ -60,4 +60,6 @@
 	--color-error-800: var(--color-red-800);
 	--color-error-900: var(--color-red-900);
 	--color-error-950: var(--color-red-950);
+
+	--color-ring: var(--color-blue-500);
 }
