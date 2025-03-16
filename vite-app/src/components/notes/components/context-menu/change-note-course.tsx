@@ -63,7 +63,7 @@ const ChangeNoteCourse = ({ currentCourse, note, handleClose }: Props) => {
 							}}
 							key={course.id}
 							value={course.id}
-							className='flex h-9 cursor-pointer select-none items-center gap-2 truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500'>
+							className='flex h-9 select-none items-center gap-2 truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 dark:hover:bg-neutral-500'>
 							<div
 								className='h-3 w-3 shrink-0 rounded-full'
 								style={{ backgroundColor: course.color }}></div>

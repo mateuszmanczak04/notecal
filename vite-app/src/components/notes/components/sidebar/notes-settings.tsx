@@ -28,7 +28,7 @@ const NotesSettings = () => {
 					className='size-5 data-[state=checked]:bg-neutral-700 dark:data-[state=checked]:bg-neutral-700'
 					onCheckedChange={value => setNoteAutoSave(value === true)}
 				/>
-				<label htmlFor='autosave-time' className='block flex-1 cursor-pointer pl-2 text-sm font-medium'>
+				<label htmlFor='autosave-time' className='block flex-1 pl-2 text-sm font-medium'>
 					Auto save content (every 30s)
 				</label>
 			</div>
@@ -42,7 +42,7 @@ const NotesSettings = () => {
 					className='size-5 data-[state=checked]:bg-neutral-700 dark:data-[state=checked]:bg-neutral-700'
 					onCheckedChange={value => setMaxNoteWidthEnabled(value === true)}
 				/>
-				<label htmlFor='limit-content-width' className='block flex-1 cursor-pointer pl-2 text-sm font-medium'>
+				<label htmlFor='limit-content-width' className='block flex-1 pl-2 text-sm font-medium'>
 					Limit content width
 				</label>
 			</div>

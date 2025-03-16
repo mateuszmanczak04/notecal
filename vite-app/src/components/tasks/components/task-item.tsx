@@ -22,12 +22,10 @@ const TaskItem = ({ task }: T_Props) => {
 			dragListener={false}
 			value={task}
 			whileDrag={{ userSelect: 'none', pointerEvents: 'none' }}
-			className='mt-4 flex w-full cursor-grab gap-4 rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800'
-		>
+			className='mt-4 flex w-full gap-4 rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800'>
 			<div
 				className='grid h-auto w-6 cursor-move place-content-center rounded-l-lg bg-neutral-100 dark:bg-neutral-700'
-				onPointerDown={e => dragControls.start(e)}
-			>
+				onPointerDown={e => dragControls.start(e)}>
 				<GripVertical className='size-4' />
 			</div>
 

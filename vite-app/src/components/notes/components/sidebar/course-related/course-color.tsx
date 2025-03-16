@@ -29,7 +29,7 @@ const CourseColor = () => {
 				return (
 					<button
 						className={cn(
-							'aspect-square max-w-6 flex-1 cursor-pointer place-content-center rounded-full border-2 border-transparent font-medium text-white transition-colors hover:opacity-90',
+							'aspect-square max-w-6 flex-1 place-content-center rounded-full border-2 border-transparent font-medium text-white transition-colors hover:opacity-90',
 							currentCourse?.color === color.hex && 'border-white/50',
 						)}
 						style={{

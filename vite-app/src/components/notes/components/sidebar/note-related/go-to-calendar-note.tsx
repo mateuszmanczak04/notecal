@@ -24,7 +24,7 @@ const GoToCalendarNote = ({ note }: Props) => {
 	};
 
 	return (
-		<p className='cursor-pointer underline opacity-75' onClick={handleGoToCalendar}>
+		<p className='underline opacity-75' onClick={handleGoToCalendar}>
 			See this note in the calendar
 		</p>
 	);

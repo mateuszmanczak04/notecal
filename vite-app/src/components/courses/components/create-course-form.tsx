@@ -88,7 +88,7 @@ const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 					return (
 						<div
 							className={cn(
-								'grid h-9 w-full cursor-pointer place-content-center rounded-xl border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
+								'grid h-9 w-full place-content-center rounded-xl border-2 border-transparent font-medium text-white transition-all hover:opacity-90',
 								selectedColor === color.hex && 'border-white/50',
 							)}
 							onClick={() => setSelectedColor(color.hex)}

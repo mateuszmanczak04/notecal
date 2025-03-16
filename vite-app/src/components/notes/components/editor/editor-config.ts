@@ -53,7 +53,7 @@ export const editorConfig: InitialConfigType = {
 			ul: 'list-disc list-inside',
 			listitem: '',
 		},
-		link: 'text-blue-500 underline cursor-pointer',
+		link: 'text-blue-500 underline ',
 		ltr: 'ltr',
 		rtl: 'rtl',
 		placeholder: 'text-neutral-500',

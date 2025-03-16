@@ -23,7 +23,7 @@ const CustomizeSidebar = () => {
 						checked={sidebarElements.courseRelated}
 						onCheckedChange={value => handleToggle('courseRelated', value === true)}
 					/>
-					<label htmlFor='show-course-related' className='flex-1 cursor-pointer pl-2'>
+					<label htmlFor='show-course-related' className='flex-1 pl-2'>
 						Course related
 					</label>
 				</li>
@@ -34,7 +34,7 @@ const CustomizeSidebar = () => {
 						checked={sidebarElements.notesList}
 						onCheckedChange={value => handleToggle('notesList', value === true)}
 					/>
-					<label htmlFor='show-notes-list' className='flex-1 cursor-pointer pl-2'>
+					<label htmlFor='show-notes-list' className='flex-1 pl-2'>
 						Notes list
 					</label>
 				</li>
@@ -45,7 +45,7 @@ const CustomizeSidebar = () => {
 						checked={sidebarElements.usefulLinks}
 						onCheckedChange={value => handleToggle('usefulLinks', value === true)}
 					/>
-					<label htmlFor='show-useful-links' className='flex-1 cursor-pointer pl-2'>
+					<label htmlFor='show-useful-links' className='flex-1 pl-2'>
 						Useful links
 					</label>
 				</li>
@@ -56,7 +56,7 @@ const CustomizeSidebar = () => {
 						checked={sidebarElements.tasks}
 						onCheckedChange={value => handleToggle('tasks', value === true)}
 					/>
-					<label htmlFor='show-tasks' className='flex-1 cursor-pointer pl-2'>
+					<label htmlFor='show-tasks' className='flex-1 pl-2'>
 						Tasks
 					</label>
 				</li>
@@ -67,7 +67,7 @@ const CustomizeSidebar = () => {
 						checked={sidebarElements.noteRelated}
 						onCheckedChange={value => handleToggle('noteRelated', value === true)}
 					/>
-					<label htmlFor='show-note-related' className='flex-1 cursor-pointer pl-2'>
+					<label htmlFor='show-note-related' className='flex-1 pl-2'>
 						Note related
 					</label>
 				</li>
@@ -78,7 +78,7 @@ const CustomizeSidebar = () => {
 						checked={sidebarElements.settings}
 						onCheckedChange={value => handleToggle('settings', value === true)}
 					/>
-					<label htmlFor='show-settings' className='flex-1 cursor-pointer pl-2'>
+					<label htmlFor='show-settings' className='flex-1 pl-2'>
 						Settings
 					</label>
 				</li>
@@ -89,7 +89,7 @@ const CustomizeSidebar = () => {
 						checked={sidebarElements.dangerZone}
 						onCheckedChange={value => handleToggle('dangerZone', value === true)}
 					/>
-					<label htmlFor='show-danger-zone' className='flex-1 cursor-pointer pl-2'>
+					<label htmlFor='show-danger-zone' className='flex-1 pl-2'>
 						Danger zone
 					</label>
 				</li>

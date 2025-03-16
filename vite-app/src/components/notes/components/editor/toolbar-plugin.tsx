@@ -353,7 +353,7 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 			{!showNoteSidebar && (
 				<button
 					onClick={() => setShowNoteSidebar(prev => !prev)}
-					className='size-13 absolute right-0 top-0 grid cursor-pointer place-content-center'>
+					className='size-13 absolute right-0 top-0 grid place-content-center'>
 					<Menu />
 				</button>
 			)}

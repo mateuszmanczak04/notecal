@@ -13,7 +13,7 @@ const Course = ({ course }: Props) => {
 	return (
 		<Link
 			to={`/notes?courseId=${course.id}`}
-			className='flex cursor-pointer select-none items-center justify-between rounded-xl bg-neutral-50 p-4 text-white transition hover:opacity-90'
+			className='flex select-none items-center justify-between rounded-xl bg-neutral-50 p-4 text-white transition hover:opacity-90'
 			style={{ background: course.color }}>
 			<div className='flex-1 overflow-x-hidden'>
 				<p className='truncate rounded-xl text-xl font-medium'>{course.name}</p>

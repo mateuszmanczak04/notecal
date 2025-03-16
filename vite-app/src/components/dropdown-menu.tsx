@@ -33,8 +33,7 @@ const DropdownMenuContextProvider = ({ children }: { children: React.ReactNode }
 				setIsOpen,
 				handleToggle,
 				menuRef,
-			}}
-		>
+			}}>
 			{children}
 		</DropdownMenuContext.Provider>
 	);
@@ -65,11 +64,10 @@ export const DropdownMenuItem = ({
 	return (
 		<button
 			className={cn(
-				'flex h-9 cursor-pointer select-none items-center justify-center gap-2 truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 sm:max-w-none dark:hover:bg-neutral-500',
+				'flex h-9 select-none items-center justify-center gap-2 truncate text-nowrap px-4 font-medium transition hover:bg-neutral-100 sm:max-w-none dark:hover:bg-neutral-500',
 				className,
 			)}
-			onClick={handleSelect}
-		>
+			onClick={handleSelect}>
 			{children}
 		</button>
 	);
@@ -90,8 +88,7 @@ export const DropdownMenuList = ({
 			className={cn(
 				'absolute left-0 top-9 z-20 flex w-full flex-col justify-center overflow-hidden rounded-b-xl border-b border-l border-r bg-white shadow-xl dark:border-neutral-500 dark:bg-neutral-600',
 				className,
-			)}
-		>
+			)}>
 			{children}
 		</div>
 	);
@@ -115,8 +112,7 @@ export const DropdownMenuTrigger = ({
 				'h-full max-w-none truncate rounded-none border border-l border-r border-t border-transparent font-medium',
 				isOpen ? 'rounded-t-xl dark:border-neutral-500' : 'rounded-xl',
 				className,
-			)}
-		>
+			)}>
 			{children}
 			{showChevron && <ChevronDown className='h-4 w-4 shrink-0' />}
 		</Tag>
