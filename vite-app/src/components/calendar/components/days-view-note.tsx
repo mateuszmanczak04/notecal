@@ -68,7 +68,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 					<div
 						key={day.toString()}
 						className={cn(
-							'bg-primary-500 absolute min-h-4 min-w-8 cursor-pointer select-none rounded-xl border-2 border-white transition-all dark:border-neutral-800',
+							'bg-primary-500 absolute min-h-4 min-w-8 cursor-pointer select-none rounded-xl border-2 border-white transition-opacity dark:border-neutral-800',
 							isDragging && 'opacity-50',
 							isHover && 'opacity-90',
 						)}
