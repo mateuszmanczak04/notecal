@@ -23,16 +23,16 @@ import {
 	AlignRight,
 	Bold,
 	Check,
-	ChevronLeft,
-	ChevronRight,
 	Code,
 	FileOutput,
 	Heading1,
 	Heading2,
 	Italic,
 	Menu,
+	Redo,
 	Strikethrough,
 	Underline,
+	Undo,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { Button } from '../../../../components/button';
@@ -213,7 +213,7 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 						editor.dispatchCommand(UNDO_COMMAND, undefined);
 					}}
 					title='Ctrl + Z'>
-					<ChevronLeft className='h-5 w-5' />
+					<Undo className='h-5 w-5' />
 				</Toggle>
 				<Toggle
 					disabled={disableMap.redo}
@@ -221,7 +221,7 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 						editor.dispatchCommand(REDO_COMMAND, undefined);
 					}}
 					title='Ctrl + Shift + Z'>
-					<ChevronRight className='h-5 w-5' />
+					<Redo className='h-5 w-5' />
 				</Toggle>
 			</div>
 
@@ -353,7 +353,7 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 			{!showNoteSidebar && (
 				<button
 					onClick={() => setShowNoteSidebar(prev => !prev)}
-					className='absolute top-0 right-0 grid size-13 cursor-pointer place-content-center'>
+					className='size-13 absolute right-0 top-0 grid cursor-pointer place-content-center'>
 					<Menu />
 				</button>
 			)}
