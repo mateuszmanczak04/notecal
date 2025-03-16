@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { useCourses } from '../../../hooks/use-courses';
 import { T_NoteWithTime } from '../../../hooks/use-notes-with-time';
@@ -43,7 +43,6 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 		topEdgeRef,
 		bottomEdgeRef,
 	} = useNoteDrag({ note, noteRef: noteBlocksRef });
-	const [isHover, setIsHover] = useState(false);
 
 	// Context menu related below:
 	const { closeContextMenu, contextMenuPosition, handleContextMenu, contextMenuBlockIndex } = useNoteContextMenu();
@@ -51,11 +50,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	const course = courses?.find(c => c.id === note.courseId);
 	const noteDays = getDaysIncludedInNote({ noteStartTime: note.startTime, noteEndTime: note.endTime });
 
-	// Handle routng to /notes/[id] page:
 	const navigate = useNavigate();
-	const handleRoute = () => {
-		navigate(`/notes?noteId=${note.id}`);
-	};
 
 	// Should not occur in normal app conditions
 	if (!courses || !course) return;
@@ -68,12 +63,9 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 					<div
 						key={day.toString()}
 						className={cn(
-							'bg-primary-500 absolute min-h-4 min-w-8 cursor-pointer select-none rounded-xl border-2 border-white transition-opacity dark:border-neutral-800',
+							'bg-primary-500 absolute min-h-4 min-w-8 cursor-pointer select-none rounded-xl border-2 border-white transition-opacity hover:opacity-90 dark:border-neutral-800',
 							isDragging && 'opacity-50',
-							isHover && 'opacity-90',
 						)}
-						onMouseEnter={() => setIsHover(true)}
-						onMouseLeave={() => setIsHover(false)}
 						style={{
 							top: 0,
 							transform: (() => {
@@ -127,7 +119,9 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 
 						{/* Center part (link) */}
 						<div
-							onClick={handleRoute}
+							onClick={() => {
+								navigate(`/notes?noteId=${note.id}`);
+							}}
 							className='-mt-4 h-full w-full overflow-clip break-all pt-4 text-sm text-white'>
 							<p className='m-4'>{note.title || course?.name}</p>
 						</div>
@@ -182,9 +176,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 							backgroundColor: course.color,
 						}}>
 						{/* Center part (link) */}
-						<div
-							onClick={handleRoute}
-							className='-mt-4 h-full w-full overflow-clip break-all pt-4 text-sm text-white'>
+						<div className='-mt-4 h-full w-full overflow-clip break-all pt-4 text-sm text-white'>
 							<p className='m-4'>{note.title || course?.name}</p>
 						</div>
 					</div>
