@@ -4,6 +4,8 @@ import { createPortal } from 'react-dom';
 import { useOnClickOutside } from 'usehooks-ts';
 import { useCourses } from '../../../../hooks/use-courses';
 import { T_Note } from '../../../../types';
+import LoadingSpinner from '../../../loading-spinner';
+import { useDeleteNote } from './use-delete-note';
 
 type Props = {
 	note: T_Note;
@@ -74,10 +76,10 @@ const NoteMenu = ({ note, isOpen, onClose, position }: Props) => {
 		onClose();
 	};
 
+	const { mutate: mutateDelete, isPending: isDeleting } = useDeleteNote({ note });
 	const handleDelete = () => {
 		console.log('DELETE');
-		// TODO: make request to delete note and update UI
-		onClose();
+		mutateDelete();
 	};
 
 	if (!isOpen) return;
@@ -119,8 +121,8 @@ const NoteMenu = ({ note, isOpen, onClose, position }: Props) => {
 			</div>
 			<button
 				onClick={handleDelete}
-				className='flex items-center rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
-				Delete
+				className='bg-error-50 text-error-800 dark:text-error-100 hover:bg-error-100 dark:bg-error-800 dark:hover:bg-error-700 flex items-center gap-2 rounded-md px-3 py-1 text-start'>
+				Delete {isDeleting && <LoadingSpinner className='size-4' />}
 			</button>
 
 			{/* {selectedNotes.length <= 1 && currentCourse && (
