@@ -7,6 +7,7 @@ import { T_Note } from '../../../../types';
 import LoadingSpinner from '../../../loading-spinner';
 import { useDeleteNote } from './use-delete-note';
 import { useDuplicateNote } from './use-duplicate-note';
+import { useUpdateNoteCourseId } from './use-update-note-coures';
 
 type Props = {
 	note: T_Note;
@@ -73,9 +74,12 @@ const NoteMenu = ({ note, isOpen, onClose, position }: Props) => {
 		mutateDuplicate();
 	};
 
+	const { mutate: mutateUpdateCourseId, isPending: isUpdatingCourseId } = useUpdateNoteCourseId({
+		note,
+		onSettledCallback: onClose,
+	});
 	const handleMoveToCourse = (courseId: string) => {
-		console.log('MOVE', courseId);
-		// TODO: make request to update note.courseId and update UI
+		mutateUpdateCourseId({ courseId });
 		onClose();
 	};
 
@@ -97,16 +101,17 @@ const NoteMenu = ({ note, isOpen, onClose, position }: Props) => {
 			}}>
 			<button
 				onClick={handleRename}
-				className='flex items-center rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
+				className='flex items-center gap-2 rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
 				Rename
 			</button>
 			<button
 				onClick={handleDuplicate}
-				className='flex items-center rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
+				className='flex items-center gap-2 rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
 				Duplicate {isDuplicating && <LoadingSpinner className='size-4' />}
 			</button>
-			<div className='group relative flex items-center rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
-				Move to <ChevronRight className='ml-8 size-4' />
+			<div className='group relative flex items-center gap-2 rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
+				Move to {isUpdatingCourseId && <LoadingSpinner className='size-4' />}{' '}
+				<ChevronRight className='ml-8 size-4' />
 				<div className='absolute left-0 hidden -translate-x-full flex-col rounded-xl bg-white p-2 shadow-2xl group-hover:flex dark:bg-neutral-800'>
 					{courses?.map(course => (
 						<button
