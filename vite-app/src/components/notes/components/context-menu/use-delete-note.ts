@@ -12,6 +12,9 @@ export const useDeleteNote = ({ note }: { note: T_Note }) => {
 	return useMutation({
 		mutationFn: async () =>
 			await fetch(`${BACKEND_DOMAIN}/api/notes/${note.id}`, { method: 'DELETE' }).then(res => res.json()),
+		onMutate: () => {
+			// TODO: Optimistic updates
+		},
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

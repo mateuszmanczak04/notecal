@@ -1,17 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { T_Note } from '../../../../types';
 import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
-import { toast } from '../../../toast/use-toast';
+import { useToast } from '../../../toast/use-toast';
 
-export const useDuplicateNote = ({ note, onSettledCallback }: { note: T_Note; onSettledCallback: () => void }) => {
+export const useUpdateNoteTitle = ({ note, onSettledCallback }: { note: T_Note; onSettledCallback: () => void }) => {
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
 	return useMutation({
-		mutationFn: async () =>
-			await fetch(`${BACKEND_DOMAIN}/api/notes/${note.id}/duplicate`, {
-				method: 'POST',
+		mutationFn: async (data: { title: string }) =>
+			await fetch(`${BACKEND_DOMAIN}/api/notes/${note.id}`, {
+				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
 				},
+				body: JSON.stringify({ title: data.title }),
 			}).then(res => res.json()),
 		onMutate: () => {
 			// TODO: Optimistic updates

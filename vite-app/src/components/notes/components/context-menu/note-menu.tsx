@@ -14,12 +14,14 @@ type Props = {
 	isOpen: boolean;
 	onClose: () => void;
 	position: [number, number];
+	/** Function starting rename flow, this mechanic must be outside of this hook */
+	onRename: () => void;
 };
 
 /**
  * Context menu for notes where user can perform various actions.
  */
-const NoteMenu = ({ note, isOpen, onClose, position }: Props) => {
+const NoteMenu = ({ note, isOpen, onClose, position, onRename }: Props) => {
 	const menuRef = useRef<HTMLDivElement>(null!);
 
 	const { data: courses } = useCourses();
@@ -56,38 +58,17 @@ const NoteMenu = ({ note, isOpen, onClose, position }: Props) => {
 		}
 	}, [isOpen]);
 
-	const handleRename = () => {
-		console.log('RENAME');
-		// TODO:
-		// 1. In SideNoteItem show name input instead of current title. Save on pressing Enter, restore previous name on pressing Escape or blurring input.
-		// 2. In DaysViewNote note make calendar note block contentEditable and update state similarly to SideNoteItem.
-		// 3. In MonthViewNote do similarly.
-		// 4. In ListViewNote do similarly.
-		onClose();
-	};
-
 	const { mutate: mutateDuplicate, isPending: isDuplicating } = useDuplicateNote({
 		note,
 		onSettledCallback: onClose,
 	});
-	const handleDuplicate = () => {
-		mutateDuplicate();
-	};
 
 	const { mutate: mutateUpdateCourseId, isPending: isUpdatingCourseId } = useUpdateNoteCourseId({
 		note,
 		onSettledCallback: onClose,
 	});
-	const handleMoveToCourse = (courseId: string) => {
-		mutateUpdateCourseId({ courseId });
-		onClose();
-	};
 
 	const { mutate: mutateDelete, isPending: isDeleting } = useDeleteNote({ note });
-	const handleDelete = () => {
-		console.log('DELETE');
-		mutateDelete();
-	};
 
 	if (!isOpen) return;
 
@@ -100,12 +81,12 @@ const NoteMenu = ({ note, isOpen, onClose, position }: Props) => {
 				top: position[1],
 			}}>
 			<button
-				onClick={handleRename}
+				onClick={onRename}
 				className='flex items-center gap-2 rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
 				Rename
 			</button>
 			<button
-				onClick={handleDuplicate}
+				onClick={() => mutateDuplicate()}
 				className='flex items-center gap-2 rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
 				Duplicate {isDuplicating && <LoadingSpinner className='size-4' />}
 			</button>
@@ -116,7 +97,7 @@ const NoteMenu = ({ note, isOpen, onClose, position }: Props) => {
 					{courses?.map(course => (
 						<button
 							key={course.id}
-							onClick={() => handleMoveToCourse(course.id)}
+							onClick={() => mutateUpdateCourseId({ courseId: course.id })}
 							className='flex items-center gap-2 text-nowrap rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
 							{course.name}{' '}
 							{course.id === note.courseId && (
@@ -128,21 +109,11 @@ const NoteMenu = ({ note, isOpen, onClose, position }: Props) => {
 				</div>
 			</div>
 			<button
-				onClick={handleDelete}
+				onClick={() => mutateDelete()}
 				className='bg-error-50 text-error-800 dark:text-error-100 hover:bg-error-100 dark:bg-error-800 dark:hover:bg-error-700 flex items-center gap-2 rounded-md px-3 py-1 text-start'>
 				Delete {isDeleting && <LoadingSpinner className='size-4' />}
 			</button>
 
-			{/* {selectedNotes.length <= 1 && currentCourse && (
-			// TODO: single note actions
-				<div>
-					<NoteTitle note={note} callback={closeMenu} />
-					<p className='mb-1 mt-4 px-2 font-semibold'>Move to another course</p>
-					<ChangeNoteCourse handleClose={closeMenu} currentCourse={currentCourse} note={note} />
-					<DuplicateNote note={note} className='mt-4 w-full' callback={closeMenu} />
-					<DeleteNoteButton note={note} className='mt-4 w-full' />
-				</div>
-			)} */}
 			{/* {selectedNotes.length > 1 && (
 			TODO: multiple notes actions
 				<DeleteManyNotesButton onDelete={deselectAll} notes={selectedNotes} className='mt-4 w-full' />
