@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useSearchParams } from 'react-router';
 import { T_Note } from '../../../../../types';
 import { cn } from '../../../../../utils/cn';
@@ -66,9 +67,11 @@ const SideNoteItem = ({ note }: Props) => {
 			</Link>
 
 			{/* Place it outside the link itself because it triggered link */}
-			{contextMenuPosition && (
-				<NoteContextMenu note={note} handleClose={closeContextMenu} position={contextMenuPosition} />
-			)}
+			{contextMenuPosition &&
+				createPortal(
+					<NoteContextMenu note={note} handleClose={closeContextMenu} position={contextMenuPosition} />,
+					document.body,
+				)}
 		</>
 	);
 };

@@ -65,12 +65,11 @@ const NoteContextMenu = ({ note, handleClose, position }: Props) => {
 	return (
 		<div
 			ref={contextMenuRef}
-			className='fixed z-50 w-[clamp(12rem,90vw,24rem)] cursor-default select-none rounded-xl bg-white p-4 shadow-2xl dark:bg-neutral-700'
+			className='fixed w-[clamp(12rem,90vw,24rem)] cursor-default select-none rounded-xl bg-white p-4 shadow-2xl dark:bg-neutral-700'
 			style={{
 				left: position.x,
 				top: position.y,
-			}}
-		>
+			}}>
 			{selectedNotes.length <= 1 && currentCourse && (
 				<div>
 					<NoteTitle note={note} callback={handleClose} />
