@@ -67,7 +67,7 @@ const RegisterForm = () => {
 				Create my account
 			</Button>
 
-			{error && <ErrorMessage>{error}</ErrorMessage>}
+			{error && <ErrorMessage className='mt-4'>{error}</ErrorMessage>}
 		</form>
 	);
 };
