@@ -4,8 +4,6 @@ import { useCourses } from '../../../hooks/use-courses';
 import { T_NoteWithTime } from '../../../hooks/use-notes-with-time';
 import { useSettings } from '../../../hooks/use-settings';
 import { cn } from '../../../utils/cn';
-import NoteContextMenu from '../../notes/components/context-menu/note-context-menu';
-import { useNoteContextMenu } from '../../notes/components/context-menu/use-note-context-menu';
 import { useNoteDrag } from '../hooks/use-note-drag';
 import { getCalendarRowHeight } from '../utils/get-calendar-row-height';
 import { getDaysIncludedInNote } from '../utils/get-days-included-in-note';
@@ -43,9 +41,6 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 		topEdgeRef,
 		bottomEdgeRef,
 	} = useNoteDrag({ note, noteRef: noteBlocksRef });
-
-	// Context menu related below:
-	const { closeContextMenu, contextMenuPosition, handleContextMenu, contextMenuBlockIndex } = useNoteContextMenu();
 
 	const course = courses?.find(c => c.id === note.courseId);
 	const noteDays = getDaysIncludedInNote({ noteStartTime: note.startTime, noteEndTime: note.endTime });
@@ -101,8 +96,7 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 						onDragStart={handleDragStart}
 						onDrag={handleDrag}
 						onDragEndCapture={handleDragEnd}
-						onDragOver={e => e.preventDefault()}
-						onContextMenu={e => handleContextMenu(e, index)}>
+						onDragOver={e => e.preventDefault()}>
 						{/* Top edge to drag: */}
 						{index === 0 && (
 							<div
@@ -141,13 +135,9 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 						)}
 
 						{/* Context menu on right mouse click */}
-						{contextMenuBlockIndex === index && contextMenuPosition && (
-							<NoteContextMenu
-								position={contextMenuPosition}
-								note={note}
-								handleClose={closeContextMenu}
-							/>
-						)}
+						{/* {contextMenuBlockIndex === index && contextMenuPosition && (
+							<NoteMenu position={contextMenuPosition} note={note} handleClose={closeContextMenu} />
+						)} */}
 					</div>
 				))}
 

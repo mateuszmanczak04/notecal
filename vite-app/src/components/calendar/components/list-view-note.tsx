@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { useCourses } from '../../../hooks/use-courses';
 import { T_Note } from '../../../types';
-import NoteContextMenu from '../../notes/components/context-menu/note-context-menu';
-import { useNoteContextMenu } from '../../notes/components/context-menu/use-note-context-menu';
 import { parseLexicalJsonToPlainText } from '../../notes/components/editor/parse-lexical-json-to-plain-text';
 import { getNoteContent } from '../../notes/utils/get-note-content';
 
@@ -15,7 +13,6 @@ type T_Props = {
 
 const ListViewNote = ({ note }: T_Props) => {
 	const { data: courses } = useCourses();
-	const { closeContextMenu, contextMenuPosition, handleContextMenu } = useNoteContextMenu();
 	const [content, setContent] = useState<string | null>(null);
 	const [isContentFetching, setIsContentFetching] = useState(false);
 
@@ -31,7 +28,6 @@ const ListViewNote = ({ note }: T_Props) => {
 	return (
 		<>
 			<Link
-				onContextMenu={handleContextMenu}
 				to={`/notes?noteId=${note.id}`}
 				className='flex w-[clamp(240px,100%,800px)] items-center justify-between gap-4 rounded-xl p-4 text-white hover:opacity-90'
 				style={{ backgroundColor: course?.color }}
@@ -53,10 +49,6 @@ const ListViewNote = ({ note }: T_Props) => {
 				</div>
 				<ChevronRight className='size-7 shrink-0' />
 			</Link>
-			{/* Context menu on right mouse click */}
-			{contextMenuPosition && (
-				<NoteContextMenu handleClose={closeContextMenu} note={note} position={contextMenuPosition} />
-			)}
 		</>
 	);
 };

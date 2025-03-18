@@ -1,11 +1,9 @@
 import { format } from 'date-fns';
-import React from 'react';
-import { createPortal } from 'react-dom';
-import { Link, useSearchParams } from 'react-router';
+import React, { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
 import { T_Note } from '../../../../../types';
 import { cn } from '../../../../../utils/cn';
-import NoteContextMenu from '../../context-menu/note-context-menu';
-import { useNoteContextMenu } from '../../context-menu/use-note-context-menu';
+import NoteMenu from '../../context-menu/note-menu';
 import { useSelectedNotes } from './selected-notes-context';
 
 type Props = {
@@ -17,9 +15,11 @@ type Props = {
  */
 const SideNoteItem = ({ note }: Props) => {
 	const [searchParams] = useSearchParams();
+	const navigate = useNavigate();
 	const noteId = searchParams.get('noteId');
-	const { closeContextMenu, contextMenuPosition, handleContextMenu } = useNoteContextMenu();
 	const { deselectAll, deselectNote, selectNote, isNoteSelected } = useSelectedNotes();
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [menuPosition, setMenuPosition] = useState<[number, number]>([0, 0]);
 
 	const handleClick = (e: React.MouseEvent) => {
 		if (e.metaKey) {
@@ -32,24 +32,24 @@ const SideNoteItem = ({ note }: Props) => {
 		} else {
 			deselectAll();
 			selectNote(note);
+			navigate(`/notes?noteId=${note.id}`);
 		}
 	};
 
-	const handleNoteContextMenu = (e: React.MouseEvent) => {
+	const handleContextMenu = (e: React.MouseEvent) => {
 		e.preventDefault();
-		if (noteId !== note.id && !isNoteSelected(note)) return;
-		handleContextMenu(e);
+		setIsMenuOpen(true);
+		setMenuPosition([e.clientX, e.clientY]);
 	};
 
 	return (
 		<>
-			<Link
+			<div
 				onClick={handleClick}
-				to={`/notes?noteId=${note.id}`}
+				onContextMenu={handleContextMenu}
 				key={note.id}
 				aria-label={`link to note ${note.title}`}
 				title={`link to note ${note.title}`}
-				onContextMenu={handleNoteContextMenu}
 				className={cn(
 					'h-9 truncate rounded-xl border-2 border-transparent bg-neutral-100 px-3 text-sm leading-9 transition-colors dark:bg-neutral-800',
 					(note.id === noteId || isNoteSelected(note)) &&
@@ -64,14 +64,8 @@ const SideNoteItem = ({ note }: Props) => {
 						<span className='ml-2 opacity-50'>Note without a title</span>
 					)}
 				</span>{' '}
-			</Link>
-
-			{/* Place it outside the link itself because it triggered link */}
-			{contextMenuPosition &&
-				createPortal(
-					<NoteContextMenu note={note} handleClose={closeContextMenu} position={contextMenuPosition} />,
-					document.body,
-				)}
+			</div>
+			<NoteMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} note={note} position={menuPosition} />
 		</>
 	);
 };
