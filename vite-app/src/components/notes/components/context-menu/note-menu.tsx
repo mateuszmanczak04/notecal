@@ -6,6 +6,7 @@ import { useCourses } from '../../../../hooks/use-courses';
 import { T_Note } from '../../../../types';
 import LoadingSpinner from '../../../loading-spinner';
 import { useDeleteNote } from './use-delete-note';
+import { useDuplicateNote } from './use-duplicate-note';
 
 type Props = {
 	note: T_Note;
@@ -64,10 +65,12 @@ const NoteMenu = ({ note, isOpen, onClose, position }: Props) => {
 		onClose();
 	};
 
+	const { mutate: mutateDuplicate, isPending: isDuplicating } = useDuplicateNote({
+		note,
+		onSettledCallback: onClose,
+	});
 	const handleDuplicate = () => {
-		console.log('DUPLICATE');
-		// TODO: make request to duplicate note and update UI
-		onClose();
+		mutateDuplicate();
 	};
 
 	const handleMoveToCourse = (courseId: string) => {
@@ -100,7 +103,7 @@ const NoteMenu = ({ note, isOpen, onClose, position }: Props) => {
 			<button
 				onClick={handleDuplicate}
 				className='flex items-center rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
-				Duplicate
+				Duplicate {isDuplicating && <LoadingSpinner className='size-4' />}
 			</button>
 			<div className='group relative flex items-center rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
 				Move to <ChevronRight className='ml-8 size-4' />
