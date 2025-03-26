@@ -1,9 +1,11 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useCourses } from '../../../hooks/use-courses';
 import { T_NoteWithTime } from '../../../hooks/use-notes-with-time';
 import { useSettings } from '../../../hooks/use-settings';
 import { cn } from '../../../utils/cn';
+import NoteMenu from '../../notes/components/context-menu/note-menu';
+import { useUpdateNoteTitle } from '../../notes/components/context-menu/use-update-note-title';
 import { useNoteDrag } from '../hooks/use-note-drag';
 import { getCalendarRowHeight } from '../utils/get-calendar-row-height';
 import { getDaysIncludedInNote } from '../utils/get-days-included-in-note';
@@ -46,6 +48,38 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	const noteDays = getDaysIncludedInNote({ noteStartTime: note.startTime, noteEndTime: note.endTime });
 
 	const navigate = useNavigate();
+
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [menuPosition, setMenuPosition] = useState<[number, number]>([0, 0]);
+	const handleContextMenu = (e: React.MouseEvent) => {
+		e.preventDefault();
+		setIsMenuOpen(true);
+		setMenuPosition([e.clientX, e.clientY]);
+	};
+
+	/** Temporary state used to update note title: */
+	const [title, setTitle] = useState('');
+	const [isRenaming, setIsRenaming] = useState(false);
+	const { mutate: mutateUpdateTitle, isPending: isUpdatingTitle } = useUpdateNoteTitle({
+		note,
+		onSettledCallback: () => setIsRenaming(false),
+	});
+
+	const handleStartRename = () => {
+		setIsMenuOpen(false);
+		setIsRenaming(true);
+		setTitle(note.title);
+	};
+
+	const handleCancelRename = () => {
+		setTitle('');
+		setIsRenaming(false);
+	};
+
+	const handleSubmitRename = (e: React.FormEvent) => {
+		e.preventDefault();
+		mutateUpdateTitle({ title });
+	};
 
 	// Should not occur in normal app conditions
 	if (!courses || !course) return;
@@ -116,8 +150,29 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 							onClick={() => {
 								navigate(`/notes?noteId=${note.id}`);
 							}}
-							className='-mt-4 h-full w-full overflow-clip break-all pt-4 text-sm text-white'>
-							<p className='m-4'>{note.title || course?.name}</p>
+							onContextMenu={handleContextMenu}
+							className={cn(
+								'-mt-4 h-full w-full break-all pt-4 text-sm text-white',
+								isUpdatingTitle && 'pointer-events-none opacity-50',
+								!isRenaming && 'overflow-clip',
+							)}>
+							{isRenaming ? (
+								<form className='m-4' onSubmit={handleSubmitRename}>
+									<input
+										onKeyDown={e => {
+											if (e.key === 'Escape') handleCancelRename();
+										}}
+										autoFocus
+										placeholder='New title'
+										value={title}
+										onChange={e => setTitle(e.target.value)}
+										onBlur={handleCancelRename}
+										className='w-full text-wrap border-none outline-none'
+									/>
+								</form>
+							) : (
+								<p className='m-4'>{note.title || course?.name}</p>
+							)}
 						</div>
 
 						{/* Bottom edge to drag: */}
@@ -171,6 +226,14 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 						</div>
 					</div>
 				))}
+
+			<NoteMenu
+				isOpen={isMenuOpen}
+				onClose={() => setIsMenuOpen(false)}
+				note={note}
+				position={menuPosition}
+				onRename={handleStartRename}
+			/>
 		</>
 	);
 };
