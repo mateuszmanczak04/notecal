@@ -1,5 +1,5 @@
 import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { generateGetPresignedUrl, generatePutPresignedUrl } from '../../../../../../server/utils/aws';
+import { generateGetPresignedUrl, generatePutPresignedUrl } from '../../../../../../server/services/s3Service';
 import { getAuthStatus } from '../../../../utils/auth';
 import db from '../../../../utils/db';
 import { en } from '../../../../utils/dictionary';

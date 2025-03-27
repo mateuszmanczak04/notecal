@@ -1,8 +1,8 @@
 'server-only';
 
 import nodemailer from 'nodemailer';
+import { CLIENT_DOMAIN } from '../config/constants';
 import db from '../prisma/db';
-import { CLIENT_DOMAIN } from './consts';
 
 const getVerificationTokenByEmail = async (email: string) => {
 	const verificationToken = await db.verificationToken.findFirst({

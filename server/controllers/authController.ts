@@ -1,8 +1,8 @@
 import type { Request, Response } from 'express';
 import db from '../prisma/db';
+import { sendConfirmationEmail } from '../services/emailService';
+import { generateToken } from '../services/jwtService';
 import { comparePasswords, hashPassword } from '../utils/bcrypt';
-import { sendConfirmationEmail } from '../utils/email';
-import { generateToken } from '../utils/jwt';
 
 export const register = async (req: Request, res: Response) => {
 	const email = req.body.email.trim().toLowerCase();
@@ -87,3 +87,8 @@ export const logout = (_req: Request, res: Response) => {
 	res.clearCookie('authToken');
 	res.status(200).end();
 };
+
+export const sendVerificationEmail = async (req: Request, res: Response) => {};
+export const verifyEmail = async (req: Request, res: Response) => {};
+export const sendForgotPasswordEmail = async (req: Request, res: Response) => {};
+export const resetPassword = async (req: Request, res: Response) => {};

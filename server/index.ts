@@ -3,6 +3,9 @@ import cors from 'cors';
 import express, { type NextFunction, type Request, type Response } from 'express';
 import { authMiddleware } from './middlewares/authMiddleware';
 import authRoutes from './routes/authRoutes';
+import courseRoutes from './routes/courseRoutes';
+import noteRoutes from './routes/noteRoutes';
+import taskRoutes from './routes/taskRoutes';
 import userRoutes from './routes/userRoutes';
 
 const app = express();
@@ -18,6 +21,9 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', authMiddleware, userRoutes);
+app.use('/api/tasks', authMiddleware, taskRoutes);
+app.use('/api/courses', authMiddleware, courseRoutes);
+app.use('/api/notes', authMiddleware, noteRoutes);
 
 app.get('/api', authMiddleware, async (req, res) => {
 	console.log(req.user);
