@@ -19,9 +19,7 @@ const ChangeEmailSetting = () => {
 			setError('');
 			const res = await fetch('/api/user/email', {
 				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
 			}).then(res => res.json());
 			if ('error' in res) {

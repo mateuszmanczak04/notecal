@@ -13,6 +13,7 @@ const CourseName = () => {
 		mutationFn: async (data: { id: string; name: string }) =>
 			await fetch(`/api/courses/${data.id}`, {
 				method: 'PATCH',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ name: data.name }),
 			}).then(res => res.json()),
 		onSettled: data => {

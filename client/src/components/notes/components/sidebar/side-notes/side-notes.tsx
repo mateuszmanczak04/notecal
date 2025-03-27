@@ -20,9 +20,7 @@ const SideNotes = () => {
 		mutationFn: async (data: { courseId: string }) =>
 			await fetch('api/notes', {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ courseId: data.courseId }),
 			}).then(res => res.json()),
 		onSettled: data => {

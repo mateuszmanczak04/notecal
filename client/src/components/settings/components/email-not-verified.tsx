@@ -14,9 +14,7 @@ const EmailNotVerified = () => {
 		async () =>
 			fetch('/api/auth/email-verified', {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ email: user?.email.trim().toLowerCase() }),
 			}).then(res => res.json()),
 		{ error: '', message: '' },

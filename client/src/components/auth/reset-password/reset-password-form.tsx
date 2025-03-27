@@ -17,9 +17,7 @@ const ResetPasswordForm = () => {
 		startTransition(async () => {
 			const res = await fetch('/api/auth/reset-password', {
 				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					email: searchParams.get('email')?.trim().toLowerCase(),
 					token: searchParams.get('token'),

@@ -20,9 +20,7 @@ const ConfirmEmailForm = () => {
 		startTransition(async () => {
 			const res = await fetch('/api/auth/email-verified', {
 				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ token: searchParams.get('token') }),
 			}).then(res => res.json());
 			if ('error' in res) {

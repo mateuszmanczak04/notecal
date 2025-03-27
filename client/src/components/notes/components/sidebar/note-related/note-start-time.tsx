@@ -17,9 +17,7 @@ const NoteStartTime = ({ note }: Props) => {
 		mutationFn: async (data: { id: string; startTime: Date | null }) =>
 			await fetch(`/api/notes/${data.id}`, {
 				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ startTime: data.startTime }),
 			}).then(res => res.json()),
 		onSettled: data => {

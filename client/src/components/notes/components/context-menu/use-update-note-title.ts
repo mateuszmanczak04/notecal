@@ -10,9 +10,7 @@ export const useUpdateNoteTitle = ({ note, onSettledCallback }: { note: T_Note; 
 		mutationFn: async (data: { title: string }) =>
 			await fetch(`/api/notes/${note.id}`, {
 				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ title: data.title }),
 			}).then(res => res.json()),
 		onMutate: () => {

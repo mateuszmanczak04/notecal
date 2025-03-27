@@ -15,9 +15,7 @@ const RegisterForm = () => {
 		startTransition(async () => {
 			await fetch('/api/auth/register', {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
 			})
 				.then(res => {

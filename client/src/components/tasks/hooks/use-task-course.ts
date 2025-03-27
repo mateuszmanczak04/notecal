@@ -11,6 +11,7 @@ export const useTaskCourse = (task: T_Task) => {
 		mutationFn: async (data: { courseId: string | null }) =>
 			await fetch(`/api/tasks/${task.id}`, {
 				method: 'PATCH',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
 		onSettled: data => {

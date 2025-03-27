@@ -9,7 +9,11 @@ export const useDeleteNote = ({ note }: { note: T_Note }) => {
 	const navigate = useNavigate();
 
 	return useMutation({
-		mutationFn: async () => await fetch(`/api/notes/${note.id}`, { method: 'DELETE' }).then(res => res.json()),
+		mutationFn: async () =>
+			await fetch(`/api/notes/${note.id}`, {
+				method: 'DELETE',
+				headers: { 'Content-Type': 'application/json' },
+			}).then(res => res.json()),
 		onMutate: () => {
 			// TODO: Optimistic updates
 		},

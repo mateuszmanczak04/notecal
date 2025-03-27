@@ -6,11 +6,13 @@ import LoadingSpinner from '../../loading-spinner';
 const LogoutButton = () => {
 	const { mutate, isPending } = useMutation({
 		mutationFn: async () =>
-			await fetch('/api/auth/logout', { method: 'POST' }).then(res => {
-				if (res.ok) {
-					window.location.reload();
-				}
-			}),
+			await fetch('/api/auth/logout', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(
+				res => {
+					if (res.ok) {
+						window.location.reload();
+					}
+				},
+			),
 	});
 
 	return (

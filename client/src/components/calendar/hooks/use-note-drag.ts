@@ -26,9 +26,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 		mutationFn: async (data: { startTime?: Date; endTime?: Date }) =>
 			await fetch('/api/notes/${note.id}', {
 				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
 		onMutate: () => {

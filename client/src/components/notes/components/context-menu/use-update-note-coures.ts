@@ -10,9 +10,7 @@ export const useUpdateNoteCourseId = ({ note, onSettledCallback }: { note: T_Not
 		mutationFn: async (data: { courseId: string }) =>
 			await fetch(`/api/notes/${note.id}`, {
 				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ courseId: data.courseId }),
 			}).then(res => res.json()),
 		onMutate: data => {

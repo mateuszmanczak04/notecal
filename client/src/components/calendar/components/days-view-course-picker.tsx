@@ -25,9 +25,7 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 		mutationFn: async (data: { courseId: string; startTime?: Date; duration?: number }) =>
 			await fetch('/api/notes', {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
 		// onMutate: data => {

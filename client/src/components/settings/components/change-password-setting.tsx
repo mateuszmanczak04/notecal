@@ -19,9 +19,7 @@ const ChangePasswordSetting = () => {
 			setMessage('');
 			const res = await fetch('/api/user/password', {
 				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ oldPassword, newPassword }),
 			}).then(res => res.json());
 			if ('error' in res) {

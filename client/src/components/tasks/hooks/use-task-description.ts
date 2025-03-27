@@ -12,6 +12,7 @@ export const useTaskDescription = (task: T_Task) => {
 		mutationFn: async (data: { description: string }) =>
 			await fetch(`/api/tasks/${task.id}`, {
 				method: 'PATCH',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
 		onSettled: data => {

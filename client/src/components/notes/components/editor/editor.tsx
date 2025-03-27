@@ -66,7 +66,7 @@ const Editor = () => {
 
 		fetchNoteContent();
 		// TODO: think how to not rerender without warnings
-	}, [currentNote?.id]);
+	}, [currentNote]);
 
 	/**
 	 * Saves the note content to the database.
@@ -99,9 +99,7 @@ const Editor = () => {
 		if (!currentNote) return;
 		const res = await fetch(`/api/notes/${currentNote.id}/export`, {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
+			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
 				htmlContent: editorContentRef.current.innerHTML,
 				theme: isDarkMode() ? 'dark' : 'light',

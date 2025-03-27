@@ -12,6 +12,7 @@ const CourseColor = () => {
 		mutationFn: async (data: { id: string; color: string }) =>
 			await fetch(`/api/courses/${data.id}`, {
 				method: 'PATCH',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ color: data.color }),
 			}).then(res => res.json()),
 		onSettled: data => {

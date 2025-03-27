@@ -25,6 +25,7 @@ const CourseUsefulLinks = () => {
 		mutationFn: async (data: { id: string; usefulLinks: string }) =>
 			await fetch(`/api/courses/${data.id}`, {
 				method: 'PATCH',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ usefulLinks: data.usefulLinks }),
 			}).then(res => res.json()),
 		onSettled: data => {

@@ -21,7 +21,11 @@ const DeleteManyNotesButton = ({ notes, className }: Props) => {
 	const [isDeleting, setIsDeleting] = useState(false);
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { ids: string[] }) =>
-			await fetch('/api/notes', { method: 'DELETE', body: JSON.stringify(data) }).then(res => res.json()),
+			await fetch('/api/notes', {
+				method: 'DELETE',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(data),
+			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

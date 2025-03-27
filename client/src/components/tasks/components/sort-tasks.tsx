@@ -30,6 +30,7 @@ const SortTasks = () => {
 		mutationFn: async (data: { newOrder: string }) =>
 			await fetch('/api/tasks/sort', {
 				method: 'PATCH',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
 		onSettled: data => {

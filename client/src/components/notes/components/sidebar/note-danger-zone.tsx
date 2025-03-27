@@ -17,6 +17,7 @@ const NoteDangerZone = () => {
 		mutationFn: async (data: { id: string }) =>
 			await fetch(`/api/courses/${data.id}`, {
 				method: 'DELETE',
+				headers: { 'Content-Type': 'application/json' },
 			}).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {

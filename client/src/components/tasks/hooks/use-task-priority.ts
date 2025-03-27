@@ -9,6 +9,7 @@ export const useTaskPriority = (task: T_Task) => {
 		mutationFn: async (data: { priority: T_TaskPriority }) =>
 			await fetch(`/api/tasks/${task.id}`, {
 				method: 'PATCH',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
 		onSettled: data => {

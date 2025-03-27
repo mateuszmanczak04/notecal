@@ -19,6 +19,7 @@ const CreateTaskForm = ({ course }: Props) => {
 		mutationFn: async (data: { title: string; courseId: string }) =>
 			await fetch('/api/tasks', {
 				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
 		onSettled: data => {

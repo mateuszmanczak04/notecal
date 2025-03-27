@@ -8,9 +8,7 @@ export const useDuplicateNote = ({ note, onSettledCallback }: { note: T_Note; on
 		mutationFn: async () =>
 			await fetch(`/api/notes/${note.id}/duplicate`, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: { 'Content-Type': 'application/json' },
 			}).then(res => res.json()),
 		onMutate: () => {
 			// TODO: Optimistic updates

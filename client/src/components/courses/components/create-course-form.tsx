@@ -18,6 +18,7 @@ const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 		mutationFn: async (data: { name: string; teacher: string; color: string }) =>
 			await fetch('/api/courses', {
 				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
 		// onMutate: data => {
