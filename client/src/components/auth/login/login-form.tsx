@@ -14,18 +14,25 @@ const LoginForm = () => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		startTransition(async () => {
-			const res = await fetch('/api/auth/login', {
+			fetch('/api/auth/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
-			}).then(res => res.json());
-			if ('error' in res) {
-				setError(res.error);
-			} else if (res.success) {
-				window.location.reload();
-			}
+			})
+				.then(res => {
+					if (res.ok) {
+						window.location.reload();
+						return;
+					}
+					return res.json();
+				})
+				.then(res => {
+					if ('error' in res) {
+						setError(res.error);
+					}
+				});
 		});
 	};
 

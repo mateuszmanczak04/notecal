@@ -15,7 +15,7 @@ if (!process.env.AUTH_SECRET) {
 export const generateToken = async (payload: JWT_AUTH): Promise<string> => {
 	return await new SignJWT(payload)
 		.setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-		.setExpirationTime('24h') // Token is valid for 24 hours
+		.setExpirationTime('7d')
 		.sign(SECRET);
 };
 

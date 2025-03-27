@@ -16,10 +16,13 @@
 		"@types/cookie-parser": "^1.4.8",
 		"@types/cors": "^2.8.17",
 		"@types/express": "^5.0.1",
+		"@types/nodemailer": "^6.4.17",
+		"bcryptjs": "^3.0.2",
 		"cookie-parser": "^1.4.7",
 		"cors": "^2.8.5",
 		"express": "^4.21.2",
 		"jose": "^6.0.10",
+		"nodemailer": "^6.10.0",
 		"prettier": "^3.5.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
 		"prisma": "^6.5.0"

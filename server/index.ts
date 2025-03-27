@@ -2,6 +2,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { type NextFunction, type Request, type Response } from 'express';
 import { authMiddleware } from './middlewares/authMiddleware';
+import authRoutes from './routes/authRoutes';
 
 const app = express();
 
@@ -13,6 +14,8 @@ app.use(
 	}),
 );
 app.use(cookieParser());
+
+app.use('/api/auth', authRoutes);
 
 app.get('/api', authMiddleware, async (req, res) => {
 	res.send('hello world');
