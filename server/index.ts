@@ -18,6 +18,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 
 app.get('/api', authMiddleware, async (req, res) => {
+	console.log(req.user);
 	res.send('hello world');
 });
 
