@@ -52,8 +52,6 @@ export const login = async (req: Request, res: Response) => {
 	const email = req.body.email.trim().toLowerCase();
 	const password = req.body.password;
 
-	console.log({ email, password });
-
 	if (!email || !password || email.length === 0 || password.length === 0) {
 		res.status(401).json({ error: 'Invalid credentials.' });
 		return;
