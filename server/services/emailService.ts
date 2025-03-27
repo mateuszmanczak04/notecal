@@ -32,24 +32,23 @@ const generateVerificationToken = async (email: string) => {
 
 export const sendConfirmationEmail = async (email: string): Promise<{ error?: string; message?: string }> => {
 	if (!email) {
-		return { error: 'Email is required' };
+		return { error: 'Email is required.' };
 	}
 
-	try {
-		const transporter = nodemailer.createTransport({
-			host: process.env.EMAIL_HOST,
-			port: 587,
-			secure: false,
-			auth: {
-				user: process.env.EMAIL_USER,
-				pass: process.env.EMAIL_PASSWORD,
-			},
-		});
+	const transporter = nodemailer.createTransport({
+		host: process.env.EMAIL_HOST,
+		port: 587,
+		secure: false,
+		auth: {
+			user: process.env.EMAIL_USER,
+			pass: process.env.EMAIL_PASSWORD,
+		},
+	});
 
-		const token = await generateVerificationToken(email);
-		const url = `${CLIENT_DOMAIN}/auth/confirm-email?token=${token.token}`;
+	const token = await generateVerificationToken(email);
+	const url = `${CLIENT_DOMAIN}/auth/confirm-email?token=${token.token}`;
 
-		const html = `
+	const html = `
             <div style="
                     font-family: sans-serif;
                     padding: 16px;
@@ -77,15 +76,12 @@ export const sendConfirmationEmail = async (email: string): Promise<{ error?: st
             </div>
         `;
 
-		await transporter.sendMail({
-			from: 'Notecal <noreply@notecal.app>',
-			to: email,
-			subject: 'Confirm Your account',
-			html,
-		});
+	await transporter.sendMail({
+		from: 'Notecal <noreply@notecal.app>',
+		to: email,
+		subject: 'Confirm Your account',
+		html,
+	});
 
-		return { message: 'Confirmation message was successfully sent to your inbox' };
-	} catch (error) {
-		return { error: 'Something went wrong' };
-	}
+	return { message: 'Confirmation message was successfully sent to your inbox.' };
 };

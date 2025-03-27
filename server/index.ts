@@ -30,6 +30,7 @@ app.get('/api', authMiddleware, async (req, res) => {
 });
 
 app.use((_err: Error, _req: Request, res: Response, _next: NextFunction) => {
+	console.log(_err);
 	res.status(500).json({ error: 'Something went wrong.' });
 });
 

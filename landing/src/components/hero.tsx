@@ -1,6 +1,6 @@
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { FRONTEND_DOMAIN } from '../utils/app-domain';
+
 import { Button } from './button';
 
 const Hero = () => {
@@ -18,7 +18,7 @@ const Hero = () => {
 				assets!
 			</p>
 			<Button className='mt-4 shadow-2xl sm:mt-6 md:mt-8' asChild size='lg'>
-				<Link href={`${FRONTEND_DOMAIN}/auth/register`}>
+				<Link href='https://www.app.notecal.app/auth/register'>
 					Try it yourself, it&apos;s free! <ChevronRight />
 				</Link>
 			</Button>
