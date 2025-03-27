@@ -3,7 +3,7 @@ import {
 	createNote,
 	deleteNote,
 	duplicateNote,
-	exportNote,
+	exportNoteToPDF,
 	getNote,
 	getNotes,
 	updateNote,
@@ -16,7 +16,7 @@ router.get('/:id', getNote);
 router.post('/', createNote);
 router.put('/:id', updateNote);
 router.delete('/:id', deleteNote);
-router.post('/:id/export', exportNote);
+router.post('/:id/export', exportNoteToPDF);
 router.post('/:id/duplicate', duplicateNote);
 
 export default router;
