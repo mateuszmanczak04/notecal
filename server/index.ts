@@ -1,6 +1,7 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { type NextFunction, type Request, type Response } from 'express';
-import db from './prisma/db';
+import { authMiddleware } from './middlewares/authMiddleware';
 
 const app = express();
 
@@ -11,27 +12,10 @@ app.use(
 		credentials: true,
 	}),
 );
-
-const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-	const authenticated = true;
-	if (!authenticated) {
-		res.status(401).end();
-		return;
-	}
-	next();
-};
+app.use(cookieParser());
 
 app.get('/api', authMiddleware, async (req, res) => {
-	const tasks = await db.task.findMany({});
-	console.log(tasks);
-	res.send(`<html>
-		<head>
-			<title>${tasks.length} tasks</title>
-		</head>
-		<body>
-			<h1>You have ${tasks.length} tasks to do yet</h1>
-		</body>
-		</html>`);
+	res.send('hello world');
 });
 
 app.use((_err: Error, _req: Request, res: Response, _next: NextFunction) => {
