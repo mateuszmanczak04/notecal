@@ -3,6 +3,7 @@ import cors from 'cors';
 import express, { type NextFunction, type Request, type Response } from 'express';
 import { authMiddleware } from './middlewares/authMiddleware';
 import authRoutes from './routes/authRoutes';
+import userRoutes from './routes/userRoutes';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(
 app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/user', authMiddleware, userRoutes);
 
 app.get('/api', authMiddleware, async (req, res) => {
 	console.log(req.user);
