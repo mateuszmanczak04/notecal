@@ -1,7 +1,15 @@
+import cors from 'cors';
 import express, { type NextFunction, type Request, type Response } from 'express';
+
 const app = express();
 
 app.use(express.json());
+app.use(
+	cors({
+		origin: process.env.NODE_ENV === 'production' ? 'https://app.notecal.app' : 'http://localhost:5173',
+		credentials: true,
+	}),
+);
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 	const authenticated = true;
