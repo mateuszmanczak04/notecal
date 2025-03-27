@@ -1,5 +1,4 @@
 import { useState, useTransition } from 'react';
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { Button } from '../../button';
 import ErrorMessage from '../../error-message';
 import { Input } from '../../input';
@@ -18,7 +17,7 @@ const ChangeEmailSetting = () => {
 		startTransition(async () => {
 			setMessage('');
 			setError('');
-			const res = await fetch(`${BACKEND_DOMAIN}/api/user/email`, {
+			const res = await fetch('/api/user/email', {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

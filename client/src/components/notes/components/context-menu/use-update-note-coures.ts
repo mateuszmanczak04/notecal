@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { T_Note } from '../../../../types';
-import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { useToast } from '../../../toast/use-toast';
 
 export const useUpdateNoteCourseId = ({ note, onSettledCallback }: { note: T_Note; onSettledCallback: () => void }) => {
@@ -9,7 +8,7 @@ export const useUpdateNoteCourseId = ({ note, onSettledCallback }: { note: T_Not
 
 	return useMutation({
 		mutationFn: async (data: { courseId: string }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/notes/${note.id}`, {
+			await fetch(`/api/notes/${note.id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 import { T_NoteWithTime } from '../../../hooks/use-notes-with-time';
 import { useSettings } from '../../../hooks/use-settings';
 import { useUser } from '../../../hooks/use-user';
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { toUTC } from '../../../utils/timezone';
 import { useToast } from '../../toast/use-toast';
 import { useCalendarContext } from '../context/calendar-context';
@@ -25,7 +24,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
 		mutationFn: async (data: { startTime?: Date; endTime?: Date }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/notes/${note.id}`, {
+			await fetch('/api/notes/${note.id}', {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

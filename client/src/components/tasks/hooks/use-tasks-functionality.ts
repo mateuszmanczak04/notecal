@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useSettings } from '../../../hooks/use-settings';
 import { useTasks } from '../../../hooks/use-tasks';
 import { T_Task } from '../../../types';
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { useToast } from '../../toast/use-toast';
 
 type T_Props = {
@@ -17,7 +16,7 @@ export const useTasksFunctionality = ({ courseId }: T_Props) => {
 	const { toast } = useToast();
 	const { mutate } = useMutation({
 		mutationFn: async (data: { tasks: T_Task[] }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/tasks`, {
+			await fetch('/api/tasks', {
 				method: 'PUT',
 				body: JSON.stringify(data),
 			}).then(res => res.json()),

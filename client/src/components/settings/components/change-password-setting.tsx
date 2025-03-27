@@ -1,5 +1,4 @@
 import { useState, useTransition } from 'react';
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { Button } from '../../button';
 import ErrorMessage from '../../error-message';
 import { Input } from '../../input';
@@ -18,7 +17,7 @@ const ChangePasswordSetting = () => {
 		startTransition(async () => {
 			setError('');
 			setMessage('');
-			const res = await fetch(`${BACKEND_DOMAIN}/api/user/password`, {
+			const res = await fetch('/api/user/password', {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

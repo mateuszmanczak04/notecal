@@ -2,7 +2,6 @@ import { Mail } from 'lucide-react';
 import { useEffect, useState, useTransition } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { useEmailVerified } from '../../../hooks/use-email-verified';
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { Button } from '../../button';
 import ErrorMessage from '../../error-message';
 import LoadingSpinner from '../../loading-spinner';
@@ -19,7 +18,7 @@ const ConfirmEmailForm = () => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		startTransition(async () => {
-			const res = await fetch(`${BACKEND_DOMAIN}/api/auth/email-verified`, {
+			const res = await fetch('/api/auth/email-verified', {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

@@ -1,13 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { T_Note } from '../../../../types';
-import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { toast } from '../../../toast/use-toast';
 
 export const useDuplicateNote = ({ note, onSettledCallback }: { note: T_Note; onSettledCallback: () => void }) => {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () =>
-			await fetch(`${BACKEND_DOMAIN}/api/notes/${note.id}/duplicate`, {
+			await fetch(`/api/notes/${note.id}/duplicate`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

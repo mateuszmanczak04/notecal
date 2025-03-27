@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { T_Task, T_TaskPriority } from '../../../types';
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { useToast } from '../../toast/use-toast';
 
 export const useTaskPriority = (task: T_Task) => {
@@ -8,7 +7,7 @@ export const useTaskPriority = (task: T_Task) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { priority: T_TaskPriority }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/tasks/${task.id}`, {
+			await fetch(`/api/tasks/${task.id}`, {
 				method: 'PATCH',
 				body: JSON.stringify(data),
 			}).then(res => res.json()),

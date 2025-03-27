@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
-import { BACKEND_DOMAIN } from '../../../../../utils/app-domain';
 import { cn } from '../../../../../utils/cn';
 import { useToast } from '../../../../toast/use-toast';
 import { useNoteContext } from '../../../context/note-context';
@@ -12,7 +11,7 @@ const CourseTeacher = () => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { id: string; teacher: string }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/courses/${data.id}`, {
+			await fetch(`/api/courses/${data.id}`, {
 				method: 'PATCH',
 				body: JSON.stringify({ teacher: data.teacher }),
 			}).then(res => res.json()),

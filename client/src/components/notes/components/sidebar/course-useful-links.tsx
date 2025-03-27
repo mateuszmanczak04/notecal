@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GripVertical, Plus, X } from 'lucide-react';
 import { Reorder, useDragControls } from 'motion/react';
 import { FormEvent, useEffect, useState } from 'react';
-import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { cn } from '../../../../utils/cn';
 import { addHttpsIfMissing, removeProtocol } from '../../../../utils/links';
 import { Button } from '../../../button';
@@ -24,7 +23,7 @@ const CourseUsefulLinks = () => {
 
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { id: string; usefulLinks: string }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/courses/${data.id}`, {
+			await fetch(`/api/courses/${data.id}`, {
 				method: 'PATCH',
 				body: JSON.stringify({ usefulLinks: data.usefulLinks }),
 			}).then(res => res.json()),

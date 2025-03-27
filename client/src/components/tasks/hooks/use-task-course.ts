@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCourses } from '../../../hooks/use-courses';
 import { T_Task } from '../../../types';
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { useToast } from '../../toast/use-toast';
 
 export const useTaskCourse = (task: T_Task) => {
@@ -10,7 +9,7 @@ export const useTaskCourse = (task: T_Task) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { courseId: string | null }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/tasks/${task.id}`, {
+			await fetch(`/api/tasks/${task.id}`, {
 				method: 'PATCH',
 				body: JSON.stringify(data),
 			}).then(res => res.json()),

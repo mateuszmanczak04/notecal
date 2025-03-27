@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import { T_Note } from '../../../../types';
-import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { useToast } from '../../../toast/use-toast';
 
 export const useDeleteNote = ({ note }: { note: T_Note }) => {
@@ -10,8 +9,7 @@ export const useDeleteNote = ({ note }: { note: T_Note }) => {
 	const navigate = useNavigate();
 
 	return useMutation({
-		mutationFn: async () =>
-			await fetch(`${BACKEND_DOMAIN}/api/notes/${note.id}`, { method: 'DELETE' }).then(res => res.json()),
+		mutationFn: async () => await fetch(`/api/notes/${note.id}`, { method: 'DELETE' }).then(res => res.json()),
 		onMutate: () => {
 			// TODO: Optimistic updates
 		},

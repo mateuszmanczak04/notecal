@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSettings } from '../../../hooks/use-settings';
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '../../dropdown-menu';
 import { useToast } from '../../toast/use-toast';
 
@@ -29,7 +28,7 @@ const SortTasks = () => {
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
 		mutationFn: async (data: { newOrder: string }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/tasks/sort`, {
+			await fetch('/api/tasks/sort', {
 				method: 'PATCH',
 				body: JSON.stringify(data),
 			}).then(res => res.json()),

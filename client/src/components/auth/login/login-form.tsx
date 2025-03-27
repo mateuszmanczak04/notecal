@@ -1,6 +1,5 @@
 import React, { useState, useTransition } from 'react';
 import { Link } from 'react-router';
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { Button } from '../../button';
 import ErrorMessage from '../../error-message';
 import { Input } from '../../input';
@@ -15,7 +14,7 @@ const LoginForm = () => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		startTransition(async () => {
-			const res = await fetch(`${BACKEND_DOMAIN}/api/auth/login`, {
+			const res = await fetch('/api/auth/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

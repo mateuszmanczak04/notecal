@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 import { T_Course } from '../../../../../types';
-import { BACKEND_DOMAIN } from '../../../../../utils/app-domain';
 import { cn } from '../../../../../utils/cn';
 import { Button } from '../../../../button';
 import { Input } from '../../../../input';
@@ -17,7 +16,7 @@ const NoteCreateTaskForm = ({ course }: Props) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { title: string; courseId: string }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/tasks`, {
+			await fetch('/api/tasks', {
 				method: 'POST',
 				body: JSON.stringify(data),
 			}).then(res => res.json()),

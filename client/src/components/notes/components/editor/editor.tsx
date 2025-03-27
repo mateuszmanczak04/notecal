@@ -15,7 +15,6 @@ import { format } from 'date-fns';
 import { EditorState } from 'lexical';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSettings } from '../../../../hooks/use-settings';
-import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { cn } from '../../../../utils/cn';
 import { isDarkMode } from '../../../../utils/is-dark-mode';
 import LoadingSpinner from '../../../loading-spinner';
@@ -98,7 +97,7 @@ const Editor = () => {
 	/** Sends editor HTML markup to the backend, receives PDF result in base64 format and downloads it */
 	const handleExportToPDF = async () => {
 		if (!currentNote) return;
-		const res = await fetch(`${BACKEND_DOMAIN}/api/notes/${currentNote.id}/export`, {
+		const res = await fetch(`/api/notes/${currentNote.id}/export`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

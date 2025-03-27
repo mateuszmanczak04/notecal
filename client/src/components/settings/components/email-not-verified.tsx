@@ -2,7 +2,6 @@ import { Mail } from 'lucide-react';
 import { useActionState } from 'react';
 import { useEmailVerified } from '../../../hooks/use-email-verified';
 import { useUser } from '../../../hooks/use-user';
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { Button } from '../../button';
 import ErrorMessage from '../../error-message';
 import LoadingSpinner from '../../loading-spinner';
@@ -13,7 +12,7 @@ const EmailNotVerified = () => {
 	const emailVerified = useEmailVerified();
 	const [state, formAction, isPending] = useActionState(
 		async () =>
-			fetch(`${BACKEND_DOMAIN}/api/auth/email-verified`, {
+			fetch('/api/auth/email-verified', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

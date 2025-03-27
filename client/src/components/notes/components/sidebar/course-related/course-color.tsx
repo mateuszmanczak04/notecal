@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { BACKEND_DOMAIN } from '../../../../../utils/app-domain';
 import { cn } from '../../../../../utils/cn';
 import { COLORS } from '../../../../../utils/colors';
 import { useToast } from '../../../../toast/use-toast';
@@ -11,7 +10,7 @@ const CourseColor = () => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { id: string; color: string }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/courses/${data.id}`, {
+			await fetch(`/api/courses/${data.id}`, {
 				method: 'PATCH',
 				body: JSON.stringify({ color: data.color }),
 			}).then(res => res.json()),

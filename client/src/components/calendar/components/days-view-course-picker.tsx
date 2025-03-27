@@ -5,7 +5,6 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { useEventListener, useOnClickOutside } from 'usehooks-ts';
 import { useCourses } from '../../../hooks/use-courses';
 import { useSettings } from '../../../hooks/use-settings';
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { cn } from '../../../utils/cn';
 import { toUTC } from '../../../utils/timezone';
 import { useToast } from '../../toast/use-toast';
@@ -24,7 +23,7 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 	const { data: courses } = useCourses();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { courseId: string; startTime?: Date; duration?: number }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/notes`, {
+			await fetch('/api/notes', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

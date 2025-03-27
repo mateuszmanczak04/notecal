@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { ClassNameValue } from 'tailwind-merge';
 import { T_Note } from '../../../../types';
-import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { cn } from '../../../../utils/cn';
 import { Button } from '../../../button';
 import LoadingSpinner from '../../../loading-spinner';
@@ -22,9 +21,7 @@ const DeleteManyNotesButton = ({ notes, className }: Props) => {
 	const [isDeleting, setIsDeleting] = useState(false);
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { ids: string[] }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/notes`, { method: 'DELETE', body: JSON.stringify(data) }).then(res =>
-				res.json(),
-			),
+			await fetch('/api/notes', { method: 'DELETE', body: JSON.stringify(data) }).then(res => res.json()),
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

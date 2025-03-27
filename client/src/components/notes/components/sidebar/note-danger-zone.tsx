@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { BACKEND_DOMAIN } from '../../../../utils/app-domain';
 import { cn } from '../../../../utils/cn';
 import { Button } from '../../../button';
 import LoadingSpinner from '../../../loading-spinner';
@@ -16,7 +15,7 @@ const NoteDangerZone = () => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { id: string }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/courses/${data.id}`, {
+			await fetch(`/api/courses/${data.id}`, {
 				method: 'DELETE',
 			}).then(res => res.json()),
 		onSettled: data => {

@@ -1,7 +1,5 @@
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
-
 export const getNoteContent = async (id: string) => {
-	const res = await fetch(`${BACKEND_DOMAIN}/api/notes/${id}`).then(res => res.json());
+	const res = await fetch(`/api/notes/${id}`).then(res => res.json());
 	if ('error' in res) {
 		return null;
 	}

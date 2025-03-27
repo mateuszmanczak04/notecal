@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import { useNotes } from '../../../../../hooks/use-notes';
-import { BACKEND_DOMAIN } from '../../../../../utils/app-domain';
 import { cn } from '../../../../../utils/cn';
 import { Button } from '../../../../button';
 import LoadingSpinner from '../../../../loading-spinner';
@@ -19,7 +18,7 @@ const SideNotes = () => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { courseId: string }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/notes`, {
+			await fetch('api/notes', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

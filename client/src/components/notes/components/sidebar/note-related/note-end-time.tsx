@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDatePickerFunctionality } from '../../../../../hooks/use-date-picker-functionality';
 import { T_Note } from '../../../../../types';
-import { BACKEND_DOMAIN } from '../../../../../utils/app-domain';
 import { cn } from '../../../../../utils/cn';
 import { toUTC } from '../../../../../utils/timezone';
 import { useToast } from '../../../../toast/use-toast';
@@ -16,7 +15,7 @@ const NoteEndTime = ({ note }: Props) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { id: string; endTime: Date | null }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/notes/${data.id}`, {
+			await fetch(`/api/notes/${data.id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

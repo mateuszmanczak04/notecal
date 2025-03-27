@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent, useState } from 'react';
-import { BACKEND_DOMAIN } from '../../../utils/app-domain';
 import { cn } from '../../../utils/cn';
 import { COLORS } from '../../../utils/colors';
 import { Button } from '../../button';
@@ -17,7 +16,7 @@ const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { name: string; teacher: string; color: string }) =>
-			await fetch(`${BACKEND_DOMAIN}/api/courses`, {
+			await fetch('/api/courses', {
 				method: 'POST',
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
