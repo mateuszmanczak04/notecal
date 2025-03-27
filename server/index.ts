@@ -26,7 +26,6 @@ app.use('/api/courses', authMiddleware, courseRoutes);
 app.use('/api/notes', authMiddleware, noteRoutes);
 
 app.get('/api', authMiddleware, async (req, res) => {
-	console.log(req.user);
 	res.send('hello world');
 });
 

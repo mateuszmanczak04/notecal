@@ -5,8 +5,6 @@ import { verifyToken } from '../services/jwtService';
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
 	const decoded = await verifyToken(req.cookies.authToken);
 
-	console.log(decoded);
-
 	if (!decoded) {
 		res.clearCookie('authToken');
 		res.status(401).end();
