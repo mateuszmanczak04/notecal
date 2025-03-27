@@ -1,3 +1,5 @@
+'server-only';
+
 import { errors, jwtVerify, SignJWT } from 'jose';
 
 export type JWT_AUTH = {

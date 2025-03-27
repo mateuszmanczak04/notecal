@@ -19,6 +19,7 @@
 		"cookie-parser": "^1.4.7",
 		"cors": "^2.8.5",
 		"express": "^4.21.2",
+		"jose": "^6.0.10",
 		"prettier": "^3.5.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
 		"prisma": "^6.5.0"
