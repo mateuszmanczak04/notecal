@@ -1,5 +1,3 @@
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { cn } from '../utils/cn';
@@ -24,9 +22,6 @@ export default async function RootLayout({
 					'fill-neutral-800 text-neutral-800 dark:bg-neutral-900 dark:fill-neutral-100 dark:text-neutral-100',
 				)}>
 				{children}
-
-				<Analytics />
-				<SpeedInsights />
 			</body>
 		</html>
 	);

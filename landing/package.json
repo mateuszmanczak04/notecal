@@ -11,31 +11,16 @@
 		"test:watch": "jest --watch"
 	},
 	"dependencies": {
-		"@prisma/client": "^5.22.0",
 		"@radix-ui/react-slot": "^1.1.1",
-		"@sparticuz/chromium": "^132.0.0",
-		"@vercel/analytics": "^1.4.1",
-		"@vercel/speed-insights": "^1.1.0",
-		"bcryptjs": "^2.4.3",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
-		"date-fns": "^3.6.0",
-		"jose": "^5.9.6",
 		"lucide-react": "^0.354.0",
 		"next": "15.1.2",
-		"nodemailer": "^6.9.16",
-		"puppeteer": "^24.1.1",
-		"puppeteer-core": "^24.2.1",
 		"react": "19.0.0",
 		"react-dom": "19.0.0",
-		"server-only": "^0.0.1",
 		"tailwind-merge": "^2.5.5"
 	},
 	"devDependencies": {
-		"@types/bcryptjs": "^2.4.6",
-		"@types/bun": "latest",
-		"@types/node": "^20.17.10",
-		"@types/nodemailer": "^6.4.17",
 		"@types/react": "19.0.2",
 		"@types/react-dom": "19.0.2",
 		"autoprefixer": "^10.4.20",
@@ -44,13 +29,7 @@
 		"postcss": "^8.4.49",
 		"prettier": "^3.4.2",
 		"prettier-plugin-tailwindcss": "^0.5.14",
-		"prisma": "^5.22.0",
-		"tailwindcss": "^3.4.17",
-		"ts-node": "^10.9.2",
-		"typescript": "^5.7.2"
-	},
-	"prisma": {
-		"schema": "src/prisma/schema.prisma"
+		"tailwindcss": "^3.4.17"
 	},
 	"overrides": {
 		"@types/react": "19.0.2",
