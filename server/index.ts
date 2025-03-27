@@ -1,6 +1,8 @@
 import express, { type NextFunction, type Request, type Response } from 'express';
 const app = express();
 
+app.use(express.json());
+
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 	const authenticated = true;
 	if (!authenticated) {
