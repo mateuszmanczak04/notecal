@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express, { type NextFunction, type Request, type Response } from 'express';
+import db from './prisma/db';
 
 const app = express();
 
@@ -20,8 +21,17 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 	next();
 };
 
-app.get('/api', authMiddleware, (req, res) => {
-	res.send('Hello World!');
+app.get('/api', authMiddleware, async (req, res) => {
+	const tasks = await db.task.findMany({});
+	console.log(tasks);
+	res.send(`<html>
+		<head>
+			<title>${tasks.length} tasks</title>
+		</head>
+		<body>
+			<h1>You have ${tasks.length} tasks to do yet</h1>
+		</body>
+		</html>`);
 });
 
 app.use((_err: Error, _req: Request, res: Response, _next: NextFunction) => {
