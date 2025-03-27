@@ -1,0 +1,28 @@
+import { useMutation } from '@tanstack/react-query';
+import { LogOut } from 'lucide-react';
+import { BACKEND_DOMAIN } from '../../../utils/app-domain';
+import { Button } from '../../button';
+import LoadingSpinner from '../../loading-spinner';
+
+const LogoutButton = () => {
+	const { mutate, isPending } = useMutation({
+		mutationFn: async () =>
+			await fetch(`${BACKEND_DOMAIN}/api/auth/logout`, { method: 'POST' })
+				.then(res => res.json())
+				.then(res => {
+					if (res.success) {
+						window.location.reload();
+					}
+				}),
+	});
+
+	return (
+		<Button variant='secondary' onClick={() => mutate()} className='w-full'>
+			{isPending && <LoadingSpinner />}
+			<LogOut className='h-4 w-4' />
+			Logout
+		</Button>
+	);
+};
+
+export default LogoutButton;

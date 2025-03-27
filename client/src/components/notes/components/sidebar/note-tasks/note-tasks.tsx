@@ -1,0 +1,48 @@
+import { Reorder } from 'motion/react';
+import { T_Task } from '../../../../../types';
+import { Button } from '../../../../button';
+import ErrorMessage from '../../../../error-message';
+import LoadingSpinner from '../../../../loading-spinner';
+import { useTasksFunctionality } from '../../../../tasks/hooks/use-tasks-functionality';
+import { useNoteContext } from '../../../context/note-context';
+import NoteCreateTaskForm from './note-create-task-form';
+import NoteTaskItem from './note-task-item';
+
+/** List of tasks for /notes page */
+const NoteTasks = () => {
+	const { currentCourse } = useNoteContext();
+	const { handleReorder, error, handleSaveNewOrder, hasChangedOrder, isPending, tasks } = useTasksFunctionality({
+		courseId: currentCourse?.id,
+	});
+
+	if (isPending) return <LoadingSpinner />;
+
+	if (error) return <ErrorMessage>{error.message}</ErrorMessage>;
+
+	if (!tasks) return;
+
+	if (!currentCourse) return;
+
+	return (
+		<div className='flex flex-col border-b border-neutral-200 p-6 dark:border-neutral-700'>
+			{hasChangedOrder && (
+				<Button
+					className='mb-4 w-full'
+					style={{ backgroundColor: currentCourse.color }}
+					onClick={handleSaveNewOrder}>
+					Save new order
+				</Button>
+			)}
+			{tasks.length > 0 && (
+				<div className='mb-2'>
+					<Reorder.Group values={tasks} onReorder={handleReorder}>
+						{tasks?.map((task: T_Task) => <NoteTaskItem key={task.id} task={task} />)}
+					</Reorder.Group>
+				</div>
+			)}
+			<NoteCreateTaskForm course={currentCourse} />
+		</div>
+	);
+};
+
+export default NoteTasks;
