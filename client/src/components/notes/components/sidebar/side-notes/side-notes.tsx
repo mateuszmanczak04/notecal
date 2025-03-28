@@ -17,7 +17,7 @@ const SideNotes = () => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { courseId: string }) =>
-			await fetch('api/notes', {
+			await fetch('/api/notes', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ courseId: data.courseId }),
