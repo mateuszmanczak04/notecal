@@ -12,7 +12,7 @@ const CTA = () => {
 					Sign up now and take control of your study life with NoteCal.
 				</p>
 				<Button asChild size='lg'>
-					<Link href='https://www.app.notecal.app/auth/register'>Sign Up for Free</Link>
+					<Link href='https://app.notecal.app/auth/register'>Sign Up for Free</Link>
 				</Button>
 			</div>
 		</section>
