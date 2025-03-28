@@ -24,7 +24,7 @@ export const useNoteDrag = ({ note, noteRef }: T_Props) => {
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
 		mutationFn: async (data: { startTime?: Date; endTime?: Date }) =>
-			await fetch('/api/notes/${note.id}', {
+			await fetch(`/api/notes/${note.id}`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),
