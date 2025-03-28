@@ -6,7 +6,6 @@ import { Button } from '../../../../button';
 import LoadingSpinner from '../../../../loading-spinner';
 import { useToast } from '../../../../toast/use-toast';
 import { useNoteContext } from '../../../context/note-context';
-import { SelectNotesProvider } from './selected-notes-context';
 import SideNoteItem from './side-note-item';
 
 /**
@@ -47,11 +46,9 @@ const SideNotes = () => {
 
 			{currentCourseNotes && (
 				<div className='flex flex-col gap-y-2'>
-					<SelectNotesProvider>
-						{currentCourseNotes.map(note => (
-							<SideNoteItem key={note.id} note={note} />
-						))}
-					</SelectNotesProvider>
+					{currentCourseNotes.map(note => (
+						<SideNoteItem key={note.id} note={note} />
+					))}
 				</div>
 			)}
 

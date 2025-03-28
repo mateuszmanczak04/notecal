@@ -1,11 +1,10 @@
 import { format } from 'date-fns';
 import React, { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { T_Note } from '../../../../../types';
 import { cn } from '../../../../../utils/cn';
 import NoteMenu from '../../context-menu/note-menu';
 import { useUpdateNoteTitle } from '../../context-menu/use-update-note-title';
-import { useSelectedNotes } from './selected-notes-context';
 
 type Props = {
 	note: T_Note;
@@ -16,24 +15,7 @@ type Props = {
  */
 const SideNoteItem = ({ note }: Props) => {
 	const [searchParams] = useSearchParams();
-	const navigate = useNavigate();
 	const noteId = searchParams.get('noteId');
-	const { deselectAll, deselectNote, selectNote, isNoteSelected } = useSelectedNotes();
-
-	const handleClick = (e: React.MouseEvent) => {
-		if (e.metaKey) {
-			e.preventDefault();
-			if (isNoteSelected(note)) {
-				deselectNote(note);
-			} else {
-				selectNote(note);
-			}
-		} else {
-			deselectAll();
-			selectNote(note);
-			navigate(`/notes?noteId=${note.id}`);
-		}
-	};
 
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [menuPosition, setMenuPosition] = useState<[number, number]>([0, 0]);
@@ -69,15 +51,15 @@ const SideNoteItem = ({ note }: Props) => {
 
 	return (
 		<>
-			<div
-				onClick={handleClick}
+			<Link
+				to={`/notes?noteId=${note.id}`}
 				onContextMenu={handleContextMenu}
 				key={note.id}
 				aria-label={`link to note ${note.title}`}
 				title={`link to note ${note.title}`}
 				className={cn(
-					'h-9 cursor-default select-none truncate rounded-xl border-2 border-transparent bg-neutral-100 px-3 text-sm leading-8 transition-colors dark:bg-neutral-800',
-					(note.id === noteId || isNoteSelected(note)) &&
+					'h-9 select-none truncate rounded-xl border-2 border-transparent bg-neutral-100 px-3 text-sm leading-8 transition-colors dark:bg-neutral-800',
+					note.id === noteId &&
 						'border-neutral-300 bg-neutral-200 dark:border-neutral-600 dark:bg-neutral-700',
 					isUpdatingTitle && 'pointer-events-none opacity-75',
 				)}>
@@ -106,7 +88,7 @@ const SideNoteItem = ({ note }: Props) => {
 						)}
 					</span>
 				)}
-			</div>
+			</Link>
 			<NoteMenu
 				isOpen={isMenuOpen}
 				onClose={() => setIsMenuOpen(false)}
