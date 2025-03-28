@@ -23,7 +23,7 @@ jobs:
           script: |
             cd /var/www/notecal
             git pull origin main
-            cd /server
+            cd ./server
             bun install
             pm2 restart notecal-server || pm2 start --interpreter bun index.ts --name notecal-server
             pm2 save
