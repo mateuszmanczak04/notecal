@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { T_Note } from '../../../../types';
-import { toast } from '../../../toast/use-toast';
+import { useToast } from '../../../toast/use-toast';
 
 export const useDuplicateNote = ({ note, onSettledCallback }: { note: T_Note; onSettledCallback: () => void }) => {
+	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () =>
