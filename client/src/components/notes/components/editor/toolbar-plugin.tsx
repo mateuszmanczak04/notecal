@@ -24,7 +24,6 @@ import {
 	Bold,
 	Check,
 	Code,
-	FileOutput,
 	Heading1,
 	Heading2,
 	Italic,
@@ -37,37 +36,18 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { useSettings } from '../../../../hooks/use-settings';
 import { Button } from '../../../button';
-import LoadingSpinner from '../../../loading-spinner';
-import { useToast } from '../../../toast/use-toast';
 import { Toggle } from '../../../toggle';
 import { useNoteContext } from '../../context/note-context';
 
 type Props = {
 	onSave: () => void;
 	hasChanged: boolean;
-	handleExport: () => Promise<void>;
 };
 
-export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Props) {
+export default function ToolbarPlugin({ onSave, hasChanged }: Props) {
 	const { setShowNoteSidebar, showNoteSidebar } = useSettings();
 	const { currentCourse, currentNote } = useNoteContext();
 	const [editor] = useLexicalComposerContext();
-	const [isExportingPDF, setIsExportingPDF] = useState(false);
-	const { toast } = useToast();
-	const handleExportPDF = () => {
-		setIsExportingPDF(true);
-
-		handleExport()
-			.then(() => {
-				toast({ description: 'PDF exported successfully' });
-			})
-			.catch(error => {
-				toast({ description: error.message, variant: 'destructive' });
-			})
-			.finally(() => {
-				setIsExportingPDF(false);
-			});
-	};
 
 	/** Indicates which properties are disabled, e.g.:
 	 * {
@@ -339,15 +319,6 @@ export default function ToolbarPlugin({ onSave, handleExport, hasChanged }: Prop
 				style={{ backgroundColor: currentCourse?.color || '' }}
 				disabled={!currentNote || !hasChanged}>
 				<Check className='size-5' /> Save
-			</Button>
-
-			{/* Export button: */}
-			<Button
-				className='rounded-md'
-				variant='secondary'
-				onClick={handleExportPDF}
-				disabled={!currentNote || isExportingPDF}>
-				<FileOutput className='size-5' /> Export PDF {isExportingPDF && <LoadingSpinner className='size-5' />}
 			</Button>
 
 			{!showNoteSidebar && (

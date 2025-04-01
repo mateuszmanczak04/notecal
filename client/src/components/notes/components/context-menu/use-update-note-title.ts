@@ -13,9 +13,6 @@ export const useUpdateNoteTitle = ({ note, onSettledCallback }: { note: T_Note; 
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ title: data.title }),
 			}).then(res => res.json()),
-		onMutate: () => {
-			// TODO: Optimistic updates
-		},
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

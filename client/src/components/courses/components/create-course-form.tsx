@@ -21,13 +21,6 @@ const CreateCourseForm = ({ handleCloseModal }: T_Props) => {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
-		// onMutate: data => {
-		// 	queryClient.setQueryData(['courses'], (prevCourses: Course[]) => {
-		// 		const newTempCourse = createTemporaryCourse(data);
-		// 		return [...prevCourses, newTempCourse];
-		// 	});
-		// 	handleCloseModal();
-		// }, // TODO
 		onSettled: async data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

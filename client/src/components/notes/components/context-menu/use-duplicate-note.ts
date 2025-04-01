@@ -11,9 +11,6 @@ export const useDuplicateNote = ({ note, onSettledCallback }: { note: T_Note; on
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 			}).then(res => res.json()),
-		onMutate: () => {
-			// TODO: Optimistic updates
-		},
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

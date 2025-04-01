@@ -28,10 +28,6 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),
 			}).then(res => res.json()),
-		// onMutate: data => {
-		// 	const tempNote = createTemporaryNote(data);
-		// 	queryClient.setQueryData(['notes'], old => [...old, tempNote]);
-		// },
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

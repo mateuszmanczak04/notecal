@@ -14,9 +14,6 @@ export const useDeleteNote = ({ note }: { note: T_Note }) => {
 				method: 'DELETE',
 				headers: { 'Content-Type': 'application/json' },
 			}).then(res => res.json()),
-		onMutate: () => {
-			// TODO: Optimistic updates
-		},
 		onSettled: data => {
 			if (data && 'error' in data) {
 				toast({ description: data.error, variant: 'destructive' });

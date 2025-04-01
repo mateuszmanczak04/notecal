@@ -11,17 +11,14 @@ import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPl
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
-import { format } from 'date-fns';
+import { useMutation } from '@tanstack/react-query';
 import { EditorState } from 'lexical';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSettings } from '../../../../hooks/use-settings';
+import { T_Note } from '../../../../types';
 import { cn } from '../../../../utils/cn';
-import { isDarkMode } from '../../../../utils/is-dark-mode';
-import LoadingSpinner from '../../../loading-spinner';
 import { useToast } from '../../../toast/use-toast';
 import { useNoteContext } from '../../context/note-context';
-import { getNoteContent } from '../../utils/get-note-content';
-import { updateNoteContent } from '../../utils/update-note-content';
 import AppAutoLinkPlugin from './auto-link-plugin';
 import CodeHighlightPlugin from './code-highlight-plugin';
 import { HR } from './custom-transformers';
@@ -35,55 +32,35 @@ import ToolbarPlugin from './toolbar-plugin';
  * A part of /note/[id] page where user enters the text content. It works like a WYSIWYG editor.
  */
 const Editor = () => {
-	const { currentNote } = useNoteContext();
-	/**
-	 * Keeps the current editor state. It's used to save the note content.
-	 */
+	//  Keeps the current editor state. It's used to save the note content.
 	const editorStateRef = useRef<EditorState>(undefined);
 	const [hasChanged, setHasChanged] = useState(false);
-	const { noteAutoSave } = useSettings();
+	const { noteAutoSave, maxNoteWidthEnabled } = useSettings();
 	const { toast } = useToast();
-	const { maxNoteWidthEnabled } = useSettings();
-	const editorContentRef = useRef<HTMLDivElement>(null!);
-	const [content, setContent] = useState<string | null>(null);
 
-	const [isPendingGet, setIsPendingGet] = useState(true);
-	const [isPendingUpdate, setIsPendingUpdate] = useState(false);
+	// Note without "content" property, fetched in bulk with all other notes
+	const { currentNote } = useNoteContext();
 
-	useEffect(() => {
-		/** Make a request to S3 bucket to retrieve note content. Then put it into state. */
-		const fetchNoteContent = async () => {
-			if (currentNote) {
-				setIsPendingGet(true);
-				const noteContent = await getNoteContent(currentNote.id);
-				setContent(noteContent);
-				setIsPendingGet(false);
-			} else {
-				setContent(null);
-				setIsPendingGet(false);
+	/** Note with content */
+	const [note, setNote] = useState<T_Note | null>(null);
+	const [isFetching, setIsFetching] = useState(false);
+
+	// Saves the note content to the database.
+	// It's called when the user clicks the save
+	// button or presses Cmd + S (or Ctrl + S) shortcut.
+	const { mutate: handleSave, isPending: isUpdating } = useMutation({
+		mutationFn: async () =>
+			await fetch(`/api/notes/${note?.id}`, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ content: JSON.stringify(editorStateRef.current) }),
+			}).then(res => res.json()),
+		onSettled: data => {
+			if ('error' in data) {
+				toast({ variant: 'destructive', description: data.error });
 			}
-		};
-
-		fetchNoteContent();
-		// TODO: think how to not rerender without warnings
-	}, [currentNote]);
-
-	/**
-	 * Saves the note content to the database.
-	 * It's called when the user clicks the save button
-	 * or presses Cmd + S (or Ctrl + S) shortcut.
-	 */
-	const handleSave = useCallback(async () => {
-		if (!editorStateRef.current || !currentNote) return;
-		setIsPendingUpdate(true);
-		const hasUpdatedSuccessfully = await updateNoteContent(currentNote.id, JSON.stringify(editorStateRef.current));
-		if (!hasUpdatedSuccessfully) {
-			toast({ description: 'Failed to save the note', variant: 'destructive' });
-		} else {
-			setHasChanged(false);
-		}
-		setIsPendingUpdate(false);
-	}, [currentNote, toast]);
+		},
+	});
 
 	// Autosave
 	useEffect(() => {
@@ -94,69 +71,48 @@ const Editor = () => {
 		return () => clearInterval(listener);
 	}, [noteAutoSave, handleSave, hasChanged]);
 
-	/** Sends editor HTML markup to the backend, receives PDF result in base64 format and downloads it */
-	const handleExportToPDF = async () => {
-		if (!currentNote) return;
-		const res = await fetch(`/api/notes/${currentNote.id}/export`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				htmlContent: editorContentRef.current.innerHTML,
-				theme: isDarkMode() ? 'dark' : 'light',
-				fileTitle: currentNote.title,
-				date: currentNote.startTime ? format(currentNote.startTime, 'yyyy-MM-dd HH:mm') : '',
-			}),
-		}).then(res => res.json());
-
-		if ('error' in res) {
-			toast({ description: res.error, variant: 'destructive' });
-			return;
-		}
-
-		const byteCharacters = atob(res.pdfBase64);
-		const byteNumbers = new Array(byteCharacters.length);
-		for (let i = 0; i < byteCharacters.length; i++) {
-			byteNumbers[i] = byteCharacters.charCodeAt(i);
-		}
-		const byteArray = new Uint8Array(byteNumbers);
-		const blob = new Blob([byteArray], { type: 'application/pdf' });
-
-		const link = document.createElement('a');
-		link.href = URL.createObjectURL(blob);
-		link.download = currentNote.title || 'document.pdf';
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-	};
+	// Fetch note with content
+	useEffect(() => {
+		if (!currentNote?.id) return;
+		setIsFetching(true);
+		fetch(`/api/notes/${currentNote.id}`)
+			.then(res => res.json())
+			.then(res => {
+				if ('note' in res) {
+					setNote(res.note);
+				}
+				if ('error' in res) {
+					toast({ variant: 'destructive', description: res.error });
+				}
+			})
+			.finally(() => {
+				setIsFetching(false);
+			});
+	}, [currentNote?.id, toast]);
 
 	return (
 		<article
 			className={cn(
 				'flex flex-1 flex-col bg-white dark:bg-neutral-900',
-				isPendingUpdate && 'pointer-events-none opacity-50',
+				isUpdating && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer
-				key={content}
+				key={note?.content}
 				initialConfig={{
 					...editorConfig,
-					editorState: content || undefined,
+					editorState: note?.content || undefined,
 				}}>
-				<ToolbarPlugin handleExport={handleExportToPDF} onSave={handleSave} hasChanged={hasChanged} />
-				{isPendingGet && (
-					<div className='p-4'>
-						<LoadingSpinner />
-					</div>
-				)}
+				<ToolbarPlugin onSave={handleSave} hasChanged={hasChanged} />
+
 				<div
 					className={cn(
 						'scrollbar-hide relative w-full flex-1 scroll-auto p-4 leading-normal',
 						maxNoteWidthEnabled && 'mx-auto max-w-screen-lg',
-						isPendingGet && 'pointer-events-none opacity-50',
+						isFetching && 'pointer-events-none opacity-50',
 					)}>
 					<RichTextPlugin
 						contentEditable={
 							<ContentEditable
-								ref={editorContentRef}
 								className={cn(
 									'relative resize-none space-y-4 pb-64 outline-none',
 									!currentNote && 'hidden',
@@ -165,11 +121,9 @@ const Editor = () => {
 						}
 						placeholder={
 							<>
-								{!isPendingGet && (
-									<p className='pointer-events-none absolute left-4 top-4 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
-										{currentNote ? 'Enter some text...' : 'Please select a note to start'}
-									</p>
-								)}
+								<p className='pointer-events-none absolute left-4 top-4 inline-block select-none overflow-hidden text-ellipsis opacity-50'>
+									{currentNote ? 'Enter some text...' : 'Please select a note to start'}
+								</p>
 							</>
 						}
 						ErrorBoundary={LexicalErrorBoundary}
@@ -181,7 +135,7 @@ const Editor = () => {
 				<OnChangePlugin
 					onChange={editorState => {
 						editorStateRef.current = editorState;
-						setHasChanged(JSON.stringify(editorState) !== content);
+						setHasChanged(JSON.stringify(editorState) !== note?.content);
 					}}
 				/>
 				<ListPlugin />

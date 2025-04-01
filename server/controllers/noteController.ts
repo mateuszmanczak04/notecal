@@ -1,10 +1,7 @@
-import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { addMinutes } from 'date-fns';
 import type { Request, Response } from 'express';
 import puppeteer from 'puppeteer';
-import { DEFAULT_NOTE_CONTENT } from '../config/constants';
 import db from '../prisma/db';
-import { generateGetPresignedUrl, generatePutPresignedUrl } from '../services/s3Service';
 
 export const createNote = async (req: Request, res: Response) => {
 	const { courseId, startTime, duration } = req.body;
@@ -32,13 +29,6 @@ export const createNote = async (req: Request, res: Response) => {
 		},
 	});
 
-	const uploadLink = await generatePutPresignedUrl(note.id);
-
-	await fetch(uploadLink, {
-		method: 'PUT',
-		body: DEFAULT_NOTE_CONTENT,
-	});
-
 	res.status(201).json({ note });
 };
 
@@ -48,6 +38,9 @@ export const getNotes = async (req: Request, res: Response) => {
 	const notes = await db.note.findMany({
 		where: {
 			userId: user.id,
+		},
+		omit: {
+			content: true,
 		},
 		orderBy: [
 			{
@@ -87,10 +80,7 @@ export const getNote = async (req: Request, res: Response) => {
 		return;
 	}
 
-	const presignedUrlGet = await generateGetPresignedUrl(note.id);
-	const presignedUrlPut = await generatePutPresignedUrl(note.id);
-
-	res.status(200).json({ note, presignedUrlGet, presignedUrlPut });
+	res.status(200).json({ note });
 };
 
 export const updateNote = async (req: Request, res: Response) => {
@@ -102,7 +92,7 @@ export const updateNote = async (req: Request, res: Response) => {
 	}
 
 	const body = req.body;
-	const { title, startTime, endTime, courseId } = body;
+	const { title, startTime, endTime, courseId, content } = body;
 
 	const user = req.user!;
 
@@ -113,6 +103,10 @@ export const updateNote = async (req: Request, res: Response) => {
 			startTime,
 			endTime,
 			courseId,
+			content,
+		},
+		omit: {
+			content: true,
 		},
 	});
 
@@ -133,42 +127,27 @@ export const deleteNote = async (req: Request, res: Response) => {
 		where: { id, userId: user.id },
 	});
 
-	const client = new S3Client({
-		region: 'eu-central-1',
-		credentials: {
-			accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-			secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
-		},
-	});
-
-	const command = new DeleteObjectCommand({
-		Bucket: 'notecal',
-		Key: `notes/${id}.json`,
-	});
-
-	await client.send(command);
-
 	res.status(200).json({ success: true });
 };
 
 export const exportNoteToPDF = async (req: Request, res: Response) => {
 	const body = req.body;
-	const {
-		htmlContent,
-		fileTitle,
-		date,
-		theme: _theme,
-	} = body as {
-		htmlContent?: string;
-		theme?: 'light' | 'dark';
-		fileTitle?: string;
-		date?: string;
-	};
+	const { id } = body;
+	const user = req.user!;
 
-	if (!htmlContent) {
-		res.status(400).json({ error: 'Content is required' });
+	if (!id) {
+		res.status(400).json({ error: 'Missing note ID.' });
 		return;
 	}
+
+	const note = await db.note.findUnique({ where: { id, userId: user.id } });
+
+	if (!note) {
+		res.status(404).json({ error: 'Note not found.' });
+		return;
+	}
+
+	const htmlContent = '<p>Hello world</p>';
 
 	const browser = await puppeteer.launch({
 		args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -176,8 +155,7 @@ export const exportNoteToPDF = async (req: Request, res: Response) => {
 	});
 
 	if (!browser) {
-		res.status(500).json({ error: 'Something went wrong' });
-		return;
+		throw Error('Something went wrong.');
 	}
 
 	const page = await browser.newPage();
@@ -185,20 +163,9 @@ export const exportNoteToPDF = async (req: Request, res: Response) => {
                         <style>
                                 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
                         </style>
-                        ${fileTitle && `<p class='title'>${fileTitle}${date && `, ${date}`}</p>`}
+                        ${note.title && `<p class='text-sm font-bold'>${note.title}</p>`}
                         ${htmlContent}
                 `);
-
-	// Themes (disabled):
-	// if (theme === 'light') {
-	//   await page.addStyleTag({
-	//     content: 'body { color: #202A37; background-color: white !important; }',
-	//   });
-	// } else {
-	//   await page.addStyleTag({
-	//     content: 'body { color: white; background-color: #202A37 !important; }',
-	//   });
-	// }
 
 	await page.addStyleTag({ content: '@page { padding: 36px; ' });
 	await page.addStyleTag({
@@ -209,7 +176,7 @@ export const exportNoteToPDF = async (req: Request, res: Response) => {
 			'body { color: #202A37; background-color: white !important; display: flex; flex-direction: column; gap: 1rem; font-size: 16px; }',
 	});
 
-	/** Manually added TailwindCSS classes for styling PDF */
+	// Manually added TailwindCSS classes for styling PDF
 	await page.addStyleTag({
 		content: `
             .block { display: block; }
@@ -239,6 +206,7 @@ export const exportNoteToPDF = async (req: Request, res: Response) => {
             .rounded { border-radius: 0.25rem; }
             .rounded-md { border-radius: 0.375rem; }
             .scroll-auto { overflow-y: auto; }
+			.text-sm { font-size: 0.875rem; }
             .text-2xl { font-size: 1.5rem; }
             .text-center { text-align: center; }
             .text-green-500 { color: #10b981; }
@@ -263,10 +231,10 @@ export const exportNoteToPDF = async (req: Request, res: Response) => {
 	});
 	await browser.close();
 
-	const pdfBase64 = Buffer.from(pdfBuffer).toString('base64');
-
-	res.status(200).json({ pdfBase64 });
-	return;
+	res.setHeader('Content-Type', 'application/pdf');
+	const sanitizedTitle = note.title.replace(/[^a-zA-Z0-9-_ ]/g, '_');
+	res.setHeader('Content-Disposition', `attachment; filename="${sanitizedTitle}.pdf"`);
+	res.status(200).send(Buffer.from(pdfBuffer));
 };
 
 export const duplicateNote = async (req: Request, res: Response) => {

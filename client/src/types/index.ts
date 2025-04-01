@@ -51,6 +51,7 @@ export interface T_Note {
 	endTime: Date | null;
 	courseId: string;
 	title: string;
+	content?: string;
 	createdAt: Date;
 	updatedAt: Date;
 }

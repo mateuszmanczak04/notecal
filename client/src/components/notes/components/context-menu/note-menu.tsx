@@ -7,6 +7,7 @@ import { T_Note } from '../../../../types';
 import LoadingSpinner from '../../../loading-spinner';
 import { useDeleteNote } from './use-delete-note';
 import { useDuplicateNote } from './use-duplicate-note';
+import { useExportNote } from './use-export-note';
 import { useUpdateNoteCourseId } from './use-update-note-coures';
 
 type Props = {
@@ -70,6 +71,8 @@ const NoteMenu = ({ note, isOpen, onClose, position, onRename }: Props) => {
 
 	const { mutate: mutateDelete, isPending: isDeleting } = useDeleteNote({ note });
 
+	const { mutate: mutateExport, isPending: isExporting } = useExportNote({ note, onSettledCallback: onClose });
+
 	if (!isOpen) return;
 
 	return createPortal(
@@ -89,6 +92,11 @@ const NoteMenu = ({ note, isOpen, onClose, position, onRename }: Props) => {
 				onClick={() => mutateDuplicate()}
 				className='flex items-center gap-2 rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
 				Duplicate {isDuplicating && <LoadingSpinner className='size-4' />}
+			</button>
+			<button
+				onClick={() => mutateExport()}
+				className='flex items-center gap-2 rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
+				Export as PDF {isExporting && <LoadingSpinner className='size-4' />}
 			</button>
 			<div className='group relative flex items-center gap-2 rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
 				Move to {isUpdatingCourseId && <LoadingSpinner className='size-4' />}{' '}
@@ -113,11 +121,6 @@ const NoteMenu = ({ note, isOpen, onClose, position, onRename }: Props) => {
 				className='bg-error-50 text-error-800 dark:text-error-100 hover:bg-error-100 dark:bg-error-800 dark:hover:bg-error-700 flex items-center gap-2 rounded-md px-3 py-1 text-start'>
 				Delete {isDeleting && <LoadingSpinner className='size-4' />}
 			</button>
-
-			{/* {selectedNotes.length > 1 && (
-			TODO: multiple notes actions
-				<DeleteManyNotesButton onDelete={deselectAll} notes={selectedNotes} className='mt-4 w-full' />
-			)} */}
 		</div>,
 		document.body,
 	);
