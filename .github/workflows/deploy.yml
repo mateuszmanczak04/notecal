@@ -25,5 +25,7 @@ jobs:
             git pull origin main
             cd ./server
             bun install
+            bunx prisma generate
+            bunx prisma db push
             pm2 restart notecal-server || pm2 start --interpreter bun index.ts --name notecal-server
             pm2 save
