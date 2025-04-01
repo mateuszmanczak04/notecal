@@ -135,6 +135,9 @@ export const exportNoteToPDF = async (req: Request, res: Response) => {
 	const { id } = body;
 	const user = req.user!;
 
+	res.status(503).json({ error: 'This feature is currently unavailable, come back later.' });
+	return;
+
 	if (!id) {
 		res.status(400).json({ error: 'Missing note ID.' });
 		return;
@@ -147,7 +150,7 @@ export const exportNoteToPDF = async (req: Request, res: Response) => {
 		return;
 	}
 
-	const htmlContent = '<p>Hello world</p>';
+	const htmlContent = `<p>Hello world</p>`;
 
 	const browser = await puppeteer.launch({
 		args: ['--no-sandbox', '--disable-setuid-sandbox'],
