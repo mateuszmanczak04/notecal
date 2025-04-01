@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { ChevronDown } from 'lucide-react';
 import { useSettings } from '../../../hooks/use-settings';
-import { DropdownMenu, DropdownMenuItem, DropdownMenuList, DropdownMenuTrigger } from '../../dropdown-menu';
+import { Button } from '../../button';
 import { useToast } from '../../toast/use-toast';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../../ui/dropdown-menu';
 
 const getNameOfCriteria = (criteria: string) => {
 	if (criteria === 'title') {
@@ -59,25 +61,19 @@ const SortTasks = () => {
 	};
 
 	return (
-		<DropdownMenu className='relative flex-1'>
-			<DropdownMenuTrigger showChevron>Sort tasks ({getNameOfCriteria(tasksOrder)})</DropdownMenuTrigger>
-			<DropdownMenuList>
-				<DropdownMenuItem value='title' onSelect={handleSort}>
-					Title
-				</DropdownMenuItem>
-				<DropdownMenuItem value='createdAt' onSelect={handleSort}>
-					Newest first
-				</DropdownMenuItem>
-				<DropdownMenuItem value='dueDate' onSelect={handleSort}>
-					Due date
-				</DropdownMenuItem>
-				<DropdownMenuItem value='priority' onSelect={handleSort}>
-					Priority
-				</DropdownMenuItem>
-				<DropdownMenuItem value='completed' onSelect={handleSort}>
-					Completed
-				</DropdownMenuItem>
-			</DropdownMenuList>
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button variant='secondary' className='mb-0 w-full'>
+					Sort tasks ({getNameOfCriteria(tasksOrder)}) <ChevronDown className='size-4' />
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent>
+				<DropdownMenuItem onClick={() => handleSort('title')}>Title</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => handleSort('createdAt')}>Newest first</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => handleSort('dueDate')}>Due date</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => handleSort('priority')}>Priority</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => handleSort('completed')}>Completed</DropdownMenuItem>
+			</DropdownMenuContent>
 		</DropdownMenu>
 	);
 };
