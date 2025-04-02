@@ -1,3 +1,4 @@
+import { ContextMenu, ContextMenuTrigger } from '@radix-ui/react-context-menu';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useCourses } from '../../../hooks/use-courses';
@@ -49,16 +50,9 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 
 	const navigate = useNavigate();
 
-	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const [menuPosition, setMenuPosition] = useState<[number, number]>([0, 0]);
-	const handleContextMenu = (e: React.MouseEvent) => {
-		e.preventDefault();
-		setIsMenuOpen(true);
-		setMenuPosition([e.clientX, e.clientY]);
-	};
-
 	/** Temporary state used to update note title: */
 	const [title, setTitle] = useState('');
+	const titleRef = useRef<HTMLInputElement | null>(null);
 	const [isRenaming, setIsRenaming] = useState(false);
 	const { mutate: mutateUpdateTitle, isPending: isUpdatingTitle } = useUpdateNoteTitle({
 		note,
@@ -66,9 +60,11 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 	});
 
 	const handleStartRename = () => {
-		setIsMenuOpen(false);
 		setIsRenaming(true);
 		setTitle(note.title);
+		setTimeout(() => {
+			titleRef.current?.focus();
+		}, 1);
 	};
 
 	const handleCancelRename = () => {
@@ -89,111 +85,107 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 			{/* Primary notes, appear like ghost notes before user released mouse when dragging: */}
 			{noteDays?.length > 0 &&
 				noteDays.map((day, index) => (
-					<div
-						key={day.toString()}
-						className={cn(
-							'bg-primary-500 absolute min-h-4 min-w-8 cursor-pointer select-none rounded-xl border-2 border-white transition-opacity hover:opacity-90 dark:border-neutral-800',
-							isDragging && 'opacity-50',
-						)}
-						style={{
-							top: 0,
-							transform: (() => {
-								const notePercentTopOffset = getNoteBlockTopOffset({
+					<ContextMenu key={day.toString()}>
+						<ContextMenuTrigger
+							className={cn(
+								'bg-primary-500 absolute min-h-4 min-w-8 cursor-pointer select-none rounded-xl border-2 border-white transition-opacity hover:opacity-90 dark:border-neutral-800',
+								isDragging && 'opacity-50',
+							)}
+							style={{
+								top: 0,
+								transform: (() => {
+									const notePercentTopOffset = getNoteBlockTopOffset({
+										blockDay: day,
+										noteStartTime: note.startTime,
+									});
+									const noteTopOffsetInAsNumber = parseFloat(notePercentTopOffset || '0') / 100;
+									const noteTopOffsetInPx =
+										noteTopOffsetInAsNumber * getCalendarRowHeight({ zoomLevel }) * 24;
+									return `translateY(${noteTopOffsetInPx}px)`;
+								})(),
+								left: getNoteBlockLeftOffset({
+									blockDay: day,
+									firstCalendarDay: firstCalendarDay,
+									displayedDays: displayedDays,
+									leftOffset,
+								}),
+								width: getNoteBlockWidth({ displayedDays: displayedDays }),
+								height: getNoteBlockHeight({
 									blockDay: day,
 									noteStartTime: note.startTime,
-								});
-								const noteTopOffsetInAsNumber = parseFloat(notePercentTopOffset || '0') / 100;
-								const noteTopOffsetInPx =
-									noteTopOffsetInAsNumber * getCalendarRowHeight({ zoomLevel }) * 24;
-								return `translateY(${noteTopOffsetInPx}px)`;
-							})(),
-							left: getNoteBlockLeftOffset({
-								blockDay: day,
-								firstCalendarDay: firstCalendarDay,
-								displayedDays: displayedDays,
-								leftOffset,
-							}),
-							width: getNoteBlockWidth({ displayedDays: displayedDays }),
-							height: getNoteBlockHeight({
-								blockDay: day,
-								noteStartTime: note.startTime,
-								noteEndTime: note.endTime,
-							}),
-							// If course was not found, the color will be undefined so
-							// the note should have "bg-primary-500" color as in className above
-							backgroundColor: course.color || '',
-						}}
-						ref={el => {
-							noteBlocksRef.current[index] = el as HTMLDivElement;
-						}}
-						draggable
-						onDragStart={handleDragStart}
-						onDrag={handleDrag}
-						onDragEndCapture={handleDragEnd}
-						onDragOver={e => e.preventDefault()}>
-						{/* Top edge to drag: */}
-						{index === 0 && (
-							<div
-								draggable
-								onDragStart={handleDragStartTop}
-								onDragEndCapture={handleDragEndTop}
-								onDrag={handleDragTop}
-								ref={topEdgeRef}
-								className={cn(
-									'absolute inset-x-0 top-0 z-30 h-2 cursor-ns-resize rounded-t-xl bg-white',
-									isDragging ? 'opacity-0' : 'opacity-25',
-								)}></div>
-						)}
-
-						{/* Center part (link) */}
-						<div
-							onClick={() => {
-								navigate(`/notes?noteId=${note.id}`);
+									noteEndTime: note.endTime,
+								}),
+								// If course was not found, the color will be undefined so
+								// the note should have "bg-primary-500" color as in className above
+								backgroundColor: course.color || '',
 							}}
-							onContextMenu={handleContextMenu}
-							className={cn(
-								'-mt-4 h-full w-full break-all pt-4 text-sm text-white',
-								isUpdatingTitle && 'pointer-events-none opacity-50',
-								!isRenaming && 'overflow-clip',
-							)}>
-							{isRenaming ? (
-								<form className='m-4' onSubmit={handleSubmitRename}>
-									<input
-										onKeyDown={e => {
-											if (e.key === 'Escape') handleCancelRename();
-										}}
-										autoFocus
-										placeholder='New title'
-										value={title}
-										onChange={e => setTitle(e.target.value)}
-										onBlur={handleCancelRename}
-										className='w-full text-wrap border-none outline-none'
-									/>
-								</form>
-							) : (
-								<p className='m-4'>{note.title || course?.name}</p>
+							ref={el => {
+								noteBlocksRef.current[index] = el as HTMLDivElement;
+							}}
+							draggable
+							onDragStart={handleDragStart}
+							onDrag={handleDrag}
+							onDragEndCapture={handleDragEnd}
+							onDragOver={e => e.preventDefault()}>
+							{/* Top edge to drag: */}
+							{index === 0 && (
+								<div
+									draggable
+									onDragStart={handleDragStartTop}
+									onDragEndCapture={handleDragEndTop}
+									onDrag={handleDragTop}
+									ref={topEdgeRef}
+									className={cn(
+										'absolute inset-x-0 top-0 z-30 h-2 cursor-ns-resize rounded-t-xl bg-white',
+										isDragging ? 'opacity-0' : 'opacity-25',
+									)}></div>
 							)}
-						</div>
 
-						{/* Bottom edge to drag: */}
-						{index === noteDays.length - 1 && (
+							{/* Center part (link) */}
 							<div
-								draggable
-								onDragStart={handleDragStartBottom}
-								onDragEndCapture={handleDragEndBottom}
-								onDrag={handleDragBottom}
-								ref={bottomEdgeRef}
+								onClick={() => {
+									navigate(`/notes?noteId=${note.id}`);
+								}}
 								className={cn(
-									'absolute inset-x-0 bottom-0 h-2 cursor-ns-resize rounded-b-xl bg-black',
-									isDragging ? 'opacity-0' : 'opacity-25',
-								)}></div>
-						)}
+									'-mt-4 h-full w-full break-all pt-4 text-sm text-white',
+									isUpdatingTitle && 'pointer-events-none opacity-50',
+									!isRenaming && 'overflow-clip',
+								)}>
+								{isRenaming ? (
+									<form className='m-4' onSubmit={handleSubmitRename}>
+										<input
+											onKeyDown={e => {
+												if (e.key === 'Escape') handleCancelRename();
+											}}
+											autoFocus
+											placeholder='New title'
+											value={title}
+											onChange={e => setTitle(e.target.value)}
+											onBlur={handleCancelRename}
+											className='w-full text-wrap border-none outline-none'
+										/>
+									</form>
+								) : (
+									<p className='m-4'>{note.title || course?.name}</p>
+								)}
+							</div>
 
-						{/* Context menu on right mouse click */}
-						{/* {contextMenuBlockIndex === index && contextMenuPosition && (
-							<NoteMenu position={contextMenuPosition} note={note} handleClose={closeContextMenu} />
-						)} */}
-					</div>
+							{/* Bottom edge to drag: */}
+							{index === noteDays.length - 1 && (
+								<div
+									draggable
+									onDragStart={handleDragStartBottom}
+									onDragEndCapture={handleDragEndBottom}
+									onDrag={handleDragBottom}
+									ref={bottomEdgeRef}
+									className={cn(
+										'absolute inset-x-0 bottom-0 h-2 cursor-ns-resize rounded-b-xl bg-black',
+										isDragging ? 'opacity-0' : 'opacity-25',
+									)}></div>
+							)}
+						</ContextMenuTrigger>
+						<NoteMenu note={note} onRename={handleStartRename} />
+					</ContextMenu>
 				))}
 
 			{/* Drag notes, visible only if user is currently dragging note: */}
@@ -226,14 +218,6 @@ const DaysViewNote = ({ note, leftOffset }: Props) => {
 						</div>
 					</div>
 				))}
-
-			<NoteMenu
-				isOpen={isMenuOpen}
-				onClose={() => setIsMenuOpen(false)}
-				note={note}
-				position={menuPosition}
-				onRename={handleStartRename}
-			/>
 		</>
 	);
 };

@@ -1,7 +1,16 @@
+import {
+	ContextMenuContent,
+	ContextMenuItem,
+	ContextMenuPortal,
+	ContextMenuRadioGroup,
+	ContextMenuRadioItem,
+	ContextMenuSub,
+	ContextMenuSubContent,
+	ContextMenuSubTrigger,
+	ItemIndicator,
+} from '@radix-ui/react-context-menu';
+import { DotFilledIcon } from '@radix-ui/react-icons';
 import { ChevronRight } from 'lucide-react';
-import { useEffect, useLayoutEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
-import { useOnClickOutside } from 'usehooks-ts';
 import { useCourses } from '../../../../hooks/use-courses';
 import { T_Note } from '../../../../types';
 import LoadingSpinner from '../../../loading-spinner';
@@ -12,9 +21,6 @@ import { useUpdateNoteCourseId } from './use-update-note-coures';
 
 type Props = {
 	note: T_Note;
-	isOpen: boolean;
-	onClose: () => void;
-	position: [number, number];
 	/** Function starting rename flow, this mechanic must be outside of this hook */
 	onRename: () => void;
 };
@@ -22,107 +28,69 @@ type Props = {
 /**
  * Context menu for notes where user can perform various actions.
  */
-const NoteMenu = ({ note, isOpen, onClose, position, onRename }: Props) => {
-	const menuRef = useRef<HTMLDivElement>(null!);
-
+const NoteMenu = ({ note, onRename }: Props) => {
 	const { data: courses } = useCourses();
-
-	useOnClickOutside(menuRef, onClose);
-
-	// Close the menu when user presses the escape key
-	useEffect(() => {
-		const handleEsc = (event: KeyboardEvent) => {
-			if (event.key === 'Escape') onClose();
-		};
-
-		document.addEventListener('keydown', handleEsc);
-
-		return () => {
-			document.removeEventListener('keydown', handleEsc);
-		};
-	}, [onClose]);
-
-	// Position the context menu so it doesn't overflow the window
-	useLayoutEffect(() => {
-		if (!menuRef.current || !isOpen) return;
-
-		const rect = menuRef.current.getBoundingClientRect();
-
-		if (rect.bottom > window.innerHeight) {
-			menuRef.current.style.top = 'auto';
-			menuRef.current.style.bottom = '32px';
-		}
-
-		if (rect.right > window.innerWidth) {
-			menuRef.current.style.left = 'auto';
-			menuRef.current.style.right = '32px';
-		}
-	}, [isOpen]);
 
 	const { mutate: mutateDuplicate, isPending: isDuplicating } = useDuplicateNote({
 		note,
-		onSettledCallback: onClose,
 	});
 
 	const { mutate: mutateUpdateCourseId, isPending: isUpdatingCourseId } = useUpdateNoteCourseId({
 		note,
-		onSettledCallback: onClose,
 	});
 
 	const { mutate: mutateDelete, isPending: isDeleting } = useDeleteNote({ note });
 
-	const { mutate: mutateExport, isPending: isExporting } = useExportNote({ note, onSettledCallback: onClose });
+	const { mutate: mutateExport, isPending: isExporting } = useExportNote({ note });
 
-	if (!isOpen) return;
-
-	return createPortal(
-		<div
-			ref={menuRef}
-			className='fixed z-50 flex w-fit cursor-default select-none flex-col rounded-xl bg-white p-2 text-sm shadow-2xl dark:bg-neutral-800'
-			style={{
-				left: position[0],
-				top: position[1],
-			}}>
-			<button
-				onClick={onRename}
-				className='flex items-center gap-2 rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
-				Rename
-			</button>
-			<button
-				onClick={() => mutateDuplicate()}
-				className='flex items-center gap-2 rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
-				Duplicate {isDuplicating && <LoadingSpinner className='size-4' />}
-			</button>
-			<button
-				onClick={() => mutateExport()}
-				className='flex items-center gap-2 rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
-				Export as PDF {isExporting && <LoadingSpinner className='size-4' />}
-			</button>
-			<div className='group relative flex items-center gap-2 rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
-				Move to {isUpdatingCourseId && <LoadingSpinner className='size-4' />}{' '}
-				<ChevronRight className='ml-8 size-4' />
-				<div className='absolute left-0 hidden -translate-x-full flex-col rounded-xl bg-white p-2 shadow-2xl group-hover:flex dark:bg-neutral-800'>
-					{courses?.map(course => (
-						<button
-							key={course.id}
-							onClick={() => mutateUpdateCourseId({ courseId: course.id })}
-							className='flex items-center gap-2 text-nowrap rounded-md px-3 py-1 text-start hover:bg-neutral-100 dark:hover:bg-neutral-700'>
-							{course.name}{' '}
-							{course.id === note.courseId && (
-								<div className='size-1.5 shrink-0 rounded-full bg-neutral-800 dark:bg-white' />
-							)}
-						</button>
-					))}
-					{courses?.length === 0 && <p>No courses available</p>}
-				</div>
-			</div>
-			<button
-				onClick={() => mutateDelete()}
-				className='bg-error-50 text-error-800 dark:text-error-100 hover:bg-error-100 dark:bg-error-800 dark:hover:bg-error-700 flex items-center gap-2 rounded-md px-3 py-1 text-start'>
-				Delete {isDeleting && <LoadingSpinner className='size-4' />}
-			</button>
-		</div>,
-		document.body,
+	return (
+		<ContextMenuPortal>
+			<ContextMenuContent className='select-none rounded-xl border border-neutral-200 bg-white p-2 text-sm shadow-2xl dark:border-neutral-600 dark:bg-neutral-800'>
+				<ContextMenuItem
+					onClick={onRename}
+					className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700'>
+					Rename
+				</ContextMenuItem>
+				<ContextMenuItem
+					onClick={() => mutateDuplicate()}
+					className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700'>
+					Duplicate {isDuplicating && <LoadingSpinner className='size-4' />}
+				</ContextMenuItem>
+				<ContextMenuItem
+					onClick={() => mutateExport()}
+					className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700'>
+					Export as PDF {isExporting && <LoadingSpinner className='size-4' />}
+				</ContextMenuItem>
+				<ContextMenuSub>
+					<ContextMenuSubTrigger className='dark:focus:bg-neutral-7000 flex items-center justify-between gap-4 rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700'>
+						Move to {isUpdatingCourseId && <LoadingSpinner className='size-4' />}{' '}
+						<ChevronRight className='size-4' />
+					</ContextMenuSubTrigger>
+					<ContextMenuSubContent className='select-none rounded-xl border border-neutral-200 bg-white p-2 dark:border-neutral-600 dark:bg-neutral-800'>
+						<ContextMenuRadioGroup value={note.courseId}>
+							{courses?.map(course => (
+								<ContextMenuRadioItem
+									key={course.id}
+									value={course.id}
+									onClick={() => mutateUpdateCourseId({ courseId: course.id })}
+									className='flex items-center justify-between gap-4 rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700'>
+									{course.name}
+									<ItemIndicator>
+										<DotFilledIcon />
+									</ItemIndicator>
+								</ContextMenuRadioItem>
+							))}
+						</ContextMenuRadioGroup>
+						{courses?.length === 0 && <p>No courses available</p>}
+					</ContextMenuSubContent>
+				</ContextMenuSub>
+				<ContextMenuItem
+					onClick={() => mutateDelete()}
+					className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700'>
+					Delete {isDeleting && <LoadingSpinner className='size-4' />}
+				</ContextMenuItem>
+			</ContextMenuContent>
+		</ContextMenuPortal>
 	);
 };
 

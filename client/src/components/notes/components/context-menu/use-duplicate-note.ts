@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { T_Note } from '../../../../types';
 import { useToast } from '../../../toast/use-toast';
 
-export const useDuplicateNote = ({ note, onSettledCallback }: { note: T_Note; onSettledCallback: () => void }) => {
+export const useDuplicateNote = ({ note, onSettledCallback }: { note: T_Note; onSettledCallback?: () => void }) => {
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	return useMutation({
@@ -16,7 +16,7 @@ export const useDuplicateNote = ({ note, onSettledCallback }: { note: T_Note; on
 				toast({ description: data.error, variant: 'destructive' });
 			}
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
-			onSettledCallback();
+			onSettledCallback?.();
 		},
 	});
 };

@@ -2,7 +2,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { T_Note } from '../../../../types';
 import { useToast } from '../../../toast/use-toast';
 
-export const useUpdateNoteCourseId = ({ note, onSettledCallback }: { note: T_Note; onSettledCallback: () => void }) => {
+export const useUpdateNoteCourseId = ({
+	note,
+	onSettledCallback,
+}: {
+	note: T_Note;
+	onSettledCallback?: () => void;
+}) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 
@@ -28,7 +34,7 @@ export const useUpdateNoteCourseId = ({ note, onSettledCallback }: { note: T_Not
 				toast({ description: data.error, variant: 'destructive' });
 			}
 			queryClient.invalidateQueries({ queryKey: ['notes'] });
-			onSettledCallback();
+			onSettledCallback?.();
 		},
 	});
 };
