@@ -1,9 +1,14 @@
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuPortal,
+	DropdownMenuTrigger,
+} from '@radix-ui/react-dropdown-menu';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ChevronDown } from 'lucide-react';
 import { useSettings } from '../../../hooks/use-settings';
 import { Button } from '../../button';
 import { useToast } from '../../toast/use-toast';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../../ui/dropdown-menu';
 
 const getNameOfCriteria = (criteria: string) => {
 	if (criteria === 'title') {
@@ -63,17 +68,39 @@ const SortTasks = () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant='secondary' className='mb-0 w-full'>
-					Sort tasks ({getNameOfCriteria(tasksOrder)}) <ChevronDown className='size-4' />
+				<Button variant='secondary' className='mb-0 select-none'>
+					Sort tasks ({getNameOfCriteria(tasksOrder)})
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent>
-				<DropdownMenuItem onClick={() => handleSort('title')}>Title</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => handleSort('createdAt')}>Newest first</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => handleSort('dueDate')}>Due date</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => handleSort('priority')}>Priority</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => handleSort('completed')}>Completed</DropdownMenuItem>
-			</DropdownMenuContent>
+			<DropdownMenuPortal>
+				<DropdownMenuContent className='select-none rounded-xl border border-neutral-200 bg-white p-2'>
+					<DropdownMenuItem
+						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0'
+						onClick={() => handleSort('title')}>
+						Title
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0'
+						onClick={() => handleSort('createdAt')}>
+						Newest first
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0'
+						onClick={() => handleSort('dueDate')}>
+						Due date
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0'
+						onClick={() => handleSort('priority')}>
+						Priority
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0'
+						onClick={() => handleSort('completed')}>
+						Completed
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenuPortal>
 		</DropdownMenu>
 	);
 };
