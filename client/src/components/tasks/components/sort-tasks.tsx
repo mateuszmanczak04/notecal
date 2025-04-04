@@ -73,29 +73,29 @@ const SortTasks = () => {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuPortal>
-				<DropdownMenuContent className='select-none rounded-xl border border-neutral-200 bg-white p-2'>
+				<DropdownMenuContent className='select-none rounded-xl border border-neutral-200 bg-white p-2 text-sm shadow-2xl dark:border-neutral-600 dark:bg-neutral-800'>
 					<DropdownMenuItem
-						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0'
+						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700'
 						onClick={() => handleSort('title')}>
 						Title
 					</DropdownMenuItem>
 					<DropdownMenuItem
-						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0'
+						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700'
 						onClick={() => handleSort('createdAt')}>
 						Newest first
 					</DropdownMenuItem>
 					<DropdownMenuItem
-						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0'
+						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700'
 						onClick={() => handleSort('dueDate')}>
 						Due date
 					</DropdownMenuItem>
 					<DropdownMenuItem
-						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0'
+						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700'
 						onClick={() => handleSort('priority')}>
 						Priority
 					</DropdownMenuItem>
 					<DropdownMenuItem
-						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0'
+						className='rounded-md px-2 py-1 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-0 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700'
 						onClick={() => handleSort('completed')}>
 						Completed
 					</DropdownMenuItem>
