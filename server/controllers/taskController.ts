@@ -15,8 +15,6 @@ export const getTasks = async (req: Request, res: Response) => {
 export const createTask = async (req: Request, res: Response) => {
 	const { title, courseId } = req.body;
 
-	console.log(req);
-
 	if (!title) {
 		res.status(400).json({ error: 'Task title is required' });
 		return;
