@@ -3,23 +3,15 @@ import Link from 'next/link';
 const Footer = () => {
 	return (
 		<footer className='bg-primary-500 mt-auto p-8 text-white'>
-			<div className='mx-auto grid max-w-screen-sm grid-cols-1 gap-2 text-center sm:grid-cols-2'>
-				<Link href='https://www.linkedin.com/in/mateusz-manczak/' className='mt-0 block hover:underline'>
-					Author&apos;s LinkedIn
+			<div className='mx-auto grid max-w-screen-sm grid-cols-1 gap-2 text-center'>
+				<Link href='/privacy-policy' className='hover:underline'>
+					Privacy policy
 				</Link>
-				<Link
-					href='https://www.upwork.com/freelancers/~010d3eb9fdecec067e'
-					className='mt-0 block hover:underline'>
-					Author&apos;s Upwork
+				<Link href='https://app.notecal.app/auth/login' className='hover:underline'>
+					Login page
 				</Link>
-				<Link href='#' className='pointer-events-none block opacity-50 '>
-					Terms & conditions (soon)
-				</Link>
-				<Link href='#' className='pointer-events-none block opacity-50'>
-					Privacy policy (soon)
-				</Link>
-				<Link href='#' className='pointer-events-none block opacity-50'>
-					Sitemap (soon)
+				<Link href='https://app.notecal.app/auth/register' className='hover:underline'>
+					Register page
 				</Link>
 			</div>
 		</footer>

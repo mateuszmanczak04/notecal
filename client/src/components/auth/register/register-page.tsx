@@ -22,7 +22,11 @@ const RegisterPage = () => {
 
 			<p className='mt-4 px-4 opacity-75'>
 				<small>
-					By clicking <q>Create my account</q> you agree to our terms of service and privacy policy.
+					By clicking <q>Create my account</q> you agree to our{' '}
+					<a href='https://notecal.app/privacy-policy' target='_blank' className='underline'>
+						privacy policy
+					</a>
+					.
 				</small>
 			</p>
 		</main>
