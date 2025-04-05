@@ -48,10 +48,17 @@ export const updateTask = async (req: Request, res: Response) => {
 	const { title, dueDate, description, completed, priority, courseId } = req.body;
 	const user = req.user!;
 
-	const task = await db.task.update({
-		where: { id: id, userId: user.id },
-		data: { title, dueDate, description, completed, priority, courseId },
-	});
+	let task;
+	if (title === '') {
+		await db.task.delete({
+			where: { id, userId: user.id },
+		});
+	} else {
+		task = await db.task.update({
+			where: { id, userId: user.id },
+			data: { title, dueDate, description, completed, priority, courseId },
+		});
+	}
 
 	res.status(200).json({ task });
 };

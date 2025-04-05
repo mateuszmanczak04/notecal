@@ -10,7 +10,7 @@ export const useTaskTitle = (task: T_Task) => {
 	const { toast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data: { title: string }) =>
-			await fetch(`api/tasks/${task.id}`, {
+			await fetch(`/api/tasks/${task.id}`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),
