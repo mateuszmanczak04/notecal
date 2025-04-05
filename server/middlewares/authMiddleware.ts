@@ -6,7 +6,6 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 	const decoded = await verifyToken(req.cookies.authToken);
 
 	if (!decoded) {
-		res.clearCookie('authToken');
 		res.status(401).end();
 		return;
 	}
@@ -18,7 +17,6 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 	});
 
 	if (!user) {
-		res.clearCookie('authToken');
 		res.status(401).end();
 		return;
 	}
