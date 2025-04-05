@@ -1,6 +1,5 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $createHeadingNode, $isHeadingNode, HeadingTagType } from '@lexical/rich-text';
-import { $wrapNodes } from '@lexical/selection';
 import { mergeRegister } from '@lexical/utils';
 import {
 	$createParagraphNode,
@@ -9,6 +8,7 @@ import {
 	CAN_REDO_COMMAND,
 	CAN_UNDO_COMMAND,
 	COMMAND_PRIORITY_LOW,
+	ElementNode,
 	FORMAT_ELEMENT_COMMAND,
 	FORMAT_TEXT_COMMAND,
 	KEY_MODIFIER_COMMAND,
@@ -101,15 +101,51 @@ export default function ToolbarPlugin({ onSave, hasChanged }: Props) {
 	}, []);
 
 	const updateHeading = useCallback(
-		(heading: HeadingTagType | null) => {
+		(headingTag: HeadingTagType | null) => {
 			editor.update(() => {
 				const selection = $getSelection();
 
 				if ($isRangeSelection(selection)) {
-					if (heading === null) {
-						$wrapNodes(selection, () => $createParagraphNode());
+					const anchorNode = selection.anchor.getNode();
+					const focusNode = selection.focus.getNode();
+
+					if (
+						anchorNode instanceof ElementNode &&
+						focusNode instanceof ElementNode &&
+						anchorNode.is(focusNode)
+					) {
+						// Case with single node selection
+						const block = anchorNode.getParent();
+
+						if (block) {
+							if (headingTag === null) {
+								const paragraphNode = $createParagraphNode();
+								block.replace(paragraphNode);
+								paragraphNode.append(...block.getChildren());
+							} else {
+								const headingNode = $createHeadingNode(headingTag);
+								block.replace(headingNode);
+								headingNode.append(...block.getChildren());
+							}
+						}
 					} else {
-						$wrapNodes(selection, () => $createHeadingNode(heading));
+						// Handle cases where the selection spans across different block nodes
+						// You might want to iterate through the selected nodes and replace the block parents
+						selection.getNodes().forEach(node => {
+							const block = node.getParent();
+
+							if (block && block.getType() !== 'root') {
+								if (headingTag === null) {
+									const paragraphNode = $createParagraphNode();
+									block.replace(paragraphNode);
+									paragraphNode.append(...block.getChildren());
+								} else {
+									const headingNode = $createHeadingNode(headingTag);
+									block.replace(headingNode);
+									headingNode.append(...block.getChildren());
+								}
+							}
+						});
 					}
 				}
 			});

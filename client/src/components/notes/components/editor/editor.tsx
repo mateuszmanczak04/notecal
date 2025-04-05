@@ -1,4 +1,4 @@
-import { TRANSFORMERS } from '@lexical/markdown';
+import { $convertFromMarkdownString, $convertToMarkdownString, TRANSFORMERS } from '@lexical/markdown';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { ClickableLinkPlugin } from '@lexical/react/LexicalClickableLinkPlugin';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
@@ -49,15 +49,27 @@ const Editor = () => {
 	// It's called when the user clicks the save
 	// button or presses Cmd + S (or Ctrl + S) shortcut.
 	const { mutate: handleSave, isPending: isUpdating } = useMutation({
-		mutationFn: async () =>
-			await fetch(`/api/notes/${note?.id}`, {
-				method: 'PUT',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ content: JSON.stringify(editorStateRef.current) }),
-			}).then(res => res.json()),
+		mutationFn: async () => {
+			{
+				if (!editorStateRef.current) return;
+
+				let content = '';
+				editorStateRef.current.read(() => {
+					content = $convertToMarkdownString([...TRANSFORMERS, HR]);
+				});
+
+				return fetch(`/api/notes/${note?.id}`, {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ content }),
+				}).then(res => res.json());
+			}
+		},
 		onSettled: data => {
 			if ('error' in data) {
 				toast({ variant: 'destructive', description: data.error });
+			} else {
+				setHasChanged(false);
 			}
 		},
 	});
@@ -100,7 +112,8 @@ const Editor = () => {
 				key={note?.content}
 				initialConfig={{
 					...editorConfig,
-					editorState: note?.content || undefined,
+					editorState: () =>
+						$convertFromMarkdownString(note?.content || '', [...TRANSFORMERS, HR], undefined, true),
 				}}>
 				<ToolbarPlugin onSave={handleSave} hasChanged={hasChanged} />
 
@@ -135,7 +148,10 @@ const Editor = () => {
 				<OnChangePlugin
 					onChange={editorState => {
 						editorStateRef.current = editorState;
-						setHasChanged(JSON.stringify(editorState) !== note?.content);
+						editorState.read(() => {
+							const markdown = $convertToMarkdownString([...TRANSFORMERS, HR], undefined, true);
+							setHasChanged(markdown !== note?.content);
+						});
 					}}
 				/>
 				<ListPlugin />
