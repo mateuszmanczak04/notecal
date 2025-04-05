@@ -63,3 +63,13 @@
 
 	--color-ring: var(--color-blue-500);
 }
+
+@layer components {
+	.hide-scrollbar {
+		scrollbar-width: 0px;
+		scrollbar-color: transparent;
+	}
+	.hide-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+}
