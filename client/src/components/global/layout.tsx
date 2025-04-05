@@ -25,10 +25,10 @@ export default function Layout() {
 			!routesForAllUsers.includes(location.pathname) &&
 			!routesForUnauthenticatedUsers.includes(location.pathname)
 		) {
-			navigate('/auth/login');
+			navigate(`/auth/login?origin=${location.pathname}${location.search}`);
 			return;
 		}
-	}, [user, location.pathname, isPending, navigate]);
+	}, [user, location.pathname, location.search, isPending, navigate]);
 
 	if (isPending) return <LoadingScreen />;
 

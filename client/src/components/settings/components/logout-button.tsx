@@ -9,7 +9,7 @@ const LogoutButton = () => {
 			await fetch('/api/auth/logout', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(
 				res => {
 					if (res.ok) {
-						window.location.reload();
+						window.location.href = '/auth/login';
 					}
 				},
 			),

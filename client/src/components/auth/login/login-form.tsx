@@ -1,5 +1,6 @@
 import React, { useState, useTransition } from 'react';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
+import { DEFAULT_LOGIN_REDIRECT } from '../../../utils/routes';
 import { Button } from '../../button';
 import ErrorMessage from '../../error-message';
 import { Input } from '../../input';
@@ -10,6 +11,7 @@ const LoginForm = () => {
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 	const [isPending, startTransition] = useTransition();
+	const [searchParams] = useSearchParams();
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -21,7 +23,8 @@ const LoginForm = () => {
 			})
 				.then(res => {
 					if (res.ok) {
-						window.location.reload();
+						const origin = searchParams.get('origin');
+						window.location.href = origin || DEFAULT_LOGIN_REDIRECT;
 						return;
 					}
 					return res.json();
