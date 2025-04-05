@@ -45,9 +45,6 @@ const SortTasks = () => {
 				toast({ description: data.error, variant: 'destructive' });
 			}
 			queryClient.invalidateQueries({ queryKey: ['tasks'] });
-			if (data && 'tasks' in data) {
-				queryClient.setQueryData(['tasks'], data.tasks);
-			}
 		},
 	});
 

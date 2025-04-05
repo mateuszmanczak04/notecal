@@ -1,13 +1,11 @@
-import { Reorder } from 'motion/react';
+import { useTasks } from '../../../hooks/use-tasks';
 import { T_Task } from '../../../types';
-import { Button } from '../../button';
 import ErrorMessage from '../../error-message';
-import { useTasksFunctionality } from '../hooks/use-tasks-functionality';
 import TaskItem from './task-item';
 
 /** List of tasks for /tasks page */
 const TasksList = () => {
-	const { handleReorder, error, handleSaveNewOrder, hasChangedOrder, isPending, tasks } = useTasksFunctionality({});
+	const { data: tasks, isPending, error } = useTasks();
 
 	if (isPending)
 		return (
@@ -30,19 +28,13 @@ const TasksList = () => {
 		return <p className='text-center text-lg text-neutral-500 sm:ml-8'>You don&apos;t have any tasks yet.</p>;
 	}
 
+	console.table(tasks.map(t => ({ dueDate: t.dueDate, type: typeof t.dueDate, title: t.title })));
+
 	return (
 		<div className='relative'>
-			{hasChangedOrder && (
-				<Button className='w-full' onClick={handleSaveNewOrder}>
-					Save new order
-				</Button>
-			)}
-
-			<Reorder.Group values={tasks} onReorder={handleReorder}>
-				{tasks.map((task: T_Task) => (
-					<TaskItem key={task.id} task={task} />
-				))}
-			</Reorder.Group>
+			{tasks.map((task: T_Task) => (
+				<TaskItem key={task.id} task={task} />
+			))}
 		</div>
 	);
 };
