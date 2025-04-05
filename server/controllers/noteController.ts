@@ -38,9 +38,6 @@ export const getNotes = async (req: Request, res: Response) => {
 		where: {
 			userId: user.id,
 		},
-		omit: {
-			content: true,
-		},
 		orderBy: [
 			{
 				startTime: {
@@ -54,7 +51,12 @@ export const getNotes = async (req: Request, res: Response) => {
 		],
 	});
 
-	res.status(200).json({ notes });
+	const notesWithContentPreview = notes.map(note => ({
+		...note,
+		content: note.content ? note.content.substring(0, 60).replace(/[\r\n]+/gm, ' ') + '...' : null,
+	}));
+
+	res.status(200).json({ notes: notesWithContentPreview });
 };
 
 export const getNote = async (req: Request, res: Response) => {
