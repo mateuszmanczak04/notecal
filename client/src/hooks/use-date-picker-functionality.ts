@@ -8,6 +8,9 @@ type T_Props = {
 	isAlwaysOpen?: boolean;
 };
 
+/**
+ * Hook to handle date and time picker components in headless way.
+ */
 export const useDatePickerFunctionality = ({ onSelect, date, isAlwaysOpen }: T_Props) => {
 	const [isOpen, setIsOpen] = useState(isAlwaysOpen || false);
 	const menuRef = useRef<HTMLDivElement>(null!);
