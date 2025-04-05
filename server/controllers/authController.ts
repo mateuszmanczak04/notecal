@@ -41,7 +41,7 @@ export const register = async (req: Request, res: Response) => {
 
 	const token = await generateToken({ id: user.id });
 
-	sendConfirmationEmail(email);
+	await sendConfirmationEmail(email);
 
 	res.cookie('authToken', token, {
 		httpOnly: true,
