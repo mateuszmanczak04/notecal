@@ -20,7 +20,7 @@ const NoteSidebar = () => {
 			{showNoteSidebar && (
 				<>
 					<div
-						className='min-w-xs flex h-screen max-w-2xl flex-row self-end'
+						className='min-w-xs flex h-screen max-w-2xl flex-row self-end scrollbar-hide'
 						style={{ width: noteSidebarWidth }}
 						onMouseDown={e => e.preventDefault()}>
 						{/* Resize bar */}

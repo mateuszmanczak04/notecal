@@ -45,7 +45,7 @@ export default function Layout() {
 			<div className='flex h-screen w-screen flex-col-reverse overflow-hidden lg:flex-row'>
 				<Navigation />
 				<MobileNavigation />
-				<div className='flex-1 overflow-y-scroll'>
+				<div className='scrollbar-hide flex-1 overflow-y-scroll'>
 					<Outlet />
 				</div>
 			</div>
