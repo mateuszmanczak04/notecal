@@ -220,7 +220,7 @@ export default function ToolbarPlugin({ onSave, hasChanged }: Props) {
 	}, [editor, onSave, updateHeading]);
 
 	return (
-		<div className='sticky top-0 z-10 flex flex-wrap items-center gap-2 border-b border-neutral-200 p-2 pr-14 dark:border-neutral-600'>
+		<div className='sticky top-0 z-10 flex flex-wrap items-center gap-2 border-b border-neutral-200 bg-white p-2 pr-14 dark:border-neutral-600 dark:bg-neutral-900'>
 			{/* Undo & Redo */}
 			<div className='grid grid-cols-2 gap-1 rounded-md bg-neutral-100 dark:bg-neutral-700'>
 				<Toggle
