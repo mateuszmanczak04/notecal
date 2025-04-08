@@ -19,35 +19,37 @@ const NoteSidebar = () => {
 		<>
 			{showNoteSidebar && (
 				<>
-					{/* Resize bar */}
 					<div
-						className='fixed right-0 top-0 z-10 hidden h-screen w-2 cursor-ew-resize border-l border-neutral-200 md:block dark:border-neutral-700'
-						style={{ right: noteSidebarWidth - 8 }}
-						onMouseDown={handleMouseDown}></div>
-					<aside
-						ref={sidebarRef}
-						className='scrollbar-hide fixed right-0 top-0 flex h-screen w-full shrink-0 flex-col overflow-y-scroll pb-32 md:w-72 lg:w-80 xl:w-72 2xl:w-96 dark:bg-neutral-900'
-						style={{
-							width: noteSidebarWidth,
-						}}>
-						{sidebarElements.courseRelated && <CourseRelated />}
-						{sidebarElements.notesList && <SideNotes />}
-						{sidebarElements.usefulLinks && <CourseUsefulLinks />}
-						{sidebarElements.tasks && <NoteTasks />}
-						{/* TODO: fix useDatePickerFunctionality to not be fired on every click outside */}
-						{sidebarElements.noteRelated && <NoteRelated />}
-						{sidebarElements.settings && <NotesSettings />}
-						{sidebarElements.dangerZone && <NoteDangerZone />}
-						<CustomizeSidebar />
+						className='min-w-xs flex h-screen max-w-2xl flex-row self-end'
+						style={{ width: noteSidebarWidth }}
+						onMouseDown={e => e.preventDefault()}>
+						{/* Resize bar */}
+						<div
+							className='z-10 w-2 cursor-col-resize self-stretch border-l border-neutral-200 bg-transparent dark:border-neutral-700'
+							onMouseDown={handleMouseDown}></div>
+						{/* Sidebar content */}
+						<aside
+							ref={sidebarRef}
+							className='scrollbar-hide flex flex-1 shrink-0 flex-col self-stretch overflow-y-scroll pb-32'>
+							{sidebarElements.courseRelated && <CourseRelated />}
+							{sidebarElements.notesList && <SideNotes />}
+							{sidebarElements.usefulLinks && <CourseUsefulLinks />}
+							{sidebarElements.tasks && <NoteTasks />}
+							{/* TODO: fix useDatePickerFunctionality to not be fired on every click outside */}
+							{sidebarElements.noteRelated && <NoteRelated />}
+							{sidebarElements.settings && <NotesSettings />}
+							{sidebarElements.dangerZone && <NoteDangerZone />}
+							<CustomizeSidebar />
 
-						<button
-							onClick={() => setShowNoteSidebar(prev => !prev)}
-							className={cn(
-								'absolute right-0 top-0 grid size-[53px] place-content-center bg-white dark:bg-neutral-900',
-							)}>
-							<Menu />
-						</button>
-					</aside>
+							<button
+								onClick={() => setShowNoteSidebar(prev => !prev)}
+								className={cn(
+									'size-13 absolute right-0 top-0 grid place-content-center bg-white dark:bg-neutral-900',
+								)}>
+								<Menu />
+							</button>
+						</aside>
+					</div>
 				</>
 			)}
 		</>

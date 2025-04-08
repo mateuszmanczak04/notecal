@@ -65,11 +65,11 @@
 }
 
 @layer components {
-	.hide-scrollbar {
+	.scrollbar-hide {
 		scrollbar-width: 0px;
 		scrollbar-color: transparent;
 	}
-	.hide-scrollbar::-webkit-scrollbar {
+	.scrollbar-hide::-webkit-scrollbar {
 		display: none;
 	}
 }

@@ -105,7 +105,7 @@ const Editor = () => {
 	return (
 		<article
 			className={cn(
-				'flex flex-1 flex-col bg-white dark:bg-neutral-900',
+				'scrollbar-hide flex h-screen flex-1 flex-col overflow-y-scroll',
 				isUpdating && 'pointer-events-none opacity-50',
 			)}>
 			<LexicalComposer

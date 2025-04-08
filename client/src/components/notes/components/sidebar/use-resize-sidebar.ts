@@ -14,17 +14,7 @@ export const useResizeSidebar = () => {
 	useEffect(() => {
 		const handleMouseMove = (e: MouseEvent) => {
 			if (!isResizing) return;
-			setNoteSidebarWidth(prev => {
-				if (prev - e.movementX < 240) {
-					setIsResizing(false);
-					return 240;
-				}
-				if (prev - e.movementX > 600) {
-					setIsResizing(false);
-					return 600;
-				}
-				return prev - e.movementX;
-			});
+			setNoteSidebarWidth(window.innerWidth - e.clientX);
 		};
 
 		const handleMouseUp = () => {
