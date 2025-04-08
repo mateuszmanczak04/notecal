@@ -43,7 +43,9 @@ const NoteSidebar = () => {
 
 							<button
 								onClick={() => setShowNoteSidebar(prev => !prev)}
-								className={cn('size-13 absolute right-0 top-0 grid place-content-center')}>
+								className={cn(
+									'size-13 absolute right-0 top-0 grid place-content-center rounded-bl-xl bg-white dark:bg-neutral-900',
+								)}>
 								<Menu />
 							</button>
 						</aside>
