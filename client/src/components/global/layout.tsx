@@ -5,6 +5,7 @@ import { DEFAULT_LOGIN_REDIRECT, routesForAllUsers, routesForUnauthenticatedUser
 import { CalendarContextProvider } from '../calendar/context/calendar-context';
 import { Toaster } from '../toast/toaster';
 import LoadingScreen from './loading-screen';
+import MobileNavigation from './mobile-navigation';
 import Navigation from './navigation';
 
 export default function Layout() {
@@ -41,9 +42,10 @@ export default function Layout() {
 
 	return (
 		<CalendarContextProvider>
-			<div className='flex pl-12 xl:pl-80'>
+			<div className='flex h-screen w-screen flex-col-reverse overflow-hidden lg:flex-row'>
 				<Navigation />
-				<div className='min-h-screen flex-1'>
+				<MobileNavigation />
+				<div className='flex-1 overflow-y-scroll'>
 					<Outlet />
 				</div>
 			</div>

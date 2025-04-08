@@ -21,7 +21,7 @@ const CalendarMenu = () => {
 
 	return (
 		<>
-			<Menubar className='sticky top-0 z-40 h-10 text-nowrap rounded-none border-0 bg-white dark:bg-neutral-900'>
+			<Menubar className='sticky top-0 z-40 h-10 text-nowrap rounded-none border-0'>
 				<MenubarLabel className='w-32 cursor-default select-none justify-center hover:bg-white data-[state=open]:bg-white dark:hover:bg-neutral-900 dark:data-[state=open]:bg-neutral-800'>
 					{currentMonth} {currentYear}
 				</MenubarLabel>

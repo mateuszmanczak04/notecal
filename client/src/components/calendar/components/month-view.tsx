@@ -72,9 +72,7 @@ const MonthView = () => {
 			<div className='grid grid-cols-7 overflow-hidden border-l border-t border-neutral-200 dark:border-neutral-600'>
 				{/* Week day names */}
 				{['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(dayName => (
-					<Tile
-						className='flex h-10 justify-center bg-white px-0 py-0 text-sm dark:bg-neutral-900'
-						key={dayName}>
+					<Tile className='flex h-10 justify-center px-0 py-0 text-sm' key={dayName}>
 						{dayName}
 					</Tile>
 				))}

@@ -3,11 +3,7 @@ import { NavLink, useSearchParams } from 'react-router';
 import { useCourses } from '../../hooks/use-courses';
 import { cn } from '../../utils/cn';
 
-type T_Props = {
-	closeNavigation: () => void;
-};
-
-const NavigationCourses = ({ closeNavigation }: T_Props) => {
+const NavigationCourses = () => {
 	const [searchParams] = useSearchParams();
 	const { data: courses } = useCourses();
 
@@ -20,14 +16,13 @@ const NavigationCourses = ({ closeNavigation }: T_Props) => {
 						'mt-2 flex h-9 items-center gap-2 rounded-xl px-3 font-semibold',
 						isActive && 'bg-white dark:bg-neutral-700',
 					)
-				}
-				onClick={closeNavigation}>
+				}>
 				<GraduationCap className='size-5' />
 				Courses
 			</NavLink>
 
 			{courses && (
-				<div className='mt-1 ml-6 flex flex-col'>
+				<div className='ml-6 mt-1 flex flex-col'>
 					{courses.map(course => (
 						<NavLink
 							key={course.id}
@@ -35,8 +30,7 @@ const NavigationCourses = ({ closeNavigation }: T_Props) => {
 							className={cn(
 								'group flex items-center rounded-md px-3 py-2 text-sm',
 								searchParams.get('courseId') == course.id && 'bg-white dark:bg-neutral-700',
-							)}
-							onClick={closeNavigation}>
+							)}>
 							<div
 								className='ml-1 size-4 rounded-full bg-neutral-200 dark:bg-neutral-700'
 								style={{ backgroundColor: course.color }}></div>
