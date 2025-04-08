@@ -25,7 +25,7 @@ const TasksList = () => {
 	if (error) return <ErrorMessage>{error.message}</ErrorMessage>;
 
 	if (!tasks || tasks.length === 0) {
-		return <p className='text-center text-lg text-neutral-500 sm:ml-8'>You don&apos;t have any tasks yet.</p>;
+		return <p className='mt-4 text-center text-lg text-neutral-500 sm:ml-8'>You don&apos;t have any tasks yet.</p>;
 	}
 
 	console.table(tasks.map(t => ({ dueDate: t.dueDate, type: typeof t.dueDate, title: t.title })));

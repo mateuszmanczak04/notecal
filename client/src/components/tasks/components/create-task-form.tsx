@@ -105,7 +105,7 @@ const CreateTaskForm = ({ course }: Props) => {
 
 			{/* Should appear only on mobile when form is not visible */}
 			{!isIntersecting && (
-				<Button type='button' size='icon' className='fixed bottom-8 right-8 z-20 h-12 w-12 rounded-full'>
+				<Button type='button' size='icon' className='fixed bottom-16 right-4 z-20 h-12 w-12 rounded-full'>
 					<Plus />
 				</Button>
 			)}
