@@ -8,7 +8,7 @@ const CalendarPage = () => {
 	const { viewMode } = useSettings();
 
 	return (
-		<div>
+		<div className='min-w-3xl'>
 			<title>Calendar</title>
 			{/* Year and month, back, forward, zoom in/out */}
 			<CalendarMenu />
