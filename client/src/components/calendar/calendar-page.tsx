@@ -8,7 +8,7 @@ const CalendarPage = () => {
 	const { viewMode } = useSettings();
 
 	return (
-		<div className='flex h-full flex-col'>
+		<div>
 			<title>Calendar</title>
 			{/* Year and month, back, forward, zoom in/out */}
 			<CalendarMenu />

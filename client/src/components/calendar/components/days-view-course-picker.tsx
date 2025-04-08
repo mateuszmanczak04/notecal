@@ -86,7 +86,7 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 0.25 }}
 				exit={{ opacity: 0 }}
-				className='absolute inset-0 z-30 bg-black'></motion.div>
+				className='absolute inset-0 z-10 bg-black'></motion.div>
 
 			{/* Popup: */}
 			{courses && courses.length > 0 && (
@@ -96,7 +96,7 @@ const DaysViewCoursePicker = ({ hidePicker, time, x, y }: Props) => {
 					animate={{ opacity: 1, y: 0 }}
 					exit={{ opacity: 0, y: -20 }}
 					className={cn(
-						'absolute z-30 flex max-h-[60vh] min-w-40 max-w-96 flex-col overflow-hidden rounded-xl bg-white p-4 shadow-xl dark:bg-neutral-800',
+						'absolute z-10 flex max-h-[60vh] min-w-40 max-w-96 flex-col overflow-hidden rounded-xl bg-white p-4 shadow-xl dark:bg-neutral-800',
 						isPending && 'pointer-events-none opacity-50',
 					)}
 					ref={pickerRef}

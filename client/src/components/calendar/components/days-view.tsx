@@ -17,42 +17,6 @@ const DaysView = () => {
 		scrollContainerRef.current!.scrollTop = calendarScrollTop;
 	}, [calendarScrollTop]);
 
-	// Handle zooming in/out with keyboard
-	// useEffect(() => {
-	// 	const handleKeyDown = (event: KeyboardEvent) => {
-	// 		if (event.metaKey && (event.key === '=' || event.key === '-')) {
-	// 			event.preventDefault();
-	// 			if (event.key === '=') {
-	// 				zoomIn();
-	// 			} else if (event.key === '-') {
-	// 				zoomOut();
-	// 			}
-	// 		} else if (event.key === 'ArrowLeft') {
-	// 			goDayBackward();
-	// 		} else if (event.key === 'ArrowRight') {
-	// 			goDayForward();
-	// 		}
-	// 	};
-
-	// 	const handleWheel = (event: WheelEvent) => {
-	// 		if (event.metaKey) {
-	// 			event.preventDefault();
-	// 			if (event.deltaY > 0) {
-	// 				zoomOut();
-	// 			} else {
-	// 				zoomIn();
-	// 			}
-	// 		}
-	// 	};
-
-	// 	window.addEventListener('keydown', handleKeyDown);
-	// 	window.addEventListener('wheel', handleWheel, { passive: false });
-	// 	return () => {
-	// 		window.removeEventListener('keydown', handleKeyDown);
-	// 		window.removeEventListener('wheel', handleWheel);
-	// 	};
-	// }, [zoomIn, zoomOut, goDayBackward, goDayForward]);
-
 	return (
 		<>
 			{/* Dates */}
