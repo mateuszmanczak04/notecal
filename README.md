@@ -5,12 +5,11 @@ It is a web application which was made to help students organize their universit
 # Technological stack
 
 This app is split into 2 parts:
-1. Backend and API routes in `./next-app` made with Next.js,
-2. Frontend in `./vite-app` made with Vite/React.
+1. Backend and API routes in `./server` made with Node.js,
+2. Frontend in `./client` made with Vite/React.
 
 Some of libraries/frameworks used are listed here (not all):
 
-- AWS S3
 - TailwindCSS
 - TypeScript
 - Shadcn-UI
@@ -24,15 +23,11 @@ Some of libraries/frameworks used are listed here (not all):
 
 and more...
 
-# Deployment
-
-Currently app is hosted on Vercel with database on neon.tech. It's also using AWS S3 for user notes because it is more optimal to keep e.g. 2 MB content as file blob instead of text in the database.
-
 # Development
 
 ## Installation
 
-I recommend using `bun` instead of `npm` but skipping this step should still work. Remember that in order to work properly you will have to launch frontend and backend separately (`cd ./next-app`, `cd ./vite-app`):
+I recommend using `bun` instead of `npm` but skipping this step should still work. Remember that in order to work properly you will have to launch frontend and backend separately (`cd ./server`, `cd ./client`):
 
 ```bash
 bun install
@@ -46,8 +41,6 @@ AUTH_SECRET=...
 EMAIL_HOST=...
 EMAIL_USER=...
 EMAIL_PASSWORD=...
-AWS_ACCESS_KEY_ID=...
-AWS_SECRET_ACCESS_KEY=...
 ```
 
 where:
@@ -55,13 +48,10 @@ where:
 - `DATABASE_URL` - for example `postgresql://admin:notecal@localhost:5432/development`
 - `AUTH_SECRET` - any text
 - `EMAIL_HOST`, `EMAIL_USER` and `EMAIL_PASSWORD` - needed for email verification after signing up
-- `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` - needed to connect to AWS S3 where user notes are stored as json files
-
-Then if you are going to send app to the production go to `./next-app/src/utils/app-domain.ts` and replace `app.notecal.app` with your own domain where you will host you frontend.
 
 ## Running development server
 
-Run this script either in `next-app` adn `vite-app` folders:
+Run this script either in `client` adn `server` folders:
 
 ```bash
 bun run dev
